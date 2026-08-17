@@ -1,0 +1,15 @@
+export { decompile, decodeOnly, type DecompileOptions, type DecompileResult } from "./decompile.js";
+export { decodeBytecode, type DecodeResult } from "./decode/Decoder.js";
+export { writeBytecode, abc, ad, e, packImport, type WrittenPrototype } from "./decode/BytecodeWriter.js";
+export { BytecodeError } from "./decode/BytecodeError.js";
+export { Opcode, CaptureType, BuiltinFunction, ConstantTag, instructionWidth, jumpTarget } from "./decode/Opcode.js";
+export { buildControlFlowGraph } from "./cfg/ControlFlowGraph.js";
+export { computeDominators, computePostDominators } from "./cfg/Dominators.js";
+export { findNaturalLoops } from "./cfg/NaturalLoops.js";
+export { buildSsa } from "./ssa/SsaBuilder.js";
+export { computeLiveness } from "./dataflow/Liveness.js";
+export { reconstructFunction, analyzePrototype } from "./reconstruct/Reconstructor.js";
+export { printLuau } from "./print/LuauPrinter.js";
+export { disassembleModule } from "./disasm/Disassembler.js";
+export { validateAst } from "./ast/AstValidator.js";
+export { DEFAULT_SAFETY_LIMITS } from "./safety/Limits.js";
