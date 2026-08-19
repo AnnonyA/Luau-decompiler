@@ -193,6 +193,18 @@ function visitExpr(expression: Expression, scopes: string[][], failures: Validat
     case "paren":
       visitExpr(expression.expression, scopes, failures);
       break;
+    case "if-expr":
+      visitExpr(expression.test, scopes, failures);
+      visitExpr(expression.consequent, scopes, failures);
+      visitExpr(expression.alternate, scopes, failures);
+      break;
+    case "interp":
+      for (const part of expression.parts) {
+        if (part.kind === "expr" && typeof part.value !== "string") {
+          visitExpr(part.value, scopes, failures);
+        }
+      }
+      break;
   }
 }
 

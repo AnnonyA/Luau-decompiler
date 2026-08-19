@@ -20,8 +20,12 @@ const PREC: Record<string, number> = {
   "^": 8,
 };
 
-export function printLuau(ast: Chunk): string {
-  const printer = new Printer();
+export interface PrintOptions {
+  indent?: "tab" | 2 | 4;
+}
+
+export function printLuau(ast: Chunk, options: PrintOptions = {}): string {
+  const printer = new Printer(options.indent ?? 4);
   printer.printBlock(ast.body, false);
   return printer.finish();
 }
@@ -30,6 +34,11 @@ class Printer {
   private readonly lines: string[] = [];
   private indentLevel = 0;
   private pendingBlank = false;
+  private readonly unit: string;
+
+  constructor(indent: "tab" | 2 | 4 = 4) {
+    this.unit = indent === "tab" ? "\t" : " ".repeat(indent);
+  }
 
   finish(): string {
     while (this.lines.length > 0 && this.lines[this.lines.length - 1] === "") {
@@ -55,13 +64,13 @@ class Printer {
       this.lines.push("");
     }
     this.pendingBlank = false;
-    this.lines.push(`${"    ".repeat(this.indentLevel)}${text}`);
+    this.lines.push(`${this.unit.repeat(this.indentLevel)}${text}`);
   }
 
   private printStatement(statement: Statement): void {
     switch (statement.kind) {
       case "local": {
-        const names = statement.names.join(", ");
+        const names = formatTypedNames(statement.names, statement.types);
         if (statement.values.length === 0) {
           this.write(`local ${names}`);
         } else {
@@ -80,7 +89,8 @@ class Printer {
         const header = `${statement.local ? "local function " : "function "}${statement.name}(${formatParams(
           statement.params,
           statement.isVararg,
-        )})`;
+          statement.paramTypes,
+        )})${statement.returnType ? `: ${statement.returnType}` : ""}`;
         this.write(header);
         this.printBlock(statement.body, true);
         this.write("end");
@@ -180,7 +190,13 @@ class Printer {
       case "table":
         return this.table(expression.fields);
       case "function-expr":
-        return `function(${formatParams(expression.params, expression.isVararg)})\n${this.nested(expression.body)}end`;
+        return `function(${formatParams(expression.params, expression.isVararg, expression.paramTypes)})${
+          expression.returnType ? `: ${expression.returnType}` : ""
+        }\n${this.nested(expression.body)}end`;
+      case "if-expr":
+        return `if ${this.expr(expression.test)} then ${this.expr(expression.consequent)} else ${this.expr(expression.alternate)}`;
+      case "interp":
+        return `\`${expression.parts.map((part) => this.interpPart(part)).join("")}\``;
       case "paren":
         return `(${this.expr(expression.expression)})`;
     }
@@ -215,6 +231,13 @@ class Printer {
     return `(${this.expr(expression)})`;
   }
 
+  private interpPart(part: { kind: "text" | "expr"; value: string | Expression }): string {
+    if (part.kind === "text") {
+      return escapeInterp(String(part.value));
+    }
+    return `{${this.expr(part.value as Expression)}}`;
+  }
+
   private table(fields: TableField[]): string {
     if (fields.length === 0) {
       return "{}";
@@ -229,26 +252,42 @@ class Printer {
       return this.expr(field.value);
     });
     if (parts.join(", ").length > 80) {
-      const inner = parts.map((part) => `${"    ".repeat(this.indentLevel + 1)}${part},`).join("\n");
-      return `{\n${inner}\n${"    ".repeat(this.indentLevel)}}`;
+      const inner = parts.map((part) => `${this.unit.repeat(this.indentLevel + 1)}${part},`).join("\n");
+      return `{\n${inner}\n${this.unit.repeat(this.indentLevel)}}`;
     }
     return `{ ${parts.join(", ")} }`;
   }
 
   private nested(body: Block): string {
-    const nested = new Printer();
+    const nested = new Printer(this.unit === "\t" ? "tab" : (this.unit.length as 2 | 4));
     nested.indentLevel = this.indentLevel + 1;
     nested.printBlock(body, false);
-    return nested.lines.length === 0 ? "" : `${nested.lines.join("\n")}\n${"    ".repeat(this.indentLevel)}`;
+    return nested.lines.length === 0 ? "" : `${nested.lines.join("\n")}\n${this.unit.repeat(this.indentLevel)}`;
   }
 }
 
-function formatParams(params: string[], isVararg: boolean): string {
-  const list = [...params];
+function formatTypedNames(names: string[], types?: Array<string | undefined>): string {
+  return names
+    .map((name, index) => {
+      const type = types?.[index];
+      return type ? `${name}: ${type}` : name;
+    })
+    .join(", ");
+}
+
+function formatParams(params: string[], isVararg: boolean, types?: Array<string | undefined>): string {
+  const list = params.map((name, index) => {
+    const type = types?.[index];
+    return type ? `${name}: ${type}` : name;
+  });
   if (isVararg) {
     list.push("...");
   }
   return list.join(", ");
+}
+
+function escapeInterp(value: string): string {
+  return value.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/{/g, "\\{");
 }
 
 function literalToSource(value: Literal["value"]): string {

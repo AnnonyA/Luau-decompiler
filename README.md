@@ -26,7 +26,10 @@ if (result.ok) {
 ```
 npx luau-decompile decompile chunk.luac
 npx luau-decompile disassemble chunk.luac
+npx luau-decompile serve 3000
 ```
+
+`POST /decompile` accepts raw `application/octet-stream` or base64 `text/plain`. Query options include `type_annotations`, `indent`, `if_expressions`, `interpolated_strings`, and `math_constants`.
 
 ## Development
 

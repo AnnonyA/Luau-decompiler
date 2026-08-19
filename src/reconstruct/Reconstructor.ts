@@ -9,6 +9,7 @@ import { CaptureType, Opcode } from "../decode/Opcode.js";
 import type { BytecodeModule, Prototype } from "../decode/Prototype.js";
 import { buildSsa, type SsaFunction } from "../ssa/SsaBuilder.js";
 import { NameAllocator, debugNameAt, isValidIdentifier } from "./Naming.js";
+import { nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
 
 export interface FunctionIr {
   cfg: ControlFlowGraph;
@@ -958,29 +959,26 @@ function cloneExpr(expression: Expression): Expression {
 }
 
 function nameHint(expression: Expression): string | undefined {
-  if (expression.kind === "call" && expression.callee.kind === "property" && expression.callee.name === "GetService") {
-    const first = expression.args[0];
-    if (first?.kind === "literal" && typeof first.value === "string" && isValidIdentifier(first.value)) {
-      return first.value;
-    }
+  if (expression.kind === "method-call") {
+    return nameFromMethod(expression.name, expression.args) ?? nameFromProperty(expression.name);
+  }
+  if (expression.kind === "call" && expression.callee.kind === "property") {
+    return nameFromMethod(expression.callee.name, expression.args);
   }
   if (expression.kind === "property") {
-    const name = expression.name;
-    if (name === "LocalPlayer") {
-      return "player";
-    }
-    if (name === "Character") {
-      return "character";
-    }
-    if (isValidIdentifier(name) && name[0] === name[0]?.toUpperCase()) {
-      return name[0]!.toLowerCase() + name.slice(1);
-    }
-    return name;
+    return nameFromProperty(expression.name) ?? (isValidIdentifier(expression.name) ? lowerIdent(expression.name) : undefined);
   }
   if (expression.kind === "identifier") {
     return expression.name;
   }
   return undefined;
+}
+
+function lowerIdent(name: string): string {
+  if (name[0] && name[0] === name[0].toUpperCase()) {
+    return name[0].toLowerCase() + name.slice(1);
+  }
+  return name;
 }
 
 function isCompare(opcode: Opcode): boolean {
