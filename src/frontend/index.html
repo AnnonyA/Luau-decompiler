@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Luau decompiler</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #101216;
+        --panel: #181b21;
+        --line: #2a2f38;
+        --text: #e8eaed;
+        --muted: #9aa3af;
+        --accent: #7dd3c7;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 14px/1.45 ui-sans-serif, system-ui, sans-serif; }
+      header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+      h1 { font-size: 16px; font-weight: 600; margin: 0; }
+      main { display: grid; grid-template-columns: 280px 1fr; height: calc(100% - 57px); }
+      aside { border-right: 1px solid var(--line); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+      button, select { background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+      button.primary { background: var(--accent); color: #10221f; font-weight: 600; border: 0; }
+      textarea, pre { width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; color: var(--text); padding: 12px; overflow: auto; }
+      textarea { min-height: 140px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .tabs { display: flex; gap: 8px; padding: 12px 16px 0; }
+      .tabs button[aria-selected="true"] { border-color: var(--accent); color: var(--accent); }
+      .pane { padding: 16px; height: calc(100% - 48px); }
+      pre { height: 100%; margin: 0; white-space: pre; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .muted { color: var(--muted); font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Luau decompiler</h1>
+      <span class="muted">bytecode in, source out</span>
+    </header>
+    <main>
+      <aside>
+        <input id="file" type="file" />
+        <label class="muted">or paste base64</label>
+        <textarea id="b64" placeholder="base64 bytecode"></textarea>
+        <label class="muted">type annotations</label>
+        <select id="types">
+          <option value="useful" selected>useful</option>
+          <option value="functions">functions</option>
+          <option value="off">off</option>
+        </select>
+        <button class="primary" id="run">Decompile</button>
+        <p class="muted" id="status">Idle</p>
+      </aside>
+      <section>
+        <div class="tabs">
+          <button data-tab="source" aria-selected="true">Source</button>
+          <button data-tab="disasm">Disassembly</button>
+          <button data-tab="diag">Diagnostics</button>
+        </div>
+        <div class="pane"><pre id="out"></pre></div>
+      </section>
+    </main>
+    <script>
+      const out = document.getElementById("out");
+      const status = document.getElementById("status");
+      let last = { source: "", disassembly: "", diagnostics: [] };
+      document.querySelectorAll(".tabs button").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".tabs button").forEach((item) => item.setAttribute("aria-selected", "false"));
+          button.setAttribute("aria-selected", "true");
+          render(button.dataset.tab);
+        });
+      });
+      function render(tab) {
+        if (tab === "disasm") out.textContent = last.disassembly || "";
+        else if (tab === "diag") out.textContent = (last.diagnostics || []).map((item) => item.severity + ": " + item.message).join("\n");
+        else out.textContent = last.source || "";
+      }
+      document.getElementById("run").addEventListener("click", async () => {
+        status.textContent = "Working…";
+        const file = document.getElementById("file").files[0];
+        const types = document.getElementById("types").value;
+        const query = new URLSearchParams({ type_annotations: types, indent: "4" });
+        let body;
+        let contentType;
+        if (file) {
+          body = await file.arrayBuffer();
+          contentType = "application/octet-stream";
+        } else {
+          body = document.getElementById("b64").value.trim();
+          contentType = "text/plain";
+        }
+        const response = await fetch("/decompile?" + query.toString(), { method: "POST", headers: { "Content-Type": contentType }, body });
+        const payload = await response.json();
+        if (!payload.ok) {
+          status.textContent = payload.error || "failed";
+          last = { source: payload.error || "", disassembly: "", diagnostics: payload.diagnostics || [] };
+        } else {
+          status.textContent = "Done";
+          last = payload;
+        }
+        render(document.querySelector(".tabs button[aria-selected='true']").dataset.tab);
+      });
+    </script>
+  </body>
+</html>

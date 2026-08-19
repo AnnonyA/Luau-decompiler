@@ -1,4 +1,6 @@
-export { decompile, decodeOnly, type DecompileOptions, type DecompileResult } from "./decompile.js";
+export { decompile, decodeOnly, parseQueryOptions, type DecompileOptions, type DecompileResult } from "./decompile.js";
+export { startServer } from "./server.js";
+export { cleanupAst } from "./ast/AstCleanup.js";
 export { decodeBytecode, type DecodeResult } from "./decode/Decoder.js";
 export { writeBytecode, abc, ad, e, packImport, type WrittenPrototype } from "./decode/BytecodeWriter.js";
 export { BytecodeError } from "./decode/BytecodeError.js";

@@ -1,23 +1,29 @@
 #!/usr/bin/env node
 import { readFileSync } from "node:fs";
-import { decompile } from "./decompile.js";
+import { decompile, parseQueryOptions } from "./decompile.js";
 import { decodeBytecode } from "./decode/Decoder.js";
 import { disassembleModule } from "./disasm/Disassembler.js";
+import { startServer } from "./server.js";
 
 function usage(): never {
-  process.stderr.write("usage: luau-decompile <decompile|disassemble|info> <file>\n");
+  process.stderr.write("usage: luau-decompile <decompile|disassemble|info|serve> [file|port]\n");
   process.exit(2);
 }
 
-const [, , command, file] = process.argv;
-if (!command || !file) {
+const [, , command, target] = process.argv;
+if (!command) {
   usage();
 }
 
-const bytes = new Uint8Array(readFileSync(file));
-
-if (command === "disassemble" || command === "info") {
+if (command === "serve") {
+  const port = Number(target ?? process.env.PORT ?? 3000);
+  startServer(port, "0.0.0.0");
+  process.stdout.write(`listening on 0.0.0.0:${port}\n`);
+} else if (!target) {
+  usage();
+} else if (command === "disassemble" || command === "info") {
   try {
+    const bytes = new Uint8Array(readFileSync(target));
     const { module, profile } = decodeBytecode(bytes);
     if (command === "info") {
       process.stdout.write(
@@ -31,7 +37,8 @@ if (command === "disassemble" || command === "info") {
     process.exit(1);
   }
 } else if (command === "decompile") {
-  const result = decompile(bytes);
+  const bytes = new Uint8Array(readFileSync(target));
+  const result = decompile(bytes, parseQueryOptions(new URLSearchParams(process.env.LUAU_DECOMPILE_OPTS ?? "")));
   if (!result.ok) {
     process.stderr.write(`${result.error}\n`);
     process.exit(1);

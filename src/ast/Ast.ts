@@ -36,6 +36,7 @@ export interface LocalDeclaration {
   kind: "local";
   names: string[];
   values: Expression[];
+  types?: Array<string | undefined>;
 }
 
 export interface Assignment {
@@ -49,6 +50,8 @@ export interface FunctionDeclaration {
   local: boolean;
   name: string;
   params: string[];
+  paramTypes?: Array<string | undefined>;
+  returnType?: string;
   isVararg: boolean;
   body: Block;
 }
@@ -124,7 +127,9 @@ export type Expression =
   | PropertyExpression
   | TableExpression
   | FunctionExpression
-  | ParenthesizedExpression;
+  | ParenthesizedExpression
+  | IfExpression
+  | InterpolatedString;
 
 export interface Identifier {
   kind: "identifier";
@@ -194,8 +199,27 @@ export interface TableExpression {
 export interface FunctionExpression {
   kind: "function-expr";
   params: string[];
+  paramTypes?: Array<string | undefined>;
+  returnType?: string;
   isVararg: boolean;
   body: Block;
+}
+
+export interface IfExpression {
+  kind: "if-expr";
+  test: Expression;
+  consequent: Expression;
+  alternate: Expression;
+}
+
+export interface InterpolatedPart {
+  kind: "text" | "expr";
+  value: string | Expression;
+}
+
+export interface InterpolatedString {
+  kind: "interp";
+  parts: InterpolatedPart[];
 }
 
 export interface ParenthesizedExpression {
