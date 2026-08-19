@@ -205,10 +205,16 @@ export interface FunctionExpression {
   body: Block;
 }
 
+export interface IfExpressionBranch {
+  test: Expression;
+  value: Expression;
+}
+
 export interface IfExpression {
   kind: "if-expr";
   test: Expression;
   consequent: Expression;
+  branches: IfExpressionBranch[];
   alternate: Expression;
 }
 

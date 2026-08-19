@@ -1,5 +1,5 @@
 import { abc, ad, writeBytecode, type WrittenConstant, type WrittenPrototype } from "../src/decode/BytecodeWriter.ts";
-import { Opcode } from "../src/decode/Opcode.ts";
+import { CaptureType, Opcode } from "../src/decode/Opcode.ts";
 import { decompile } from "../src/decompile.ts";
 import { decodeBytecode } from "../src/decode/Decoder.ts";
 
@@ -49,4 +49,4 @@ export function importConst(path: string[]): WrittenConstant {
   return { kind: "import", path };
 }
 
-export { abc, ad, Opcode };
+export { abc, ad, Opcode, CaptureType };

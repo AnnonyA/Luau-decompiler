@@ -74,6 +74,17 @@ export class NameAllocator {
     }
     return this.take("tmp");
   }
+
+  snapshot(): Set<string> {
+    return new Set(this.used);
+  }
+
+  restore(snapshot: Set<string>): void {
+    this.used.clear();
+    for (const name of snapshot) {
+      this.used.add(name);
+    }
+  }
 }
 
 export function sanitizeIdentifier(raw: string): string {

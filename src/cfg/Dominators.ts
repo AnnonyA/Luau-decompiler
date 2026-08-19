@@ -67,68 +67,55 @@ export function computeDominators(cfg: ControlFlowGraph): DominatorTree {
 export function computePostDominators(cfg: ControlFlowGraph): PostDominatorTree {
   const n = cfg.blocks.length;
   const ipdom = new Array<number>(n).fill(-1);
-  const exits = cfg.exits.length > 0 ? cfg.exits : cfg.blocks.filter((block) => !block.unreachable).map((b) => b.id);
+  const reachable = cfg.blocks.filter((block) => !block.unreachable).map((block) => block.id);
+  const exits = cfg.exits.length > 0 ? cfg.exits : reachable.filter((id) => cfg.blocks[id]!.successors.length === 0);
   if (exits.length === 0) {
     return { ipdom, children: Array.from({ length: n }, () => []), postDominates: () => false };
   }
 
+  // Post-dominators of the original graph are dominators of the reversed graph,
+  // computed from a virtual exit node that every exit block connects to.
   const virtualExit = n;
-  const successors = cfg.blocks.map((block) => [...block.predecessors]);
-  const predecessors: number[][] = Array.from({ length: n + 1 }, () => []);
+  const reversedSuccessors: number[][] = Array.from({ length: n + 1 }, () => []);
   for (const block of cfg.blocks) {
     for (const pred of block.predecessors) {
-      predecessors[block.id]!.push(pred);
+      reversedSuccessors[block.id]!.push(pred);
     }
   }
-  for (const exit of exits) {
-    successors[exit] = [...(cfg.blocks[exit]?.predecessors ?? [])];
-  }
-
-  const reversedSuccessors = cfg.blocks.map((block) => [...block.predecessors]);
   for (const exit of exits) {
     reversedSuccessors[exit]!.push(virtualExit);
   }
 
-  const rpo: number[] = [];
-  const seen = new Set<number>([virtualExit]);
-  const visit = (id: number): void => {
-    for (const succ of id === virtualExit ? exits : (cfg.blocks[id]?.predecessors ?? [])) {
-      if (!seen.has(succ)) {
-        seen.add(succ);
-        visit(succ);
-      }
-    }
-    if (id !== virtualExit) {
-      rpo.push(id);
-    }
-  };
-  visit(virtualExit);
-  rpo.reverse();
-
+  const rpo = reversePostOrderOn(
+    n + 1,
+    virtualExit,
+    (id) => (id === virtualExit ? exits : reversedSuccessors[id]!),
+    new Set(reachable),
+  );
   const indexOf = new Map<number, number>();
   rpo.forEach((id, index) => indexOf.set(id, index));
-  const working = new Array<number>(n).fill(-1);
+
+  const working = new Array<number>(n + 1).fill(-1);
+  working[virtualExit] = virtualExit;
+  for (const exit of exits) {
+    working[exit] = virtualExit;
+  }
 
   let changed = true;
   while (changed) {
     changed = false;
     for (const id of rpo) {
-      const succs = cfg.blocks[id]!.successors;
-      const candidates = succs.length === 0 ? [] : succs.filter((succ) => working[succ] !== -1 || succs.length === 0);
-      const seeds = succs.length === 0 ? [id] : candidates;
-      if (seeds.length === 0 && succs.length === 0) {
-        if (working[id] !== id) {
-          working[id] = id;
-          changed = true;
-        }
+      if (id === virtualExit || working[id] === virtualExit) {
         continue;
       }
-      if (seeds.length === 0) {
+      // Predecessors in the reversed graph are the original successors.
+      const preds = (cfg.blocks[id]?.successors ?? []).filter((pred) => working[pred] !== -1);
+      if (preds.length === 0) {
         continue;
       }
-      let newIdom = seeds[0]!;
-      for (let i = 1; i < seeds.length; i++) {
-        newIdom = intersect(seeds[i]!, newIdom, working, indexOf);
+      let newIdom = preds[0]!;
+      for (let i = 1; i < preds.length; i++) {
+        newIdom = intersect(preds[i]!, newIdom, working, indexOf);
       }
       if (working[id] !== newIdom) {
         working[id] = newIdom;
@@ -139,7 +126,8 @@ export function computePostDominators(cfg: ControlFlowGraph): PostDominatorTree 
 
   const children = Array.from({ length: n }, () => [] as number[]);
   for (let id = 0; id < n; id++) {
-    ipdom[id] = working[id] ?? -1;
+    const post = working[id];
+    ipdom[id] = post === undefined || post === virtualExit || post === -1 ? -1 : post;
     if (ipdom[id] !== -1 && ipdom[id] !== id) {
       children[ipdom[id]!]!.push(id);
     }
@@ -149,6 +137,30 @@ export function computePostDominators(cfg: ControlFlowGraph): PostDominatorTree 
     children,
     postDominates: (a, b) => dominates(a, b, ipdom),
   };
+}
+
+function reversePostOrderOn(
+  size: number,
+  start: number,
+  next: (id: number) => number[],
+  allowed: Set<number>,
+): number[] {
+  const seen = new Set<number>();
+  const order: number[] = [];
+  const visit = (id: number): void => {
+    if (seen.has(id)) {
+      return;
+    }
+    seen.add(id);
+    for (const succ of next(id)) {
+      if (succ < size && (succ === start || allowed.has(succ))) {
+        visit(succ);
+      }
+    }
+    order.push(id);
+  };
+  visit(start);
+  return order.reverse();
 }
 
 function emptyTree(n: number): DominatorTree {

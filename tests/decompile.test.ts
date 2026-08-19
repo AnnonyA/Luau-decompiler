@@ -105,9 +105,9 @@ describe("decompilation", () => {
         ],
       }),
     );
-    expect(source).toMatch(/if flag then/);
-    expect(source).toMatch(/else/);
-    expect(source).toMatch(/end/);
+    // The diamond is recovered as a value-if expression.
+    expect(source).toMatch(/local result = if flag then 1 else 2/);
+    expect(source).not.toMatch(/end/);
   });
 
   it("recovers a repeat/until post-test loop", () => {
@@ -195,9 +195,11 @@ describe("decompilation", () => {
         locals: [{ name: "config", startPc: 1, endPc: 9, register: 0 }],
       }),
     );
-    expect(source).toMatch(/config/);
-    expect(source).toMatch(/Enabled/);
+    // The returned table gets the module role; the literal must contain the
+    // SETTABLEKS fields.
+    expect(source).toMatch(/(module|config) = \{[^}]*Enabled/);
     expect(source).toMatch(/Name/);
+    expect(source).toMatch(/alpha/);
   });
 
   it("keeps mutable recursive locals as assignment, not local function", () => {
