@@ -59,9 +59,9 @@ const EVENT_PARAMS: Record<string, string[]> = {
   ChildRemoved: ["child"],
   DescendantAdded: ["descendant"],
   DescendantRemoving: ["descendant"],
-  InputBegan: ["input", "gameProcessed"],
-  InputEnded: ["input", "gameProcessed"],
-  InputChanged: ["input", "gameProcessed"],
+  InputBegan: ["input", "gameProcessedEvent"],
+  InputEnded: ["input", "gameProcessedEvent"],
+  InputChanged: ["input", "gameProcessedEvent"],
   Heartbeat: ["deltaTime"],
   Stepped: ["time", "deltaTime"],
   RenderStepped: ["deltaTime"],
@@ -287,6 +287,35 @@ function typeFromMethod(_object: Expression, name: string, args: Expression[]): 
   return undefined;
 }
 
+const CALLBACK_PARAM_TYPES: Record<string, string> = {
+  input: "InputObject",
+  inputObject: "InputObject",
+  gameProcessedEvent: "boolean",
+  gameProcessed: "boolean",
+  player: "Player",
+  character: "Model",
+  deltaTime: "number",
+  time: "number",
+  hit: "BasePart",
+  property: "string",
+  playbackState: "Enum.PlaybackState",
+  cframe: "CFrame",
+  child: "Instance",
+  parent: "Instance",
+  descendant: "Instance",
+  clickCount: "number",
+  enterPressed: "boolean",
+  health: "number",
+  speed: "number",
+  keyframe: "string",
+  old: "Enum.HumanoidStateType",
+  new: "Enum.HumanoidStateType",
+};
+
+export function callbackParamType(name: string): string | undefined {
+  return CALLBACK_PARAM_TYPES[name];
+}
+
 export function callbackParamsFor(expression: Expression): string[] | undefined {
   if (expression.kind === "method-call" && CALLBACK_METHODS.has(expression.name)) {
     return callbackParamsFor(expression.object);
@@ -294,8 +323,14 @@ export function callbackParamsFor(expression: Expression): string[] | undefined 
   if (expression.kind === "property") {
     return EVENT_PARAMS[expression.name];
   }
-  if (expression.kind === "call" && expression.callee.kind === "property" && expression.callee.name === "GetPropertyChangedSignal") {
-    return ["property"];
+  if (expression.kind === "call") {
+    const callee = expression.callee;
+    if (callee.kind === "property" && callee.name === "GetPropertyChangedSignal") {
+      return ["property"];
+    }
+    if (callee.kind === "property" && callee.name === "new" && callee.object.kind === "identifier" && /Shake/i.test(callee.object.name)) {
+      return ["cframe"];
+    }
   }
   return undefined;
 }

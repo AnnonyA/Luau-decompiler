@@ -324,30 +324,29 @@ local function attachTrail(value45)
     local result5 = if value45:IsA("Model") then value45.PrimaryPart else value45
     if not result5 then
         return
-    else
-        local value46: Attachment = Instance.new("Attachment")
-        value46.Position = Vector3.new(0, result5.Size.Y / 2 + 0.4, 0)
-        value46.Parent = result5
-        local value47: Attachment = Instance.new("Attachment")
-        value47.Position = Vector3.new(0, result5.Size.Y / 2 - 0.4, 0)
-        value47.Parent = result5
-        local value48: Trail = Instance.new("Trail")
-        value48.Attachment0 = value46
-        value48.Attachment1 = value47
-        value48.Lifetime = 1.1
-        value48.LightEmission = 1
-        value48.Color = ColorSequence.new(Color3.new(1, 1, 1))
-        local config13 = {
-            NumberSequenceKeypoint.new(0, 0),
-            NumberSequenceKeypoint.new(0.7, 0.25),
-            NumberSequenceKeypoint.new(1, 1),
-        }
-        value48.Transparency = NumberSequence.new(config13)
-        local config14 = { NumberSequenceKeypoint.new(0, 1.4), NumberSequenceKeypoint.new(1, 0.6) }
-        value48.WidthScale = NumberSequence.new(config14)
-        value48.FaceCamera = true
-        value48.Parent = result5
     end
+    local value46: Attachment = Instance.new("Attachment")
+    value46.Position = Vector3.new(0, result5.Size.Y / 2 + 0.4, 0)
+    value46.Parent = result5
+    local value47: Attachment = Instance.new("Attachment")
+    value47.Position = Vector3.new(0, result5.Size.Y / 2 - 0.4, 0)
+    value47.Parent = result5
+    local value48: Trail = Instance.new("Trail")
+    value48.Attachment0 = value46
+    value48.Attachment1 = value47
+    value48.Lifetime = 1.1
+    value48.LightEmission = 1
+    value48.Color = ColorSequence.new(Color3.new(1, 1, 1))
+    local config13 = {
+        NumberSequenceKeypoint.new(0, 0),
+        NumberSequenceKeypoint.new(0.7, 0.25),
+        NumberSequenceKeypoint.new(1, 1),
+    }
+    value48.Transparency = NumberSequence.new(config13)
+    local config14 = { NumberSequenceKeypoint.new(0, 1.4), NumberSequenceKeypoint.new(1, 0.6) }
+    value48.WidthScale = NumberSequence.new(config14)
+    value48.FaceCamera = true
+    value48.Parent = result5
 end
 
 local function riseNukeFromSilo(value49)
@@ -486,15 +485,14 @@ Start = function(value67)
     onClientEvent2 = function()
         if callback7 then
             return
-        else
-            callback7 = true
-            callback8 = true
-            setGameMusicSuppressed(true)
-            Players.LocalPlayer:SetAttribute("MeltdownCutsceneActive", true)
-            playIntroCutscene()
-            callback7 = false
-            Players.LocalPlayer:SetAttribute("MeltdownCutsceneActive", false)
         end
+        callback7 = true
+        callback8 = true
+        setGameMusicSuppressed(true)
+        Players.LocalPlayer:SetAttribute("MeltdownCutsceneActive", true)
+        playIntroCutscene()
+        callback7 = false
+        Players.LocalPlayer:SetAttribute("MeltdownCutsceneActive", false)
     end
     Remotes.MeltdownCutscene.OnClientEvent:Connect(onClientEvent2)
     local onClientEvent

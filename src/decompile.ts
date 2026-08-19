@@ -10,6 +10,7 @@ import { DiagnosticBag, type Diagnostic } from "./diagnostics.js";
 import { disassembleModule } from "./disasm/Disassembler.js";
 import { printLuau, hasArtificialComments, type PrintOptions } from "./print/LuauPrinter.js";
 import { reconstructFunction } from "./reconstruct/Reconstructor.js";
+import { applyRuntimeContext, parseRuntimeContext, type RuntimeContext } from "./reconstruct/RuntimeContext.js";
 
 export type TypeAnnotationMode = "off" | "functions" | "useful";
 
@@ -20,6 +21,8 @@ export interface DecompileOptions extends DecodeOptions, PrintOptions {
   earlyReturn?: boolean;
   interpolatedStrings?: boolean;
   mathConstants?: boolean;
+  /** Live-game naming hints. Pass `false` to ignore any collected context. */
+  runtimeContext?: RuntimeContext | false;
 }
 
 export interface DecompileSuccess {
@@ -78,7 +81,8 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
 
   const reconstructed = reconstructFunction(decoded.module, main);
   const raw = chunk(reconstructed.body.statements);
-  const ast = cleanupAst(raw, defaultCleanupOptions(options));
+  const cleaned = cleanupAst(raw, defaultCleanupOptions(options));
+  const ast = options.runtimeContext === false ? cleaned : applyRuntimeContext(cleaned, options.runtimeContext);
   const validation = validateAst(ast);
   for (const failure of validation) {
     diagnostics.error(failure.code, failure.message);
@@ -109,6 +113,17 @@ export function parseQueryOptions(query: URLSearchParams): DecompileOptions {
   const indentRaw = query.get("indent");
   const indent = indentRaw === "tab" ? "tab" : indentRaw === "2" ? 2 : 4;
   const typeAnnotations = (query.get("type_annotations") as TypeAnnotationMode | null) ?? "useful";
+  const runtimeRaw = query.get("runtime_context");
+  let runtimeContext: RuntimeContext | false | undefined;
+  if (runtimeRaw === "false") {
+    runtimeContext = false;
+  } else if (runtimeRaw) {
+    try {
+      runtimeContext = parseRuntimeContext(JSON.parse(runtimeRaw));
+    } catch {
+      runtimeContext = undefined;
+    }
+  }
   return {
     indent,
     typeAnnotations: ["off", "functions", "useful"].includes(typeAnnotations) ? typeAnnotations : "useful",
@@ -116,5 +131,6 @@ export function parseQueryOptions(query: URLSearchParams): DecompileOptions {
     earlyReturn: query.get("early_return") !== "false",
     interpolatedStrings: query.get("interpolated_strings") !== "false",
     mathConstants: query.get("math_constants") !== "false",
+    runtimeContext,
   };
 }

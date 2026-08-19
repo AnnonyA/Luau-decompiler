@@ -10,6 +10,7 @@ import type {
   TableField,
 } from "./Ast.js";
 import {
+  callbackParamType,
   callbackParamsFor,
   eventCallbackName,
   MATH_CONSTANTS,
@@ -42,6 +43,7 @@ function transformBlock(body: Block, options: CleanupOptions): Block {
   // new `if` body that would otherwise skip the compound-assign rewrite.
   statements = foldCompoundAssigns(statements);
   statements = invertContinueIfs(statements);
+  statements = flattenElseIf(statements);
   const withIfExpr = options.ifExpressions ? recoverIfExpressions(statements) : statements;
   const withReturnIf = options.ifExpressions ? recoverReturnIfExpressions(withIfExpr) : withIfExpr;
   const withReturns = options.earlyReturn ? recoverEarlyReturns(withReturnIf) : withReturnIf;
@@ -888,7 +890,7 @@ function remapCallbackParams(
     if (!suggested || suggested === "..." || !isValidIdentifier(suggested)) {
       return param;
     }
-    if (param.startsWith("arg") || param === "value" || param === "self" || /^value\d+$/.test(param)) {
+    if (isGenericCallbackParam(param)) {
       return suggested;
     }
     return param;
@@ -900,11 +902,22 @@ function remapCallbackParams(
       rename.set(old, next);
     }
   });
-  const paramTypes =
-    options.typeAnnotations === "off"
-      ? undefined
-      : mapped.map((name) => (name === "player" ? "Player" : name === "character" ? "Model" : name === "cframe" ? "CFrame" : undefined));
+  const types = options.typeAnnotations === "off" ? undefined : mapped.map((name) => callbackParamType(name));
+  const paramTypes = types?.some((type) => type) ? types : undefined;
   return { params: mapped, paramTypes, body: rename.size > 0 ? renameIdentifiers(body, rename) : body };
+}
+
+function isGenericCallbackParam(param: string): boolean {
+  return (
+    param.startsWith("arg") ||
+    param === "value" ||
+    param === "self" ||
+    param === "index" ||
+    param === "count" ||
+    param === "gameProcessed" ||
+    /^value\d+$/.test(param) ||
+    /^index\d+$/.test(param)
+  );
 }
 
 function allocateName(preferred: string, used: Set<string>): string {
@@ -1530,12 +1543,16 @@ function sameTarget(left: Expression | undefined, right: Expression | undefined)
 function recoverEarlyReturns(statements: Statement[]): Statement[] {
   const out: Statement[] = [];
   for (const statement of statements) {
-    if (statement.kind !== "if" || statement.branches.length > 0 || statement.alternate) {
-      out.push(statement);
-      continue;
-    }
-    if (statement.consequent.statements.length === 1 && statement.consequent.statements[0]?.kind === "return") {
-      out.push(statement);
+    // `if cond then return x else <body> end` → guard + body at this level.
+    if (
+      statement.kind === "if" &&
+      statement.branches.length === 0 &&
+      statement.alternate &&
+      statement.consequent.statements.length === 1 &&
+      statement.consequent.statements[0]?.kind === "return"
+    ) {
+      out.push({ ...statement, alternate: undefined });
+      out.push(...statement.alternate.statements);
       continue;
     }
     out.push(statement);
@@ -1644,7 +1661,7 @@ function renameFunctionParams(fn: FunctionExpression, names: string[], options: 
     if (!suggested || suggested === "..." || !isValidIdentifier(suggested)) {
       return param;
     }
-    if (param.startsWith("arg") || param === "value" || param === "self") {
+    if (isGenericCallbackParam(param) || param === "self") {
       return suggested;
     }
     return param;
@@ -1657,10 +1674,8 @@ function renameFunctionParams(fn: FunctionExpression, names: string[], options: 
     }
   });
   const body = renameIdentifiers(fn.body, rename);
-  const paramTypes =
-    options.typeAnnotations === "off"
-      ? undefined
-      : mapped.map((name) => (name === "player" ? "Player" : name === "character" ? "Model" : undefined));
+  const types = options.typeAnnotations === "off" ? undefined : mapped.map((name) => callbackParamType(name));
+  const paramTypes = types?.some((type) => type) ? types : undefined;
   return { ...fn, params: mapped, paramTypes, body: transformBlock(body, options) };
 }
 

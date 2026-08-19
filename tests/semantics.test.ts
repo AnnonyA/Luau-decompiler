@@ -121,6 +121,60 @@ describe("semantic reconstruction", () => {
     expect(printLuau(ast)).toContain("math.pi");
   });
 
+  it("types InputBegan callbacks as InputObject + boolean", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "expression-stmt",
+          expression: {
+            kind: "method-call",
+            object: { kind: "property", object: ident("UserInputService"), name: "InputBegan" },
+            name: "Connect",
+            args: [
+              {
+                kind: "function-expr",
+                params: ["value", "index"],
+                isVararg: false,
+                body: {
+                  kind: "block",
+                  statements: [
+                    {
+                      kind: "if",
+                      test: ident("index"),
+                      consequent: { kind: "block", statements: [{ kind: "return", values: [] }] },
+                      branches: [],
+                    },
+                    {
+                      kind: "expression-stmt",
+                      expression: {
+                        kind: "call",
+                        callee: ident("print"),
+                        args: [ident("value")],
+                        open: false,
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            open: false,
+          },
+        },
+      ]),
+      {
+        typeAnnotations: "useful",
+        ifExpressions: false,
+        earlyReturn: false,
+        interpolatedStrings: false,
+        mathConstants: false,
+      },
+    );
+    const source = printLuau(ast);
+    expect(source).toMatch(/function\(input: InputObject, gameProcessedEvent: boolean\)/);
+    expect(source).toMatch(/if gameProcessedEvent then/);
+    expect(source).toMatch(/print\(input\)/);
+  });
+
   it("names Connect callbacks from PlayerAdded", () => {
     const ast = cleanupAst(
       chunk([
@@ -327,6 +381,34 @@ describe("semantic reconstruction", () => {
     // Indexed writes re-evaluate the key; keep the long form.
     expect(source).toContain("items[i] = items[i] + 1");
     expect(source).not.toContain("items[i] +=");
+  });
+
+  it("renames the returned module from runtime context", () => {
+    const bytecode = compile(
+      proto({
+        constants: strings("Enabled"),
+        instructions: [
+          abc(Opcode.NEWTABLE, 0, 0, 0),
+          0,
+          abc(Opcode.LOADB, 1, 1, 0),
+          abc(Opcode.SETTABLEKS, 1, 0, 0),
+          0,
+          abc(Opcode.RETURN, 0, 2, 0),
+        ],
+        locals: [{ name: "module", startPc: 1, endPc: 6, register: 0 }],
+      }),
+    );
+    const result = decompile(bytecode, { runtimeContext: { moduleName: "AdditionModule" } });
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.source).toMatch(/local AdditionModule/);
+      expect(result.source).not.toMatch(/\bmodule\b/);
+    }
+    const disabled = decompile(bytecode, { runtimeContext: false });
+    expect(disabled.ok).toBe(true);
+    if (disabled.ok) {
+      expect(disabled.source).toMatch(/local (module|config)/);
+    }
   });
 
   it("stays deterministic with the new cleanup pipeline", () => {

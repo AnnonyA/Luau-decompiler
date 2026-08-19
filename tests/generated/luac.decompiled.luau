@@ -136,13 +136,14 @@ end
 local function nestedGuard(value25, index7, count6)
     if not value25 then
         return nil
-    elseif not index7 then
-        return nil
-    elseif not count6 then
-        return nil
-    else
-        return value25, index7, count6
     end
+    if not index7 then
+        return nil
+    end
+    if not count6 then
+        return nil
+    end
+    return value25, index7, count6
 end
 
 local config7 = {}
@@ -412,9 +413,8 @@ local function instancePhiStress(value72)
     if part then
         if result16 then
             return part, result16
-        else
-            return nil, nil
         end
+        return nil, nil
     end
 end
 
@@ -512,21 +512,20 @@ local tweenStress
 tweenStress = function(value82, index17)
     if not value82:IsA("GuiObject") then
         return nil
-    else
-        local config35 = { BackgroundTransparency = index17, Position = UDim2.fromScale(0.5, 0.5) }
-        local value83 = TweenService:Create(value82, value, config35)
-        local function onCompleted(playbackState)
-            callback2 = nil
-            if playbackState == Enum.PlaybackState.Completed then
-                value2 += 1
-            end
-        end
-
-        value83.Completed:Once(onCompleted)
-        callback2 = value83
-        value83:Play()
-        return value83
     end
+    local config35 = { BackgroundTransparency = index17, Position = UDim2.fromScale(0.5, 0.5) }
+    local value83 = TweenService:Create(value82, value, config35)
+    local function onCompleted(playbackState: Enum.PlaybackState)
+        callback2 = nil
+        if playbackState == Enum.PlaybackState.Completed then
+            value2 += 1
+        end
+    end
+
+    value83.Completed:Once(onCompleted)
+    callback2 = value83
+    value83:Play()
+    return value83
 end
 local connectionStress
 connectionStress = function(value85)
@@ -593,10 +592,9 @@ local function sortingCallbackStress(value93)
     local function compare(value95, index19)
         if value95 == index19 then
             return false
-        else
-            local value96 = index19 < value95
-            return value96
         end
+        local value96 = index19 < value95
+        return value96
     end
 
     table.sort(value94, compare)
