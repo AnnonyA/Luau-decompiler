@@ -140,10 +140,21 @@ export function nameFromMethod(name: string, args: Expression[]): string | undef
   return METHOD_RESULT[name];
 }
 
+export function eventCallbackName(event: string): string {
+  if (event.length === 0) {
+    return "callback";
+  }
+  if (/^On[A-Z]/.test(event) || /^on[A-Z]/.test(event)) {
+    return event[0]!.toLowerCase() + event.slice(1);
+  }
+  return `on${event}`;
+}
+
 export function typeFromExpression(expression: Expression): string | undefined {
   if (expression.kind === "literal") {
     if (expression.value === null) {
-      return "nil";
+      // `local x: nil = nil` is noise; a nil initializer never deserves an annotation.
+      return undefined;
     }
     if (typeof expression.value === "boolean") {
       return "boolean";

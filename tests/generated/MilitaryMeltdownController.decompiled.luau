@@ -48,11 +48,11 @@ end
 local function fadeSoundOut(value6)
     local config = { Volume = 0 }
     local value7 = TweenService:Create(value6, TweenInfo.new(2), config)
-    local function function_()
+    local function onCompleted()
         value6:Destroy()
     end
 
-    value7.Completed:Once(function_)
+    value7.Completed:Once(onCompleted)
     value7:Play()
 end
 
@@ -76,7 +76,7 @@ local closeSiloDoor
 closeSiloDoor = function(value13)
     local value14 = AnimationController:Play(value13, 127905115426978)
     value14.Priority = Enum.AnimationPriority.Action
-    local function function_2()
+    local function onStopped()
         if value8 then
             value8:Stop(0)
         end
@@ -86,7 +86,7 @@ closeSiloDoor = function(value13)
         value8 = value15
     end
 
-    value14.Stopped:Once(function_2)
+    value14.Stopped:Once(onStopped)
 end
 local playIntroCutscene
 playIntroCutscene = function()
@@ -130,8 +130,8 @@ playIntroCutscene = function()
     local value23 = AnimationController:Load(clone2.AnimationController.Animator, 89400215976354)
     local currentCamera = workspace.CurrentCamera
     local config5 = {}
-    local function_3
-    function_3 = function()
+    local onPreAnimation2
+    onPreAnimation2 = function()
         local timePosition = value23.TimePosition
         if value23.IsPlaying and value24 < timePosition then
             value24 = timePosition
@@ -142,7 +142,7 @@ playIntroCutscene = function()
             currentCamera.CFrame = value25
         end
     end
-    table.insert(config5, RunService.PreAnimation:Connect(function_3))
+    table.insert(config5, RunService.PreAnimation:Connect(onPreAnimation2))
     local children: {Instance} = Lighting:GetChildren()
     for _, value26 in children do
         value26.Parent = nil
@@ -210,15 +210,15 @@ playIntroCutscene = function()
             value34:Play()
             local config9 = { BackgroundTransparency = 1 }
             TweenService:Create(value19, TweenInfo.new(0.5), config9):Play()
-            local function function_4()
+            local function delayed()
                 value31:Play()
             end
 
-            task.delay(0.6, function_4)
+            task.delay(0.6, delayed)
             ForgeVFX.emit(clone.CutsceneCamwork1)
-            local result4: nil = nil
-            local function_5
-            function_5 = function()
+            local result4 = nil
+            local onPreAnimation
+            onPreAnimation = function()
                 if not value36 and value34.TimePosition >= 4.833 then
                     value36 = true
                     ForgeVFX.emit(clone.EnabledBarrelSmoke)
@@ -237,7 +237,7 @@ playIntroCutscene = function()
                     end
                 end
             end
-            table.insert(config5, RunService.PreAnimation:Connect(function_5))
+            table.insert(config5, RunService.PreAnimation:Connect(onPreAnimation))
             value34.Completed:Wait()
             if not result4 then
                 local config11 = { BackgroundTransparency = 0 }
@@ -290,7 +290,7 @@ playIntroCutscene = function()
             value18:Destroy()
             local value46 = AnimationController:Play(animator, 127905115426978)
             value46.Priority = Enum.AnimationPriority.Action
-            local function function_6()
+            local function onStopped()
                 if value8 then
                     value8:Stop(0)
                 end
@@ -300,21 +300,21 @@ playIntroCutscene = function()
                 value8 = value47
             end
 
-            value46.Stopped:Once(function_6)
+            value46.Stopped:Once(onStopped)
         end
     end
 end
 local shakeOnImpact
 shakeOnImpact = function()
     if not value48 then
-        local function function_7(value49)
+        local function onShake(value49)
             local currentCamera2 = workspace.CurrentCamera
             if currentCamera2 then
-                currentCamera2.CFrame = currentCamera2.CFrame * value49
+                currentCamera2.CFrame *= value49
             end
         end
 
-        local value50 = CameraShaker.new(Enum.RenderPriority.Camera.Value + 1, function_7)
+        local value50 = CameraShaker.new(Enum.RenderPriority.Camera.Value + 1, onShake)
         value50:Start()
         value48 = value50
     end
@@ -370,7 +370,7 @@ local function riseNukeFromSilo(value55)
                 end
             end
         else
-            value56.Size = value56.Size * value57
+            value56.Size *= value57
             result6 = value56.Size.Y
             value56.CanQuery = false
             value56.CanTouch = false
@@ -398,7 +398,7 @@ local function riseNukeFromSilo(value55)
                 value56:Destroy()
                 return
             else
-                local function function_8()
+                local function spawned()
                     local value63 = position + vector.create(0, 1, 0) * value55.RiseHeight
                     local result7 = value63
                     local value64 = os.clock()
@@ -419,7 +419,7 @@ local function riseNukeFromSilo(value55)
                     value56:Destroy()
                 end
 
-                task.spawn(function_8)
+                task.spawn(spawned)
             end
         end
     end
@@ -433,7 +433,7 @@ playSiloLaunch = function(value68)
     local animator2 = SiloDoor.AnimationController.Animator
     local value69 = AnimationController:Play(animator2, 133831286058861)
     value69.Priority = Enum.AnimationPriority.Action
-    local function function_9()
+    local function onStopped2()
         if value8 then
             value8:Stop(0)
         end
@@ -443,7 +443,7 @@ playSiloLaunch = function(value68)
         value8 = value70
     end
 
-    value69.Stopped:Once(function_9)
+    value69.Stopped:Once(onStopped2)
     if value68.TargetUserId == player.UserId and value68.FlightTime then
         task.delay(value68.LaunchTime + value68.RiseTime + value68.FlightTime, shakeOnImpact)
     end
@@ -453,7 +453,7 @@ playSiloLaunch = function(value68)
         local config16 = { Color = Color3.new(1, 0.518958, 0.258824) }
         TweenService:Create(part, TweenInfo.new(value68.LaunchTime, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out), config16):Play()
     end
-    local function function_10()
+    local function delayed2()
         ForgeVFX.emit(SiloLaunchVFX)
         if part and result8 then
             local config17 = { Color = result8 }
@@ -465,7 +465,7 @@ playSiloLaunch = function(value68)
         end
         local value71 = AnimationController:Play(animator2, 127905115426978)
         value71.Priority = Enum.AnimationPriority.Action
-        local function function_11()
+        local function onStopped()
             if value8 then
                 value8:Stop(0)
             end
@@ -475,15 +475,15 @@ playSiloLaunch = function(value68)
             value8 = value72
         end
 
-        value71.Stopped:Once(function_11)
+        value71.Stopped:Once(onStopped)
     end
 
-    task.delay(value68.LaunchTime, function_10)
+    task.delay(value68.LaunchTime, delayed2)
 end
 local Start
 Start = function(value75)
-    local function_12
-    function_12 = function()
+    local onClientEvent2
+    onClientEvent2 = function()
         if value73 then
             return
         else
@@ -496,15 +496,15 @@ Start = function(value75)
             Players.LocalPlayer:SetAttribute("MeltdownCutsceneActive", false)
         end
     end
-    Remotes.MeltdownCutscene.OnClientEvent:Connect(function_12)
-    local function_13
-    function_13 = function()
+    Remotes.MeltdownCutscene.OnClientEvent:Connect(onClientEvent2)
+    local onClientEvent
+    onClientEvent = function()
         value74 = false
         setGameMusicSuppressed(false)
     end
-    Remotes.MeltdownEnded.OnClientEvent:Connect(function_13)
-    function_13 = playSiloLaunch
-    Remotes.MeltdownSiloLaunch.OnClientEvent:Connect(function_13)
+    Remotes.MeltdownEnded.OnClientEvent:Connect(onClientEvent)
+    onClientEvent = playSiloLaunch
+    Remotes.MeltdownSiloLaunch.OnClientEvent:Connect(onClientEvent)
 end
 local module = { Start = Start }
 return module

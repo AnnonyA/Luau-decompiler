@@ -17,9 +17,12 @@ export interface Block {
   statements: Statement[];
 }
 
+export type CompoundOperator = "+" | "-" | "*" | "/" | "%" | "..";
+
 export type Statement =
   | LocalDeclaration
   | Assignment
+  | CompoundAssignment
   | FunctionDeclaration
   | IfStatement
   | WhileStatement
@@ -43,6 +46,13 @@ export interface Assignment {
   kind: "assign";
   targets: Expression[];
   values: Expression[];
+}
+
+export interface CompoundAssignment {
+  kind: "compound-assign";
+  target: Expression;
+  op: CompoundOperator;
+  value: Expression;
 }
 
 export interface FunctionDeclaration {

@@ -63,6 +63,10 @@ function visitStatement(statement: Statement, scopes: string[][], loopDepth: num
         visitExpr(value, scopes, failures);
       }
       break;
+    case "compound-assign":
+      visitExpr(statement.target, scopes, failures);
+      visitExpr(statement.value, scopes, failures);
+      break;
     case "function-decl":
       if (statement.local) {
         declare(statement.name, scopes, failures);

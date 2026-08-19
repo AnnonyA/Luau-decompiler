@@ -16,7 +16,7 @@ import { CaptureType, Opcode } from "../decode/Opcode.js";
 import type { BytecodeModule, Prototype } from "../decode/Prototype.js";
 import { buildSsa, type SsaFunction } from "../ssa/SsaBuilder.js";
 import { NameAllocator, debugNameAt, isValidIdentifier } from "./Naming.js";
-import { nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
+import { eventCallbackName, nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
 
 export interface FunctionIr {
   cfg: ControlFlowGraph;
@@ -1270,7 +1270,7 @@ class SourceBuilder {
         liftedStatements.push(lifted);
       }
     }
-    const literalFields = fields.filter((field) => !liftedFields.has(field));
+    const literalFields = dropScaffoldNilFields(fields.filter((field) => !liftedFields.has(field)));
     const statements: Statement[] = [{ kind: "local", names: [name], values: [{ kind: "table", fields: normalizeArrayFields(literalFields) }] }];
     for (const selfRef of pending.selfRefs) {
       const target: Expression = selfRef.name
@@ -1297,7 +1297,7 @@ class SourceBuilder {
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       }
     }
-    return { kind: "table", fields: normalizeArrayFields(fields) };
+    return { kind: "table", fields: normalizeArrayFields(dropScaffoldNilFields(fields)) };
   }
 
   private tableName(pending: PendingTable): string {
@@ -1310,15 +1310,20 @@ class SourceBuilder {
     if (!fieldName || !isValidIdentifier(fieldName)) {
       return undefined;
     }
+    // A pinned local is a real binding (and may be captured later). Keep
+    // `table.field = name` so we do not clone the body.
+    if (this.env.get(insn.a)?.pinned) {
+      return undefined;
+    }
     const record = this.closureFields.get(this.env.get(insn.a)?.name ?? "");
     if (!record || record.fieldName !== fieldName) {
       return undefined;
     }
     const fn = record.fn;
-    if (fn.kind !== "function-expr" || fn.params.length === 0) {
+    if (fn.kind !== "function-expr") {
       return undefined;
     }
-    const receiver = firstParamIsReceiver(fn);
+    const receiver = fn.params.length > 0 && firstParamIsReceiver(fn);
     const tableText = objectText(object);
     if (!tableText) {
       return undefined;
@@ -1336,18 +1341,23 @@ class SourceBuilder {
   }
 
   private tryLiftMethod(field: TableField, tableName: string): Statement | undefined {
-    if (!field.name || field.value.kind !== "identifier") {
+    if (!field.name) {
       return undefined;
     }
-    const record = this.closureFields.get(field.value.name);
-    if (!record || record.fieldName !== field.name) {
+    let fn: Expression | undefined;
+    if (field.value.kind === "identifier") {
+      const record = this.closureFields.get(field.value.name);
+      if (!record || record.fieldName !== field.name) {
+        return undefined;
+      }
+      fn = record.fn;
+    } else if (field.value.kind === "function-expr") {
+      fn = field.value;
+    }
+    if (!fn || fn.kind !== "function-expr") {
       return undefined;
     }
-    const fn = record.fn;
-    if (fn.kind !== "function-expr" || fn.params.length === 0) {
-      return undefined;
-    }
-    const receiver = firstParamIsReceiver(fn);
+    const receiver = fn.params.length > 0 && firstParamIsReceiver(fn);
     const params = receiver ? fn.params.slice(1) : fn.params;
     const body = receiver ? renameIdentifiers(fn.body, new Map([[fn.params[0]!, "self"]])) : fn.body;
     return {
@@ -1831,8 +1841,9 @@ class SourceBuilder {
     const fieldName = this.nextFieldName(insn);
     const mutable = captures.some((capture) => capture.capture?.type === CaptureType.REF);
     const selfCaptured = captures.some((capture) => capture.capture?.source === insn.a);
-    const preferred = debug ?? fieldName ?? "function";
-    const name = this.allocator.reserve(preferred);
+    const onlyField = Boolean(fieldName) && !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
+    const preferred = debug ?? fieldName ?? this.pendingCallbackHint(insn.a) ?? "function";
+    const name = onlyField ? preferred : this.allocator.reserve(preferred);
 
     // Build the capture bindings for the child.
     const captureMap = new Map<number, CaptureBinding>();
@@ -1895,10 +1906,16 @@ class SourceBuilder {
         { kind: "assign", targets: [ident(name)], values: [fn] },
       ];
     }
-    this.env.set(insn.a, { name, expression: ident(name), pinned: true });
     if (fieldName) {
       this.closureFields.set(name, { fieldName, tableRegister: this.nextFieldTable(insn), fn, params: reconstructed.params, isVararg: child.isVararg });
     }
+    if (onlyField) {
+      // The only use is `table.field = <closure>`; leave the function-expr
+      // unpinned so SETTABLEKS can lift it without a dead local.
+      this.env.set(insn.a, { name, expression: fn, pinned: false });
+      return statements;
+    }
+    this.env.set(insn.a, { name, expression: ident(name), pinned: true });
     return [...statements, { kind: "local", names: [name], values: [fn] }];
   }
 
@@ -1945,6 +1962,81 @@ class SourceBuilder {
 
   private nextFieldTable(insn: DecodedInstruction): number {
     return this.nextFieldWrite(insn)?.b ?? -1;
+  }
+
+  /** True when the closure register is written to exactly one table field and
+   * never read afterwards (so a local binding would be dead). */
+  private onlyUsedAsFieldWrite(insn: DecodedInstruction): boolean {
+    const register = insn.a;
+    let writes = 0;
+    for (const other of this.proto.instructions) {
+      if (other.pc <= insn.pc) {
+        continue;
+      }
+    if (other.opcode === Opcode.NOP) {
+      continue;
+    }
+    if (other.opcode === Opcode.CAPTURE) {
+      // A child that captures this register needs the local to stay.
+      if (other.capture?.source === register || other.uses.includes(register)) {
+        return false;
+      }
+      continue;
+    }
+    if (
+      (other.opcode === Opcode.SETTABLEKS || other.opcode === Opcode.SETUDATAKS) &&
+      other.a === register &&
+      other.b !== register
+    ) {
+      writes += 1;
+      continue;
+    }
+      if (other.defs.includes(register)) {
+        break;
+      }
+      if (other.uses.includes(register)) {
+        return false;
+      }
+    }
+    return writes === 1;
+  }
+
+  /** Name a closure from a pending NAMECALL / known callee sitting in a nearby register. */
+  private pendingCallbackHint(register: number): string | undefined {
+    for (let base = register - 1; base >= Math.max(0, register - 4); base--) {
+      const expr = this.env.get(base)?.expression;
+      if (!expr) {
+        continue;
+      }
+      if (expr.kind === "method-call" && (expr.name === "Connect" || expr.name === "Once")) {
+        return expr.object.kind === "property" ? eventCallbackName(expr.object.name) : "callback";
+      }
+      if (expr.kind === "property") {
+        if (expr.object.kind === "identifier" && expr.object.name === "table" && expr.name === "sort") {
+          return "compare";
+        }
+        if (expr.object.kind === "identifier" && expr.object.name === "coroutine" && expr.name === "create") {
+          return "routine";
+        }
+        if (expr.object.kind === "identifier" && expr.object.name === "task") {
+          if (expr.name === "delay") {
+            return "delayed";
+          }
+          if (expr.name === "spawn") {
+            return "spawned";
+          }
+        }
+      }
+      if (expr.kind === "identifier") {
+        if (expr.name === "xpcall") {
+          return "onError";
+        }
+        if (expr.name === "pcall") {
+          return "protected";
+        }
+      }
+    }
+    return undefined;
   }
 
   private nextFieldWrite(insn: DecodedInstruction): DecodedInstruction | undefined {
@@ -2623,6 +2715,15 @@ function isNilLiteral(expression: Expression | undefined): boolean {
   return expression?.kind === "literal" && expression.value === null;
 }
 
+function dropScaffoldNilFields(fields: TableField[]): TableField[] {
+  return fields.filter((field) => {
+    if (!isNilLiteral(field.value)) {
+      return true;
+    }
+    return !field.name && !field.key;
+  });
+}
+
 function isPackish(expression: Expression): boolean {
   return expression.kind === "call" || expression.kind === "method-call" || expression.kind === "vararg";
 }
@@ -3016,6 +3117,8 @@ function renameIdentifiers(body: Block, rename: Map<string, string>): Block {
         return { ...statement, values: statement.values.map(walkExpr) };
       case "assign":
         return { ...statement, targets: statement.targets.map(walkExpr), values: statement.values.map(walkExpr) };
+      case "compound-assign":
+        return { ...statement, target: walkExpr(statement.target), value: walkExpr(statement.value) };
       case "expression-stmt":
         return { ...statement, expression: walkExpr(statement.expression) };
       case "return":

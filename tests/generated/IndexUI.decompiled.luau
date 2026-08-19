@@ -22,11 +22,11 @@ local config2 = { total = 0, folder = Nukes, entries = config, discovered = {} }
 local config3 = {}
 local config4 = { total = 0, folder = Commanders, entries = config3, discovered = {} }
 local config5 = {}
-local config6 = { total = 0, folder = nil, entries = config5, discovered = {} }
+local config6 = { total = 0, entries = config5, discovered = {} }
 local config7 = {}
-local config8 = { total = 0, folder = nil, entries = config7, discovered = {} }
+local config8 = { total = 0, entries = config7, discovered = {} }
 local config9 = {}
-local config10 = { total = 0, folder = nil, entries = config9, discovered = {} }
+local config10 = { total = 0, entries = config9, discovered = {} }
 config10 = "Nukes"
 config9 = false
 local value3: boolean = false
@@ -109,12 +109,12 @@ local function getNukeIds()
             table.insert(config12, value6)
         end
     end
-    local function function_(value7, index)
+    local function compare(value7, index)
         local value8 = value7 < index
         return value8
     end
 
-    table.sort(config12, function_)
+    table.sort(config12, compare)
     return config12
 end
 
@@ -123,7 +123,7 @@ local function getCommanderIds()
     for key, _ in CommanderData do
         table.insert(config13, key)
     end
-    local function function_2(value9, index2)
+    local function compare2(value9, index2)
         local rarity = CommanderData[value9].Rarity
         local rarity2 = CommanderData[index2].Rarity
         local result = rarity and rarity.Order or 0
@@ -137,7 +137,7 @@ local function getCommanderIds()
         end
     end
 
-    table.sort(config13, function_2)
+    table.sort(config13, compare2)
     return config13
 end
 
@@ -151,7 +151,7 @@ local function getExplosionVFXIds()
             table.insert(config14, key2)
         end
     end
-    local function function_3(value12, index3)
+    local function compare3(value12, index3)
         local rarity3 = ExplosionVFXData.List[value12].Rarity
         local rarity4 = ExplosionVFXData.List[index3].Rarity
         local result3 = rarity3 and rarity3.Order or 0
@@ -165,7 +165,7 @@ local function getExplosionVFXIds()
         end
     end
 
-    table.sort(config14, function_3)
+    table.sort(config14, compare3)
     return config14
 end
 
@@ -174,7 +174,7 @@ local function getMutationIds()
     for key3 in MutationData do
         table.insert(config15, key3)
     end
-    local function function_4(value14, index4)
+    local function compare4(value14, index4)
         local value15 = ExplosionVFXData.Rarities[MutationData[value14].Rarity]
         local value16 = ExplosionVFXData.Rarities[MutationData[index4].Rarity]
         local result5 = value15 and value15.Order or 0
@@ -188,7 +188,7 @@ local function getMutationIds()
         end
     end
 
-    table.sort(config15, function_4)
+    table.sort(config15, compare4)
     return config15
 end
 
@@ -197,7 +197,7 @@ local function getBaseSkinIds()
     for key4 in BaseSkinData.Skins do
         table.insert(config16, key4)
     end
-    local function function_5(value18, index5)
+    local function compare5(value18, index5)
         local order = BaseSkinData.Skins[value18].Rarity.Order
         local order2 = BaseSkinData.Skins[index5].Rarity.Order
         if order ~= order2 then
@@ -209,7 +209,7 @@ local function getBaseSkinIds()
         end
     end
 
-    table.sort(config16, function_5)
+    table.sort(config16, compare5)
     return config16
 end
 
@@ -252,7 +252,7 @@ refreshCounter = function()
         local value25: number = 0
         for _ in Discovered.entries do
             if Discovered.discovered[_] then
-                value25 = value25 + 1
+                value25 += 1
             end
         end
     end
@@ -261,7 +261,6 @@ local refreshVisibility
 refreshVisibility = function()
     for key5 in config11[config10].entries do
         local value26 = config11[config10].entries[key5]
-        local result7
         if not value26 then
             continue
         else
@@ -310,8 +309,8 @@ local function visibleFrame(value27)
                 end
             end
             local value34 = math.max(size.X * size.Y * size.Z, 0.001)
-            value30 = value30 + value32.Position * value34
-            value31 = value31 + value34
+            value30 += value32.Position * value34
+            value31 += value34
         end
     end
 end
@@ -325,17 +324,17 @@ local function loopAnimation(value35, index11)
             if typeof(index11) == "string" then
                 value36.AnimationId = index11
             else
-                local function function_6()
+                local function protected()
                     value36.AnimationContent = index11
                 end
 
-                pcall(function_6)
+                pcall(protected)
             end
-            local function function_7()
+            local function protected2()
                 return value35:LoadAnimation(value36)
             end
 
-            local result12, value37 = pcall(function_7)
+            local result12, value37 = pcall(protected2)
             if result12 then
                 if not value37 then
                     return false
@@ -375,8 +374,8 @@ ensureBobbingLoop = function()
     if value39 then
         return
     else
-        local function_8
-        function_8 = function()
+        local onRenderStepped
+        onRenderStepped = function()
             local result13 = IndexFrame.Visible
             if result13 then
                 result13 = config10
@@ -393,13 +392,12 @@ ensureBobbingLoop = function()
                             continue
                         else
                             config17[_] = nil
-                            local _: nil = nil
                         end
                     end
                 end
             end
         end
-        local connection: RBXScriptConnection = RunService.RenderStepped:Connect(function_8)
+        local connection: RBXScriptConnection = RunService.RenderStepped:Connect(onRenderStepped)
         value39 = connection
     end
 end
@@ -418,7 +416,7 @@ startCommanderAnimation = function(value44, index13, count)
                 if value39 then
                     return
                 else
-                    local function function_9()
+                    local function onRenderStepped()
                         local result14 = IndexFrame.Visible
                         if result14 then
                             result14 = config10
@@ -435,14 +433,13 @@ startCommanderAnimation = function(value44, index13, count)
                                         continue
                                     else
                                         config17[_] = nil
-                                        local _: nil = nil
                                     end
                                 end
                             end
                         end
                     end
 
-                    value39 = RunService.RenderStepped:Connect(function_9)
+                    value39 = RunService.RenderStepped:Connect(onRenderStepped)
                 end
             end
         end
@@ -455,9 +452,6 @@ local function populateViewport(value50, index14, count2, options, arg4)
     else
         for _, _ in value50:GetChildren() do
             local result16: string = "BasePart"
-            local result17
-            local result18
-            local result19
             if not _:IsA(result16) then
                 result16 = "Model"
                 if not _:IsA(result16) then
@@ -474,85 +468,9 @@ local function populateViewport(value50, index14, count2, options, arg4)
     end
 end
 
-function module:PopulateViewport(index14, count2, options, arg4)
-    local result15 = count2 or index14:FindFirstChild(count2)
-    if not result15 then
-        return
-    else
-        for _, _ in self:GetChildren() do
-            local result16: string = "BasePart"
-            local result17
-            local result18
-            local result19
-            if not _:IsA(result16) then
-                result16 = "Model"
-                if not _:IsA(result16) then
-                    result16 = "WorldModel"
-                    if not _:IsA(result16) then
-                        result16 = "Camera"
-                        if _:IsA(result16) then
-                            _:Destroy()
-                        end
-                    end
-                end
-            end
-        end
-    end
-end
-
-function module:SetupCommanderAnimation(index12)
-    if not index12 then
-        return
-    else
-        local mount: Instance = self:FindFirstChild("Mount")
-        local result13 = mount
-        if result13 then
-            result13 = mount:FindFirstChildWhichIsA("Animator", true)
-        end
-        loopAnimation(result13, index12.ClaimableMountIdleAnimation)
-        local child4 = (self:FindFirstChild("Commander") or self):FindFirstChildWhichIsA("Animator", true)
-        result13 = index12.ClaimableCommanderIdleAnimation
-        if not result13 then
-            result13 = index12.HelicopterIdleAnimation
-        end
-        loopAnimation(child4, result13)
-    end
-end
-
-function module.LoopAnimation(value35, index11)
-    if value35 then
-        if not index11 then
-            return false
-        else
-            local value36: Animation = Instance.new("Animation")
-            if typeof(index11) == "string" then
-                value36.AnimationId = index11
-            else
-                local function function_6()
-                    value36.AnimationContent = index11
-                end
-
-                pcall(function_6)
-            end
-            local function function_7()
-                return value35:LoadAnimation(value36)
-            end
-
-            local result12, value37 = pcall(function_7)
-            if result12 then
-                if not value37 then
-                    return false
-                else
-                    value37.Looped = true
-                    value37.Priority = Enum.AnimationPriority.Action
-                    value37:Play(0)
-                    return true
-                end
-            end
-        end
-    end
-end
-
+module.PopulateViewport = populateViewport
+module.SetupCommanderAnimation = setupCommanderAnimation
+module.LoopAnimation = loopAnimation
 local function refreshCommanderTooltip(value51)
     local value52 = config11.Commanders.entries[value51]
     if not value52 then
@@ -1001,7 +919,7 @@ buildCategory = function(value84, index21, count3, options2)
             end
         end
         local viewportFrame2: Instance = clone3:FindFirstChild("ViewportFrame")
-        local result33: nil = nil
+        local result33 = nil
         if viewportFrame2 then
             if value84 == "Commanders" then
                 result33 = value86.ViewportTemplateInstance
@@ -1090,19 +1008,12 @@ buildExplosionCategory = function()
         result34 = config11
         result34 = result34.ExplosionVFXs
         result34 = result34.entries
-        local config19 = {
-            commanderData = nil,
-            animated = false,
-            frame = clone4,
-            viewport = icon,
-            label = textLabel6,
-        }
+        local config19 = { animated = false, frame = clone4, viewport = icon, label = textLabel6 }
         result34[value89] = config19
     end
     for key9 in config11.ExplosionVFXs.discovered do
         icon = config11
         value90 = icon.ExplosionVFXs.entries[key9]
-        local result35
         if not value90 then
             continue
         else
@@ -1166,13 +1077,7 @@ buildMutationCategory = function()
         result37 = config11
         result37 = result37.Mutations
         result37 = result37.entries
-        local config20 = {
-            commanderData = nil,
-            animated = false,
-            frame = clone5,
-            viewport = child6,
-            label = textLabel7,
-        }
+        local config20 = { animated = false, frame = clone5, viewport = child6, label = textLabel7 }
         result37[value94] = config20
         result37 = config11.Mutations.entries[value94]
         if not result37 then
@@ -1192,7 +1097,6 @@ buildMutationCategory = function()
     for key11 in config11.Mutations.discovered do
         local clone5 = config11
         local value95 = clone5.Mutations.entries[key11]
-        local result38
         if not value95 then
             continue
         else
@@ -1290,13 +1194,7 @@ buildBaseSkinCategory = function()
         result39 = config11
         result39 = result39.BaseSkins
         result39 = result39.entries
-        local config21 = {
-            commanderData = nil,
-            animated = false,
-            frame = clone6,
-            viewport = result39,
-            label = textLabel8,
-        }
+        local config21 = { animated = false, frame = clone6, viewport = result39, label = textLabel8 }
         result39[value102] = config21
     end
     for key13 in config11.BaseSkins.discovered do
@@ -1373,8 +1271,7 @@ buildAll = function()
         refreshCounter()
     end
 end
-local Start
-Start = function()
+function module.Start()
     buildAll()
     CommanderRarityFlags.onChanged(refreshCommanderRarities)
     local Nukes2: Instance = Tabs:WaitForChild("Nukes")
@@ -1389,40 +1286,39 @@ Start = function()
     local TextButton5: Instance = Mutations:WaitForChild("TextButton")
     value82 = Mutations:FindFirstChild("unlocks")
     value83 = Mutations:FindFirstChild("TextLabel")
-    local function function_10()
+    local function onActivated5()
         switchTab("Nukes")
     end
 
-    TextButton.Activated:Connect(function_10)
-    local function function_11()
+    TextButton.Activated:Connect(onActivated5)
+    local function onActivated()
         switchTab("Commanders")
     end
 
-    TextButton2.Activated:Connect(function_11)
-    local function function_12()
+    TextButton2.Activated:Connect(onActivated)
+    local function onActivated2()
         switchTab("ExplosionVFXs")
     end
 
-    TextButton3.Activated:Connect(function_12)
-    local function function_13()
+    TextButton3.Activated:Connect(onActivated2)
+    local function onActivated3()
         switchTab("Mutations")
     end
 
-    TextButton5.Activated:Connect(function_13)
-    local function function_14()
+    TextButton5.Activated:Connect(onActivated3)
+    local function onActivated4()
         switchTab("BaseSkins")
     end
 
-    TextButton4.Activated:Connect(function_14)
+    TextButton4.Activated:Connect(onActivated4)
     local Left: Instance = ScreenGui:WaitForChild("Left")
     local SquareBtns: Instance = Left:WaitForChild("SquareBtns")
     local Index: Instance = SquareBtns:WaitForChild("Index")
-    local function_15
-    function_15 = function()
+    local onActivated6
+    onActivated6 = function()
         FramesManager.Toggle("IndexFrame")
         for key15 in config11[config10].entries do
             local value111 = config11[config10].entries[key15]
-            local result41
             if not value111 then
                 continue
             else
@@ -1436,7 +1332,7 @@ Start = function()
         end
         refreshCounter()
     end
-    Index.Activated:Connect(function_15)
+    Index.Activated:Connect(onActivated6)
     local value112 = DataController:Get()
     local config22 = { "discoveredTiers" }
     value112:ObserveKeys(config22, onDiscoveredNuke)
@@ -1448,7 +1344,7 @@ Start = function()
     value112:ObserveKeys(config25, onDiscoveredExplosionVFX)
     local config26 = { "BaseSkins", "Owned" }
     value112:ObserveKeys(config26, onDiscoveredBaseSkin)
-    local function function_16(value113)
+    local function observer(value113)
         local value114 = (tonumber(value113) or 0) >= 3
         value3 = value114
         value114 = value82
@@ -1462,17 +1358,16 @@ Start = function()
     end
 
     local config27 = { "rebirthLevel" }
-    value112:Observe(config27, function_16)
+    value112:Observe(config27, observer)
     config27 = refreshVisibility
     IndexVisibility.Changed:Connect(config27)
-    local function_17
-    function_17 = function()
+    local spawned
+    spawned = function()
         task.wait(30)
         while IndexFrame.Visible do
             if IndexVisibility.hasTimeWindows() then
                 for key16 in config11[config10].entries do
                     local value115 = config11[config10].entries[key16]
-                    local result42
                     if not value115 then
                     else
                         local frame9 = value115.frame
@@ -1486,7 +1381,7 @@ Start = function()
             end
         end
     end
-    task.spawn(function_17)
+    task.spawn(spawned)
 end
-module.Start = Start
+
 return module

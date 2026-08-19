@@ -155,6 +155,111 @@ describe("semantic reconstruction", () => {
     expect(source).toMatch(/return player/);
   });
 
+  it("drops a dead local function after lifting function module.X", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "local",
+          names: ["ControlFlow"],
+          values: [
+            {
+              kind: "function-expr",
+              params: ["seed"],
+              isVararg: false,
+              body: { kind: "block", statements: [{ kind: "return", values: [ident("seed")] }] },
+            },
+          ],
+        },
+        {
+          kind: "function-decl",
+          local: false,
+          name: "module.ControlFlow",
+          params: ["seed"],
+          isVararg: false,
+          body: { kind: "block", statements: [{ kind: "return", values: [ident("seed")] }] },
+        },
+      ]),
+      {
+        typeAnnotations: "off",
+        ifExpressions: false,
+        earlyReturn: false,
+        interpolatedStrings: false,
+        mathConstants: false,
+      },
+    );
+    const source = printLuau(ast);
+    expect(source).toContain("function module.ControlFlow(seed)");
+    expect(source).not.toMatch(/local function ControlFlow/);
+    expect((source.match(/return seed/g) ?? []).length).toBe(1);
+  });
+
+  it("lifts a pure module alias into function module.X", () => {
+    const ast = cleanupAst(
+      chunk([
+        { kind: "local", names: ["BuildMegaTable"], values: [] },
+        {
+          kind: "assign",
+          targets: [ident("BuildMegaTable")],
+          values: [
+            {
+              kind: "function-expr",
+              params: ["seed"],
+              isVararg: false,
+              body: { kind: "block", statements: [{ kind: "return", values: [ident("seed")] }] },
+            },
+          ],
+        },
+        {
+          kind: "assign",
+          targets: [{ kind: "property", object: ident("module"), name: "BuildMegaTable" }],
+          values: [ident("BuildMegaTable")],
+        },
+      ]),
+      {
+        typeAnnotations: "off",
+        ifExpressions: false,
+        earlyReturn: false,
+        interpolatedStrings: false,
+        mathConstants: false,
+      },
+    );
+    const source = printLuau(ast);
+    expect(source).toContain("function module.BuildMegaTable(seed)");
+    expect(source).not.toMatch(/local BuildMegaTable/);
+    expect(source).not.toMatch(/module\.BuildMegaTable = BuildMegaTable/);
+  });
+
+  it("folds identifier and property updates into compound assignments", () => {
+    const ast = cleanupAst(
+      chunk([
+        { kind: "assign", targets: [ident("total")], values: [{ kind: "binary", op: "+", left: ident("total"), right: lit(1) }] },
+        {
+          kind: "assign",
+          targets: [{ kind: "property", object: ident("self"), name: "value" }],
+          values: [{ kind: "binary", op: "*", left: { kind: "property", object: ident("self"), name: "value" }, right: ident("amount") }],
+        },
+        {
+          kind: "assign",
+          targets: [{ kind: "index", table: ident("items"), key: ident("i") }],
+          values: [{ kind: "binary", op: "+", left: { kind: "index", table: ident("items"), key: ident("i") }, right: lit(1) }],
+        },
+      ]),
+      {
+        typeAnnotations: "off",
+        ifExpressions: false,
+        earlyReturn: false,
+        interpolatedStrings: false,
+        mathConstants: false,
+      },
+    );
+    const source = printLuau(ast);
+    expect(source).toContain("total += 1");
+    expect(source).toContain("self.value *= amount");
+    // Indexed writes re-evaluate the key; keep the long form.
+    expect(source).toContain("items[i] = items[i] + 1");
+    expect(source).not.toContain("items[i] +=");
+  });
+
   it("stays deterministic with the new cleanup pipeline", () => {
     const bytecode = compile(
       proto({

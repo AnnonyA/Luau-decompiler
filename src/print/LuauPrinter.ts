@@ -86,6 +86,9 @@ class Printer {
             .join(", ")}`,
         );
         break;
+      case "compound-assign":
+        this.write(`${this.expr(statement.target)} ${statement.op}= ${this.expr(statement.value)}`);
+        break;
       case "function-decl": {
         const header = `${statement.local ? "local function " : "function "}${statement.name}(${formatParams(
           statement.params,

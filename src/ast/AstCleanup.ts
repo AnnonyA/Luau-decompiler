@@ -1,7 +1,24 @@
 import { block } from "./Ast.js";
-import type { BinaryOperator, Block, Chunk, Expression, FunctionExpression, Statement } from "./Ast.js";
-import { callbackParamsFor, MATH_CONSTANTS, typeFromExpression } from "../reconstruct/RobloxSemantics.js";
+import type {
+  BinaryOperator,
+  Block,
+  Chunk,
+  CompoundOperator,
+  Expression,
+  FunctionExpression,
+  Statement,
+  TableField,
+} from "./Ast.js";
+import {
+  callbackParamsFor,
+  eventCallbackName,
+  MATH_CONSTANTS,
+  typeFromExpression,
+} from "../reconstruct/RobloxSemantics.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
+
+const COMPOUND_OPS = new Set<BinaryOperator>(["+", "-", "*", "/", "%", ".."]);
+const GENERIC_CLOSURE = /^function_?\d*$/;
 
 export interface CleanupOptions {
   typeAnnotations: "off" | "functions" | "useful";
@@ -18,12 +35,37 @@ export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
 
 function transformBlock(body: Block, options: CleanupOptions): Block {
   let statements = flattenElseIf(body.statements).map((statement) => transformStatement(statement, options));
+  // Fold before invertContinueIfs: that pass may wrap later statements into a
+  // new `if` body that would otherwise skip the compound-assign rewrite.
+  statements = foldCompoundAssigns(statements);
   statements = invertContinueIfs(statements);
   const withIfExpr = options.ifExpressions ? recoverIfExpressions(statements) : statements;
   const withReturns = options.earlyReturn ? recoverEarlyReturns(withIfExpr) : withIfExpr;
   const withoutDead = removeUnusedLocals(withReturns);
   const withLocalFunctions = liftLocalFunctions(withoutDead);
-  return { kind: "block", statements: withLocalFunctions };
+  const withExports = liftExportedFunctions(withLocalFunctions);
+  const withNames = renameGenericClosures(withExports);
+  return { kind: "block", statements: withNames };
+}
+
+/** Last identifier of `module.X` / `config:method`. */
+function declarationTail(name: string): string {
+  const parts = name.split(/[.:]/);
+  return parts[parts.length - 1] ?? name;
+}
+
+function isNilLiteral(expression: Expression | undefined): boolean {
+  return expression?.kind === "literal" && expression.value === null;
+}
+
+function dropScaffoldNilFields(fields: TableField[]): TableField[] {
+  return fields.filter((field) => {
+    if (!isNilLiteral(field.value)) {
+      return true;
+    }
+    // Positional array holes can be meaningful; named/keyed nils are DUPTABLE scaffolding.
+    return !field.name && !field.key;
+  });
 }
 
 /** `local name = function(...) body end` becomes `local function name(...)` when
@@ -31,8 +73,8 @@ function transformBlock(body: Block, options: CleanupOptions): Block {
 function liftLocalFunctions(statements: Statement[]): Statement[] {
   const liftedNames = new Set<string>();
   for (const statement of statements) {
-    if (statement.kind === "function-decl") {
-      liftedNames.add(statement.name.slice(statement.name.lastIndexOf(":") + 1));
+    if (statement.kind === "function-decl" && !statement.local) {
+      liftedNames.add(declarationTail(statement.name));
     }
   }
   return statements.map((statement) => {
@@ -91,18 +133,17 @@ function invertContinueIfs(statements: Statement[]): Statement[] {
 }
 
 /** Drop `local x = <fn>` declarations whose name is never referenced again
- * (they are superseded by lifted method declarations). */
+ * (they are superseded by lifted method declarations), and drop `local _ = nil`. */
 function removeUnusedLocals(statements: Statement[]): Statement[] {
   const referenced = new Set<string>();
   const liftedNames = new Set<string>();
   const locals: Array<{ name: string; statement: Statement }> = [];
   for (const statement of statements) {
-    if (statement.kind === "local" && statement.names.length === 1 && statement.values.length === 1) {
+    if (statement.kind === "local" && statement.names.length === 1) {
       locals.push({ name: statement.names[0]!, statement });
     }
-    if (statement.kind === "function-decl") {
-      const tail = statement.name.slice(statement.name.lastIndexOf(":") + 1);
-      liftedNames.add(tail);
+    if (statement.kind === "function-decl" && !statement.local) {
+      liftedNames.add(declarationTail(statement.name));
     }
     collectIdentifiers(statement, (name) => {
       referenced.add(name);
@@ -113,17 +154,731 @@ function removeUnusedLocals(statements: Statement[]): Statement[] {
       return true;
     }
     const name = statement.names[0]!;
+    const value = statement.values[0];
+    // `_` is the unused-binding convention; a nil initializer is dead.
+    if (name === "_" && (statement.values.length === 0 || isNilLiteral(value))) {
+      return false;
+    }
     const local = locals.find((candidate) => candidate.statement === statement);
     if (!local || referenced.has(name)) {
       return true;
     }
-    const value = statement.values[0];
+    if (statement.values.length === 0 || isNilLiteral(value)) {
+      return false;
+    }
     if (!value || value.kind !== "function-expr") {
       return true;
     }
-    // Only drop closure locals superseded by a lifted method declaration.
+    // Drop closure locals superseded by a lifted method/field declaration.
     return !liftedNames.has(name);
   });
+}
+
+function foldCompoundAssigns(statements: Statement[]): Statement[] {
+  return statements.map((statement) => {
+    if (statement.kind !== "assign" || statement.targets.length !== 1 || statement.values.length !== 1) {
+      return statement;
+    }
+    const target = statement.targets[0]!;
+    const value = statement.values[0]!;
+    if (value.kind !== "binary" || !COMPOUND_OPS.has(value.op)) {
+      return statement;
+    }
+    if (!isSafeCompoundTarget(target) || !sameCompoundTarget(target, value.left)) {
+      return statement;
+    }
+    return { kind: "compound-assign", target, op: value.op as CompoundOperator, value: value.right };
+  });
+}
+
+function isSafeCompoundTarget(expression: Expression): boolean {
+  if (expression.kind === "identifier") {
+    return true;
+  }
+  // `obj.field += x` is safe when `obj` is a plain identifier (no re-eval).
+  return expression.kind === "property" && expression.object.kind === "identifier";
+}
+
+function sameCompoundTarget(target: Expression, left: Expression): boolean {
+  if (target.kind === "identifier" && left.kind === "identifier") {
+    return target.name === left.name;
+  }
+  if (target.kind === "property" && left.kind === "property") {
+    return target.name === left.name && sameCompoundTarget(target.object, left.object);
+  }
+  return false;
+}
+
+function asFunctionExpr(statement: Statement): FunctionExpression | undefined {
+  if (statement.kind === "function-decl") {
+    return {
+      kind: "function-expr",
+      params: statement.params,
+      paramTypes: statement.paramTypes,
+      returnType: statement.returnType,
+      isVararg: statement.isVararg,
+      body: statement.body,
+    };
+  }
+  if (statement.kind === "local" && statement.names.length === 1 && statement.values.length === 1) {
+    const value = statement.values[0];
+    return value?.kind === "function-expr" ? value : undefined;
+  }
+  if (statement.kind === "assign" && statement.values.length === 1) {
+    const value = statement.values[0];
+    return value?.kind === "function-expr" ? value : undefined;
+  }
+  return undefined;
+}
+
+/** `local function X(...) ... end; module.X = X` (or `local X; X = function`)
+ * becomes `function module.X(...)` when X is otherwise unused. */
+function liftExportedFunctions(statements: Statement[]): Statement[] {
+  type LocalFn = {
+    name: string;
+    fn: FunctionExpression;
+    declare: Statement;
+    assign?: Statement;
+  };
+  const locals = new Map<string, LocalFn>();
+  for (const statement of statements) {
+    if (statement.kind === "function-decl" && statement.local && !statement.name.includes(".") && !statement.name.includes(":")) {
+      const fn = asFunctionExpr(statement);
+      if (fn) {
+        locals.set(statement.name, { name: statement.name, fn, declare: statement });
+      }
+    } else if (statement.kind === "local" && statement.names.length === 1) {
+      const name = statement.names[0]!;
+      const value = statement.values[0];
+      if (value?.kind === "function-expr") {
+        locals.set(name, { name, fn: value, declare: statement });
+      } else if (statement.values.length === 0) {
+        locals.set(name, { name, fn: { kind: "function-expr", params: [], isVararg: false, body: block() }, declare: statement });
+      }
+    } else if (statement.kind === "assign" && statement.targets.length === 1 && statement.values.length === 1) {
+      const target = statement.targets[0]!;
+      const value = statement.values[0]!;
+      if (target.kind === "identifier" && value.kind === "function-expr") {
+        const existing = locals.get(target.name);
+        if (existing && existing.declare.kind === "local" && existing.declare.values.length === 0) {
+          existing.fn = value;
+          existing.assign = statement;
+        }
+      }
+    }
+  }
+
+  const exports = new Map<string, { statement: Statement; object: Expression; field: string }>();
+  for (const statement of statements) {
+    if (statement.kind !== "assign" || statement.targets.length !== 1 || statement.values.length !== 1) {
+      continue;
+    }
+    const target = statement.targets[0]!;
+    const value = statement.values[0]!;
+    if (target.kind === "property" && target.object.kind === "identifier" && value.kind === "identifier" && locals.has(value.name)) {
+      // Prefer the first export of each local.
+      if (!exports.has(value.name)) {
+        exports.set(value.name, { statement, object: target.object, field: target.name });
+      }
+    }
+  }
+
+  const skip = new Set<Statement>();
+  const replacements = new Map<Statement, Statement>();
+  for (const [name, local] of locals) {
+    const exported = exports.get(name);
+    if (!exported || !isValidIdentifier(exported.field)) {
+      continue;
+    }
+    const ignored = new Set<Statement>([local.declare, exported.statement]);
+    if (local.assign) {
+      ignored.add(local.assign);
+    }
+    if (countNameUses(statements, name, ignored) > 0) {
+      continue;
+    }
+    const receiver = firstParamIsReceiver(local.fn);
+    const table = exported.object.kind === "identifier" ? exported.object.name : undefined;
+    if (!table) {
+      continue;
+    }
+    const lifted: Statement = {
+      kind: "function-decl",
+      local: false,
+      name: `${table}${receiver ? ":" : "."}${exported.field}`,
+      params: receiver ? local.fn.params.slice(1) : local.fn.params,
+      paramTypes: receiver ? local.fn.paramTypes?.slice(1) : local.fn.paramTypes,
+      returnType: local.fn.returnType,
+      isVararg: local.fn.isVararg,
+      body: receiver && local.fn.params[0] ? renameIdentifiers(local.fn.body, new Map([[local.fn.params[0], "self"]])) : local.fn.body,
+    };
+    skip.add(local.declare);
+    if (local.assign) {
+      skip.add(local.assign);
+    }
+    replacements.set(exported.statement, lifted);
+  }
+
+  if (skip.size === 0 && replacements.size === 0) {
+    return statements;
+  }
+  return statements.flatMap((statement) => {
+    if (skip.has(statement)) {
+      return [];
+    }
+    return [replacements.get(statement) ?? statement];
+  });
+}
+
+function countNameUses(statements: Statement[], name: string, ignored: Set<Statement>): number {
+  let count = 0;
+  for (const statement of statements) {
+    if (ignored.has(statement)) {
+      continue;
+    }
+    collectIdentifiers(statement, (candidate) => {
+      if (candidate === name) {
+        count += 1;
+      }
+    });
+  }
+  return count;
+}
+
+function firstParamIsReceiver(fn: FunctionExpression): boolean {
+  const first = fn.params[0];
+  if (!first) {
+    return false;
+  }
+  let receiver = false;
+  for (const statement of fn.body.statements) {
+    walkForReceiver(statement, first, () => {
+      receiver = true;
+    });
+    if (receiver) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function walkForReceiver(statement: Statement, first: string, hit: () => void): void {
+  const visit = (expression: Expression): void => {
+    switch (expression.kind) {
+      case "property":
+        if (expression.object.kind === "identifier" && expression.object.name === first) {
+          hit();
+        }
+        visit(expression.object);
+        break;
+      case "index":
+        if (expression.table.kind === "identifier" && expression.table.name === first) {
+          hit();
+        }
+        visit(expression.table);
+        visit(expression.key);
+        break;
+      case "method-call":
+        if (expression.object.kind === "identifier" && expression.object.name === first) {
+          hit();
+        }
+        visit(expression.object);
+        expression.args.forEach(visit);
+        break;
+      case "call":
+        visit(expression.callee);
+        expression.args.forEach(visit);
+        break;
+      case "binary":
+        visit(expression.left);
+        visit(expression.right);
+        break;
+      case "unary":
+        visit(expression.argument);
+        break;
+      case "table":
+        expression.fields.forEach((field) => {
+          if (field.key) {
+            visit(field.key);
+          }
+          visit(field.value);
+        });
+        break;
+      case "if-expr":
+        visit(expression.test);
+        visit(expression.consequent);
+        expression.branches.forEach((branch) => {
+          visit(branch.test);
+          visit(branch.value);
+        });
+        visit(expression.alternate);
+        break;
+      case "interp":
+        expression.parts.forEach((part) => {
+          if (part.kind === "expr" && typeof part.value !== "string") {
+            visit(part.value);
+          }
+        });
+        break;
+      case "paren":
+        visit(expression.expression);
+        break;
+      default:
+        break;
+    }
+  };
+  const visitStmt = (item: Statement): void => {
+    switch (item.kind) {
+      case "local":
+        item.values.forEach(visit);
+        break;
+      case "assign":
+        item.targets.forEach(visit);
+        item.values.forEach(visit);
+        break;
+      case "compound-assign":
+        visit(item.target);
+        visit(item.value);
+        break;
+      case "expression-stmt":
+        visit(item.expression);
+        break;
+      case "return":
+        item.values.forEach(visit);
+        break;
+      case "if":
+        visit(item.test);
+        item.consequent.statements.forEach(visitStmt);
+        item.branches.forEach((branch) => {
+          visit(branch.test);
+          branch.body.statements.forEach(visitStmt);
+        });
+        item.alternate?.statements.forEach(visitStmt);
+        break;
+      case "while":
+        visit(item.test);
+        item.body.statements.forEach(visitStmt);
+        break;
+      case "repeat":
+        item.body.statements.forEach(visitStmt);
+        visit(item.test);
+        break;
+      case "numeric-for":
+        visit(item.start);
+        visit(item.stop);
+        if (item.step) {
+          visit(item.step);
+        }
+        item.body.statements.forEach(visitStmt);
+        break;
+      case "generic-for":
+        item.iterators.forEach(visit);
+        item.body.statements.forEach(visitStmt);
+        break;
+      case "do":
+        item.body.statements.forEach(visitStmt);
+        break;
+      case "function-decl":
+        item.body.statements.forEach(visitStmt);
+        break;
+      default:
+        break;
+    }
+  };
+  visitStmt(statement);
+}
+
+function renameGenericClosures(statements: Statement[]): Statement[] {
+  const used = new Set<string>();
+  for (const statement of statements) {
+    collectIdentifiers(statement, (name) => used.add(name));
+    if (statement.kind === "local") {
+      statement.names.forEach((name) => used.add(name));
+    }
+    if (statement.kind === "function-decl") {
+      used.add(declarationTail(statement.name));
+    }
+  }
+
+  const bindings = new Map<string, { declare: Statement; assign?: Statement }>();
+  for (const statement of statements) {
+    if (statement.kind === "function-decl" && statement.local && GENERIC_CLOSURE.test(statement.name)) {
+      bindings.set(statement.name, { declare: statement });
+    } else if (statement.kind === "local" && statement.names.length === 1 && GENERIC_CLOSURE.test(statement.names[0]!)) {
+      bindings.set(statement.names[0]!, { declare: statement });
+    } else if (statement.kind === "assign" && statement.targets.length === 1 && statement.values[0]?.kind === "function-expr") {
+      const target = statement.targets[0]!;
+      if (target.kind === "identifier" && GENERIC_CLOSURE.test(target.name)) {
+        const existing = bindings.get(target.name);
+        if (existing) {
+          existing.assign = statement;
+        }
+      }
+    }
+  }
+
+  const rename = new Map<string, string>();
+  for (const [name, binding] of bindings) {
+    if (hasNonFunctionAssignment(statements, name, binding)) {
+      continue;
+    }
+    const role = inferClosureRole(statements, name);
+    if (!role || role === name) {
+      continue;
+    }
+    const next = allocateName(role, used);
+    used.add(next);
+    rename.set(name, next);
+  }
+  if (rename.size === 0) {
+    return statements;
+  }
+  return statements.map((statement) => renameStatementNames(statement, rename));
+}
+
+function hasNonFunctionAssignment(statements: Statement[], name: string, binding: { declare: Statement; assign?: Statement }): boolean {
+  for (const statement of statements) {
+    if (statement === binding.declare || statement === binding.assign) {
+      continue;
+    }
+    if (statement.kind === "assign" && statement.targets.some((target) => target.kind === "identifier" && target.name === name)) {
+      return statement.values.some((value) => value.kind !== "function-expr");
+    }
+    if (statement.kind === "compound-assign" && statement.target.kind === "identifier" && statement.target.name === name) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function inferClosureRole(statements: Statement[], name: string): string | undefined {
+  let role: string | undefined;
+  const consider = (candidate: string | undefined): void => {
+    if (candidate) {
+      role = candidate;
+    }
+  };
+  const visit = (expression: Expression): void => {
+    switch (expression.kind) {
+      case "method-call": {
+        const last = expression.args.at(-1);
+        if (last?.kind === "identifier" && last.name === name) {
+          if (expression.name === "Connect" || expression.name === "Once") {
+            if (expression.object.kind === "property") {
+              consider(eventCallbackName(expression.object.name));
+            } else {
+              consider("callback");
+            }
+          } else if (expression.name === "Observe" || expression.name === "ObserveKeys") {
+            consider("observer");
+          }
+        }
+        visit(expression.object);
+        expression.args.forEach(visit);
+        break;
+      }
+      case "call": {
+        const last = expression.args.at(-1);
+        if (last?.kind === "identifier" && last.name === name) {
+          consider(roleFromCallee(expression.callee, expression.args, name) ?? "callback");
+        }
+        visit(expression.callee);
+        expression.args.forEach(visit);
+        break;
+      }
+      case "unary":
+        visit(expression.argument);
+        break;
+      case "binary":
+        visit(expression.left);
+        visit(expression.right);
+        break;
+      case "index":
+        visit(expression.table);
+        visit(expression.key);
+        break;
+      case "property":
+        visit(expression.object);
+        break;
+      case "table":
+        expression.fields.forEach((field) => {
+          if (field.key) {
+            visit(field.key);
+          }
+          if (field.value.kind === "identifier" && field.value.name === name && field.name) {
+            consider(field.name);
+          }
+          visit(field.value);
+        });
+        break;
+      case "function-expr":
+        break;
+      case "paren":
+        visit(expression.expression);
+        break;
+      case "if-expr":
+        visit(expression.test);
+        visit(expression.consequent);
+        expression.branches.forEach((branch) => {
+          visit(branch.test);
+          visit(branch.value);
+        });
+        visit(expression.alternate);
+        break;
+      case "interp":
+        expression.parts.forEach((part) => {
+          if (part.kind === "expr" && typeof part.value !== "string") {
+            visit(part.value);
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  };
+  const visitStmt = (statement: Statement): void => {
+    switch (statement.kind) {
+      case "local":
+        statement.values.forEach(visit);
+        break;
+      case "assign":
+        if (
+          statement.targets.length === 1 &&
+          statement.values.length === 1 &&
+          statement.targets[0]?.kind === "property" &&
+          statement.values[0]?.kind === "identifier" &&
+          statement.values[0].name === name
+        ) {
+          consider(statement.targets[0].name);
+        }
+        statement.targets.forEach(visit);
+        statement.values.forEach(visit);
+        break;
+      case "compound-assign":
+        visit(statement.target);
+        visit(statement.value);
+        break;
+      case "expression-stmt":
+        visit(statement.expression);
+        break;
+      case "return":
+        statement.values.forEach(visit);
+        break;
+      case "if":
+        visit(statement.test);
+        statement.consequent.statements.forEach(visitStmt);
+        statement.branches.forEach((branch) => {
+          visit(branch.test);
+          branch.body.statements.forEach(visitStmt);
+        });
+        statement.alternate?.statements.forEach(visitStmt);
+        break;
+      case "while":
+        visit(statement.test);
+        statement.body.statements.forEach(visitStmt);
+        break;
+      case "repeat":
+        statement.body.statements.forEach(visitStmt);
+        visit(statement.test);
+        break;
+      case "numeric-for":
+        visit(statement.start);
+        visit(statement.stop);
+        if (statement.step) {
+          visit(statement.step);
+        }
+        statement.body.statements.forEach(visitStmt);
+        break;
+      case "generic-for":
+        statement.iterators.forEach(visit);
+        statement.body.statements.forEach(visitStmt);
+        break;
+      case "do":
+        statement.body.statements.forEach(visitStmt);
+        break;
+      case "function-decl":
+        statement.body.statements.forEach(visitStmt);
+        break;
+      default:
+        break;
+    }
+  };
+  statements.forEach(visitStmt);
+  return role;
+}
+
+function roleFromCallee(callee: Expression, args: Expression[], name: string): string | undefined {
+  if (callee.kind === "property") {
+    if (callee.object.kind === "identifier" && callee.object.name === "table" && callee.name === "sort") {
+      return "compare";
+    }
+    if (callee.object.kind === "identifier" && callee.object.name === "coroutine" && callee.name === "create") {
+      return "routine";
+    }
+    if (callee.object.kind === "identifier" && callee.object.name === "task") {
+      if (callee.name === "delay") {
+        return "delayed";
+      }
+      if (callee.name === "spawn") {
+        return "spawned";
+      }
+    }
+    if (callee.name === "Connect" || callee.name === "Once") {
+      return callee.object.kind === "property" ? eventCallbackName(callee.object.name) : "callback";
+    }
+    if (callee.name === "Observe" || callee.name === "ObserveKeys") {
+      return "observer";
+    }
+    if (callee.name === "new" && callee.object.kind === "identifier" && /Shake/i.test(callee.object.name)) {
+      return "onShake";
+    }
+  }
+  if (callee.kind === "identifier") {
+    if (callee.name === "xpcall") {
+      return args[1]?.kind === "identifier" && args[1].name === name ? "onError" : "protected";
+    }
+    if (callee.name === "pcall") {
+      return "protected";
+    }
+  }
+  return undefined;
+}
+
+function allocateName(preferred: string, used: Set<string>): string {
+  const base = isValidIdentifier(preferred) ? preferred : "callback";
+  if (!used.has(base)) {
+    return base;
+  }
+  let suffix = 2;
+  while (used.has(`${base}${suffix}`)) {
+    suffix += 1;
+  }
+  return `${base}${suffix}`;
+}
+
+function renameStatementNames(statement: Statement, rename: Map<string, string>): Statement {
+  const mapped = (name: string): string => rename.get(name) ?? name;
+  switch (statement.kind) {
+    case "local":
+      return {
+        ...statement,
+        names: statement.names.map(mapped),
+        values: statement.values.map((value) => renameExpr(value, rename)),
+      };
+    case "assign":
+      return {
+        ...statement,
+        targets: statement.targets.map((target) => renameExpr(target, rename)),
+        values: statement.values.map((value) => renameExpr(value, rename)),
+      };
+    case "compound-assign":
+      return { ...statement, target: renameExpr(statement.target, rename), value: renameExpr(statement.value, rename) };
+    case "function-decl": {
+      const name = statement.local ? mapped(statement.name) : statement.name;
+      return { ...statement, name, body: renameIdentifiers(statement.body, rename) };
+    }
+    case "expression-stmt":
+      return { ...statement, expression: renameExpr(statement.expression, rename) };
+    case "return":
+      return { ...statement, values: statement.values.map((value) => renameExpr(value, rename)) };
+    case "if":
+      return {
+        ...statement,
+        test: renameExpr(statement.test, rename),
+        consequent: renameIdentifiers(statement.consequent, rename),
+        branches: statement.branches.map((branch) => ({
+          test: renameExpr(branch.test, rename),
+          body: renameIdentifiers(branch.body, rename),
+        })),
+        alternate: statement.alternate ? renameIdentifiers(statement.alternate, rename) : undefined,
+      };
+    case "while":
+      return { ...statement, test: renameExpr(statement.test, rename), body: renameIdentifiers(statement.body, rename) };
+    case "repeat":
+      return { ...statement, test: renameExpr(statement.test, rename), body: renameIdentifiers(statement.body, rename) };
+    case "numeric-for":
+      return {
+        ...statement,
+        start: renameExpr(statement.start, rename),
+        stop: renameExpr(statement.stop, rename),
+        step: statement.step ? renameExpr(statement.step, rename) : undefined,
+        body: renameIdentifiers(statement.body, rename),
+      };
+    case "generic-for":
+      return {
+        ...statement,
+        iterators: statement.iterators.map((iterator) => renameExpr(iterator, rename)),
+        body: renameIdentifiers(statement.body, rename),
+      };
+    case "do":
+      return { ...statement, body: renameIdentifiers(statement.body, rename) };
+    default:
+      return statement;
+  }
+}
+
+function renameExpr(expression: Expression, rename: Map<string, string>): Expression {
+  if (expression.kind === "identifier") {
+    const next = rename.get(expression.name);
+    return next ? { ...expression, name: next } : expression;
+  }
+  if (expression.kind === "unary") {
+    return { ...expression, argument: renameExpr(expression.argument, rename) };
+  }
+  if (expression.kind === "binary") {
+    return { ...expression, left: renameExpr(expression.left, rename), right: renameExpr(expression.right, rename) };
+  }
+  if (expression.kind === "call") {
+    return { ...expression, callee: renameExpr(expression.callee, rename), args: expression.args.map((arg) => renameExpr(arg, rename)) };
+  }
+  if (expression.kind === "method-call") {
+    return { ...expression, object: renameExpr(expression.object, rename), args: expression.args.map((arg) => renameExpr(arg, rename)) };
+  }
+  if (expression.kind === "index") {
+    return { ...expression, table: renameExpr(expression.table, rename), key: renameExpr(expression.key, rename) };
+  }
+  if (expression.kind === "property") {
+    return { ...expression, object: renameExpr(expression.object, rename) };
+  }
+  if (expression.kind === "function-expr") {
+    return { ...expression, body: renameIdentifiers(expression.body, rename) };
+  }
+  if (expression.kind === "paren") {
+    return { ...expression, expression: renameExpr(expression.expression, rename) };
+  }
+  if (expression.kind === "table") {
+    return {
+      ...expression,
+      fields: expression.fields.map((field) => ({
+        ...field,
+        key: field.key ? renameExpr(field.key, rename) : undefined,
+        value: renameExpr(field.value, rename),
+      })),
+    };
+  }
+  if (expression.kind === "if-expr") {
+    return {
+      ...expression,
+      test: renameExpr(expression.test, rename),
+      consequent: renameExpr(expression.consequent, rename),
+      branches: expression.branches.map((branch) => ({
+        test: renameExpr(branch.test, rename),
+        value: renameExpr(branch.value, rename),
+      })),
+      alternate: renameExpr(expression.alternate, rename),
+    };
+  }
+  if (expression.kind === "interp") {
+    return {
+      ...expression,
+      parts: expression.parts.map((part) =>
+        part.kind === "expr" && typeof part.value !== "string"
+          ? { kind: "expr" as const, value: renameExpr(part.value, rename) }
+          : part,
+      ),
+    };
+  }
+  return expression;
 }
 
 function collectIdentifiers(statement: Statement, visit: (name: string) => void): void {
@@ -196,6 +951,10 @@ function collectIdentifiers(statement: Statement, visit: (name: string) => void)
       case "assign":
         item.targets.forEach(walkExpr);
         item.values.forEach(walkExpr);
+        break;
+      case "compound-assign":
+        walkExpr(item.target);
+        walkExpr(item.value);
         break;
       case "function-decl":
         item.body.statements.forEach(walkStmt);
@@ -308,6 +1067,12 @@ function transformStatement(statement: Statement, options: CleanupOptions): Stat
         targets: statement.targets.map((target) => transformExpr(target, options)),
         values: statement.values.map((value) => transformExpr(value, options)),
       };
+    case "compound-assign":
+      return {
+        ...statement,
+        target: transformExpr(statement.target, options),
+        value: transformExpr(statement.value, options),
+      };
     case "function-decl":
       return {
         ...statement,
@@ -412,11 +1177,13 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
     case "table":
       return {
         ...expression,
-        fields: expression.fields.map((field) => ({
-          ...field,
-          key: field.key ? transformExpr(field.key, options) : undefined,
-          value: transformExpr(field.value, options),
-        })),
+        fields: dropScaffoldNilFields(
+          expression.fields.map((field) => ({
+            ...field,
+            key: field.key ? transformExpr(field.key, options) : undefined,
+            value: transformExpr(field.value, options),
+          })),
+        ),
       };
     case "function-expr":
       return { ...expression, body: transformBlock(expression.body, options) };
@@ -448,7 +1215,8 @@ function annotateLocals(statement: { names: string[]; values: Expression[] }, op
     return undefined;
   }
   const types = statement.values.map((value) => typeFromExpression(value));
-  return types.some((type) => type) ? types : undefined;
+  const useful = types.map((type) => (type && type !== "nil" ? type : undefined));
+  return useful.some((type) => type) ? useful : undefined;
 }
 
 function flattenElseIf(statements: Statement[]): Statement[] {
