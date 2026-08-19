@@ -88,12 +88,13 @@ Leave `--context` out, or pass `--no-context` / `runtime_context=false`, and not
 
 We already do better on types, method lifting, if-expressions, callback names, and region-based loop structuring (`break` / `continue` / sequential guards).
 
-Everyday locals are closing: `LocalPlayer`, `sharedCounter`, `CONFIG`, `Counter`, `payload`, `descending`, `seed`, `limit`. Other decompilers still win on leftover `valueN` / `resultN` and exact source spellings (`HALF_SECOND`).
+Everyday locals are closing: `LocalPlayer`, `sharedCounter`, `CONFIG`, `Counter`, `payload`, `descending`, `seed`, `limit`, `total`/`calls`. Closures pin REF captures (`localState`, `captured`) instead of ghost `callback` names.
 
 ## Still to do (to look like the original source)
 
 1. Leftover numbered temps where a register is reused as a different value
 2. Exact source spellings we cannot prove (`HALF_SECOND`, `WHITE`, `UP`)
 3. Parameter types on ordinary functions, not only Roblox callbacks
+4. A few upvalue slots still share a name (`connectionStress` count vs callback)
 
 The bar is `tests/Original.txt`, not “good enough for a decompiler.”

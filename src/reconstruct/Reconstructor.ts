@@ -1393,7 +1393,7 @@ class SourceBuilder {
   }
 
   private tryLiftMethod(field: TableField, tableName: string): Statement | undefined {
-    if (!field.name) {
+    if (!field.name || field.name.startsWith("__")) {
       return undefined;
     }
     let fn: Expression | undefined;
@@ -1884,9 +1884,15 @@ class SourceBuilder {
     // Captured pending tables must be materialized before their names are read.
     const statements: Statement[] = [];
     for (const cap of captures) {
-      const pending = this.pendingOf(cap.capture?.source ?? -1);
+      const source = cap.capture?.source ?? -1;
+      const pending = this.pendingOf(source);
       if (pending && !pending.flushed) {
         statements.push(...this.flushPending(pending));
+      }
+      // A REF capture is a real variable. Pin an unpinned temp so the child
+      // mutates a named local, not a ghost `callback`.
+      if (cap.capture?.type === CaptureType.REF && source !== insn.a) {
+        statements.push(...this.pinRefCapture(source, insn.pc));
       }
     }
     const debug = child.debugName ?? debugNameAt(this.proto, insn.a, insn.pc + insn.width);
@@ -2002,6 +2008,76 @@ class SourceBuilder {
       return binding.name;
     }
     return this.proto.upvalueNames[index] ?? `up${index}`;
+  }
+
+  /** Turn a REF-captured register into a real named local before the child is built. */
+  private pinRefCapture(register: number, fromPc: number): Statement[] {
+    const existing = this.env.get(register);
+    if (existing?.name && existing.pinned && this.isDeclaredInScope(existing.name)) {
+      return [];
+    }
+    if (existing && !existing.name) {
+      const name = this.allocator.reserve(nameHint(existing.expression) ?? "value");
+      this.declareInScope(name);
+      this.env.set(register, { name, expression: ident(name), pinned: true });
+      return [{ kind: "local", names: [name], values: [existing.expression] }];
+    }
+    const hint = this.futureDefineHint(register, fromPc) ?? "value";
+    const name = this.allocator.reserve(hint);
+    this.declareInScope(name);
+    this.env.set(register, { name, expression: ident(name), pinned: true, forwardRef: true });
+    return [{ kind: "local", names: [name], values: [] }];
+  }
+
+  /** Hint a not-yet-defined register from how it is first written after `fromPc`. */
+  private futureDefineHint(register: number, fromPc: number): string | undefined {
+    const closure = this.futureClosureHint(register, fromPc);
+    if (closure) {
+      return closure;
+    }
+    for (const other of this.proto.instructions) {
+      if (other.pc <= fromPc) {
+        continue;
+      }
+      if (other.opcode === Opcode.CAPTURE || other.opcode === Opcode.NOP) {
+        continue;
+      }
+      if (!other.defs.includes(register)) {
+        continue;
+      }
+      if (other.opcode === Opcode.CALL || other.opcode === Opcode.CALLFB) {
+        const callee = this.env.get(other.a)?.expression;
+        if (callee?.kind === "method-call" && (callee.name === "Connect" || callee.name === "Once")) {
+          return "connection";
+        }
+        if (callee?.kind === "method-call" && callee.name === "Create") {
+          return "tween";
+        }
+      }
+      if (other.opcode === Opcode.LOADN && other.d === 0) {
+        return "count";
+      }
+      if (other.opcode === Opcode.LOADNIL) {
+        return "value";
+      }
+      return undefined;
+    }
+    return undefined;
+  }
+
+  private willBeRefCaptured(register: number, fromPc: number): boolean {
+    for (const insn of this.proto.instructions) {
+      if (insn.pc <= fromPc) {
+        continue;
+      }
+      if (insn.opcode === Opcode.CAPTURE && insn.capture?.type === CaptureType.REF && insn.capture.source === register) {
+        return true;
+      }
+      if (insn.defs.includes(register)) {
+        return false;
+      }
+    }
+    return false;
   }
 
   private capturesAfter(pc: number): DecodedInstruction[] {
@@ -2347,18 +2423,33 @@ class SourceBuilder {
     const uses = this.useCount(register, insn.pc);
     const liveAcrossBlocks = this.usedOutsideBlock(register, insn);
     const phi = this.phiBinding(register, insn);
+    const envBind = this.env.get(register);
+    if (envBind?.forwardRef && envBind.name) {
+      const nilLiteral = isNilLiteral(expression);
+      this.env.set(register, { name: envBind.name, expression: ident(envBind.name), pinned: true, nilLiteral });
+      return [{ kind: "assign", targets: [ident(envBind.name)], values: [expression] }];
+    }
     // A literal nil has no identity worth keeping in a local: only a debug
     // name or a phi (real variable slot) pins it.
     const nilLiteral = isNilLiteral(expression);
+    const refCaptured = this.willBeRefCaptured(register, insn.pc);
     const pin =
       forceLocal ||
       Boolean(debug) ||
+      refCaptured ||
       (!nilLiteral && (uses > 1 || liveAcrossBlocks)) ||
       this.isEscaping(expression) ||
       phi !== undefined;
     if (pin) {
       const preferred = debug ?? nameHint(expression) ?? "value";
-      if (expression.kind === "identifier" && expression.name === preferred && !forceLocal && !debug && phi === undefined) {
+      if (
+        expression.kind === "identifier" &&
+        expression.name === preferred &&
+        !forceLocal &&
+        !debug &&
+        phi === undefined &&
+        !refCaptured
+      ) {
         this.env.set(register, { name: preferred, expression, pinned: true });
         return [];
       }

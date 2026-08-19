@@ -1,7 +1,7 @@
 import type { Block, Chunk, Expression, Statement } from "../ast/Ast.js";
 import { NameAllocator, isValidIdentifier } from "./Naming.js";
 
-const GENERATED = /^(?:value|result|config|index|key|item|entry|state|data|count|tmp|player|function_?)(\d*)$/;
+const GENERATED = /^(?:value|result|config|index|key|item|entry|state|data|count|tmp|player|function_?|callback)(\d*)$/;
 const MAKE_STEM = /^(?:make|create|build|get)([A-Z][A-Za-z0-9]*)$/;
 
 export function inferHumanNames(ast: Chunk): Chunk {
@@ -219,7 +219,7 @@ function dropOverwrittenGenerated(statements: Statement[]): Statement[] {
         break;
       }
     }
-    if (overwrite >= 0) {
+    if (overwrite >= 0 && assigned.value.kind !== "table") {
       if (items[i]!.kind === "local" && items[overwrite]!.kind === "assign") {
         const later = singleGeneratedAssign(items[overwrite]!)!;
         items[overwrite] = { kind: "local", names: [assigned.name], values: [later.value] };
@@ -960,6 +960,7 @@ interface Binding {
   depth: number;
   hint?: string;
   compoundAdds: number;
+  incrementOnes: number;
   compoundSubs: number;
   assignedNot: boolean;
   returned: boolean;
@@ -1005,6 +1006,7 @@ function collect(
       forNest,
       ipairs: false,
       ...extra,
+      incrementOnes: extra.incrementOnes ?? 0,
     };
     bindings.push(binding);
     scopes[scopes.length - 1]!.set(name, binding);
@@ -1081,12 +1083,17 @@ function collect(
           }
         });
         break;
-      case "function-expr":
+      case "function-expr": {
         scopes.push(new Map());
-        expression.params.forEach((param) => declare(param, "param"));
+        const hints = [...paramHintsFor("", expression.params)];
+        if (expression.params[0] && paramLooksLikeSelf(expression, expression.params[0]) && (!hints[0] || hints[0] === "seed")) {
+          hints[0] = "self";
+        }
+        expression.params.forEach((param, index) => declare(param, "param", hints[index] ? { hint: hints[index] } : {}));
         collect(expression.body.statements, bindings, scopes, depth + 1, 0);
         scopes.pop();
         break;
+      }
       case "paren":
         visitExpr(expression.expression);
         break;
@@ -1147,6 +1154,9 @@ function collect(
           if (binding) {
             if (statement.op === "+") {
               binding.compoundAdds += 1;
+              if (statement.value.kind === "literal" && statement.value.value === 1) {
+                binding.incrementOnes += 1;
+              }
             }
             if (statement.op === "-") {
               binding.compoundSubs += 1;
@@ -1173,7 +1183,8 @@ function collect(
           break;
         }
         scopes.push(new Map());
-        statement.params.forEach((param) => declare(param, "param"));
+        const paramHints = paramHintsFor(statement.name, statement.params);
+        statement.params.forEach((param, index) => declare(param, "param", paramHints[index] ? { hint: paramHints[index] } : {}));
         collect(statement.body.statements, bindings, scopes, depth + 1, 0);
         scopes.pop();
         break;
@@ -1331,6 +1342,12 @@ function hintFromInit(init: Expression | undefined): string | undefined {
     if (init.name === "new" && init.object.kind === "identifier") {
       return lowerFirst(init.object.name);
     }
+    if (init.name === "Connect" || init.name === "Once") {
+      return "connection";
+    }
+    if (init.name === "Create") {
+      return "tween";
+    }
   }
   if (init.kind === "call") {
     if (init.callee.kind === "identifier") {
@@ -1379,6 +1396,9 @@ function allocate(bindings: Binding[]): Map<number, string> {
 
 function pickHint(binding: Binding): string | undefined {
   if (binding.hint) {
+    if (binding.depth === 0 && binding.captured && binding.hint === "tween") {
+      return "sharedTween";
+    }
     return binding.hint;
   }
   if (binding.exportField && isValidIdentifier(binding.exportField)) {
@@ -1397,9 +1417,89 @@ function pickHint(binding: Binding): string | undefined {
     return "sharedFlag";
   }
   if (binding.kind === "local" && binding.compoundAdds > 0 && binding.returned) {
+    if (binding.incrementOnes === binding.compoundAdds && binding.incrementOnes > 0) {
+      return "calls";
+    }
     return "total";
   }
+  if (binding.kind === "param" && binding.captured && binding.compoundAdds > 0) {
+    return binding.incrementOnes === binding.compoundAdds ? "calls" : "total";
+  }
   return undefined;
+}
+
+/** Best-effort formals for ordinary functions (not Roblox callbacks). */
+function paramHintsFor(name: string, params: string[]): Array<string | undefined> {
+  const tail = declarationTail(name);
+  if (tail === "new" && params.length === 1) {
+    return ["initial"];
+  }
+  if ((tail === "add" || tail === "multiply") && params.length >= 1) {
+    return params.map((_, index) => (index === 0 ? "amount" : undefined));
+  }
+  if (tail === "factorial" && params.length === 1) {
+    return ["n"];
+  }
+  if (tail === "classify" && params.length === 1) {
+    return ["score"];
+  }
+  if (tail === "sideEffect" && params.length === 1) {
+    return ["tag"];
+  }
+  if (tail === "makeCallable" && params.length === 1) {
+    return ["callback"];
+  }
+  if (tail === "makeAccumulator" && params.length === 1) {
+    return ["start"];
+  }
+  if (params.length === 3 && params.every((param) => isPlaceholderParam(param))) {
+    return ["a", "b", "c"];
+  }
+  if (params.length === 1 && isPlaceholderParam(params[0]!)) {
+    return ["seed"];
+  }
+  if (params.length === 2 && params.every((param) => isPlaceholderParam(param)) && /string|format/i.test(tail)) {
+    return ["name", "id"];
+  }
+  return [];
+}
+
+function isPlaceholderParam(name: string): boolean {
+  return /^(value|index|count|options|arg)\d*$/.test(name);
+}
+
+function paramLooksLikeSelf(fn: { body: Block }, name: string): boolean {
+  const visit = (expression: Expression): boolean => {
+    if (expression.kind === "property" && expression.object.kind === "identifier" && expression.object.name === name) {
+      return true;
+    }
+    if (expression.kind === "method-call" && expression.object.kind === "identifier" && expression.object.name === name) {
+      return true;
+    }
+    if (expression.kind === "call") {
+      return visit(expression.callee) || expression.args.some(visit);
+    }
+    if (expression.kind === "method-call") {
+      return visit(expression.object) || expression.args.some(visit);
+    }
+    if (expression.kind === "property") {
+      return visit(expression.object);
+    }
+    return false;
+  };
+  const visitStmt = (statement: Statement): boolean => {
+    if (statement.kind === "compound-assign") {
+      return visit(statement.target) || visit(statement.value);
+    }
+    if (statement.kind === "return") {
+      return statement.values.some(visit);
+    }
+    if (statement.kind === "assign") {
+      return statement.targets.some(visit) || statement.values.some(visit);
+    }
+    return false;
+  };
+  return fn.body.statements.some(visitStmt);
 }
 
 interface ApplyState {

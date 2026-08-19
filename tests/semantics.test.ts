@@ -669,6 +669,76 @@ describe("semantic reconstruction", () => {
     expect(source).not.toMatch(/result5|result6|result8/);
   });
 
+  it("names a += 1 returned local calls, not total", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "function-decl",
+          local: true,
+          name: "makeAccumulator",
+          params: ["start"],
+          isVararg: false,
+          body: {
+            kind: "block",
+            statements: [
+              { kind: "local", names: ["result5"], values: [lit(0)] },
+              { kind: "compound-assign", target: ident("result5"), op: "+", value: lit(1) },
+              { kind: "return", values: [ident("result5")] },
+            ],
+          },
+        },
+      ]),
+      { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
+    );
+    expect(printLuau(ast)).toMatch(/local calls = 0/);
+    expect(printLuau(ast)).toMatch(/calls \+= 1/);
+  });
+
+  it("does not lift __call off a metatable table", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "local",
+          names: ["config12"],
+          values: [
+            {
+              kind: "table",
+              fields: [
+                {
+                  name: "__call",
+                  value: {
+                    kind: "function-expr",
+                    params: ["self"],
+                    isVararg: true,
+                    body: { kind: "block", statements: [{ kind: "return", values: [] }] },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: "return",
+          values: [
+            {
+              kind: "call",
+              callee: ident("setmetatable"),
+              args: [
+                { kind: "table", fields: [{ name: "calls", value: lit(0) }] },
+                ident("config12"),
+              ],
+              open: false,
+            },
+          ],
+        },
+      ]),
+      { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
+    );
+    const source = printLuau(ast);
+    expect(source).toMatch(/__call/);
+    expect(source).toMatch(/setmetatable/);
+  });
+
   it("stays deterministic with the new cleanup pipeline", () => {
     const bytecode = compile(
       proto({
