@@ -31,8 +31,8 @@ setGameMusicSuppressed = function(value)
         end
     end
     if callback and callback.SetEventMusicSuppressed then
-        local result = value
-        pcall(callback.SetEventMusicSuppressed, result)
+        local result3 = value
+        pcall(callback.SetEventMusicSuppressed, result3)
     end
 end
 local function createLoopedSound(Name, SoundId, Volume)
@@ -101,26 +101,26 @@ playIntroCutscene = function()
     for _, value15 in config2 do
         AnimationController:Load(animator, value15)
     end
-    local instance2: ScreenGui = Instance.new("ScreenGui")
-    instance2.Name = "MeltdownCutsceneFade"
-    instance2.IgnoreGuiInset = true
-    instance2.DisplayOrder = 1000
-    instance2.Parent = LocalPlayer.PlayerGui
-    local instance3: Frame = Instance.new("Frame")
-    instance3.Size = UDim2.fromScale(1, 1)
-    instance3.BackgroundColor3 = Color3.new(0, 0, 0)
-    instance3.BackgroundTransparency = 1
-    instance3.BorderSizePixel = 0
-    instance3.Parent = instance2
+    local instance: ScreenGui = Instance.new("ScreenGui")
+    instance.Name = "MeltdownCutsceneFade"
+    instance.IgnoreGuiInset = true
+    instance.DisplayOrder = 1000
+    instance.Parent = LocalPlayer.PlayerGui
+    local instance2: Frame = Instance.new("Frame")
+    instance2.Size = UDim2.fromScale(1, 1)
+    instance2.BackgroundColor3 = Color3.new(0, 0, 0)
+    instance2.BackgroundTransparency = 1
+    instance2.BorderSizePixel = 0
+    instance2.Parent = instance
     local function fadeTo(BackgroundTransparency)
         local config3 = { BackgroundTransparency = BackgroundTransparency }
-        local value19 = TweenService:Create(instance3, TweenInfo.new(0.5), config3)
+        local value19 = TweenService:Create(instance2, TweenInfo.new(0.5), config3)
         value19:Play()
         return value19
     end
 
     local config4 = { BackgroundTransparency = 0 }
-    local value20 = TweenService:Create(instance3, TweenInfo.new(0.5), config4)
+    local value20 = TweenService:Create(instance2, TweenInfo.new(0.5), config4)
     value20:Play()
     value20.Completed:Wait()
     local clone2: Instance = militaryMeltdown.Blr:Clone()
@@ -143,7 +143,7 @@ playIntroCutscene = function()
     end
     table.insert(config5, RunService.PreAnimation:Connect(onPreAnimation))
     local children: {Instance} = Lighting:GetChildren()
-    for _, value22 in children do
+    for _2, value22 in children do
         value22.Parent = nil
     end
     local lighting = militaryMeltdown.Lighting
@@ -151,15 +151,15 @@ playIntroCutscene = function()
     for key in lighting:GetAttributes() do
         config6[key] = Lighting[key]
     end
-    for _, value23 in lighting:Clone():GetChildren() do
+    for _3, value23 in lighting:Clone():GetChildren() do
         value23.Parent = Lighting
     end
     for key2, value24 in lighting:GetAttributes() do
         Lighting[key2] = value24
     end
     local config7 = {}
-    for _, value25 in LocalPlayer.PlayerGui:GetChildren() do
-        if value25 == instance2 then
+    for _4, value25 in LocalPlayer.PlayerGui:GetChildren() do
+        if value25 == instance then
             continue
         end
         if not value25:IsA("ScreenGui") then
@@ -184,20 +184,20 @@ playIntroCutscene = function()
         ReplicatedStorage.Assets.CutScenes.ScreenEffects.ScreenGui:Clone(),
         ReplicatedStorage.Assets.CutScenes.ScreenEffects.Vignette:Clone(),
     }
-    for _, value26 in config8 do
+    for _5, value26 in config8 do
         value26.Parent = LocalPlayer.PlayerGui
     end
-    local instance4: Sound = Instance.new("Sound")
-    instance4.Name = "MeltdownCutsceneAmbience"
-    instance4.SoundId = "rbxassetid://113127659745813"
-    instance4.Looped = true
-    instance4.Volume = 0.4
-    instance4.Parent = SoundService
-    instance4.Looped = false
+    local instance3: Sound = Instance.new("Sound")
+    instance3.Name = "MeltdownCutsceneAmbience"
+    instance3.SoundId = "rbxassetid://113127659745813"
+    instance3.Looped = true
+    instance3.Volume = 0.4
+    instance3.Parent = SoundService
+    instance3.Looped = false
     local value28 = AnimationController:Load(animator, 73037425215243)
     local value29 = os.clock() + 5
     while os.clock() < value29 do
-        if value21.Length > 0 and (value28.Length > 0 and instance4.IsLoaded) then
+        if value21.Length > 0 and (value28.Length > 0 and instance3.IsLoaded) then
             break
         end
         task.wait()
@@ -210,9 +210,9 @@ playIntroCutscene = function()
     value28 = value31
     value30:Play()
     local config9 = { BackgroundTransparency = 1 }
-    TweenService:Create(instance3, TweenInfo.new(0.5), config9):Play()
+    TweenService:Create(instance2, TweenInfo.new(0.5), config9):Play()
     local function delayed()
-        instance4:Play()
+        instance3:Play()
     end
 
     task.delay(0.6, delayed)
@@ -231,7 +231,7 @@ playIntroCutscene = function()
             TimePosition = value30.TimePosition
             if value30:GetTimeLength() - 0.5 <= TimePosition then
                 local config10 = { BackgroundTransparency = 0 }
-                local value32 = TweenService:Create(instance3, TweenInfo.new(0.5), config10)
+                local value32 = TweenService:Create(instance2, TweenInfo.new(0.5), config10)
                 value32:Play()
                 TimePosition = value32
                 result4 = TimePosition
@@ -242,7 +242,7 @@ playIntroCutscene = function()
     value30.Completed:Wait()
     if not result4 then
         local config11 = { BackgroundTransparency = 0 }
-        local value33 = TweenService:Create(instance3, TweenInfo.new(0.5), config11)
+        local value33 = TweenService:Create(instance2, TweenInfo.new(0.5), config11)
         value33:Play()
         result4 = value33
     end
@@ -253,13 +253,13 @@ playIntroCutscene = function()
     if callback2 then
         callback2:Stop(0)
     end
-    local config11: number = 0
-    local value34 = AnimationController:Play(animator, 119837384893258, config11)
+    local config112: number = 0
+    local value34 = AnimationController:Play(animator, 119837384893258, config112)
     value34.Priority = Enum.AnimationPriority.Idle
     value34.Looped = true
     callback2 = value34
     value28:Stop()
-    for _, value35 in config5 do
+    for _6, value35 in config5 do
         value35:Disconnect()
     end
     value30:Stop()
@@ -268,14 +268,14 @@ playIntroCutscene = function()
     for key3, value36 in config6 do
         Lighting[key3] = value36
     end
-    for _, value37 in children do
+    for _7, value37 in children do
         value37.Parent = Lighting
     end
-    fadeSoundOut(instance4)
-    for _, value38 in config8 do
+    fadeSoundOut(instance3)
+    for _8, value38 in config8 do
         value38:Destroy()
     end
-    for _, value39 in config7 do
+    for _9, value39 in config7 do
         value39.Enabled = true
     end
     if result3 then
@@ -285,10 +285,10 @@ playIntroCutscene = function()
     clone:Destroy()
     currentCamera.CameraType = Enum.CameraType.Custom
     local config12 = { BackgroundTransparency = 1 }
-    local value40 = TweenService:Create(instance3, TweenInfo.new(0.5), config12)
+    local value40 = TweenService:Create(instance2, TweenInfo.new(0.5), config12)
     value40:Play()
     value40.Completed:Wait()
-    instance2:Destroy()
+    instance:Destroy()
     local value41 = AnimationController:Play(animator, 127905115426978)
     value41.Priority = Enum.AnimationPriority.Action
     local function onStopped()
@@ -324,26 +324,26 @@ local function attachTrail(value45)
     if not Parent then
         return
     end
-    local instance5: Attachment = Instance.new("Attachment")
-    instance5.Position = Vector3.new(0, Parent.Size.Y / 2 + 0.4, 0)
-    instance5.Parent = Parent
-    local instance6: Attachment = Instance.new("Attachment")
-    instance6.Position = Vector3.new(0, Parent.Size.Y / 2 - 0.4, 0)
-    instance6.Parent = Parent
-    local instance7: Trail = Instance.new("Trail")
-    instance7.Attachment0 = instance5
-    instance7.Attachment1 = instance6
-    instance7.Lifetime = 1.1
-    instance7.LightEmission = 1
-    instance7.Color = ColorSequence.new(Color3.new(1, 1, 1))
-    instance7.Transparency = NumberSequence.new({
+    local instance: Attachment = Instance.new("Attachment")
+    instance.Position = Vector3.new(0, Parent.Size.Y / 2 + 0.4, 0)
+    instance.Parent = Parent
+    local instance2: Attachment = Instance.new("Attachment")
+    instance2.Position = Vector3.new(0, Parent.Size.Y / 2 - 0.4, 0)
+    instance2.Parent = Parent
+    local instance3: Trail = Instance.new("Trail")
+    instance3.Attachment0 = instance
+    instance3.Attachment1 = instance2
+    instance3.Lifetime = 1.1
+    instance3.LightEmission = 1
+    instance3.Color = ColorSequence.new(Color3.new(1, 1, 1))
+    instance3.Transparency = NumberSequence.new({
         NumberSequenceKeypoint.new(0, 0),
         NumberSequenceKeypoint.new(0.7, 0.25),
         NumberSequenceKeypoint.new(1, 1),
     })
-    instance7.WidthScale = NumberSequence.new({ NumberSequenceKeypoint.new(0, 1.4), NumberSequenceKeypoint.new(1, 0.6) })
-    instance7.FaceCamera = true
-    instance7.Parent = Parent
+    instance3.WidthScale = NumberSequence.new({ NumberSequenceKeypoint.new(0, 1.4), NumberSequenceKeypoint.new(1, 0.6) })
+    instance3.FaceCamera = true
+    instance3.Parent = Parent
 end
 
 local function riseNukeFromSilo(value49)
@@ -358,11 +358,11 @@ local function riseNukeFromSilo(value49)
         local Y
         if value50:IsA("Model") then
             value50:ScaleTo(value51)
-            for _, _ in value50:GetDescendants() do
-                if _:IsA("BasePart") then
-                    _.CanQuery = false
-                    _.CanTouch = false
-                    _.CastShadow = false
+            for _, _2 in value50:GetDescendants() do
+                if _2:IsA("BasePart") then
+                    _2.CanQuery = false
+                    _2.CanTouch = false
+                    _2.CastShadow = false
                 end
             end
         else

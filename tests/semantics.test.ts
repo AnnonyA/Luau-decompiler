@@ -556,6 +556,119 @@ describe("semantic reconstruction", () => {
     expect(printLuau(ast)).toMatch(/function rgb\(r, g, b\)/);
   });
 
+  it("folds x = math.clamp; x = x(n, 0, 20) and drops overwritten scratch", () => {
+    const ast = cleanupAst(
+      chunk([
+        { kind: "assign", targets: [ident("result27")], values: [{ kind: "property", object: ident("math"), name: "clamp" }] },
+        {
+          kind: "assign",
+          targets: [ident("result27")],
+          values: [{ kind: "call", callee: ident("result27"), args: [ident("seed"), lit(0), lit(20)], open: false }],
+        },
+        { kind: "assign", targets: [ident("result27")], values: [ident("seed")] },
+        { kind: "return", values: [ident("result27")] },
+      ]),
+      { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
+    );
+    const source = printLuau(ast);
+    expect(source).toMatch(/result27 = seed/);
+    expect(source).toMatch(/return result27/);
+    expect(source).not.toMatch(/math\.clamp/);
+  });
+
+  it("folds callee aliases inside assigned function expressions", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "assign",
+          targets: [ident("makePayload")],
+          values: [
+            {
+              kind: "function-expr",
+              params: ["id"],
+              isVararg: false,
+              body: {
+                kind: "block",
+                statements: [
+                  { kind: "assign", targets: [ident("result19")], values: [{ kind: "property", object: ident("math"), name: "abs" }] },
+                  {
+                    kind: "assign",
+                    targets: [ident("result19")],
+                    values: [{ kind: "call", callee: ident("result19"), args: [ident("id")], open: false }],
+                  },
+                  { kind: "return", values: [ident("result19")] },
+                ],
+              },
+            },
+          ],
+        },
+      ]),
+      { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
+    );
+    expect(printLuau(ast)).toMatch(/result19 = math\.abs\(id\)/);
+    expect(printLuau(ast)).not.toMatch(/result19 = math\.abs\n/);
+  });
+
+  it("drops a generated assign overwritten after an unrelated local", () => {
+    const ast = cleanupAst(
+      chunk([
+        { kind: "local", names: ["value117"], values: [lit(4)] },
+        { kind: "local", names: ["config47"], values: [{ kind: "table", fields: [{ name: "name", value: lit("A") }] }] },
+        { kind: "assign", targets: [ident("value117")], values: [ident("seed")] },
+        { kind: "return", values: [ident("value117")] },
+      ]),
+      { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
+    );
+    const source = printLuau(ast);
+    expect(source).toMatch(/local value117 = seed/);
+    expect(source).not.toMatch(/value117 = 4/);
+    expect(source).toMatch(/config47/);
+  });
+
+  it("coalesces empty generated accumulators onto the first zero local", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "function-decl",
+          local: true,
+          name: "loopStress",
+          params: ["limit"],
+          isVararg: false,
+          body: {
+            kind: "block",
+            statements: [
+              { kind: "local", names: ["result5"], values: [lit(0)] },
+              {
+                kind: "numeric-for",
+                name: "i",
+                start: lit(1),
+                stop: ident("limit"),
+                body: {
+                  kind: "block",
+                  statements: [
+                    { kind: "local", names: ["result6"], values: [] },
+                    { kind: "compound-assign", target: ident("result6"), op: "+", value: ident("i") },
+                  ],
+                },
+              },
+              { kind: "local", names: ["result8"], values: [] },
+              { kind: "compound-assign", target: ident("result8"), op: "+", value: lit(1) },
+              { kind: "return", values: [ident("result8")] },
+            ],
+          },
+        },
+      ]),
+      { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
+    );
+    const source = printLuau(ast);
+    // Coalesce first, then the returned accumulator is renamed to `total`.
+    expect(source).toMatch(/local total = 0/);
+    expect(source).toMatch(/total \+= i/);
+    expect(source).toMatch(/total \+= 1/);
+    expect(source).toMatch(/return total/);
+    expect(source).not.toMatch(/result5|result6|result8/);
+  });
+
   it("stays deterministic with the new cleanup pipeline", () => {
     const bytecode = compile(
       proto({

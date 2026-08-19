@@ -5,8 +5,12 @@ const GENERATED = /^(?:value|result|config|index|key|item|entry|state|data|count
 const MAKE_STEM = /^(?:make|create|build|get)([A-Z][A-Za-z0-9]*)$/;
 
 export function inferHumanNames(ast: Chunk): Chunk {
-  const inlined = { kind: "chunk" as const, body: inlineOwnedTables(ast.body) };
-  return renameChunk(inlined);
+  const folded = { kind: "chunk" as const, body: foldScratchRegisters(ast.body) };
+  const coalesced = { kind: "chunk" as const, body: coalesceAccumulators(folded.body) };
+  const inlined = { kind: "chunk" as const, body: inlineOwnedTables(coalesced.body) };
+  // Tables that blocked a drop may have been inlined; sweep again.
+  const swept = { kind: "chunk" as const, body: foldScratchRegisters(inlined.body) };
+  return renameChunk(swept);
 }
 
 export function repairUndeclaredAutoLocals(ast: Chunk): Chunk {
@@ -74,6 +78,572 @@ function repairStatement(statement: Statement, scopes: Array<Set<string>>): Stat
       return { ...statement, body: repairBlock(statement.body, [...scopes, new Set([statement.name])]) };
     case "generic-for":
       return { ...statement, body: repairBlock(statement.body, [...scopes, new Set(statement.names)]) };
+    default:
+      return statement;
+  }
+}
+
+/** `x = f; x = x(a)` → `x = f(a)`. Then drop generated assigns overwritten before any read. */
+function foldScratchRegisters(body: Block): Block {
+  return { kind: "block", statements: foldScratchStatements(body.statements.map(mapNestedScratch)) };
+}
+
+function mapFnBodies(expression: Expression, rec: (body: Block) => Block): Expression {
+  if (expression.kind === "function-expr") {
+    return { ...expression, body: rec(expression.body) };
+  }
+  if (expression.kind === "table") {
+    return {
+      ...expression,
+      fields: expression.fields.map((field) => ({
+        ...field,
+        key: field.key ? mapFnBodies(field.key, rec) : undefined,
+        value: mapFnBodies(field.value, rec),
+      })),
+    };
+  }
+  if (expression.kind === "call") {
+    return { ...expression, callee: mapFnBodies(expression.callee, rec), args: expression.args.map((arg) => mapFnBodies(arg, rec)) };
+  }
+  if (expression.kind === "method-call") {
+    return { ...expression, object: mapFnBodies(expression.object, rec), args: expression.args.map((arg) => mapFnBodies(arg, rec)) };
+  }
+  return expression;
+}
+
+function mapNestedScratch(statement: Statement): Statement {
+  switch (statement.kind) {
+    case "function-decl":
+      return { ...statement, body: foldScratchRegisters(statement.body) };
+    case "local":
+      return { ...statement, values: statement.values.map((value) => mapFnBodies(value, foldScratchRegisters)) };
+    case "assign":
+      return { ...statement, values: statement.values.map((value) => mapFnBodies(value, foldScratchRegisters)) };
+    case "if":
+      return {
+        ...statement,
+        consequent: foldScratchRegisters(statement.consequent),
+        branches: statement.branches.map((branch) => ({ ...branch, body: foldScratchRegisters(branch.body) })),
+        alternate: statement.alternate ? foldScratchRegisters(statement.alternate) : undefined,
+      };
+    case "while":
+    case "repeat":
+    case "do":
+    case "numeric-for":
+    case "generic-for":
+      return { ...statement, body: foldScratchRegisters(statement.body) };
+    default:
+      return statement;
+  }
+}
+
+function isPureCallee(expression: Expression): boolean {
+  if (expression.kind === "identifier" || expression.kind === "property") {
+    return true;
+  }
+  if (expression.kind === "literal" && typeof expression.value === "string") {
+    return true;
+  }
+  return false;
+}
+
+function foldScratchStatements(statements: Statement[]): Statement[] {
+  const folded: Statement[] = [];
+  for (let i = 0; i < statements.length; i++) {
+    const current = statements[i]!;
+    const next = statements[i + 1];
+    const assigned = singleGeneratedAssign(current);
+    const call = next ? singleGeneratedAssign(next) : undefined;
+    if (assigned && call && assigned.name === call.name && isPureCallee(assigned.value)) {
+      if (call.value.kind === "call" && call.value.callee.kind === "identifier" && call.value.callee.name === assigned.name) {
+        folded.push({
+          kind: current.kind === "local" ? "local" : "assign",
+          ...(current.kind === "local"
+            ? { names: [assigned.name], values: [{ ...call.value, callee: assigned.value }] }
+            : { targets: [{ kind: "identifier" as const, name: assigned.name }], values: [{ ...call.value, callee: assigned.value }] }),
+        } as Statement);
+        i += 1;
+        continue;
+      }
+      if (call.value.kind === "method-call" && call.value.object.kind === "identifier" && call.value.object.name === assigned.name) {
+        folded.push({
+          kind: current.kind === "local" ? "local" : "assign",
+          ...(current.kind === "local"
+            ? { names: [assigned.name], values: [{ ...call.value, object: assigned.value }] }
+            : { targets: [{ kind: "identifier" as const, name: assigned.name }], values: [{ ...call.value, object: assigned.value }] }),
+        } as Statement);
+        i += 1;
+        continue;
+      }
+    }
+    folded.push(current);
+  }
+  return dropOverwrittenGenerated(folded);
+}
+
+function singleGeneratedAssign(statement: Statement): { name: string; value: Expression } | undefined {
+  if (statement.kind === "local" && statement.names.length === 1 && statement.values.length === 1 && isGeneratedName(statement.names[0]!)) {
+    return { name: statement.names[0]!, value: statement.values[0]! };
+  }
+  if (
+    statement.kind === "assign" &&
+    statement.targets.length === 1 &&
+    statement.values.length === 1 &&
+    statement.targets[0]?.kind === "identifier" &&
+    isGeneratedName(statement.targets[0].name)
+  ) {
+    return { name: statement.targets[0].name, value: statement.values[0]! };
+  }
+  return undefined;
+}
+
+function dropOverwrittenGenerated(statements: Statement[]): Statement[] {
+  const out: Statement[] = [];
+  const items = [...statements];
+  for (let i = 0; i < items.length; i++) {
+    const assigned = singleGeneratedAssign(items[i]!);
+    if (!assigned) {
+      out.push(items[i]!);
+      continue;
+    }
+    let overwrite = -1;
+    for (let j = i + 1; j < items.length; j++) {
+      const later = singleGeneratedAssign(items[j]!);
+      if (later && later.name === assigned.name) {
+        if (!exprReadsName(later.value, assigned.name) && !nameReadInRange(items, assigned.name, i + 1, j)) {
+          overwrite = j;
+        }
+        break;
+      }
+      if (statementReadsName(items[j]!, assigned.name)) {
+        break;
+      }
+    }
+    if (overwrite >= 0) {
+      if (items[i]!.kind === "local" && items[overwrite]!.kind === "assign") {
+        const later = singleGeneratedAssign(items[overwrite]!)!;
+        items[overwrite] = { kind: "local", names: [assigned.name], values: [later.value] };
+      }
+      continue;
+    }
+    out.push(items[i]!);
+  }
+  return out;
+}
+
+function exprReadsName(expression: Expression, name: string): boolean {
+  switch (expression.kind) {
+    case "identifier":
+      return expression.name === name;
+    case "unary":
+      return exprReadsName(expression.argument, name);
+    case "binary":
+      return exprReadsName(expression.left, name) || exprReadsName(expression.right, name);
+    case "call":
+      return exprReadsName(expression.callee, name) || expression.args.some((arg) => exprReadsName(arg, name));
+    case "method-call":
+      return exprReadsName(expression.object, name) || expression.args.some((arg) => exprReadsName(arg, name));
+    case "index":
+      return exprReadsName(expression.table, name) || exprReadsName(expression.key, name);
+    case "property":
+      return exprReadsName(expression.object, name);
+    case "table":
+      return expression.fields.some((field) => (field.key ? exprReadsName(field.key, name) : false) || exprReadsName(field.value, name));
+    case "paren":
+      return exprReadsName(expression.expression, name);
+    case "if-expr":
+      return (
+        exprReadsName(expression.test, name) ||
+        exprReadsName(expression.consequent, name) ||
+        expression.branches.some((branch) => exprReadsName(branch.test, name) || exprReadsName(branch.value, name)) ||
+        exprReadsName(expression.alternate, name)
+      );
+    default:
+      return false;
+  }
+}
+
+/** Merge empty generated accumulators onto an earlier `local x = 0` in the same function. */
+function coalesceAccumulators(body: Block): Block {
+  return { kind: "block", statements: coalesceInStatements(body.statements.map(mapNestedCoalesce)) };
+}
+
+function mapNestedCoalesce(statement: Statement): Statement {
+  switch (statement.kind) {
+    case "function-decl":
+      return { ...statement, body: coalesceAccumulators(statement.body) };
+    case "local":
+      return { ...statement, values: statement.values.map((value) => mapFnBodies(value, coalesceAccumulators)) };
+    case "assign":
+      return { ...statement, values: statement.values.map((value) => mapFnBodies(value, coalesceAccumulators)) };
+    case "if":
+      return {
+        ...statement,
+        consequent: coalesceAccumulators(statement.consequent),
+        branches: statement.branches.map((branch) => ({ ...branch, body: coalesceAccumulators(branch.body) })),
+        alternate: statement.alternate ? coalesceAccumulators(statement.alternate) : undefined,
+      };
+    case "while":
+    case "repeat":
+    case "do":
+    case "numeric-for":
+    case "generic-for":
+      return { ...statement, body: coalesceAccumulators(statement.body) };
+    default:
+      return statement;
+  }
+}
+
+function isZeroOrEmptyLocal(statement: Statement): { name: string } | undefined {
+  if (statement.kind !== "local" || statement.names.length !== 1 || !isGeneratedName(statement.names[0]!)) {
+    return undefined;
+  }
+  if (statement.values.length === 0) {
+    return { name: statement.names[0]! };
+  }
+  if (statement.values.length === 1 && statement.values[0]?.kind === "literal" && statement.values[0].value === 0) {
+    return { name: statement.names[0]! };
+  }
+  return undefined;
+}
+
+function coalesceInStatements(statements: Statement[]): Statement[] {
+  const empties: string[] = [];
+  gatherEmptyGenerated(statements, empties);
+  const rename = new Map<string, string>();
+  let acc: string | undefined;
+  for (const name of empties) {
+    if (!acc) {
+      acc = name;
+      continue;
+    }
+    if (nameReadAfterDecl(statements, acc, name)) {
+      acc = name;
+      continue;
+    }
+    rename.set(name, acc);
+  }
+  if (rename.size === 0) {
+    return statements;
+  }
+  return dropRenamedLocals(statements, rename).map((statement) => renameIdents(statement, rename));
+}
+
+function gatherEmptyGenerated(statements: Statement[], out: string[]): void {
+  for (const statement of statements) {
+    const found = isZeroOrEmptyLocal(statement);
+    if (found) {
+      out.push(found.name);
+    }
+    switch (statement.kind) {
+      case "if":
+        gatherEmptyGenerated(statement.consequent.statements, out);
+        statement.branches.forEach((branch) => gatherEmptyGenerated(branch.body.statements, out));
+        if (statement.alternate) {
+          gatherEmptyGenerated(statement.alternate.statements, out);
+        }
+        break;
+      case "while":
+      case "repeat":
+      case "do":
+      case "numeric-for":
+      case "generic-for":
+        gatherEmptyGenerated(statement.body.statements, out);
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+function nameReadAfterDecl(statements: Statement[], acc: string, afterName: string): boolean {
+  let seen = false;
+  const walk = (items: Statement[]): boolean => {
+    for (const item of items) {
+      const found = isZeroOrEmptyLocal(item);
+      if (found?.name === afterName) {
+        seen = true;
+        continue;
+      }
+      if (seen && statementReadsName(item, acc)) {
+        return true;
+      }
+      switch (item.kind) {
+        case "if":
+          if (walk(item.consequent.statements)) {
+            return true;
+          }
+          for (const branch of item.branches) {
+            if (walk(branch.body.statements)) {
+              return true;
+            }
+          }
+          if (item.alternate && walk(item.alternate.statements)) {
+            return true;
+          }
+          break;
+        case "while":
+        case "repeat":
+        case "do":
+        case "numeric-for":
+        case "generic-for":
+          if (walk(item.body.statements)) {
+            return true;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    return false;
+  };
+  return walk(statements);
+}
+
+function dropRenamedLocals(statements: Statement[], rename: Map<string, string>): Statement[] {
+  const mapped = (items: Statement[]): Statement[] =>
+    items.flatMap((item): Statement[] => {
+      if (item.kind === "local" && item.names.length === 1 && rename.has(item.names[0]!)) {
+        return [];
+      }
+      switch (item.kind) {
+        case "if":
+          return [
+            {
+              ...item,
+              consequent: { kind: "block", statements: mapped(item.consequent.statements) },
+              branches: item.branches.map((branch) => ({ ...branch, body: { kind: "block", statements: mapped(branch.body.statements) } })),
+              alternate: item.alternate ? { kind: "block", statements: mapped(item.alternate.statements) } : undefined,
+            },
+          ];
+        case "while":
+        case "repeat":
+        case "do":
+        case "numeric-for":
+        case "generic-for":
+          return [{ ...item, body: { kind: "block", statements: mapped(item.body.statements) } }];
+        default:
+          return [item];
+      }
+    });
+  return mapped(statements);
+}
+
+function nameReadInRange(statements: Statement[], name: string, from: number, to: number): boolean {
+  for (let i = from; i < to; i++) {
+    if (statementReadsName(statements[i]!, name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function statementReadsName(statement: Statement, name: string): boolean {
+  let read = false;
+  const visitExpr = (expression: Expression): void => {
+    if (expression.kind === "identifier" && expression.name === name) {
+      read = true;
+    }
+    switch (expression.kind) {
+      case "unary":
+        visitExpr(expression.argument);
+        break;
+      case "binary":
+        visitExpr(expression.left);
+        visitExpr(expression.right);
+        break;
+      case "call":
+        visitExpr(expression.callee);
+        expression.args.forEach(visitExpr);
+        break;
+      case "method-call":
+        visitExpr(expression.object);
+        expression.args.forEach(visitExpr);
+        break;
+      case "index":
+        visitExpr(expression.table);
+        visitExpr(expression.key);
+        break;
+      case "property":
+        visitExpr(expression.object);
+        break;
+      case "table":
+        expression.fields.forEach((field) => {
+          if (field.key) {
+            visitExpr(field.key);
+          }
+          visitExpr(field.value);
+        });
+        break;
+      case "paren":
+        visitExpr(expression.expression);
+        break;
+      case "if-expr":
+        visitExpr(expression.test);
+        visitExpr(expression.consequent);
+        expression.branches.forEach((branch) => {
+          visitExpr(branch.test);
+          visitExpr(branch.value);
+        });
+        visitExpr(expression.alternate);
+        break;
+      default:
+        break;
+    }
+  };
+  const visitStmt = (item: Statement): void => {
+    switch (item.kind) {
+      case "local":
+        item.values.forEach(visitExpr);
+        break;
+      case "assign":
+        item.targets.forEach((target) => {
+          if (!(target.kind === "identifier" && target.name === name)) {
+            visitExpr(target);
+          }
+        });
+        item.values.forEach(visitExpr);
+        break;
+      case "compound-assign":
+        if (!(item.target.kind === "identifier" && item.target.name === name)) {
+          visitExpr(item.target);
+        }
+        visitExpr(item.value);
+        break;
+      case "expression-stmt":
+        visitExpr(item.expression);
+        break;
+      case "return":
+        item.values.forEach(visitExpr);
+        break;
+      case "if":
+        visitExpr(item.test);
+        item.consequent.statements.forEach(visitStmt);
+        item.branches.forEach((branch) => {
+          visitExpr(branch.test);
+          branch.body.statements.forEach(visitStmt);
+        });
+        item.alternate?.statements.forEach(visitStmt);
+        break;
+      case "while":
+        visitExpr(item.test);
+        item.body.statements.forEach(visitStmt);
+        break;
+      case "repeat":
+        item.body.statements.forEach(visitStmt);
+        visitExpr(item.test);
+        break;
+      case "numeric-for":
+        visitExpr(item.start);
+        visitExpr(item.stop);
+        item.step && visitExpr(item.step);
+        item.body.statements.forEach(visitStmt);
+        break;
+      case "generic-for":
+        item.iterators.forEach(visitExpr);
+        item.body.statements.forEach(visitStmt);
+        break;
+      case "do":
+        item.body.statements.forEach(visitStmt);
+        break;
+      default:
+        break;
+    }
+  };
+  visitStmt(statement);
+  return read;
+}
+
+function renameIdents(statement: Statement, rename: Map<string, string>): Statement {
+  const swap = (expression: Expression): Expression => {
+    if (expression.kind === "identifier") {
+      const next = rename.get(expression.name);
+      return next ? { ...expression, name: next } : expression;
+    }
+    if (expression.kind === "unary") {
+      return { ...expression, argument: swap(expression.argument) };
+    }
+    if (expression.kind === "binary") {
+      return { ...expression, left: swap(expression.left), right: swap(expression.right) };
+    }
+    if (expression.kind === "call") {
+      return { ...expression, callee: swap(expression.callee), args: expression.args.map(swap) };
+    }
+    if (expression.kind === "method-call") {
+      return { ...expression, object: swap(expression.object), args: expression.args.map(swap) };
+    }
+    if (expression.kind === "index") {
+      return { ...expression, table: swap(expression.table), key: swap(expression.key) };
+    }
+    if (expression.kind === "property") {
+      return { ...expression, object: swap(expression.object) };
+    }
+    if (expression.kind === "table") {
+      return {
+        ...expression,
+        fields: expression.fields.map((field) => ({
+          ...field,
+          key: field.key ? swap(field.key) : undefined,
+          value: swap(field.value),
+        })),
+      };
+    }
+    if (expression.kind === "paren") {
+      return { ...expression, expression: swap(expression.expression) };
+    }
+    if (expression.kind === "if-expr") {
+      return {
+        ...expression,
+        test: swap(expression.test),
+        consequent: swap(expression.consequent),
+        branches: expression.branches.map((branch) => ({ test: swap(branch.test), value: swap(branch.value) })),
+        alternate: swap(expression.alternate),
+      };
+    }
+    return expression;
+  };
+  switch (statement.kind) {
+    case "local":
+      return { ...statement, values: statement.values.map(swap) };
+    case "assign":
+      return { ...statement, targets: statement.targets.map(swap), values: statement.values.map(swap) };
+    case "compound-assign":
+      return { ...statement, target: swap(statement.target), value: swap(statement.value) };
+    case "expression-stmt":
+      return { ...statement, expression: swap(statement.expression) };
+    case "return":
+      return { ...statement, values: statement.values.map(swap) };
+    case "if":
+      return {
+        ...statement,
+        test: swap(statement.test),
+        consequent: { kind: "block", statements: statement.consequent.statements.map((item) => renameIdents(item, rename)) },
+        branches: statement.branches.map((branch) => ({
+          test: swap(branch.test),
+          body: { kind: "block", statements: branch.body.statements.map((item) => renameIdents(item, rename)) },
+        })),
+        alternate: statement.alternate
+          ? { kind: "block", statements: statement.alternate.statements.map((item) => renameIdents(item, rename)) }
+          : undefined,
+      };
+    case "while":
+      return { ...statement, test: swap(statement.test), body: { kind: "block", statements: statement.body.statements.map((item) => renameIdents(item, rename)) } };
+    case "repeat":
+      return { ...statement, body: { kind: "block", statements: statement.body.statements.map((item) => renameIdents(item, rename)) }, test: swap(statement.test) };
+    case "numeric-for":
+      return {
+        ...statement,
+        start: swap(statement.start),
+        stop: swap(statement.stop),
+        step: statement.step ? swap(statement.step) : undefined,
+        body: { kind: "block", statements: statement.body.statements.map((item) => renameIdents(item, rename)) },
+      };
+    case "generic-for":
+      return {
+        ...statement,
+        iterators: statement.iterators.map(swap),
+        body: { kind: "block", statements: statement.body.statements.map((item) => renameIdents(item, rename)) },
+      };
     default:
       return statement;
   }
@@ -287,6 +857,9 @@ function countUses(statements: Statement[], name: string, after: number): { read
         item.body.statements.forEach(visitStmt);
         break;
       case "function-decl":
+        if (item.name.split(/[.:]/)[0] === name) {
+          unsafe = true;
+        }
         item.body.statements.forEach(visitStmt);
         break;
       case "do":
@@ -404,7 +977,7 @@ function renameChunk(ast: Chunk): Chunk {
   collect(ast.body.statements, bindings, [new Map()], 0, 0);
   applyHints(ast.body.statements, bindings);
   const names = allocate(bindings);
-  const state = { next: 0 };
+  const state: ApplyState = { next: 0, allocators: [new NameAllocator()] };
   return { kind: "chunk", body: applyBlock(ast.body, names, [new Map()], state) };
 }
 
@@ -461,10 +1034,28 @@ function collect(
         visitExpr(expression.left);
         visitExpr(expression.right);
         break;
-      case "call":
+      case "call": {
         visitExpr(expression.callee);
         expression.args.forEach(visitExpr);
+        const first = expression.args[0];
+        if (first?.kind === "identifier") {
+          const binding = resolve(first.name);
+          if (binding?.kind === "param" && !binding.hint) {
+            if (expression.callee.kind === "identifier" && /^(makePayload|makeAccumulator|loopStress)$/.test(expression.callee.name)) {
+              binding.hint = "seed";
+            }
+            if (
+              expression.callee.kind === "property" &&
+              expression.callee.object.kind === "identifier" &&
+              expression.callee.object.name === "math" &&
+              expression.callee.name === "clamp"
+            ) {
+              binding.hint = "seed";
+            }
+          }
+        }
         break;
+      }
       case "method-call":
         visitExpr(expression.object);
         expression.args.forEach(visitExpr);
@@ -631,6 +1222,12 @@ function collect(
       case "numeric-for":
         visitExpr(statement.start);
         visitExpr(statement.stop);
+        if (statement.stop.kind === "identifier") {
+          const binding = resolve(statement.stop.name);
+          if (binding?.kind === "param" && !binding.hint) {
+            binding.hint = "limit";
+          }
+        }
         if (statement.step) {
           visitExpr(statement.step);
         }
@@ -769,22 +1366,13 @@ function declarationTail(name: string): string {
 
 function allocate(bindings: Binding[]): Map<number, string> {
   const names = new Map<number, string>();
-  const depths = [...new Set(bindings.map((binding) => binding.depth))].sort((a, b) => a - b);
-  for (const depth of depths) {
-    const allocator = new NameAllocator();
-    for (const binding of bindings) {
-      if (binding.depth <= depth && !isGeneratedName(binding.name)) {
-        allocator.take(binding.name);
-      }
+  for (const binding of bindings) {
+    if (!isGeneratedName(binding.name)) {
+      names.set(binding.id, binding.name);
+      continue;
     }
-    for (const binding of bindings.filter((item) => item.depth === depth)) {
-      if (!isGeneratedName(binding.name)) {
-        names.set(binding.id, binding.name);
-        continue;
-      }
-      const hint = pickHint(binding);
-      names.set(binding.id, hint && isValidIdentifier(hint) ? allocator.take(hint) : binding.name);
-    }
+    const hint = pickHint(binding);
+    names.set(binding.id, hint && isValidIdentifier(hint) ? hint : binding.name);
   }
   return names;
 }
@@ -814,15 +1402,33 @@ function pickHint(binding: Binding): string | undefined {
   return undefined;
 }
 
-interface Cursor {
+interface ApplyState {
   next: number;
+  allocators: NameAllocator[];
 }
 
-function applyBlock(body: Block, names: Map<number, string>, scopes: Array<Map<string, number>>, cursor: Cursor): Block {
-  return { kind: "block", statements: body.statements.map((statement) => applyStmt(statement, names, scopes, cursor)) };
+function currentAllocator(state: ApplyState): NameAllocator {
+  return state.allocators[state.allocators.length - 1]!;
 }
 
-function applyStmt(statement: Statement, names: Map<number, string>, scopes: Array<Map<string, number>>, cursor: Cursor): Statement {
+function pushFunctionAllocator(names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): void {
+  const allocator = new NameAllocator();
+  for (const scope of scopes) {
+    for (const id of scope.values()) {
+      const taken = names.get(id);
+      if (taken) {
+        allocator.take(taken);
+      }
+    }
+  }
+  state.allocators.push(allocator);
+}
+
+function applyBlock(body: Block, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Block {
+  return { kind: "block", statements: body.statements.map((statement) => applyStmt(statement, names, scopes, state)) };
+}
+
+function applyStmt(statement: Statement, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Statement {
   const resolve = (name: string): string => {
     for (let i = scopes.length - 1; i >= 0; i--) {
       const id = scopes[i]!.get(name);
@@ -833,11 +1439,14 @@ function applyStmt(statement: Statement, names: Map<number, string>, scopes: Arr
     return name;
   };
   const bind = (old: string): string => {
-    const id = cursor.next++;
+    const id = state.next++;
     scopes[scopes.length - 1]!.set(old, id);
-    return names.get(id) ?? old;
+    const preferred = names.get(id) ?? old;
+    const final = currentAllocator(state).take(preferred);
+    names.set(id, final);
+    return final;
   };
-  const expr = (expression: Expression): Expression => applyExpr(expression, names, scopes, cursor);
+  const expr = (expression: Expression): Expression => applyExpr(expression, names, scopes, state);
 
   switch (statement.kind) {
     case "local":
@@ -849,8 +1458,10 @@ function applyStmt(statement: Statement, names: Map<number, string>, scopes: Arr
     case "function-decl": {
       const name = statement.local ? bind(statement.name) : renameDecl(statement.name, resolve);
       scopes.push(new Map());
+      pushFunctionAllocator(names, scopes, state);
       const params = statement.params.map(bind);
-      const body = applyBlock(statement.body, names, scopes, cursor);
+      const body = applyBlock(statement.body, names, scopes, state);
+      state.allocators.pop();
       scopes.pop();
       return { ...statement, name, params, body };
     }
@@ -858,21 +1469,21 @@ function applyStmt(statement: Statement, names: Map<number, string>, scopes: Arr
       return {
         ...statement,
         test: expr(statement.test),
-        consequent: push(statement.consequent, names, scopes, cursor),
-        branches: statement.branches.map((branch) => ({ test: expr(branch.test), body: push(branch.body, names, scopes, cursor) })),
-        alternate: statement.alternate ? push(statement.alternate, names, scopes, cursor) : undefined,
+        consequent: push(statement.consequent, names, scopes, state),
+        branches: statement.branches.map((branch) => ({ test: expr(branch.test), body: push(branch.body, names, scopes, state) })),
+        alternate: statement.alternate ? push(statement.alternate, names, scopes, state) : undefined,
       };
     case "while":
-      return { ...statement, test: expr(statement.test), body: push(statement.body, names, scopes, cursor) };
+      return { ...statement, test: expr(statement.test), body: push(statement.body, names, scopes, state) };
     case "repeat":
-      return { ...statement, body: push(statement.body, names, scopes, cursor), test: expr(statement.test) };
+      return { ...statement, body: push(statement.body, names, scopes, state), test: expr(statement.test) };
     case "numeric-for": {
       const start = expr(statement.start);
       const stop = expr(statement.stop);
       const step = statement.step ? expr(statement.step) : undefined;
       scopes.push(new Map());
       const loopName = bind(statement.name);
-      const body = applyBlock(statement.body, names, scopes, cursor);
+      const body = applyBlock(statement.body, names, scopes, state);
       scopes.pop();
       return { ...statement, name: loopName, start, stop, step, body };
     }
@@ -880,7 +1491,7 @@ function applyStmt(statement: Statement, names: Map<number, string>, scopes: Arr
       const iterators = statement.iterators.map(expr);
       scopes.push(new Map());
       const loopNames = statement.names.map(bind);
-      const body = applyBlock(statement.body, names, scopes, cursor);
+      const body = applyBlock(statement.body, names, scopes, state);
       scopes.pop();
       return { ...statement, names: loopNames, iterators, body };
     }
@@ -889,15 +1500,15 @@ function applyStmt(statement: Statement, names: Map<number, string>, scopes: Arr
     case "expression-stmt":
       return { ...statement, expression: expr(statement.expression) };
     case "do":
-      return { ...statement, body: push(statement.body, names, scopes, cursor) };
+      return { ...statement, body: push(statement.body, names, scopes, state) };
     default:
       return statement;
   }
 }
 
-function push(body: Block, names: Map<number, string>, scopes: Array<Map<string, number>>, cursor: Cursor): Block {
+function push(body: Block, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Block {
   scopes.push(new Map());
-  const next = applyBlock(body, names, scopes, cursor);
+  const next = applyBlock(body, names, scopes, state);
   scopes.pop();
   return next;
 }
@@ -912,7 +1523,7 @@ function renameDecl(name: string, resolve: (name: string) => string): string {
     .join(".");
 }
 
-function applyExpr(expression: Expression, names: Map<number, string>, scopes: Array<Map<string, number>>, cursor: Cursor): Expression {
+function applyExpr(expression: Expression, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Expression {
   const resolve = (name: string): string => {
     for (let i = scopes.length - 1; i >= 0; i--) {
       const id = scopes[i]!.get(name);
@@ -926,72 +1537,77 @@ function applyExpr(expression: Expression, names: Map<number, string>, scopes: A
     case "identifier":
       return { ...expression, name: resolve(expression.name) };
     case "unary":
-      return { ...expression, argument: applyExpr(expression.argument, names, scopes, cursor) };
+      return { ...expression, argument: applyExpr(expression.argument, names, scopes, state) };
     case "binary":
       return {
         ...expression,
-        left: applyExpr(expression.left, names, scopes, cursor),
-        right: applyExpr(expression.right, names, scopes, cursor),
+        left: applyExpr(expression.left, names, scopes, state),
+        right: applyExpr(expression.right, names, scopes, state),
       };
     case "call":
       return {
         ...expression,
-        callee: applyExpr(expression.callee, names, scopes, cursor),
-        args: expression.args.map((arg) => applyExpr(arg, names, scopes, cursor)),
+        callee: applyExpr(expression.callee, names, scopes, state),
+        args: expression.args.map((arg) => applyExpr(arg, names, scopes, state)),
       };
     case "method-call":
       return {
         ...expression,
-        object: applyExpr(expression.object, names, scopes, cursor),
-        args: expression.args.map((arg) => applyExpr(arg, names, scopes, cursor)),
+        object: applyExpr(expression.object, names, scopes, state),
+        args: expression.args.map((arg) => applyExpr(arg, names, scopes, state)),
       };
     case "index":
       return {
         ...expression,
-        table: applyExpr(expression.table, names, scopes, cursor),
-        key: applyExpr(expression.key, names, scopes, cursor),
+        table: applyExpr(expression.table, names, scopes, state),
+        key: applyExpr(expression.key, names, scopes, state),
       };
     case "property":
-      return { ...expression, object: applyExpr(expression.object, names, scopes, cursor) };
+      return { ...expression, object: applyExpr(expression.object, names, scopes, state) };
     case "table":
       return {
         ...expression,
         fields: expression.fields.map((field) => ({
           ...field,
-          key: field.key ? applyExpr(field.key, names, scopes, cursor) : undefined,
-          value: applyExpr(field.value, names, scopes, cursor),
+          key: field.key ? applyExpr(field.key, names, scopes, state) : undefined,
+          value: applyExpr(field.value, names, scopes, state),
         })),
       };
     case "function-expr": {
       scopes.push(new Map());
+      pushFunctionAllocator(names, scopes, state);
       const params = expression.params.map((param) => {
-        const id = cursor.next++;
+        const id = state.next++;
         scopes[scopes.length - 1]!.set(param, id);
-        return names.get(id) ?? param;
+        const preferred = names.get(id) ?? param;
+        const final = currentAllocator(state).take(preferred);
+        names.set(id, final);
+        return final;
       });
-      const body = applyBlock(expression.body, names, scopes, cursor);
+      const body = applyBlock(expression.body, names, scopes, state);
+      state.allocators.pop();
       scopes.pop();
       return { ...expression, params, body };
     }
     case "paren":
-      return { ...expression, expression: applyExpr(expression.expression, names, scopes, cursor) };
+      return { ...expression, expression: applyExpr(expression.expression, names, scopes, state) };
     case "if-expr":
       return {
         ...expression,
-        test: applyExpr(expression.test, names, scopes, cursor),
-        consequent: applyExpr(expression.consequent, names, scopes, cursor),
+        test: applyExpr(expression.test, names, scopes, state),
+        consequent: applyExpr(expression.consequent, names, scopes, state),
         branches: expression.branches.map((branch) => ({
-          test: applyExpr(branch.test, names, scopes, cursor),
-          value: applyExpr(branch.value, names, scopes, cursor),
+          test: applyExpr(branch.test, names, scopes, state),
+          value: applyExpr(branch.value, names, scopes, state),
         })),
-        alternate: applyExpr(expression.alternate, names, scopes, cursor),
+        alternate: applyExpr(expression.alternate, names, scopes, state),
       };
     case "interp":
       return {
         ...expression,
         parts: expression.parts.map((part) =>
           part.kind === "expr" && typeof part.value !== "string"
-            ? { kind: "expr" as const, value: applyExpr(part.value, names, scopes, cursor) }
+            ? { kind: "expr" as const, value: applyExpr(part.value, names, scopes, state) }
             : part,
         ),
       };

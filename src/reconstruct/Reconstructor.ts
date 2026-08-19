@@ -374,6 +374,15 @@ class SourceBuilder {
     return { kind: "repeat", body: block(body), test };
   }
 
+  /** Reuse a live pinned local in this register instead of minting a new phi name. */
+  private existingPhiName(register: number): string | undefined {
+    const binding = this.env.get(register);
+    if (binding?.name && binding.pinned && this.isDeclaredInScope(binding.name)) {
+      return binding.name;
+    }
+    return undefined;
+  }
+
   private hoistLoopPhis(loop: NaturalLoop): Statement[] {
     const statements: Statement[] = [];
     const namesByRegister = new Map<number, string>();
@@ -386,10 +395,13 @@ class SourceBuilder {
         const name =
           namesByRegister.get(phi.register) ??
           this.loopPhiNames.get(`${blockId}:${phi.register}`) ??
+          this.existingPhiName(phi.register) ??
           this.phiNameFor(key, phi.register, this.ir.cfg.blocks[blockId]!.startPc);
         namesByRegister.set(phi.register, name);
         this.loopPhiNames.set(`${blockId}:${phi.register}`, name);
+        this.phiNames.set(key, name);
         if (this.declaredPhis.has(key) || this.isDeclaredInScope(name)) {
+          this.declaredPhis.add(key);
           this.env.set(phi.register, { name, expression: ident(name), pinned: true });
           continue;
         }
@@ -777,6 +789,12 @@ class SourceBuilder {
   private declareJoinPhis(join: number, statements: Statement[]): void {
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
       const key = `phi:${join}:${phi.register}`;
+      const reused = this.existingPhiName(phi.register);
+      if (reused) {
+        this.phiNames.set(key, reused);
+        this.declaredPhis.add(key);
+        continue;
+      }
       const name = this.phiNameFor(key, phi.register, this.ir.cfg.blocks[join]!.startPc);
       if (!this.declaredPhis.has(key) && !this.isDeclaredInScope(name)) {
         this.declaredPhis.add(key);
@@ -801,6 +819,11 @@ class SourceBuilder {
         this.phiNames.set(key, loopName);
         return loopName;
       }
+    }
+    const reused = this.existingPhiName(register);
+    if (reused) {
+      this.phiNames.set(key, reused);
+      return reused;
     }
     const debug = debugNameAt(this.proto, register, pc);
     const name = this.allocator.reserve(debug ?? "result");
