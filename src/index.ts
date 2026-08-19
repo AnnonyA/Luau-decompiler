@@ -9,6 +9,7 @@ export { Opcode, CaptureType, BuiltinFunction, ConstantTag, instructionWidth, ju
 export { buildControlFlowGraph } from "./cfg/ControlFlowGraph.js";
 export { computeDominators, computePostDominators } from "./cfg/Dominators.js";
 export { findNaturalLoops } from "./cfg/NaturalLoops.js";
+export { structureControlFlow, computeIfFollows, type StructureInfo } from "./cfg/Structure.js";
 export { buildSsa } from "./ssa/SsaBuilder.js";
 export { computeLiveness } from "./dataflow/Liveness.js";
 export { reconstructFunction, analyzePrototype } from "./reconstruct/Reconstructor.js";

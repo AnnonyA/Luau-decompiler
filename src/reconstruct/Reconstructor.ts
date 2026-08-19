@@ -10,6 +10,7 @@ import { block, ident, lit } from "../ast/Ast.js";
 import { buildControlFlowGraph, type BasicBlock, type ControlFlowGraph } from "../cfg/ControlFlowGraph.js";
 import { computeDominators, computePostDominators, type DominatorTree, type PostDominatorTree } from "../cfg/Dominators.js";
 import { findNaturalLoops, type NaturalLoop } from "../cfg/NaturalLoops.js";
+import { structureControlFlow, type StructureInfo } from "../cfg/Structure.js";
 import type { LuauConstant } from "../decode/Constant.js";
 import type { DecodedInstruction } from "../decode/DecodedInstruction.js";
 import { CaptureType, Opcode } from "../decode/Opcode.js";
@@ -24,6 +25,7 @@ export interface FunctionIr {
   postDominators: PostDominatorTree;
   ssa: SsaFunction;
   loops: NaturalLoop[];
+  structure: StructureInfo;
 }
 
 export function analyzePrototype(prototype: Prototype): FunctionIr {
@@ -32,7 +34,8 @@ export function analyzePrototype(prototype: Prototype): FunctionIr {
   const postDominators = computePostDominators(cfg);
   const ssa = buildSsa(cfg, dominators);
   const loops = findNaturalLoops(cfg, dominators);
-  return { cfg, dominators, postDominators, ssa, loops };
+  const structure = structureControlFlow(cfg, dominators, postDominators, loops);
+  return { cfg, dominators, postDominators, ssa, loops, structure };
 }
 
 export interface ReconstructedFunction {
@@ -118,6 +121,8 @@ class SourceBuilder {
   private readonly loopByHeader: Map<number, NaturalLoop>;
   /** Blocks that are the exit (follow) of some natural loop. */
   private readonly loopFollows = new Set<number>();
+  /** Loops whose AST is currently being emitted. Break/continue are only valid here. */
+  private readonly emittingLoops: NaturalLoop[] = [];
   private readonly consumed = new Set<number>();
   private readonly phiNames = new Map<string, string>();
   private readonly loopPhiNames = new Map<string, string>();
@@ -264,7 +269,7 @@ class SourceBuilder {
       }
       if (block.successors.length === 1) {
         const successor = block.successors[0]!;
-        const loop = this.innermostLoopContaining(block.id);
+        const loop = this.currentLoop();
         const last = block.instructions.at(-1);
         if (loop && last?.opcode === Opcode.JUMP) {
           if (successor === loop.header || successor === loop.latch) {
@@ -278,14 +283,15 @@ class SourceBuilder {
             continue;
           }
         }
-        // A pure control stub that jumps to the enclosing loop's exit is a
+        // A pure control stub that jumps to the loop we are emitting is a
         // `break`, even when it is not part of the natural loop (blocks that
         // never reach the latch are excluded from the loop body).
         if (
           last?.opcode === Opcode.JUMP &&
           successor === stop &&
           stop !== undefined &&
-          this.loopFollows.has(stop) &&
+          loop !== undefined &&
+          this.loopFollow(loop) === stop &&
           block.instructions.every((insn) => isControlOnly(insn.opcode))
         ) {
           statements.push({ kind: "break" });
@@ -309,6 +315,15 @@ class SourceBuilder {
   // ------------------------------------------------------------------ loops
 
   private emitLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
+    this.emittingLoops.push(loop);
+    try {
+      return this.emitStructuredLoop(loop, visited);
+    } finally {
+      this.emittingLoops.pop();
+    }
+  }
+
+  private emitStructuredLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
     const header = this.ir.cfg.blocks[loop.header]!;
     const declarations = this.hoistLoopPhis(loop);
     if (loop.kind === "numeric-for") {
@@ -544,6 +559,10 @@ class SourceBuilder {
   }
 
   private loopFollow(loop: NaturalLoop): number | undefined {
+    const structured = this.ir.structure.loopFollow.get(loop.header);
+    if (structured !== undefined) {
+      return structured;
+    }
     const header = this.ir.cfg.blocks[loop.header];
     if (header) {
       const ipdom = this.ir.postDominators.ipdom[loop.header];
@@ -560,6 +579,10 @@ class SourceBuilder {
       }
     }
     return outside.sort((a, b) => a - b)[0];
+  }
+
+  private currentLoop(): NaturalLoop | undefined {
+    return this.emittingLoops.at(-1);
   }
 
   private innermostLoopContaining(blockId: number): NaturalLoop | undefined {
@@ -592,7 +615,7 @@ class SourceBuilder {
     if (thenId === undefined || elseId === undefined) {
       return undefined;
     }
-    const activeLoop = this.innermostLoopContaining(basic.id);
+    const activeLoop = this.currentLoop();
 
     // Boolean assignment pattern: `r = <comparison>` compiled through a
     // JUMP + two LOADB blocks (`r = true/false` on each side).
@@ -630,15 +653,18 @@ class SourceBuilder {
       const thenInside = activeLoop.blocks.includes(thenId);
       const elseInside = activeLoop.blocks.includes(elseId);
       if (thenInside !== elseInside) {
-        // The branch leaving the loop must be a pure control stub (loop exit or
-        // an enclosing latch); a branch with real content is a plain if/else.
+        // One arm leaves the loop we are emitting. The follow may be a RETURN
+        // (zero successors); that is still `break`, not a wrapping if.
         const outsideId = thenInside ? elseId : thenId;
         const outsideBlock = this.ir.cfg.blocks[outsideId];
-        const pureStub =
-          outsideBlock !== undefined &&
-          outsideBlock.successors.length > 0 &&
-          outsideBlock.instructions.every((insn) => isControlOnly(insn.opcode));
-        if (pureStub) {
+        const follow = this.loopFollow(activeLoop);
+        const exitsLoop =
+          outsideId === follow ||
+          (outsideBlock !== undefined &&
+            outsideBlock.instructions.every((insn) => isControlOnly(insn.opcode)) &&
+            outsideBlock.successors.length > 0 &&
+            outsideBlock.successors.every((id) => !activeLoop.blocks.includes(id)));
+        if (exitsLoop) {
           const jumpExits = thenInside;
           this.consumed.add(last.pc);
           const statements = this.emitStraight(basic);
@@ -702,8 +728,9 @@ class SourceBuilder {
     if (basic.fallthrough === undefined || basic.branch === undefined) {
       return undefined;
     }
-    const ipdom = this.ir.postDominators.ipdom[basic.id];
-    const loop = this.innermostLoopContaining(basic.id);
+    const structured = this.ir.structure.ifFollow.get(basic.id);
+    const ipdom = structured ?? this.ir.postDominators.ipdom[basic.id];
+    const loop = this.currentLoop() ?? this.innermostLoopContaining(basic.id);
     if (ipdom !== undefined && ipdom < this.ir.cfg.blocks.length && ipdom !== basic.id) {
       if (!loop || loop.blocks.includes(ipdom)) {
         return ipdom;

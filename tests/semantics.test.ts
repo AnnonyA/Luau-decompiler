@@ -352,6 +352,78 @@ describe("semantic reconstruction", () => {
     expect(printLuau(ast)).toContain("return if flag then left else right");
   });
 
+  it("turns a wrapping loop if into a continue guard", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "numeric-for",
+          name: "i",
+          start: lit(1),
+          stop: ident("n"),
+          body: {
+            kind: "block",
+            statements: [
+              {
+                kind: "if",
+                test: { kind: "binary", op: "~=", left: ident("i"), right: lit(0) },
+                consequent: {
+                  kind: "block",
+                  statements: [
+                    { kind: "assign", targets: [ident("total")], values: [{ kind: "binary", op: "+", left: ident("total"), right: ident("i") }] },
+                    { kind: "expression-stmt", expression: { kind: "call", callee: ident("use"), args: [ident("i")], open: false } },
+                  ],
+                },
+                branches: [],
+              },
+            ],
+          },
+        },
+      ]),
+      {
+        typeAnnotations: "off",
+        ifExpressions: false,
+        earlyReturn: true,
+        interpolatedStrings: false,
+        mathConstants: false,
+      },
+    );
+    const source = printLuau(ast);
+    expect(source).toMatch(/if i == 0 then\n\s+continue/);
+    expect(source).toMatch(/total \+= i/);
+  });
+
+  it("splits an exiting elseif chain into sequential guards", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "while",
+          test: ident("run"),
+          body: {
+            kind: "block",
+            statements: [
+              {
+                kind: "if",
+                test: ident("stop"),
+                consequent: { kind: "block", statements: [{ kind: "continue" }] },
+                branches: [{ test: ident("ready"), body: { kind: "block", statements: [{ kind: "assign", targets: [ident("state")], values: [lit("go")] }] } }],
+                alternate: { kind: "block", statements: [{ kind: "assign", targets: [ident("state")], values: [lit("idle")] }] },
+              },
+            ],
+          },
+        },
+      ]),
+      {
+        typeAnnotations: "off",
+        ifExpressions: false,
+        earlyReturn: true,
+        interpolatedStrings: false,
+        mathConstants: false,
+      },
+    );
+    const source = printLuau(ast);
+    expect(source).toMatch(/if stop then\n\s+continue\n\s+end\n\s+if ready then/);
+  });
+
   it("folds identifier and property updates into compound assignments", () => {
     const ast = cleanupAst(
       chunk([

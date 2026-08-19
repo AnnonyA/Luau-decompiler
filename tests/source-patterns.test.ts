@@ -29,7 +29,8 @@ describe("real bytecode source patterns", () => {
     expect(hash).toBe("8a942d62ce2a933f6ec5d84822a9420b263f6b30");
 
     const source = sourceFor("luac.bin");
-    expect(source).toMatch(/for \w+ = \w+, \w+ do\n\s+if \w+ % 2 ~= 0 then/);
+    expect(source).toMatch(/for \w+ = \w+, \w+ do\n\s+if \w+ % 2 == 0 then\n\s+continue/);
+    expect(source).toMatch(/if \w+ > 100 then\n\s+break/);
     // Compound assignment is the human form of the repeat/while counters.
     expect(source).toMatch(/repeat\n\s+\w+ \+= 1/);
     expect(source).toMatch(/while \w+ > 0 do\n\s+\w+ -= 1/);

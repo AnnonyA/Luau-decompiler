@@ -33,6 +33,7 @@ The output is meant to read like someone wrote it. No raw registers, no `up0`, n
 - Compound assigns: `self.value += n`
 - Methods: `function config:add(...)`
 - Value `if`: `return if cond then a else b`, plus real `elseif` chains
+- Loop structuring: `if i % 2 == 0 then continue`, `if value > 100 then break`, sequential continue-guards instead of a wrapping if
 - Event handlers named from the signal: `onRenderStepped`, `onStopped`, `onActivated`
 - Mutual recursion (`isEven` / `isOdd`) resolves instead of calling a ghost local
 - Types only when we are sure (`Players: Players`) — never `: nil`
@@ -85,7 +86,7 @@ Leave `--context` out, or pass `--no-context` / `runtime_context=false`, and not
 
 ## Versus other Luau decompilers
 
-We already do better on types, method lifting, if-expressions, and callback names.
+We already do better on types, method lifting, if-expressions, callback names, and region-based loop structuring (`break` / `continue` / sequential guards).
 
 They still win on everyday locals (`LocalPlayer` vs `value2`). That is the next gap.
 

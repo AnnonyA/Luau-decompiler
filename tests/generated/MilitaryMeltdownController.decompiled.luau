@@ -130,8 +130,8 @@ playIntroCutscene = function()
     local value21 = AnimationController:Load(clone2.AnimationController.Animator, 89400215976354)
     local currentCamera = workspace.CurrentCamera
     local config5 = {}
-    local onPreAnimation2
-    onPreAnimation2 = function()
+    local onPreAnimation
+    onPreAnimation = function()
         local timePosition = value21.TimePosition
         if value21.IsPlaying and callback3 < timePosition then
             callback3 = timePosition
@@ -142,7 +142,7 @@ playIntroCutscene = function()
             currentCamera.CFrame = callback4
         end
     end
-    table.insert(config5, RunService.PreAnimation:Connect(onPreAnimation2))
+    table.insert(config5, RunService.PreAnimation:Connect(onPreAnimation))
     local children: {Instance} = Lighting:GetChildren()
     for _, value22 in children do
         value22.Parent = nil
@@ -160,16 +160,17 @@ playIntroCutscene = function()
     end
     local config7 = {}
     for _, value25 in player.PlayerGui:GetChildren() do
-        if value25 ~= value16 then
-            if not value25:IsA("ScreenGui") then
-                continue
-            end
-            if not value25.Enabled then
-                continue
-            end
-            value25.Enabled = false
-            table.insert(config7, value25)
+        if value25 == value16 then
+            continue
         end
+        if not value25:IsA("ScreenGui") then
+            continue
+        end
+        if not value25.Enabled then
+            continue
+        end
+        value25.Enabled = false
+        table.insert(config7, value25)
     end
     local floor: Instance = CityModel:FindFirstChild("Floor", true)
     local result3 = floor
@@ -197,112 +198,111 @@ playIntroCutscene = function()
     local value28 = AnimationController:Load(animator, 73037425215243)
     local value29 = os.clock() + 5
     while os.clock() < value29 do
-        if value21.Length > 0 and value28.Length > 0 then
-            if not value27.IsLoaded then
-                task.wait()
-            end
-            local value30 = Moonlite.CreatePlayer(militaryMeltdown.Intro)
-            value30.Looped = false
-            value21:Play()
-            local value31 = AnimationController:Play(animator, 73037425215243)
-            value31.Priority = Enum.AnimationPriority.Action
-            value28 = value31
-            value30:Play()
-            local config9 = { BackgroundTransparency = 1 }
-            TweenService:Create(value17, TweenInfo.new(0.5), config9):Play()
-            local function delayed()
-                value27:Play()
-            end
+        if value21.Length > 0 and (value28.Length > 0 and value27.IsLoaded) then
+            break
+        end
+        task.wait()
+    end
+    local value30 = Moonlite.CreatePlayer(militaryMeltdown.Intro)
+    value30.Looped = false
+    value21:Play()
+    local value31 = AnimationController:Play(animator, 73037425215243)
+    value31.Priority = Enum.AnimationPriority.Action
+    value28 = value31
+    value30:Play()
+    local config9 = { BackgroundTransparency = 1 }
+    TweenService:Create(value17, TweenInfo.new(0.5), config9):Play()
+    local function delayed()
+        value27:Play()
+    end
 
-            task.delay(0.6, delayed)
-            ForgeVFX.emit(clone.CutsceneCamwork1)
-            local result4 = nil
-            local onPreAnimation
-            onPreAnimation = function()
-                if not callback5 and value30.TimePosition >= 4.833 then
-                    callback5 = true
-                    ForgeVFX.emit(clone.EnabledBarrelSmoke)
-                    ForgeVFX.emit(clone.OpenBarrelEmit)
-                    ForgeVFX.emit(clone.CamZoom)
-                end
-                local result5 = result4
-                if not result5 then
-                    result5 = value30.TimePosition
-                    if value30:GetTimeLength() - 0.5 <= result5 then
-                        local config10 = { BackgroundTransparency = 0 }
-                        local value32 = TweenService:Create(value17, TweenInfo.new(0.5), config10)
-                        value32:Play()
-                        result5 = value32
-                        result4 = result5
-                    end
-                end
+    task.delay(0.6, delayed)
+    ForgeVFX.emit(clone.CutsceneCamwork1)
+    local result4 = nil
+    local onPreAnimation2
+    onPreAnimation2 = function()
+        if not callback5 and value30.TimePosition >= 4.833 then
+            callback5 = true
+            ForgeVFX.emit(clone.EnabledBarrelSmoke)
+            ForgeVFX.emit(clone.OpenBarrelEmit)
+            ForgeVFX.emit(clone.CamZoom)
+        end
+        local result5 = result4
+        if not result5 then
+            result5 = value30.TimePosition
+            if value30:GetTimeLength() - 0.5 <= result5 then
+                local config10 = { BackgroundTransparency = 0 }
+                local value32 = TweenService:Create(value17, TweenInfo.new(0.5), config10)
+                value32:Play()
+                result5 = value32
+                result4 = result5
             end
-            table.insert(config5, RunService.PreAnimation:Connect(onPreAnimation))
-            value30.Completed:Wait()
-            if not result4 then
-                local config11 = { BackgroundTransparency = 0 }
-                local value33 = TweenService:Create(value17, TweenInfo.new(0.5), config11)
-                value33:Play()
-                result4 = value33
-            end
-            local value33 = result4.PlaybackState
-            if value33 == Enum.PlaybackState.Playing then
-                result4.Completed:Wait()
-            end
-            if callback2 then
-                callback2:Stop(0)
-            end
-            local config11: number = 0
-            local value34 = AnimationController:Play(animator, 119837384893258, config11)
-            value34.Priority = Enum.AnimationPriority.Idle
-            value34.Looped = true
-            callback2 = value34
-            value28:Stop()
-            for _, value35 in config5 do
-                value35:Disconnect()
-            end
-            value30:Stop()
-            value30:Destroy()
-            Lighting:ClearAllChildren()
-            for key3, value36 in config6 do
-                Lighting[key3] = value36
-            end
-            for _, value37 in children do
-                value37.Parent = Lighting
-            end
-            fadeSoundOut(value27)
-            for _, value38 in config8 do
-                value38:Destroy()
-            end
-            for _, value39 in config7 do
-                value39.Enabled = true
-            end
-            if result3 then
-                result3.Scale = 1
-            end
-            clone2:Destroy()
-            clone:Destroy()
-            currentCamera.CameraType = Enum.CameraType.Custom
-            local config12 = { BackgroundTransparency = 1 }
-            local value40 = TweenService:Create(value17, TweenInfo.new(0.5), config12)
-            value40:Play()
-            value40.Completed:Wait()
-            value16:Destroy()
-            local value41 = AnimationController:Play(animator, 127905115426978)
-            value41.Priority = Enum.AnimationPriority.Action
-            local function onStopped()
-                if callback2 then
-                    callback2:Stop(0)
-                end
-                local value42 = AnimationController:Play(animator, 104097693446066, 0)
-                value42.Priority = Enum.AnimationPriority.Idle
-                value42.Looped = true
-                callback2 = value42
-            end
-
-            value41.Stopped:Once(onStopped)
         end
     end
+    table.insert(config5, RunService.PreAnimation:Connect(onPreAnimation2))
+    value30.Completed:Wait()
+    if not result4 then
+        local config11 = { BackgroundTransparency = 0 }
+        local value33 = TweenService:Create(value17, TweenInfo.new(0.5), config11)
+        value33:Play()
+        result4 = value33
+    end
+    local value33 = result4.PlaybackState
+    if value33 == Enum.PlaybackState.Playing then
+        result4.Completed:Wait()
+    end
+    if callback2 then
+        callback2:Stop(0)
+    end
+    local config11: number = 0
+    local value34 = AnimationController:Play(animator, 119837384893258, config11)
+    value34.Priority = Enum.AnimationPriority.Idle
+    value34.Looped = true
+    callback2 = value34
+    value28:Stop()
+    for _, value35 in config5 do
+        value35:Disconnect()
+    end
+    value30:Stop()
+    value30:Destroy()
+    Lighting:ClearAllChildren()
+    for key3, value36 in config6 do
+        Lighting[key3] = value36
+    end
+    for _, value37 in children do
+        value37.Parent = Lighting
+    end
+    fadeSoundOut(value27)
+    for _, value38 in config8 do
+        value38:Destroy()
+    end
+    for _, value39 in config7 do
+        value39.Enabled = true
+    end
+    if result3 then
+        result3.Scale = 1
+    end
+    clone2:Destroy()
+    clone:Destroy()
+    currentCamera.CameraType = Enum.CameraType.Custom
+    local config12 = { BackgroundTransparency = 1 }
+    local value40 = TweenService:Create(value17, TweenInfo.new(0.5), config12)
+    value40:Play()
+    value40.Completed:Wait()
+    value16:Destroy()
+    local value41 = AnimationController:Play(animator, 127905115426978)
+    value41.Priority = Enum.AnimationPriority.Action
+    local function onStopped()
+        if callback2 then
+            callback2:Stop(0)
+        end
+        local value42 = AnimationController:Play(animator, 104097693446066, 0)
+        value42.Priority = Enum.AnimationPriority.Idle
+        value42.Looped = true
+        callback2 = value42
+    end
+
+    value41.Stopped:Once(onStopped)
 end
 local shakeOnImpact
 shakeOnImpact = function()
@@ -385,9 +385,10 @@ local function riseNukeFromSilo(value49)
         local value56 = NukeBallistics.orientation(position + vector.create(0, 1, 0) * (value52 + value53 * value55 * value55), vector.create(0, 1, 0), 0)
         while value50:IsA("Model") do
             value50:PivotTo(value56)
-            if value55 < 1 then
-                RunService.RenderStepped:Wait()
+            if value55 >= 1 then
+                break
             end
+            RunService.RenderStepped:Wait()
         end
         value55 = value49.TargetPosition
         local flightTime = value49.FlightTime
@@ -411,9 +412,10 @@ local function riseNukeFromSilo(value49)
                             value50.CFrame = value61
                         end
                         result7 = value60
-                        if value59 < 1 then
-                            RunService.RenderStepped:Wait()
+                        if value59 >= 1 then
+                            break
                         end
+                        RunService.RenderStepped:Wait()
                     end
                     value50:Destroy()
                 end

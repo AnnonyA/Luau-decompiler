@@ -247,8 +247,12 @@ describe("loop reconstruction", () => {
         ],
       }),
     );
-    expect(source).toContain("continue");
+    // `if c then if not x then continue end end; break` is equivalent to the
+    // sequential guards below; a trailing continue at the end of the while is
+    // a no-op and is dropped.
     expect(source).toContain("break");
+    expect(source).toMatch(/while x do/);
+    expect(source).toMatch(/if not c then\s+break/);
   });
 
   it("recovers a repeat/until with the test in the last body block", () => {

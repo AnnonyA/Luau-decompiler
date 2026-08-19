@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { buildControlFlowGraph } from "../src/cfg/ControlFlowGraph.ts";
 import { computeDominators, computePostDominators } from "../src/cfg/Dominators.ts";
 import { findNaturalLoops } from "../src/cfg/NaturalLoops.ts";
+import { computeIfFollows, structureControlFlow } from "../src/cfg/Structure.ts";
 import { buildSsa } from "../src/ssa/SsaBuilder.ts";
 import { computeLiveness } from "../src/dataflow/Liveness.ts";
 import { abc, ad, Opcode, decode, proto, ret } from "./helpers.ts";
@@ -69,6 +70,38 @@ describe("control-flow graph", () => {
     const loops = findNaturalLoops(cfg, computeDominators(cfg));
     expect(loops.length).toBeGreaterThan(0);
     expect(loops[0]?.kind === "infinite" || loops[0]?.blocks.length).toBeTruthy();
+  });
+
+  it("assigns an if-follow to every 2-way diamond", () => {
+    const cfg = buildControlFlowGraph(diamond());
+    const post = computePostDominators(cfg);
+    const follows = computeIfFollows(cfg, post);
+    const branch = cfg.blocks.find((block) => block.successors.length === 2);
+    expect(branch).toBeTruthy();
+    expect(follows.get(branch!.id)).toBeDefined();
+  });
+
+  it("structures a diamond as if-then-else and a JUMPBACK as a loop region", () => {
+    const diamondCfg = buildControlFlowGraph(diamond());
+    const diamondInfo = structureControlFlow(
+      diamondCfg,
+      computeDominators(diamondCfg),
+      computePostDominators(diamondCfg),
+      findNaturalLoops(diamondCfg, computeDominators(diamondCfg)),
+    );
+    expect(diamondInfo.regions.some((region) => region.kind === "if-then" || region.kind === "if-then-else")).toBe(true);
+
+    const loopProto = decode(
+      proto({
+        instructions: [ad(Opcode.LOADN, 0, 0), ad(Opcode.JUMPBACK, 0, -2), ret()],
+      }),
+    ).module.prototypes[0]!;
+    const loopCfg = buildControlFlowGraph(loopProto);
+    const loopDom = computeDominators(loopCfg);
+    const info = structureControlFlow(loopCfg, loopDom, computePostDominators(loopCfg), findNaturalLoops(loopCfg, loopDom));
+    expect(info.regions.some((region) => region.kind === "infinite" || region.kind === "while" || region.kind === "repeat")).toBe(
+      true,
+    );
   });
 });
 

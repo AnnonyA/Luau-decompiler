@@ -140,6 +140,120 @@ function invertContinueIfs(statements: Statement[]): Statement[] {
   return out;
 }
 
+/** Phoenix/Cifuentes post-pass: turn loop CFGs into continue/break guards. */
+function structureLoopBody(body: Block): Block {
+  let statements = sequentializeExitingBranches(body.statements);
+  statements = expandLoopGuards(statements);
+  statements = dropRedundantContinues(statements);
+  return { kind: "block", statements };
+}
+
+function alwaysExits(body: Block): boolean {
+  const last = body.statements.at(-1);
+  return last?.kind === "return" || last?.kind === "continue" || last?.kind === "break";
+}
+
+/** `if A then continue elseif B then S` → `if A then continue end; if B then S`. */
+function sequentializeExitingBranches(statements: Statement[]): Statement[] {
+  const out: Statement[] = [];
+  for (const statement of statements) {
+    if (statement.kind !== "if") {
+      out.push(statement);
+      continue;
+    }
+    let current: Extract<Statement, { kind: "if" }> = statement;
+    while (alwaysExits(current.consequent) && (current.branches.length > 0 || current.alternate)) {
+      out.push({ kind: "if", test: current.test, consequent: current.consequent, branches: [] });
+      if (current.branches.length > 0) {
+        const [next, ...rest] = current.branches;
+        current = {
+          kind: "if",
+          test: next!.test,
+          consequent: next!.body,
+          branches: rest,
+          alternate: current.alternate,
+        };
+      } else {
+        out.push(...(current.alternate?.statements ?? []));
+        current = undefined as unknown as Extract<Statement, { kind: "if" }>;
+        break;
+      }
+    }
+    if (current) {
+      out.push(current);
+    }
+  }
+  return out;
+}
+
+function shouldExpandGuard(body: Block): boolean {
+  if (body.statements.length > 1) {
+    return true;
+  }
+  const statement = body.statements[0];
+  return (
+    statement?.kind === "if" ||
+    statement?.kind === "while" ||
+    statement?.kind === "repeat" ||
+    statement?.kind === "numeric-for" ||
+    statement?.kind === "generic-for" ||
+    statement?.kind === "do"
+  );
+}
+
+/** `if X then <rest of loop>` → `if not X then continue end; <rest>`. */
+function expandLoopGuards(statements: Statement[]): Statement[] {
+  const out = [...statements];
+  while (out.length > 0) {
+    const last = out[out.length - 1]!;
+    if (last.kind !== "if" || last.branches.length > 0 || last.alternate || !shouldExpandGuard(last.consequent)) {
+      break;
+    }
+    const inverted = negateCondition(last.test);
+    if (!inverted) {
+      break;
+    }
+    out.pop();
+    out.push({ kind: "if", test: inverted, consequent: block([{ kind: "continue" }]), branches: [] });
+    out.push(...last.consequent.statements);
+  }
+  return out;
+}
+
+/** A `continue` that is the last thing in the loop body is a no-op. */
+function dropRedundantContinues(statements: Statement[]): Statement[] {
+  const out = [...statements];
+  while (out.at(-1)?.kind === "continue") {
+    out.pop();
+  }
+  const last = out.at(-1);
+  if (last?.kind === "if") {
+    out[out.length - 1] = stripTrailingContinues(last);
+  }
+  return out;
+}
+
+function stripBlockContinues(body: Block): Block {
+  const statements = [...body.statements];
+  while (statements.at(-1)?.kind === "continue") {
+    statements.pop();
+  }
+  const last = statements.at(-1);
+  if (last?.kind === "if") {
+    statements[statements.length - 1] = stripTrailingContinues(last);
+  }
+  return { kind: "block", statements };
+}
+
+function stripTrailingContinues(statement: Extract<Statement, { kind: "if" }>): Extract<Statement, { kind: "if" }> {
+  return {
+    ...statement,
+    consequent: stripBlockContinues(statement.consequent),
+    branches: statement.branches.map((branch) => ({ ...branch, body: stripBlockContinues(branch.body) })),
+    alternate: statement.alternate ? stripBlockContinues(statement.alternate) : undefined,
+  };
+}
+
 /** Drop `local x = <fn>` declarations whose name is never referenced again
  * (they are superseded by lifted method declarations), and drop `local _ = nil`. */
 function removeUnusedLocals(statements: Statement[]): Statement[] {
@@ -1268,22 +1382,22 @@ function transformStatement(statement: Statement, options: CleanupOptions): Stat
         alternate: statement.alternate ? transformBlock(statement.alternate, options) : undefined,
       };
     case "while":
-      return { ...statement, test: transformExpr(statement.test, options), body: transformBlock(statement.body, options) };
+      return { ...statement, test: transformExpr(statement.test, options), body: structureLoopBody(transformBlock(statement.body, options)) };
     case "repeat":
-      return { ...statement, test: transformExpr(statement.test, options), body: transformBlock(statement.body, options) };
+      return { ...statement, test: transformExpr(statement.test, options), body: structureLoopBody(transformBlock(statement.body, options)) };
     case "numeric-for":
       return {
         ...statement,
         start: transformExpr(statement.start, options),
         stop: transformExpr(statement.stop, options),
         step: statement.step ? transformExpr(statement.step, options) : undefined,
-        body: transformBlock(statement.body, options),
+        body: structureLoopBody(transformBlock(statement.body, options)),
       };
     case "generic-for":
       return {
         ...statement,
         iterators: statement.iterators.map((iterator) => transformExpr(iterator, options)),
-        body: transformBlock(statement.body, options),
+        body: structureLoopBody(transformBlock(statement.body, options)),
       };
     case "return":
       return { ...statement, values: statement.values.map((value) => transformExpr(value, options)) };
@@ -1754,4 +1868,5 @@ function renameIdentifiers(body: Block, rename: Map<string, string>): Block {
   };
   return { kind: "block", statements: body.statements.map(walkStmt) };
 }
+
 

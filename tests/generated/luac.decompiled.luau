@@ -233,25 +233,27 @@ end
 local function loopStress(value41)
     local result5: number = 0
     for index11 = 1, value41 do
-        if index11 % 2 ~= 0 then
-            local result6
-            for index12 = 1, 5 do
-                if index12 == 4 and index11 > 6 then
-                    break
-                end
-                result6 += index11 * index12
+        if index11 % 2 == 0 then
+            continue
+        end
+        local result6
+        for index12 = 1, 5 do
+            if index12 == 4 and index11 > 6 then
+                break
             end
+            result6 += index11 * index12
         end
     end
     local result7 = value41
     local result8
     while result7 > 0 do
         result7 -= 1
-        if result7 ~= 3 then
-            result8 += result7
-            if result8 > 10000 then
-                break
-            end
+        if result7 == 3 then
+            continue
+        end
+        result8 += result7
+        if result8 > 10000 then
+            break
         end
     end
     local result9: number = 0
@@ -454,27 +456,23 @@ local function stateMachineStress(value78)
         if result19 > 20 then
             result17 = "done"
             continue
-        elseif result17 == "start" then
+        end
+        if result17 == "start" then
             result18 += value78
             if value78 % 2 == 0 then
                 result17 = "even"
-                continue
             else
                 result17 = "odd"
-                continue
             end
         elseif result17 == "even" then
             result18 *= 2
             result17 = "finalize"
-            continue
         elseif result17 == "odd" then
             result18 = result18 * 3 + 1
             result17 = "finalize"
-            continue
         elseif result17 == "finalize" then
             result18 = math.floor(result18 / 2)
             result17 = "done"
-            continue
         else
             result17 = "done"
         end
@@ -618,15 +616,17 @@ end
 local function earlyBreakContinueStress(value102)
     local config38 = {}
     for _, value103 in value102 do
-        if value103 >= 0 then
-            if value103 <= 100 then
-                if value103 == 0 then
-                    table.insert(config38, "zero")
-                    continue
-                else
-                    table.insert(config38, classify(value103))
-                end
-            end
+        if value103 < 0 then
+            continue
+        end
+        if value103 > 100 then
+            break
+        end
+        local result22
+        if value103 == 0 then
+            table.insert(config38, "zero")
+        else
+            table.insert(config38, classify(value103))
         end
     end
     return config38

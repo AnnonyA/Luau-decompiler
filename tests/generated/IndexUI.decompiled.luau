@@ -144,12 +144,13 @@ end
 local function getExplosionVFXIds()
     local config14 = {}
     for key2, value11 in ExplosionVFXData.List do
-        if value11.Collectible then
-            if value11.HideFromIndex then
-                continue
-            end
-            table.insert(config14, key2)
+        if not value11.Collectible then
+            continue
         end
+        if value11.HideFromIndex then
+            continue
+        end
+        table.insert(config14, key2)
     end
     local function compare3(value12, index3)
         local rarity3 = ExplosionVFXData.List[value12].Rarity
@@ -257,14 +258,13 @@ refreshVisibility = function()
         local value26 = config11[config10].entries[key5]
         if not value26 then
             continue
-        else
-            local frame2 = value26.frame
-            local result8: boolean = false
-            if config10 == config10 then
-                result8 = if config10 then true else IndexVisibility.isVisible(config10, key5)
-            end
-            frame2.Visible = result8
         end
+        local frame2 = value26.frame
+        local result8: boolean = false
+        if config10 == config10 then
+            result8 = if config10 then true else IndexVisibility.isVisible(config10, key5)
+        end
+        frame2.Visible = result8
     end
     refreshCounter()
 end
@@ -380,9 +380,8 @@ ensureBobbingLoop = function()
                 if _.Parent then
                     _:PivotTo(_ * value42)
                     continue
-                else
-                    config17[_] = nil
                 end
+                config17[_] = nil
             end
         end
     end
@@ -419,9 +418,8 @@ startCommanderAnimation = function(value43, index13, count)
                         if _.Parent then
                             _:PivotTo(_ * value48)
                             continue
-                        else
-                            config17[_] = nil
                         end
+                        config17[_] = nil
                     end
                 end
             end
@@ -437,17 +435,20 @@ local function populateViewport(value49, index14, count2, options, arg4)
     end
     for _, _ in value49:GetChildren() do
         local result16: string = "BasePart"
-        if not _:IsA(result16) then
-            result16 = "Model"
-            if not _:IsA(result16) then
-                result16 = "WorldModel"
-                if not _:IsA(result16) then
-                    result16 = "Camera"
-                    if _:IsA(result16) then
-                        _:Destroy()
-                    end
-                end
-            end
+        if _:IsA(result16) then
+            continue
+        end
+        result16 = "Model"
+        if _:IsA(result16) then
+            continue
+        end
+        result16 = "WorldModel"
+        if _:IsA(result16) then
+            continue
+        end
+        result16 = "Camera"
+        if _:IsA(result16) then
+            _:Destroy()
         end
     end
 end
@@ -983,21 +984,20 @@ buildExplosionCategory = function()
         value87 = icon.ExplosionVFXs.entries[key9]
         if not value87 then
             continue
-        else
-            local value89 = rarityOutline2.ExplosionVFXs.discovered[key9]
-            local viewport7 = value87.viewport
-            rarityOutline2 = value89 and value2 or value
-            viewport7.ImageColor3 = rarityOutline2
-            local viewport7 = value87.label
-            if viewport7 then
-                viewport7 = value87.label
-                rarityOutline2 = value89 == true
-                viewport7.Visible = rarityOutline2
-            end
-            viewport7 = value87.viewport
-            rarityOutline2 = 0
-            viewport7.ImageTransparency = rarityOutline2
         end
+        local value89 = rarityOutline2.ExplosionVFXs.discovered[key9]
+        local viewport7 = value87.viewport
+        rarityOutline2 = value89 and value2 or value
+        viewport7.ImageColor3 = rarityOutline2
+        local viewport7 = value87.label
+        if viewport7 then
+            viewport7 = value87.label
+            rarityOutline2 = value89 == true
+            viewport7.Visible = rarityOutline2
+        end
+        viewport7 = value87.viewport
+        rarityOutline2 = 0
+        viewport7.ImageTransparency = rarityOutline2
     end
 end
 local buildMutationCategory
@@ -1049,16 +1049,15 @@ buildMutationCategory = function()
         result37 = config11.Mutations.entries[value91]
         if not result37 then
             continue
+        end
+        local value95 = MutationData[value91]
+        if not config11.Mutations.discovered[value91] then
+            continue
+        end
+        if value95 then
+            TooltipController:AddTooltip(TooltipController:AddTooltip())
         else
-            local value95 = MutationData[value91]
-            if config11.Mutations.discovered[value91] then
-                if value95 then
-                    TooltipController:AddTooltip(TooltipController:AddTooltip())
-                    continue
-                else
-                    TooltipController:RemoveTooltip(result37.frame)
-                end
-            end
+            TooltipController:RemoveTooltip(result37.frame)
         end
     end
     for key11 in config11.Mutations.discovered do
@@ -1066,32 +1065,29 @@ buildMutationCategory = function()
         local value92 = clone5.Mutations.entries[key11]
         if not value92 then
             continue
+        end
+        local value96 = child6.Mutations.discovered[key11]
+        local viewport8 = value92.viewport
+        child6 = value96 and value2 or value
+        viewport8.ImageColor3 = child6
+        local viewport8 = value92.label
+        if viewport8 then
+            viewport8 = value92.label
+            child6 = value96 == true
+            viewport8.Visible = child6
+        end
+        viewport8 = config11.Mutations.entries[key11]
+        if not viewport8 then
         else
-            local value96 = child6.Mutations.discovered[key11]
-            local viewport8 = value92.viewport
-            child6 = value96 and value2 or value
-            viewport8.ImageColor3 = child6
-            local viewport8 = value92.label
-            if viewport8 then
-                viewport8 = value92.label
-                child6 = value96 == true
-                viewport8.Visible = child6
-            end
-            viewport8 = config11.Mutations.entries[key11]
-            if not viewport8 then
-                continue
-            else
-                local value97 = MutationData[key11]
-                if config11.Mutations.discovered[key11] then
-                    if value97 then
-                        rarityLabel4 = viewport8.frame
-                        local value95 = value97
-                        TooltipController:AddTooltip(TooltipController:AddTooltip())
-                        continue
-                    else
-                        rarityLabel4 = viewport8.frame
-                        TooltipController:RemoveTooltip(rarityLabel4)
-                    end
+            local value97 = MutationData[key11]
+            if config11.Mutations.discovered[key11] then
+                if value97 then
+                    rarityLabel4 = viewport8.frame
+                    local value95 = value97
+                    TooltipController:AddTooltip(TooltipController:AddTooltip())
+                else
+                    rarityLabel4 = viewport8.frame
+                    TooltipController:RemoveTooltip(rarityLabel4)
                 end
             end
         end
@@ -1169,54 +1165,55 @@ buildBaseSkinCategory = function()
         value100 = clone6.BaseSkins.entries[key13]
         if not value100 then
             continue
-        else
-            local value103 = textLabel8.BaseSkins.discovered[key13]
-            local viewport9 = value100.viewport
-            textLabel8 = value103 and value2 or value
-            viewport9.ImageColor3 = textLabel8
-            local viewport9 = value100.label
-            if viewport9 then
-                viewport9 = value100.label
-                textLabel8 = value103 == true
-                viewport9.Visible = textLabel8
-            end
         end
+        local value103 = textLabel8.BaseSkins.discovered[key13]
+        local viewport9 = value100.viewport
+        textLabel8 = value103 and value2 or value
+        viewport9.ImageColor3 = textLabel8
+        local viewport9 = value100.label
+        if not viewport9 then
+            continue
+        end
+        viewport9 = value100.label
+        textLabel8 = value103 == true
+        viewport9.Visible = textLabel8
     end
 end
 local function refreshCommanderRarities()
     local value104 = getCommanderIds()
     for key14, value105 in value104 do
         local value106 = config11.Commanders.entries[value105]
-        if value106 then
-            local value107 = CommanderData[value105]
-            local result40 = value107
-            if result40 then
-                result40 = value107.Rarity
-            end
-            if not result40 then
-                continue
-            end
-            local rarityLabel6: Instance = value106.frame:FindFirstChild("RarityLabel")
-            if rarityLabel6 then
-                rarityLabel6.Text = result40.DisplayName
-                local child8 = rarityLabel6:FindFirstChildOfClass("UIGradient")
-                if typeof(result40.Color) == "Color3" then
-                    rarityLabel6.TextColor3 = result40.Color
-                    if child8 then
-                        child8.Enabled = false
-                    end
-                elseif typeof(result40.Color) == "ColorSequence" then
-                    if not child8 then
-                        child8 = Instance.new("UIGradient")
-                        child8.Parent = rarityLabel6
-                    end
-                    child8.Enabled = true
-                    child8.Color = result40.Color
-                end
-            end
-            local child8 = value106.frame
-            child8.LayoutOrder = (result40.Order or 1) * 1000 + key14
+        if not value106 then
+            continue
         end
+        local value107 = CommanderData[value105]
+        local result40 = value107
+        if result40 then
+            result40 = value107.Rarity
+        end
+        if not result40 then
+            continue
+        end
+        local rarityLabel6: Instance = value106.frame:FindFirstChild("RarityLabel")
+        if rarityLabel6 then
+            rarityLabel6.Text = result40.DisplayName
+            local child8 = rarityLabel6:FindFirstChildOfClass("UIGradient")
+            if typeof(result40.Color) == "Color3" then
+                rarityLabel6.TextColor3 = result40.Color
+                if child8 then
+                    child8.Enabled = false
+                end
+            elseif typeof(result40.Color) == "ColorSequence" then
+                if not child8 then
+                    child8 = Instance.new("UIGradient")
+                    child8.Parent = rarityLabel6
+                end
+                child8.Enabled = true
+                child8.Color = result40.Color
+            end
+        end
+        local child8 = value106.frame
+        child8.LayoutOrder = (result40.Order or 1) * 1000 + key14
     end
 end
 
@@ -1287,14 +1284,13 @@ function module.Start()
             local value108 = config11[config10].entries[key15]
             if not value108 then
                 continue
-            else
-                local frame8 = value108.frame
-                local result42: boolean = false
-                if config10 == config10 then
-                    result42 = if config10 then true else IndexVisibility.isVisible(config10, key15)
-                end
-                frame8.Visible = result42
             end
+            local frame8 = value108.frame
+            local result42: boolean = false
+            if config10 == config10 then
+                result42 = if config10 then true else IndexVisibility.isVisible(config10, key15)
+            end
+            frame8.Visible = result42
         end
         refreshCounter()
     end
@@ -1335,14 +1331,14 @@ function module.Start()
                 for key16 in config11[config10].entries do
                     local value112 = config11[config10].entries[key16]
                     if not value112 then
-                    else
-                        local frame9 = value112.frame
-                        local result43: boolean = false
-                        if config10 == config10 then
-                            result43 = if config10 then true else IndexVisibility.isVisible(config10, key16)
-                        end
-                        frame9.Visible = result43
+                        continue
                     end
+                    local frame9 = value112.frame
+                    local result43: boolean = false
+                    if config10 == config10 then
+                        result43 = if config10 then true else IndexVisibility.isVisible(config10, key16)
+                    end
+                    frame9.Visible = result43
                 end
             end
         end
