@@ -128,7 +128,7 @@ export function nameFromMethod(name: string, args: Expression[]): string | undef
   if (name === "GetService" || name === "WaitForChild" || name === "FindFirstChild") {
     const first = args[0];
     if (first?.kind === "literal" && typeof first.value === "string" && isValidIdentifier(first.value)) {
-      if (name === "GetService") {
+      if (name === "GetService" || name === "WaitForChild") {
         return first.value;
       }
       return lowerFirst(first.value);

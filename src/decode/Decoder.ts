@@ -13,8 +13,11 @@ import { decodeCodeStream } from "./DecodedInstruction.js";
 import { ConstantTag, Opcode, instructionWidth, opcodeDescriptor } from "./Opcode.js";
 import type { BytecodeModule, FeedbackSlot, LocalDebugInfo, Prototype, UserdataType } from "./Prototype.js";
 
+export type OpcodeEncoding = "auto" | "official" | "roblox";
+
 export interface DecodeOptions {
   limits?: Partial<SafetyLimits>;
+  opcodeEncoding?: OpcodeEncoding;
 }
 
 export interface DecodeResult {
@@ -56,14 +59,22 @@ export function decodeBytecode(input: Uint8Array | ArrayBuffer, options: DecodeO
   const userdataTypes = typesVersion === 3 ? readUserdataTypes(reader, strings, limits) : [];
   const protoCount = reader.boundedVarint(limits.maxPrototypeCount, "prototype count");
   const prototypes: Prototype[] = [];
+  const encoding: OpcodeEncodingState = { value: options.opcodeEncoding ?? "auto" };
 
   for (let id = 0; id < protoCount; id++) {
-    prototypes.push(readPrototype(reader, id, version, typesVersion, strings, limits));
+    prototypes.push(readPrototype(reader, id, version, typesVersion, strings, limits, encoding));
+  }
+  if (encoding.value === "roblox") {
+    profile.notes.push("Roblox opcode encoding was detected and normalized");
   }
 
   const mainProtoId = reader.varint();
   if (mainProtoId >= prototypes.length) {
     throw new BytecodeError("main", `main prototype ${mainProtoId} is out of range`);
+  }
+  if (encoding.value === "roblox" && reader.remaining === 24) {
+    reader.skipTo(reader.bytes.length);
+    profile.notes.push("Roblox bytecode trailer was recognized as opaque metadata");
   }
   if (!reader.atEnd) {
     throw new BytecodeError("trailing", `unused trailing bytes after main prototype`, reader.offset);
@@ -127,6 +138,10 @@ function optionalStringRef(reader: BytecodeReader, strings: string[]): string | 
   return value;
 }
 
+interface OpcodeEncodingState {
+  value: OpcodeEncoding;
+}
+
 function readPrototype(
   reader: BytecodeReader,
   id: number,
@@ -134,6 +149,7 @@ function readPrototype(
   typesVersion: number,
   strings: string[],
   limits: SafetyLimits,
+  encoding: OpcodeEncodingState,
 ): Prototype {
   let protoSize = 0;
   let protoStart = reader.offset;
@@ -158,11 +174,11 @@ function readPrototype(
   }
 
   const codeSize = reader.boundedVarint(limits.maxInstructionsPerPrototype, "instruction count");
-  const code = new Uint32Array(codeSize);
+  let code: Uint32Array = new Uint32Array(codeSize);
   for (let i = 0; i < codeSize; i++) {
     code[i] = reader.u32();
   }
-  validateInstructionStream(code, id);
+  code = normalizeInstructionStream(code, id, encoding);
 
   const constantCount = reader.boundedVarint(limits.maxConstantsPerPrototype, "constant count");
   const constants: LuauConstant[] = [];
@@ -339,6 +355,64 @@ function readConstant(reader: BytecodeReader, strings: string[], prior: LuauCons
 
 function collectIndexedStrings(constants: LuauConstant[]): string[] {
   return constants.map((constant) => (constant.kind === "string" ? constant.value : ""));
+}
+
+const ROBLOX_OPCODE_DECODE_MULTIPLIER = 203;
+
+function normalizeInstructionStream(
+  code: Uint32Array,
+  protoId: number,
+  encoding: OpcodeEncodingState,
+): Uint32Array {
+  if (encoding.value === "official") {
+    validateInstructionStream(code, protoId);
+    return code;
+  }
+  if (encoding.value === "roblox") {
+    return normalizeRobloxOpcodes(code, protoId);
+  }
+
+  try {
+    validateInstructionStream(code, protoId);
+    encoding.value = "official";
+    return code;
+  } catch (officialError) {
+    try {
+      const normalized = normalizeRobloxOpcodes(code, protoId);
+      encoding.value = "roblox";
+      return normalized;
+    } catch {
+      throw officialError;
+    }
+  }
+}
+
+function normalizeRobloxOpcodes(code: Uint32Array, protoId: number): Uint32Array {
+  const normalized = code.slice();
+  let pc = 0;
+  while (pc < normalized.length) {
+    const word = normalized[pc]!;
+    const encodedOpcode = word & 0xff;
+    const opcode = (encodedOpcode * ROBLOX_OPCODE_DECODE_MULTIPLIER) & 0xff;
+    const descriptor = opcodeDescriptor(opcode);
+    if (!descriptor) {
+      throw new BytecodeError(
+        "opcode",
+        `unknown Roblox-encoded opcode ${encodedOpcode} in prototype ${protoId} at pc ${pc}`,
+      );
+    }
+    normalized[pc] = (word & 0xffffff00) | opcode;
+    const width = instructionWidth(opcode);
+    if (pc + width > normalized.length) {
+      throw new BytecodeError(
+        "aux",
+        `opcode ${descriptor.name} in prototype ${protoId} at pc ${pc} is missing its AUX word`,
+      );
+    }
+    pc += width;
+  }
+  validateInstructionStream(normalized, protoId);
+  return normalized;
 }
 
 function validateInstructionStream(code: Uint32Array, protoId: number): void {

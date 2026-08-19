@@ -1,5 +1,5 @@
 import type { DecodedInstruction } from "../decode/DecodedInstruction.js";
-import { Opcode, isFallthrough } from "../decode/Opcode.js";
+import { Opcode, isFallthrough, isFastCall } from "../decode/Opcode.js";
 import type { Prototype } from "../decode/Prototype.js";
 
 export interface BasicBlock {
@@ -31,11 +31,12 @@ export function buildControlFlowGraph(prototype: Prototype): ControlFlowGraph {
   }
 
   for (const insn of instructions) {
-    if (insn.jumpTarget !== undefined && insn.jumpTarget < prototype.code.length) {
-      leaders.add(insn.jumpTarget);
+    const structuralJump = insn.jumpTarget !== undefined && !isFastCall(insn.opcode);
+    if (structuralJump && insn.jumpTarget! < prototype.code.length) {
+      leaders.add(insn.jumpTarget!);
     }
     const next = insn.pc + insn.width;
-    if (!isFallthrough(insn.opcode) || insn.jumpTarget !== undefined) {
+    if (!isFallthrough(insn.opcode) || structuralJump) {
       if (next < prototype.code.length && isFallthrough(insn.opcode)) {
         leaders.add(next);
       } else if (next < prototype.code.length && insn.opcode !== Opcode.RETURN) {
@@ -85,7 +86,7 @@ export function buildControlFlowGraph(prototype: Prototype): ControlFlowGraph {
         addEdge(block, blocks[nextBlock]!);
       }
     }
-    if (last.jumpTarget !== undefined && last.jumpTarget <= prototype.code.length) {
+    if (last.jumpTarget !== undefined && !isFastCall(last.opcode) && last.jumpTarget <= prototype.code.length) {
       if (last.jumpTarget === prototype.code.length) {
         continue;
       }

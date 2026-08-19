@@ -265,7 +265,7 @@ function annotateEffects(insn: DecodedInstruction, constantCount: number): void 
     case Opcode.FORNPREP:
     case Opcode.FORNLOOP:
       insn.uses = [a, a + 1, a + 2];
-      insn.defs = [a + 2, a + 3];
+      insn.defs = [a + 2];
       break;
     case Opcode.FORGPREP:
     case Opcode.FORGPREP_INEXT:
