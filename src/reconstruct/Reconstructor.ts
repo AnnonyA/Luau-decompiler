@@ -3,7 +3,7 @@ import { block, ident, lit } from "../ast/Ast.js";
 import { buildControlFlowGraph, type BasicBlock, type ControlFlowGraph } from "../cfg/ControlFlowGraph.js";
 import { computeDominators, type DominatorTree } from "../cfg/Dominators.js";
 import { findNaturalLoops, type NaturalLoop } from "../cfg/NaturalLoops.js";
-import { constantAsLuauLiteral, type LuauConstant } from "../decode/Constant.js";
+import type { LuauConstant } from "../decode/Constant.js";
 import type { DecodedInstruction } from "../decode/DecodedInstruction.js";
 import { CaptureType, Opcode } from "../decode/Opcode.js";
 import type { BytecodeModule, Prototype } from "../decode/Prototype.js";
@@ -83,12 +83,20 @@ class SourceBuilder {
     const statements: Statement[] = [];
     let current: number | undefined = start;
     while (current !== undefined && current !== stop) {
-      if (visited.has(current)) {
+      if (visited.has(current) || this.emitted.has(current)) {
         break;
       }
       const block = this.ir.cfg.blocks[current];
       if (!block || block.unreachable) {
         break;
+      }
+      const preparedLoop = this.preparedLoop(block);
+      if (preparedLoop && !visited.has(-preparedLoop.header - 1)) {
+        statements.push(...this.emitStraight(block));
+        visited.add(-preparedLoop.header - 1);
+        statements.push(...this.emitLoop(preparedLoop, visited));
+        current = this.loopFollow(preparedLoop);
+        continue;
       }
       const loop = this.loopByHeader.get(current);
       if (loop && !visited.has(-loop.header - 1)) {
@@ -171,17 +179,35 @@ class SourceBuilder {
     return this.emitRange(start, follow, inner);
   }
 
+  private preparedLoop(block: BasicBlock): NaturalLoop | undefined {
+    const last = block.instructions.at(-1);
+    if (last?.opcode !== Opcode.FORNPREP || block.fallthrough === undefined) {
+      return undefined;
+    }
+    const loop = this.loopByHeader.get(block.fallthrough);
+    return loop?.kind === "numeric-for" ? loop : undefined;
+  }
+
+  private numericForPrep(loop: NaturalLoop): DecodedInstruction | undefined {
+    for (const block of this.ir.cfg.blocks) {
+      const last = block.instructions.at(-1);
+      if (last?.opcode === Opcode.FORNPREP && block.fallthrough === loop.header) {
+        return last;
+      }
+    }
+    return undefined;
+  }
+
   private emitNumericFor(loop: NaturalLoop, header: BasicBlock, visited: Set<number>): Statement {
-    const prep = findOpcode(this.ir.cfg, Opcode.FORNPREP, loop.blocks) ?? header.instructions[0];
+    const prep = this.numericForPrep(loop) ?? header.instructions[0];
     const base = prep?.a ?? 0;
-    const name = this.bindLocal(base + 3, prep?.pc ?? header.startPc, "index");
     const start = this.readRegister(base + 2, prep);
     const stop = this.readRegister(base, prep);
     const stepExpr = this.readRegister(base + 1, prep);
+    const name = this.bindLocal(base + 2, prep?.pc ?? header.startPc, "index");
     const step = isLiteralOne(stepExpr) ? undefined : stepExpr;
     const follow = this.loopFollow(loop);
-    const bodyStart = header.successors.find((id) => loop.blocks.includes(id)) ?? loop.header;
-    const body = this.emitRange(bodyStart, follow, new Set([...visited, loop.header]));
+    const body = this.emitRange(loop.header, follow, new Set(visited));
     return { kind: "numeric-for", name, start, stop, step, body: block(body) };
   }
 
@@ -195,8 +221,7 @@ class SourceBuilder {
     }
     const iterators = [this.readRegister(base, loopInsn), this.readRegister(base + 1, loopInsn)];
     const follow = this.loopFollow(loop);
-    const bodyStart = header.successors.find((id) => id !== follow && loop.blocks.includes(id)) ?? loop.header;
-    const body = this.emitRange(bodyStart, follow, new Set([...visited, loop.header]));
+    const body = this.emitRange(loop.header, follow, new Set(visited));
     return { kind: "generic-for", names, iterators, body: block(body) };
   }
 
@@ -212,6 +237,20 @@ class SourceBuilder {
     return outside.sort((a, b) => a - b)[0];
   }
 
+  private innermostLoopContaining(blockId: number): NaturalLoop | undefined {
+    return this.ir.loops
+      .filter((loop) => loop.blocks.includes(blockId))
+      .sort((left, right) => left.blocks.length - right.blocks.length)[0];
+  }
+
+  private isPureLoopLatch(blockId: number, loop: NaturalLoop): boolean {
+    if (blockId !== loop.latch) {
+      return false;
+    }
+    const instructions = this.ir.cfg.blocks[blockId]?.instructions ?? [];
+    return instructions.every((insn) => isControlOnly(insn.opcode));
+  }
+
   private tryIf(
     basic: BasicBlock,
     stop: number | undefined,
@@ -225,6 +264,40 @@ class SourceBuilder {
     const elseId = basic.branch;
     if (thenId === undefined || elseId === undefined) {
       return undefined;
+    }
+    const activeLoop = this.innermostLoopContaining(basic.id);
+    if (
+      activeLoop &&
+      (this.isPureLoopLatch(thenId, activeLoop) || this.isPureLoopLatch(elseId, activeLoop))
+    ) {
+      const transferOnFallthrough = this.isPureLoopLatch(thenId, activeLoop);
+      const follow = transferOnFallthrough ? elseId : thenId;
+      this.consumed.add(last.pc);
+      const statements = this.emitStraight(basic);
+      statements.push({
+        kind: "if",
+        test: this.conditionFrom(last, transferOnFallthrough),
+        consequent: block([{ kind: "continue" }]),
+        branches: [],
+      });
+      return { statements, follow };
+    }
+    if (activeLoop) {
+      const thenInside = activeLoop.blocks.includes(thenId);
+      const elseInside = activeLoop.blocks.includes(elseId);
+      if (thenInside !== elseInside) {
+        const transferOnFallthrough = !thenInside;
+        const follow = thenInside ? thenId : elseId;
+        this.consumed.add(last.pc);
+        const statements = this.emitStraight(basic);
+        statements.push({
+          kind: "if",
+          test: this.conditionFrom(last, transferOnFallthrough),
+          consequent: block([{ kind: "break" }]),
+          branches: [],
+        });
+        return { statements, follow };
+      }
     }
     const join = this.commonJoin(thenId, elseId, stop);
     if (join === undefined && stop === undefined && this.ir.dominators.dominates(basic.id, thenId) === false) {
@@ -247,7 +320,7 @@ class SourceBuilder {
         }
       }
     }
-    const test = this.conditionFrom(last, false);
+    const test = this.conditionFrom(last, true);
     const consequent = block(this.emitRange(thenId, join ?? stop, new Set(visited)));
     const alternateStmts = this.emitRange(elseId, join ?? stop, new Set(visited));
     const ifStmt: Statement = {
@@ -260,26 +333,62 @@ class SourceBuilder {
     return { statements: [...statements, ifStmt], follow: join };
   }
 
-  private commonJoin(a: number, b: number, stop: number | undefined): number | undefined {
-    const seenA = new Set<number>();
-    const walk = (start: number, into: Set<number>): void => {
-      const stack = [start];
-      while (stack.length > 0) {
-        const id = stack.pop()!;
-        if (into.has(id) || id === stop) {
-          continue;
-        }
-        into.add(id);
-        for (const succ of this.ir.cfg.blocks[id]?.successors ?? []) {
-          stack.push(succ);
+  private reachesWithoutBackEdges(start: number, target: number): boolean {
+    const pending = [start];
+    const seen = new Set<number>();
+    while (pending.length > 0) {
+      const current = pending.pop()!;
+      if (current === target) {
+        return true;
+      }
+      if (seen.has(current)) {
+        continue;
+      }
+      seen.add(current);
+      for (const successor of this.ir.cfg.blocks[current]?.successors ?? []) {
+        if (!this.ir.dominators.dominates(successor, current)) {
+          pending.push(successor);
         }
       }
+    }
+    return false;
+  }
+
+  private commonJoin(a: number, b: number, stop: number | undefined): number | undefined {
+    const aReachesB = this.reachesWithoutBackEdges(a, b);
+    const bReachesA = this.reachesWithoutBackEdges(b, a);
+    if (aReachesB !== bReachesA) {
+      return aReachesB ? b : a;
+    }
+
+    const distances = (start: number): Map<number, number> => {
+      const result = new Map<number, number>();
+      const pending: Array<[number, number]> = [[start, 0]];
+      while (pending.length > 0) {
+        const [current, distance] = pending.shift()!;
+        if (result.has(current)) {
+          continue;
+        }
+        result.set(current, distance);
+        if (current === stop) {
+          continue;
+        }
+        for (const successor of this.ir.cfg.blocks[current]?.successors ?? []) {
+          if (!this.ir.dominators.dominates(successor, current)) {
+            pending.push([successor, distance + 1]);
+          }
+        }
+      }
+      return result;
     };
-    walk(a, seenA);
-    const seenB = new Set<number>();
-    walk(b, seenB);
-    const joins = [...seenA].filter((id) => seenB.has(id) && id !== a && id !== b);
-    joins.sort((x, y) => x - y);
+    const fromA = distances(a);
+    const fromB = distances(b);
+    const joins = [...fromA.keys()].filter((id) => fromB.has(id));
+    joins.sort((left, right) => {
+      const leftMax = Math.max(fromA.get(left)!, fromB.get(left)!);
+      const rightMax = Math.max(fromA.get(right)!, fromB.get(right)!);
+      return leftMax - rightMax || fromA.get(left)! + fromB.get(left)! - fromA.get(right)! - fromB.get(right)!;
+    });
     return joins[0];
   }
 
@@ -768,8 +877,15 @@ class SourceBuilder {
     if (constant.kind === "nil") {
       return lit(null);
     }
-    const text = constantAsLuauLiteral(constant);
-    return text ? ident(text) : lit(null);
+    if (constant.kind === "vector") {
+      return {
+        kind: "call",
+        callee: { kind: "property", object: ident("vector"), name: "create" },
+        args: [lit(constant.x), lit(constant.y), lit(constant.z)],
+        open: false,
+      };
+    }
+    return lit(null);
   }
 
   private stringConstant(index: number): string | undefined {
@@ -816,10 +932,10 @@ class SourceBuilder {
     switch (insn.opcode) {
       case Opcode.JUMPIF:
         test = this.readRegister(insn.a, insn);
-        invert = !invert;
         break;
       case Opcode.JUMPIFNOT:
         test = this.readRegister(insn.a, insn);
+        invert = !invert;
         break;
       case Opcode.JUMPIFEQ:
       case Opcode.JUMPIFNOTEQ:
@@ -899,7 +1015,13 @@ class SourceBuilder {
   }
 
   private isEscaping(expression: Expression): boolean {
-    return expression.kind === "function-expr" || expression.kind === "table";
+    if (expression.kind === "function-expr" || expression.kind === "table") {
+      return true;
+    }
+    if (expression.kind === "method-call") {
+      return expression.name === "GetService" || expression.name === "WaitForChild";
+    }
+    return expression.kind === "call" && expression.callee.kind === "identifier" && expression.callee.name === "require";
   }
 
   private isTerminalReturn(insn: DecodedInstruction): boolean {
@@ -962,14 +1084,34 @@ function nameHint(expression: Expression): string | undefined {
   if (expression.kind === "method-call") {
     return nameFromMethod(expression.name, expression.args) ?? nameFromProperty(expression.name);
   }
-  if (expression.kind === "call" && expression.callee.kind === "property") {
-    return nameFromMethod(expression.callee.name, expression.args);
+  if (expression.kind === "call") {
+    if (expression.callee.kind === "identifier" && expression.callee.name === "require") {
+      return nameFromModulePath(expression.args[0]);
+    }
+    if (expression.callee.kind === "property") {
+      return nameFromMethod(expression.callee.name, expression.args);
+    }
   }
   if (expression.kind === "property") {
     return nameFromProperty(expression.name) ?? (isValidIdentifier(expression.name) ? lowerIdent(expression.name) : undefined);
   }
   if (expression.kind === "identifier") {
     return expression.name;
+  }
+  return undefined;
+}
+
+function nameFromModulePath(expression: Expression | undefined): string | undefined {
+  if (expression?.kind === "property" && isValidIdentifier(expression.name)) {
+    return expression.name;
+  }
+  if (
+    expression?.kind === "index" &&
+    expression.key.kind === "literal" &&
+    typeof expression.key.value === "string" &&
+    isValidIdentifier(expression.key.value)
+  ) {
+    return expression.key.value;
   }
   return undefined;
 }
@@ -1024,16 +1166,6 @@ function isTableWrite(insn: DecodedInstruction, register: number): boolean {
       insn.b === register) ||
     (insn.opcode === Opcode.SETLIST && insn.a === register)
   );
-}
-
-function findOpcode(cfg: ControlFlowGraph, opcode: Opcode, blocks: number[]): DecodedInstruction | undefined {
-  for (const id of blocks) {
-    const found = cfg.blocks[id]?.instructions.find((insn) => insn.opcode === opcode);
-    if (found) {
-      return found;
-    }
-  }
-  return undefined;
 }
 
 function isLiteralOne(expression: Expression): boolean {
