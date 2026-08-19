@@ -229,6 +229,75 @@ describe("semantic reconstruction", () => {
     expect(source).not.toMatch(/module\.BuildMegaTable = BuildMegaTable/);
   });
 
+  it("flattens a nested else/if return chain into elseif", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "if",
+          test: ident("a"),
+          consequent: { kind: "block", statements: [{ kind: "return", values: [lit("legendary")] }] },
+          branches: [],
+          alternate: {
+            kind: "block",
+            statements: [
+              {
+                kind: "if",
+                test: ident("b"),
+                consequent: { kind: "block", statements: [{ kind: "return", values: [lit("epic")] }] },
+                branches: [],
+                alternate: {
+                  kind: "block",
+                  statements: [
+                    {
+                      kind: "if",
+                      test: ident("c"),
+                      consequent: { kind: "block", statements: [{ kind: "return", values: [lit("rare")] }] },
+                      branches: [],
+                      alternate: { kind: "block", statements: [{ kind: "return", values: [lit("common")] }] },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ]),
+      {
+        typeAnnotations: "off",
+        ifExpressions: false,
+        earlyReturn: false,
+        interpolatedStrings: false,
+        mathConstants: false,
+      },
+    );
+    const source = printLuau(ast);
+    expect(source).toMatch(/elseif b then/);
+    expect(source).toMatch(/elseif c then/);
+    expect(source).not.toMatch(/else\n    if b then/);
+  });
+
+  it("turns if/else returns into a return if-expression", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "if",
+          test: ident("flag"),
+          consequent: { kind: "block", statements: [{ kind: "return", values: [ident("left")] }] },
+          branches: [],
+          alternate: { kind: "block", statements: [{ kind: "return", values: [ident("right")] }] },
+        },
+      ]),
+      {
+        typeAnnotations: "off",
+        ifExpressions: true,
+        earlyReturn: false,
+        interpolatedStrings: false,
+        mathConstants: false,
+      },
+    );
+    expect(printLuau(ast)).toContain("return if flag then left else right");
+  });
+
   it("folds identifier and property updates into compound assignments", () => {
     const ast = cleanupAst(
       chunk([

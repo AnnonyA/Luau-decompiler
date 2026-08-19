@@ -64,6 +64,8 @@ export interface FunctionDeclaration {
   returnType?: string;
   isVararg: boolean;
   body: Block;
+  /** Source line from the prototype's `lineDefined`, when present. */
+  line?: number;
 }
 
 export interface IfStatement {
@@ -213,6 +215,8 @@ export interface FunctionExpression {
   returnType?: string;
   isVararg: boolean;
   body: Block;
+  /** Source line from the prototype's `lineDefined`, when present. */
+  line?: number;
 }
 
 export interface IfExpressionBranch {

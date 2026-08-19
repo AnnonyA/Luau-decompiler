@@ -41,6 +41,11 @@ describe("real bytecode source patterns", () => {
     expect(source).not.toMatch(/local function ControlFlow\b/);
     expect(source).toContain("function module.BuildMegaTable");
     expect(source).not.toMatch(/module\.BuildMegaTable = BuildMegaTable/);
+    expect(source).toMatch(/elseif \w+ >= 50 then/);
+    expect(source).toMatch(/return if \w+ then/);
+    expect(source).toMatch(/\bisEven\b/);
+    expect(source).toMatch(/\bisOdd\b/);
+    expect(source).not.toMatch(/\bvalue14\s*\(/);
   });
 
   it("normalizes Roblox opcodes and recovers the IndexUI service/module chain", () => {

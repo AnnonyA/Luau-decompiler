@@ -34,18 +34,23 @@ export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
 }
 
 function transformBlock(body: Block, options: CleanupOptions): Block {
-  let statements = flattenElseIf(body.statements).map((statement) => transformStatement(statement, options));
+  // Transform children first so nested `else if` is already flattened, then
+  // absorb those into elseif branches at this level.
+  let statements = body.statements.map((statement) => transformStatement(statement, options));
+  statements = flattenElseIf(statements);
   // Fold before invertContinueIfs: that pass may wrap later statements into a
   // new `if` body that would otherwise skip the compound-assign rewrite.
   statements = foldCompoundAssigns(statements);
   statements = invertContinueIfs(statements);
   const withIfExpr = options.ifExpressions ? recoverIfExpressions(statements) : statements;
-  const withReturns = options.earlyReturn ? recoverEarlyReturns(withIfExpr) : withIfExpr;
+  const withReturnIf = options.ifExpressions ? recoverReturnIfExpressions(withIfExpr) : withIfExpr;
+  const withReturns = options.earlyReturn ? recoverEarlyReturns(withReturnIf) : withReturnIf;
   const withoutDead = removeUnusedLocals(withReturns);
   const withLocalFunctions = liftLocalFunctions(withoutDead);
   const withExports = liftExportedFunctions(withLocalFunctions);
   const withNames = renameGenericClosures(withExports);
-  return { kind: "block", statements: withNames };
+  const withCallbackParams = bindNamedCallbacks(withNames, options);
+  return { kind: "block", statements: withCallbackParams };
 }
 
 /** Last identifier of `module.X` / `config:method`. */
@@ -99,6 +104,7 @@ function liftLocalFunctions(statements: Statement[]): Statement[] {
       returnType: value.returnType,
       isVararg: value.isVararg,
       body: value.body,
+      line: value.line,
     };
   });
 }
@@ -218,6 +224,7 @@ function asFunctionExpr(statement: Statement): FunctionExpression | undefined {
       returnType: statement.returnType,
       isVararg: statement.isVararg,
       body: statement.body,
+      line: statement.line,
     };
   }
   if (statement.kind === "local" && statement.names.length === 1 && statement.values.length === 1) {
@@ -478,7 +485,7 @@ function walkForReceiver(statement: Statement, first: string, hit: () => void): 
       case "do":
         item.body.statements.forEach(visitStmt);
         break;
-      case "function-decl":
+     case "function-decl":
         item.body.statements.forEach(visitStmt);
         break;
       default:
@@ -742,6 +749,162 @@ function roleFromCallee(callee: Expression, args: Expression[], name: string): s
     }
   }
   return undefined;
+}
+
+/** Rename params of `local function X` when X is passed to Connect/Once/etc. */
+function bindNamedCallbacks(statements: Statement[], options: CleanupOptions): Statement[] {
+  const paramsFor = new Map<string, string[]>();
+  const collectFromExpr = (expression: Expression): void => {
+    if (expression.kind === "method-call" || expression.kind === "call") {
+      const last = expression.args.at(-1);
+      if (last?.kind === "identifier") {
+        const names = callbackParamsFor(expression.kind === "method-call" ? expression : expression.callee);
+        if (names && names.length > 0 && names[0] !== "...") {
+          paramsFor.set(last.name, names);
+        }
+      }
+      if (expression.kind === "method-call") {
+        collectFromExpr(expression.object);
+      } else {
+        collectFromExpr(expression.callee);
+      }
+      expression.args.forEach(collectFromExpr);
+      return;
+    }
+    if (expression.kind === "unary") {
+      collectFromExpr(expression.argument);
+    } else if (expression.kind === "binary") {
+      collectFromExpr(expression.left);
+      collectFromExpr(expression.right);
+    } else if (expression.kind === "property") {
+      collectFromExpr(expression.object);
+    } else if (expression.kind === "index") {
+      collectFromExpr(expression.table);
+      collectFromExpr(expression.key);
+    } else if (expression.kind === "table") {
+      expression.fields.forEach((field) => {
+        if (field.key) {
+          collectFromExpr(field.key);
+        }
+        collectFromExpr(field.value);
+      });
+    } else if (expression.kind === "if-expr") {
+      collectFromExpr(expression.test);
+      collectFromExpr(expression.consequent);
+      expression.branches.forEach((branch) => {
+        collectFromExpr(branch.test);
+        collectFromExpr(branch.value);
+      });
+      collectFromExpr(expression.alternate);
+    }
+  };
+  const collectFromStmt = (statement: Statement): void => {
+    switch (statement.kind) {
+      case "local":
+        statement.values.forEach(collectFromExpr);
+        break;
+      case "assign":
+        statement.targets.forEach(collectFromExpr);
+        statement.values.forEach(collectFromExpr);
+        break;
+      case "compound-assign":
+        collectFromExpr(statement.target);
+        collectFromExpr(statement.value);
+        break;
+      case "expression-stmt":
+        collectFromExpr(statement.expression);
+        break;
+      case "return":
+        statement.values.forEach(collectFromExpr);
+        break;
+      case "if":
+        collectFromExpr(statement.test);
+        statement.consequent.statements.forEach(collectFromStmt);
+        statement.branches.forEach((branch) => {
+          collectFromExpr(branch.test);
+          branch.body.statements.forEach(collectFromStmt);
+        });
+        statement.alternate?.statements.forEach(collectFromStmt);
+        break;
+      case "while":
+        collectFromExpr(statement.test);
+        statement.body.statements.forEach(collectFromStmt);
+        break;
+      case "repeat":
+        statement.body.statements.forEach(collectFromStmt);
+        collectFromExpr(statement.test);
+        break;
+      case "function-decl":
+        statement.body.statements.forEach(collectFromStmt);
+        break;
+      default:
+        break;
+    }
+  };
+  statements.forEach(collectFromStmt);
+  if (paramsFor.size === 0) {
+    return statements;
+  }
+  return statements.map((statement) => {
+    if (statement.kind === "function-decl" && statement.local) {
+      const names = paramsFor.get(statement.name);
+      if (names) {
+        const remapped = remapCallbackParams(statement.params, statement.body, names, options);
+        return { ...statement, params: remapped.params, paramTypes: remapped.paramTypes, body: remapped.body };
+      }
+    }
+    if (statement.kind === "local" && statement.names.length === 1 && statement.values[0]?.kind === "function-expr") {
+      const names = paramsFor.get(statement.names[0]!);
+      if (names) {
+        const fn = statement.values[0];
+        const remapped = remapCallbackParams(fn.params, fn.body, names, options);
+        return { ...statement, values: [{ ...fn, params: remapped.params, paramTypes: remapped.paramTypes, body: remapped.body }] };
+      }
+    }
+    if (
+      statement.kind === "assign" &&
+      statement.targets[0]?.kind === "identifier" &&
+      statement.values[0]?.kind === "function-expr"
+    ) {
+      const names = paramsFor.get(statement.targets[0].name);
+      if (names) {
+        const fn = statement.values[0];
+        const remapped = remapCallbackParams(fn.params, fn.body, names, options);
+        return { ...statement, values: [{ ...fn, params: remapped.params, paramTypes: remapped.paramTypes, body: remapped.body }] };
+      }
+    }
+    return statement;
+  });
+}
+
+function remapCallbackParams(
+  params: string[],
+  body: Block,
+  names: string[],
+  options: CleanupOptions,
+): { params: string[]; paramTypes?: Array<string | undefined>; body: Block } {
+  const mapped = params.map((param, index) => {
+    const suggested = names[index];
+    if (!suggested || suggested === "..." || !isValidIdentifier(suggested)) {
+      return param;
+    }
+    if (param.startsWith("arg") || param === "value" || param === "self" || /^value\d+$/.test(param)) {
+      return suggested;
+    }
+    return param;
+  });
+  const rename = new Map<string, string>();
+  params.forEach((old, index) => {
+    const next = mapped[index];
+    if (next && next !== old) {
+      rename.set(old, next);
+    }
+  });
+  const paramTypes =
+    options.typeAnnotations === "off"
+      ? undefined
+      : mapped.map((name) => (name === "player" ? "Player" : name === "character" ? "Model" : name === "cframe" ? "CFrame" : undefined));
+  return { params: mapped, paramTypes, body: rename.size > 0 ? renameIdentifiers(body, rename) : body };
 }
 
 function allocateName(preferred: string, used: Set<string>): string {
@@ -1220,20 +1383,85 @@ function annotateLocals(statement: { names: string[]; values: Expression[] }, op
 }
 
 function flattenElseIf(statements: Statement[]): Statement[] {
-  return statements.map((statement) => {
-    if (statement.kind !== "if" || !statement.alternate || statement.alternate.statements.length !== 1) {
-      return statement;
-    }
-    const inner = statement.alternate.statements[0];
-    if (!inner || inner.kind !== "if") {
-      return statement;
-    }
-    return {
-      ...statement,
-      branches: [...statement.branches, { test: inner.test, body: inner.consequent }, ...inner.branches],
+  return statements.map((statement) => flattenOneIf(statement));
+}
+
+function flattenOneIf(statement: Statement): Statement {
+  if (statement.kind !== "if" || !statement.alternate) {
+    return statement;
+  }
+  let current = statement;
+  while (
+    current.alternate &&
+    current.alternate.statements.length === 1 &&
+    current.alternate.statements[0]?.kind === "if"
+  ) {
+    const inner = current.alternate.statements[0];
+    current = {
+      ...current,
+      branches: [...current.branches, { test: inner.test, body: inner.consequent }, ...inner.branches],
       alternate: inner.alternate,
     };
+  }
+  return current;
+}
+
+/** `if cond then return a else return b end` → `return if cond then a else b`. */
+function recoverReturnIfExpressions(statements: Statement[]): Statement[] {
+  return statements.map((statement) => {
+    if (statement.kind !== "if") {
+      return statement;
+    }
+    const thenReturn = singleReturn(statement.consequent.statements);
+    if (!thenReturn) {
+      return statement;
+    }
+    const branchReturns: Array<{ test: Expression; value: Expression }> = [];
+    for (const branch of statement.branches) {
+      const ret = singleReturn(branch.body.statements);
+      if (!ret || ret.values.length !== thenReturn.values.length) {
+        return statement;
+      }
+      if (thenReturn.values.length === 1) {
+        branchReturns.push({ test: branch.test, value: ret.values[0]! });
+      } else {
+        return statement;
+      }
+    }
+    if (!statement.alternate) {
+      return statement;
+    }
+    const elseReturn = singleReturn(statement.alternate.statements);
+    if (!elseReturn || elseReturn.values.length !== thenReturn.values.length || thenReturn.values.length !== 1) {
+      return statement;
+    }
+    let expr: Expression = {
+      kind: "if-expr",
+      test: statement.test,
+      consequent: thenReturn.values[0]!,
+      branches: branchReturns,
+      alternate: elseReturn.values[0]!,
+    };
+    // Inner transform may already have turned the else into `return if ...`.
+    const alt = elseReturn.values[0]!;
+    if (branchReturns.length === 0 && alt.kind === "if-expr") {
+      expr = {
+        kind: "if-expr",
+        test: statement.test,
+        consequent: thenReturn.values[0]!,
+        branches: [{ test: alt.test, value: alt.consequent }, ...alt.branches],
+        alternate: alt.alternate,
+      };
+    }
+    return { kind: "return", values: [expr] };
   });
+}
+
+function singleReturn(statements: Statement[]): Extract<Statement, { kind: "return" }> | undefined {
+  if (statements.length !== 1 || statements[0]?.kind !== "return") {
+    return undefined;
+  }
+  return statements[0];
 }
 
 function recoverIfExpressions(statements: Statement[]): Statement[] {
@@ -1511,3 +1739,4 @@ function renameIdentifiers(body: Block, rename: Map<string, string>): Block {
   };
   return { kind: "block", statements: body.statements.map(walkStmt) };
 }
+

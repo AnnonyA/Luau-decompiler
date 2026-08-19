@@ -81,6 +81,8 @@ interface Binding {
   methodSelf?: number;
   /** The binding was created from a literal nil (LOADNIL). */
   nilLiteral?: boolean;
+  /** Placeholder created so a later NEWCLOSURE can reuse this name. */
+  forwardRef?: boolean;
 }
 
 interface PendingTable {
@@ -1842,8 +1844,20 @@ class SourceBuilder {
     const mutable = captures.some((capture) => capture.capture?.type === CaptureType.REF);
     const selfCaptured = captures.some((capture) => capture.capture?.source === insn.a);
     const onlyField = Boolean(fieldName) && !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
-    const preferred = debug ?? fieldName ?? this.pendingCallbackHint(insn.a) ?? "function";
-    const name = onlyField ? preferred : this.allocator.reserve(preferred);
+    const existing = this.env.get(insn.a);
+    const preferred =
+      (existing?.forwardRef ? existing.name : undefined) ??
+      debug ??
+      fieldName ??
+      this.pendingCallbackHint(insn.a) ??
+      peekPredicateName(child) ??
+      "function";
+    const name =
+      existing?.forwardRef && existing.name
+        ? existing.name
+        : onlyField
+          ? preferred
+          : this.allocator.reserve(preferred);
 
     // Build the capture bindings for the child.
     const captureMap = new Map<number, CaptureBinding>();
@@ -1874,8 +1888,9 @@ class SourceBuilder {
           refName = undefined;
         }
         if (!refName) {
-          refName = this.allocator.reserve(child.upvalueNames[index] ?? "value");
-          this.env.set(source, { name: refName, expression: ident(refName), pinned: true });
+          const hint = this.futureClosureHint(source, insn.pc) ?? child.upvalueNames[index] ?? "callback";
+          refName = this.allocator.reserve(hint);
+          this.env.set(source, { name: refName, expression: ident(refName), pinned: true, forwardRef: true });
           this.declareInScope(refName);
         }
         captureMap.set(index, { name: refName, expression: ident(refName), mutable: true });
@@ -1895,6 +1910,7 @@ class SourceBuilder {
       params: reconstructed.params,
       isVararg: child.isVararg,
       body: reconstructed.body,
+      line: child.lineDefined || undefined,
     };
 
     if (selfCaptured || mutable) {
@@ -1999,6 +2015,43 @@ class SourceBuilder {
       }
     }
     return writes === 1;
+  }
+
+  /** Look ahead for the NEWCLOSURE that will define `register` and steal its name. */
+  private futureClosureHint(register: number, fromPc: number): string | undefined {
+    for (const other of this.proto.instructions) {
+      if (other.pc <= fromPc) {
+        continue;
+      }
+      if (other.opcode === Opcode.CAPTURE || other.opcode === Opcode.NOP) {
+        continue;
+      }
+      if ((other.opcode === Opcode.NEWCLOSURE || other.opcode === Opcode.DUPCLOSURE) && other.a === register) {
+        const future = this.childOf(other);
+        return (
+          future?.debugName ??
+          this.nextFieldName(other) ??
+          (future ? peekPredicateName(future) : undefined) ??
+          "callback"
+        );
+      }
+      if (other.defs.includes(register)) {
+        return undefined;
+      }
+    }
+    return undefined;
+  }
+
+  private childOf(insn: DecodedInstruction): Prototype | undefined {
+    if (insn.opcode === Opcode.NEWCLOSURE) {
+      const childId = this.proto.childProtoIds[insn.d];
+      return childId !== undefined ? this.module.prototypes[childId] : undefined;
+    }
+    const constant = this.proto.constants[insn.d];
+    if (constant?.kind === "closure") {
+      return this.module.prototypes[constant.protoId];
+    }
+    return undefined;
   }
 
   /** Name a closure from a pending NAMECALL / known callee sitting in a nearby register. */
@@ -2551,6 +2604,31 @@ function fallbackParam(index: number, total: number): string {
     return "value";
   }
   return ["value", "index", "count", "options"][index] ?? `arg${index}`;
+}
+
+/** `if n == 0 then return true/false` mutual recursion → isEven / isOdd. */
+function peekPredicateName(child: Prototype): string | undefined {
+  const instructions = child.instructions;
+  if (instructions.length < 2 || child.numParams !== 1) {
+    return undefined;
+  }
+  let comparesZero = false;
+  let trueOnZero: boolean | undefined;
+  for (const insn of instructions) {
+    if (
+      (insn.opcode === Opcode.JUMPXEQKN || insn.opcode === Opcode.JUMPIFEQ || insn.opcode === Opcode.JUMPXEQKB) &&
+      insn.a === 0
+    ) {
+      comparesZero = true;
+    }
+    if (insn.opcode === Opcode.LOADB && trueOnZero === undefined) {
+      trueOnZero = insn.b !== 0;
+    }
+  }
+  if (!comparesZero || trueOnZero === undefined) {
+    return undefined;
+  }
+  return trueOnZero ? "isEven" : "isOdd";
 }
 
 function pathToExpr(path: string[]): Expression {

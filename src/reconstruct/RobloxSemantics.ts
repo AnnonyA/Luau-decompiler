@@ -65,6 +65,10 @@ const EVENT_PARAMS: Record<string, string[]> = {
   Heartbeat: ["deltaTime"],
   Stepped: ["time", "deltaTime"],
   RenderStepped: ["deltaTime"],
+  PreRender: ["deltaTime"],
+  PreAnimation: ["deltaTime"],
+  PreSimulation: ["deltaTime"],
+  PostSimulation: ["deltaTime"],
   Touched: ["hit"],
   TouchEnded: ["hit"],
   AncestryChanged: ["child", "parent"],
@@ -72,6 +76,43 @@ const EVENT_PARAMS: Record<string, string[]> = {
   GetPropertyChangedSignal: ["property"],
   OnClientEvent: ["..."],
   OnServerEvent: ["player"],
+  Activated: ["inputObject", "clickCount"],
+  MouseButton1Click: [],
+  MouseButton1Down: ["x", "y"],
+  MouseButton1Up: ["x", "y"],
+  MouseButton2Click: [],
+  MouseEnter: ["x", "y"],
+  MouseLeave: ["x", "y"],
+  MouseMoved: ["x", "y"],
+  MouseWheelForward: ["x", "y"],
+  MouseWheelBackward: ["x", "y"],
+  Focused: [],
+  FocusLost: ["enterPressed"],
+  SelectionGained: [],
+  SelectionLost: [],
+  Completed: ["playbackState"],
+  Stopped: [],
+  Played: [],
+  DidLoop: [],
+  Ended: [],
+  Loaded: [],
+  KeyframeReached: ["keyframe"],
+  Triggered: ["player"],
+  PromptShown: ["inputType"],
+  PromptHidden: [],
+  StateChanged: ["old", "new"],
+  Died: [],
+  Running: ["speed"],
+  Jumping: ["active"],
+  Climbing: ["speed"],
+  Swimming: ["speed"],
+  FreeFalling: ["active"],
+  Seated: ["active", "seat"],
+  HealthChanged: ["health"],
+  Idled: ["time"],
+  Event: ["..."],
+  Observe: ["value"],
+  ObserveKeys: ["value"],
 };
 
 const PROPERTY_LOCAL: Record<string, string> = {
@@ -118,7 +159,15 @@ const METHOD_RESULT: Record<string, string> = {
   Disconnect: "unused",
 };
 
-const CALLBACK_METHODS = new Set(["Connect", "Once", "connect", "once"]);
+const CALLBACK_METHODS = new Set([
+  "Connect",
+  "Once",
+  "connect",
+  "once",
+  "ConnectParallel",
+  "Observe",
+  "ObserveKeys",
+]);
 
 export function nameFromProperty(name: string): string | undefined {
   return PROPERTY_LOCAL[name];
