@@ -1,0 +1,1145 @@
+--!strict
+-- Purpose: compile this ModuleScript to real Luau bytecode, then decompile the
+-- exact same bytecode with multiple decompilers.
+--
+-- This intentionally mixes:
+-- services/imports, typed params/returns, CALL result cardinality, MULTRET,
+-- nested call-valued tables, closures/upvalues, recursion, methods/metatables,
+-- if/elseif/guards, short-circuit value expressions, conditional expressions,
+-- numeric/generic/custom loops, break/continue/repeat, RMW, dynamic indexing,
+-- pcall/xpcall, varargs, callbacks, strings/unicode, Roblox userdata and more.
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local HttpService = game:GetService("HttpService")
+local CollectionService = game:GetService("CollectionService")
+
+local LocalPlayer: Player? = Players.LocalPlayer
+local HALF_SECOND: TweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+local WHITE: Color3 = Color3.new(1, 1, 1)
+local UP: Vector3 = Vector3.new(0, 1, 0)
+
+export type Payload = {
+    id: number,
+    name: string,
+    enabled: boolean,
+    tags: {string},
+    metadata: {[string]: any},
+}
+
+export type Result<T> = {
+    ok: boolean,
+    value: T?,
+    error: string?,
+}
+
+local module = {}
+
+local optionalModule = script:FindFirstChild("OptionalModule")
+local OptionalDependency =
+    if optionalModule and optionalModule:IsA("ModuleScript")
+    then require(optionalModule)
+    else nil
+
+local sharedCounter = 0
+local sharedFlag = false
+local sharedObject: any = nil
+local sharedTween: Tween? = nil
+
+local function rgb(r: number, g: number, b: number): Color3
+    return Color3.fromRGB(r, g, b)
+end
+
+local CONFIG = {
+    Name = "MegaStress",
+    Version = 7,
+    Enabled = true,
+
+    Services = {
+        ReplicatedStorage = ReplicatedStorage,
+        RunService = RunService,
+        TweenService = TweenService,
+    },
+
+    Numbers = {
+        zero = 0,
+        one = 1,
+        pi = math.pi,
+        huge = math.huge,
+        negative = -42,
+        fraction = 1 / 3,
+    },
+
+    Strings = {
+        plain = "hello",
+        escaped = "line1\nline2\t\"quoted\"\\slash",
+        unicode = "🇦🇷 — café — 日本語 — 🚀",
+        asset = "rbxassetid://123456789",
+    },
+
+    Colors = {
+        Primary = rgb(255, 64, 110),
+        Secondary = rgb(20, 255, 80),
+        Gradient = {
+            rgb(255, 0, 0),
+            rgb(0, 255, 0),
+            rgb(0, 0, 255),
+        },
+    },
+
+    Nested = {
+        A = {
+            B = {
+                C = {
+                    value = math.floor(10.75),
+                    vector = Vector3.new(1, 2, 3),
+                    cframe = CFrame.new(1, 2, 3) * CFrame.Angles(0, math.pi / 2, 0),
+                },
+            },
+        },
+    },
+
+    DynamicLike = {
+        ["hello world"] = true,
+        [100] = "numeric-key",
+        [false] = "boolean-key",
+    },
+}
+
+module.Config = CONFIG
+
+local function returnsThree(seed: number)
+    return seed, seed + 1, seed + 2
+end
+
+local function sum3(a: number, b: number, c: number): number
+    return a + b + c
+end
+
+local function fixedOneFromMulti(seed: number): number
+    local first = returnsThree(seed)
+    return first
+end
+
+local function fixedTwoFromMulti(seed: number)
+    local first, second = returnsThree(seed)
+    return first, second
+end
+
+local function forwardMulti(seed: number)
+    return returnsThree(seed)
+end
+
+local function callWithOpenTail(seed: number): number
+    return sum3(returnsThree(seed))
+end
+
+local function varargStats(...: any)
+    local count = select("#", ...)
+    local packed = table.pack(...)
+    local first = packed[1]
+    local last = packed[count]
+    return count, first, last, packed
+end
+
+local function forwardVarargs(callback: (...any) -> ...any, ...: any)
+    return callback(...)
+end
+
+local function factorial(n: number): number
+    if n <= 1 then
+        return 1
+    end
+
+    return n * factorial(n - 1)
+end
+
+local isEven: (number) -> boolean
+local isOdd: (number) -> boolean
+
+isEven = function(n: number): boolean
+    if n == 0 then
+        return true
+    end
+
+    return isOdd(n - 1)
+end
+
+isOdd = function(n: number): boolean
+    if n == 0 then
+        return false
+    end
+
+    return isEven(n - 1)
+end
+
+local function genericIdentity<T>(value: T): T
+    return value
+end
+
+local function chooseValue(condition: boolean, left: any, right: any)
+    return if condition then left else right
+end
+
+local function sideEffect(tag: string): boolean
+    sharedCounter += 1
+    sharedFlag = not sharedFlag
+    return #tag > 2
+end
+
+local function valueShortCircuit(primary: any, fallback: any)
+    return primary or fallback
+end
+
+local function booleanShortCircuit(a: boolean, b: boolean, c: boolean): boolean
+    return (a and b) or (not a and c)
+end
+
+local function guarded(value: number?): number
+    if value == nil then
+        return -1
+    end
+
+    if value < 0 then
+        return 0
+    end
+
+    return value
+end
+
+local function classify(score: number): string
+    if score >= 100 then
+        return "legendary"
+    elseif score >= 75 then
+        return "epic"
+    elseif score >= 50 then
+        return "rare"
+    elseif score >= 25 then
+        return "uncommon"
+    else
+        return "common"
+    end
+end
+
+local function branchPhi(condition: boolean, value: number): number
+    local result
+
+    if condition then
+        result = math.max(value, 10)
+    else
+        result = math.min(value, -10)
+    end
+
+    return result
+end
+
+local function nestedGuard(a: any, b: any, c: any)
+    if not a then
+        return nil
+    end
+
+    if not b then
+        return nil
+    end
+
+    if not c then
+        return nil
+    end
+
+    return a, b, c
+end
+
+local Counter = {}
+Counter.__index = Counter
+
+function Counter.new(initial: number)
+    return setmetatable({
+        value = initial,
+        history = {initial},
+        metadata = {
+            createdAt = os.clock(),
+            color = rgb(100, 150, 200),
+        },
+    }, Counter)
+end
+
+function Counter:add(amount: number): number
+    self.value += amount
+    table.insert(self.history, self.value)
+    return self.value
+end
+
+function Counter:multiply(amount: number): number
+    self.value *= amount
+    table.insert(self.history, self.value)
+    return self.value
+end
+
+function Counter:reset()
+    self.value = 0
+    table.clear(self.history)
+    table.insert(self.history, 0)
+end
+
+function Counter:getLast()
+    return self.history[#self.history]
+end
+
+module.Counter = Counter
+
+local function makeAccumulator(start: number)
+    local total = start
+    local calls = 0
+
+    local function accumulate(delta: number): number
+        calls += 1
+        total += delta
+        sharedCounter += 1
+        return total
+    end
+
+    local function stats()
+        return total, calls
+    end
+
+    return accumulate, stats
+end
+
+local function makeRecursiveClosure(multiplier: number)
+    local callback
+
+    callback = function(value: number): number
+        if value <= 0 then
+            return 0
+        end
+
+        return multiplier + callback(value - 1)
+    end
+
+    return callback
+end
+
+local function makeCallable(callback: (...any) -> ...any)
+    local object = {
+        calls = 0,
+        callback = callback,
+    }
+
+    return setmetatable(object, {
+        __call = function(self, ...)
+            self.calls += 1
+            return self.callback(...)
+        end,
+
+        __tostring = function(self)
+            return `Callable(calls={self.calls})`
+        end,
+    })
+end
+
+local function reverseIterator(list: {any}, index: number?)
+    local nextIndex = (index or (#list + 1)) - 1
+
+    if nextIndex < 1 then
+        return nil
+    end
+
+    return nextIndex, list[nextIndex]
+end
+
+local function loopStress(limit: number): number
+    local total = 0
+
+    for i = 1, limit do
+        if i % 2 == 0 then
+            continue
+        end
+
+        for j = 1, 5 do
+            if j == 4 and i > 6 then
+                break
+            end
+
+            total += i * j
+        end
+    end
+
+    local descending = limit
+
+    while descending > 0 do
+        descending -= 1
+
+        if descending == 3 then
+            continue
+        end
+
+        total += descending
+
+        if total > 10_000 then
+            break
+        end
+    end
+
+    local repeatCount = 0
+
+    repeat
+        repeatCount += 1
+        total += repeatCount
+    until repeatCount >= 3
+
+    return total
+end
+
+local function genericLoopStress(values: {number}, dictionary: {[string]: number}): number
+    local total = 0
+
+    for index, value in ipairs(values) do
+        total += index * value
+    end
+
+    for key, value in pairs(dictionary) do
+        if #key > 0 then
+            total += value
+        end
+    end
+
+    for _, value in values do
+        total += value
+    end
+
+    for index, value in reverseIterator, values, nil do
+        total += index + value
+    end
+
+    return total
+end
+
+local function dynamicRmwStress(seed: number)
+    local index = (seed % 3) + 1
+    local key = `key_{seed % 4}`
+
+    local state = {
+        array = {10, 20, 30},
+        map = {
+            key_0 = 1,
+            key_1 = 2,
+            key_2 = 3,
+            key_3 = 4,
+        },
+        nested = {
+            stats = {
+                score = 5,
+                multiplier = 2,
+            },
+        },
+    }
+
+    state.array[index] += seed
+    state.map[key] += 1
+    state.nested.stats.score += state.array[index]
+    state.nested.stats.multiplier *= 2
+
+    local a, b = state.array[1], state.array[2]
+    a, b = b, a
+    state.array[1], state.array[2] = a, b
+
+    return state
+end
+
+local function callValuedTable(seed: number)
+    local dynamicKey = `dynamic_{seed}`
+
+    local tableValue = {
+        id = seed,
+        label = `fixture-{seed}`,
+        color = rgb(seed % 255, (seed * 2) % 255, (seed * 3) % 255),
+
+        vector = Vector3.new(seed, seed + 1, seed + 2),
+
+        nested = {
+            position = CFrame.new(seed, 0, 0),
+            values = {
+                math.max(seed, 1),
+                math.floor(seed / 2),
+                math.clamp(seed, 0, 100),
+            },
+            colors = {
+                rgb(255, 0, 0),
+                rgb(0, 255, 0),
+                rgb(0, 0, 255),
+            },
+        },
+
+        [dynamicKey] = math.abs(seed),
+        [seed] = chooseValue(seed % 2 == 0, "even", "odd"),
+    }
+
+    return tableValue
+end
+
+local function trueOpenMultretTable(seed: number)
+    local values = {
+        "prefix",
+        returnsThree(seed),
+    }
+
+    return values
+end
+
+local function fixedCallTable(seed: number)
+    local values = {
+        fixedOne = returnsThree(seed),
+        nested = {
+            returnsThree(seed + 10),
+        },
+        packed = table.pack(returnsThree(seed + 20)),
+    }
+
+    return values
+end
+
+local function expressionStress(a: number, b: number, c: number): number
+    local left = (a + b) * c
+    local right = a + b * c
+    local power = a ^ 2 + b ^ 2
+    local modulo = power % math.max(c, 1)
+    local combined = math.floor((left + right + modulo) / 3)
+
+    return combined
+end
+
+local function bitStress(value: number): number
+    local masked = bit32.band(value, 0xFF)
+    local shifted = bit32.lshift(masked, 2)
+    return bit32.bxor(shifted, 0x5A)
+end
+
+local function stringStress(name: string, id: number): string
+    local interpolated = `user={name}; id={id}; class={classify(id)}`
+    local joined = table.concat({"alpha", "beta", tostring(id)}, "|")
+    local replaced = string.gsub(interpolated, "user=", "name=")
+    return replaced .. "::" .. joined .. "::🇦🇷"
+end
+
+local function safeJsonDecode(text: string): Result<any>
+    local ok, value = pcall(HttpService.JSONDecode, HttpService, text)
+
+    if ok then
+        return {
+            ok = true,
+            value = value,
+            error = nil,
+        }
+    end
+
+    return {
+        ok = false,
+        value = nil,
+        error = tostring(value),
+    }
+end
+
+local function xpcallStress(callback: () -> any): Result<any>
+    local ok, value = xpcall(callback, function(err)
+        return `handled:{tostring(err)}`
+    end)
+
+    if ok then
+        return {ok = true, value = value}
+    end
+
+    return {ok = false, error = tostring(value)}
+end
+
+local function coroutineStress(seed: number)
+    local thread = coroutine.create(function(value: number)
+        coroutine.yield(value + 1, value + 2)
+        return value + 3
+    end)
+
+    local ok1, a, b = coroutine.resume(thread, seed)
+    local ok2, c = coroutine.resume(thread)
+
+    return ok1, a, b, ok2, c
+end
+
+local function bufferStress(seed: number): number
+    local data = buffer.create(8)
+    buffer.writeu8(data, 0, seed % 256)
+    buffer.writei16(data, 1, seed)
+    buffer.writef32(data, 3, seed / 3)
+
+    return buffer.readu8(data, 0) + buffer.readi16(data, 1)
+end
+
+local function instancePhiStress(root: Instance)
+    local part = root:FindFirstChild("Part")
+    local color =
+        if part and part:IsA("BasePart")
+        then part.Color
+        else nil
+
+    if part and color then
+        return part, color
+    end
+
+    return nil, nil
+end
+
+local function chainedFindStress(root: Instance)
+    local current = root:FindFirstChild("A")
+
+    if current then
+        current = current:FindFirstChild("B")
+    end
+
+    if current then
+        current = current:FindFirstChild("C")
+    end
+
+    return current
+end
+
+local function tableEscapeNegative(observer: (any) -> (), value: number)
+    local result = {}
+    observer(result)
+    result.value = value
+    return result
+end
+
+local function repeatedCallNegative(callback: () -> any)
+    local value = callback()
+    return value, value
+end
+
+local function mutableSnapshotNegative(object: any)
+    local config = object.Config
+    local before = config.Value
+    sideEffect("mutation-barrier")
+    local after = config.Value
+
+    return before, after
+end
+
+local function stateMachineStress(input: number): number
+    local state = "start"
+    local result = 0
+    local iterations = 0
+
+    while state ~= "done" do
+        iterations += 1
+
+        if iterations > 20 then
+            state = "done"
+            continue
+        end
+
+        if state == "start" then
+            result += input
+            state = if input % 2 == 0 then "even" else "odd"
+        elseif state == "even" then
+            result *= 2
+            state = "finalize"
+        elseif state == "odd" then
+            result = result * 3 + 1
+            state = "finalize"
+        elseif state == "finalize" then
+            result = math.floor(result / 2)
+            state = "done"
+        else
+            state = "done"
+        end
+    end
+
+    return result
+end
+
+local function nestedCallbacks(seed: number)
+    local captured = seed
+    local history = {}
+
+    local function outer(multiplier: number)
+        local localState = multiplier
+
+        return function(delta: number)
+            captured += delta
+            localState *= 2
+
+            table.insert(history, {
+                captured = captured,
+                localState = localState,
+                color = rgb(captured % 255, localState % 255, 128),
+            })
+
+            return captured + localState
+        end
+    end
+
+    local first = outer(2)
+    local second = outer(3)
+
+    return {
+        first = first,
+        second = second,
+        history = history,
+        snapshot = function()
+            return captured, #history
+        end,
+    }
+end
+
+local function tweenStress(instance: Instance, transparency: number)
+    if not instance:IsA("GuiObject") then
+        return nil
+    end
+
+    local tween = TweenService:Create(instance, HALF_SECOND, {
+        BackgroundTransparency = transparency,
+        Position = UDim2.fromScale(0.5, 0.5),
+    })
+
+    tween.Completed:Once(function(playbackState)
+        sharedTween = nil
+
+        if playbackState == Enum.PlaybackState.Completed then
+            sharedCounter += 1
+        end
+    end)
+
+    sharedTween = tween
+    tween:Play()
+
+    return tween
+end
+
+local function connectionStress(signal: RBXScriptSignal)
+    local count = 0
+    local connection: RBXScriptConnection?
+
+    connection = signal:Connect(function(...)
+        count += select("#", ...)
+        sharedCounter += 1
+
+        if count >= 5 and connection then
+            connection:Disconnect()
+            connection = nil
+        end
+    end)
+
+    return connection
+end
+
+local function collectionStress(instance: Instance)
+    local tags = CollectionService:GetTags(instance)
+    local map = {}
+
+    for _, tag in tags do
+        map[tag] = true
+    end
+
+    return {
+        tags = tags,
+        map = map,
+        hasAny = #tags > 0,
+    }
+end
+
+local function optionalDependencyStress(value: number)
+    if OptionalDependency and type(OptionalDependency) == "table" then
+        local callback = OptionalDependency.transform
+
+        if type(callback) == "function" then
+            return callback(value)
+        end
+    end
+
+    return value
+end
+
+local function shadowingStress(value: number): number
+    local result = value
+
+    do
+        local value = result + 1
+        local result = value * 2
+
+        if result > 10 then
+            local value = result - 3
+            result = value
+        end
+
+        sharedCounter += result
+    end
+
+    return result
+end
+
+local function complexCondition(a: any, b: any, c: any, callback: () -> boolean): boolean
+    return (
+        (a ~= nil and b ~= nil and a ~= b)
+        or (c and callback())
+        or (not a and not b and not c)
+    )
+end
+
+local function sortingCallbackStress(values: {number})
+    local copy = table.clone(values)
+
+    table.sort(copy, function(a, b)
+        if a == b then
+            return false
+        end
+
+        return a > b
+    end)
+
+    return copy
+end
+
+local function directReturnCall(value: number)
+    return optionalDependencyStress(value)
+end
+
+local function localAliasStress(payload: Payload)
+    local metadata = payload.metadata
+    local tags = payload.tags
+    local firstTag = tags[1]
+    local enabled = payload.enabled
+
+    return metadata, tags, firstTag, enabled
+end
+
+local function multiAssignmentStress(seed: number)
+    local a, b, c = seed, seed + 1, seed + 2
+
+    a, b = b, a
+    b, c = c, b
+    a, b, c = returnsThree(seed + 10)
+
+    return a, b, c
+end
+
+local function earlyBreakContinueStress(values: {number})
+    local output = {}
+
+    for _, value in values do
+        if value < 0 then
+            continue
+        end
+
+        if value > 100 then
+            break
+        end
+
+        if value == 0 then
+            table.insert(output, "zero")
+            continue
+        end
+
+        table.insert(output, classify(value))
+    end
+
+    return output
+end
+
+local function makePayload(seed: number): Payload
+    return {
+        id = seed,
+        name = `Payload-{seed}`,
+        enabled = seed % 2 == 0,
+        tags = {
+            "stress",
+            classify(seed),
+            if isEven(math.abs(seed)) then "even" else "odd",
+        },
+        metadata = {
+            factorial = factorial(math.clamp(math.abs(seed), 0, 8)),
+            bit = bitStress(seed),
+            expression = expressionStress(seed, seed + 1, seed + 2),
+            fixedOne = fixedOneFromMulti(seed),
+            callTail = callWithOpenTail(seed),
+            stateMachine = stateMachineStress(seed),
+        },
+    }
+end
+
+function module.BuildMegaTable(seed: number)
+    local payload = makePayload(seed)
+    local accumulator, stats = makeAccumulator(seed)
+    local recursive = makeRecursiveClosure(2)
+    local callbacks = nestedCallbacks(seed)
+
+    local firstAccumulation = accumulator(5)
+    local secondAccumulation = accumulator(-2)
+    local total, calls = stats()
+
+    local openA, openB, openC = returnsThree(seed)
+
+    local result = {
+        payload = payload,
+
+        calculations = {
+            factorial = factorial(math.clamp(seed, 0, 8)),
+            branchPhi = branchPhi(seed % 2 == 0, seed),
+            loops = loopStress(math.clamp(seed, 0, 20)),
+            expression = expressionStress(seed, seed + 2, seed + 3),
+            bits = bitStress(seed),
+            recursiveClosure = recursive(4),
+        },
+
+        accumulator = {
+            first = firstAccumulation,
+            second = secondAccumulation,
+            total = total,
+            calls = calls,
+        },
+
+        multi = {
+            fixedOne = fixedOneFromMulti(seed),
+            fixedTwo = table.pack(fixedTwoFromMulti(seed)),
+            forwarded = table.pack(forwardMulti(seed)),
+            openTable = trueOpenMultretTable(seed),
+            fixedTable = fixedCallTable(seed),
+            direct = {openA, openB, openC},
+        },
+
+        constructors = {
+            callValued = callValuedTable(seed),
+            dynamic = dynamicRmwStress(seed),
+            colors = {
+                rgb(255, 64, 110),
+                rgb(20, 255, 80),
+                rgb(0, 0, 0),
+            },
+            nestedCalls = {
+                {
+                    name = "A",
+                    value = math.max(seed, 1),
+                    color = rgb(255, 0, 0),
+                },
+                {
+                    name = "B",
+                    value = math.min(seed, 100),
+                    color = rgb(0, 255, 0),
+                },
+                {
+                    name = "C",
+                    value = math.abs(seed),
+                    color = rgb(0, 0, 255),
+                },
+            },
+        },
+
+        callbacks = {
+            first = callbacks.first(1),
+            second = callbacks.second(2),
+            snapshot = table.pack(callbacks.snapshot()),
+        },
+
+        strings = {
+            formatted = stringStress(`seed-{seed}`, seed),
+            class = classify(seed),
+            unicode = CONFIG.Strings.unicode,
+        },
+
+        booleans = {
+            even = isEven(math.abs(seed)),
+            odd = isOdd(math.abs(seed)),
+            complex = booleanShortCircuit(seed > 0, seed % 2 == 0, seed < 10),
+            sideEffectValue = (seed > 0 and sideEffect("positive")) or sideEffect("fallback"),
+        },
+    }
+
+    return result
+end
+
+function module.ControlFlow(seed: number, values: {number})
+    if #values == 0 then
+        return {
+            empty = true,
+            total = 0,
+        }
+    end
+
+    local dictionary = {
+        alpha = seed,
+        beta = seed + 1,
+        gamma = seed + 2,
+    }
+
+    local loopTotal = genericLoopStress(values, dictionary)
+    local filtered = earlyBreakContinueStress(values)
+
+    local conditional =
+        if loopTotal > 100
+        then "large"
+        elseif loopTotal > 50
+        then "medium"
+        else "small"
+
+    return {
+        empty = false,
+        total = loopTotal,
+        category = conditional,
+        filtered = filtered,
+        guarded = guarded(seed),
+    }
+end
+
+function module.Varargs(seed: number, ...)
+    local count, first, last, packed = varargStats(...)
+    local forwarded = table.pack(forwardVarargs(returnsThree, seed))
+
+    return {
+        count = count,
+        first = first,
+        last = last,
+        packed = packed,
+        forwarded = forwarded,
+    }
+end
+
+function module.Objects(seed: number)
+    local counter = Counter.new(seed)
+    counter:add(5)
+    counter:multiply(2)
+
+    local callable = makeCallable(function(a: number, b: number)
+        return a + b + counter.value
+    end)
+
+    local callableResult = callable(seed, seed + 1)
+
+    return {
+        counter = counter,
+        last = counter:getLast(),
+        callable = callable,
+        callableResult = callableResult,
+        callableText = tostring(callable),
+    }
+end
+
+function module.SafeOperations(json: string, seed: number)
+    local decoded = safeJsonDecode(json)
+    local protected = xpcallStress(function()
+        if seed < 0 then
+            error("negative seed")
+        end
+
+        return makePayload(seed)
+    end)
+
+    local coroutineResult = table.pack(coroutineStress(seed))
+
+    return {
+        decoded = decoded,
+        protected = protected,
+        coroutineResult = coroutineResult,
+        bufferValue = bufferStress(seed),
+    }
+end
+
+function module.InstancePatterns(root: Instance, guiObject: Instance?)
+    local part, color = instancePhiStress(root)
+    local deep = chainedFindStress(root)
+    local collection = collectionStress(root)
+
+    local tween =
+        if guiObject
+        then tweenStress(guiObject, 0.25)
+        else nil
+
+    return {
+        part = part,
+        color = color,
+        deep = deep,
+        collection = collection,
+        tween = tween,
+    }
+end
+
+function module.Connect(signal: RBXScriptSignal)
+    return connectionStress(signal)
+end
+
+function module.NegativeCases(observer: (any) -> (), callback: () -> any, object: any)
+    local escaped = tableEscapeNegative(observer, 123)
+    local first, second = repeatedCallNegative(callback)
+    local before, after = mutableSnapshotNegative(object)
+
+    return {
+        escaped = escaped,
+        repeated = {first, second},
+        mutable = {before, after},
+    }
+end
+
+function module.Misc(seed: number, payload: Payload)
+    local metadata, tags, firstTag, enabled = localAliasStress(payload)
+    local a, b, c = multiAssignmentStress(seed)
+
+    local values = {
+        seed,
+        seed + 1,
+        seed + 2,
+        seed - 1,
+        0,
+        101,
+    }
+
+    local sorted = sortingCallbackStress(values)
+
+    return {
+        identity = genericIdentity(seed),
+        directReturn = directReturnCall(seed),
+        shadowing = shadowingStress(seed),
+        complexCondition = complexCondition(
+            payload,
+            metadata,
+            enabled,
+            function()
+                return #tags > 0 and firstTag ~= nil
+            end
+        ),
+        multi = {a, b, c},
+        sorted = sorted,
+    }
+end
+
+function module.RunEverything(seed: number, root: Instance?, guiObject: Instance?)
+    seed = math.floor(seed)
+
+    local payload = makePayload(seed)
+    local mega = module.BuildMegaTable(seed)
+    local flow = module.ControlFlow(seed, {1, 2, 3, -1, 5, 150})
+    local objects = module.Objects(seed)
+    local misc = module.Misc(seed, payload)
+
+    local instanceData =
+        if root
+        then module.InstancePatterns(root, guiObject)
+        else nil
+
+    sharedObject = {
+        seed = seed,
+        payload = payload,
+        mega = mega,
+    }
+
+    return {
+        seed = seed,
+        mega = mega,
+        flow = flow,
+        objects = objects,
+        misc = misc,
+        instances = instanceData,
+        sharedCounter = sharedCounter,
+        sharedFlag = sharedFlag,
+        sharedObject = sharedObject,
+        localPlayer = LocalPlayer,
+    }
+end
+
+return module
