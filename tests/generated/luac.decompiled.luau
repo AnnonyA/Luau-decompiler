@@ -4,52 +4,16 @@ local Players: Players = game:GetService("Players")
 local TweenService: TweenService = game:GetService("TweenService")
 local HttpService: HttpService = game:GetService("HttpService")
 local CollectionService: CollectionService = game:GetService("CollectionService")
-local player: Player = Players.LocalPlayer
-local value = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+local LocalPlayer: Player = Players.LocalPlayer
+local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 local optionalModule: Instance = script:FindFirstChild("OptionalModule")
-local result = if optionalModule and optionalModule:IsA("ModuleScript") then require(optionalModule) else nil
-local value2: number = 0
-local value3: boolean = false
-local function rgb(value4, index, count)
-    return Color3.fromRGB(value4, index, count)
+local OptionalDependency = if optionalModule and optionalModule:IsA("ModuleScript") then require(optionalModule) else nil
+local sharedCounter: number = 0
+local sharedFlag: boolean = false
+local function rgb(r, g, b)
+    return Color3.fromRGB(r, g, b)
 end
 
-local config = {
-    ReplicatedStorage = ReplicatedStorage,
-    RunService = RunService,
-    TweenService = TweenService,
-}
-local config2 = {
-    zero = 0,
-    one = 1,
-    negative = -42,
-    fraction = 0.3333333333333333,
-    pi = math.pi,
-    huge = math.huge,
-}
-local config3 = {
-    plain = "hello",
-    escaped = "line1\nline2\t\"quoted\"\\slash",
-    unicode = "🇦🇷 — café — 日本語 — 🚀",
-    asset = "rbxassetid://123456789",
-}
-local config4 = {
-    Primary = rgb(255, 64, 110),
-    Secondary = rgb(20, 255, 80),
-    Gradient = { rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255) },
-}
-local config5 = {
-    A = {
-        B = {
-            C = {
-                value = math.floor(10.75),
-                vector = Vector3.new(1, 2, 3),
-                cframe = CFrame.new(1, 2, 3) * CFrame.Angles(0, math.pi / 2, 0),
-            },
-        },
-    },
-}
-local config6 = { hello world = true, [100] = "numeric-key", [false] = "boolean-key" }
 local function returnsThree(value5)
     return value5, value5 + 1, value5 + 2
 end
@@ -107,8 +71,8 @@ end
 
 local sideEffect
 sideEffect = function(value18)
-    value2 += 1
-    value3 = not value3
+    sharedCounter += 1
+    sharedFlag = not sharedFlag
     local value19 = #value18 > 2
     return value19
 end
@@ -146,51 +110,49 @@ local function nestedGuard(value25, index7, count6)
     return value25, index7, count6
 end
 
-local config7 = {}
-config7.__index = config7
-function config7.new(value26)
-    local config8 = { value26 }
-    local config9 = { createdAt = os.clock(), color = rgb(100, 150, 200) }
-    config9 = config7
-    local config10 = { value = value26, history = config8, metadata = config9 }
-    return setmetatable(config10, config9)
+local Counter = {}
+Counter.__index = Counter
+function Counter.new(value)
+    local metadata = { createdAt = os.clock(), color = rgb(100, 150, 200) }
+    metadata = Counter
+    return setmetatable({ value = value, history = { value }, metadata = metadata }, metadata)
 end
 
-function config7:add(index8)
+function Counter:add(index8)
     self.value += index8
     table.insert(self.history, self.value)
     return self.value
 end
 
-function config7:multiply(index9)
+function Counter:multiply(index9)
     self.value *= index9
     table.insert(self.history, self.value)
     return self.value
 end
 
-function config7:reset()
+function Counter:reset()
     self.value = 0
     table.clear(self.history)
     table.insert(self.history, 0)
 end
 
-function config7:getLast()
+function Counter:getLast()
     return self.history[#self.history]
 end
 
 local makeAccumulator
 makeAccumulator = function(value31)
-    local value32: number = 0
+    local total: number = 0
     local accumulate
     accumulate = function(value33)
-        value32 += 1
+        total += 1
         value31 += value33
-        value2 += 1
+        sharedCounter += 1
         return value31
     end
     local stats
     stats = function()
-        return value31, value32
+        return value31, total
     end
     return accumulate, stats
 end
@@ -202,9 +164,7 @@ local function makeRecursiveClosure(value34)
     return function_
 end
 
-local function makeCallable(value36)
-    local config11 = { calls = 0, callback = value36 }
-    local config12 = {}
+local function makeCallable(callback)
     function config12:__call(...)
         self.calls += 1
         return self.callback(...)
@@ -214,7 +174,7 @@ local function makeCallable(value36)
         return "Callable(calls=%*)":format(self.calls)
     end
 
-    return setmetatable(config11, config12)
+    return setmetatable({ calls = 0, callback = callback }, {})
 end
 
 local function reverseIterator(value39, index10)
@@ -232,66 +192,64 @@ end
 
 local function loopStress(value41)
     local result5: number = 0
-    for index11 = 1, value41 do
-        if index11 % 2 == 0 then
+    for i = 1, value41 do
+        if i % 2 == 0 then
             continue
         end
         local result6
-        for index12 = 1, 5 do
-            if index12 == 4 and index11 > 6 then
+        for j = 1, 5 do
+            if j == 4 and i > 6 then
                 break
             end
-            result6 += index11 * index12
+            result6 += i * j
         end
     end
-    local result7 = value41
+    local descending = value41
     local result8
-    while result7 > 0 do
-        result7 -= 1
-        if result7 == 3 then
+    while descending > 0 do
+        descending -= 1
+        if descending == 3 then
             continue
         end
-        result8 += result7
+        result8 += descending
         if result8 > 10000 then
             break
         end
     end
-    local result9: number = 0
-    local result10
+    local repeatCount: number = 0
+    local total2
     repeat
-        result9 += 1
-        result10 += result9
-    until result9 >= 3
-    return result10
+        repeatCount += 1
+        total2 += repeatCount
+    until repeatCount >= 3
+    return total2
 end
 
 local function genericLoopStress(value42, index13)
-    local value43: number = 0
+    local total3: number = 0
     for key, value44 in ipairs(value42) do
-        value43 += key * value44
+        total3 += key * value44
     end
     for key2, value45 in pairs(index13) do
         if #key2 > 0 then
-            value43 += value45
+            total3 += value45
         end
     end
     for _, value46 in value42 do
-        value43 += value46
+        total3 += value46
     end
     for key3, value47 in reverseIterator, value42 do
-        value43 += key3 + value47
+        total3 += key3 + value47
     end
-    return value43
+    return total3
 end
 
 local function dynamicRmwStress(value48)
     local value49 = value48 % 3 + 1
     local value50 = "key_%*":format(value48 % 4)
-    local config13 = { 10, 20, 30 }
-    local config14 = { key_0 = 1, key_1 = 2, key_2 = 3, key_3 = 4 }
     local config15 = {
-        array = config13,
-        map = config14,
+        array = { 10, 20, 30 },
+        map = { key_0 = 1, key_1 = 2, key_2 = 3, key_3 = 4 },
         nested = { stats = { score = 5, multiplier = 2 } },
     }
     local array = config15.array
@@ -307,45 +265,44 @@ local function dynamicRmwStress(value48)
     return config15
 end
 
-local function callValuedTable(value51)
-    local config16 = { position = CFrame.new(value51, 0, 0) }
+local function callValuedTable(id)
+    local config16 = { position = CFrame.new(id, 0, 0) }
     local config17 = {
-        id = value51,
-        label = "fixture-%*":format(value51),
-        color = rgb(value51 % 255, value51 * 2 % 255, value51 * 3 % 255),
-        vector = Vector3.new(value51, value51 + 1, value51 + 2),
+        id = id,
+        label = "fixture-%*":format(id),
+        color = rgb(id % 255, id * 2 % 255, id * 3 % 255),
+        vector = Vector3.new(id, id + 1, id + 2),
     }
-    local config18 = { math.max(value51, 1), math.floor(value51 / 2), math.clamp(value51, 0, 100) }
-    local config19 = { rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255) }
-    config19 = value51
-    local config20 = { position = CFrame.new(value51, 0, 0), values = config18, colors = config19 }
+    local colors = { rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255) }
+    colors = id
     local config21 = {
-        id = value51,
-        label = "fixture-%*":format(value51),
-        color = rgb(value51 % 255, value51 * 2 % 255, value51 * 3 % 255),
-        vector = Vector3.new(value51, value51 + 1, value51 + 2),
-        ["dynamic_%*":format(value51)] = math.abs(config19),
-        nested = config20,
+        id = id,
+        label = "fixture-%*":format(id),
+        color = rgb(id % 255, id * 2 % 255, id * 3 % 255),
+        vector = Vector3.new(id, id + 1, id + 2),
+        ["dynamic_%*":format(id)] = math.abs(colors),
+        nested = {
+            position = CFrame.new(id, 0, 0),
+            values = { math.max(id, 1), math.floor(id / 2), math.clamp(id, 0, 100) },
+            colors = colors,
+        },
     }
-    config19 = if value51 % 2 ~= 0 then false else true
-    local chooseValue = chooseValue(config19, "even", "odd")
-    config21[value51] = chooseValue
+    colors = if id % 2 ~= 0 then false else true
+    local chooseValue = chooseValue(colors, "even", "odd")
+    config21[id] = chooseValue
     return config21
 end
 
 local function trueOpenMultretTable(value52)
-    local config22 = { "prefix", returnsThree(value52) }
-    return config22
+    return { "prefix", returnsThree(value52) }
 end
 
 local function fixedCallTable(value53)
-    local config23 = { returnsThree(value53 + 10) }
-    local config24 = {
+    return {
         fixedOne = returnsThree(value53),
         packed = table.pack(returnsThree(value53 + 20)),
-        nested = config23,
+        nested = { returnsThree(value53 + 10) },
     }
-    return config24
 end
 
 local function expressionStress(value54, index14, count7)
@@ -359,18 +316,15 @@ local function bitStress(value55)
 end
 
 local function stringStress(value58, index15)
-    local config25 = { "alpha", "beta", tostring(index15) }
-    return (`{string.gsub("user=%*; id=%*; class=%*":format(value58, index15, classify(index15)), "user=", "name=")}::` .. table.concat(config25, "|")) .. "::🇦🇷"
+    return (`{string.gsub("user=%*; id=%*; class=%*":format(value58, index15, classify(index15)), "user=", "name=")}::` .. table.concat({ "alpha", "beta", tostring(index15) }, "|")) .. "::🇦🇷"
 end
 
 local function safeJsonDecode(value59)
-    local result12, value60 = pcall(HttpService.JSONDecode, HttpService, value59)
+    local result12, value = pcall(HttpService.JSONDecode, HttpService, value59)
     if result12 then
-        local config26 = { ok = true, value = value60 }
-        return config26
+        return { ok = true, value = value }
     else
-        local config27 = { ok = false, error = tostring(value60) }
-        return config27
+        return { ok = false, error = tostring(value) }
     end
 end
 
@@ -379,13 +333,11 @@ local function xpcallStress(value61)
         return "handled:%*":format(tostring(value62))
     end
 
-    local result13, value63 = xpcall(value61, onError)
+    local result13, value2 = xpcall(value61, onError)
     if result13 then
-        local config28 = { ok = true, value = value63 }
-        return config28
+        return { ok = true, value = value2 }
     else
-        local config29 = { ok = false, error = tostring(value63) }
-        return config29
+        return { ok = false, error = tostring(value2) }
     end
 end
 
@@ -429,10 +381,10 @@ local function chainedFindStress(value73)
     return result17
 end
 
-local function tableEscapeNegative(value74, index16)
+local function tableEscapeNegative(value74, value2)
     local config30 = {}
     value74(config30)
-    config30.value = index16
+    config30.value = value2
     return config30
 end
 
@@ -442,14 +394,14 @@ local function repeatedCallNegative(value75)
 end
 
 local function mutableSnapshotNegative(value77)
-    local config31 = value77.Config
+    local Config = value77.Config
     sideEffect("mutation-barrier")
-    return config31.Value, config31.Value
+    return Config.Value, Config.Value
 end
 
 local function stateMachineStress(value78)
     local result17: string = "start"
-    local result18: number = 0
+    local total4: number = 0
     local result19: number = 0
     while result17 ~= "done" do
         result19 += 1
@@ -458,65 +410,67 @@ local function stateMachineStress(value78)
             continue
         end
         if result17 == "start" then
-            result18 += value78
+            total4 += value78
             if value78 % 2 == 0 then
                 result17 = "even"
             else
                 result17 = "odd"
             end
         elseif result17 == "even" then
-            result18 *= 2
+            total4 *= 2
             result17 = "finalize"
         elseif result17 == "odd" then
-            result18 = result18 * 3 + 1
+            total4 = total4 * 3 + 1
             result17 = "finalize"
         elseif result17 == "finalize" then
-            result18 = math.floor(result18 / 2)
+            total4 = math.floor(total4 / 2)
             result17 = "done"
         else
             result17 = "done"
         end
     end
-    return result18
+    return total4
 end
 
-local function nestedCallbacks(value79)
-    local config32 = {}
+local function nestedCallbacks(captured)
+    local history = {}
     local outer
     outer = function(value80)
         local function_2
         function_2 = function(value81)
-            value79 += value81
+            captured += value81
             callback *= 2
             local config33 = {}
-            config33.captured = value79
+            config33.captured = captured
             config33.localState = callback
-            config33.color = rgb(value79 % 255, callback % 255, 128)
-            table.insert(config32, config33)
+            config33.color = rgb(captured % 255, callback % 255, 128)
+            table.insert(history, config33)
             config33 = callback
-            return value79 + config33
+            return captured + config33
         end
         return function_2
     end
     local snapshot
     snapshot = function()
-        return value79, #config32
+        return captured, #history
     end
-    local config34 = { first = outer(2), second = outer(3), history = config32, snapshot = snapshot }
-    return config34
+    return { first = outer(2), second = outer(3), history = history, snapshot = snapshot }
 end
 
 local tweenStress
-tweenStress = function(value82, index17)
+tweenStress = function(value82, BackgroundTransparency)
     if not value82:IsA("GuiObject") then
         return nil
     end
-    local config35 = { BackgroundTransparency = index17, Position = UDim2.fromScale(0.5, 0.5) }
-    local value83 = TweenService:Create(value82, value, config35)
+    local config35 = {
+        BackgroundTransparency = BackgroundTransparency,
+        Position = UDim2.fromScale(0.5, 0.5),
+    }
+    local value83 = TweenService:Create(value82, tweenInfo, config35)
     local function onCompleted(playbackState: Enum.PlaybackState)
         callback2 = nil
         if playbackState == Enum.PlaybackState.Completed then
-            value2 += 1
+            sharedCounter += 1
         end
     end
 
@@ -530,7 +484,7 @@ connectionStress = function(value85)
     local callback
     callback = function(...)
         callback3 += select("#", ...)
-        value2 += 1
+        sharedCounter += 1
         local result20 = callback3
         if result20 >= 5 then
             result20 = callback4
@@ -545,19 +499,18 @@ connectionStress = function(value85)
     return callback4
 end
 local function collectionStress(value86)
-    local value87 = CollectionService:GetTags(value86)
-    local config36 = {}
-    for _, value88 in value87 do
-        config36[value88] = true
+    local tags2 = CollectionService:GetTags(value86)
+    local map2 = {}
+    for _, value88 in tags2 do
+        map2[value88] = true
     end
-    local value89 = #value87 > 0
-    local config37 = { tags = value87, map = config36, hasAny = value89 }
-    return config37
+    local hasAny = #tags2 > 0
+    return { tags = tags2, map = map2, hasAny = hasAny }
 end
 
 local function optionalDependencyStress(value90)
-    if result and type(result) == "table" then
-        local transform = result.transform
+    if OptionalDependency and type(OptionalDependency) == "table" then
+        local transform = OptionalDependency.transform
         return if type(transform) == "function" then transform(value90) else value90
     end
 end
@@ -565,7 +518,7 @@ end
 local shadowingStress
 shadowingStress = function(value91)
     local result20 = (value91 + 1) * 2 or result20 - 3
-    value2 += result20
+    sharedCounter += result20
     return value91
 end
 local function complexCondition(value92, index18, count8, options)
@@ -633,50 +586,80 @@ local function earlyBreakContinueStress(value102)
 end
 
 local makePayload
-makePayload = function(value104)
-    local value105 = value104 % 2 == 0
+makePayload = function(id2)
+    local enabled = id2 % 2 == 0
     local value106: string = "stress"
-    local value107 = classify(value104)
-    local result23 = if isEven(math.abs(value104)) then "even" else "odd"
-    local config39 = { value106, value107, result23 }
+    local value107 = classify(id2)
+    local result23 = if isEven(math.abs(id2)) then "even" else "odd"
+    local tags3 = { value106, value107, result23 }
     result23 = math.abs
-    result23 = result23(value104)
-    result23 = value104 + 1
+    result23 = result23(id2)
+    result23 = id2 + 1
     local config40 = {
-        id = value104,
-        name = "Payload-%*":format(value104),
-        enabled = value105,
-        tags = config39,
+        id = id2,
+        name = "Payload-%*":format(id2),
+        enabled = enabled,
+        tags = tags3,
         metadata = {
             factorial = factorial(math.clamp(result23, 0, 8)),
-            bit = bitStress(value104),
-            expression = expressionStress(value104, result23, value104 + 2),
-            fixedOne = fixedOneFromMulti(value104),
-            callTail = callWithOpenTail(value104),
-            stateMachine = stateMachineStress(value104),
+            bit = bitStress(id2),
+            expression = expressionStress(id2, result23, id2 + 2),
+            fixedOne = fixedOneFromMulti(id2),
+            callTail = callWithOpenTail(id2),
+            stateMachine = stateMachineStress(id2),
         },
     }
     return config40
 end
-local config41 = {
+local CONFIG = {
     Name = "MegaStress",
     Version = 7,
     Enabled = true,
-    Services = config,
-    Numbers = config2,
-    Strings = config3,
-    Colors = config4,
-    Nested = config5,
-    DynamicLike = config6,
+    Services = {
+        ReplicatedStorage = ReplicatedStorage,
+        RunService = RunService,
+        TweenService = TweenService,
+    },
+    Numbers = {
+        zero = 0,
+        one = 1,
+        negative = -42,
+        fraction = 0.3333333333333333,
+        pi = math.pi,
+        huge = math.huge,
+    },
+    Strings = {
+        plain = "hello",
+        escaped = "line1\nline2\t\"quoted\"\\slash",
+        unicode = "🇦🇷 — café — 日本語 — 🚀",
+        asset = "rbxassetid://123456789",
+    },
+    Colors = {
+        Primary = rgb(255, 64, 110),
+        Secondary = rgb(20, 255, 80),
+        Gradient = { rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255) },
+    },
+    Nested = {
+        A = {
+            B = {
+                C = {
+                    value = math.floor(10.75),
+                    vector = Vector3.new(1, 2, 3),
+                    cframe = CFrame.new(1, 2, 3) * CFrame.Angles(0, math.pi / 2, 0),
+                },
+            },
+        },
+    },
+    DynamicLike = { hello world = true, [100] = "numeric-key", [false] = "boolean-key" },
 }
-local module = { Counter = config7, Config = config41 }
+local module = { Counter = Counter, Config = CONFIG }
 function module.BuildMegaTable(value108)
-    local result24, value109 = makeAccumulator(value108)
-    local value110 = makeRecursiveClosure(2)
+    local accumulator, stats4 = makeAccumulator(value108)
+    local recursiveClosure = makeRecursiveClosure(2)
     local value111 = nestedCallbacks(value108)
-    local value112 = result24(5)
-    local value113 = result24(-2)
-    local result25, value114 = value109()
+    local first = accumulator(5)
+    local second = accumulator(-2)
+    local total5, calls = stats4()
     local result26, value115, value116 = returnsThree(value108)
     local value117 = value108 % 2 == 0
     result27 = math.clamp
@@ -684,15 +667,6 @@ function module.BuildMegaTable(value108)
     result27 = value108
     result27 = value108
     result27 = 4
-    local config42 = {
-        factorial = factorial(math.clamp(value108, 0, 8)),
-        branchPhi = loopStress(result27, value108),
-        loops = loopStress(result27),
-        expression = expressionStress(result27, value108 + 2, value108 + 3),
-        bits = bitStress(result27),
-        recursiveClosure = value110(result27),
-    }
-    local config43 = { first = value112, second = value113, total = result25, calls = value114 }
     result27 = value108
     result27 = fixedTwoFromMulti
     result27 = result27(value108)
@@ -701,130 +675,127 @@ function module.BuildMegaTable(value108)
     result27 = value108
     result27 = value108
     result27 = result26
-    local config44 = {
-        fixedOne = fixedOneFromMulti(result27),
-        fixedTwo = table.pack(result27),
-        forwarded = table.pack(result27),
-        openTable = trueOpenMultretTable(result27),
-        fixedTable = fixedCallTable(result27),
-        direct = { result27, value115, value116 },
-    }
     result27 = value108
     result27 = value108
     result27 = rgb
     result27 = result27(255, 64, 110)
-    local config45 = { result27 }
-    local config46 = {
-        callValued = callValuedTable(result27),
-        dynamic = dynamicRmwStress(result27),
-        colors = config45,
-        nestedCalls = { result27, rgb(255, 0, 0), rgb(0, 255, 0) },
-    }
     local config47 = { name = "A", value = math.max(value108, 1), color = rgb(255, 0, 0) }
     result27 = 1
     result27 = 2
     result27 = value111.snapshot
     result27 = result27()
-    local config48 = {
-        first = value111.first(result27),
-        second = value111.second(result27),
-        snapshot = table.pack(result27),
-    }
     result27 = "seed-%*"
     local config49 = { name = "C", value = math.abs(value108), color = rgb(0, 0, 255) }
     config49 = value108
     local config50 = { name = "B", value = math.min(value108, 100), color = rgb(0, 255, 0) }
     result27 = result27:format(config49)
     result27 = value108
-    local config51 = {
-        formatted = stringStress(result27, value108),
-        class = classify(result27),
-        unicode = config41.Strings.unicode,
-    }
     result27 = math.abs
     result27 = result27(value108)
     result27 = math.abs
     result27 = result27(value108)
-    local config52 = { even = isEven(result27), odd = isOdd(result27) }
+    local booleans = { even = isEven(result27), odd = isOdd(result27) }
     local config53 = {
         payload = makePayload(value108),
-        calculations = config42,
-        accumulator = config43,
-        multi = config44,
-        constructors = config46,
-        callbacks = config48,
-        strings = config51,
+        calculations = {
+            factorial = factorial(math.clamp(value108, 0, 8)),
+            branchPhi = loopStress(result27, value108),
+            loops = loopStress(result27),
+            expression = expressionStress(result27, value108 + 2, value108 + 3),
+            bits = bitStress(result27),
+            recursiveClosure = recursiveClosure(result27),
+        },
+        accumulator = { first = first, second = second, total = total5, calls = calls },
+        multi = {
+            fixedOne = fixedOneFromMulti(result27),
+            fixedTwo = table.pack(result27),
+            forwarded = table.pack(result27),
+            openTable = trueOpenMultretTable(result27),
+            fixedTable = fixedCallTable(result27),
+            direct = { result27, value115, value116 },
+        },
+        constructors = {
+            callValued = callValuedTable(result27),
+            dynamic = dynamicRmwStress(result27),
+            colors = { result27 },
+            nestedCalls = { result27, rgb(255, 0, 0), rgb(0, 255, 0) },
+        },
+        callbacks = {
+            first = value111.first(result27),
+            second = value111.second(result27),
+            snapshot = table.pack(result27),
+        },
+        strings = {
+            formatted = stringStress(result27, value108),
+            class = classify(result27),
+            unicode = CONFIG.Strings.unicode,
+        },
     }
     result27 = if value108 <= 0 then false else true
     config49 = value108 % 2
     local value118 = config49 == 0
     config49 = value108 < 10
     local booleanShortCircuit = booleanShortCircuit(result27, value118, config49)
-    config52.complex = booleanShortCircuit
+    booleans.complex = booleanShortCircuit
     result27 = 0
-    local result29
+    local sideEffectValue
     if result27 < value108 then
         result27 = "positive"
-        result29 = sideEffect(result27)
-        if not result29 then
+        sideEffectValue = sideEffect(result27)
+        if not sideEffectValue then
             result27 = "fallback"
-            result29 = sideEffect(result27)
+            sideEffectValue = sideEffect(result27)
         end
     end
-    config52.sideEffectValue = result29
-    config53.booleans = config52
+    booleans.sideEffectValue = sideEffectValue
+    config53.booleans = booleans
     return config53
 end
 
-function module.ControlFlow(value119, index20)
+function module.ControlFlow(alpha, index20)
     if #index20 == 0 then
-        local config54 = { empty = true, total = 0 }
-        return config54
+        return { empty = true, total = 0 }
     else
-        local config55 = { alpha = value119, beta = value119 + 1, gamma = value119 + 2 }
-        local value120 = genericLoopStress(index20, config55)
-        local value121 = earlyBreakContinueStress(index20)
-        local result30 = if value120 > 100 then "large" elseif 100 < value120 then "medium" else "small"
-        local config56 = {
+        local total6 = genericLoopStress(index20, { alpha = alpha, beta = alpha + 1, gamma = alpha + 2 })
+        local filtered = earlyBreakContinueStress(index20)
+        local category = if total6 > 100 then "large" elseif 100 < total6 then "medium" else "small"
+        return {
             empty = false,
-            total = value120,
-            category = result30,
-            filtered = value121,
-            guarded = guarded(value119),
+            total = total6,
+            category = category,
+            filtered = filtered,
+            guarded = guarded(alpha),
         }
-        return config56
     end
 end
 
 function module.Varargs(value122, ...)
-    local result31, value123, value124, value125 = varargStats(...)
-    local config57 = {
-        count = result31,
-        first = value123,
-        last = value124,
-        packed = value125,
+    local count, first2, last, packed2 = varargStats(...)
+    return {
+        count = count,
+        first = first2,
+        last = last,
+        packed = packed2,
         forwarded = table.pack(forwardVarargs(returnsThree, value122)),
     }
-    return config57
 end
 
 function module.Objects(value126)
-    local value127 = config7.new(value126)
-    value127:add(5)
-    value127:multiply(2)
+    local config7 = Counter.new(value126)
+    config7:add(5)
+    config7:multiply(2)
     local function callback(value128, index21)
-        return value128 + index21 + value127.value
+        return value128 + index21 + config7.value
     end
 
-    local value129 = makeCallable(callback)
-    local config58 = {
-        counter = value127,
-        last = value127:getLast(),
-        callable = value129,
-        callableResult = value129(value126, value126 + 1),
-        callableText = tostring(value129),
+    local callable = makeCallable(callback)
+    return {
+        counter = config7,
+        last = config7:getLast(),
+        callable = callable,
+        callableResult = callable(value126, value126 + 1),
+        callableText = tostring(callable),
     }
-    return config58
 end
 
 function module.SafeOperations(value130, index22)
@@ -835,28 +806,20 @@ function module.SafeOperations(value130, index22)
         return makePayload(index22)
     end
 
-    local config59 = {
+    return {
         decoded = safeJsonDecode(value130),
         protected = xpcallStress(callback),
         coroutineResult = table.pack(coroutineStress(index22)),
         bufferValue = bufferStress(index22),
     }
-    return config59
 end
 
 function module.InstancePatterns(value131, index23)
-    local result32, value132 = instancePhiStress(value131)
-    local value133 = chainedFindStress(value131)
-    local value134 = collectionStress(value131)
-    local result33 = if index23 then tweenStress(index23, 0.25) else nil
-    local config60 = {
-        part = result32,
-        color = value132,
-        deep = value133,
-        collection = value134,
-        tween = result33,
-    }
-    return config60
+    local part2, color = instancePhiStress(value131)
+    local deep = chainedFindStress(value131)
+    local collection = collectionStress(value131)
+    local tween = if index23 then tweenStress(index23, 0.25) else nil
+    return { part = part2, color = color, deep = deep, collection = collection, tween = tween }
 end
 
 function module.Connect(value135)
@@ -866,19 +829,16 @@ end
 function module.NegativeCases(value136, index24, count9)
     local result34, value137 = repeatedCallNegative(index24)
     local result35, value138 = mutableSnapshotNegative(count9)
-    local config61 = { result34, value137 }
-    local config62 = {
+    return {
         escaped = tableEscapeNegative(value136, 123),
-        repeated = config61,
+        repeated = { result34, value137 },
         mutable = { result35, value138 },
     }
-    return config62
 end
 
 function module.Misc(value139, index25)
     local result36, value140, value141, value142 = localAliasStress(index25)
     local result37, value143, value144 = multiAssignmentStress(value139)
-    local config63 = { value139, value139 + 1, value139 + 2, value139 - 1, 0, 101 }
     local function callback()
         local result38: boolean = false
         if #value140 > 0 then
@@ -887,7 +847,7 @@ function module.Misc(value139, index25)
         return result38
     end
 
-    local config64 = {
+    return {
         identity = genericIdentity(value139),
         directReturn = directReturnCall(value139),
         shadowing = shadowingStress(value139),
@@ -895,32 +855,29 @@ function module.Misc(value139, index25)
         sorted = sortingCallbackStress(config63),
         multi = { result37, value143, value144 },
     }
-    return config64
 end
 
-function module.RunEverything(value145, index26, count10)
-    value145 = math.floor(value145)
-    local value146 = makePayload(value145)
-    local value147 = module.BuildMegaTable(value145)
-    local config65 = { 1, 2, 3, -1, 5, 150 }
-    local value148 = module.ControlFlow(value145, config65)
-    local value149 = module.Objects(value145)
-    local value150 = module.Misc(value145, value146)
-    local result38 = if index26 then module.InstancePatterns(index26, count10) else nil
-    local config66 = { seed = value145, payload = value146, mega = value147 }
-    callback5 = config66
+function module.RunEverything(seed, index26, count10)
+    seed = math.floor(seed)
+    local payload = makePayload(seed)
+    local mega = module.BuildMegaTable(seed)
+    local flow = module.ControlFlow(seed, { 1, 2, 3, -1, 5, 150 })
+    local objects = module.Objects(seed)
+    local misc = module.Misc(seed, payload)
+    local instances = if index26 then module.InstancePatterns(index26, count10) else nil
+    callback5 = { seed = seed, payload = payload, mega = mega }
     local config67 = {
-        seed = value145,
-        mega = value147,
-        flow = value148,
-        objects = value149,
-        misc = value150,
-        instances = result38,
+        seed = seed,
+        mega = mega,
+        flow = flow,
+        objects = objects,
+        misc = misc,
+        instances = instances,
     }
-    config67.sharedCounter = value2
-    config67.sharedFlag = value3
+    config67.sharedCounter = sharedCounter
+    config67.sharedFlag = sharedFlag
     config67.sharedObject = callback5
-    config67.localPlayer = player
+    config67.localPlayer = LocalPlayer
     return config67
 end
 

@@ -88,14 +88,13 @@ Leave `--context` out, or pass `--no-context` / `runtime_context=false`, and not
 
 We already do better on types, method lifting, if-expressions, callback names, and region-based loop structuring (`break` / `continue` / sequential guards).
 
-They still win on everyday locals (`LocalPlayer` vs `value2`). That is the next gap.
+Everyday locals are closing: `LocalPlayer`, `sharedCounter`, `CONFIG`, `Counter`, `payload`, `descending`. Other decompilers still win on leftover `valueN` / `resultN` and exact source spellings (`HALF_SECOND`, `seed`).
 
 ## Still to do (to look like the original source)
 
-1. Names that follow the value — `math.clamp(seed, 0, 20)` instead of `result27 = math.clamp`
-2. Human locals — `Counter`, `seed`, not `config7`
-3. One table literal instead of `config` + `config2` + `config3`
+1. Leftover numbered temps — `value108`, `result27` after callee-alias collapse
+2. Exact source spellings we cannot prove (`HALF_SECOND`, `WHITE`, `UP`)
+3. One `total` across a function instead of `total` / `total2` / `result8`
 4. Parameter types on ordinary functions, not only Roblox callbacks
-5. No writes to names that were never declared (`result27 = ...`)
 
 The bar is `tests/Original.txt`, not “good enough for a decompiler.”

@@ -17,6 +17,7 @@ import {
   typeFromExpression,
 } from "../reconstruct/RobloxSemantics.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
+import { inferHumanNames, repairUndeclaredAutoLocals } from "../reconstruct/NameInference.js";
 
 const COMPOUND_OPS = new Set<BinaryOperator>(["+", "-", "*", "/", "%", ".."]);
 const GENERIC_CLOSURE = /^function_?\d*$/;
@@ -30,8 +31,9 @@ export interface CleanupOptions {
 }
 
 export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
-  const body = transformBlock(ast.body, options);
-  return { kind: "chunk", body };
+  const repaired = repairUndeclaredAutoLocals(ast);
+  const body = transformBlock(repaired.body, options);
+  return inferHumanNames({ kind: "chunk", body });
 }
 
 function transformBlock(body: Block, options: CleanupOptions): Block {

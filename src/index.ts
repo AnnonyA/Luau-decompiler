@@ -1,5 +1,6 @@
 export { decompile, decodeOnly, parseQueryOptions, type DecompileOptions, type DecompileResult } from "./decompile.js";
 export { applyRuntimeContext, parseRuntimeContext, type RuntimeContext } from "./reconstruct/RuntimeContext.js";
+export { inferHumanNames, repairUndeclaredAutoLocals } from "./reconstruct/NameInference.js";
 export { startServer } from "./server.js";
 export { cleanupAst } from "./ast/AstCleanup.js";
 export { decodeBytecode, type DecodeResult } from "./decode/Decoder.js";

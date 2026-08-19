@@ -483,6 +483,79 @@ describe("semantic reconstruction", () => {
     }
   });
 
+  it("names Players.LocalPlayer as LocalPlayer, not player", () => {
+    const ast = cleanupAst(
+      chunk([{ kind: "local", names: ["player"], values: [{ kind: "property", object: ident("Players"), name: "LocalPlayer" }] }]),
+      { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
+    );
+    expect(printLuau(ast)).toMatch(/local LocalPlayer = Players\.LocalPlayer/);
+  });
+
+  it("names a makePayload result and inlines a one-use table local", () => {
+    const ast = cleanupAst(
+      chunk([
+        { kind: "local", names: ["config"], values: [{ kind: "table", fields: [{ name: "zero", value: lit(0) }] }] },
+        {
+          kind: "local",
+          names: ["config2"],
+          values: [{ kind: "table", fields: [{ name: "Numbers", value: ident("config") }, { name: "Name", value: lit("Mega") }] }],
+        },
+        { kind: "local", names: ["value2"], values: [{ kind: "call", callee: ident("makePayload"), args: [ident("seed")], open: false }] },
+        { kind: "assign", targets: [{ kind: "property", object: ident("module"), name: "Config" }], values: [ident("config2")] },
+      ]),
+      { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
+    );
+    const source = printLuau(ast);
+    expect(source).toMatch(/local payload = makePayload\(seed\)/);
+    expect(source).toMatch(/Numbers = \{\s*zero = 0/);
+    expect(source).not.toMatch(/local config\b/);
+    expect(source).toMatch(/module\.Config = \{/);
+  });
+
+  it("turns an undeclared generated assign into a local", () => {
+    const ast = cleanupAst(chunk([{ kind: "assign", targets: [ident("result27")], values: [ident("math")] }]), {
+      typeAnnotations: "off",
+      ifExpressions: false,
+      earlyReturn: false,
+      interpolatedStrings: false,
+      mathConstants: false,
+    });
+    expect(printLuau(ast)).toMatch(/local result27 = math/);
+  });
+
+  it("names rgb formals from Color3.fromRGB", () => {
+    const ast = cleanupAst(
+      chunk([
+        {
+          kind: "function-decl",
+          local: true,
+          name: "rgb",
+          params: ["value4", "index", "count"],
+          isVararg: false,
+          body: {
+            kind: "block",
+            statements: [
+              {
+                kind: "return",
+                values: [
+                  {
+                    kind: "method-call",
+                    object: ident("Color3"),
+                    name: "fromRGB",
+                    args: [ident("value4"), ident("index"), ident("count")],
+                    open: false,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ]),
+      { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
+    );
+    expect(printLuau(ast)).toMatch(/function rgb\(r, g, b\)/);
+  });
+
   it("stays deterministic with the new cleanup pipeline", () => {
     const bytecode = compile(
       proto({

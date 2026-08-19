@@ -116,7 +116,7 @@ const EVENT_PARAMS: Record<string, string[]> = {
 };
 
 const PROPERTY_LOCAL: Record<string, string> = {
-  LocalPlayer: "player",
+  LocalPlayer: "LocalPlayer",
   Character: "character",
   Humanoid: "humanoid",
   PrimaryPart: "primaryPart",
