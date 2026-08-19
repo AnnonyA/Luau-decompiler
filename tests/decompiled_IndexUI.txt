@@ -1,0 +1,1371 @@
+local Players: Players = game:GetService("Players")
+local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService: RunService = game:GetService("RunService")
+local _Packages = ReplicatedStorage.Packages
+local Shared = ReplicatedStorage.Shared
+local Nukes: Instance = ReplicatedStorage:WaitForChild("Nukes")
+local Commanders = ReplicatedStorage.Assets:WaitForChild("Commanders")
+local Color32: Color3 = Color3.fromRGB(0, 0, 0)
+local Color3: Color3 = Color3.fromRGB(255, 255, 255)
+local LocalPlayer: Player = Players.LocalPlayer
+local FramesManager = require(script.Parent.FramesManager)
+local BigNum = require(Shared.BigNum)
+local DataController = require(ReplicatedStorage.Controllers.DataController)
+local CommanderData = require(ReplicatedStorage.Shared.CommanderData)
+local IndexVisibility = require(ReplicatedStorage.Shared.IndexVisibility)
+local CommanderRarityFlags = require(ReplicatedStorage.Shared.CommanderRarityFlags)
+local ExplosionVFXData = require(ReplicatedStorage.Shared.ExplosionVFXData)
+local MutationData = require(ReplicatedStorage.Shared.MutationData)
+local MutationVisual = require(ReplicatedStorage.Shared.MutationVisual)
+local BaseSkinData = require(ReplicatedStorage.Shared.BaseSkinData)
+local BaseSkinController = require(ReplicatedStorage.Controllers.BaseSkinController)
+local TooltipController = require(ReplicatedStorage.Controllers.TooltipController)
+local module = {}
+local tbl1 = {
+    Nukes = {
+        total = 0,
+        entries = {},
+        discovered = {},
+        folder = Nukes
+    },
+    Commanders = {
+        total = 0,
+        entries = {},
+        discovered = {},
+        folder = Commanders
+    },
+    ExplosionVFXs = {
+        total = 0,
+        entries = {},
+        discovered = {}
+    },
+    Mutations = {
+        total = 0,
+        entries = {},
+        discovered = {}
+    },
+    BaseSkins = {
+        total = 0,
+        entries = {},
+        discovered = {}
+    }
+}
+local str1 = "Nukes"
+local bool1 = false
+local bool2 = false
+local var1 = nil
+local var2 = nil
+local ScreenGui: Instance = LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("ScreenGui")
+local IndexFrame: Instance = ScreenGui:WaitForChild("Frames"):WaitForChild("IndexFrame")
+local ScrollingFrame: Instance = IndexFrame:WaitForChild("ScrollContainer"):WaitForChild("ScrollingFrame")
+local Tabs: Instance = IndexFrame:WaitForChild("Tabs")
+local Template: Instance = ScrollingFrame:WaitForChild("Template")
+Template.Parent = nil
+local CommanderTemplate: Instance = ScrollingFrame:WaitForChild("CommanderTemplate")
+CommanderTemplate.Parent = nil
+local MutationTemplate: Instance = ScrollingFrame:WaitForChild("MutationTemplate")
+MutationTemplate.Parent = nil
+local ExplosionTemplate: Instance = Template:Clone()
+ExplosionTemplate.Name = "ExplosionTemplate"
+local ViewportFrame = ExplosionTemplate:FindFirstChild("ViewportFrame")
+local Icon: ImageLabel = Instance.new("ImageLabel")
+Icon.Name = "Icon"
+Icon.BackgroundTransparency = 1
+Icon.AnchorPoint = Vector2.new(0.5, 0.5)
+Icon.Position = UDim2.fromScale(0.5, 0.5)
+Icon.Size = UDim2.fromScale(1, 1)
+Icon.ScaleType = Enum.ScaleType.Fit
+Icon.ZIndex = 1
+Icon.Parent = ExplosionTemplate
+
+if ViewportFrame then
+    ViewportFrame:Destroy()
+end
+
+local RarityOutline = ExplosionTemplate:FindFirstChild("RarityOutline")
+
+if RarityOutline then
+    RarityOutline.ZIndex = 2
+end
+
+local TextLabel = ExplosionTemplate:FindFirstChild("TextLabel")
+
+if TextLabel then
+    TextLabel:Destroy()
+end
+
+local TextLabel2 = CommanderTemplate:FindFirstChild("TextLabel")
+
+if TextLabel2 then
+    TextLabel2:Clone().Parent = ExplosionTemplate
+end
+
+local RarityLabel = CommanderTemplate:FindFirstChild("RarityLabel")
+
+if RarityLabel and not ExplosionTemplate:FindFirstChild("RarityLabel") then
+    RarityLabel:Clone().Parent = ExplosionTemplate
+end
+
+local BaseSkinTemplate: Instance = Template:Clone()
+BaseSkinTemplate.Name = "BaseSkinTemplate"
+local TextLabel3 = BaseSkinTemplate:FindFirstChild("TextLabel")
+
+if TextLabel3 then
+    TextLabel3:Destroy()
+end
+
+local TextLabel4 = CommanderTemplate:FindFirstChild("TextLabel")
+
+if TextLabel4 then
+    TextLabel4:Clone().Parent = BaseSkinTemplate
+end
+
+local RarityLabel2 = CommanderTemplate:FindFirstChild("RarityLabel")
+
+if RarityLabel2 then
+    RarityLabel2:Clone().Parent = BaseSkinTemplate
+end
+
+local Discovered: Instance = IndexFrame:WaitForChild("Header"):WaitForChild("Discovered")
+
+local function getNukeIds()
+    local nukeIds = {}
+
+    for _, Instance in pairs(tbl1.Nukes.folder:GetChildren()) do
+        local var3 = tonumber(Instance.Name)
+
+        if var3 then
+            table.insert(nukeIds, var3)
+        end
+    end
+
+    table.sort(nukeIds, function(arg1, arg2): boolean
+        return arg1 < arg2
+    end)
+
+    return nukeIds
+end
+
+local function getCommanderIds()
+    local commanderIds = {}
+
+    for v, _ in CommanderData do
+        table.insert(commanderIds, v)
+    end
+
+    table.sort(commanderIds, function(arg1, arg2): boolean
+        local Rarity = CommanderData[arg1].Rarity
+        local Rarity2 = CommanderData[arg2].Rarity
+        local Order = Rarity and Rarity.Order or 0
+        local Order2 = Rarity2 and Rarity2.Order or 0
+
+        if Order == Order2 then
+            return arg1 < arg2
+        end
+
+        return Order < Order2
+    end)
+
+    return commanderIds
+end
+
+local function getExplosionVFXIds()
+    local explosionVFXIds = {}
+
+    for v, v2 in ExplosionVFXData.List do
+        if v2.Collectible and not v2.HideFromIndex then
+            table.insert(explosionVFXIds, v)
+        end
+    end
+
+    table.sort(explosionVFXIds, function(arg1, arg2): boolean
+        local Rarity = ExplosionVFXData.List[arg1].Rarity
+        local Rarity2 = ExplosionVFXData.List[arg2].Rarity
+        local Order = Rarity and Rarity.Order or 0
+        local Order2 = Rarity2 and Rarity2.Order or 0
+
+        if Order == Order2 then
+            return arg1 < arg2
+        end
+
+        return Order < Order2
+    end)
+
+    return explosionVFXIds
+end
+
+local function getMutationIds()
+    local mutationIds = {}
+
+    for v in MutationData do
+        table.insert(mutationIds, v)
+    end
+
+    table.sort(mutationIds, function(arg1, arg2): boolean
+        local var3 = ExplosionVFXData.Rarities[MutationData[arg1].Rarity]
+        local var4 = ExplosionVFXData.Rarities[MutationData[arg2].Rarity]
+        local Order = var3 and var3.Order or 0
+        local Order2 = var4 and var4.Order or 0
+
+        if Order == Order2 then
+            return arg1 < arg2
+        end
+
+        return Order < Order2
+    end)
+
+    return mutationIds
+end
+
+local function getBaseSkinIds()
+    local baseSkinIds = {}
+
+    for k in BaseSkinData.Skins do
+        table.insert(baseSkinIds, k)
+    end
+
+    table.sort(baseSkinIds, function(arg1, arg2): boolean
+        local Order = BaseSkinData.Skins[arg1].Rarity.Order
+        local Order2 = BaseSkinData.Skins[arg2].Rarity.Order
+
+        if Order == Order2 then
+            return arg1 < arg2
+        end
+
+        return Order < Order2
+    end)
+
+    return baseSkinIds
+end
+
+local function displayValue(arg1): number -- Luacid: Inlined by compiler; 1 call site recovered
+    return 2 ^ (arg1 - 1)
+end
+
+local function formatTierNumber(arg1) -- Luacid: unused: defined but never referenced
+    return BigNum.format(BigNum.new(arg1))
+end
+
+local function entryVisible(arg1, arg2) -- Luacid: unused: defined but never referenced
+    if tbl1[arg1].discovered[arg2] then
+        return true
+    end
+
+    return IndexVisibility.isVisible(arg1, arg2)
+end
+
+local function applyEntryVisibility(arg1, arg2) -- Luacid: unused: defined but never referenced
+    local var3 = tbl1[arg1].entries[arg2]
+
+    if var3 then
+        local frame = var3.frame
+        frame.Visible = if str1 == arg1 then tbl1[arg1].discovered[arg2] and true or IndexVisibility.isVisible(arg1, arg2) else false
+    end
+end
+
+local function refreshCounter()
+    if not Discovered then
+        return
+    end
+
+    local var3 = tbl1[str1]
+    local num1 = 0
+
+    for v in var3.entries do
+        if var3.discovered[v] then
+            num1 += 1
+        end
+    end
+
+    local num2 = 0
+
+    for v in var3.entries do
+        if tbl1[str1].discovered[v] and true or IndexVisibility.isVisible(str1, v) then
+            num2 += 1
+        end
+    end
+
+    Discovered.Text = num1 .. "/" .. num2 .. " Discovered"
+end
+
+local function refreshVisibility()
+    for v in tbl1[str1].entries do
+        local var3 = tbl1[str1].entries[v]
+
+        if var3 then
+            local frame = var3.frame
+            frame.Visible = if str1 == str1 then tbl1[str1].discovered[v] and true or IndexVisibility.isVisible(str1, v) else false
+        end
+    end
+
+    refreshCounter()
+end
+
+local function visibleFrame(Instance: Instance)
+    local vec = Vector3.new(1000000000, 1000000000, 1000000000)
+    local vec2 = Vector3.new(-1000000000, -1000000000, -1000000000)
+    local vec3 = Vector3.new(0, 0, 0)
+    local num1 = 0
+
+    for _, descendant in Instance:GetDescendants() do
+        if not descendant:IsA("BasePart") or not (descendant.Transparency < 1) then
+            continue
+        end
+
+        local descendantCFrame = descendant.CFrame
+        local Size = descendant.Size
+
+        for i = -1, 1, 2 do
+            for j = -1, 1, 2 do
+                for k = -1, 1, 2 do
+                    local Position = (descendantCFrame * CFrame.new(Size.X * 0.5 * i, Size.Y * 0.5 * j, Size.Z * 0.5 * k)).Position
+                    local x = math.min(vec.X, Position.X)
+                    local y = math.min(vec.Y, Position.Y)
+                    vec = Vector3.new(x, y, (math.min(vec.Z, Position.Z)))
+                    local x2 = math.max(vec2.X, Position.X)
+                    local y2 = math.max(vec2.Y, Position.Y)
+                    vec2 = Vector3.new(x2, y2, (math.max(vec2.Z, Position.Z)))
+                end
+            end
+        end
+
+        local num2 = math.max(Size.X * Size.Y * Size.Z, 0.001)
+        vec3 += descendant.Position * num2
+        num1 += num2
+    end
+
+    if num1 <= 0 then
+        return nil, nil
+    end
+
+    local var3 = vec2 - vec
+    local var4 = vec3 / num1
+    local X = var3.X
+    local Y = var3.Y
+    local Z = var3.Z
+
+    return var4, (math.max(X, Y, Z))
+end
+
+local function loopAnimation(arg1, arg2): boolean
+    if not (arg1 and arg2) then
+        return false
+    end
+
+    local Animation: Animation = Instance.new("Animation")
+
+    if typeof(arg2) == "string" then
+        Animation.AnimationId = arg2
+    else
+        pcall(function()
+            Animation.AnimationContent = arg2
+        end)
+    end
+
+    local success, result = pcall(function()
+        return arg1:LoadAnimation(Animation)
+    end)
+
+    if not (success and result) then
+        return false
+    end
+
+    result.Looped = true
+    result.Priority = Enum.AnimationPriority.Action
+    result:Play(0)
+
+    return true
+end
+
+local function setupCommanderAnimation(Instance: Instance, arg1)
+    if not arg1 then
+        return
+    end
+
+    local Mount = Instance:FindFirstChild("Mount")
+
+    if Mount then
+        Mount = Mount:FindFirstChildWhichIsA("Animator", true)
+    end
+
+    local var3 = (Instance:FindFirstChild("Commander") or Instance):FindFirstChildWhichIsA("Animator", true)
+    loopAnimation(Mount, arg1.ClaimableMountIdleAnimation)
+    loopAnimation(var3, arg1.ClaimableCommanderIdleAnimation or arg1.HelicopterIdleAnimation)
+end
+
+local tbl2 = {}
+local var3 = nil
+
+local function ensureBobbingLoop() -- Luacid: unused: defined but never referenced
+    if var3 then
+        return
+    end
+
+    var3 = RunService.RenderStepped:Connect(function()
+        if not IndexFrame.Visible or str1 ~= "Commanders" then
+            return
+        end
+
+        local num1 = os.clock()
+        local new = CFrame.new
+        local num2 = num1 * 2
+        local var4 = new(0, math.sin(num2) * 0.25, 0)
+        local Angles = CFrame.Angles
+        local num3 = math.sin(num1 * 1.2) * 0.04
+        local num4 = num1 * 1.5
+        local var5 = var4 * Angles(num3, 0, math.cos(num4) * 0.04)
+
+        for v, v2 in tbl2 do
+            if v.Parent then
+                v:PivotTo(v2 * var5)
+            else
+                tbl2[v] = nil
+            end
+        end
+    end)
+end
+
+local function startCommanderAnimation(arg1, Instance2: Instance, arg2)
+    if not Instance2 or not arg2 then
+        return
+    end
+
+    local WorldModel: WorldModel = Instance.new("WorldModel")
+    WorldModel.Parent = arg1
+    Instance2.Parent = WorldModel
+    setupCommanderAnimation(Instance2, arg2)
+
+    if not Instance2:FindFirstChild("Mount") then
+        return
+    end
+
+    tbl2[Instance2] = Instance2:GetPivot()
+
+    if var3 then
+        return
+    end
+
+    var3 = RunService.RenderStepped:Connect(function()
+        if not IndexFrame.Visible or str1 ~= "Commanders" then
+            return
+        end
+
+        local num1 = os.clock()
+        local new = CFrame.new
+        local num2 = num1 * 2
+        local var4 = new(0, math.sin(num2) * 0.25, 0)
+        local Angles = CFrame.Angles
+        local num3 = math.sin(num1 * 1.2) * 0.04
+        local num4 = num1 * 1.5
+        local var5 = var4 * Angles(num3, 0, math.cos(num4) * 0.04)
+
+        for v, v2 in tbl2 do
+            if v.Parent then
+                v:PivotTo(v2 * var5)
+            else
+                tbl2[v] = nil
+            end
+        end
+    end)
+end
+
+local function populateViewport(Instance2: Instance, Instance3: Instance, Instance4: Instance, arg1, arg2)
+    if typeof(Instance4) == "string" then
+        Instance4 = Instance3:FindFirstChild(Instance4)
+    end
+
+    if not Instance4 then
+        return
+    end
+
+    for _, child in Instance2:GetChildren() do
+        if child:IsA("BasePart") or child:IsA("Model") or child:IsA("WorldModel") or child:IsA("Camera") then
+            child:Destroy()
+        end
+    end
+
+    local var4 = Instance4:Clone()
+    var4:PivotTo(CFrame.identity)
+    local bool3 = arg1 and not var4:IsA("BasePart")
+
+    if bool3 then
+        local AnimSaves = var4:FindFirstChild("AnimSaves", true)
+
+        if AnimSaves then
+            AnimSaves:Destroy()
+        end
+
+        for _, descendant in var4:GetDescendants() do
+            if descendant:IsA("LuaSourceContainer") or descendant:IsA("KeyframeSequence") or descendant:IsA("AnimationRigData") then
+                descendant:Destroy()
+            end
+        end
+
+        var4.Parent = Instance2
+    else
+        if var4:IsA("BasePart") then
+            var4.Anchored = true
+        else
+            for _, descendant in var4:GetDescendants() do
+                if descendant:IsA("BasePart") then
+                    descendant.Anchored = true
+                end
+            end
+        end
+
+        var4.Parent = Instance2
+    end
+
+    local Position, var5
+
+    if arg1 and not var4:IsA("BasePart") then
+        Position, var5 = visibleFrame(var4)
+    else
+        Position = nil
+        var5 = nil
+    end
+
+    if not Position then
+        if var4:IsA("BasePart") then
+            Position = var4.Position
+            var5 = math.max(var4.Size.X, var4.Size.Y, var4.Size.Z)
+        else
+            local boundingBox, var6 = var4:GetBoundingBox()
+            Position = boundingBox.Position
+            var5 = math.max(var6.X, var6.Y, var6.Z)
+        end
+    end
+
+    local Camera: Camera = Instance.new("Camera")
+    Camera.FieldOfView = 40
+    local IndexCameraMultiplier = var4:GetAttribute("IndexCameraMultiplier") or 1
+    local _ViewportOffset = var4:GetAttribute("ViewportOffset") or Vector3.new(0, 0, 0)
+
+    if arg1 and arg2 and arg2.ViewportOffset then
+        local var6 = arg2.ViewportOffset.Position * var5 * IndexCameraMultiplier
+        Camera.CFrame = CFrame.lookAt(Position + var6, Position) + (arg2.ViewportCameraOffset or Vector3.new(0, 0, 0))
+    else
+        local var6 = (if arg1 then var5 * 1.5 else var5 * 1.8) * IndexCameraMultiplier
+        local Unit = (Vector3.new(-0.5, 0.4, -1)).Unit
+        Camera.CFrame = CFrame.lookAt(Position + Unit * var6, Position)
+    end
+
+    Camera.Parent = Instance2
+    Instance2.CurrentCamera = Camera
+
+    if arg1 and arg2 and arg2.ViewportModelOffset then
+        var4:PivotTo(CFrame.new(arg2.ViewportModelOffset))
+    end
+
+    return bool3 and var4 or nil
+end
+
+module.PopulateViewport = populateViewport
+module.SetupCommanderAnimation = setupCommanderAnimation
+module.LoopAnimation = loopAnimation
+
+local function refreshCommanderTooltip(arg1)
+    local var4 = tbl1.Commanders.entries[arg1]
+
+    if not var4 then
+        return
+    end
+
+    local var5 = CommanderData[arg1]
+
+    if tbl1.Commanders.discovered[arg1] and var5 and var5.Specialty then
+        TooltipController:AddTooltip(var4.frame, (`Role: {var5.Specialty}`))
+
+        return
+    end
+
+    TooltipController:RemoveTooltip(var4.frame)
+end
+
+local function refreshMutationTooltip(arg1) -- Luacid: unused: defined but never referenced
+    local var4 = tbl1.Mutations.entries[arg1]
+
+    if not var4 then
+        return
+    end
+
+    local var5 = MutationData[arg1]
+
+    if tbl1.Mutations.discovered[arg1] and var5 then
+        TooltipController:AddTooltip(var4.frame, MutationVisual.FullDescriptionText(var5))
+
+        return
+    end
+
+    TooltipController:RemoveTooltip(var4.frame)
+end
+
+local function applyEntryState(arg1, arg2)
+    local var4 = tbl1[arg1].entries[arg2]
+
+    if not var4 then
+        return
+    end
+
+    local var5 = tbl1[arg1].discovered[arg2]
+    var4.viewport.ImageColor3 = var5 and Color3 or Color32
+
+    if arg1 == "Commanders" then
+        refreshCommanderTooltip(arg2)
+    end
+
+    if arg1 == "Commanders" and not var4.commanderData.ViewportDoNotFloatAnimation then
+        var4.frame.TextLabel.Visible = var5 == true
+
+        if var5 and var4.model and not var4.animated then
+            startCommanderAnimation(var4.viewport, var4.model, var4.commanderData)
+            var4.animated = true
+        end
+
+        return
+    end
+
+    if arg1 == "ExplosionVFXs" then
+        if var4.label then
+            var4.label.Visible = var5 == true
+        end
+
+        var4.viewport.ImageTransparency = 0
+
+        return
+    end
+
+    if arg1 ~= "Mutations" then
+        if arg1 == "BaseSkins" and var4.label then
+            var4.label.Visible = var5 == true
+        end
+
+        return
+    end
+
+    if var4.label then
+        var4.label.Visible = var5 == true
+    end
+
+    local var6 = tbl1.Mutations.entries[arg2]
+
+    if not var6 then
+        return
+    end
+
+    local var7 = MutationData[arg2]
+
+    if tbl1.Mutations.discovered[arg2] and var7 then
+        TooltipController:AddTooltip(var6.frame, MutationVisual.FullDescriptionText(var7))
+
+        return
+    end
+
+    TooltipController:RemoveTooltip(var6.frame)
+end
+
+local function onDiscoveredNuke(arg1, arg2)
+    if arg2 == nil then
+        return
+    end
+
+    local var4 = tonumber(arg1)
+
+    if not var4 or tbl1.Nukes.discovered[var4] then
+        return
+    end
+
+    tbl1.Nukes.discovered[var4] = true
+    local var5 = tbl1.Nukes.entries[var4]
+
+    if var5 then
+        local var6 = tbl1.Nukes.discovered[var4]
+        var5.viewport.ImageColor3 = var6 and Color3 or Color32
+    end
+
+    local var6 = tbl1.Nukes.entries[var4]
+
+    if var6 then
+        local frame = var6.frame
+        frame.Visible = if str1 == "Nukes" then tbl1.Nukes.discovered[var4] and true or IndexVisibility.isVisible("Nukes", var4) else false
+    end
+
+    if str1 == "Nukes" then
+        refreshCounter()
+    end
+end
+
+local function onDiscoveredCommander(arg1, arg2)
+    if arg2 == nil then
+        return
+    end
+
+    local str2 = tostring(arg1)
+
+    if not str2 or tbl1.Commanders.discovered[str2] then
+        return
+    end
+
+    tbl1.Commanders.discovered[str2] = true
+    local var4 = tbl1.Commanders.entries[str2]
+
+    if var4 then
+        local var5 = tbl1.Commanders.discovered[str2]
+        var4.viewport.ImageColor3 = var5 and Color3 or Color32
+        refreshCommanderTooltip(str2)
+
+        if not var4.commanderData.ViewportDoNotFloatAnimation then
+            var4.frame.TextLabel.Visible = var5 == true
+
+            if var5 and var4.model and not var4.animated then
+                startCommanderAnimation(var4.viewport, var4.model, var4.commanderData)
+                var4.animated = true
+            end
+        end
+    end
+
+    local var5 = tbl1.Commanders.entries[str2]
+
+    if var5 then
+        local frame = var5.frame
+        frame.Visible = if str1 == "Commanders" then tbl1.Commanders.discovered[str2] and true or IndexVisibility.isVisible("Commanders", str2) else false
+    end
+
+    if str1 == "Commanders" then
+        refreshCounter()
+    end
+end
+
+local function onDiscoveredMutation(arg1, arg2)
+    if arg2 == nil then
+        return
+    end
+
+    local str2 = tostring(arg1)
+
+    if tbl1.Mutations.discovered[str2] then
+        return
+    end
+
+    tbl1.Mutations.discovered[str2] = true
+    local var4 = tbl1.Mutations.entries[str2]
+
+    if var4 then
+        local var5 = tbl1.Mutations.discovered[str2]
+        var4.viewport.ImageColor3 = var5 and Color3 or Color32
+
+        if var4.label then
+            var4.label.Visible = var5 == true
+        end
+
+        local var6 = tbl1.Mutations.entries[str2]
+
+        if var6 then
+            local var7 = MutationData[str2]
+
+            if tbl1.Mutations.discovered[str2] and var7 then
+                TooltipController:AddTooltip(var6.frame, MutationVisual.FullDescriptionText(var7))
+            else
+                TooltipController:RemoveTooltip(var6.frame)
+            end
+        end
+    end
+
+    local var5 = tbl1.Mutations.entries[str2]
+
+    if var5 then
+        local frame = var5.frame
+        frame.Visible = if str1 == "Mutations" then tbl1.Mutations.discovered[str2] and true or IndexVisibility.isVisible("Mutations", str2) else false
+    end
+
+    if str1 == "Mutations" then
+        refreshCounter()
+    end
+end
+
+local function onDiscoveredExplosionVFX(arg1, arg2)
+    if arg2 == nil then
+        return
+    end
+
+    local str2 = tostring(arg1)
+
+    if tbl1.ExplosionVFXs.discovered[str2] then
+        return
+    end
+
+    tbl1.ExplosionVFXs.discovered[str2] = true
+    local var4 = tbl1.ExplosionVFXs.entries[str2]
+
+    if var4 then
+        local var5 = tbl1.ExplosionVFXs.discovered[str2]
+        var4.viewport.ImageColor3 = var5 and Color3 or Color32
+
+        if var4.label then
+            var4.label.Visible = var5 == true
+        end
+
+        var4.viewport.ImageTransparency = 0
+    end
+
+    local var5 = tbl1.ExplosionVFXs.entries[str2]
+
+    if var5 then
+        local frame = var5.frame
+        frame.Visible = if str1 == "ExplosionVFXs" then tbl1.ExplosionVFXs.discovered[str2] and true or IndexVisibility.isVisible("ExplosionVFXs", str2) else false
+    end
+
+    if str1 == "ExplosionVFXs" then
+        refreshCounter()
+    end
+end
+
+local function onDiscoveredBaseSkin(arg1, arg2)
+    if arg2 == nil then
+        return
+    end
+
+    local str2 = tostring(arg1)
+
+    if tbl1.BaseSkins.discovered[str2] then
+        return
+    end
+
+    tbl1.BaseSkins.discovered[str2] = true
+    local var4 = tbl1.BaseSkins.entries[str2]
+
+    if var4 then
+        local var5 = tbl1.BaseSkins.discovered[str2]
+        var4.viewport.ImageColor3 = var5 and Color3 or Color32
+
+        if var4.label then
+            var4.label.Visible = var5 == true
+        end
+    end
+
+    local var5 = tbl1.BaseSkins.entries[str2]
+
+    if var5 then
+        local frame = var5.frame
+        frame.Visible = if str1 == "BaseSkins" then tbl1.BaseSkins.discovered[str2] and true or IndexVisibility.isVisible("BaseSkins", str2) else false
+    end
+
+    if str1 == "BaseSkins" then
+        refreshCounter()
+    end
+end
+
+local function switchTab(arg1)
+    if str1 == arg1 then
+        return
+    end
+
+    local str2 = str1
+    str1 = arg1
+
+    for _, v in tbl1[str2].entries do
+        v.frame.Visible = false
+    end
+
+    for v, v2 in tbl1[arg1].entries do
+        v2.frame.Visible = tbl1[arg1].discovered[v] and true or IndexVisibility.isVisible(arg1, v)
+    end
+
+    refreshCounter()
+end
+
+local function refreshMutationLock() -- Luacid: Inlined by compiler; 1 call site recovered
+    if var1 then
+        var1.Text = `Unlocks at rebirth {3}!`
+        var1.Visible = not bool2
+    end
+
+    if var2 then
+        var2.Visible = bool2
+    end
+end
+
+local function buildCategory(arg1, Instance2: Instance, arg2, arg3)
+    local nukeIds = arg1 == "Nukes" and getNukeIds() or getCommanderIds()
+    tbl1[arg1].total = #nukeIds
+
+    for k, nukeId in nukeIds do
+        local Instance3 = Instance2:Clone()
+        Instance3.Name = arg2 .. "_" .. tostring(nukeId)
+        Instance3.Visible = true
+        Instance3.LayoutOrder = k
+        local var4 = CommanderData[nukeId]
+        local TextLabel5 = Instance3:FindFirstChild("TextLabel")
+
+        if TextLabel5 then
+            if arg3 then
+                local var5 = displayValue(nukeId)
+                TextLabel5.Text = "Tier " .. BigNum.format(BigNum.new(var5))
+            else
+                TextLabel5.Text = var4 and var4.DisplayName or tostring(nukeId)
+            end
+
+            if arg1 == "Commanders" then
+                TextLabel5.Visible = tbl1[arg1].discovered[nukeId] == true
+            end
+        end
+
+        local RarityLabel3 = Instance3:FindFirstChild("RarityLabel")
+
+        if RarityLabel3 then
+            local Rarity = var4 and var4.Rarity
+
+            if Rarity then
+                RarityLabel3.Text = Rarity.DisplayName
+
+                if typeof(Rarity.Color) == "Color3" then
+                    RarityLabel3.TextColor3 = Rarity.Color
+                elseif typeof(Rarity.Color) == "ColorSequence" then
+                    local UIGradient = RarityLabel3:FindFirstChildOfClass("UIGradient")
+
+                    if not UIGradient then
+                        UIGradient = Instance.new("UIGradient")
+                        UIGradient.Parent = RarityLabel3
+                    end
+
+                    UIGradient.Color = Rarity.Color
+                end
+
+                Instance3.LayoutOrder = (Rarity.Order or 1) * 1000 + k
+            end
+        end
+
+        local ViewportFrame2 = Instance3:FindFirstChild("ViewportFrame")
+        local var5
+
+        if ViewportFrame2 then
+            local ViewportTemplateInstance = arg1 == "Commanders" and (var4.ViewportTemplateInstance or var4.ClaimableCommanderTemplateInstance) or tostring(nukeId)
+            var5 = populateViewport(ViewportFrame2, tbl1[arg1].folder, ViewportTemplateInstance, arg1 == "Commanders", var4)
+            ViewportFrame2.ImageColor3 = Color32
+        else
+            var5 = nil
+        end
+
+        local Locked = Instance3:FindFirstChild("Locked")
+        Instance3.Visible = if str1 == arg1 then tbl1[arg1].discovered[nukeId] and true or IndexVisibility.isVisible(arg1, nukeId) else false
+        Instance3.Parent = ScrollingFrame
+        tbl1[arg1].entries[nukeId] = {
+            animated = false,
+            frame = Instance3,
+            viewport = ViewportFrame2,
+            label = TextLabel5,
+            lockedFrame = Locked,
+            model = var5,
+            commanderData = var4
+        }
+    end
+
+    for v in tbl1[arg1].discovered do
+        applyEntryState(arg1, v)
+    end
+end
+
+local function buildExplosionCategory()
+    local explosionVFXIds = getExplosionVFXIds()
+    tbl1.ExplosionVFXs.total = #explosionVFXIds
+
+    for k, explosionVFXId in explosionVFXIds do
+        local var4 = ExplosionVFXData.List[explosionVFXId]
+        local Instance = ExplosionTemplate:Clone()
+        Instance.Name = "ExplosionVFX_" .. explosionVFXId
+        Instance.LayoutOrder = (var4.Rarity.Order or 1) * 1000 + k
+        local Icon2 = Instance:FindFirstChild("Icon")
+
+        if Icon2 then
+            Icon2.Image = var4.PreviewImage
+            Icon2.ImageColor3 = Color32
+        end
+
+        local RarityOutline2 = Instance:FindFirstChild("RarityOutline")
+
+        if RarityOutline2 then
+            RarityOutline2.ImageColor3 = var4.Rarity.Color
+        end
+
+        local TextLabel5 = Instance:FindFirstChild("TextLabel")
+
+        if TextLabel5 then
+            TextLabel5.Text = var4.DisplayName
+            TextLabel5.Visible = tbl1.ExplosionVFXs.discovered[explosionVFXId] == true
+        end
+
+        local RarityLabel3 = Instance:FindFirstChild("RarityLabel")
+
+        if RarityLabel3 then
+            RarityLabel3.Text = var4.Rarity.DisplayName
+
+            if typeof(var4.Rarity.Color) == "Color3" then
+                RarityLabel3.TextColor3 = var4.Rarity.Color
+                local UIGradient = RarityLabel3:FindFirstChildOfClass("UIGradient")
+
+                if UIGradient then
+                    UIGradient.Enabled = false
+                end
+            end
+        end
+
+        Instance.Visible = if str1 == "ExplosionVFXs" then tbl1.ExplosionVFXs.discovered[explosionVFXId] and true or IndexVisibility.isVisible("ExplosionVFXs", explosionVFXId) else false
+        Instance.Parent = ScrollingFrame
+        tbl1.ExplosionVFXs.entries[explosionVFXId] = {
+            animated = false,
+            frame = Instance,
+            viewport = Icon2,
+            label = TextLabel5
+        }
+    end
+
+    for v in tbl1.ExplosionVFXs.discovered do
+        local var4 = tbl1.ExplosionVFXs.entries[v]
+
+        if not var4 then
+            continue
+        end
+
+        local var5 = tbl1.ExplosionVFXs.discovered[v]
+        var4.viewport.ImageColor3 = var5 and Color3 or Color32
+
+        if var4.label then
+            var4.label.Visible = var5 == true
+        end
+
+        var4.viewport.ImageTransparency = 0
+    end
+end
+
+local function buildMutationCategory()
+    local mutationIds = getMutationIds()
+    tbl1.Mutations.total = #mutationIds
+
+    for k, mutationId in mutationIds do
+        local var4 = MutationData[mutationId]
+        local var5 = ExplosionVFXData.Rarities[var4.Rarity]
+        local Instance = MutationTemplate:Clone()
+        Instance.Name = "Mutation_" .. mutationId
+        local var6 = if var5 then var5.Order or 1 else 1
+        Instance.LayoutOrder = var6 * 1000 + k
+        local Icon2 = Instance:FindFirstChild("Icon")
+
+        if Icon2 then
+            Icon2.Image = var4.Icon
+            Icon2.ImageColor3 = Color32
+        end
+
+        local RarityOutline2 = Instance:FindFirstChild("RarityOutline")
+
+        if RarityOutline2 and var5 and typeof(var5.Color) == "Color3" then
+            RarityOutline2.ImageColor3 = var5.Color
+        end
+
+        local TextLabel5 = Instance:FindFirstChild("TextLabel")
+
+        if TextLabel5 then
+            TextLabel5.Text = var4.Name
+            TextLabel5.Visible = tbl1.Mutations.discovered[mutationId] == true
+        end
+
+        local RarityLabel3 = Instance:FindFirstChild("RarityLabel")
+
+        if RarityLabel3 and var5 then
+            RarityLabel3.Text = var5.DisplayName
+
+            if typeof(var5.Color) == "Color3" then
+                RarityLabel3.TextColor3 = var5.Color
+            end
+        end
+
+        Instance.Visible = if str1 == "Mutations" then tbl1.Mutations.discovered[mutationId] and true or IndexVisibility.isVisible("Mutations", mutationId) else false
+        Instance.Parent = ScrollingFrame
+        tbl1.Mutations.entries[mutationId] = {
+            animated = false,
+            frame = Instance,
+            viewport = Icon2,
+            label = TextLabel5
+        }
+        local var7 = tbl1.Mutations.entries[mutationId]
+
+        if not var7 then
+            continue
+        end
+
+        local var8 = MutationData[mutationId]
+
+        if tbl1.Mutations.discovered[mutationId] and var8 then
+            TooltipController:AddTooltip(var7.frame, MutationVisual.FullDescriptionText(var8))
+        else
+            TooltipController:RemoveTooltip(var7.frame)
+        end
+    end
+
+    for v in tbl1.Mutations.discovered do
+        local var4 = tbl1.Mutations.entries[v]
+
+        if not var4 then
+            continue
+        end
+
+        local var5 = tbl1.Mutations.discovered[v]
+        var4.viewport.ImageColor3 = var5 and Color3 or Color32
+
+        if var4.label then
+            var4.label.Visible = var5 == true
+        end
+
+        local var6 = tbl1.Mutations.entries[v]
+
+        if not var6 then
+            continue
+        end
+
+        local var7 = MutationData[v]
+
+        if tbl1.Mutations.discovered[v] and var7 then
+            TooltipController:AddTooltip(var6.frame, MutationVisual.FullDescriptionText(var7))
+        else
+            TooltipController:RemoveTooltip(var6.frame)
+        end
+    end
+end
+
+local function buildBaseSkinCategory()
+    tbl1.BaseSkins.discovered[BaseSkinData.DefaultKey] = true
+    local baseSkinIds = getBaseSkinIds()
+    tbl1.BaseSkins.total = #baseSkinIds
+
+    for k, baseSkinId in baseSkinIds do
+        local Skin = BaseSkinData.Skins[baseSkinId]
+        local Rarity = Skin.Rarity
+        local Instance2 = BaseSkinTemplate:Clone()
+        Instance2.Name = "BaseSkin_" .. baseSkinId
+        Instance2.LayoutOrder = Rarity.Order * 1000 + k
+        local TextLabel5 = Instance2:FindFirstChild("TextLabel")
+
+        if TextLabel5 then
+            TextLabel5.Text = Skin.DisplayName
+            TextLabel5.Visible = tbl1.BaseSkins.discovered[baseSkinId] == true
+        end
+
+        local RarityLabel3 = Instance2:FindFirstChild("RarityLabel")
+
+        if RarityLabel3 then
+            RarityLabel3.Text = Rarity.DisplayName
+
+            if typeof(Rarity.Color) == "Color3" then
+                RarityLabel3.TextColor3 = Rarity.Color
+                local UIGradient = RarityLabel3:FindFirstChildOfClass("UIGradient")
+
+                if UIGradient then
+                    UIGradient.Enabled = false
+                end
+            elseif typeof(Rarity.Color) == "ColorSequence" then
+                local UIGradient = RarityLabel3:FindFirstChildOfClass("UIGradient")
+
+                if not UIGradient then
+                    UIGradient = Instance.new("UIGradient")
+                    UIGradient.Parent = RarityLabel3
+                end
+
+                UIGradient.Enabled = true
+                UIGradient.Color = Rarity.Color
+            end
+        end
+
+        local ViewportFrame2 = Instance2:FindFirstChild("ViewportFrame")
+        local ImageLabel
+
+        if ViewportFrame2 then
+            if Skin.Icon then
+                ImageLabel = Instance.new("ImageLabel")
+                ImageLabel.Name = "Icon"
+                ImageLabel.BackgroundTransparency = 1
+                ImageLabel.Size = UDim2.fromScale(1, 1)
+                ImageLabel.ScaleType = Enum.ScaleType.Fit
+                ImageLabel.Image = Skin.Icon
+                ImageLabel.ImageColor3 = Color32
+                ImageLabel.Parent = ViewportFrame2
+            else
+                populateViewport(ViewportFrame2, nil, BaseSkinController.BuildPreviewIsland(baseSkinId), false, nil)
+                ViewportFrame2.ImageColor3 = Color32
+                ImageLabel = ViewportFrame2
+            end
+        else
+            ImageLabel = ViewportFrame2
+        end
+
+        Instance2.Visible = if str1 == "BaseSkins" then tbl1.BaseSkins.discovered[baseSkinId] and true or IndexVisibility.isVisible("BaseSkins", baseSkinId) else false
+        Instance2.Parent = ScrollingFrame
+        tbl1.BaseSkins.entries[baseSkinId] = {
+            animated = false,
+            frame = Instance2,
+            viewport = ImageLabel,
+            label = TextLabel5
+        }
+    end
+
+    for v in tbl1.BaseSkins.discovered do
+        local var4 = tbl1.BaseSkins.entries[v]
+
+        if not var4 then
+            continue
+        end
+
+        local var5 = tbl1.BaseSkins.discovered[v]
+        var4.viewport.ImageColor3 = var5 and Color3 or Color32
+
+        if var4.label then
+            var4.label.Visible = var5 == true
+        end
+    end
+end
+
+local function refreshCommanderRarities()
+    for v, v2 in getCommanderIds() do
+        local var4 = tbl1.Commanders.entries[v2]
+
+        if not var4 then
+            continue
+        end
+
+        local var5 = CommanderData[v2]
+
+        if var5 then
+            var5 = var5.Rarity
+        end
+
+        if not var5 then
+            continue
+        end
+
+        local RarityLabel3 = var4.frame:FindFirstChild("RarityLabel")
+
+        if RarityLabel3 then
+            RarityLabel3.Text = var5.DisplayName
+            local var6 = RarityLabel3:FindFirstChildOfClass("UIGradient")
+
+            if typeof(var5.Color) == "Color3" then
+                RarityLabel3.TextColor3 = var5.Color
+
+                if var6 then
+                    var6.Enabled = false
+                end
+            elseif typeof(var5.Color) == "ColorSequence" then
+                if not var6 then
+                    var6 = Instance.new("UIGradient")
+                    var6.Parent = RarityLabel3
+                end
+
+                var6.Enabled = true
+                var6.Color = var5.Color
+            end
+        end
+
+        var4.frame.LayoutOrder = (var5.Order or 1) * 1000 + v
+    end
+end
+
+local function buildAll()
+    if bool1 then
+        return
+    end
+
+    bool1 = true
+    local UIGridLayout = ScrollingFrame:FindFirstChildOfClass("UIGridLayout")
+
+    if UIGridLayout then
+        UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    end
+
+    buildCategory("Nukes", Template, "Tier", true)
+    buildCategory("Commanders", CommanderTemplate, "Commander", false)
+    buildExplosionCategory()
+    buildMutationCategory()
+    buildBaseSkinCategory()
+    refreshCounter()
+end
+
+function module.Start()
+    buildAll()
+    CommanderRarityFlags.onChanged(refreshCommanderRarities)
+    local TextButton = Tabs:WaitForChild("Nukes"):WaitForChild("TextButton")
+    local TextButton2 = Tabs:WaitForChild("Commanders"):WaitForChild("TextButton")
+    local TextButton3 = Tabs:WaitForChild("Explosions"):WaitForChild("TextButton")
+    local TextButton4 = Tabs:WaitForChild("BaseSkins"):WaitForChild("TextButton")
+    local Mutations = Tabs:WaitForChild("Mutations")
+    local TextButton5 = Mutations:WaitForChild("TextButton")
+    var1 = Mutations:FindFirstChild("unlocks")
+    var2 = Mutations:FindFirstChild("TextLabel")
+
+    TextButton.Activated:Connect(function()
+        switchTab("Nukes")
+    end)
+
+    TextButton2.Activated:Connect(function()
+        switchTab("Commanders")
+    end)
+
+    TextButton3.Activated:Connect(function()
+        switchTab("ExplosionVFXs")
+    end)
+
+    TextButton5.Activated:Connect(function()
+        switchTab("Mutations")
+    end)
+
+    TextButton4.Activated:Connect(function()
+        switchTab("BaseSkins")
+    end)
+
+    ScreenGui:WaitForChild("Left"):WaitForChild("SquareBtns"):WaitForChild("Index").Activated:Connect(function()
+        FramesManager.Toggle("IndexFrame")
+
+        for v in tbl1[str1].entries do
+            local var4 = tbl1[str1].entries[v]
+
+            if var4 then
+                local frame = var4.frame
+                frame.Visible = if str1 == str1 then tbl1[str1].discovered[v] and true or IndexVisibility.isVisible(str1, v) else false
+            end
+        end
+
+        refreshCounter()
+    end)
+
+    local var4 = DataController:Get()
+    var4:ObserveKeys({ "discoveredTiers" }, onDiscoveredNuke)
+    var4:ObserveKeys({ "DiscoveredCommanders" }, onDiscoveredCommander)
+    var4:ObserveKeys({ "DiscoveredMutations" }, onDiscoveredMutation)
+    var4:ObserveKeys({ "ExplosionVFXs", "Owned" }, onDiscoveredExplosionVFX)
+    var4:ObserveKeys({ "BaseSkins", "Owned" }, onDiscoveredBaseSkin)
+
+    var4:Observe({ "rebirthLevel" }, function(arg1)
+        bool2 = (tonumber(arg1) or 0) >= 3
+        refreshMutationLock()
+    end)
+
+    IndexVisibility.Changed:Connect(refreshVisibility)
+
+    task.spawn(function()
+        while true do
+            repeat
+                task.wait(30)
+            until IndexFrame.Visible and IndexVisibility.hasTimeWindows()
+
+            for v in tbl1[str1].entries do
+                local var5 = tbl1[str1].entries[v]
+
+                if var5 then
+                    local frame = var5.frame
+                    frame.Visible = if str1 == str1 then tbl1[str1].discovered[v] and true or IndexVisibility.isVisible(str1, v) else false
+                end
+            end
+
+            refreshCounter()
+        end
+    end)
+end
+
+return module
