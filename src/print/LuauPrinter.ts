@@ -33,6 +33,7 @@ export function printLuau(ast: Chunk, options: PrintOptions = {}): string {
 class Printer {
   private readonly lines: string[] = [];
   private indentLevel = 0;
+  private exprDepth = 0;
   private pendingBlank = false;
   private readonly unit: string;
 
@@ -242,6 +243,7 @@ class Printer {
     if (fields.length === 0) {
       return "{}";
     }
+    this.exprDepth += 1;
     const parts = fields.map((field) => {
       if (field.name) {
         return `${field.name} = ${this.expr(field.value)}`;
@@ -251,9 +253,10 @@ class Printer {
       }
       return this.expr(field.value);
     });
+    this.exprDepth -= 1;
     if (parts.join(", ").length > 80) {
-      const inner = parts.map((part) => `${this.unit.repeat(this.indentLevel + 1)}${part},`).join("\n");
-      return `{\n${inner}\n${this.unit.repeat(this.indentLevel)}}`;
+      const inner = parts.map((part) => `${this.unit.repeat(this.indentLevel + this.exprDepth + 1)}${part},`).join("\n");
+      return `{\n${inner}\n${this.unit.repeat(this.indentLevel + this.exprDepth)}}`;
     }
     return `{ ${parts.join(", ")} }`;
   }

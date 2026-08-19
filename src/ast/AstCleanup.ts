@@ -1,4 +1,5 @@
-import type { Block, Chunk, Expression, FunctionExpression, Statement } from "./Ast.js";
+import { block } from "./Ast.js";
+import type { BinaryOperator, Block, Chunk, Expression, FunctionExpression, Statement } from "./Ast.js";
 import { callbackParamsFor, MATH_CONSTANTS, typeFromExpression } from "../reconstruct/RobloxSemantics.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
 
@@ -16,10 +17,281 @@ export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
 }
 
 function transformBlock(body: Block, options: CleanupOptions): Block {
-  const statements = flattenElseIf(body.statements).map((statement) => transformStatement(statement, options));
+  let statements = flattenElseIf(body.statements).map((statement) => transformStatement(statement, options));
+  statements = invertContinueIfs(statements);
   const withIfExpr = options.ifExpressions ? recoverIfExpressions(statements) : statements;
   const withReturns = options.earlyReturn ? recoverEarlyReturns(withIfExpr) : withIfExpr;
-  return { kind: "block", statements: withReturns };
+  const withoutDead = removeUnusedLocals(withReturns);
+  const withLocalFunctions = liftLocalFunctions(withoutDead);
+  return { kind: "block", statements: withLocalFunctions };
+}
+
+/** `local name = function(...) body end` becomes `local function name(...)` when
+ * the closure is not immediately assigned to a table field afterwards. */
+function liftLocalFunctions(statements: Statement[]): Statement[] {
+  const liftedNames = new Set<string>();
+  for (const statement of statements) {
+    if (statement.kind === "function-decl") {
+      liftedNames.add(statement.name.slice(statement.name.lastIndexOf(":") + 1));
+    }
+  }
+  return statements.map((statement) => {
+    if (
+      statement.kind !== "local" ||
+      statement.names.length !== 1 ||
+      statement.values.length !== 1 ||
+      liftedNames.has(statement.names[0]!)
+    ) {
+      return statement;
+    }
+    const value = statement.values[0];
+    if (!value || value.kind !== "function-expr") {
+      return statement;
+    }
+    return {
+      kind: "function-decl",
+      local: true,
+      name: statement.names[0]!,
+      params: value.params,
+      paramTypes: value.paramTypes,
+      returnType: value.returnType,
+      isVararg: value.isVararg,
+      body: value.body,
+    };
+  });
+}
+
+/** `if not X then continue end; S...` at the start of a loop body becomes
+ * `if X then S... end` (both keep short-circuit evaluation). */
+function invertContinueIfs(statements: Statement[]): Statement[] {
+  const out: Statement[] = [];
+  let index = 0;
+  while (index < statements.length) {
+    const statement = statements[index]!;
+    if (
+      statement.kind === "if" &&
+      statement.branches.length === 0 &&
+      !statement.alternate &&
+      statement.consequent.statements.length === 1 &&
+      statement.consequent.statements[0]?.kind === "continue"
+    ) {
+      const test = negateCondition(statement.test);
+      if (test) {
+        const rest = statements.slice(index + 1);
+        if (rest.length > 0) {
+          out.push({ kind: "if", test, consequent: block(rest), branches: [] });
+          return out;
+        }
+      }
+    }
+    out.push(statement);
+    index += 1;
+  }
+  return out;
+}
+
+/** Drop `local x = <fn>` declarations whose name is never referenced again
+ * (they are superseded by lifted method declarations). */
+function removeUnusedLocals(statements: Statement[]): Statement[] {
+  const referenced = new Set<string>();
+  const liftedNames = new Set<string>();
+  const locals: Array<{ name: string; statement: Statement }> = [];
+  for (const statement of statements) {
+    if (statement.kind === "local" && statement.names.length === 1 && statement.values.length === 1) {
+      locals.push({ name: statement.names[0]!, statement });
+    }
+    if (statement.kind === "function-decl") {
+      const tail = statement.name.slice(statement.name.lastIndexOf(":") + 1);
+      liftedNames.add(tail);
+    }
+    collectIdentifiers(statement, (name) => {
+      referenced.add(name);
+    });
+  }
+  return statements.filter((statement) => {
+    if (statement.kind !== "local" || statement.names.length !== 1) {
+      return true;
+    }
+    const name = statement.names[0]!;
+    const local = locals.find((candidate) => candidate.statement === statement);
+    if (!local || referenced.has(name)) {
+      return true;
+    }
+    const value = statement.values[0];
+    if (!value || value.kind !== "function-expr") {
+      return true;
+    }
+    // Only drop closure locals superseded by a lifted method declaration.
+    return !liftedNames.has(name);
+  });
+}
+
+function collectIdentifiers(statement: Statement, visit: (name: string) => void): void {
+  const walkExpr = (expression: Expression): void => {
+    switch (expression.kind) {
+      case "identifier":
+        visit(expression.name);
+        break;
+      case "unary":
+        walkExpr(expression.argument);
+        break;
+      case "binary":
+        walkExpr(expression.left);
+        walkExpr(expression.right);
+        break;
+      case "call":
+        walkExpr(expression.callee);
+        expression.args.forEach(walkExpr);
+        break;
+      case "method-call":
+        walkExpr(expression.object);
+        expression.args.forEach(walkExpr);
+        break;
+      case "index":
+        walkExpr(expression.table);
+        walkExpr(expression.key);
+        break;
+      case "property":
+        walkExpr(expression.object);
+        break;
+      case "table":
+        expression.fields.forEach((field) => {
+          if (field.key) {
+            walkExpr(field.key);
+          }
+          walkExpr(field.value);
+        });
+        break;
+      case "function-expr":
+        expression.body.statements.forEach(walkStmt);
+        break;
+      case "paren":
+        walkExpr(expression.expression);
+        break;
+      case "if-expr":
+        walkExpr(expression.test);
+        walkExpr(expression.consequent);
+        expression.branches.forEach((branch) => {
+          walkExpr(branch.test);
+          walkExpr(branch.value);
+        });
+        walkExpr(expression.alternate);
+        break;
+      case "interp":
+        expression.parts.forEach((part) => {
+          if (part.kind === "expr" && typeof part.value !== "string") {
+            walkExpr(part.value);
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  };
+  const walkStmt = (item: Statement): void => {
+    switch (item.kind) {
+      case "local":
+        item.values.forEach(walkExpr);
+        break;
+      case "assign":
+        item.targets.forEach(walkExpr);
+        item.values.forEach(walkExpr);
+        break;
+      case "function-decl":
+        item.body.statements.forEach(walkStmt);
+        break;
+      case "if":
+        walkExpr(item.test);
+        item.consequent.statements.forEach(walkStmt);
+        item.branches.forEach((branch) => {
+          walkExpr(branch.test);
+          branch.body.statements.forEach(walkStmt);
+        });
+        item.alternate?.statements.forEach(walkStmt);
+        break;
+      case "while":
+        walkExpr(item.test);
+        item.body.statements.forEach(walkStmt);
+        break;
+      case "repeat":
+        item.body.statements.forEach(walkStmt);
+        walkExpr(item.test);
+        break;
+      case "numeric-for":
+        walkExpr(item.start);
+        walkExpr(item.stop);
+        if (item.step) {
+          walkExpr(item.step);
+        }
+        item.body.statements.forEach(walkStmt);
+        break;
+      case "generic-for":
+        item.iterators.forEach(walkExpr);
+        item.body.statements.forEach(walkStmt);
+        break;
+      case "return":
+        item.values.forEach(walkExpr);
+        break;
+      case "expression-stmt":
+        walkExpr(item.expression);
+        break;
+      case "do":
+        item.body.statements.forEach(walkStmt);
+        break;
+      default:
+        break;
+    }
+  };
+  walkStmt(statement);
+}
+
+/** `lit < x` becomes `x > lit`; `lit <= x` becomes `x >= lit`. */
+function normalizeComparison(expression: Expression): Expression {
+  if (expression.kind !== "binary") {
+    return expression;
+  }
+  const { op, left, right } = expression;
+  if (left.kind === "literal" && typeof left.value === "number") {
+    if (op === "<") {
+      return { kind: "binary", op: ">", left: right, right: left };
+    }
+    if (op === "<=") {
+      return { kind: "binary", op: ">=", left: right, right: left };
+    }
+    if (op === ">") {
+      return { kind: "binary", op: "<", left: right, right: left };
+    }
+    if (op === ">=") {
+      return { kind: "binary", op: "<=", left: right, right: left };
+    }
+  }
+  return expression;
+}
+
+/** Negate a condition, preferring a direct comparison operator. */
+function negateCondition(expression: Expression): Expression | undefined {
+  if (expression.kind === "unary" && expression.op === "not") {
+    return expression.argument;
+  }
+  if (expression.kind === "binary") {
+    const flipped: Record<string, string> = {
+      "==": "~=",
+      "~=": "==",
+      "<": ">=",
+      "<=": ">",
+      ">": "<=",
+      ">=": "<",
+    };
+    const next = flipped[expression.op];
+    if (next) {
+      return { kind: "binary", op: next as BinaryOperator, left: expression.left, right: expression.right };
+    }
+  }
+  // A plain value can always be negated (`x` -> `not x`).
+  if (expression.kind === "identifier" || expression.kind === "property" || expression.kind === "index") {
+    return { kind: "unary", op: "not", argument: expression };
+  }
+  return undefined;
 }
 
 function transformStatement(statement: Statement, options: CleanupOptions): Statement {
@@ -85,18 +357,27 @@ function transformStatement(statement: Statement, options: CleanupOptions): Stat
 
 function transformExpr(expression: Expression, options: CleanupOptions): Expression {
   switch (expression.kind) {
-    case "unary":
-      return { ...expression, argument: transformExpr(expression.argument, options) };
+    case "unary": {
+      const argument = transformExpr(expression.argument, options);
+      if (expression.op === "not") {
+        const simplified = negateCondition(argument);
+        if (simplified) {
+          return simplified;
+        }
+      }
+      return { ...expression, argument };
+    }
     case "binary": {
       const left = transformExpr(expression.left, options);
       const right = transformExpr(expression.right, options);
-      const rewritten = { ...expression, left, right };
+      let rewritten: Expression = { ...expression, left, right };
       if (options.interpolatedStrings) {
         const interp = concatToInterp(rewritten);
         if (interp) {
           return interp;
         }
       }
+      rewritten = normalizeComparison(rewritten);
       if (options.mathConstants) {
         return rewriteMathConstant(rewritten);
       }
@@ -210,6 +491,7 @@ function recoverIfExpressions(statements: Statement[]): Statement[] {
       kind: "if-expr",
       test: statement.test,
       consequent: thenAssign.values[0]!,
+      branches: [],
       alternate: elseAssign.values[0]!,
     };
     if (thenAssign.kind === "local") {
