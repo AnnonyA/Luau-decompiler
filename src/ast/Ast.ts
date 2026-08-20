@@ -17,9 +17,12 @@ export interface Block {
   statements: Statement[];
 }
 
+export type CompoundOperator = "+" | "-" | "*" | "/" | "%" | "..";
+
 export type Statement =
   | LocalDeclaration
   | Assignment
+  | CompoundAssignment
   | FunctionDeclaration
   | IfStatement
   | WhileStatement
@@ -45,6 +48,13 @@ export interface Assignment {
   values: Expression[];
 }
 
+export interface CompoundAssignment {
+  kind: "compound-assign";
+  target: Expression;
+  op: CompoundOperator;
+  value: Expression;
+}
+
 export interface FunctionDeclaration {
   kind: "function-decl";
   local: boolean;
@@ -54,6 +64,8 @@ export interface FunctionDeclaration {
   returnType?: string;
   isVararg: boolean;
   body: Block;
+  /** Source line from the prototype's `lineDefined`, when present. */
+  line?: number;
 }
 
 export interface IfStatement {
@@ -203,6 +215,8 @@ export interface FunctionExpression {
   returnType?: string;
   isVararg: boolean;
   body: Block;
+  /** Source line from the prototype's `lineDefined`, when present. */
+  line?: number;
 }
 
 export interface IfExpressionBranch {

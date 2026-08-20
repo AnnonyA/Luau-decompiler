@@ -29,11 +29,24 @@ describe("real bytecode source patterns", () => {
     expect(hash).toBe("8a942d62ce2a933f6ec5d84822a9420b263f6b30");
 
     const source = sourceFor("luac.bin");
-    expect(source).toMatch(/for \w+ = \w+, \w+ do\n\s+if \w+ % 2 ~= 0 then/);
-    expect(source).toMatch(/repeat\n\s+\w+ = \w+ \+ 1/);
-    expect(source).toMatch(/while \w+ > 0 do\n\s+\w+ = \w+ - 1/);
+    expect(source).toMatch(/for \w+ = \w+, \w+ do\n\s+if \w+ % 2 == 0 then\n\s+continue/);
+    expect(source).toMatch(/if \w+ > 100 then\n\s+break/);
+    // Compound assignment is the human form of the repeat/while counters.
+    expect(source).toMatch(/repeat\n\s+\w+ \+= 1/);
+    expect(source).toMatch(/while \w+ > 0 do\n\s+\w+ -= 1/);
     expect(source).toContain("local Players: Players = game:GetService(\"Players\")");
     expect(source.length).toBeLessThan(100_000);
+    expect(source).not.toMatch(/: nil/);
+    expect(source).toMatch(/\w+ \+= /);
+    expect(source).toContain("function module.ControlFlow");
+    expect(source).not.toMatch(/local function ControlFlow\b/);
+    expect(source).toContain("function module.BuildMegaTable");
+    expect(source).not.toMatch(/module\.BuildMegaTable = BuildMegaTable/);
+    expect(source).toMatch(/elseif \w+ >= 50 then/);
+    expect(source).toMatch(/return if \w+ then/);
+    expect(source).toMatch(/\bisEven\b/);
+    expect(source).toMatch(/\bisOdd\b/);
+    expect(source).not.toMatch(/\bvalue14\s*\(/);
   });
 
   it("normalizes Roblox opcodes and recovers the IndexUI service/module chain", () => {
@@ -48,6 +61,11 @@ describe("real bytecode source patterns", () => {
     expect(source).toContain("local Nukes: Instance = ReplicatedStorage:WaitForChild(\"Nukes\")");
     expect(source).toContain("local FramesManager = require(script.Parent.FramesManager)");
     expect(source.length).toBeLessThan(100_000);
+    expect(source).not.toMatch(/: nil/);
+    expect(source).not.toMatch(/local _: nil = nil/);
+    expect(source).toMatch(/local function populateViewport/);
+    expect(source).toContain("module.PopulateViewport = populateViewport");
+    expect(source).toMatch(/populateViewport\(/);
   });
 
   it("decompiles the real Military controller without duplicated CFG regions", () => {
@@ -59,5 +77,6 @@ describe("real bytecode source patterns", () => {
     expect(source).toContain("local SoundService: SoundService = game:GetService(\"SoundService\")");
     expect(source).toContain("local Remotes = require(packages.Remotes)");
     expect(source.length).toBeLessThan(50_000);
+    expect(source).not.toMatch(/: nil/);
   });
 });

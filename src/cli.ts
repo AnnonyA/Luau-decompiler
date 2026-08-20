@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { decompile, parseQueryOptions } from "./decompile.js";
 import { decodeBytecode } from "./decode/Decoder.js";
 import { disassembleModule } from "./disasm/Disassembler.js";
+import { parseRuntimeContext } from "./reconstruct/RuntimeContext.js";
 import { startServer } from "./server.js";
 
 function usage(): never {
@@ -38,7 +39,20 @@ if (command === "serve") {
   }
 } else if (command === "decompile") {
   const bytes = new Uint8Array(readFileSync(target));
-  const result = decompile(bytes, parseQueryOptions(new URLSearchParams(process.env.LUAU_DECOMPILE_OPTS ?? "")));
+  const options = parseQueryOptions(new URLSearchParams(process.env.LUAU_DECOMPILE_OPTS ?? ""));
+  const contextFlag = process.argv.indexOf("--context");
+  if (contextFlag >= 0 && process.argv[contextFlag + 1]) {
+    try {
+      options.runtimeContext = parseRuntimeContext(JSON.parse(readFileSync(process.argv[contextFlag + 1]!, "utf8")));
+    } catch (error) {
+      process.stderr.write(`failed to read --context: ${error instanceof Error ? error.message : error}\n`);
+      process.exit(1);
+    }
+  }
+  if (process.argv.includes("--no-context")) {
+    options.runtimeContext = false;
+  }
+  const result = decompile(bytes, options);
   if (!result.ok) {
     process.stderr.write(`${result.error}\n`);
     process.exit(1);

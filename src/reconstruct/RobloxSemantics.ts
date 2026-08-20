@@ -59,12 +59,16 @@ const EVENT_PARAMS: Record<string, string[]> = {
   ChildRemoved: ["child"],
   DescendantAdded: ["descendant"],
   DescendantRemoving: ["descendant"],
-  InputBegan: ["input", "gameProcessed"],
-  InputEnded: ["input", "gameProcessed"],
-  InputChanged: ["input", "gameProcessed"],
+  InputBegan: ["input", "gameProcessedEvent"],
+  InputEnded: ["input", "gameProcessedEvent"],
+  InputChanged: ["input", "gameProcessedEvent"],
   Heartbeat: ["deltaTime"],
   Stepped: ["time", "deltaTime"],
   RenderStepped: ["deltaTime"],
+  PreRender: ["deltaTime"],
+  PreAnimation: ["deltaTime"],
+  PreSimulation: ["deltaTime"],
+  PostSimulation: ["deltaTime"],
   Touched: ["hit"],
   TouchEnded: ["hit"],
   AncestryChanged: ["child", "parent"],
@@ -72,10 +76,47 @@ const EVENT_PARAMS: Record<string, string[]> = {
   GetPropertyChangedSignal: ["property"],
   OnClientEvent: ["..."],
   OnServerEvent: ["player"],
+  Activated: ["inputObject", "clickCount"],
+  MouseButton1Click: [],
+  MouseButton1Down: ["x", "y"],
+  MouseButton1Up: ["x", "y"],
+  MouseButton2Click: [],
+  MouseEnter: ["x", "y"],
+  MouseLeave: ["x", "y"],
+  MouseMoved: ["x", "y"],
+  MouseWheelForward: ["x", "y"],
+  MouseWheelBackward: ["x", "y"],
+  Focused: [],
+  FocusLost: ["enterPressed"],
+  SelectionGained: [],
+  SelectionLost: [],
+  Completed: ["playbackState"],
+  Stopped: [],
+  Played: [],
+  DidLoop: [],
+  Ended: [],
+  Loaded: [],
+  KeyframeReached: ["keyframe"],
+  Triggered: ["player"],
+  PromptShown: ["inputType"],
+  PromptHidden: [],
+  StateChanged: ["old", "new"],
+  Died: [],
+  Running: ["speed"],
+  Jumping: ["active"],
+  Climbing: ["speed"],
+  Swimming: ["speed"],
+  FreeFalling: ["active"],
+  Seated: ["active", "seat"],
+  HealthChanged: ["health"],
+  Idled: ["time"],
+  Event: ["..."],
+  Observe: ["value"],
+  ObserveKeys: ["value"],
 };
 
 const PROPERTY_LOCAL: Record<string, string> = {
-  LocalPlayer: "player",
+  LocalPlayer: "LocalPlayer",
   Character: "character",
   Humanoid: "humanoid",
   PrimaryPart: "primaryPart",
@@ -118,7 +159,15 @@ const METHOD_RESULT: Record<string, string> = {
   Disconnect: "unused",
 };
 
-const CALLBACK_METHODS = new Set(["Connect", "Once", "connect", "once"]);
+const CALLBACK_METHODS = new Set([
+  "Connect",
+  "Once",
+  "connect",
+  "once",
+  "ConnectParallel",
+  "Observe",
+  "ObserveKeys",
+]);
 
 export function nameFromProperty(name: string): string | undefined {
   return PROPERTY_LOCAL[name];
@@ -140,10 +189,21 @@ export function nameFromMethod(name: string, args: Expression[]): string | undef
   return METHOD_RESULT[name];
 }
 
+export function eventCallbackName(event: string): string {
+  if (event.length === 0) {
+    return "callback";
+  }
+  if (/^On[A-Z]/.test(event) || /^on[A-Z]/.test(event)) {
+    return event[0]!.toLowerCase() + event.slice(1);
+  }
+  return `on${event}`;
+}
+
 export function typeFromExpression(expression: Expression): string | undefined {
   if (expression.kind === "literal") {
     if (expression.value === null) {
-      return "nil";
+      // `local x: nil = nil` is noise; a nil initializer never deserves an annotation.
+      return undefined;
     }
     if (typeof expression.value === "boolean") {
       return "boolean";
@@ -227,6 +287,35 @@ function typeFromMethod(_object: Expression, name: string, args: Expression[]): 
   return undefined;
 }
 
+const CALLBACK_PARAM_TYPES: Record<string, string> = {
+  input: "InputObject",
+  inputObject: "InputObject",
+  gameProcessedEvent: "boolean",
+  gameProcessed: "boolean",
+  player: "Player",
+  character: "Model",
+  deltaTime: "number",
+  time: "number",
+  hit: "BasePart",
+  property: "string",
+  playbackState: "Enum.PlaybackState",
+  cframe: "CFrame",
+  child: "Instance",
+  parent: "Instance",
+  descendant: "Instance",
+  clickCount: "number",
+  enterPressed: "boolean",
+  health: "number",
+  speed: "number",
+  keyframe: "string",
+  old: "Enum.HumanoidStateType",
+  new: "Enum.HumanoidStateType",
+};
+
+export function callbackParamType(name: string): string | undefined {
+  return CALLBACK_PARAM_TYPES[name];
+}
+
 export function callbackParamsFor(expression: Expression): string[] | undefined {
   if (expression.kind === "method-call" && CALLBACK_METHODS.has(expression.name)) {
     return callbackParamsFor(expression.object);
@@ -234,8 +323,14 @@ export function callbackParamsFor(expression: Expression): string[] | undefined 
   if (expression.kind === "property") {
     return EVENT_PARAMS[expression.name];
   }
-  if (expression.kind === "call" && expression.callee.kind === "property" && expression.callee.name === "GetPropertyChangedSignal") {
-    return ["property"];
+  if (expression.kind === "call") {
+    const callee = expression.callee;
+    if (callee.kind === "property" && callee.name === "GetPropertyChangedSignal") {
+      return ["property"];
+    }
+    if (callee.kind === "property" && callee.name === "new" && callee.object.kind === "identifier" && /Shake/i.test(callee.object.name)) {
+      return ["cframe"];
+    }
   }
   return undefined;
 }

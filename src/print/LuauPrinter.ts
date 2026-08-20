@@ -86,6 +86,9 @@ class Printer {
             .join(", ")}`,
         );
         break;
+      case "compound-assign":
+        this.write(`${this.expr(statement.target)} ${statement.op}= ${this.expr(statement.value)}`);
+        break;
       case "function-decl": {
         const header = `${statement.local ? "local function " : "function "}${statement.name}(${formatParams(
           statement.params,
@@ -194,8 +197,12 @@ class Printer {
         return `function(${formatParams(expression.params, expression.isVararg, expression.paramTypes)})${
           expression.returnType ? `: ${expression.returnType}` : ""
         }\n${this.nested(expression.body)}end`;
-      case "if-expr":
-        return `if ${this.expr(expression.test)} then ${this.expr(expression.consequent)} else ${this.expr(expression.alternate)}`;
+      case "if-expr": {
+        const branches = expression.branches
+          .map((branch) => ` elseif ${this.expr(branch.test)} then ${this.expr(branch.value)}`)
+          .join("");
+        return `if ${this.expr(expression.test)} then ${this.expr(expression.consequent)}${branches} else ${this.expr(expression.alternate)}`;
+      }
       case "interp":
         return `\`${expression.parts.map((part) => this.interpPart(part)).join("")}\``;
       case "paren":

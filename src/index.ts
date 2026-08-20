@@ -1,4 +1,6 @@
 export { decompile, decodeOnly, parseQueryOptions, type DecompileOptions, type DecompileResult } from "./decompile.js";
+export { applyRuntimeContext, parseRuntimeContext, type RuntimeContext } from "./reconstruct/RuntimeContext.js";
+export { inferHumanNames, repairUndeclaredAutoLocals } from "./reconstruct/NameInference.js";
 export { startServer } from "./server.js";
 export { cleanupAst } from "./ast/AstCleanup.js";
 export { decodeBytecode, type DecodeResult } from "./decode/Decoder.js";
@@ -8,6 +10,7 @@ export { Opcode, CaptureType, BuiltinFunction, ConstantTag, instructionWidth, ju
 export { buildControlFlowGraph } from "./cfg/ControlFlowGraph.js";
 export { computeDominators, computePostDominators } from "./cfg/Dominators.js";
 export { findNaturalLoops } from "./cfg/NaturalLoops.js";
+export { structureControlFlow, computeIfFollows, type StructureInfo } from "./cfg/Structure.js";
 export { buildSsa } from "./ssa/SsaBuilder.js";
 export { computeLiveness } from "./dataflow/Liveness.js";
 export { reconstructFunction, analyzePrototype } from "./reconstruct/Reconstructor.js";

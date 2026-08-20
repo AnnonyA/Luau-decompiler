@@ -149,6 +149,28 @@ describe("table consolidation", () => {
     expect(source).not.toMatch(/entries = r/);
   });
 
+  it("emits compound assignment for `n = n + 1`", () => {
+    const source = sourceOf(
+      proto({
+        numParams: 1,
+        locals: [{ name: "n", startPc: 0, endPc: 4, register: 0 }],
+        instructions: [abc(Opcode.LOADN, 1, 1, 0), abc(Opcode.ADD, 0, 0, 1), abc(Opcode.RETURN, 0, 2, 0)],
+      }),
+    );
+    expect(source).toMatch(/n \+= 1/);
+    expect(source).not.toMatch(/n = n \+ 1/);
+  });
+
+  it("does not annotate a nil initializer", () => {
+    const source = sourceOf(
+      proto({
+        instructions: [abc(Opcode.LOADNIL, 0, 0, 0), abc(Opcode.RETURN, 0, 2, 0)],
+        locals: [{ name: "result", startPc: 1, endPc: 2, register: 0 }],
+      }),
+    );
+    expect(source).not.toMatch(/: nil/);
+  });
+
   it("drops DUPTABLE scaffolding fields that are overwritten", () => {
     const source = sourceOf(
       proto({
@@ -164,7 +186,25 @@ describe("table consolidation", () => {
       }),
     );
     expect(source).not.toMatch(/A = nil/);
+    expect(source).not.toMatch(/B = nil/);
     expect(source).toMatch(/A = 5/);
+  });
+
+  it("omits remaining DUPTABLE nil keys from the literal", () => {
+    const source = sourceOf(
+      proto({
+        constants: [...strings("ready", "error"), { kind: "table", keys: [0, 1] }],
+        instructions: [
+          ad(Opcode.DUPTABLE, 0, 2),
+          abc(Opcode.LOADB, 1, 1, 0),
+          abc(Opcode.SETTABLEKS, 1, 0, 0),
+          0,
+          abc(Opcode.RETURN, 0, 2, 0),
+        ],
+      }),
+    );
+    expect(source).toMatch(/ready = true/);
+    expect(source).not.toMatch(/= nil/);
   });
 });
 
@@ -207,8 +247,12 @@ describe("loop reconstruction", () => {
         ],
       }),
     );
-    expect(source).toContain("continue");
+    // `if c then if not x then continue end end; break` is equivalent to the
+    // sequential guards below; a trailing continue at the end of the while is
+    // a no-op and is dropped.
     expect(source).toContain("break");
+    expect(source).toMatch(/while x do/);
+    expect(source).toMatch(/if not c then\s+break/);
   });
 
   it("recovers a repeat/until with the test in the last body block", () => {

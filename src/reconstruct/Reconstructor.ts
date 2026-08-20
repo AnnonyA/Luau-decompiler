@@ -10,13 +10,14 @@ import { block, ident, lit } from "../ast/Ast.js";
 import { buildControlFlowGraph, type BasicBlock, type ControlFlowGraph } from "../cfg/ControlFlowGraph.js";
 import { computeDominators, computePostDominators, type DominatorTree, type PostDominatorTree } from "../cfg/Dominators.js";
 import { findNaturalLoops, type NaturalLoop } from "../cfg/NaturalLoops.js";
+import { structureControlFlow, type StructureInfo } from "../cfg/Structure.js";
 import type { LuauConstant } from "../decode/Constant.js";
 import type { DecodedInstruction } from "../decode/DecodedInstruction.js";
 import { CaptureType, Opcode } from "../decode/Opcode.js";
 import type { BytecodeModule, Prototype } from "../decode/Prototype.js";
 import { buildSsa, type SsaFunction } from "../ssa/SsaBuilder.js";
 import { NameAllocator, debugNameAt, isValidIdentifier } from "./Naming.js";
-import { nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
+import { eventCallbackName, nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
 
 export interface FunctionIr {
   cfg: ControlFlowGraph;
@@ -24,6 +25,7 @@ export interface FunctionIr {
   postDominators: PostDominatorTree;
   ssa: SsaFunction;
   loops: NaturalLoop[];
+  structure: StructureInfo;
 }
 
 export function analyzePrototype(prototype: Prototype): FunctionIr {
@@ -32,7 +34,8 @@ export function analyzePrototype(prototype: Prototype): FunctionIr {
   const postDominators = computePostDominators(cfg);
   const ssa = buildSsa(cfg, dominators);
   const loops = findNaturalLoops(cfg, dominators);
-  return { cfg, dominators, postDominators, ssa, loops };
+  const structure = structureControlFlow(cfg, dominators, postDominators, loops);
+  return { cfg, dominators, postDominators, ssa, loops, structure };
 }
 
 export interface ReconstructedFunction {
@@ -81,6 +84,8 @@ interface Binding {
   methodSelf?: number;
   /** The binding was created from a literal nil (LOADNIL). */
   nilLiteral?: boolean;
+  /** Placeholder created so a later NEWCLOSURE can reuse this name. */
+  forwardRef?: boolean;
 }
 
 interface PendingTable {
@@ -116,6 +121,8 @@ class SourceBuilder {
   private readonly loopByHeader: Map<number, NaturalLoop>;
   /** Blocks that are the exit (follow) of some natural loop. */
   private readonly loopFollows = new Set<number>();
+  /** Loops whose AST is currently being emitted. Break/continue are only valid here. */
+  private readonly emittingLoops: NaturalLoop[] = [];
   private readonly consumed = new Set<number>();
   private readonly phiNames = new Map<string, string>();
   private readonly loopPhiNames = new Map<string, string>();
@@ -262,7 +269,7 @@ class SourceBuilder {
       }
       if (block.successors.length === 1) {
         const successor = block.successors[0]!;
-        const loop = this.innermostLoopContaining(block.id);
+        const loop = this.currentLoop();
         const last = block.instructions.at(-1);
         if (loop && last?.opcode === Opcode.JUMP) {
           if (successor === loop.header || successor === loop.latch) {
@@ -276,14 +283,15 @@ class SourceBuilder {
             continue;
           }
         }
-        // A pure control stub that jumps to the enclosing loop's exit is a
+        // A pure control stub that jumps to the loop we are emitting is a
         // `break`, even when it is not part of the natural loop (blocks that
         // never reach the latch are excluded from the loop body).
         if (
           last?.opcode === Opcode.JUMP &&
           successor === stop &&
           stop !== undefined &&
-          this.loopFollows.has(stop) &&
+          loop !== undefined &&
+          this.loopFollow(loop) === stop &&
           block.instructions.every((insn) => isControlOnly(insn.opcode))
         ) {
           statements.push({ kind: "break" });
@@ -307,6 +315,15 @@ class SourceBuilder {
   // ------------------------------------------------------------------ loops
 
   private emitLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
+    this.emittingLoops.push(loop);
+    try {
+      return this.emitStructuredLoop(loop, visited);
+    } finally {
+      this.emittingLoops.pop();
+    }
+  }
+
+  private emitStructuredLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
     const header = this.ir.cfg.blocks[loop.header]!;
     const declarations = this.hoistLoopPhis(loop);
     if (loop.kind === "numeric-for") {
@@ -357,6 +374,15 @@ class SourceBuilder {
     return { kind: "repeat", body: block(body), test };
   }
 
+  /** Reuse a live pinned local in this register instead of minting a new phi name. */
+  private existingPhiName(register: number): string | undefined {
+    const binding = this.env.get(register);
+    if (binding?.name && binding.pinned && this.isDeclaredInScope(binding.name)) {
+      return binding.name;
+    }
+    return undefined;
+  }
+
   private hoistLoopPhis(loop: NaturalLoop): Statement[] {
     const statements: Statement[] = [];
     const namesByRegister = new Map<number, string>();
@@ -369,10 +395,13 @@ class SourceBuilder {
         const name =
           namesByRegister.get(phi.register) ??
           this.loopPhiNames.get(`${blockId}:${phi.register}`) ??
+          this.existingPhiName(phi.register) ??
           this.phiNameFor(key, phi.register, this.ir.cfg.blocks[blockId]!.startPc);
         namesByRegister.set(phi.register, name);
         this.loopPhiNames.set(`${blockId}:${phi.register}`, name);
+        this.phiNames.set(key, name);
         if (this.declaredPhis.has(key) || this.isDeclaredInScope(name)) {
+          this.declaredPhis.add(key);
           this.env.set(phi.register, { name, expression: ident(name), pinned: true });
           continue;
         }
@@ -542,6 +571,10 @@ class SourceBuilder {
   }
 
   private loopFollow(loop: NaturalLoop): number | undefined {
+    const structured = this.ir.structure.loopFollow.get(loop.header);
+    if (structured !== undefined) {
+      return structured;
+    }
     const header = this.ir.cfg.blocks[loop.header];
     if (header) {
       const ipdom = this.ir.postDominators.ipdom[loop.header];
@@ -558,6 +591,10 @@ class SourceBuilder {
       }
     }
     return outside.sort((a, b) => a - b)[0];
+  }
+
+  private currentLoop(): NaturalLoop | undefined {
+    return this.emittingLoops.at(-1);
   }
 
   private innermostLoopContaining(blockId: number): NaturalLoop | undefined {
@@ -590,7 +627,7 @@ class SourceBuilder {
     if (thenId === undefined || elseId === undefined) {
       return undefined;
     }
-    const activeLoop = this.innermostLoopContaining(basic.id);
+    const activeLoop = this.currentLoop();
 
     // Boolean assignment pattern: `r = <comparison>` compiled through a
     // JUMP + two LOADB blocks (`r = true/false` on each side).
@@ -628,15 +665,18 @@ class SourceBuilder {
       const thenInside = activeLoop.blocks.includes(thenId);
       const elseInside = activeLoop.blocks.includes(elseId);
       if (thenInside !== elseInside) {
-        // The branch leaving the loop must be a pure control stub (loop exit or
-        // an enclosing latch); a branch with real content is a plain if/else.
+        // One arm leaves the loop we are emitting. The follow may be a RETURN
+        // (zero successors); that is still `break`, not a wrapping if.
         const outsideId = thenInside ? elseId : thenId;
         const outsideBlock = this.ir.cfg.blocks[outsideId];
-        const pureStub =
-          outsideBlock !== undefined &&
-          outsideBlock.successors.length > 0 &&
-          outsideBlock.instructions.every((insn) => isControlOnly(insn.opcode));
-        if (pureStub) {
+        const follow = this.loopFollow(activeLoop);
+        const exitsLoop =
+          outsideId === follow ||
+          (outsideBlock !== undefined &&
+            outsideBlock.instructions.every((insn) => isControlOnly(insn.opcode)) &&
+            outsideBlock.successors.length > 0 &&
+            outsideBlock.successors.every((id) => !activeLoop.blocks.includes(id)));
+        if (exitsLoop) {
           const jumpExits = thenInside;
           this.consumed.add(last.pc);
           const statements = this.emitStraight(basic);
@@ -700,8 +740,9 @@ class SourceBuilder {
     if (basic.fallthrough === undefined || basic.branch === undefined) {
       return undefined;
     }
-    const ipdom = this.ir.postDominators.ipdom[basic.id];
-    const loop = this.innermostLoopContaining(basic.id);
+    const structured = this.ir.structure.ifFollow.get(basic.id);
+    const ipdom = structured ?? this.ir.postDominators.ipdom[basic.id];
+    const loop = this.currentLoop() ?? this.innermostLoopContaining(basic.id);
     if (ipdom !== undefined && ipdom < this.ir.cfg.blocks.length && ipdom !== basic.id) {
       if (!loop || loop.blocks.includes(ipdom)) {
         return ipdom;
@@ -748,6 +789,12 @@ class SourceBuilder {
   private declareJoinPhis(join: number, statements: Statement[]): void {
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
       const key = `phi:${join}:${phi.register}`;
+      const reused = this.existingPhiName(phi.register);
+      if (reused) {
+        this.phiNames.set(key, reused);
+        this.declaredPhis.add(key);
+        continue;
+      }
       const name = this.phiNameFor(key, phi.register, this.ir.cfg.blocks[join]!.startPc);
       if (!this.declaredPhis.has(key) && !this.isDeclaredInScope(name)) {
         this.declaredPhis.add(key);
@@ -772,6 +819,11 @@ class SourceBuilder {
         this.phiNames.set(key, loopName);
         return loopName;
       }
+    }
+    const reused = this.existingPhiName(register);
+    if (reused) {
+      this.phiNames.set(key, reused);
+      return reused;
     }
     const debug = debugNameAt(this.proto, register, pc);
     const name = this.allocator.reserve(debug ?? "result");
@@ -1270,7 +1322,7 @@ class SourceBuilder {
         liftedStatements.push(lifted);
       }
     }
-    const literalFields = fields.filter((field) => !liftedFields.has(field));
+    const literalFields = dropScaffoldNilFields(fields.filter((field) => !liftedFields.has(field)));
     const statements: Statement[] = [{ kind: "local", names: [name], values: [{ kind: "table", fields: normalizeArrayFields(literalFields) }] }];
     for (const selfRef of pending.selfRefs) {
       const target: Expression = selfRef.name
@@ -1297,7 +1349,7 @@ class SourceBuilder {
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       }
     }
-    return { kind: "table", fields: normalizeArrayFields(fields) };
+    return { kind: "table", fields: normalizeArrayFields(dropScaffoldNilFields(fields)) };
   }
 
   private tableName(pending: PendingTable): string {
@@ -1310,15 +1362,20 @@ class SourceBuilder {
     if (!fieldName || !isValidIdentifier(fieldName)) {
       return undefined;
     }
+    // A pinned local is a real binding (and may be captured later). Keep
+    // `table.field = name` so we do not clone the body.
+    if (this.env.get(insn.a)?.pinned) {
+      return undefined;
+    }
     const record = this.closureFields.get(this.env.get(insn.a)?.name ?? "");
     if (!record || record.fieldName !== fieldName) {
       return undefined;
     }
     const fn = record.fn;
-    if (fn.kind !== "function-expr" || fn.params.length === 0) {
+    if (fn.kind !== "function-expr") {
       return undefined;
     }
-    const receiver = firstParamIsReceiver(fn);
+    const receiver = fn.params.length > 0 && firstParamIsReceiver(fn);
     const tableText = objectText(object);
     if (!tableText) {
       return undefined;
@@ -1336,18 +1393,23 @@ class SourceBuilder {
   }
 
   private tryLiftMethod(field: TableField, tableName: string): Statement | undefined {
-    if (!field.name || field.value.kind !== "identifier") {
+    if (!field.name || field.name.startsWith("__")) {
       return undefined;
     }
-    const record = this.closureFields.get(field.value.name);
-    if (!record || record.fieldName !== field.name) {
+    let fn: Expression | undefined;
+    if (field.value.kind === "identifier") {
+      const record = this.closureFields.get(field.value.name);
+      if (!record || record.fieldName !== field.name) {
+        return undefined;
+      }
+      fn = record.fn;
+    } else if (field.value.kind === "function-expr") {
+      fn = field.value;
+    }
+    if (!fn || fn.kind !== "function-expr") {
       return undefined;
     }
-    const fn = record.fn;
-    if (fn.kind !== "function-expr" || fn.params.length === 0) {
-      return undefined;
-    }
-    const receiver = firstParamIsReceiver(fn);
+    const receiver = fn.params.length > 0 && firstParamIsReceiver(fn);
     const params = receiver ? fn.params.slice(1) : fn.params;
     const body = receiver ? renameIdentifiers(fn.body, new Map([[fn.params[0]!, "self"]])) : fn.body;
     return {
@@ -1822,17 +1884,36 @@ class SourceBuilder {
     // Captured pending tables must be materialized before their names are read.
     const statements: Statement[] = [];
     for (const cap of captures) {
-      const pending = this.pendingOf(cap.capture?.source ?? -1);
+      const source = cap.capture?.source ?? -1;
+      const pending = this.pendingOf(source);
       if (pending && !pending.flushed) {
         statements.push(...this.flushPending(pending));
+      }
+      // A REF capture is a real variable. Pin an unpinned temp so the child
+      // mutates a named local, not a ghost `callback`.
+      if (cap.capture?.type === CaptureType.REF && source !== insn.a) {
+        statements.push(...this.pinRefCapture(source, insn.pc));
       }
     }
     const debug = child.debugName ?? debugNameAt(this.proto, insn.a, insn.pc + insn.width);
     const fieldName = this.nextFieldName(insn);
     const mutable = captures.some((capture) => capture.capture?.type === CaptureType.REF);
     const selfCaptured = captures.some((capture) => capture.capture?.source === insn.a);
-    const preferred = debug ?? fieldName ?? "function";
-    const name = this.allocator.reserve(preferred);
+    const onlyField = Boolean(fieldName) && !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
+    const existing = this.env.get(insn.a);
+    const preferred =
+      (existing?.forwardRef ? existing.name : undefined) ??
+      debug ??
+      fieldName ??
+      this.pendingCallbackHint(insn.a) ??
+      peekPredicateName(child) ??
+      "function";
+    const name =
+      existing?.forwardRef && existing.name
+        ? existing.name
+        : onlyField
+          ? preferred
+          : this.allocator.reserve(preferred);
 
     // Build the capture bindings for the child.
     const captureMap = new Map<number, CaptureBinding>();
@@ -1863,8 +1944,9 @@ class SourceBuilder {
           refName = undefined;
         }
         if (!refName) {
-          refName = this.allocator.reserve(child.upvalueNames[index] ?? "value");
-          this.env.set(source, { name: refName, expression: ident(refName), pinned: true });
+          const hint = this.futureClosureHint(source, insn.pc) ?? child.upvalueNames[index] ?? "callback";
+          refName = this.allocator.reserve(hint);
+          this.env.set(source, { name: refName, expression: ident(refName), pinned: true, forwardRef: true });
           this.declareInScope(refName);
         }
         captureMap.set(index, { name: refName, expression: ident(refName), mutable: true });
@@ -1884,6 +1966,7 @@ class SourceBuilder {
       params: reconstructed.params,
       isVararg: child.isVararg,
       body: reconstructed.body,
+      line: child.lineDefined || undefined,
     };
 
     if (selfCaptured || mutable) {
@@ -1895,10 +1978,16 @@ class SourceBuilder {
         { kind: "assign", targets: [ident(name)], values: [fn] },
       ];
     }
-    this.env.set(insn.a, { name, expression: ident(name), pinned: true });
     if (fieldName) {
       this.closureFields.set(name, { fieldName, tableRegister: this.nextFieldTable(insn), fn, params: reconstructed.params, isVararg: child.isVararg });
     }
+    if (onlyField) {
+      // The only use is `table.field = <closure>`; leave the function-expr
+      // unpinned so SETTABLEKS can lift it without a dead local.
+      this.env.set(insn.a, { name, expression: fn, pinned: false });
+      return statements;
+    }
+    this.env.set(insn.a, { name, expression: ident(name), pinned: true });
     return [...statements, { kind: "local", names: [name], values: [fn] }];
   }
 
@@ -1919,6 +2008,76 @@ class SourceBuilder {
       return binding.name;
     }
     return this.proto.upvalueNames[index] ?? `up${index}`;
+  }
+
+  /** Turn a REF-captured register into a real named local before the child is built. */
+  private pinRefCapture(register: number, fromPc: number): Statement[] {
+    const existing = this.env.get(register);
+    if (existing?.name && existing.pinned && this.isDeclaredInScope(existing.name)) {
+      return [];
+    }
+    if (existing && !existing.name) {
+      const name = this.allocator.reserve(nameHint(existing.expression) ?? "value");
+      this.declareInScope(name);
+      this.env.set(register, { name, expression: ident(name), pinned: true });
+      return [{ kind: "local", names: [name], values: [existing.expression] }];
+    }
+    const hint = this.futureDefineHint(register, fromPc) ?? "value";
+    const name = this.allocator.reserve(hint);
+    this.declareInScope(name);
+    this.env.set(register, { name, expression: ident(name), pinned: true, forwardRef: true });
+    return [{ kind: "local", names: [name], values: [] }];
+  }
+
+  /** Hint a not-yet-defined register from how it is first written after `fromPc`. */
+  private futureDefineHint(register: number, fromPc: number): string | undefined {
+    const closure = this.futureClosureHint(register, fromPc);
+    if (closure) {
+      return closure;
+    }
+    for (const other of this.proto.instructions) {
+      if (other.pc <= fromPc) {
+        continue;
+      }
+      if (other.opcode === Opcode.CAPTURE || other.opcode === Opcode.NOP) {
+        continue;
+      }
+      if (!other.defs.includes(register)) {
+        continue;
+      }
+      if (other.opcode === Opcode.CALL || other.opcode === Opcode.CALLFB) {
+        const callee = this.env.get(other.a)?.expression;
+        if (callee?.kind === "method-call" && (callee.name === "Connect" || callee.name === "Once")) {
+          return "connection";
+        }
+        if (callee?.kind === "method-call" && callee.name === "Create") {
+          return "tween";
+        }
+      }
+      if (other.opcode === Opcode.LOADN && other.d === 0) {
+        return "count";
+      }
+      if (other.opcode === Opcode.LOADNIL) {
+        return "value";
+      }
+      return undefined;
+    }
+    return undefined;
+  }
+
+  private willBeRefCaptured(register: number, fromPc: number): boolean {
+    for (const insn of this.proto.instructions) {
+      if (insn.pc <= fromPc) {
+        continue;
+      }
+      if (insn.opcode === Opcode.CAPTURE && insn.capture?.type === CaptureType.REF && insn.capture.source === register) {
+        return true;
+      }
+      if (insn.defs.includes(register)) {
+        return false;
+      }
+    }
+    return false;
   }
 
   private capturesAfter(pc: number): DecodedInstruction[] {
@@ -1945,6 +2104,118 @@ class SourceBuilder {
 
   private nextFieldTable(insn: DecodedInstruction): number {
     return this.nextFieldWrite(insn)?.b ?? -1;
+  }
+
+  /** True when the closure register is written to exactly one table field and
+   * never read afterwards (so a local binding would be dead). */
+  private onlyUsedAsFieldWrite(insn: DecodedInstruction): boolean {
+    const register = insn.a;
+    let writes = 0;
+    for (const other of this.proto.instructions) {
+      if (other.pc <= insn.pc) {
+        continue;
+      }
+    if (other.opcode === Opcode.NOP) {
+      continue;
+    }
+    if (other.opcode === Opcode.CAPTURE) {
+      // A child that captures this register needs the local to stay.
+      if (other.capture?.source === register || other.uses.includes(register)) {
+        return false;
+      }
+      continue;
+    }
+    if (
+      (other.opcode === Opcode.SETTABLEKS || other.opcode === Opcode.SETUDATAKS) &&
+      other.a === register &&
+      other.b !== register
+    ) {
+      writes += 1;
+      continue;
+    }
+      if (other.defs.includes(register)) {
+        break;
+      }
+      if (other.uses.includes(register)) {
+        return false;
+      }
+    }
+    return writes === 1;
+  }
+
+  /** Look ahead for the NEWCLOSURE that will define `register` and steal its name. */
+  private futureClosureHint(register: number, fromPc: number): string | undefined {
+    for (const other of this.proto.instructions) {
+      if (other.pc <= fromPc) {
+        continue;
+      }
+      if (other.opcode === Opcode.CAPTURE || other.opcode === Opcode.NOP) {
+        continue;
+      }
+      if ((other.opcode === Opcode.NEWCLOSURE || other.opcode === Opcode.DUPCLOSURE) && other.a === register) {
+        const future = this.childOf(other);
+        return (
+          future?.debugName ??
+          this.nextFieldName(other) ??
+          (future ? peekPredicateName(future) : undefined) ??
+          "callback"
+        );
+      }
+      if (other.defs.includes(register)) {
+        return undefined;
+      }
+    }
+    return undefined;
+  }
+
+  private childOf(insn: DecodedInstruction): Prototype | undefined {
+    if (insn.opcode === Opcode.NEWCLOSURE) {
+      const childId = this.proto.childProtoIds[insn.d];
+      return childId !== undefined ? this.module.prototypes[childId] : undefined;
+    }
+    const constant = this.proto.constants[insn.d];
+    if (constant?.kind === "closure") {
+      return this.module.prototypes[constant.protoId];
+    }
+    return undefined;
+  }
+
+  /** Name a closure from a pending NAMECALL / known callee sitting in a nearby register. */
+  private pendingCallbackHint(register: number): string | undefined {
+    for (let base = register - 1; base >= Math.max(0, register - 4); base--) {
+      const expr = this.env.get(base)?.expression;
+      if (!expr) {
+        continue;
+      }
+      if (expr.kind === "method-call" && (expr.name === "Connect" || expr.name === "Once")) {
+        return expr.object.kind === "property" ? eventCallbackName(expr.object.name) : "callback";
+      }
+      if (expr.kind === "property") {
+        if (expr.object.kind === "identifier" && expr.object.name === "table" && expr.name === "sort") {
+          return "compare";
+        }
+        if (expr.object.kind === "identifier" && expr.object.name === "coroutine" && expr.name === "create") {
+          return "routine";
+        }
+        if (expr.object.kind === "identifier" && expr.object.name === "task") {
+          if (expr.name === "delay") {
+            return "delayed";
+          }
+          if (expr.name === "spawn") {
+            return "spawned";
+          }
+        }
+      }
+      if (expr.kind === "identifier") {
+        if (expr.name === "xpcall") {
+          return "onError";
+        }
+        if (expr.name === "pcall") {
+          return "protected";
+        }
+      }
+    }
+    return undefined;
   }
 
   private nextFieldWrite(insn: DecodedInstruction): DecodedInstruction | undefined {
@@ -2152,18 +2423,33 @@ class SourceBuilder {
     const uses = this.useCount(register, insn.pc);
     const liveAcrossBlocks = this.usedOutsideBlock(register, insn);
     const phi = this.phiBinding(register, insn);
+    const envBind = this.env.get(register);
+    if (envBind?.forwardRef && envBind.name) {
+      const nilLiteral = isNilLiteral(expression);
+      this.env.set(register, { name: envBind.name, expression: ident(envBind.name), pinned: true, nilLiteral });
+      return [{ kind: "assign", targets: [ident(envBind.name)], values: [expression] }];
+    }
     // A literal nil has no identity worth keeping in a local: only a debug
     // name or a phi (real variable slot) pins it.
     const nilLiteral = isNilLiteral(expression);
+    const refCaptured = this.willBeRefCaptured(register, insn.pc);
     const pin =
       forceLocal ||
       Boolean(debug) ||
+      refCaptured ||
       (!nilLiteral && (uses > 1 || liveAcrossBlocks)) ||
       this.isEscaping(expression) ||
       phi !== undefined;
     if (pin) {
       const preferred = debug ?? nameHint(expression) ?? "value";
-      if (expression.kind === "identifier" && expression.name === preferred && !forceLocal && !debug && phi === undefined) {
+      if (
+        expression.kind === "identifier" &&
+        expression.name === preferred &&
+        !forceLocal &&
+        !debug &&
+        phi === undefined &&
+        !refCaptured
+      ) {
         this.env.set(register, { name: preferred, expression, pinned: true });
         return [];
       }
@@ -2461,6 +2747,31 @@ function fallbackParam(index: number, total: number): string {
   return ["value", "index", "count", "options"][index] ?? `arg${index}`;
 }
 
+/** `if n == 0 then return true/false` mutual recursion → isEven / isOdd. */
+function peekPredicateName(child: Prototype): string | undefined {
+  const instructions = child.instructions;
+  if (instructions.length < 2 || child.numParams !== 1) {
+    return undefined;
+  }
+  let comparesZero = false;
+  let trueOnZero: boolean | undefined;
+  for (const insn of instructions) {
+    if (
+      (insn.opcode === Opcode.JUMPXEQKN || insn.opcode === Opcode.JUMPIFEQ || insn.opcode === Opcode.JUMPXEQKB) &&
+      insn.a === 0
+    ) {
+      comparesZero = true;
+    }
+    if (insn.opcode === Opcode.LOADB && trueOnZero === undefined) {
+      trueOnZero = insn.b !== 0;
+    }
+  }
+  if (!comparesZero || trueOnZero === undefined) {
+    return undefined;
+  }
+  return trueOnZero ? "isEven" : "isOdd";
+}
+
 function pathToExpr(path: string[]): Expression {
   if (path.length === 0) {
     return ident("_");
@@ -2621,6 +2932,15 @@ function isLiteralOne(expression: Expression): boolean {
 
 function isNilLiteral(expression: Expression | undefined): boolean {
   return expression?.kind === "literal" && expression.value === null;
+}
+
+function dropScaffoldNilFields(fields: TableField[]): TableField[] {
+  return fields.filter((field) => {
+    if (!isNilLiteral(field.value)) {
+      return true;
+    }
+    return !field.name && !field.key;
+  });
 }
 
 function isPackish(expression: Expression): boolean {
@@ -3016,6 +3336,8 @@ function renameIdentifiers(body: Block, rename: Map<string, string>): Block {
         return { ...statement, values: statement.values.map(walkExpr) };
       case "assign":
         return { ...statement, targets: statement.targets.map(walkExpr), values: statement.values.map(walkExpr) };
+      case "compound-assign":
+        return { ...statement, target: walkExpr(statement.target), value: walkExpr(statement.value) };
       case "expression-stmt":
         return { ...statement, expression: walkExpr(statement.expression) };
       case "return":
