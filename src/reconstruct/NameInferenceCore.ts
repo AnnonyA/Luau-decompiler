@@ -249,6 +249,8 @@ function exprReadsName(expression: Expression, name: string): boolean {
       return exprReadsName(expression.object, name);
     case "table":
       return expression.fields.some((field) => (field.key ? exprReadsName(field.key, name) : false) || exprReadsName(field.value, name));
+    case "function-expr":
+      return !expression.params.includes(name) && expression.body.statements.some((statement) => statementReadsName(statement, name));
     case "paren":
       return exprReadsName(expression.expression, name);
     case "if-expr":
@@ -474,6 +476,11 @@ function statementReadsName(statement: Statement, name: string): boolean {
           }
           visitExpr(field.value);
         });
+        break;
+      case "function-expr":
+        if (!expression.params.includes(name)) {
+          expression.body.statements.forEach(visitStmt);
+        }
         break;
       case "paren":
         visitExpr(expression.expression);
@@ -1156,6 +1163,17 @@ function collect(
               binding.compoundAdds += 1;
               if (statement.value.kind === "literal" && statement.value.value === 1) {
                 binding.incrementOnes += 1;
+              }
+              if (
+                !binding.hint &&
+                statement.value.kind === "call" &&
+                statement.value.callee.kind === "identifier" &&
+                statement.value.callee.name === "select" &&
+                statement.value.args[0]?.kind === "literal" &&
+                statement.value.args[0].value === "#" &&
+                statement.value.args[1]?.kind === "vararg"
+              ) {
+                binding.hint = "count";
               }
             }
             if (statement.op === "-") {
