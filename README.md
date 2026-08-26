@@ -1,19 +1,59 @@
 # Luau decompiler
 
-A TypeScript decompiler for official Luau bytecode. It never runs the input: it decodes the proto, rebuilds control flow, and prints Luau.
+A **static TypeScript decompiler for official Luau bytecode** that aims for readable, source-like Luau instead of a register dump.
 
-```
+It never executes the input. The pipeline decodes the bytecode, reconstructs control flow and values, lifts them into an AST, and prints Luau:
+
+```text
 bytecode → decode → CFG → SSA → AST → printer
 ```
 
-Versions **3–9** are the supported decode surface. 10–13 decode, but reconstruction of those extras is still incomplete.
+| | |
+| --- | --- |
+| **Input** | Official Luau bytecode |
+| **Output** | Readable Luau source |
+| **Analysis** | Static-only; input is never executed |
+| **Implementation** | TypeScript, Node.js 20+ |
+| **Bytecode support** | Versions 3–9 supported; 10–13 decode with incomplete reconstruction |
+| **License** | MIT |
 
-## Usage
+## Why this exists
+
+A useful decompiler should recover program structure, not just rename registers. This project focuses on turning low-level bytecode patterns back into code that looks intentionally written while staying conservative when the original source cannot be proven.
+
+That means recovering things such as:
+
+- structured `if` / `elseif`, value-`if`, loops, `break`, and `continue`
+- methods and closures instead of flat anonymous register operations
+- useful local and callback names when there is enough evidence
+- Roblox callback parameter names and types for common signals
+- tables, compound assignments, value packs, captures, and mutual recursion
+- explicit uncertainty instead of invented source details
+
+On the three real fixtures currently used by the project, the generated output contains **0 raw `rN` registers, 0 `upN` names, 0 invented comment lines, and 0 `: nil` annotations**.
+
+## Quick start
 
 ```bash
-npx luau-decompile decompile chunk.luac
-npx luau-decompile disassemble chunk.luac
+git clone https://github.com/AnnonyA/Luau-decompiler.git
+cd Luau-decompiler
+npm install
+npm run build
 ```
+
+Decompile a chunk:
+
+```bash
+node dist/cli.js decompile chunk.luac
+```
+
+Disassemble without reconstructing source:
+
+```bash
+node dist/cli.js disassemble chunk.luac
+```
+
+The package also exposes a library API:
 
 ```ts
 import { decompile } from "luau-decompiler";
@@ -22,27 +62,9 @@ const result = decompile(bytes);
 if (result.ok) console.log(result.source);
 ```
 
-```
-npm test && npm run typecheck && npm run build
-```
+## What the output looks like
 
-## What it already does
-
-The output is meant to read like someone wrote it. No raw registers, no `up0`, no invented comments.
-
-- Compound assigns: `self.value += n`
-- Methods: `function config:add(...)`
-- Value `if`: `return if cond then a else b`, plus real `elseif` chains
-- Loop structuring: `if i % 2 == 0 then continue`, `if value > 100 then break`, sequential continue-guards instead of a wrapping if
-- Event handlers named from the signal: `onRenderStepped`, `onStopped`, `onActivated`
-- Mutual recursion (`isEven` / `isOdd`) resolves instead of calling a ghost local
-- Types only when we are sure (`Players: Players`) — never `: nil`
-
-On the three real fixtures: **0** `rN`, **0** `upN`, **0** comment lines, **0** `: nil`.
-
-## Roblox API names and types
-
-Connect/Once/Observe handlers pick up the official argument names **and** types. Cases that used to stay as `value, index` now come out as real API:
+The goal is to produce normal Luau constructs rather than leaking VM details:
 
 ```luau
 local UserInputService = game:GetService("UserInputService")
@@ -56,45 +78,102 @@ UserInputService.InputBegan:Connect(function(input: InputObject, gameProcessedEv
 end)
 ```
 
-Same idea for `PlayerAdded` (`player: Player`), `Heartbeat` (`deltaTime: number`), `Touched` (`hit: BasePart`), `Completed` (`playbackState`), CameraShaker (`cframe: CFrame`), and the rest of the common signals.
+Other recovered forms include:
 
-## Runtime context (optional)
+```luau
+self.value += n
+```
 
-If you decompile from a live executor, you can dump in-game names and feed them back so the module is not just called `module`.
+```luau
+function config:add(...)
+```
 
-Run `scripts/collect-context.luau` (loadstring / executor). It prints JSON. Then:
+```luau
+return if condition then a else b
+```
+
+and loop regions with real `break` / `continue` instead of flattened jumps.
+
+## Reconstruction highlights
+
+- Compound assignments such as `self.value += n`
+- Method lifting such as `function config:add(...)`
+- Value `if` and real `elseif` chains
+- Region-based loop structuring with `break`, `continue`, and sequential guards
+- Event handlers named from their signal, including `onRenderStepped`, `onStopped`, and `onActivated`
+- Mutual recursion recovery (`isEven` / `isOdd`) without ghost locals
+- Conservative type recovery — never emitting a type just because a slot happened to contain `nil`
+- Human-oriented local naming such as `LocalPlayer`, `sharedCounter`, `CONFIG`, `payload`, `seed`, `limit`, `total`, and `calls`
+- REF capture recovery for nested closures instead of unresolved callback placeholders
+
+## Roblox API names and types
+
+`Connect`, `Once`, and `Observe` callbacks can pick up official argument names and types for common APIs. Examples include:
+
+- `InputBegan` → `input: InputObject, gameProcessedEvent: boolean`
+- `PlayerAdded` → `player: Player`
+- `Heartbeat` → `deltaTime: number`
+- `Touched` → `hit: BasePart`
+- `CameraShaker` callbacks → `cframe: CFrame`
+
+## Optional runtime context
+
+Static bytecode cannot always preserve source-level names. If you have runtime context from a live environment, it can be supplied separately to improve names without changing the core decompiler into a dynamic executor.
+
+Run `scripts/collect-context.luau` to produce JSON, then pass it to the CLI:
 
 ```bash
-npx luau-decompile decompile chunk.luac --context context.json
+node dist/cli.js decompile chunk.luac --context context.json
 ```
 
-```luau
--- in-game
-local module = {}
-function module.Add(num1: number, num2: number) ... end
-return module
+For example, context can turn a generic returned `module` table into a known module name such as `AdditionModule`.
+
+Leave `--context` out, pass `--no-context`, or use `runtime_context=false` to keep the decompilation purely bytecode-derived.
+
+## Architecture
+
+The implementation is split around the information recovered at each stage:
+
+```text
+validated bytecode
+      ↓
+version-aware decoder
+      ↓
+control-flow graph
+      ↓
+SSA / phi reconstruction
+      ↓
+structured regions + value semantics
+      ↓
+Luau AST
+      ↓
+source printer
 ```
 
-```luau
--- with context { "moduleName": "AdditionModule" }
-local AdditionModule = {}
-function AdditionModule.Add(num1: number, num2: number) ... end
-return AdditionModule
+The important rule is that later stages only claim structure the earlier analysis can justify. When reconstruction is uncertain, the project prefers a conservative representation over fabricating an exact original spelling.
+
+## Current limitations
+
+The target is source-like output, not an assertion that lost source information can always be recovered exactly.
+
+Current gaps include:
+
+1. leftover numbered temporaries when a register is reused for unrelated values
+2. exact source spellings that are absent from bytecode (`HALF_SECOND`, `WHITE`, `UP`, etc.)
+3. parameter types on ordinary functions beyond the callback cases that can be inferred confidently
+4. a few upvalue slots that can still inherit the same inferred name
+5. incomplete high-level reconstruction for bytecode versions 10–13
+
+The project uses `tests/Original.txt` as the quality bar where an original fixture is available, rather than treating syntactically valid output as sufficient.
+
+## Development
+
+```bash
+npm test
+npm run typecheck
+npm run build
 ```
 
-Leave `--context` out, or pass `--no-context` / `runtime_context=false`, and nothing is renamed.
+Contributions that improve semantic reconstruction, reduce false-positive naming, add bytecode-version coverage, or provide small reproducible fixtures are especially useful.
 
-## Versus other Luau decompilers
-
-We already do better on types, method lifting, if-expressions, callback names, and region-based loop structuring (`break` / `continue` / sequential guards).
-
-Everyday locals are closing: `LocalPlayer`, `sharedCounter`, `CONFIG`, `Counter`, `payload`, `descending`, `seed`, `limit`, `total`/`calls`. Closures pin REF captures (`localState`, `captured`) instead of ghost `callback` names.
-
-## Still to do (to look like the original source)
-
-1. Leftover numbered temps where a register is reused as a different value
-2. Exact source spellings we cannot prove (`HALF_SECOND`, `WHITE`, `UP`)
-3. Parameter types on ordinary functions, not only Roblox callbacks
-4. A few upvalue slots still share a name (`connectionStress` count vs callback)
-
-The bar is `tests/Original.txt`, not “good enough for a decompiler.”
+If you find a case that reconstructs incorrectly, open an issue with the smallest bytecode/source example you can share and the output you expected.
