@@ -14,7 +14,7 @@ bytecode → decode → CFG → SSA → AST → printer
 | **Output** | Readable Luau source |
 | **Analysis** | Static-only; input is never executed |
 | **Implementation** | TypeScript, Node.js 20+ |
-| **Bytecode support** | Versions 3–9 supported; 10–13 decode with incomplete reconstruction |
+| **Bytecode support** | Versions 3–9 reconstructed broadly; 10–14 have experimental decoding/reconstruction, including v14 `FASTPCALL` |
 | **License** | MIT |
 
 ## Why this exists
@@ -162,9 +162,11 @@ Current gaps include:
 2. exact source spellings that are absent from bytecode (`HALF_SECOND`, `WHITE`, `UP`, etc.)
 3. parameter types on ordinary functions beyond the callback cases that can be inferred confidently
 4. a few upvalue slots that can still inherit the same inferred name
-5. incomplete high-level reconstruction for bytecode versions 10–13
+5. incomplete high-level reconstruction for bytecode versions 10–14, especially class and feedback extensions
 
 The project uses `tests/Original.txt` as the quality bar where an original fixture is available, rather than treating syntactically valid output as sufficient.
+
+Bytecode v14 recognizes the official `FASTPCALL` optimization and reconstructs through its accompanying ordinary `CALL` fallback. This does **not** mean the original names, optimizations, experimental class semantics, or all runtime details can be recovered. The version 10–14 profile remains experimental until it has sufficient real-world fixtures.
 
 ## Development
 
