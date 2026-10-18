@@ -1,34 +1,10 @@
 import type { Block, Chunk, Expression, Statement } from "./Ast.js";
+import { isValidIdentifier } from "../reconstruct/Naming.js";
 
 export interface ValidationFailure {
   code: string;
   message: string;
 }
-
-const KEYWORDS = new Set([
-  "and",
-  "break",
-  "do",
-  "else",
-  "elseif",
-  "end",
-  "false",
-  "for",
-  "function",
-  "if",
-  "in",
-  "local",
-  "nil",
-  "not",
-  "or",
-  "repeat",
-  "return",
-  "then",
-  "true",
-  "until",
-  "while",
-  "continue",
-]);
 
 export function validateAst(ast: Chunk): ValidationFailure[] {
   const failures: ValidationFailure[] = [];
@@ -164,6 +140,12 @@ function visitExpr(expression: Expression, scopes: string[][], failures: Validat
       break;
     case "method-call":
       visitExpr(expression.object, scopes, failures);
+      // Colon syntax requires an identifier; unlike property access, an
+      // invalid method name cannot be printed with brackets without changing
+      // receiver evaluation and implicit self semantics.
+      if (!isValidIdentifier(expression.name)) {
+        failures.push({ code: "identifier", message: `invalid method ${expression.name}` });
+      }
       for (const arg of expression.args) {
         visitExpr(arg, scopes, failures);
       }
@@ -173,10 +155,9 @@ function visitExpr(expression: Expression, scopes: string[][], failures: Validat
       visitExpr(expression.key, scopes, failures);
       break;
     case "property":
+      // Any string key is representable: the Luau printer emits bracket
+      // access for keywords or punctuation, e.g. obj["end"].
       visitExpr(expression.object, scopes, failures);
-      if (!isValidName(expression.name)) {
-        failures.push({ code: "identifier", message: `invalid property ${expression.name}` });
-      }
       break;
     case "table":
       for (const field of expression.fields) {
@@ -225,5 +206,5 @@ function declare(name: string, scopes: string[][], failures: ValidationFailure[]
 }
 
 function isValidName(name: string): boolean {
-  return /^[A-Za-z_][A-Za-z0-9_]*$/.test(name) && !KEYWORDS.has(name);
+  return isValidIdentifier(name);
 }

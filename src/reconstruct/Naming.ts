@@ -24,8 +24,8 @@ const KEYWORDS = new Set([
   "until",
   "while",
   "continue",
-  "export",
-  "type",
+  // 'type' and 'export' are contextual keywords in Luau: they remain valid
+  // variable, property and method names outside type-declaration syntax.
 ]);
 
 const GENERIC_FALLBACKS = ["value", "result", "item", "entry", "state", "data", "count", "index", "key"];
