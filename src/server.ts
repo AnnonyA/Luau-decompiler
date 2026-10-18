@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { decompile, parseQueryOptions } from "./decompile.js";
+import { DEFAULT_SAFETY_LIMITS } from "./safety/Limits.js";
 
 function loadPage(): string {
   const here = dirname(fileURLToPath(import.meta.url));
@@ -64,8 +65,15 @@ async function handle(request: IncomingMessage, response: ServerResponse): Promi
         }),
       );
     } catch (error) {
-      response.writeHead(400, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ ok: false, error: error instanceof Error ? error.message : String(error) }));
+      const oversized = error instanceof RequestBodyTooLargeError;
+      response.writeHead(oversized ? 413 : 400, { "Content-Type": "application/json" });
+      response.end(
+        JSON.stringify({
+          ok: false,
+          code: oversized ? "payload-too-large" : "request",
+          error: error instanceof Error ? error.message : String(error),
+        }),
+      );
     }
     return;
   }
@@ -79,14 +87,41 @@ function setCors(response: ServerResponse): void {
   response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 }
 
-async function readBody(request: IncomingMessage): Promise<Uint8Array> {
-  const chunks: Buffer[] = [];
-  for await (const chunk of request) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+// Base64 expands binary data and may include formatting whitespace.
+const MAX_BINARY_REQUEST_BYTES = DEFAULT_SAFETY_LIMITS.maxBytecodeBytes;
+const MAX_BASE64_REQUEST_BYTES = Math.ceil((MAX_BINARY_REQUEST_BYTES * 4) / 3) + 1024 * 1024;
+
+class RequestBodyTooLargeError extends Error {
+  constructor(limit: number) {
+    super(`request body exceeds ${limit} byte limit`);
+    this.name = "RequestBodyTooLargeError";
   }
-  const raw = Buffer.concat(chunks);
+}
+
+async function readBody(request: IncomingMessage): Promise<Uint8Array> {
   const type = request.headers["content-type"] ?? "";
-  if (type.includes("text/plain") || type.includes("application/base64")) {
+  const isBase64 = type.includes("text/plain") || type.includes("application/base64");
+  const limit = isBase64 ? MAX_BASE64_REQUEST_BYTES : MAX_BINARY_REQUEST_BYTES;
+  const chunks: Buffer[] = [];
+  let totalBytes = 0;
+  let exceededLimit = false;
+
+  for await (const chunk of request) {
+    const bytes = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+    totalBytes += bytes.length;
+    if (totalBytes > limit) {
+      // Continue draining the request without retaining additional bytes.
+      exceededLimit = true;
+      continue;
+    }
+    chunks.push(bytes);
+  }
+  if (exceededLimit) {
+    throw new RequestBodyTooLargeError(limit);
+  }
+
+  const raw = Buffer.concat(chunks, totalBytes);
+  if (isBase64) {
     const text = raw.toString("utf8").replace(/\s+/g, "");
     return Uint8Array.from(Buffer.from(text, "base64"));
   }
