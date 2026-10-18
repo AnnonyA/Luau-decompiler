@@ -193,15 +193,20 @@ class Printer {
         return `${this.memberObject(expression.object)}.${expression.name}`;
       case "table":
         return this.table(expression.fields);
-      case "function-expr":
-        return `function(${formatParams(expression.params, expression.isVararg, expression.paramTypes)})${
+      case "function-expr": {
+        const text = `function(${formatParams(expression.params, expression.isVararg, expression.paramTypes)})${
           expression.returnType ? `: ${expression.returnType}` : ""
         }\n${this.nested(expression.body)}end`;
+        return parent > 0 ? `(${text})` : text;
+      }
       case "if-expr": {
         const branches = expression.branches
           .map((branch) => ` elseif ${this.expr(branch.test)} then ${this.expr(branch.value)}`)
           .join("");
-        return `if ${this.expr(expression.test)} then ${this.expr(expression.consequent)}${branches} else ${this.expr(expression.alternate)}`;
+        const text = `if ${this.expr(expression.test)} then ${this.expr(expression.consequent)}${branches} else ${this.expr(expression.alternate)}`;
+        // A conditional expression has lower precedence than operators. It
+        // must be grouped when the recovered AST uses it as an operand.
+        return parent > 0 ? `(${text})` : text;
       }
       case "interp":
         return `\`${expression.parts.map((part) => this.interpPart(part)).join("")}\``;
