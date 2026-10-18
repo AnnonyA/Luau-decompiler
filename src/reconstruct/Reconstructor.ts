@@ -184,17 +184,42 @@ class SourceBuilder {
     this.fallbackCalls = this.collectFallbackCalls();
   }
 
+  /** Index of the first decoded instruction strictly after the given pc.
+   * Instructions are ordered by bytecode pc, including AUX-width opcodes.
+   * Binary search avoids rescanning the entire function for every closure
+   * and FASTCALL fallback.
+   */
+  private firstInstructionAfter(pc: number): number {
+    const instructions = this.proto.instructions;
+    let low = 0;
+    let high = instructions.length;
+    while (low < high) {
+      const middle = low + Math.floor((high - low) / 2);
+      if (instructions[middle]!.pc <= pc) {
+        low = middle + 1;
+      } else {
+        high = middle;
+      }
+    }
+    return low;
+  }
+
   /** CALL/CALLFB instructions that are the slow-path fallbacks of a preceding
    * FASTCALL* jump. Their uses must not count as real uses (double counting). */
   private collectFallbackCalls(): Set<number> {
     const fallbacks = new Set<number>();
-    for (const insn of this.proto.instructions) {
+    const instructions = this.proto.instructions;
+    for (const insn of instructions) {
       if (!isFastCallLike(insn.opcode) || insn.jumpTarget === undefined) {
         continue;
       }
       const target = insn.jumpTarget;
-      for (const other of this.proto.instructions) {
-        if (other.pc > insn.pc && other.pc < target && (other.opcode === Opcode.CALL || other.opcode === Opcode.CALLFB)) {
+      for (let i = this.firstInstructionAfter(insn.pc); i < instructions.length; i++) {
+        const other = instructions[i]!;
+        if (other.pc >= target) {
+          break;
+        }
+        if (other.opcode === Opcode.CALL || other.opcode === Opcode.CALLFB) {
           fallbacks.add(other.pc);
         }
       }
@@ -2091,12 +2116,13 @@ class SourceBuilder {
 
   private capturesAfter(pc: number): DecodedInstruction[] {
     const captures: DecodedInstruction[] = [];
-    for (const insn of this.proto.instructions) {
-      if (insn.pc > pc && insn.opcode === Opcode.CAPTURE) {
-        captures.push(insn);
-      } else if (insn.pc > pc && insn.opcode !== Opcode.CAPTURE) {
+    const instructions = this.proto.instructions;
+    for (let i = this.firstInstructionAfter(pc); i < instructions.length; i++) {
+      const insn = instructions[i]!;
+      if (insn.opcode !== Opcode.CAPTURE) {
         break;
       }
+      captures.push(insn);
     }
     return captures;
   }
