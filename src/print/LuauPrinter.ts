@@ -1,4 +1,5 @@
 import type { Block, Chunk, Expression, Literal, Statement, TableField } from "../ast/Ast.js";
+import { isValidIdentifier } from "../reconstruct/Naming.js";
 
 const PREC: Record<string, number> = {
   or: 1,
@@ -190,7 +191,9 @@ class Printer {
       case "index":
         return `${this.memberObject(expression.table)}[${this.expr(expression.key)}]`;
       case "property":
-        return `${this.memberObject(expression.object)}.${expression.name}`;
+        return isValidIdentifier(expression.name)
+          ? `${this.memberObject(expression.object)}.${expression.name}`
+          : `${this.memberObject(expression.object)}[${quote(expression.name)}]`;
       case "table":
         return this.table(expression.fields);
       case "function-expr": {
@@ -258,7 +261,8 @@ class Printer {
     this.exprDepth += 1;
     const parts = fields.map((field) => {
       if (field.name) {
-        return `${field.name} = ${this.expr(field.value)}`;
+        const key = isValidIdentifier(field.name) ? field.name : `[${quote(field.name)}]`;
+        return `${key} = ${this.expr(field.value)}`;
       }
       if (field.key) {
         return `[${this.expr(field.key)}] = ${this.expr(field.value)}`;
