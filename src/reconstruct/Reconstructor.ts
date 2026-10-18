@@ -13,7 +13,7 @@ import { findNaturalLoops, type NaturalLoop } from "../cfg/NaturalLoops.js";
 import { structureControlFlow, type StructureInfo } from "../cfg/Structure.js";
 import type { LuauConstant } from "../decode/Constant.js";
 import type { DecodedInstruction } from "../decode/DecodedInstruction.js";
-import { CaptureType, Opcode } from "../decode/Opcode.js";
+import { CaptureType, Opcode, isFastCall } from "../decode/Opcode.js";
 import type { BytecodeModule, Prototype } from "../decode/Prototype.js";
 import { buildSsa, type SsaFunction } from "../ssa/SsaBuilder.js";
 import { NameAllocator, debugNameAt, isValidIdentifier } from "./Naming.js";
@@ -1853,6 +1853,7 @@ class SourceBuilder {
       case Opcode.FASTCALL2:
       case Opcode.FASTCALL2K:
       case Opcode.FASTCALL3:
+      case Opcode.FASTPCALL:
       case Opcode.CAPTURE:
       case Opcode.NOP:
       case Opcode.COVERAGE:
@@ -2883,16 +2884,7 @@ function isControlOnly(opcode: Opcode): boolean {
 }
 
 function isFastCallLike(opcode: Opcode): boolean {
-  switch (opcode) {
-    case Opcode.FASTCALL:
-    case Opcode.FASTCALL1:
-    case Opcode.FASTCALL2:
-    case Opcode.FASTCALL2K:
-    case Opcode.FASTCALL3:
-      return true;
-    default:
-      return false;
-  }
+  return isFastCall(opcode);
 }
 
 /** Uses that are part of the loop protocol, not real reads of the value. */
