@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { BytecodeError } from "../src/decode/BytecodeError.ts";
 import { decodeBytecode } from "../src/decode/Decoder.ts";
-import { abc, ad, compile, Opcode, proto, ret } from "./helpers.ts";
+import { abc, ad, compile, Opcode, proto, ret, strings } from "./helpers.ts";
 
 describe("bytecode jump instruction boundaries", () => {
   it("rejects an ordinary jump into an AUX word", () => {
@@ -39,6 +39,7 @@ describe("bytecode jump instruction boundaries", () => {
 
   it("accepts a jump over an entire AUX-bearing instruction", () => {
     const result = decodeBytecode(compile(proto({
+      constants: strings("validGlobal"),
       instructions: [
         ad(Opcode.JUMP, 0, 2), // pc 0 -> pc 3, a real instruction
         abc(Opcode.GETGLOBAL, 0, 0, 0),
