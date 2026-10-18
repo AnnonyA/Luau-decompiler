@@ -455,6 +455,10 @@ function countFollowingCaptures(code: Uint32Array, start: number): number {
 
 function validateReferences(prototypes: Prototype[], _strings: string[], profile: BytecodeProfile): void {
   for (const proto of prototypes) {
+    // Instructions carrying AUX consume two words; the second word is data,
+    // not a valid jump destination. Preserve real instruction boundaries for
+    // both ordinary branches and optimized FASTCALL skip targets.
+    const instructionStarts = new Set(proto.instructions.map((insn) => insn.pc));
     for (const child of proto.childProtoIds) {
       if (child >= prototypes.length) {
         throw new BytecodeError("proto-ref", `prototype ${proto.id} references missing child ${child}`);
@@ -467,8 +471,17 @@ function validateReferences(prototypes: Prototype[], _strings: string[], profile
           `opcode ${insn.mnemonic} in prototype ${proto.id} at pc ${insn.pc} is not valid for bytecode version ${profile.version}`,
         );
       }
-      if (insn.jumpTarget !== undefined && (insn.jumpTarget < 0 || insn.jumpTarget > proto.code.length)) {
-        throw new BytecodeError("jump", `prototype ${proto.id} pc ${insn.pc} jumps outside the function`);
+      if (insn.jumpTarget !== undefined) {
+        const target = insn.jumpTarget;
+        if (target < 0 || target > proto.code.length) {
+          throw new BytecodeError("jump", `prototype ${proto.id} pc ${insn.pc} jumps outside the function`);
+        }
+        if (target !== proto.code.length && !instructionStarts.has(target)) {
+          throw new BytecodeError(
+            "jump-boundary",
+            `prototype ${proto.id} pc ${insn.pc} jumps to pc ${target} inside an instruction's AUX word`,
+          );
+        }
       }
       if (insn.protoIndex !== undefined && insn.opcode === Opcode.NEWCLOSURE) {
         if (insn.protoIndex < 0 || insn.protoIndex >= proto.childProtoIds.length) {
