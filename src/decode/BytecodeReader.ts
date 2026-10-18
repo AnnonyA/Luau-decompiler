@@ -67,6 +67,11 @@ export class BytecodeReader {
     let shift = 0;
     for (let i = 0; i < 5; i++) {
       const byte = this.u8();
+      // The fifth byte may carry only four bits in an unsigned 32-bit LEB128.
+      // Reject overflow instead of silently wrapping with bitwise shifts.
+      if (i === 4 && (byte & 0x7f) > 0x0f) {
+        throw new BytecodeError("varint", "varint exceeds unsigned 32-bit range", this.offset);
+      }
       result |= (byte & 0x7f) << shift;
       if ((byte & 0x80) === 0) {
         return result >>> 0;
@@ -81,6 +86,10 @@ export class BytecodeReader {
     let shift = 0n;
     for (let i = 0; i < 10; i++) {
       const byte = BigInt(this.u8());
+      // The tenth byte may carry only one bit in an unsigned 64-bit LEB128.
+      if (i === 9 && (byte & 0x7fn) > 1n) {
+        throw new BytecodeError("varint64", "varint64 exceeds unsigned 64-bit range", this.offset);
+      }
       result |= (byte & 0x7fn) << shift;
       if ((byte & 0x80n) === 0n) {
         return result;
