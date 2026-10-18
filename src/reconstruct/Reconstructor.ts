@@ -3023,6 +3023,11 @@ function expressionsEqual(left: Expression, right: Expression): boolean {
   if (left.kind === "identifier" && right.kind === "identifier") {
     return left.name === right.name;
   }
+  if (left.kind === "literal" && right.kind === "literal") {
+    // A key reconstructed from a bytecode string constant may be represented
+    // by distinct AST nodes even though both point at the same table field.
+    return Object.is(left.value, right.value);
+  }
   return left === right;
 }
 
