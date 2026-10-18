@@ -473,6 +473,32 @@ function countFollowingCaptures(code: Uint32Array, start: number): number {
 
 function validateReferences(prototypes: Prototype[], _strings: string[], profile: BytecodeProfile): void {
   for (const proto of prototypes) {
+    // DUPTABLE templates contain indices of string constants. The
+    // reconstruction layer previously skipped missing or non-string keys,
+    // silently dropping table fields from the recovered source.
+    for (let templateIndex = 0; templateIndex < proto.constants.length; templateIndex++) {
+      const template = proto.constants[templateIndex]!;
+      if (template.kind !== "table" && template.kind !== "tableWithConstants") {
+        continue;
+      }
+      const keys = template.kind === "table"
+        ? template.keys
+        : template.entries.map((entry) => entry.key);
+      for (const keyIndex of keys) {
+        if (keyIndex < 0 || keyIndex >= proto.constants.length) {
+          throw new BytecodeError(
+            "constant-ref",
+            `prototype ${proto.id} table constant ${templateIndex} references missing key constant ${keyIndex}`,
+          );
+        }
+        if (proto.constants[keyIndex]?.kind !== "string") {
+          throw new BytecodeError(
+            "constant-kind",
+            `prototype ${proto.id} table constant ${templateIndex} requires a string key at constant ${keyIndex}`,
+          );
+        }
+      }
+    }
     // Instructions carrying AUX consume two words; the second word is data,
     // not a valid jump destination. Preserve real instruction boundaries for
     // both ordinary branches and optimized FASTCALL skip targets.
