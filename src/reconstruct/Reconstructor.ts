@@ -1581,16 +1581,24 @@ class SourceBuilder {
       case Opcode.SETUDATAKS: {
         const name = this.stringConstant(insn.constantIndex ?? 0);
         const object = this.readRegister(insn.b, insn);
+        const validFieldName = name !== undefined && isValidIdentifier(name);
         if (pendingTable && pendingTable.register === insn.b && name) {
+          // Bytecode keys are arbitrary strings. Only valid Luau identifiers
+          // may be written as dotted properties or bare table fields.
+          const fieldKey = validFieldName ? { name } : { key: lit(name) };
+          const targetFor = (table: Expression): Expression =>
+            validFieldName
+              ? { kind: "property", object: table, name }
+              : { kind: "index", table, key: lit(name) };
           if (insn.a === pendingTable.register) {
-            this.removePureField(pendingTable, { name, value: lit(null) });
-            pendingTable.selfRefs.push({ name });
+            this.removePureField(pendingTable, { ...fieldKey, value: lit(null) });
+            pendingTable.selfRefs.push(fieldKey);
             return { statements };
           }
           const nested = this.nestedChildOf(insn.a, pendingTable);
           if (nested) {
-            this.removePureField(pendingTable, { name, value: lit(null) });
-            pendingTable.nested.push({ field: { name }, child: nested });
+            this.removePureField(pendingTable, { ...fieldKey, value: lit(null) });
+            pendingTable.nested.push({ field: fieldKey, child: nested });
           } else if (this.mutableFieldValue(insn.a, insn)) {
             // The value is a mutable local that gets reassigned later in the
             // block; capture the write as a statement so the table literal
@@ -1603,7 +1611,7 @@ class SourceBuilder {
               }
               statements.push({
                 kind: "assign",
-                targets: [{ kind: "property", object: ident(pendingTable.name), name }],
+                targets: [targetFor(ident(pendingTable.name))],
                 values: [this.readRegister(insn.a, insn)],
               });
               return { statements };
@@ -1611,24 +1619,24 @@ class SourceBuilder {
             statements.push(...this.flushPending(pendingTable));
             statements.push({
               kind: "assign",
-              targets: [{ kind: "property", object: this.readRegister(insn.b, insn), name }],
+              targets: [targetFor(this.readRegister(insn.b, insn))],
               values: [this.readRegister(insn.a, insn)],
             });
             return { statements };
           } else {
-            this.addField(pendingTable, { name, value: this.readRegister(insn.a, insn) });
+            this.addField(pendingTable, { ...fieldKey, value: this.readRegister(insn.a, insn) });
           }
           return { statements };
         }
-        const lifted = this.tryLiftMethodAssignment(insn, name, object);
+        const lifted = validFieldName ? this.tryLiftMethodAssignment(insn, name, object) : undefined;
         if (lifted) {
           statements.push(lifted);
         } else {
           statements.push({
             kind: "assign",
             targets: [
-              name && isValidIdentifier(name)
-                ? { kind: "property", object, name }
+              validFieldName
+                ? { kind: "property", object, name: name! }
                 : { kind: "index", table: object, key: this.constantExpr(insn.constantIndex ?? 0) },
             ],
             values: [this.readRegister(insn.a, insn)],
