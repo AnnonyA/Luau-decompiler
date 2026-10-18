@@ -80,7 +80,7 @@ export function decodeBytecode(input: Uint8Array | ArrayBuffer, options: DecodeO
     throw new BytecodeError("trailing", `unused trailing bytes after main prototype`, reader.offset);
   }
 
-  validateReferences(prototypes, strings);
+  validateReferences(prototypes, strings, profile);
   return { module: { version, typesVersion, strings, userdataTypes, prototypes, mainProtoId }, profile };
 }
 
@@ -453,7 +453,7 @@ function countFollowingCaptures(code: Uint32Array, start: number): number {
   return count;
 }
 
-function validateReferences(prototypes: Prototype[], _strings: string[]): void {
+function validateReferences(prototypes: Prototype[], _strings: string[], profile: BytecodeProfile): void {
   for (const proto of prototypes) {
     for (const child of proto.childProtoIds) {
       if (child >= prototypes.length) {
@@ -461,6 +461,12 @@ function validateReferences(prototypes: Prototype[], _strings: string[]): void {
       }
     }
     for (const insn of proto.instructions) {
+      if (!profile.allowsOpcode(insn.opcode)) {
+        throw new BytecodeError(
+          "opcode-version",
+          `opcode ${insn.mnemonic} in prototype ${proto.id} at pc ${insn.pc} is not valid for bytecode version ${profile.version}`,
+        );
+      }
       if (insn.jumpTarget !== undefined && (insn.jumpTarget < 0 || insn.jumpTarget > proto.code.length)) {
         throw new BytecodeError("jump", `prototype ${proto.id} pc ${insn.pc} jumps outside the function`);
       }
