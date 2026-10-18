@@ -11,6 +11,20 @@ function analyze(instructions: number[]) {
 }
 
 describe("reachability-aware register liveness", () => {
+  it("decodes zero, fixed, and open RETURN register-use counts accurately", () => {
+    const used = (b: number): number[] => {
+      const { module } = decodeBytecode(
+        compile(proto({ instructions: [abc(Opcode.RETURN, 3, b, 0)] })),
+        { opcodeEncoding: "official" },
+      );
+      return module.prototypes[module.mainProtoId]!.instructions[0]!.uses;
+    };
+    expect(used(1)).toEqual([]);
+    expect(used(2)).toEqual([3]);
+    expect(used(4)).toEqual([3, 4, 5]);
+    expect(used(0)).toEqual([3]);
+  });
+
   it("keeps a joined if/else result live but kills it in both defining arms", () => {
     const { cfg, live } = analyze([
       abc(Opcode.LOADB, 0, 1, 0),
