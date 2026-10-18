@@ -174,10 +174,9 @@ describe("table consolidation", () => {
   it("drops DUPTABLE scaffolding fields that are overwritten", () => {
     const source = sourceOf(
       proto({
-        constants: [...strings("A"), ...strings("B"), ...strings("A")],
+        constants: [...strings("A"), ...strings("B"), ...strings("A"), { kind: "table", keys: [0, 1] }],
         instructions: [
-          abc(Opcode.DUPTABLE, 0, 0, 0),
-          0,
+          ad(Opcode.DUPTABLE, 0, 3),
           abc(Opcode.LOADN, 1, 5, 0),
           abc(Opcode.SETTABLEKS, 1, 0, 0),
           2,
