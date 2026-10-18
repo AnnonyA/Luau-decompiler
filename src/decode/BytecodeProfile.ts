@@ -1,7 +1,7 @@
 import { OPCODE_TABLE, type SupportStatus } from "./Opcode.js";
 
 export const LBC_VERSION_MIN = 3;
-export const LBC_VERSION_MAX = 13;
+export const LBC_VERSION_MAX = 14;
 export const LBC_VERSION_TARGET = 6;
 export const LBC_VERSION_CLASSES = 100;
 export const LBC_TYPE_VERSION_MIN = 1;
@@ -52,6 +52,9 @@ export function profileFor(version: number, typesVersion: number): BytecodeProfi
   if (version >= 10 || version === LBC_VERSION_CLASSES) {
     status = "experimental";
     notes.push("class, feedback, and cost-model extensions are decoded but not fully reconstructed");
+    if (version >= 14 && version !== LBC_VERSION_CLASSES) {
+      notes.push("version 14 FASTPCALL is recognized; the standard CALL path is used for source reconstruction");
+    }
   }
 
   return {
