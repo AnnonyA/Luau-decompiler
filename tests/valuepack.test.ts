@@ -115,7 +115,7 @@ describe("value packs and short-circuit recovery", () => {
         instructions: [
           abc(Opcode.PREPVARARGS, 0, 0, 0),
           ad(Opcode.LOADK, 1, 0),
-          ad(Opcode.GETIMPORT, 0, 1),
+          ad(Opcode.GETIMPORT, 0, 2),
           0,
           abc(Opcode.GETVARARGS, 2, 0, 0),
           abc(Opcode.CALL, 0, 0, 2),
