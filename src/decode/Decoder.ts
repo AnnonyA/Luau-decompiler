@@ -459,19 +459,23 @@ function validateReferences(prototypes: Prototype[], _strings: string[], profile
     // not a valid jump destination. Preserve real instruction boundaries for
     // both ordinary branches and optimized FASTCALL skip targets.
     const instructionStarts = new Set(proto.instructions.map((insn) => insn.pc));
-    // CAPTURE instructions belong exclusively to the NEWCLOSURE immediately
-    // preceding them. A mismatched capture list would otherwise silently
-    // reconstruct incorrect upvalues or leak names into the generated source.
+    // The Luau closure constructors (NEWCLOSURE and DUPCLOSURE) may
+    // each be followed by a capture list. Recover the child from either
+    // the prototype table or the DUPCLOSURE constant before checking arity.
     const ownedCaptures = new Set<number>();
     for (let index = 0; index < proto.instructions.length; index++) {
       const insn = proto.instructions[index]!;
-      if (insn.opcode !== Opcode.NEWCLOSURE) {
+      if (insn.opcode !== Opcode.NEWCLOSURE && insn.opcode !== Opcode.DUPCLOSURE) {
         continue;
       }
-      const childId = proto.childProtoIds[insn.d];
+      const childId = insn.opcode === Opcode.NEWCLOSURE
+        ? proto.childProtoIds[insn.d]
+        : (proto.constants[insn.d]?.kind === "closure"
+          ? (proto.constants[insn.d] as Extract<LuauConstant, { kind: "closure" }>).protoId
+          : undefined);
       const child = childId === undefined ? undefined : prototypes[childId];
       if (!child) {
-        // The regular child-reference check below reports this precisely.
+        // Reference validation is independent of the capture sequence.
         continue;
       }
       for (let captureIndex = 0; captureIndex < child.numUpvalues; captureIndex++) {
@@ -479,7 +483,7 @@ function validateReferences(prototypes: Prototype[], _strings: string[], profile
         if (!capture || capture.opcode !== Opcode.CAPTURE) {
           throw new BytecodeError(
             "capture",
-            `NEWCLOSURE in prototype ${proto.id} at pc ${insn.pc} requires ${child.numUpvalues} CAPTURE instruction(s)`,
+            `${insn.mnemonic} in prototype ${proto.id} at pc ${insn.pc} requires ${child.numUpvalues} CAPTURE instruction(s)`,
           );
         }
         ownedCaptures.add(capture.pc);
