@@ -8,7 +8,7 @@ function returned(expression: Expression) {
 }
 
 describe("AST identifier and property validation", () => {
-  it.each(["foo-bar", "end", "type", "export", "some space"])(
+  it.each(["foo-bar", "end", "some space"])(
     "accepts string property keys represented with bracket syntax: %s",
     (name) => {
       const ast = returned({ kind: "property", object: ident("object"), name });
@@ -17,22 +17,29 @@ describe("AST identifier and property validation", () => {
     },
   );
 
-  it.each(["type", "export"])("rejects Luau reserved keywords in local bindings: %s", (name) => {
-    const ast = chunk([{ kind: "local", names: [name], values: [lit(1)] }]);
-    expect(validateAst(ast)).toContainEqual({
+  it.each(["type", "export"])("accepts contextual keywords as local bindings: %s", (name) => {
+    const ast = chunk([
+      { kind: "local", names: [name], values: [lit(1)] },
+      { kind: "return", values: [ident(name)] },
+    ]);
+    expect(validateAst(ast)).toEqual([]);
+    expect(printLuau(ast)).toContain(`local ${name} = 1`);
+  });
+
+  it.each(["type", "export"])("prints contextual property keys with normal dot syntax: %s", (name) => {
+    const ast = returned({ kind: "property", object: ident("object"), name });
+    expect(validateAst(ast)).toEqual([]);
+    expect(printLuau(ast)).toContain(`object.${name}`);
+  });
+
+  it.each(["end", "while"])("rejects genuinely reserved names in bindings: %s", (name) => {
+    expect(validateAst(chunk([{ kind: "local", names: [name], values: [lit(1)] }]))).toContainEqual({
       code: "identifier",
       message: `invalid binding ${name}`,
     });
   });
 
-  it.each(["type", "export"])("rejects reserved keywords as plain identifiers: %s", (name) => {
-    expect(validateAst(returned(ident(name)))).toContainEqual({
-      code: "identifier",
-      message: `invalid identifier ${name}`,
-    });
-  });
-
-  it.each(["foo-bar", "end", "type"])(
+  it.each(["foo-bar", "end"])(
     "rejects invalid method names instead of producing invalid colon syntax: %s",
     (name) => {
       const ast = returned({
@@ -48,6 +55,12 @@ describe("AST identifier and property validation", () => {
       });
     },
   );
+
+  it.each(["type", "export"])("accepts contextual method names: %s", (name) => {
+    const ast = returned({ kind: "method-call", object: ident("object"), name, args: [], open: false });
+    expect(validateAst(ast)).toEqual([]);
+    expect(printLuau(ast)).toContain(`object:${name}()`);
+  });
 
   it("keeps ordinary method calls and valid locals unchanged", () => {
     const ast = chunk([
