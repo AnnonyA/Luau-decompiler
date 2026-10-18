@@ -88,10 +88,13 @@ export enum Opcode {
   NEWCLASSMEMBER = 86,
   CALLFB = 87,
   CMPPROTO = 88,
-  NEWCLASS = 89,
+  FASTPCALL = 89,
+  NEWCLASS = 90,
+  CONSTRUCT = 91,
+  FINCONSTRUCT = 92,
 }
 
-export const OPCODE_COUNT = 90;
+export const OPCODE_COUNT = 93;
 
 export enum InstructionFormat {
   ABC = "ABC",
@@ -340,7 +343,10 @@ export const OPCODE_TABLE: readonly OpcodeDescriptor[] = [
   d(Opcode.NEWCLASSMEMBER, "NEWCLASSMEMBER", InstructionFormat.ABC, AUX, 10, "experimental"),
   d(Opcode.CALLFB, "CALLFB", InstructionFormat.ABC, AUX, 11, "experimental"),
   d(Opcode.CMPPROTO, "CMPPROTO", InstructionFormat.AD, AUX, 11, "experimental"),
+  d(Opcode.FASTPCALL, "FASTPCALL", InstructionFormat.ABC, NO_AUX, 14),
   d(Opcode.NEWCLASS, "NEWCLASS", InstructionFormat.ABC, AUX, 100, "experimental"),
+  d(Opcode.CONSTRUCT, "CONSTRUCT", InstructionFormat.ABC, AUX, 100, "experimental"),
+  d(Opcode.FINCONSTRUCT, "FINCONSTRUCT", InstructionFormat.ABC, NO_AUX, 100, "experimental"),
 ];
 
 const BY_OPCODE = new Map<number, OpcodeDescriptor>(OPCODE_TABLE.map((entry) => [entry.opcode, entry]));
@@ -393,6 +399,7 @@ export function isFastCall(opcode: Opcode): boolean {
     case Opcode.FASTCALL2:
     case Opcode.FASTCALL2K:
     case Opcode.FASTCALL3:
+    case Opcode.FASTPCALL:
       return true;
     default:
       return false;
