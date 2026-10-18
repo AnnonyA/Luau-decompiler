@@ -79,30 +79,37 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
     return { ok: false, error: "missing main prototype", code: "main", diagnostics: [...diagnostics.all] };
   }
 
-  const reconstructed = reconstructFunction(decoded.module, main);
-  const raw = chunk(reconstructed.body.statements);
-  const cleaned = cleanupAst(raw, defaultCleanupOptions(options));
-  const ast = options.runtimeContext === false ? cleaned : applyRuntimeContext(cleaned, options.runtimeContext);
-  const validation = validateAst(ast);
-  for (const failure of validation) {
-    diagnostics.error(failure.code, failure.message);
+  try {
+    const reconstructed = reconstructFunction(decoded.module, main);
+    const raw = chunk(reconstructed.body.statements);
+    const cleaned = cleanupAst(raw, defaultCleanupOptions(options));
+    const ast = options.runtimeContext === false ? cleaned : applyRuntimeContext(cleaned, options.runtimeContext);
+    const validation = validateAst(ast);
+    for (const failure of validation) {
+      diagnostics.error(failure.code, failure.message);
+    }
+
+    const source = printLuau(ast, { indent: options.indent ?? 4 });
+    if (hasArtificialComments(source)) {
+      diagnostics.error("comments", "printer emitted a comment");
+    }
+
+    return {
+      ok: true,
+      source,
+      ast,
+      module: decoded.module,
+      profile: decoded.profile,
+      diagnostics: [...diagnostics.all],
+      disassembly: disassembleModule(decoded.module),
+      validation,
+    };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    diagnostics.error("pipeline", message);
+    return { ok: false, error: message, code: "pipeline", diagnostics: [...diagnostics.all] };
   }
 
-  const source = printLuau(ast, { indent: options.indent ?? 4 });
-  if (hasArtificialComments(source)) {
-    diagnostics.error("comments", "printer emitted a comment");
-  }
-
-  return {
-    ok: true,
-    source,
-    ast,
-    module: decoded.module,
-    profile: decoded.profile,
-    diagnostics: [...diagnostics.all],
-    disassembly: disassembleModule(decoded.module),
-    validation,
-  };
 }
 
 export function decodeOnly(input: Uint8Array | ArrayBuffer, options: DecodeOptions = {}): DecodeResult {
