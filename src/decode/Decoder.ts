@@ -538,6 +538,50 @@ function validateReferences(prototypes: Prototype[], _strings: string[], profile
           throw new BytecodeError("proto-ref", `prototype ${proto.id} pc ${insn.pc} child index is invalid`);
         }
       }
+      // These opcodes directly consume an entry in the constant pool. Without
+      // validation, missing entries become literal nil during reconstruction,
+      // which silently changes the original program's meaning.
+      if (hasDirectConstantOperand(insn.opcode)) {
+        const index = insn.constantIndex;
+        if (index === undefined || index < 0 || index >= proto.constants.length) {
+          throw new BytecodeError(
+            "constant-ref",
+            `prototype ${proto.id} pc ${insn.pc} ${insn.mnemonic} references missing constant ${index}`,
+          );
+        }
+        const constant = proto.constants[index]!;
+        if (insn.opcode === Opcode.DUPCLOSURE) {
+          if (constant.kind !== "closure") {
+            throw new BytecodeError(
+              "constant-kind",
+              `prototype ${proto.id} pc ${insn.pc} DUPCLOSURE expected a closure constant`,
+            );
+          }
+          if (constant.protoId >= prototypes.length) {
+            throw new BytecodeError(
+              "proto-ref",
+              `prototype ${proto.id} pc ${insn.pc} DUPCLOSURE references missing prototype ${constant.protoId}`,
+            );
+          }
+        }
+      }
     }
+  }
+}
+
+// Only check opcodes whose operand is always a constant-pool index, not
+// feedback slots, builtin IDs or other version-dependent AUX metadata.
+function hasDirectConstantOperand(opcode: Opcode): boolean {
+  switch (opcode) {
+    case Opcode.LOADK:
+    case Opcode.LOADKX:
+    case Opcode.GETGLOBAL:
+    case Opcode.SETGLOBAL:
+    case Opcode.GETIMPORT:
+    case Opcode.DUPTABLE:
+    case Opcode.DUPCLOSURE:
+      return true;
+    default:
+      return false;
   }
 }
