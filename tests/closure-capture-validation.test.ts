@@ -27,6 +27,21 @@ describe("closure capture validation", () => {
     ]);
   });
 
+  it("accepts DUPCLOSURE capture lists in real-world bytecode layouts", () => {
+    const { module } = decodeBytecode(compile(proto({
+      children: [childWithUpvalues(1)],
+      constants: [{ kind: "closure", protoId: 0 }],
+      instructions: [
+        ad(Opcode.DUPCLOSURE, 1, 0),
+        abc(Opcode.CAPTURE, CaptureType.VAL, 0),
+        ret(),
+      ],
+    })));
+    expect(module.prototypes[module.mainProtoId]!.instructions.map((insn) => insn.mnemonic)).toEqual([
+      "DUPCLOSURE", "CAPTURE", "RETURN",
+    ]);
+  });
+
   it("rejects a NEWCLOSURE with too few captures", () => {
     const bytecode = compile(proto({
       children: [childWithUpvalues(2)],
