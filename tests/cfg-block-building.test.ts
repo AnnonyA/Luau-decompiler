@@ -16,8 +16,8 @@ describe("control-flow basic-block construction", () => {
       ],
     }));
     const { module } = decodeBytecode(bytes, { opcodeEncoding: "official" });
-    const proto = module.prototypes[module.mainProtoId]!;
-    const cfg = buildControlFlowGraph(proto);
+    const prototype = module.prototypes[module.mainProtoId]!;
+    const cfg = buildControlFlowGraph(prototype);
     expect(cfg.blocks.map((block) => block.instructions.map((insn) => insn.pc))).toEqual([
       [0, 1], [2, 3], [4], [5],
     ]);
