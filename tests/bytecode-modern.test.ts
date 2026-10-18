@@ -60,7 +60,7 @@ describe("modern Luau bytecode", () => {
     const result = decodeBytecode(bytes, { opcodeEncoding: "official" });
     expect(result.profile.status).toBe("experimental");
     expect(result.module.prototypes[0]!.instructions.map((insn) => insn.mnemonic)).toContain("FASTPCALL");
-    expect(result.module.prototypes[0]!.instructions[4]!.jumpTarget).toBe(7);
+    expect(result.module.prototypes[0]!.instructions[3]!.jumpTarget).toBe(7);
     expect(jumpTarget(instructions[5]!, 5)).toBe(7);
 
     const reconstructed = decompile(bytes, { opcodeEncoding: "official" });
