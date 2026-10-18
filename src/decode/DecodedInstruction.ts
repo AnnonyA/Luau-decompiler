@@ -292,6 +292,7 @@ function annotateEffects(insn: DecodedInstruction, constantCount: number): void 
     case Opcode.FASTCALL2:
     case Opcode.FASTCALL2K:
     case Opcode.FASTCALL3:
+    case Opcode.FASTPCALL:
       insn.builtinId = a;
       if (opcode === Opcode.FASTCALL1) {
         insn.uses = [b];
