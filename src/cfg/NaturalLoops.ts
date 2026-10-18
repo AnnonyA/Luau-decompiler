@@ -47,13 +47,41 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
       });
     }
   }
-  loops.sort((a, b) => a.header - b.header || a.blocks.length - b.blocks.length);
+  // Several continue paths may branch back to the same loop header. They
+  // describe ONE natural loop, not separate nested loops with identical
+  // headers. Merge their bodies and retain all backedges for downstream SSA.
+  const byHeader = new Map<number, NaturalLoop>();
   for (const loop of loops) {
+    const existing = byHeader.get(loop.header);
+    if (!existing) {
+      byHeader.set(loop.header, loop);
+      continue;
+    }
+    existing.backEdges.push(...loop.backEdges);
+    existing.blocks = [...new Set([...existing.blocks, ...loop.blocks])].sort((a, b) => a - b);
+    if (isPreferredLatch(cfg, loop.latch, existing.latch)) {
+      existing.latch = loop.latch;
+    }
+  }
+
+  const merged = [...byHeader.values()].sort((a, b) => a.header - b.header);
+  for (const loop of merged) {
+    loop.kind = classifyLoop(cfg, loop.header, loop.latch, loop.blocks);
     if (loop.kind === "repeat" && loop.header !== loop.latch) {
       loop.testBlock = findRepeatTestBlock(cfg, loop);
     }
   }
-  return loops;
+  return merged;
+}
+
+function isPreferredLatch(cfg: ControlFlowGraph, candidate: number, current: number): boolean {
+  const score = (id: number): number => {
+    const opcode = cfg.blocks[id]?.instructions.at(-1)?.opcode;
+    return opcode === Opcode.FORNLOOP || opcode === Opcode.FORGLOOP ? 2 : 0;
+  };
+  const next = score(candidate);
+  const previous = score(current);
+  return next > previous || (next === previous && cfg.blocks[candidate]!.startPc > cfg.blocks[current]!.startPc);
 }
 
 function collectLoopBody(cfg: ControlFlowGraph, header: number, latch: number): number[] {
@@ -67,7 +95,7 @@ function collectLoopBody(cfg: ControlFlowGraph, header: number, latch: number): 
   while (stack.length > 0) {
     const id = stack.pop()!;
     for (const pred of cfg.blocks[id]?.predecessors ?? []) {
-      if (!body.has(pred)) {
+      if (!cfg.blocks[pred]?.unreachable && !body.has(pred)) {
         body.add(pred);
         stack.push(pred);
       }
@@ -173,7 +201,7 @@ function loopBlocks(cfg: ControlFlowGraph, loop: Pick<NaturalLoop, "header" | "l
   while (stack.length > 0) {
     const current = stack.pop()!;
     for (const pred of cfg.blocks[current]?.predecessors ?? []) {
-      if (!blocks.has(pred)) {
+      if (!cfg.blocks[pred]?.unreachable && !blocks.has(pred)) {
         blocks.add(pred);
         stack.push(pred);
       }
