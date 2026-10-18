@@ -7,17 +7,17 @@ const official = { opcodeEncoding: "official" as const };
 
 describe("constant operands in arithmetic and field bytecode", () => {
   it.each([
-    [Opcode.ADDK, 0, 1],
-    [Opcode.SUBK, 0, 1],
-    [Opcode.MULK, 0, 1],
-    [Opcode.DIVK, 0, 1],
-    [Opcode.MODK, 0, 1],
-    [Opcode.POWK, 0, 1],
-    [Opcode.IDIVK, 0, 1],
-    [Opcode.ANDK, 0, 1],
-    [Opcode.ORK, 0, 1],
-    [Opcode.SUBRK, 1, 0],
-    [Opcode.DIVRK, 1, 0],
+    [Opcode.ADDK, 1, 0],
+    [Opcode.SUBK, 1, 0],
+    [Opcode.MULK, 1, 0],
+    [Opcode.DIVK, 1, 0],
+    [Opcode.MODK, 1, 0],
+    [Opcode.POWK, 1, 0],
+    [Opcode.IDIVK, 1, 0],
+    [Opcode.ANDK, 1, 0],
+    [Opcode.ORK, 1, 0],
+    [Opcode.SUBRK, 0, 1],
+    [Opcode.DIVRK, 0, 1],
   ])("rejects a missing constant for arithmetic opcode %i", (opcode, b, c) => {
     const bytes = compile(proto({
       instructions: [abc(opcode, 0, b, c), ret()],
@@ -41,7 +41,7 @@ describe("constant operands in arithmetic and field bytecode", () => {
     for (const opcode of [Opcode.JUMPXEQKN, Opcode.JUMPXEQKS]) {
       const bytes = compile(proto({
         constants: strings("one"),
-        instructions: [ad(opcode, 0, 0), 2, ret()],
+        instructions: [ad(opcode, 0, 1), 2, ret()],
       }));
       expect(() => decodeBytecode(bytes, official)).toThrow(/references missing constant 2/);
     }
