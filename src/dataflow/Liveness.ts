@@ -36,15 +36,24 @@ export function computeLiveness(cfg: ControlFlowGraph): Liveness {
     kill.push(k);
   }
 
-  const work = cfg.blocks.map((block) => block.id);
+  // Liveness only needs entry-reachable control flow. Keep each block in
+  // the worklist at most once: backedges and converging branches otherwise
+  // enqueue the same predecessor repeatedly and can exhaust the analysis
+  // iteration limit before the fixed point is reached.
+  const work = cfg.blocks.filter((block) => !block.unreachable).map((block) => block.id);
+  const queued = new Set(work);
   let iterations = 0;
   while (work.length > 0) {
     if (++iterations > DEFAULT_SAFETY_LIMITS.maxAnalysisIterations) {
       break;
     }
     const id = work.pop()!;
+    queued.delete(id);
     const out = new Set<number>();
     for (const succ of cfg.blocks[id]!.successors) {
+      if (cfg.blocks[succ]?.unreachable) {
+        continue;
+      }
       for (const register of liveIn[succ]!) {
         out.add(register);
       }
@@ -59,7 +68,10 @@ export function computeLiveness(cfg: ControlFlowGraph): Liveness {
     if (!sameSet(nextIn, liveIn[id]!)) {
       liveIn[id] = nextIn;
       for (const pred of cfg.blocks[id]!.predecessors) {
-        work.push(pred);
+        if (!cfg.blocks[pred]?.unreachable && !queued.has(pred)) {
+          queued.add(pred);
+          work.push(pred);
+        }
       }
     }
   }
