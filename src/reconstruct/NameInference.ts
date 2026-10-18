@@ -88,53 +88,112 @@ function foldScratchRegisters(body: Block): Block {
   return { kind: "block", statements: foldScratchStatements(body.statements.map(mapNestedScratch)) };
 }
 
+/** Recurse through every expression slot that can contain a nested closure.
+ * Earlier passes only looked in local/assign values and direct call/table
+ * arguments, skipping returned functions and closures in conditionals. */
 function mapFnBodies(expression: Expression, rec: (body: Block) => Block): Expression {
-  if (expression.kind === "function-expr") {
-    return { ...expression, body: rec(expression.body) };
+  const walk = (value: Expression): Expression => mapFnBodies(value, rec);
+  switch (expression.kind) {
+    case "function-expr":
+      return { ...expression, body: rec(expression.body) };
+    case "unary":
+      return { ...expression, argument: walk(expression.argument) };
+    case "binary":
+      return { ...expression, left: walk(expression.left), right: walk(expression.right) };
+    case "call":
+      return { ...expression, callee: walk(expression.callee), args: expression.args.map(walk) };
+    case "method-call":
+      return { ...expression, object: walk(expression.object), args: expression.args.map(walk) };
+    case "index":
+      return { ...expression, table: walk(expression.table), key: walk(expression.key) };
+    case "property":
+      return { ...expression, object: walk(expression.object) };
+    case "table":
+      return {
+        ...expression,
+        fields: expression.fields.map((field) => ({
+          ...field,
+          key: field.key ? walk(field.key) : undefined,
+          value: walk(field.value),
+        })),
+      };
+    case "paren":
+      return { ...expression, expression: walk(expression.expression) };
+    case "if-expr":
+      return {
+        ...expression,
+        test: walk(expression.test),
+        consequent: walk(expression.consequent),
+        branches: expression.branches.map((branch) => ({
+          test: walk(branch.test),
+          value: walk(branch.value),
+        })),
+        alternate: walk(expression.alternate),
+      };
+    case "interp":
+      return {
+        ...expression,
+        parts: expression.parts.map((part) =>
+          part.kind === "expr" && typeof part.value !== "string"
+            ? { ...part, value: walk(part.value) }
+            : part,
+        ),
+      };
+    default:
+      return expression;
   }
-  if (expression.kind === "table") {
-    return {
-      ...expression,
-      fields: expression.fields.map((field) => ({
-        ...field,
-        key: field.key ? mapFnBodies(field.key, rec) : undefined,
-        value: mapFnBodies(field.value, rec),
-      })),
-    };
-  }
-  if (expression.kind === "call") {
-    return { ...expression, callee: mapFnBodies(expression.callee, rec), args: expression.args.map((arg) => mapFnBodies(arg, rec)) };
-  }
-  if (expression.kind === "method-call") {
-    return { ...expression, object: mapFnBodies(expression.object, rec), args: expression.args.map((arg) => mapFnBodies(arg, rec)) };
-  }
-  return expression;
 }
 
-function mapNestedScratch(statement: Statement): Statement {
+function mapNestedFunctionBlocks(statement: Statement, rec: (body: Block) => Block): Statement {
+  const walk = (value: Expression): Expression => mapFnBodies(value, rec);
   switch (statement.kind) {
     case "function-decl":
-      return { ...statement, body: foldScratchRegisters(statement.body) };
+      return { ...statement, body: rec(statement.body) };
     case "local":
-      return { ...statement, values: statement.values.map((value) => mapFnBodies(value, foldScratchRegisters)) };
+      return { ...statement, values: statement.values.map(walk) };
     case "assign":
-      return { ...statement, values: statement.values.map((value) => mapFnBodies(value, foldScratchRegisters)) };
+      return { ...statement, targets: statement.targets.map(walk), values: statement.values.map(walk) };
+    case "compound-assign":
+      return { ...statement, target: walk(statement.target), value: walk(statement.value) };
+    case "return":
+      return { ...statement, values: statement.values.map(walk) };
+    case "expression-stmt":
+      return { ...statement, expression: walk(statement.expression) };
     case "if":
       return {
         ...statement,
-        consequent: foldScratchRegisters(statement.consequent),
-        branches: statement.branches.map((branch) => ({ ...branch, body: foldScratchRegisters(branch.body) })),
-        alternate: statement.alternate ? foldScratchRegisters(statement.alternate) : undefined,
+        test: walk(statement.test),
+        consequent: rec(statement.consequent),
+        branches: statement.branches.map((branch) => ({
+          ...branch,
+          test: walk(branch.test),
+          body: rec(branch.body),
+        })),
+        alternate: statement.alternate ? rec(statement.alternate) : undefined,
       };
     case "while":
+      return { ...statement, test: walk(statement.test), body: rec(statement.body) };
     case "repeat":
+      return { ...statement, body: rec(statement.body), test: walk(statement.test) };
     case "do":
+      return { ...statement, body: rec(statement.body) };
     case "numeric-for":
+      return {
+        ...statement,
+        start: walk(statement.start),
+        stop: walk(statement.stop),
+        step: statement.step ? walk(statement.step) : undefined,
+        body: rec(statement.body),
+      };
     case "generic-for":
-      return { ...statement, body: foldScratchRegisters(statement.body) };
+      return { ...statement, iterators: statement.iterators.map(walk), body: rec(statement.body) };
     default:
       return statement;
   }
+}
+
+function mapNestedScratch(statement: Statement): Statement {
+  return mapNestedFunctionBlocks(statement, foldScratchRegisters);
 }
 
 function isPureCallee(expression: Expression): boolean {
@@ -287,29 +346,7 @@ function coalesceAccumulators(body: Block): Block {
 }
 
 function mapNestedCoalesce(statement: Statement): Statement {
-  switch (statement.kind) {
-    case "function-decl":
-      return { ...statement, body: coalesceAccumulators(statement.body) };
-    case "local":
-      return { ...statement, values: statement.values.map((value) => mapFnBodies(value, coalesceAccumulators)) };
-    case "assign":
-      return { ...statement, values: statement.values.map((value) => mapFnBodies(value, coalesceAccumulators)) };
-    case "if":
-      return {
-        ...statement,
-        consequent: coalesceAccumulators(statement.consequent),
-        branches: statement.branches.map((branch) => ({ ...branch, body: coalesceAccumulators(branch.body) })),
-        alternate: statement.alternate ? coalesceAccumulators(statement.alternate) : undefined,
-      };
-    case "while":
-    case "repeat":
-    case "do":
-    case "numeric-for":
-    case "generic-for":
-      return { ...statement, body: coalesceAccumulators(statement.body) };
-    default:
-      return statement;
-  }
+  return mapNestedFunctionBlocks(statement, coalesceAccumulators);
 }
 
 function isZeroOrEmptyLocal(statement: Statement): { name: string } | undefined {
@@ -685,25 +722,7 @@ function inlineOwnedTables(body: Block): Block {
 }
 
 function mapNestedInline(statement: Statement): Statement {
-  switch (statement.kind) {
-    case "function-decl":
-      return { ...statement, body: inlineOwnedTables(statement.body) };
-    case "if":
-      return {
-        ...statement,
-        consequent: inlineOwnedTables(statement.consequent),
-        branches: statement.branches.map((branch) => ({ ...branch, body: inlineOwnedTables(branch.body) })),
-        alternate: statement.alternate ? inlineOwnedTables(statement.alternate) : undefined,
-      };
-    case "while":
-    case "repeat":
-    case "do":
-    case "numeric-for":
-    case "generic-for":
-      return { ...statement, body: inlineOwnedTables(statement.body) };
-    default:
-      return statement;
-  }
+  return mapNestedFunctionBlocks(statement, inlineOwnedTables);
 }
 
 function inlineStatements(statements: Statement[]): Statement[] {
