@@ -249,6 +249,14 @@ function exprReadsName(expression: Expression, name: string): boolean {
       return exprReadsName(expression.object, name);
     case "table":
       return expression.fields.some((field) => (field.key ? exprReadsName(field.key, name) : false) || exprReadsName(field.value, name));
+    case "function-expr":
+      // A nested closure can capture this local even if no outer statement
+      // reads it directly. Do not discard its initial value before capture.
+      return expression.body.statements.some((statement) => statementReadsName(statement, name));
+    case "interp":
+      return expression.parts.some((part) =>
+        part.kind === "expr" && typeof part.value !== "string" && exprReadsName(part.value, name),
+      );
     case "paren":
       return exprReadsName(expression.expression, name);
     case "if-expr":
@@ -475,6 +483,16 @@ function statementReadsName(statement: Statement, name: string): boolean {
           visitExpr(field.value);
         });
         break;
+      case "function-expr":
+        expression.body.statements.forEach(visitStmt);
+        break;
+      case "interp":
+        expression.parts.forEach((part) => {
+          if (part.kind === "expr" && typeof part.value !== "string") {
+            visitExpr(part.value);
+          }
+        });
+        break;
       case "paren":
         visitExpr(expression.expression);
         break;
@@ -541,6 +559,9 @@ function statementReadsName(statement: Statement, name: string): boolean {
         break;
       case "generic-for":
         item.iterators.forEach(visitExpr);
+        item.body.statements.forEach(visitStmt);
+        break;
+      case "function-decl":
         item.body.statements.forEach(visitStmt);
         break;
       case "do":
@@ -783,6 +804,13 @@ function countUses(statements: Statement[], name: string, after: number): { read
         break;
       case "function-expr":
         expression.body.statements.forEach(visitStmt);
+        break;
+      case "interp":
+        expression.parts.forEach((part) => {
+          if (part.kind === "expr" && typeof part.value !== "string") {
+            visitExpr(part.value);
+          }
+        });
         break;
       case "paren":
         visitExpr(expression.expression);
