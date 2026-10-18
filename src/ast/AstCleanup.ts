@@ -1486,6 +1486,10 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
         ...expression,
         test: transformExpr(expression.test, options),
         consequent: transformExpr(expression.consequent, options),
+        branches: expression.branches.map((branch) => ({
+          test: transformExpr(branch.test, options),
+          value: transformExpr(branch.value, options),
+        })),
         alternate: transformExpr(expression.alternate, options),
       };
     case "interp":
@@ -1703,9 +1707,10 @@ function formatToInterp(expression: Expression): Expression | undefined {
     return undefined;
   }
   const callee = expression.callee;
+  // Only rewrite the known string.format function, not an arbitrary local
+  // function named "format" that may have unrelated behavior.
   const isFormat =
-    (callee.kind === "property" && callee.object.kind === "identifier" && callee.object.name === "string" && callee.name === "format") ||
-    (callee.kind === "identifier" && callee.name === "format");
+    callee.kind === "property" && callee.object.kind === "identifier" && callee.object.name === "string" && callee.name === "format";
   if (!isFormat) {
     return undefined;
   }
@@ -1717,27 +1722,35 @@ function formatToInterp(expression: Expression): Expression | undefined {
   const text = template.value;
   let index = 0;
   let arg = 1;
-  const pattern = /%%|%s|%d|%i|%f/g;
-  let match: RegExpExecArray | null;
-  while ((match = pattern.exec(text))) {
-    if (match.index > index) {
-      parts.push({ kind: "text", value: text.slice(index, match.index) });
+  let interpolations = 0;
+  while (index < text.length) {
+    const percent = text.indexOf("%", index);
+    if (percent === -1) {
+      parts.push({ kind: "text", value: text.slice(index) });
+      break;
     }
-    if (match[0] === "%%") {
+    if (percent > index) {
+      parts.push({ kind: "text", value: text.slice(index, percent) });
+    }
+    const specifier = text[percent + 1];
+    if (specifier === "%") {
       parts.push({ kind: "text", value: "%" });
-    } else {
+    } else if (specifier === "s") {
       const value = expression.args[arg++];
       if (!value) {
         return undefined;
       }
       parts.push({ kind: "expr", value });
+      interpolations += 1;
+    } else {
+      // Numeric specifiers (%d, %i, %f), flags, precision and width change
+      // formatting semantics. Never rewrite them as simple interpolation.
+      // Reject unrecognized and dangling '%' too; don't silently drop them.
+      return undefined;
     }
-    index = match.index + match[0].length;
+    index = percent + 2;
   }
-  if (index < text.length) {
-    parts.push({ kind: "text", value: text.slice(index) });
-  }
-  if (arg !== expression.args.length) {
+  if (arg !== expression.args.length || interpolations === 0) {
     return undefined;
   }
   return { kind: "interp", parts };

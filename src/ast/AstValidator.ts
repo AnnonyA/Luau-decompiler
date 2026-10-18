@@ -200,6 +200,10 @@ function visitExpr(expression: Expression, scopes: string[][], failures: Validat
     case "if-expr":
       visitExpr(expression.test, scopes, failures);
       visitExpr(expression.consequent, scopes, failures);
+      for (const branch of expression.branches) {
+        visitExpr(branch.test, scopes, failures);
+        visitExpr(branch.value, scopes, failures);
+      }
       visitExpr(expression.alternate, scopes, failures);
       break;
     case "interp":
