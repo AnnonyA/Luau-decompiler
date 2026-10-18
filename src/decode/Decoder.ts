@@ -297,6 +297,24 @@ function readConstant(reader: BytecodeReader, strings: string[], prior: LuauCons
     }
     case ConstantTag.IMPORT: {
       const importId = reader.u32();
+      const count = importId >>> 30;
+      // Import components are indices into *earlier string constants*.
+      // Never invent kNNN names for malformed imports: those identifiers
+      // silently change the meaning of the reconstructed Luau program.
+      if (count === 0) {
+        throw new BytecodeError("import-ref", "import constant has no path components", reader.offset);
+      }
+      const indices = [(importId >>> 20) & 1023, (importId >>> 10) & 1023, importId & 1023];
+      for (let i = 0; i < count; i++) {
+        const index = indices[i]!;
+        if (prior[index]?.kind !== "string") {
+          throw new BytecodeError(
+            "import-ref",
+            `import component ${i} references missing or non-string constant ${index}`,
+            reader.offset,
+          );
+        }
+      }
       return { kind: "import", id: importId, path: decodeImportPath(importId, collectIndexedStrings(prior)) };
     }
     case ConstantTag.TABLE: {
