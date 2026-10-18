@@ -234,11 +234,11 @@ function dropOverwrittenGenerated(statements: Statement[]): Statement[] {
   return out;
 }
 
-/** Only plain scalar literals and already-resolved identifiers are safe to
- * discard if overwritten before their next read. Never erase a call or a
- * table/property access: these may execute user code or metamethods. */
+/** Only literal evaluation is certainly side-effect-free. Even identifier
+ * reads may invoke an environment __index metamethod, while indexing,
+ * arithmetic and calls may execute arbitrary user code. */
 function isDiscardableInitializer(expression: Expression): boolean {
-  return expression.kind === "literal" || expression.kind === "identifier";
+  return expression.kind === "literal";
 }
 
 function exprReadsName(expression: Expression, name: string): boolean {
