@@ -550,6 +550,18 @@ function validateReferences(prototypes: Prototype[], _strings: string[], profile
           );
         }
         const constant = proto.constants[index]!;
+        if (insn.opcode === Opcode.GETIMPORT && constant.kind !== "import") {
+          throw new BytecodeError(
+            "constant-kind",
+            `prototype ${proto.id} pc ${insn.pc} GETIMPORT requires an import constant, got ${constant.kind}`,
+          );
+        }
+        if (insn.opcode === Opcode.JUMPXEQKN && constant.kind !== "number") {
+          throw new BytecodeError(
+            "constant-kind",
+            `prototype ${proto.id} pc ${insn.pc} JUMPXEQKN requires a number constant, got ${constant.kind}`,
+          );
+        }
         if (hasStringKeyOperand(insn.opcode) && constant.kind !== "string") {
           throw new BytecodeError(
             "constant-kind",
