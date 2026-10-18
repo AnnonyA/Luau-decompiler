@@ -550,6 +550,22 @@ function validateReferences(prototypes: Prototype[], _strings: string[], profile
           );
         }
         const constant = proto.constants[index]!;
+        if (hasStringKeyOperand(insn.opcode) && constant.kind !== "string") {
+          throw new BytecodeError(
+            "constant-kind",
+            `prototype ${proto.id} pc ${insn.pc} ${insn.mnemonic} requires a string constant, got ${constant.kind}`,
+          );
+        }
+        if (
+          insn.opcode === Opcode.DUPTABLE &&
+          constant.kind !== "table" &&
+          constant.kind !== "tableWithConstants"
+        ) {
+          throw new BytecodeError(
+            "constant-kind",
+            `prototype ${proto.id} pc ${insn.pc} DUPTABLE requires a table constant, got ${constant.kind}`,
+          );
+        }
         if (insn.opcode === Opcode.DUPCLOSURE) {
           if (constant.kind !== "closure") {
             throw new BytecodeError(
@@ -569,8 +585,8 @@ function validateReferences(prototypes: Prototype[], _strings: string[], profile
   }
 }
 
-// Only check opcodes whose operand is always a constant-pool index, not
-// feedback slots, builtin IDs or other version-dependent AUX metadata.
+// Check only operands that are actual constant-pool indices, not feedback
+// slots, builtin function identifiers, or version-dependent AUX metadata.
 function hasDirectConstantOperand(opcode: Opcode): boolean {
   switch (opcode) {
     case Opcode.LOADK:
@@ -578,8 +594,44 @@ function hasDirectConstantOperand(opcode: Opcode): boolean {
     case Opcode.GETGLOBAL:
     case Opcode.SETGLOBAL:
     case Opcode.GETIMPORT:
+    case Opcode.GETTABLEKS:
+    case Opcode.SETTABLEKS:
+    case Opcode.NAMECALL:
+    case Opcode.GETUDATAKS:
+    case Opcode.SETUDATAKS:
+    case Opcode.NAMECALLUDATA:
     case Opcode.DUPTABLE:
     case Opcode.DUPCLOSURE:
+    case Opcode.ADDK:
+    case Opcode.SUBK:
+    case Opcode.MULK:
+    case Opcode.DIVK:
+    case Opcode.MODK:
+    case Opcode.POWK:
+    case Opcode.IDIVK:
+    case Opcode.ANDK:
+    case Opcode.ORK:
+    case Opcode.SUBRK:
+    case Opcode.DIVRK:
+    case Opcode.JUMPXEQKN:
+    case Opcode.JUMPXEQKS:
+      return true;
+    default:
+      return false;
+  }
+}
+
+function hasStringKeyOperand(opcode: Opcode): boolean {
+  switch (opcode) {
+    case Opcode.GETGLOBAL:
+    case Opcode.SETGLOBAL:
+    case Opcode.GETTABLEKS:
+    case Opcode.SETTABLEKS:
+    case Opcode.NAMECALL:
+    case Opcode.GETUDATAKS:
+    case Opcode.SETUDATAKS:
+    case Opcode.NAMECALLUDATA:
+    case Opcode.JUMPXEQKS:
       return true;
     default:
       return false;
