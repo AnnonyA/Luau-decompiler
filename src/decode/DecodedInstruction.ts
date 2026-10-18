@@ -183,7 +183,9 @@ function annotateEffects(insn: DecodedInstruction, constantCount: number): void 
       }
       break;
     case Opcode.RETURN:
-      insn.uses = b === 0 ? [a] : collectRange(a, a + Math.max(b - 2, 0));
+      // B = 1 returns no values, B = 2 returns R[A], and B = 0
+      // returns an open pack. Do not invent a register use for return().
+      insn.uses = b === 0 ? [a] : b === 1 ? [] : collectRange(a, a + b - 2);
       break;
     case Opcode.JUMPIF:
     case Opcode.JUMPIFNOT:
