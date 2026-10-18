@@ -109,14 +109,22 @@ export function debugNameAt(prototype: Prototype, register: number, pc: number):
   return matches.at(-1)?.name;
 }
 
-export function parameterNames(prototype: Prototype, allocator: NameAllocator): string[] {
+/** Allocate parameter names from locals alive at function entry.
+ * A register may later be reused by an unrelated local, whose debug name
+ * must not be assigned to the original parameter.
+ */
+export function parameterNames(
+  prototype: Prototype,
+  allocator: NameAllocator,
+  fallback: (index: number, total: number) => string =
+    (index, total) => total === 1 ? "arg" : `arg${index}`,
+): string[] {
   const names: string[] = [];
   for (let i = 0; i < prototype.numParams; i++) {
-    const debug = prototype.locals.find((local) => local.register === i && local.startPc === 0)?.name
-      ?? prototype.locals.find((local) => local.register === i)?.name;
-    names.push(allocator.reserve(debug ?? `arg${i === 0 && prototype.numParams === 1 ? "" : ""}`));
+    const debug = debugNameAt(prototype, i, 0);
+    names.push(allocator.reserve(debug ?? fallback(i, prototype.numParams)));
   }
-  return names.map((name, index) => (name === "arg" && prototype.numParams !== 1 ? allocator.take(`arg${index}`) : name));
+  return names;
 }
 
 export function nameFromConstant(constant: LuauConstant | undefined): string | undefined {
