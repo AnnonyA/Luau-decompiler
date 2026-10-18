@@ -239,10 +239,16 @@ function dominates(a: number, b: number, idom: number[]): boolean {
 function computeDominanceFrontiers(cfg: ControlFlowGraph, idom: number[]): number[][] {
   const frontier = cfg.blocks.map(() => [] as number[]);
   for (const block of cfg.blocks) {
-    if (block.predecessors.length < 2) {
+    if (block.unreachable || idom[block.id] === -1) {
       continue;
     }
-    for (const pred of block.predecessors) {
+    // Dead bytecode may still jump into a reachable join. Those edges are
+    // not executable and must not create dominance frontiers or SSA phis.
+    const reachablePreds = block.predecessors.filter((pred) => !cfg.blocks[pred]?.unreachable);
+    if (reachablePreds.length < 2) {
+      continue;
+    }
+    for (const pred of reachablePreds) {
       let runner = pred;
       while (runner !== -1 && runner !== idom[block.id]) {
         if (!frontier[runner]!.includes(block.id)) {

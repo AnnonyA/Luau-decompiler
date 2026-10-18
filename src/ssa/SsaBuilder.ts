@@ -156,18 +156,25 @@ export function buildSsa(cfg: ControlFlowGraph, dominators: DominatorTree): SsaF
 }
 
 function defsByRegisterFromCfg(cfg: ControlFlowGraph): Map<number, number[]> {
-  const map = new Map<number, number[]>();
+  const map = new Map<number, Set<number>>();
   for (let register = 0; register < cfg.prototype.numParams; register++) {
-    map.set(register, [cfg.entry]);
+    map.set(register, new Set([cfg.entry]));
   }
   for (const block of cfg.blocks) {
+    if (block.unreachable) {
+      continue;
+    }
     for (const insn of block.instructions) {
       for (const register of insn.defs) {
-        map.set(register, [...(map.get(register) ?? []), block.id]);
+        const sites = map.get(register) ?? new Set<number>();
+        sites.add(block.id);
+        map.set(register, sites);
       }
     }
   }
-  return map;
+  // A block that overwrites the same register several times is one SSA
+  // definition site for phi placement, not a separate site per instruction.
+  return new Map([...map.entries()].map(([register, sites]) => [register, [...sites]]));
 }
 
 function classify(insn: DecodedInstruction, resultIndex: number): ValueClass {
