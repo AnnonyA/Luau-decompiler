@@ -459,12 +459,62 @@ function validateReferences(prototypes: Prototype[], _strings: string[], profile
     // not a valid jump destination. Preserve real instruction boundaries for
     // both ordinary branches and optimized FASTCALL skip targets.
     const instructionStarts = new Set(proto.instructions.map((insn) => insn.pc));
+    // The Luau closure constructors (NEWCLOSURE and DUPCLOSURE) may
+    // each be followed by a capture list. Recover the child from either
+    // the prototype table or the DUPCLOSURE constant before checking arity.
+    const ownedCaptures = new Set<number>();
+    for (let index = 0; index < proto.instructions.length; index++) {
+      const insn = proto.instructions[index]!;
+      if (insn.opcode !== Opcode.NEWCLOSURE && insn.opcode !== Opcode.DUPCLOSURE) {
+        continue;
+      }
+      const childId = insn.opcode === Opcode.NEWCLOSURE
+        ? proto.childProtoIds[insn.d]
+        : (proto.constants[insn.d]?.kind === "closure"
+          ? (proto.constants[insn.d] as Extract<LuauConstant, { kind: "closure" }>).protoId
+          : undefined);
+      const child = childId === undefined ? undefined : prototypes[childId];
+      if (!child) {
+        // Reference validation is independent of the capture sequence.
+        continue;
+      }
+      for (let captureIndex = 0; captureIndex < child.numUpvalues; captureIndex++) {
+        const capture = proto.instructions[index + captureIndex + 1];
+        if (!capture || capture.opcode !== Opcode.CAPTURE) {
+          throw new BytecodeError(
+            "capture",
+            `${insn.mnemonic} in prototype ${proto.id} at pc ${insn.pc} requires ${child.numUpvalues} CAPTURE instruction(s)`,
+          );
+        }
+        ownedCaptures.add(capture.pc);
+      }
+    }
     for (const child of proto.childProtoIds) {
       if (child >= prototypes.length) {
         throw new BytecodeError("proto-ref", `prototype ${proto.id} references missing child ${child}`);
       }
     }
     for (const insn of proto.instructions) {
+      if (insn.opcode === Opcode.CAPTURE) {
+        if (!ownedCaptures.has(insn.pc)) {
+          throw new BytecodeError(
+            "capture",
+            `orphan CAPTURE instruction in prototype ${proto.id} at pc ${insn.pc}`,
+          );
+        }
+        const type = insn.capture?.type;
+        const source = insn.capture?.source ?? -1;
+        if (type !== 0 && type !== 1 && type !== 2) {
+          throw new BytecodeError("capture", `invalid CAPTURE kind ${type} in prototype ${proto.id} at pc ${insn.pc}`);
+        }
+        const limit = type === 2 ? proto.numUpvalues : proto.maxStackSize;
+        if (source < 0 || source >= limit) {
+          throw new BytecodeError(
+            "capture",
+            `CAPTURE in prototype ${proto.id} at pc ${insn.pc} references ${type === 2 ? "upvalue" : "register"} ${source} outside limit ${limit}`,
+          );
+        }
+      }
       if (!profile.allowsOpcode(insn.opcode)) {
         throw new BytecodeError(
           "opcode-version",
