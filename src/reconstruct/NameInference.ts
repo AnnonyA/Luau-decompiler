@@ -219,7 +219,10 @@ function dropOverwrittenGenerated(statements: Statement[]): Statement[] {
         break;
       }
     }
-    if (overwrite >= 0 && assigned.value.kind !== "table") {
+    // Dropping an overwritten temporary is only safe when evaluating the
+    // old initializer has no observable effects. Calls, property/index reads,
+    // arithmetic (metamethods), and closure creation must be preserved.
+    if (overwrite >= 0 && isDiscardableInitializer(assigned.value)) {
       if (items[i]!.kind === "local" && items[overwrite]!.kind === "assign") {
         const later = singleGeneratedAssign(items[overwrite]!)!;
         items[overwrite] = { kind: "local", names: [assigned.name], values: [later.value] };
@@ -229,6 +232,13 @@ function dropOverwrittenGenerated(statements: Statement[]): Statement[] {
     out.push(items[i]!);
   }
   return out;
+}
+
+/** Only literal evaluation is certainly side-effect-free. Even identifier
+ * reads may invoke an environment __index metamethod, while indexing,
+ * arithmetic and calls may execute arbitrary user code. */
+function isDiscardableInitializer(expression: Expression): boolean {
+  return expression.kind === "literal";
 }
 
 function exprReadsName(expression: Expression, name: string): boolean {

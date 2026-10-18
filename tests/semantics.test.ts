@@ -556,7 +556,7 @@ describe("semantic reconstruction", () => {
     expect(printLuau(ast)).toMatch(/function rgb\(r, g, b\)/);
   });
 
-  it("folds x = math.clamp; x = x(n, 0, 20) and drops overwritten scratch", () => {
+  it("folds callee aliases without deleting the original call when later overwritten", () => {
     const ast = cleanupAst(
       chunk([
         { kind: "assign", targets: [ident("result27")], values: [{ kind: "property", object: ident("math"), name: "clamp" }] },
@@ -571,9 +571,10 @@ describe("semantic reconstruction", () => {
       { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
     );
     const source = printLuau(ast);
+    expect(source).toMatch(/math\.clamp\(seed, 0, 20\)/);
     expect(source).toMatch(/result27 = seed/);
     expect(source).toMatch(/return result27/);
-    expect(source).not.toMatch(/math\.clamp/);
+    expect(source.indexOf("math.clamp")).toBeLessThan(source.indexOf("result27 = seed"));
   });
 
   it("folds callee aliases inside assigned function expressions", () => {
