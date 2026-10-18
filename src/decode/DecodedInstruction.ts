@@ -177,7 +177,8 @@ function annotateEffects(insn: DecodedInstruction, constantCount: number): void 
         resultCount: c === 0 ? "multret" : c - 1,
       };
       insn.uses = collectRange(a, b === 0 ? a + 1 : a + (b - 1));
-      insn.defs = c === 0 ? [a] : collectRange(a, a + Math.max(c - 2, 0));
+      // C = 1 discards results; C = 0 leaves an open result pack.
+      insn.defs = c === 0 ? [a] : c === 1 ? [] : collectRange(a, a + c - 2);
       if (opcode === Opcode.CALLFB) {
         insn.constantIndex = aux;
       }
@@ -281,7 +282,8 @@ function annotateEffects(insn: DecodedInstruction, constantCount: number): void 
       break;
     }
     case Opcode.GETVARARGS:
-      insn.defs = b === 0 ? [a] : collectRange(a, a + Math.max(b - 2, 0));
+      // B = 1 requests no values and writes no registers.
+      insn.defs = b === 0 ? [a] : b === 1 ? [] : collectRange(a, a + b - 2);
       break;
     case Opcode.CAPTURE:
       insn.capture = { type: a as CaptureType, source: b };
