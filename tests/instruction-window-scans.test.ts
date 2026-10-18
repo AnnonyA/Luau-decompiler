@@ -31,7 +31,7 @@ describe("indexed instruction window scans", () => {
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(result.validation).toEqual([]);
-      expect(result.source.match(/function\(/g)).toHaveLength(2);
+      expect(result.source.match(/\bfunction\b/g) ?? []).toHaveLength(2);
       expect(result.source).toContain("return 7");
       expect(result.source).toContain("return 9");
     }
