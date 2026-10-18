@@ -150,7 +150,8 @@ describe("decoder", () => {
             { kind: "boolean", value: true },
             { kind: "vector", x: 1, y: 2, z: 3 },
             { kind: "integer", value: 99n },
-            { kind: "table", keys: [1] },
+            { kind: "string", value: "field" },
+            { kind: "table", keys: [4] },
           ],
           instructions: [ret()],
         }),
@@ -161,6 +162,7 @@ describe("decoder", () => {
       "boolean",
       "vector",
       "integer",
+      "string",
       "table",
     ]);
   });
