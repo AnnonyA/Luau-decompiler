@@ -345,7 +345,7 @@ function quote(value: string): string {
         out += "\\t";
         break;
       case "\0":
-        out += "\\0";
+        out += "\\000";
         break;
       default: {
         const code = char.charCodeAt(0);
@@ -357,18 +357,28 @@ function quote(value: string): string {
 }
 
 export function hasArtificialComments(source: string): boolean {
-  for (const line of source.split("\n")) {
-    const trimmed = line.trim();
-    if (trimmed.startsWith("--")) {
-      return true;
+  // Ignore '--' inside emitted quoted and interpolated string literals.
+  // The printer never intentionally emits comments, so a bare '--' outside
+  // literals is the only pattern that should trigger this diagnostic.
+  let quote: string | undefined;
+  let escaped = false;
+  for (let i = 0; i < source.length; i++) {
+    const char = source[i]!;
+    if (quote !== undefined) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === "\\") {
+        escaped = true;
+      } else if (char === quote) {
+        quote = undefined;
+      }
+      continue;
     }
-    if (trimmed.includes("--") && !inString(trimmed)) {
+    if (char === '"' || char === "'" || char === "\x60") {
+      quote = char;
+    } else if (char === "-" && source[i + 1] === "-") {
       return true;
     }
   }
-  return false;
-}
-
-function inString(_line: string): boolean {
   return false;
 }
