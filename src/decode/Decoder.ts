@@ -161,6 +161,9 @@ function readPrototype(
   const maxStackSize = reader.u8();
   const numParams = reader.u8();
   const numUpvalues = reader.u8();
+  if (numUpvalues > limits.maxUpvalues) {
+    throw new BytecodeError("limit", `upvalue count ${numUpvalues} exceeds limit ${limits.maxUpvalues}`, reader.offset);
+  }
   const isVararg = reader.u8() !== 0;
   let flags = 0;
   let typeInfo: Uint8Array | undefined;
