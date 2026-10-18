@@ -16,7 +16,7 @@ import type { DecodedInstruction } from "../decode/DecodedInstruction.js";
 import { CaptureType, Opcode, isFastCall } from "../decode/Opcode.js";
 import type { BytecodeModule, Prototype } from "../decode/Prototype.js";
 import { buildSsa, type SsaFunction } from "../ssa/SsaBuilder.js";
-import { NameAllocator, debugNameAt, isValidIdentifier } from "./Naming.js";
+import { NameAllocator, debugNameAt, isValidIdentifier, parameterNames } from "./Naming.js";
 import { eventCallbackName, nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
 
 export interface FunctionIr {
@@ -174,9 +174,9 @@ class SourceBuilder {
       }
     }
     this.mainProto = module.prototypes[module.mainProtoId];
-    for (let i = 0; i < proto.numParams; i++) {
-      const debug = debugNameAt(proto, i, 0) ?? fallbackParam(i, proto.numParams);
-      const name = this.allocator.reserve(debug);
+    const names = parameterNames(proto, this.allocator, fallbackParam);
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i]!;
       this.params.push(name);
       this.declareInScope(name);
       this.env.set(i, { name, expression: ident(name), pinned: true });
