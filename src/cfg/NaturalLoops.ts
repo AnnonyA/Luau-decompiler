@@ -17,11 +17,18 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
   const loops: NaturalLoop[] = [];
   const seen = new Set<string>();
   for (const block of cfg.blocks) {
+    // Dead code is not part of the entry-reachable control-flow regions.
+    if (block.unreachable) {
+      continue;
+    }
     for (const succ of block.successors) {
+      if (cfg.blocks[succ]?.unreachable) {
+        continue;
+      }
       if (!dominators.dominates(succ, block.id)) {
         // Generic-for loops are entered through FORGPREP which jumps directly to
         // the FORGLOOP latch, so the body start does not dominate the latch.
-        if (!(block.instructions.at(-1)?.opcode === Opcode.FORGLOOP && succ === block.branch)) {
+        if (!(block.instructions.at(-1)?.opcode === Opcode.FORGLOOP && succ === block.branch && succ < block.id)) {
           continue;
         }
       }
@@ -50,6 +57,11 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
 }
 
 function collectLoopBody(cfg: ControlFlowGraph, header: number, latch: number): number[] {
+  // A self-loop consists only of its header. Walking predecessors of the
+  // header would incorrectly pull in the preheader and earlier statements.
+  if (header === latch) {
+    return [header];
+  }
   const body = new Set<number>([header, latch]);
   const stack = [latch];
   while (stack.length > 0) {
