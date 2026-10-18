@@ -25,11 +25,6 @@ export interface ControlFlowGraph {
 export function buildControlFlowGraph(prototype: Prototype): ControlFlowGraph {
   const leaders = new Set<number>([0]);
   const instructions = prototype.instructions;
-  const byPc = new Map<number, DecodedInstruction>();
-  for (const insn of instructions) {
-    byPc.set(insn.pc, insn);
-  }
-
   for (const insn of instructions) {
     const structuralJump = insn.jumpTarget !== undefined && !isFastCall(insn.opcode);
     if (structuralJump && insn.jumpTarget! < prototype.code.length) {
@@ -60,16 +55,18 @@ export function buildControlFlowGraph(prototype: Prototype): ControlFlowGraph {
   }));
 
   const blockOfPc = new Map<number, number>();
+  // Both block leaders and decoded instructions are ordered by program
+  // counter. Walk the instruction stream once instead of rescanning it for
+  // every basic block (which was quadratic for branch-heavy functions).
+  let instructionIndex = 0;
   for (let i = 0; i < starts.length; i++) {
-    const start = starts[i]!;
     const end = i + 1 < starts.length ? starts[i + 1]! : prototype.code.length;
     const block = blocks[i]!;
     block.endPc = end;
-    for (const insn of instructions) {
-      if (insn.pc >= start && insn.pc < end) {
-        block.instructions.push(insn);
-        blockOfPc.set(insn.pc, i);
-      }
+    while (instructionIndex < instructions.length && instructions[instructionIndex]!.pc < end) {
+      const insn = instructions[instructionIndex++]!;
+      block.instructions.push(insn);
+      blockOfPc.set(insn.pc, i);
     }
   }
 
