@@ -33,7 +33,7 @@ export type WrittenConstant =
   | { kind: "table"; keys: number[] }
   | { kind: "tableWithConstants"; entries: Array<{ key: number; value: number }> }
   | { kind: "closure"; protoId: number }
-  | { kind: "vector"; x: number; y: number; z: number; w?: number }
+  | { kind: "vector"; x: number; y: number; z: number; w?: number; precise?: boolean }
   | { kind: "integer"; value: bigint };
 
 export interface WriteOptions {
@@ -176,7 +176,17 @@ export function writeBytecode(main: WrittenPrototype, options: WriteOptions = {}
 
   sink.varint(prototypes.length);
   for (const proto of prototypes) {
-    writePrototype(sink, proto, intern, childIds.get(proto) ?? [], version, typesVersion);
+    if (version >= 12) {
+      // Version 12+ frames each prototype with a byte count, allowing future
+      // extensions to be skipped without desynchronizing the next prototype.
+      const frame = new ByteSink();
+      writePrototype(frame, proto, intern, childIds.get(proto) ?? [], version, typesVersion);
+      const encoded = frame.bytes;
+      sink.varint(encoded.length);
+      sink.raw(encoded);
+    } else {
+      writePrototype(sink, proto, intern, childIds.get(proto) ?? [], version, typesVersion);
+    }
   }
   sink.varint(mainId);
   return sink.bytes;
@@ -209,7 +219,7 @@ function writePrototype(
   const constants = proto.constants ?? [];
   sink.varint(constants.length);
   for (const constant of constants) {
-    writeConstant(sink, constant, intern, constants);
+    writeConstant(sink, constant, intern, constants, version);
   }
   sink.varint(children.length);
   for (const child of children) {
@@ -235,6 +245,13 @@ function writePrototype(
       sink.varint(intern(name));
     }
   }
+  if (version >= 11) {
+    // This fixture writer has no runtime feedback annotations.
+    sink.varint(0);
+  }
+  if (version >= 12 && ((proto.flags ?? 0) & 8) !== 0) {
+    sink.varint64(0n);
+  }
 }
 
 function writeConstant(
@@ -242,6 +259,7 @@ function writeConstant(
   constant: WrittenConstant,
   intern: (value: string) => number,
   all: WrittenConstant[],
+  version: number,
 ): void {
   switch (constant.kind) {
     case "nil":
@@ -291,11 +309,19 @@ function writeConstant(
       sink.varint(constant.protoId);
       break;
     case "vector":
-      sink.u8(ConstantTag.VECTOR);
-      sink.f32(constant.x);
-      sink.f32(constant.y);
-      sink.f32(constant.z);
-      sink.f32(constant.w ?? 0);
+      if (constant.precise && version >= 13) {
+        sink.u8(ConstantTag.VECTORD);
+        sink.f64(constant.x);
+        sink.f64(constant.y);
+        sink.f64(constant.z);
+        sink.f64(constant.w ?? 0);
+      } else {
+        sink.u8(ConstantTag.VECTOR);
+        sink.f32(constant.x);
+        sink.f32(constant.y);
+        sink.f32(constant.z);
+        sink.f32(constant.w ?? 0);
+      }
       break;
     case "integer": {
       sink.u8(ConstantTag.INTEGER);
