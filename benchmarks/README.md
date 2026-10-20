@@ -79,13 +79,23 @@ outputs**. No bytecode or emitted source is executed in the Luau VM.
 The job uploads `luau-official-parser-results` (JSON) and provides an Actions
 summary with per-fixture parse outcomes. The job fails if the parser is missing,
 fails to execute, or if our decompiler stops emitting output for a case.
-**A real parser `FAIL` is recorded, not suppressed or reclassified as success,
-but is not yet a CI gate.** This diagnostic-only stage exposes syntax bugs that
-will be corrected before promoting syntax validity to a release criterion.
+**Official syntax validity is now an enforced CI gate:** all 25 decompiled
+sources must parse cleanly. If a future regression causes any Luau parse FAIL,
+`bench-assert-syntax.mjs --require-all-pass` fails the job and identifies the
+affected fixture. A published reference's parser result is recorded separately
+and does not affect the gate for our own output.
 
 Source parser PASS/FAIL is not a semantic equivalence result or evidence that
 LunaUX's actual engine ran. Compiler revision, toolchain and source hashes should
 be recorded alongside benchmark artifacts in any externally shared comparison.
+
+### Download generated Luau for parser debugging
+
+The official parser job also uploads a `luau-generated-source` artifact
+with the decompiled text of all 25 licensed or repository-owned fixtures.
+Locally, `npm run bench:compare -- --source-dir /tmp/luau-output` writes
+generated sources using normalized fixture IDs. This is **opt-in**, because
+generated source can contain private code when benchmarking user files.
 
 ## Interpreting the report
 
