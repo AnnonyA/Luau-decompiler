@@ -11,25 +11,25 @@ test("semantic corpus is a fixed allowlist of owned Luau sources", () => {
 });
 
 test("CI gates only behavior already independently verified, without treating new failures as passes", () => {
-  assert.equal(VERIFIED_BASELINE.length, 16);
-  assert.equal(new Set(VERIFIED_BASELINE).size, 16);
-  for (const id of CONTROLLED_CASES.slice(0, 8)) {
+  assert.equal(VERIFIED_BASELINE.length, 18);
+  assert.equal(new Set(VERIFIED_BASELINE).size, 18);
+  for (const id of CONTROLLED_CASES.slice(0, 9)) {
     assert.ok(VERIFIED_BASELINE.includes(id));
     assert.ok(VERIFIED_BASELINE.includes(`${id}@O1`));
   }
-  for (const id of ["varargs", "shortcircuit"]) {
+  for (const id of ["shortcircuit"]) {
     assert.ok(!VERIFIED_BASELINE.includes(id));
     assert.ok(!VERIFIED_BASELINE.includes(`${id}@O1`));
   }
-  for (const caseId of ["tables", "multireturn", "nestedloops", "recursion"]) {
+  for (const caseId of ["tables", "multireturn", "nestedloops", "recursion", "varargs"]) {
     assert.ok(VERIFIED_BASELINE.includes(caseId), "officially validated fixture must remain a CI gate");
   }
 });
 
-test("optimization matrix measures 20 pairs while gating only 16 confirmed pairs", () => {
+test("optimization matrix measures 20 pairs while gating 18 confirmed pairs", () => {
   assert.deepEqual(CONTROLLED_OPTIMIZATIONS, [0, 1]);
   assert.equal(CONTROLLED_CASES.length * CONTROLLED_OPTIMIZATIONS.length, 20);
-  assert.equal(VERIFIED_BASELINE.filter((id) => id.endsWith("@O1")).length, 8);
+  assert.equal(VERIFIED_BASELINE.filter((id) => id.endsWith("@O1")).length, 9);
 });
 
 test("matches equal nonempty deterministic traces", () => {
