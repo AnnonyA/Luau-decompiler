@@ -10,24 +10,22 @@ test("semantic corpus is a fixed allowlist of owned Luau sources", () => {
   assert.deepEqual(CONTROLLED_CASES, ["arithmetic", "branches", "loop", "closure", "tables", "multireturn", "nestedloops", "recursion", "varargs", "shortcircuit", "mutablecaptures"]);
 });
 
-test("CI gates all 20 behavior profiles already verified by the pinned official VM", () => {
-  assert.equal(VERIFIED_BASELINE.length, 20);
-  assert.equal(new Set(VERIFIED_BASELINE).size, 20);
-  for (const id of CONTROLLED_CASES.filter((id) => id !== "mutablecaptures")) {
+test("CI gates all 22 behavior profiles verified by the pinned official VM", () => {
+  assert.equal(VERIFIED_BASELINE.length, 22);
+  assert.equal(new Set(VERIFIED_BASELINE).size, 22);
+  for (const id of CONTROLLED_CASES) {
     assert.ok(VERIFIED_BASELINE.includes(id));
     assert.ok(VERIFIED_BASELINE.includes(`${id}@O1`));
   }
-  assert.ok(!VERIFIED_BASELINE.includes("mutablecaptures"));
-  assert.ok(!VERIFIED_BASELINE.includes("mutablecaptures@O1"));
-  for (const caseId of ["tables", "multireturn", "nestedloops", "recursion", "varargs"]) {
+  for (const caseId of ["tables", "multireturn", "nestedloops", "recursion", "varargs", "mutablecaptures"]) {
     assert.ok(VERIFIED_BASELINE.includes(caseId), "officially validated fixture must remain a CI gate");
   }
 });
 
-test("optimization matrix measures 22 pairs while retaining 20 verified gates", () => {
+test("optimization matrix gates all 22 confirmed pairs", () => {
   assert.deepEqual(CONTROLLED_OPTIMIZATIONS, [0, 1]);
   assert.equal(CONTROLLED_CASES.length * CONTROLLED_OPTIMIZATIONS.length, 22);
-  assert.equal(VERIFIED_BASELINE.filter((id) => id.endsWith("@O1")).length, 10);
+  assert.equal(VERIFIED_BASELINE.filter((id) => id.endsWith("@O1")).length, 11);
 });
 
 test("matches equal nonempty deterministic traces", () => {
