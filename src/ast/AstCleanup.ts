@@ -1665,7 +1665,13 @@ function recoverEarlyReturns(statements: Statement[]): Statement[] {
       statement.branches.length === 0 &&
       statement.alternate &&
       statement.consequent.statements.length === 1 &&
-      statement.consequent.statements[0]?.kind === "return"
+      statement.consequent.statements[0]?.kind === "return" &&
+      // Flattening the else arm into the parent scope would extend the
+      // lifetime of locals and local function declarations past the 'end'.
+      // Preserve the conditional when this changes lexical visibility.
+      !statement.alternate.statements.some((item) =>
+        item.kind === "local" || (item.kind === "function-decl" && item.local),
+      )
     ) {
       out.push({ ...statement, alternate: undefined });
       out.push(...statement.alternate.statements);
