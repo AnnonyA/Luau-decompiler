@@ -117,6 +117,11 @@ interface ValuePath {
 class SourceBuilder {
   readonly params: string[] = [];
   private readonly env = new Map<number, Binding>();
+  private debugPhi(stage: string, register: number, pc: number, detail = ""): void {
+    if (process.env.LUAU_DEBUG_PHI !== "1" || this.proto.code.length < 60) return;
+    const env = [...this.env].filter(([r, b]) => b.pinned).map(([r, b]) => `${r}:${b.name}`).join(",");
+    console.error(`[phi] ${stage} r=${register} pc=${pc} ${detail} env=${env}`);
+  }
   private readonly emitted = new Set<number>();
   private readonly loopByHeader: Map<number, NaturalLoop>;
   /** Blocks that are the exit (follow) of some natural loop. */
@@ -826,6 +831,7 @@ class SourceBuilder {
 
   private declareJoinPhis(join: number, statements: Statement[]): void {
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
+      this.debugPhi("declareJoin", phi.register, this.ir.cfg.blocks[join]!.startPc);
       const key = `phi:${join}:${phi.register}`;
       const reused = this.existingPhiName(phi.register);
       if (reused) {
@@ -926,6 +932,7 @@ class SourceBuilder {
       return undefined;
     }
     const t = phis[0]!.register;
+    this.debugPhi("tryValueIf", t, last.pc);
     const savedEnv = new Map(this.env);
     const savedOpen = new Set(this.openPacks);
     const savedConsumed = new Set(this.consumed);
@@ -1003,6 +1010,7 @@ class SourceBuilder {
       this.scopeStack.push(new Set(scope));
     }
     const usedAfterJoin = this.usedAfterPc(this.ir.cfg.blocks[join]!.startPc, t);
+    this.debugPhi("valueIf define", t, last.pc, `force=${usedAfterJoin}`);
     const statements = [...basicWalk.statements, ...this.define(t, expr, last, usedAfterJoin)];
     return { statements, follow: join };
   }
@@ -2483,6 +2491,7 @@ class SourceBuilder {
     const uses = this.useCount(register, insn.pc);
     const liveAcrossBlocks = this.usedOutsideBlock(register, insn);
     const phi = this.phiBinding(register, insn);
+    if (insn.opcode === Opcode.JUMPIF || insn.opcode === Opcode.JUMPIFNOT) this.debugPhi("define", register, insn.pc, `phi=${phi}`);
     const envBind = this.env.get(register);
     if (envBind?.forwardRef && envBind.name) {
       const nilLiteral = isNilLiteral(expression);
