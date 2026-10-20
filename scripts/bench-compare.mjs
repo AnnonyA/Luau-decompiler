@@ -83,6 +83,7 @@ export async function collectFixtures({ manifest = DEFAULT_MANIFEST, lunauxDir }
 
 export async function runBenchmark({ manifest, lunauxDir, compiler, engine = decompile } = {}) {
   const fixtures = await collectFixtures({ manifest, lunauxDir });
+  const packageMetadata = JSON.parse(await readFile(join(ROOT, "package.json"), "utf8"));
   const samples = [];
   for (const fixture of fixtures) {
     const bytes = await readFile(fixture.path);
@@ -137,7 +138,7 @@ export async function runBenchmark({ manifest, lunauxDir, compiler, engine = dec
     schemaVersion: 1,
     measuredAt: new Date().toISOString(),
     localEngine: "AnnonyA/Luau-decompiler",
-    localVersion: "0.2.0",
+    localVersion: packageMetadata.version,
     compiler: compiler ? { executable: compiler, mode: "--only-parse --null" } : "NOT_CONFIGURED",
     platform: { node: process.version, platform: process.platform, arch: process.arch },
     comparisonNote: "Only our engine is executed/timed; LunaUX published source is not an independently measured engine result. Syntax is NOT_CHECKED without official luau-compile. Semantic equivalence is NOT_MEASURED.",
