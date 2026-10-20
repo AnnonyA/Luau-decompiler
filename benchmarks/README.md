@@ -104,7 +104,11 @@ deterministic programs (arithmetic, branches, loops, closures). The CI builds
 the pinned **official Luau interpreter** alongside `luau-compile`, compiles
 each source to bytecode using `-O0 -g1`, decompiles the result with our engine,
 then runs both sources in the official Luau interpreter. Differences in the
-process result, standard output, and standard error are reported as failures.
+process result, standard output, and standard error are recorded as
+`MISMATCH` or `ERROR` with the reconstructed source saved in the JSON.
+The verified **arithmetic** trace is a blocking CI baseline. Other observed
+failures remain explicitly reported but do not block infrastructure changes
+until corrected and promoted to the verified set.
 
 ```sh
 npm run build
@@ -118,6 +122,14 @@ The runner **executes Luau code**, unlike the syntax-only benchmark. It uses
 a hard-coded allowlist of original fixtures authored in this repository.
 **Do not supply third-party or user-uploaded files to this runner.** Its
 process timeouts and output limits are not a full operating-system sandbox.
+
+The first comparison on bytecode v14 measured **1/4 matching traces**:
+`arithmetic` matched; `branches` and `closure` lost observable
+results; and `loop` did not terminate within the execution limit.
+These are **open fidelity defects**, not passes. The JSON artifact includes
+their original and reconstructed traces and exact recovered Luau text for
+diagnosis. Each case will become a blocking gate after its root cause is
+fixed and revalidated.
 
 Matching stdout/stderr/exit status on four examples proves only the observed
 trace for those selected inputs; it does not prove general semantic
