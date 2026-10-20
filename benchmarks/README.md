@@ -99,11 +99,12 @@ generated source can contain private code when benchmarking user files.
 
 ## Controlled behavioral differential (experimental)
 
-The project-owned `benchmarks/semantic/*.luau` files contain eight small,
+The project-owned `benchmarks/semantic/*.luau` files contain ten small,
 deterministic programs: arithmetic, branches, while loops, closures,
-tables, multiple returns, nested numeric loops, and recursion. The CI builds
+tables, multiple returns, nested numeric loops, recursion, open varargs,
+and short-circuit side effects. The CI builds
 the pinned **official Luau interpreter** alongside `luau-compile`, compiles
-each source with both `-O0 -g1` and `-O1 -g1` (16 fixture/profile pairs),
+each source with both `-O0 -g1` and `-O1 -g1` (20 fixture/profile pairs),
 decompiles each bytecode with our engine, then runs both sources in the official
 Luau interpreter. Differences in the
 process result, standard output, and standard error are recorded as
