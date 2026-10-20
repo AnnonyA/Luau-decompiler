@@ -107,11 +107,14 @@ each source to bytecode using `-O0 -g1`, decompiles the result with our engine,
 then runs both sources in the official Luau interpreter. Differences in the
 process result, standard output, and standard error are recorded as
 `MISMATCH` or `ERROR` with the reconstructed source saved in the JSON.
-The four previously verified traces (arithmetic, branches, loop and closure)
-are blocking CI gates. The four newly introduced fixtures are **diagnostic**
-until their observed traces have been verified with the official Luau VM;
-failures remain explicitly reported, not mislabeled as passes. Promote a
-new case into the CI gate only after it has been measured as matching.
+The first run of the eight-case controlled corpus with the pinned official
+Luau VM confirmed **8/8 matching traces**, including table mutation,
+multiple-return forwarding, nested numeric loops, and recursion.
+**All eight fixtures are now mandatory CI gates.** Each source is compiled
+to bytecode, reconstructed, executed and compared in the official Luau VM
+at every validation run. These outcomes apply only to the eight selected
+input programs; they are not general equivalence proofs or a direct
+measurement against the LunaUX engine.
 
 ```sh
 npm run build
