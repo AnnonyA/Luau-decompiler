@@ -399,13 +399,26 @@ class SourceBuilder {
     return { kind: "repeat", body: block(body), test };
   }
 
-  /** Reuse a live pinned local in this register instead of minting a new phi name. */
+  /** Reuse a live pinned local in this register instead of minting a new phi name.
+   * A scratch register must never steal the name of another live register:
+   * sequential boolean/value joins can be in different registers while all
+   * remaining live until a later print/return.
+   */
   private existingPhiName(register: number): string | undefined {
     const binding = this.env.get(register);
-    if (binding?.name && binding.pinned && this.isDeclaredInScope(binding.name)) {
-      return binding.name;
+    if (!binding?.name || !binding.pinned || !this.isDeclaredInScope(binding.name)) {
+      return undefined;
     }
-    return undefined;
+    for (const [otherRegister, otherBinding] of this.env) {
+      if (
+        otherRegister !== register &&
+        otherBinding.pinned &&
+        otherBinding.name === binding.name
+      ) {
+        return undefined;
+      }
+    }
+    return binding.name;
   }
 
   private hoistLoopPhis(loop: NaturalLoop): Statement[] {
