@@ -119,13 +119,14 @@ mandatory CI gates.** Every program is compiled, reconstructed, executed and
 compared for both `-O0 -g1` and `-O1 -g1` on each CI validation run.
 
 On 2026-10-20, the pinned official VM confirmed both O0 and O1 `varargs`
-traces after fixing open `RETURN` packs: **18/20** checks now match.
-The nine verified programs (18 compiler-profile pairs) are blocking CI gates.
-The two `shortcircuit` profile pairs remain **MISMATCH**: the recovered code
-reuses a single local for four separately observed values. They remain visible
-in each report but are not falsely marked as passing.
-These selected cases are not a general semantic equivalence proof or a
-measurement of the LunaUX executable.
+traces after fixing open `RETURN` packs, reaching **18/20** matching executions.
+Following the speculative SSA/phi rollback correction in PR #55, GitHub Actions
+[run 39439159200](https://github.com/AnnonyA/Luau-decompiler/actions/runs/39439159200)
+reported **20/20 MATCH**, with zero mismatches and errors. In particular,
+`shortcircuit` matched on both `-O0 -g1` and `-O1 -g1`. All ten controlled
+programs (20 compiler-profile pairs) are now mandatory CI gates. These selected
+traces are not proof of general semantic equivalence or a comparison with the
+LunaUX executable.
 
 ```sh
 npm run build
