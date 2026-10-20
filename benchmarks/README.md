@@ -124,12 +124,14 @@ Following the speculative SSA/phi rollback correction in PR #55, GitHub Actions
 [run 39439159200](https://github.com/AnnonyA/Luau-decompiler/actions/runs/39439159200)
 reported **20/20 MATCH**, with zero mismatches and errors. In particular,
 `shortcircuit` matched on both `-O0 -g1` and `-O1 -g1`. All ten controlled
-programs (20 compiler-profile pairs) are now mandatory CI gates. The added
-`mutablecaptures` fixture measures two additional O0/O1 pairs, involving
-independent mutable reference captures in returned functions. Both new pairs
-remain explicitly diagnostic until their actual VM trace outcomes are checked;
-they are not assumed to pass. These selected traces are not proof of general
-semantic equivalence or a comparison with the LunaUX executable.
+programs (20 compiler-profile pairs) were mandatory CI gates. The new
+`mutablecaptures` fixture exercises independent mutable reference captures in
+returned functions. The pinned official Luau VM confirmed **22/22 MATCH** in
+[CI run 39440654154](https://github.com/AnnonyA/Luau-decompiler/actions/runs/39440654154),
+with zero mismatches and execution errors, across both O0 and O1. **All eleven
+controlled programs (22 compilation profiles) are now mandatory CI gates.**
+These selected traces are not proof of general semantic equivalence or a
+comparison with the LunaUX executable.
 
 ```sh
 npm run build
