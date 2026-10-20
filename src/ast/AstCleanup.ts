@@ -1606,12 +1606,16 @@ function recoverIfExpressions(statements: Statement[]): Statement[] {
     }
     const thenAssign = singleAssign(statement.consequent.statements);
     const elseAssign = singleAssign(statement.alternate.statements);
-    if (!thenAssign || !elseAssign) {
+    // A local declared inside an if/else arm is scoped to that arm.
+    // Hoisting it as 'local x = if ...' changes visibility and can shadow
+    // a different outer binding. Only fold writes to the same existing
+    // identifier; keep branch-local declarations in their original scopes.
+    if (!thenAssign || !elseAssign || thenAssign.kind !== "assign" || elseAssign.kind !== "assign") {
       out.push(statement);
       continue;
     }
-    const thenTarget = thenAssign.kind === "local" ? identFromName(thenAssign.names[0]) : thenAssign.targets[0];
-    const elseTarget = elseAssign.kind === "local" ? identFromName(elseAssign.names[0]) : elseAssign.targets[0];
+    const thenTarget = thenAssign.targets[0];
+    const elseTarget = elseAssign.targets[0];
     if (!sameTarget(thenTarget, elseTarget)) {
       out.push(statement);
       continue;
@@ -1623,11 +1627,7 @@ function recoverIfExpressions(statements: Statement[]): Statement[] {
       branches: [],
       alternate: elseAssign.values[0]!,
     };
-    if (thenAssign.kind === "local") {
-      out.push({ kind: "local", names: thenAssign.names, values: [value], types: thenAssign.types });
-    } else {
-      out.push({ kind: "assign", targets: thenAssign.targets, values: [value] });
-    }
+    out.push({ kind: "assign", targets: thenAssign.targets, values: [value] });
   }
   return out;
 }
@@ -1644,10 +1644,6 @@ function singleAssign(statements: Statement[]): Extract<Statement, { kind: "loca
     return statement;
   }
   return undefined;
-}
-
-function identFromName(name: string | undefined): Expression | undefined {
-  return name ? { kind: "identifier", name } : undefined;
 }
 
 function sameTarget(left: Expression | undefined, right: Expression | undefined): boolean {
