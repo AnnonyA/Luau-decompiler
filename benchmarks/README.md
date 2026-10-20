@@ -97,6 +97,35 @@ Locally, `npm run bench:compare -- --source-dir /tmp/luau-output` writes
 generated sources using normalized fixture IDs. This is **opt-in**, because
 generated source can contain private code when benchmarking user files.
 
+## Controlled behavioral differential (experimental)
+
+The project-owned `benchmarks/semantic/*.luau` files contain four small,
+deterministic programs (arithmetic, branches, loops, closures). The CI builds
+the pinned **official Luau interpreter** alongside `luau-compile`, compiles
+each source to bytecode using `-O0 -g1`, decompiles the result with our engine,
+then runs both sources in the official Luau interpreter. Differences in the
+process result, standard output, and standard error are reported as failures.
+
+```sh
+npm run build
+npm run bench:semantic -- \
+  --luau-compile /absolute/path/to/luau-compile \
+  --luau /absolute/path/to/luau \
+  --output benchmarks/results/controlled-semantics.json
+```
+
+The runner **executes Luau code**, unlike the syntax-only benchmark. It uses
+a hard-coded allowlist of original fixtures authored in this repository.
+**Do not supply third-party or user-uploaded files to this runner.** Its
+process timeouts and output limits are not a full operating-system sandbox.
+
+Matching stdout/stderr/exit status on four examples proves only the observed
+trace for those selected inputs; it does not prove general semantic
+equivalence, closure identity, heap state or parity with LunaUX. The JSON
+artifact from CI includes the original-bytecode hashes and both execution
+traces. Additional independent held-out programs and stronger assertions
+will be needed before v0.3.0 is ready.
+
 ## Interpreting the report
 
 - `sha256`, `inputBytes`, `bytecodeVersion`, `supportStatus` and `errorCode` identify exactly what our engine decoded and whether it succeeded.
