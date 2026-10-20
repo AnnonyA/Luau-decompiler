@@ -16,6 +16,7 @@ import { decompile } from "../dist/decompile.js";
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
 export const CONTROLLED_CASES = Object.freeze([
   "arithmetic", "branches", "loop", "closure",
+  "tables", "multireturn", "nestedloops", "recursion",
 ]);
 // Promote a fixture to this CI gate only after its trace has been verified.
 // All other cases remain measured regressions and are never labeled as PASS.
