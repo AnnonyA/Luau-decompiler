@@ -148,7 +148,7 @@ export async function runBenchmark({ manifest, lunauxDir, compiler, engine = dec
       lunaux: samples.filter((s) => s.group === "lunaux").length,
       successful: samples.filter((s) => s.ourEngine.success).length,
     },
-    processPeakRssBytes: process.memoryUsage().rss,
+    processRssBytesAtEnd: process.memoryUsage().rss,
     samples,
   };
 }

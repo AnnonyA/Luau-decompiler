@@ -37,3 +37,12 @@ jobs:
         run: npm run bench:test
       - name: Smoke-test local benchmark
         run: npm run bench:compare -- --output "$RUNNER_TEMP/luau-baseline.json"
+      - name: Summarize benchmark in job report
+        run: node scripts/bench-summary.mjs "$RUNNER_TEMP/luau-baseline.json" >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload measured benchmark JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-baseline-node-${{ matrix.node }}
+          path: ${{ runner.temp }}/luau-baseline.json
+          if-no-files-found: error
+          retention-days: 30
