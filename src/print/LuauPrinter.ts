@@ -169,8 +169,11 @@ class Printer {
       case "unary": {
         const prec = PREC.unary ?? 7;
         const arg = this.expr(expression.argument, prec);
+        // Two adjacent minus signs form a Luau line comment, not two unary
+        // negations. This also applies to negative numeric literals (-(-4)).
+        const safeArg = expression.op === "-" && arg.startsWith("-") ? `(${arg})` : arg;
         const space = expression.op === "not" ? " " : "";
-        const text = `${expression.op}${space}${arg}`;
+        const text = `${expression.op}${space}${safeArg}`;
         return prec < parent ? `(${text})` : text;
       }
       case "binary": {
