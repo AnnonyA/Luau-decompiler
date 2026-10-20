@@ -186,7 +186,7 @@ function readPrototype(
   const constantCount = reader.boundedVarint(limits.maxConstantsPerPrototype, "constant count");
   const constants: LuauConstant[] = [];
   for (let i = 0; i < constantCount; i++) {
-    constants.push(readConstant(reader, strings, constants));
+    constants.push(readConstant(reader, strings, constants, limits));
   }
 
   const childCount = reader.boundedVarint(limits.maxChildPrototypes, "child prototype count");
@@ -275,7 +275,7 @@ function readPrototype(
   };
 }
 
-function readConstant(reader: BytecodeReader, strings: string[], prior: LuauConstant[]): LuauConstant {
+function readConstant(reader: BytecodeReader, strings: string[], prior: LuauConstant[], limits: SafetyLimits): LuauConstant {
   const tag = reader.u8();
   switch (tag) {
     case ConstantTag.NIL:
@@ -318,7 +318,9 @@ function readConstant(reader: BytecodeReader, strings: string[], prior: LuauCons
       return { kind: "import", id: importId, path: decodeImportPath(importId, collectIndexedStrings(prior)) };
     }
     case ConstantTag.TABLE: {
-      const keyCount = reader.varint();
+      // A template cannot refer to more keys than the bounded constant pool.
+      // Check before allocating or scanning attacker-controlled entries.
+      const keyCount = reader.boundedVarint(limits.maxConstantsPerPrototype, "table key count");
       const keys: number[] = [];
       for (let i = 0; i < keyCount; i++) {
         keys.push(reader.varint());
@@ -326,7 +328,7 @@ function readConstant(reader: BytecodeReader, strings: string[], prior: LuauCons
       return { kind: "table", keys };
     }
     case ConstantTag.TABLE_WITH_CONSTANTS: {
-      const keyCount = reader.varint();
+      const keyCount = reader.boundedVarint(limits.maxConstantsPerPrototype, "table entry count");
       const entries: Array<{ key: number; value: number }> = [];
       for (let i = 0; i < keyCount; i++) {
         entries.push({ key: reader.varint(), value: reader.i32() });
@@ -361,8 +363,11 @@ function readConstant(reader: BytecodeReader, strings: string[], prior: LuauCons
     }
     case ConstantTag.CLASS_SHAPE: {
       const classNameId = reader.varint();
-      const numProperties = reader.varint();
-      const numMethods = reader.varint();
+      const numProperties = reader.boundedVarint(limits.maxConstantsPerPrototype, "class property count");
+      const numMethods = reader.boundedVarint(limits.maxConstantsPerPrototype, "class method count");
+      if (numProperties + numMethods > limits.maxConstantsPerPrototype) {
+        throw new BytecodeError("limit", "class member count exceeds constant pool limit", reader.offset);
+      }
       const members: number[] = [];
       for (let i = 0; i < numProperties + numMethods; i++) {
         members.push(reader.varint());
