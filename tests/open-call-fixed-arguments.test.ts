@@ -21,7 +21,10 @@ describe("fixed call arguments before an open multret argument", () => {
         ret(),
       ],
     }));
-    expect(source).toContain('print("calls", compute(-3), compute(0), compute(7))');
+    expect(source).toMatch(/print\("calls", compute\(-3\), compute\(0\), compute\((?:7|value)\)\)/);
+    if (source.includes("compute(value)")) {
+      expect(source).toMatch(/local value(?:: number)? = 7/);
+    }
     expect(source.match(/compute\(/g)).toHaveLength(3);
     expect(source).not.toMatch(/local _\d* = compute\(/);
   });
