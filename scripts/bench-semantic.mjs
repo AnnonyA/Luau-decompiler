@@ -62,19 +62,13 @@ export async function runSemanticBenchmark({
     for (const id of CONTROLLED_CASES) {
       const originalPath = join(ROOT, "benchmarks", "semantic", id + ".luau");
       const originalSource = await readFile(originalPath, "utf8");
-      const compiled = launch(compiler, ["--binary", "-O0", "-g1", originalPath], tempDir);
-      if (!compiled.ok) {
-        // Do not silently fall back to a hand-constructed bytecode fixture.
-        throw new Error("official Luau compilation failed for " + id + ": " + compiled.stderr);
-      }
-      // Binary mode writes arbitrary bytes, not UTF-8 text: run the compiler
-      // separately to obtain the actual buffer without string decoding.
+      // Capture raw bytes: Luau's --binary output is not UTF-8 text.
       const binary = spawnSync(compiler, ["--binary", "-O0", "-g1", originalPath], {
         cwd: tempDir, timeout: 15000, maxBuffer: 1024 * 1024,
         env: { PATH: process.env.PATH ?? "" },
       });
       if (binary.error || binary.status !== 0 || !binary.stdout?.length) {
-        throw new Error("missing official bytecode for " + id);
+        throw new Error("official bytecode compilation failed for " + id + ": " + (binary.stderr?.toString("utf8") ?? binary.error?.message ?? "empty output"));
       }
 
       const bytecode = new Uint8Array(binary.stdout);
