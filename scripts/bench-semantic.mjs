@@ -12,6 +12,9 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { decompile } from "../dist/decompile.js";
+import { decodeBytecode } from "../dist/decode/Decoder.js";
+import { Opcode } from "../dist/decode/Opcode.js";
+import { analyzePrototype } from "../dist/reconstruct/Reconstructor.js";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
 export const CONTROLLED_CASES = Object.freeze([
@@ -88,7 +91,27 @@ export async function runSemanticBenchmark({
         ? compareTraces(originalRun, recoveredRun)
         : { status: "ERROR", reason: "decompiler failed: " + decompiled.code };
 
+      const loopDiagnostics = id === "loop" ? (() => {
+        const decoded = decodeBytecode(bytecode, { opcodeEncoding: "official" });
+        const prototype = decoded.module.prototypes[decoded.module.mainProtoId];
+        const analysis = analyzePrototype(prototype);
+        return {
+          bytecodeBase64: Buffer.from(bytecode).toString("base64"),
+          instructions: prototype.instructions.map((x) => ({
+            pc: x.pc, op: Opcode[x.opcode] ?? x.opcode, a: x.a, b: x.b, c: x.c,
+            d: x.d, jumpTarget: x.jumpTarget, uses: x.uses, defs: x.defs,
+          })),
+          cfg: analysis.cfg.blocks.map((b) => ({
+            id: b.id, instructions: b.instructions.map((x) => x.pc),
+            fallthrough: b.fallthrough, branch: b.branch,
+            successors: b.successors, predecessors: b.predecessors,
+          })),
+          loops: analysis.loops,
+          phi: [...analysis.ssa.phis.entries()],
+        };
+      })() : undefined;
       results.push({
+        ...(loopDiagnostics ? { diagnostic: loopDiagnostics } : {}),
         id,
         sourceSha256: digest(originalSource),
         binarySha256: digest(binary.stdout),
