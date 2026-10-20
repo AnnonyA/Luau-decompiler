@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { compareTraces, CONTROLLED_CASES, VERIFIED_BASELINE } from "./bench-semantic.mjs";
+import { compareTraces, CONTROLLED_CASES, CONTROLLED_OPTIMIZATIONS, VERIFIED_BASELINE } from "./bench-semantic.mjs";
 
 const run = (stdout, stderr = "") => ({
   ok: true, status: 0, signal: null, stdout, stderr, error: null,
@@ -16,6 +16,12 @@ test("CI gates only behavior already independently verified, without treating ne
   for (const caseId of ["tables", "multireturn", "nestedloops", "recursion"]) {
     assert.ok(VERIFIED_BASELINE.includes(caseId), "officially validated fixture must remain a CI gate");
   }
+});
+
+test("optimization matrix measures 16 cases while keeping O1 diagnostic until confirmed", () => {
+  assert.deepEqual(CONTROLLED_OPTIMIZATIONS, [0, 1]);
+  assert.equal(CONTROLLED_CASES.length * CONTROLLED_OPTIMIZATIONS.length, 16);
+  assert.ok(VERIFIED_BASELINE.every((id) => !id.includes("@O1")));
 });
 
 test("matches equal nonempty deterministic traces", () => {
