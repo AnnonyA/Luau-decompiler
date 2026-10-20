@@ -42,7 +42,7 @@ describe("if expression recovery preserves lexical scopes", () => {
       { kind: "return", values: [ident("choice")] });
     expect(source).toContain("if flag then");
     expect(source).toContain("local choice = 1");
-    expect(source).toMatch(/local choice\\d* = 2/);
+    expect(source).toMatch(/local choice\d* = 2/);
     expect(source).not.toContain("local choice = if flag");
   });
 
@@ -52,7 +52,7 @@ describe("if expression recovery preserves lexical scopes", () => {
       choice(local("choice", 1), assign("choice", 2)),
       { kind: "return", values: [ident("choice")] },
     );
-    expect(source).toMatch(/local choice\\d* = 1/);
+    expect(source).toMatch(/local choice\d* = 1/);
     expect(source).toContain("choice = 2");
     expect(source).not.toContain("choice = if flag then");
   });
