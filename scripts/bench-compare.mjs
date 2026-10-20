@@ -123,7 +123,7 @@ export async function collectFixtures({ manifest = DEFAULT_MANIFEST, lunauxDir, 
   return fixtures;
 }
 
-export async function runBenchmark({ manifest, lunauxDir, lunauxLock, compiler, engine = decompile } = {}) {
+export async function runBenchmark({ manifest, lunauxDir, lunauxLock, compiler, sourceDir, engine = decompile } = {}) {
   const fixtures = await collectFixtures({ manifest, lunauxDir, lunauxLock });
   const packageMetadata = JSON.parse(await readFile(join(ROOT, "package.json"), "utf8"));
   const samples = [];
@@ -137,6 +137,12 @@ export async function runBenchmark({ manifest, lunauxDir, lunauxLock, compiler, 
       result = { ok: false, code: "unexpected", error: String(error) };
     }
     const durationMs = Math.round(Number(process.hrtime.bigint() - started) / 1000) / 1000;
+    if (sourceDir && result.ok) {
+      // Only opt-in diagnostics; fixture IDs are normalized to avoid paths escaping the output directory.
+      await mkdir(sourceDir, { recursive: true });
+      const safeId = fixture.id.replace(/[^A-Za-z0-9_-]/g, "_");
+      await writeFile(join(sourceDir, safeId + ".luau"), result.source, "utf8");
+    }
     const entry = {
       id: fixture.id,
       group: fixture.group,
@@ -199,7 +205,7 @@ function parseOptions(args) {
   const out = {};
   for (let i = 0; i < args.length; i++) {
     const key = args[i];
-    if (!["--manifest", "--lunaux-dir", "--lunaux-lock", "--luau-compile", "--output", "--require-lunaux-count"].includes(key)) {
+    if (!["--manifest", "--lunaux-dir", "--lunaux-lock", "--luau-compile", "--output", "--source-dir", "--require-lunaux-count"].includes(key)) {
       throw new Error("unknown argument " + key);
     }
     const value = args[++i];
@@ -209,6 +215,7 @@ function parseOptions(args) {
     if (key === "--lunaux-lock") out.lunauxLock = resolve(value);
     if (key === "--luau-compile") out.compiler = resolve(value);
     if (key === "--output") out.output = resolve(value);
+    if (key === "--source-dir") out.sourceDir = resolve(value);
     if (key === "--require-lunaux-count") out.requireLunauxCount = Number(value);
   }
   return out;
