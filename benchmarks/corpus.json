@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "notes": "Measured locally from the project regression fixtures. Hashes computed from source bytes at run time; do not infer semantic equivalence from source patterns.",
+  "fixtures": [
+    {
+      "id": "luac",
+      "bytecode": "tests/luac.bin",
+      "provenance": "AnnonyA/Luau-decompiler tests/luac.bin (existing repo fixture)"
+    },
+    {
+      "id": "index-ui",
+      "bytecode": "tests/IndexUI_ModuleScript_Bytecode.txt",
+      "provenance": "AnnonyA/Luau-decompiler tests/IndexUI_ModuleScript_Bytecode.txt (existing repo fixture)"
+    },
+    {
+      "id": "military-controller",
+      "bytecode": "tests/MilitaryMeltdownController_ModuleScript_Bytecode.txt",
+      "provenance": "AnnonyA/Luau-decompiler tests/MilitaryMeltdownController_ModuleScript_Bytecode.txt (existing repo fixture)"
+    }
+  ]
+}
