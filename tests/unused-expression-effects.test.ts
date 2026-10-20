@@ -36,7 +36,7 @@ describe("discarded expression evaluation must not disappear", () => {
     }));
     const result = decompile(bytes, { opcodeEncoding: "official" });
     expect(result.ok).toBe(true);
-    if (result.ok) expect(result.source).toMatch(/local \\w+ = index \\+ count/);
+    if (result.ok) expect(result.source).toMatch(/local \w+ = index \+ count/);
   });
 
   it("keeps an unused unary length that may invoke __len", () => {
@@ -49,7 +49,7 @@ describe("discarded expression evaluation must not disappear", () => {
     }));
     const result = decompile(bytes, { opcodeEncoding: "official" });
     expect(result.ok).toBe(true);
-    if (result.ok) expect(result.source).toMatch(/local \\w+ = #index/);
+    if (result.ok) expect(result.source).toMatch(/local \w+ = #index/);
   });
 
   it("does not emit a pointless local for an unused literal", () => {
