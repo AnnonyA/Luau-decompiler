@@ -68,6 +68,25 @@ npm run bench:compare -- \
 
 The runner invokes the compiler with `--only-parse --null <temporary-source-file>`, not the VM. When no compiler is supplied, all syntax statuses are `NOT_CHECKED`; if the executable is unavailable, status is `ERROR`, never `PASS`. A successful parse **does not** prove semantic equivalence. No source file is executed.
 
+### CI parser baseline
+
+A separate `syntax` GitHub Actions job builds the official Luau parser at
+[luau-lang/luau@9d7748a4](https://github.com/luau-lang/luau/commit/9d7748a4f324213a18cb8283fa2a77c330225fa0)
+from source with CMake. It checks the **25 inputs** (our 3 existing fixtures and the
+22 locked LunaUX bytecode files) and, where published, their **22 LunaUX source
+outputs**. No bytecode or emitted source is executed in the Luau VM.
+
+The job uploads `luau-official-parser-results` (JSON) and provides an Actions
+summary with per-fixture parse outcomes. The job fails if the parser is missing,
+fails to execute, or if our decompiler stops emitting output for a case.
+**A real parser `FAIL` is recorded, not suppressed or reclassified as success,
+but is not yet a CI gate.** This diagnostic-only stage exposes syntax bugs that
+will be corrected before promoting syntax validity to a release criterion.
+
+Source parser PASS/FAIL is not a semantic equivalence result or evidence that
+LunaUX's actual engine ran. Compiler revision, toolchain and source hashes should
+be recorded alongside benchmark artifacts in any externally shared comparison.
+
 ## Interpreting the report
 
 - `sha256`, `inputBytes`, `bytecodeVersion`, `supportStatus` and `errorCode` identify exactly what our engine decoded and whether it succeeded.

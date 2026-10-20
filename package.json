@@ -14,7 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "bench:compare": "node scripts/bench-compare.mjs",
-    "bench:test": "node --test scripts/bench-compare.test.mjs scripts/bench-summary.test.mjs",
+    "bench:test": "node --test scripts/bench-compare.test.mjs scripts/bench-summary.test.mjs scripts/bench-assert-syntax.test.mjs",
     "serve": "node dist/cli.js serve"
   },
   "engines": {

@@ -67,3 +67,59 @@ jobs:
           path: ${{ runner.temp }}/luau-shared-baseline.json
           if-no-files-found: error
           retention-days: 30
+
+  syntax:
+    name: Parse source with official pinned Luau
+    runs-on: ubuntu-latest
+    needs: verify
+    steps:
+      - name: Check out our decompiler
+        uses: actions/checkout@v4
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install and build our decompiler
+        run: |
+          npm ci
+          npm run build
+      - name: Fetch pinned official Luau compiler
+        shell: bash
+        run: |
+          git init "$RUNNER_TEMP/luau-source"
+          git -C "$RUNNER_TEMP/luau-source" remote add origin https://github.com/luau-lang/luau.git
+          git -C "$RUNNER_TEMP/luau-source" fetch --depth 1 origin 9d7748a4f324213a18cb8283fa2a77c330225fa0
+          git -C "$RUNNER_TEMP/luau-source" checkout --detach FETCH_HEAD
+      - name: Build official syntax checker
+        shell: bash
+        run: |
+          cmake -S "$RUNNER_TEMP/luau-source" -B "$RUNNER_TEMP/luau-build" \
+            -DCMAKE_BUILD_TYPE=Release -DLUAU_BUILD_TESTS=OFF
+          cmake --build "$RUNNER_TEMP/luau-build" --target Luau.Compile.CLI --parallel 2
+          "$RUNNER_TEMP/luau-build/luau-compile" --help | grep -F -- "--only-parse"
+      - name: Fetch pinned LunaUX public fixture corpus
+        shell: bash
+        run: |
+          git init "$RUNNER_TEMP/lunaux-corpus"
+          git -C "$RUNNER_TEMP/lunaux-corpus" remote add origin https://github.com/boydev-1444/lunaux-decompiler.git
+          git -C "$RUNNER_TEMP/lunaux-corpus" fetch --depth 1 origin 910ccd4d546fd0c8e21f770a30732ae246eab5c5
+          git -C "$RUNNER_TEMP/lunaux-corpus" checkout --detach FETCH_HEAD
+      - name: Check our output and published references with official parser
+        shell: bash
+        run: |
+          npm run bench:compare -- \
+            --lunaux-dir "$RUNNER_TEMP/lunaux-corpus" \
+            --require-lunaux-count 22 \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --output "$RUNNER_TEMP/luau-syntax-report.json"
+          node scripts/bench-summary.mjs "$RUNNER_TEMP/luau-syntax-report.json" >> "$GITHUB_STEP_SUMMARY"
+          node scripts/bench-assert-syntax.mjs "$RUNNER_TEMP/luau-syntax-report.json"
+      - name: Upload official parser results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-official-parser-results
+          path: ${{ runner.temp }}/luau-syntax-report.json
+          if-no-files-found: warn
+          retention-days: 30
