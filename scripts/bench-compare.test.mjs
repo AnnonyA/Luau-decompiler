@@ -20,8 +20,8 @@ test("an opt-in source directory contains the reconstructed fixtures for diagnos
     assert.equal(report.fixtureCounts.repository, 3);
     const emitted = await readFile(join(dir, "luac.luau"), "utf8");
     assert.match(emitted, /Callable/);
-    assert.match(emitted, /\\(\"Callable\\(calls=%\\*\\)\"\\):format/);
-    assert.match(await readFile(join(dir, "index-ui.luau"), "utf8"), /\\(\"Role: %\\*\"\\):format/);
+    assert.ok(emitted.includes('("Callable(calls=%*)"):format'));
+    assert.ok((await readFile(join(dir, "index-ui.luau"), "utf8")).includes('("Role: %*"):format'));
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
