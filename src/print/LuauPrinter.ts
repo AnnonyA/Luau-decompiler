@@ -242,11 +242,13 @@ class Printer {
       expression.kind === "index" ||
       expression.kind === "call" ||
       expression.kind === "method-call" ||
-      expression.kind === "paren" ||
-      expression.kind === "literal"
+      expression.kind === "paren"
     ) {
       return this.expr(expression);
     }
+    // Luau requires a parenthesized primary expression as the receiver for
+    // indexing and colon calls. A string/number literal cannot be followed
+    // directly by ':method', '.field', or '[key]'.
     return `(${this.expr(expression)})`;
   }
 

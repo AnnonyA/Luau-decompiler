@@ -112,9 +112,18 @@ jobs:
             --lunaux-dir "$RUNNER_TEMP/lunaux-corpus" \
             --require-lunaux-count 22 \
             --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --source-dir "$RUNNER_TEMP/generated-source" \
             --output "$RUNNER_TEMP/luau-syntax-report.json"
           node scripts/bench-summary.mjs "$RUNNER_TEMP/luau-syntax-report.json" >> "$GITHUB_STEP_SUMMARY"
-          node scripts/bench-assert-syntax.mjs "$RUNNER_TEMP/luau-syntax-report.json"
+          node scripts/bench-assert-syntax.mjs "$RUNNER_TEMP/luau-syntax-report.json" --require-all-pass
+      - name: Upload generated Luau for parse-error triage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-generated-source
+          path: ${{ runner.temp }}/generated-source/*.luau
+          if-no-files-found: warn
+          retention-days: 14
       - name: Upload official parser results
         if: always()
         uses: actions/upload-artifact@v4

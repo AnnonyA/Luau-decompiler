@@ -27,6 +27,16 @@ test("records actual syntax failure as a measured result rather than inventing P
   assert.deepEqual(inspectSyntaxReport(report("PASS", "FAIL")).published, { PASS: 0, FAIL: 1 });
 });
 
+test("requireAllPass makes syntax failures a blocking, diagnosed regression", () => {
+  assert.deepEqual(inspectSyntaxReport(report(), { requireAllPass: true }).own, { PASS: 1, FAIL: 0 });
+  assert.throws(
+    () => inspectSyntaxReport(report("FAIL"), { requireAllPass: true }),
+    /official Luau parser rejected 1\/1 decompiled sources: lunaux\/Sample/,
+  );
+  // Competitor-published syntax failures are diagnostic and do not block our output gate.
+  assert.equal(inspectSyntaxReport(report("PASS", "FAIL"), { requireAllPass: true }).own.PASS, 1);
+});
+
 test("rejects missing, skipped, or errored official compiler invocation", () => {
   for (const state of ["NOT_CHECKED", "ERROR", undefined]) {
     const own = report();
