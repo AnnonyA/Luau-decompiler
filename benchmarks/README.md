@@ -44,7 +44,7 @@ The runner invokes the compiler with `--only-parse --null <temporary-source-file
 
 - `sha256`, `inputBytes`, `bytecodeVersion`, `supportStatus` and `errorCode` identify exactly what our engine decoded and whether it succeeded.
 - `durationMs` is only our decompile call (not external fetching, process startup, or compiler parsing). Timings can vary and are **not** comparable with remote API latency.
-- `processPeakRssBytes` is a process-level snapshot, **not** isolated per-file peak memory.
+- `processRssBytesAtEnd` is a process-level final snapshot, **not** a peak measurement or isolated per-file memory usage.
 - `sourceMetrics.registerPlaceholders` is a basic textual proxy, not a precision/recall measure and may include matches in strings or comments.
 - `semanticEquivalence` is `NOT_MEASURED` until controlled differential execution is implemented using licensed input examples and an independent correctness oracle.
 - `competitorPublishedSource` is an artifact from LunaUX's repository, not a measured competitor engine invocation.
