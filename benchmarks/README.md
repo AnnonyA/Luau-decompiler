@@ -103,18 +103,22 @@ The project-owned `benchmarks/semantic/*.luau` files contain eight small,
 deterministic programs: arithmetic, branches, while loops, closures,
 tables, multiple returns, nested numeric loops, and recursion. The CI builds
 the pinned **official Luau interpreter** alongside `luau-compile`, compiles
-each source to bytecode using `-O0 -g1`, decompiles the result with our engine,
-then runs both sources in the official Luau interpreter. Differences in the
+each source with both `-O0 -g1` and `-O1 -g1` (16 fixture/profile pairs),
+decompiles each bytecode with our engine, then runs both sources in the official
+Luau interpreter. Differences in the
 process result, standard output, and standard error are recorded as
 `MISMATCH` or `ERROR` with the reconstructed source saved in the JSON.
 The first run of the eight-case controlled corpus with the pinned official
 Luau VM confirmed **8/8 matching traces**, including table mutation,
 multiple-return forwarding, nested numeric loops, and recursion.
-**All eight fixtures are now mandatory CI gates.** Each source is compiled
-to bytecode, reconstructed, executed and compared in the official Luau VM
-at every validation run. These outcomes apply only to the eight selected
-input programs; they are not general equivalence proofs or a direct
-measurement against the LunaUX engine.
+The pinned official Luau VM confirmed **16/16 matching traces** in the first
+O0/O1 matrix run (8 fixtures × 2 compiler optimization profiles), with zero
+mismatches or execution errors. **All sixteen profile-specific checks are
+mandatory CI gates.** Every program is compiled, reconstructed, executed and
+compared for both `-O0 -g1` and `-O1 -g1` on each CI validation run.
+
+These checks cover only the selected eight programs; they are not a general
+semantic equivalence proof or a measurement of the LunaUX executable.
 
 ```sh
 npm run build

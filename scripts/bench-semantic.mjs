@@ -20,7 +20,8 @@ export const CONTROLLED_CASES = Object.freeze([
 ]);
 // Promote a fixture to this CI gate only after its trace has been verified.
 // All other cases remain measured regressions and are never labeled as PASS.
-export const VERIFIED_BASELINE = Object.freeze([...CONTROLLED_CASES]);
+export const CONTROLLED_OPTIMIZATIONS = Object.freeze([0, 1]);
+export const VERIFIED_BASELINE = Object.freeze([...CONTROLLED_CASES, ...CONTROLLED_CASES.map((id) => `${id}@O1`)]);
 const digest = (data) => createHash("sha256").update(data).digest("hex");
 
 function launch(program, args, cwd) {
@@ -66,8 +67,10 @@ export async function runSemanticBenchmark({
     for (const id of CONTROLLED_CASES) {
       const originalPath = join(ROOT, "benchmarks", "semantic", id + ".luau");
       const originalSource = await readFile(originalPath, "utf8");
+      for (const optimization of CONTROLLED_OPTIMIZATIONS) {
+      const caseId = optimization === 0 ? id : `${id}@O${optimization}`;
       // Capture raw bytes: Luau's --binary output is not UTF-8 text.
-      const binary = spawnSync(compiler, ["--binary", "-O0", "-g1", originalPath], {
+      const binary = spawnSync(compiler, ["--binary", `-O${optimization}`, "-g1", originalPath], {
         cwd: tempDir, timeout: 15000, maxBuffer: 1024 * 1024,
         env: { PATH: process.env.PATH ?? "" },
       });
@@ -76,11 +79,16 @@ export async function runSemanticBenchmark({
       }
 
       const bytecode = new Uint8Array(binary.stdout);
-      const decompiled = engine(bytecode, { opcodeEncoding: "official" });
+      let decompiled;
+      try {
+        decompiled = engine(bytecode, { opcodeEncoding: "official" });
+      } catch (error) {
+        decompiled = { ok: false, code: "unexpected", error: String(error) };
+      }
       let recoveredPath = null;
       let recoveredRun = null;
       if (decompiled.ok) {
-        recoveredPath = join(tempDir, id + "-recovered.luau");
+        recoveredPath = join(tempDir, caseId + "-recovered.luau");
         await writeFile(recoveredPath, decompiled.source, "utf8");
       }
       const originalRun = launch(interpreter, [originalPath], tempDir);
@@ -90,7 +98,9 @@ export async function runSemanticBenchmark({
         : { status: "ERROR", reason: "decompiler failed: " + decompiled.code };
 
       results.push({
-        id,
+        id: caseId,
+        sourceId: id,
+        optimization,
         sourceSha256: digest(originalSource),
         binarySha256: digest(binary.stdout),
         bytecodeVersion: bytecode[0],
@@ -103,6 +113,7 @@ export async function runSemanticBenchmark({
         reconstructedExecution: recoveredRun,
         comparison,
       });
+      }
     }
   } finally {
     await rm(tempDir, { recursive: true, force: true });
@@ -114,6 +125,7 @@ export async function runSemanticBenchmark({
     interpreter: interpreter,
     scope: "Controlled project-owned examples; compares stdout, stderr and exit success only. NOT full semantic equivalence.",
     total: results.length,
+    compilationProfiles: [...CONTROLLED_OPTIMIZATIONS].map((n) => `-O${n} -g1`),
     match: results.filter((r) => r.comparison.status === "MATCH").length,
     mismatch: results.filter((r) => r.comparison.status === "MISMATCH").length,
     errors: results.filter((r) => r.comparison.status === "ERROR").length,
@@ -149,7 +161,7 @@ async function main() {
     process.stdout.write(item.id + ": " + item.comparison.status + "\n");
   }
   const verifiedPass = report.verifiedBaselinePassed === VERIFIED_BASELINE.length;
-  if (!verifiedPass || report.total !== CONTROLLED_CASES.length) {
+  if (!verifiedPass || report.total !== CONTROLLED_CASES.length * CONTROLLED_OPTIMIZATIONS.length) {
     process.exitCode = 1;
   }
   if (report.match !== report.total) {

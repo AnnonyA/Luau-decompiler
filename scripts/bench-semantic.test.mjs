@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { compareTraces, CONTROLLED_CASES, VERIFIED_BASELINE } from "./bench-semantic.mjs";
+import { compareTraces, CONTROLLED_CASES, CONTROLLED_OPTIMIZATIONS, VERIFIED_BASELINE } from "./bench-semantic.mjs";
 
 const run = (stdout, stderr = "") => ({
   ok: true, status: 0, signal: null, stdout, stderr, error: null,
@@ -11,11 +11,21 @@ test("semantic corpus is a fixed allowlist of owned Luau sources", () => {
 });
 
 test("CI gates only behavior already independently verified, without treating new failures as passes", () => {
-  assert.deepEqual(VERIFIED_BASELINE, CONTROLLED_CASES);
-  assert.equal(new Set(VERIFIED_BASELINE).size, 8);
+  assert.equal(VERIFIED_BASELINE.length, 16);
+  assert.equal(new Set(VERIFIED_BASELINE).size, 16);
+  for (const id of CONTROLLED_CASES) {
+    assert.ok(VERIFIED_BASELINE.includes(id));
+    assert.ok(VERIFIED_BASELINE.includes(`${id}@O1`));
+  }
   for (const caseId of ["tables", "multireturn", "nestedloops", "recursion"]) {
     assert.ok(VERIFIED_BASELINE.includes(caseId), "officially validated fixture must remain a CI gate");
   }
+});
+
+test("optimization matrix gates all 16 officially confirmed O0/O1 cases", () => {
+  assert.deepEqual(CONTROLLED_OPTIMIZATIONS, [0, 1]);
+  assert.equal(CONTROLLED_CASES.length * CONTROLLED_OPTIMIZATIONS.length, 16);
+  assert.equal(VERIFIED_BASELINE.filter((id) => id.endsWith("@O1")).length, 8);
 });
 
 test("matches equal nonempty deterministic traces", () => {
