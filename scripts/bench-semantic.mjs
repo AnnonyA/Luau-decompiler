@@ -12,6 +12,9 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { decompile } from "../dist/decompile.js";
+import { reconstructFunction } from "../dist/reconstruct/Reconstructor.js";
+import { chunk } from "../dist/ast/Ast.js";
+import { printLuau } from "../dist/print/LuauPrinter.js";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
 // Keep previously confirmed cases blocking; new scenarios are diagnostic until
@@ -109,6 +112,12 @@ export async function runSemanticBenchmark({
         // Only project-authored fixtures run here; preserve generated text
         // so a failing comparison can be reproduced without guesswork.
         recoveredSource: decompiled.ok ? decompiled.source : null,
+        // Controlled fixtures only: retain the decoded register layout to
+        // diagnose semantic aliasing without running arbitrary bytecode.
+        disassembly: decompiled.ok ? decompiled.disassembly : null,
+        rawSource: decompiled.ok
+          ? printLuau(chunk(reconstructFunction(decompiled.module, decompiled.module.prototypes[decompiled.module.mainProtoId]).body.statements))
+          : null,
         reconstructionSucceeded: decompiled.ok,
         originalExecution: originalRun,
         reconstructedExecution: recoveredRun,
