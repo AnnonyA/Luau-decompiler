@@ -99,12 +99,12 @@ generated source can contain private code when benchmarking user files.
 
 ## Controlled behavioral differential (experimental)
 
-The project-owned `benchmarks/semantic/*.luau` files contain ten small,
+The project-owned `benchmarks/semantic/*.luau` files contain eleven small,
 deterministic programs: arithmetic, branches, while loops, closures,
 tables, multiple returns, nested numeric loops, recursion, open varargs,
-and short-circuit side effects. The CI builds
+short-circuit side effects, and mutable reference captures. The CI builds
 the pinned **official Luau interpreter** alongside `luau-compile`, compiles
-each source with both `-O0 -g1` and `-O1 -g1` (20 fixture/profile pairs),
+each source with both `-O0 -g1` and `-O1 -g1` (22 fixture/profile pairs),
 decompiles each bytecode with our engine, then runs both sources in the official
 Luau interpreter. Differences in the
 process result, standard output, and standard error are recorded as
@@ -124,9 +124,12 @@ Following the speculative SSA/phi rollback correction in PR #55, GitHub Actions
 [run 39439159200](https://github.com/AnnonyA/Luau-decompiler/actions/runs/39439159200)
 reported **20/20 MATCH**, with zero mismatches and errors. In particular,
 `shortcircuit` matched on both `-O0 -g1` and `-O1 -g1`. All ten controlled
-programs (20 compiler-profile pairs) are now mandatory CI gates. These selected
-traces are not proof of general semantic equivalence or a comparison with the
-LunaUX executable.
+programs (20 compiler-profile pairs) are now mandatory CI gates. The added
+`mutablecaptures` fixture measures two additional O0/O1 pairs, involving
+independent mutable reference captures in returned functions. Both new pairs
+remain explicitly diagnostic until their actual VM trace outcomes are checked;
+they are not assumed to pass. These selected traces are not proof of general
+semantic equivalence or a comparison with the LunaUX executable.
 
 ```sh
 npm run build
