@@ -99,16 +99,22 @@ generated source can contain private code when benchmarking user files.
 
 ## Controlled behavioral differential (experimental)
 
-The project-owned `benchmarks/semantic/*.luau` files contain four small,
-deterministic programs (arithmetic, branches, loops, closures). The CI builds
+The project-owned `benchmarks/semantic/*.luau` files contain eight small,
+deterministic programs: arithmetic, branches, while loops, closures,
+tables, multiple returns, nested numeric loops, and recursion. The CI builds
 the pinned **official Luau interpreter** alongside `luau-compile`, compiles
 each source to bytecode using `-O0 -g1`, decompiles the result with our engine,
 then runs both sources in the official Luau interpreter. Differences in the
 process result, standard output, and standard error are recorded as
 `MISMATCH` or `ERROR` with the reconstructed source saved in the JSON.
-The verified **arithmetic** trace is a blocking CI baseline. Other observed
-failures remain explicitly reported but do not block infrastructure changes
-until corrected and promoted to the verified set.
+The first run of the eight-case controlled corpus with the pinned official
+Luau VM confirmed **8/8 matching traces**, including table mutation,
+multiple-return forwarding, nested numeric loops, and recursion.
+**All eight fixtures are now mandatory CI gates.** Each source is compiled
+to bytecode, reconstructed, executed and compared in the official Luau VM
+at every validation run. These outcomes apply only to the eight selected
+input programs; they are not general equivalence proofs or a direct
+measurement against the LunaUX engine.
 
 ```sh
 npm run build
@@ -134,8 +140,8 @@ observed traces remain available in each CI JSON artifact.
 These are reproducible checks on selected programs, not proof of general
 semantic equivalence.
 
-Matching stdout/stderr/exit status on four examples proves only the observed
-trace for those selected inputs; it does not prove general semantic
+Matching stdout/stderr/exit status on selected examples proves only the observed
+trace for those particular inputs; it does not prove general semantic
 equivalence, closure identity, heap state or parity with LunaUX. The JSON
 artifact from CI includes the original-bytecode hashes and both execution
 traces. Additional independent held-out programs and stronger assertions
