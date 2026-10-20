@@ -7,7 +7,7 @@ const run = (stdout, stderr = "") => ({
 });
 
 test("semantic corpus is a fixed allowlist of owned Luau sources", () => {
-  assert.deepEqual(CONTROLLED_CASES, ["arithmetic", "branches", "loop", "closure"]);
+  assert.deepEqual(CONTROLLED_CASES, ["arithmetic", "branches", "loop", "closure", "tables", "multireturn", "nestedloops", "recursion"]);
 });
 
 test("CI gates only behavior already independently verified, without treating new failures as passes", () => {
@@ -15,6 +15,10 @@ test("CI gates only behavior already independently verified, without treating ne
   assert.ok(VERIFIED_BASELINE.every((id) => CONTROLLED_CASES.includes(id)));
   assert.ok(CONTROLLED_CASES.includes("loop"));
   assert.ok(VERIFIED_BASELINE.includes("loop"));
+  for (const caseId of ["tables", "multireturn", "nestedloops", "recursion"]) {
+    assert.ok(CONTROLLED_CASES.includes(caseId));
+    assert.ok(!VERIFIED_BASELINE.includes(caseId), "new differential results need official VM verification first");
+  }
 });
 
 test("matches equal nonempty deterministic traces", () => {
