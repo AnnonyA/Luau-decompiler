@@ -2326,7 +2326,11 @@ class SourceBuilder {
       guard += 1;
       const binding = this.env.get(register);
       args.push(this.readRegister(register, insn));
-      if (this.openPacks.has(register) || (binding && isPackish(binding.expression))) {
+      // A fixed one-result CALL also has a call expression in its binding.
+      // Only a real open result pack (or an open vararg) terminates a B=0
+      // argument list. Stopping at an arbitrary nested call silently drops
+      // following arguments to print(f(), g(), h()).
+      if (this.openPacks.has(register) || binding?.expression.kind === "vararg") {
         break;
       }
       register += 1;
@@ -2561,7 +2565,18 @@ class SourceBuilder {
       if (insn.pc <= fromPc) {
         continue;
       }
-      if (insn.uses.includes(register) && !isFakeUse(insn.opcode) && !this.fallbackCalls.has(insn.pc)) {
+      if (
+        !this.fallbackCalls.has(insn.pc) &&
+        (
+          (insn.uses.includes(register) && !isFakeUse(insn.opcode)) ||
+          // Open CALL argument lists use the live registers above A, even
+          // though the bytecode decoder cannot enumerate their upper bound
+          // statically (B=0). Count the use before discarding or inlining
+          // effectful calls: otherwise f() is emitted twice or lost.
+          ((insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) &&
+            insn.b === 0 && register >= insn.a + 1)
+        )
+      ) {
         count += 1;
       }
       if (insn.defs.includes(register)) {

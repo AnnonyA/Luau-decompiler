@@ -123,13 +123,13 @@ a hard-coded allowlist of original fixtures authored in this repository.
 **Do not supply third-party or user-uploaded files to this runner.** Its
 process timeouts and output limits are not a full operating-system sandbox.
 
-The first comparison on bytecode v14 measured **1/4 matching traces**:
-`arithmetic` matched; `branches` and `closure` lost observable
-results; and `loop` did not terminate within the execution limit.
-These are **open fidelity defects**, not passes. The JSON artifact includes
-their original and reconstructed traces and exact recovered Luau text for
-diagnosis. Each case will become a blocking gate after its root cause is
-fixed and revalidated.
+The first comparison on bytecode v14 measured **1/4 matching traces**.
+After fixing open CALL argument handling in PR #48, the official VM confirmed
+**3/4 matching traces**: `arithmetic`, `branches`, and `closure` all match
+their originals and are now **blocking CI gates**. The remaining `loop`
+fixture fails to terminate and remains an open fidelity regression (issue #46).
+These are reproducible checks on selected programs, not proof of general
+semantic equivalence.
 
 Matching stdout/stderr/exit status on four examples proves only the observed
 trace for those selected inputs; it does not prove general semantic
