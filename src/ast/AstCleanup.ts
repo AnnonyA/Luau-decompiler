@@ -1325,13 +1325,13 @@ function negateCondition(expression: Expression): Expression | undefined {
     return expression.argument;
   }
   if (expression.kind === "binary") {
+    // Equality and inequality are logical complements, but ordering
+    // comparisons are NOT: for NaN, both (a < b) and (a >= b) are false,
+    // so `not (a < b)` must not become `a >= b`. Preserve the explicit
+    // `not` for <, <=, > and >= (and for overloaded comparison operators).
     const flipped: Record<string, string> = {
       "==": "~=",
       "~=": "==",
-      "<": ">=",
-      "<=": ">",
-      ">": "<=",
-      ">=": "<",
     };
     const next = flipped[expression.op];
     if (next) {
