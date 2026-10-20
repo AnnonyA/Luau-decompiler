@@ -14,7 +14,7 @@ test("manifest includes the three existing real bytecode fixtures", async () => 
 
 test("source metrics are deterministic and identify explicit register placeholders", () => {
   assert.deepEqual(sourceMetrics("local r2 = up3\nreturn r2\n"), {
-    bytes: 27,
+    bytes: 25,
     lines: 2,
     registerPlaceholders: 3,
   });
