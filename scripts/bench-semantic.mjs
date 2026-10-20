@@ -84,10 +84,16 @@ export async function runSemanticBenchmark({
 
       const bytecode = new Uint8Array(binary.stdout);
       let decompiled;
+      // Temporary owned-fixture diagnostics, removed before merging.
+      const oldTrace = process.env.LUAU_DEBUG_PHI;
+      if (id === "shortcircuit") process.env.LUAU_DEBUG_PHI = "1";
       try {
         decompiled = engine(bytecode, { opcodeEncoding: "official" });
       } catch (error) {
         decompiled = { ok: false, code: "unexpected", error: String(error) };
+      } finally {
+        if (oldTrace === undefined) delete process.env.LUAU_DEBUG_PHI;
+        else process.env.LUAU_DEBUG_PHI = oldTrace;
       }
       let recoveredPath = null;
       let recoveredRun = null;
