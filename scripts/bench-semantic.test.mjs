@@ -11,7 +11,7 @@ test("semantic corpus is a fixed allowlist of owned Luau sources", () => {
 });
 
 test("CI gates only behavior already independently verified, without treating new failures as passes", () => {
-  assert.deepEqual(VERIFIED_BASELINE, ["arithmetic"]);
+  assert.deepEqual(VERIFIED_BASELINE, ["arithmetic", "branches", "closure"]);
   assert.ok(VERIFIED_BASELINE.every((id) => CONTROLLED_CASES.includes(id)));
   assert.ok(CONTROLLED_CASES.includes("loop"));
   assert.ok(!VERIFIED_BASELINE.includes("loop"));
