@@ -1847,7 +1847,15 @@ class SourceBuilder {
         const count = insn.b === 0 ? -1 : insn.b - 1;
         const values: Expression[] = [];
         if (count < 0) {
-          values.push(this.readRegister(insn.a, insn));
+          // RETURN B=0 forwards a variable-length final pack, but can also
+          // contain fixed leading values: return count(...), ...
+          // The prior implementation returned only R[A] and silently lost
+          // trailing open packs from GETVARARGS or CALL.
+          const hasOpenTail = [...this.openPacks].some((register) =>
+            register >= insn.a && register < insn.a + 64);
+          values.push(...(hasOpenTail
+            ? this.openArgs(insn.a, insn)
+            : [this.readRegister(insn.a, insn)]));
         } else {
           for (let i = 0; i < count; i++) {
             values.push(this.readRegister(insn.a + i, insn));

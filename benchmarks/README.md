@@ -99,11 +99,12 @@ generated source can contain private code when benchmarking user files.
 
 ## Controlled behavioral differential (experimental)
 
-The project-owned `benchmarks/semantic/*.luau` files contain eight small,
+The project-owned `benchmarks/semantic/*.luau` files contain ten small,
 deterministic programs: arithmetic, branches, while loops, closures,
-tables, multiple returns, nested numeric loops, and recursion. The CI builds
+tables, multiple returns, nested numeric loops, recursion, open varargs,
+and short-circuit side effects. The CI builds
 the pinned **official Luau interpreter** alongside `luau-compile`, compiles
-each source with both `-O0 -g1` and `-O1 -g1` (16 fixture/profile pairs),
+each source with both `-O0 -g1` and `-O1 -g1` (20 fixture/profile pairs),
 decompiles each bytecode with our engine, then runs both sources in the official
 Luau interpreter. Differences in the
 process result, standard output, and standard error are recorded as
@@ -113,12 +114,18 @@ Luau VM confirmed **8/8 matching traces**, including table mutation,
 multiple-return forwarding, nested numeric loops, and recursion.
 The pinned official Luau VM confirmed **16/16 matching traces** in the first
 O0/O1 matrix run (8 fixtures × 2 compiler optimization profiles), with zero
-mismatches or execution errors. **All sixteen profile-specific checks are
+mismatches or execution errors. **Those sixteen previously confirmed profile-specific checks remain
 mandatory CI gates.** Every program is compiled, reconstructed, executed and
 compared for both `-O0 -g1` and `-O1 -g1` on each CI validation run.
 
-These checks cover only the selected eight programs; they are not a general
-semantic equivalence proof or a measurement of the LunaUX executable.
+On 2026-10-20, the pinned official VM confirmed both O0 and O1 `varargs`
+traces after fixing open `RETURN` packs: **18/20** checks now match.
+The nine verified programs (18 compiler-profile pairs) are blocking CI gates.
+The two `shortcircuit` profile pairs remain **MISMATCH**: the recovered code
+reuses a single local for four separately observed values. They remain visible
+in each report but are not falsely marked as passing.
+These selected cases are not a general semantic equivalence proof or a
+measurement of the LunaUX executable.
 
 ```sh
 npm run build
