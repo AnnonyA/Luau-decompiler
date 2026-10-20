@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "repository": "boydev-1444/lunaux-decompiler",
+  "revision": "910ccd4d546fd0c8e21f770a30732ae246eab5c5",
+  "license": "Apache-2.0",
+  "sources": {
+    "repository": "https://github.com/boydev-1444/lunaux-decompiler/tree/910ccd4d546fd0c8e21f770a30732ae246eab5c5",
+    "license": "https://github.com/boydev-1444/lunaux-decompiler/blob/910ccd4d546fd0c8e21f770a30732ae246eab5c5/LICENSE",
+    "binaryDirectory": "Tests/Binary",
+    "referenceDirectory": "Tests/Decompile"
+  },
+  "fixtures": [
+    {
+      "name": "AndOrChains.luauc",
+      "binary": {
+        "bytes": 630,
+        "gitBlobSha1": "72268b665a6fdd152e6203b4ab7c950e0068dc3f"
+      },
+      "reference": {
+        "bytes": 567,
+        "gitBlobSha1": "6cebd827943bfdedd773b2f9d05ff85523019bb6"
+      }
+    },
+    {
+      "name": "BinaryOperationCF.luauc",
+      "binary": {
+        "bytes": 544,
+        "gitBlobSha1": "dced74b740a6f670dfe69000bbb12b22cbe9ce23"
+      },
+      "reference": {
+        "bytes": 319,
+        "gitBlobSha1": "815cb9e8936b4339e5058aaadbf887b8c780c174"
+      }
+    },
+    {
+      "name": "BinaryOperationSimple.luauc",
+      "binary": {
+        "bytes": 166,
+        "gitBlobSha1": "fdc98e6d37f9beb5a121b8eb326c8305346277d1"
+      },
+      "reference": {
+        "bytes": 49,
+        "gitBlobSha1": "9f0b20758b1bd98eab717b2c51e5dfd43951508d"
+      }
+    },
+    {
+      "name": "ChainedComparisons.luauc",
+      "binary": {
+        "bytes": 433,
+        "gitBlobSha1": "3c36455bfe05861b1016767981d3aa9aa143fef6"
+      },
+      "reference": {
+        "bytes": 466,
+        "gitBlobSha1": "002478e0127b804843fdca5ab76636aae7a8b96e"
+      }
+    },
+    {
+      "name": "ClassMethods.luauc",
+      "binary": {
+        "bytes": 804,
+        "gitBlobSha1": "fe093d35ecf1b0472ea7041367c4062bdb3cc47b"
+      },
+      "reference": {
+        "bytes": 898,
+        "gitBlobSha1": "dedd04dc3af4c512a05c370c1fae109b7d4b4914"
+      }
+    },
+    {
+      "name": "Compoundops.luauc",
+      "binary": {
+        "bytes": 158,
+        "gitBlobSha1": "606c4a77ea53637c0ca23b131c6ab9f10fb9c10e"
+      },
+      "reference": {
+        "bytes": 44,
+        "gitBlobSha1": "969e5887b264e0ed58f40f624795f9d9d7de1366"
+      }
+    },
+    {
+      "name": "DeadDiscards.luauc",
+      "binary": {
+        "bytes": 315,
+        "gitBlobSha1": "d73bfab449ec1c77a28ab36c2bff5e9c04edbac7"
+      },
+      "reference": {
+        "bytes": 249,
+        "gitBlobSha1": "f32c421b4bc01520c8ea372d3074a8f6cbf1690c"
+      }
+    },
+    {
+      "name": "FunctionMultiReturn.luauc",
+      "binary": {
+        "bytes": 246,
+        "gitBlobSha1": "6e7b2a434ac4c02be8626b4951ef054bccd15490"
+      },
+      "reference": {
+        "bytes": 174,
+        "gitBlobSha1": "30f0258218ba89d263ddcb4f26aa6cb30f7497d7"
+      }
+    },
+    {
+      "name": "GenericForLoop.luauc",
+      "binary": {
+        "bytes": 198,
+        "gitBlobSha1": "043748d76c320c1b61330c3de5671c11304c7c2b"
+      },
+      "reference": {
+        "bytes": 94,
+        "gitBlobSha1": "90a6408419ba79024ccce80dcf82d825ed719ec1"
+      }
+    },
+    {
+      "name": "GuardClauses.luauc",
+      "binary": {
+        "bytes": 433,
+        "gitBlobSha1": "011f168213701fcf786fb62d13ae6118f4e5e557"
+      },
+      "reference": {
+        "bytes": 379,
+        "gitBlobSha1": "39f505efd1dcb36cede66bac28814343aa9da480"
+      }
+    },
+    {
+      "name": "LoopScopedLocals.luauc",
+      "binary": {
+        "bytes": 260,
+        "gitBlobSha1": "73e0c4aab91681e71fc0e0eb9fb2962e055c1333"
+      },
+      "reference": {
+        "bytes": 255,
+        "gitBlobSha1": "98480811004b377091727d2f92321d02fc2b1e81"
+      }
+    },
+    {
+      "name": "MethodDefinitions.luauc",
+      "binary": {
+        "bytes": 490,
+        "gitBlobSha1": "1153073e9229735c4d2851cff85662c833d4f8ce"
+      },
+      "reference": {
+        "bytes": 518,
+        "gitBlobSha1": "b4aea0a21fb0bad83f37d77595574355e7aab6ce"
+      }
+    },
+    {
+      "name": "NestedConditions.luauc",
+      "binary": {
+        "bytes": 256,
+        "gitBlobSha1": "80e6742d9251febd058fa91eb2ed0b64b0ad21ae"
+      },
+      "reference": {
+        "bytes": 289,
+        "gitBlobSha1": "80df2fc832f27a5149c33013b0f2816c55c8bb39"
+      }
+    },
+    {
+      "name": "NestedLoops.luauc",
+      "binary": {
+        "bytes": 142,
+        "gitBlobSha1": "ed97f894176948bb6ec8e373046772395368aaeb"
+      },
+      "reference": {
+        "bytes": 85,
+        "gitBlobSha1": "6f7f51d5063f611714e2064debd6850fa0be3efa"
+      }
+    },
+    {
+      "name": "NumericForLoop.luauc",
+      "binary": {
+        "bytes": 276,
+        "gitBlobSha1": "a838c8c3b440dfa7e30278a81277959944241849"
+      },
+      "reference": {
+        "bytes": 162,
+        "gitBlobSha1": "7b4e1afbd9be54d9f0968f5e934535bd8e833004"
+      }
+    },
+    {
+      "name": "RecursiveFunction.luauc",
+      "binary": {
+        "bytes": 350,
+        "gitBlobSha1": "76b025c5f12c8ecb294cdbe501b02ed3dc29dcd1"
+      },
+      "reference": {
+        "bytes": 375,
+        "gitBlobSha1": "fd8adf4b7bf8ac58f8fca992c859065461352be3"
+      }
+    },
+    {
+      "name": "Repeat.luauc",
+      "binary": {
+        "bytes": 166,
+        "gitBlobSha1": "6a8d6e32af69ee42dab9720e5c341c18060ee831"
+      },
+      "reference": {
+        "bytes": 58,
+        "gitBlobSha1": "1ee7f958ca479a054a66cd1bd743e635fc0f6028"
+      }
+    },
+    {
+      "name": "RepeatBreakContinue.luauc",
+      "binary": {
+        "bytes": 346,
+        "gitBlobSha1": "c6af8910bec2233bc76b72a4c8c5f27081ac6942"
+      },
+      "reference": {
+        "bytes": 350,
+        "gitBlobSha1": "ee6aa8da289a0e48541fa0cca035d71f6c01dc11"
+      }
+    },
+    {
+      "name": "ShortCircuitAssign.luauc",
+      "binary": {
+        "bytes": 454,
+        "gitBlobSha1": "fc943536431feb732296d97d2ac3004cae906931"
+      },
+      "reference": {
+        "bytes": 295,
+        "gitBlobSha1": "55313a98aa69440b00ca639a52c4e8ca468579fc"
+      }
+    },
+    {
+      "name": "TernaryChains.luauc",
+      "binary": {
+        "bytes": 450,
+        "gitBlobSha1": "5254939b7be48cd159a363591541e7fcabe19ae1"
+      },
+      "reference": {
+        "bytes": 501,
+        "gitBlobSha1": "a4c5131fd3633dd7c31960d0bfd58f6cae050497"
+      }
+    },
+    {
+      "name": "WhileCondition.luauc",
+      "binary": {
+        "bytes": 169,
+        "gitBlobSha1": "bad499e212a98341d903bb0b15c63ae867da00a8"
+      },
+      "reference": {
+        "bytes": 68,
+        "gitBlobSha1": "164ad0e34f27734f916f152472b41e62a05909f9"
+      }
+    },
+    {
+      "name": "WhileTrue.luauc",
+      "binary": {
+        "bytes": 80,
+        "gitBlobSha1": "d2ee0cd3578be374760b072f2149f18039a545fd"
+      },
+      "reference": {
+        "bytes": 32,
+        "gitBlobSha1": "204e2f4dfd23d99b59aef41c8b5e3b346099038c"
+      }
+    }
+  ]
+}

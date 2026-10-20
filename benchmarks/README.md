@@ -24,16 +24,35 @@ and execution date can be recovered from the linked GitHub Actions run.
 
 ## Optional: benchmark LunaUX's published 22 binary samples
 
-If redistribution/provenance is acceptable for your use, obtain a local checkout of [boydev-1444/lunaux-decompiler](https://github.com/boydev-1444/lunaux-decompiler) yourself, record its exact commit SHA and license, then run:
+The corpus is pinned in [lunaux-lock.json](lunaux-lock.json) to the public competitor
+commit `910ccd4d546fd0c8e21f770a30732ae246eab5c5` under **Apache-2.0**.
+Its 22 raw bytecode inputs and 22 published decompiled source files have verified
+**Git blob SHA-1 and byte size** entries. The benchmark verifies all 44 local files
+against these entries **before running**. SHA-256 hashes are also computed from
+the actual inputs in each benchmark report.
+
+Obtain the public repository at the exact pinned commit:
 
 ```sh
+git clone https://github.com/boydev-1444/lunaux-decompiler.git ../lunaux-decompiler
+git -C ../lunaux-decompiler checkout 910ccd4d546fd0c8e21f770a30732ae246eab5c5
 npm run bench:compare -- \
   --lunaux-dir ../lunaux-decompiler \
   --require-lunaux-count 22 \
   --output benchmarks/results/shared-fixtures.json
 ```
 
-This scans `Tests/Binary/*.luauc` and optionally reads corresponding `Tests/Decompile/*.luau` **as pre-existing published output**. It runs **only our** local decompiler on the binary files. A published source artifact is not a semantic oracle, and its availability is not evidence that the LunaUX executable was run or timed. Results explicitly mark `competitorExecution: NOT_RUN` and `semanticEquivalence: NOT_MEASURED`.
+The runner uses `Tests/Binary/*.luauc` and reads corresponding
+`Tests/Decompile/*.luau` **only as published reference output**. Missing,
+additional or modified inputs, or modified reference output, cause an error.
+This explicitly prevents silent changes to our shared benchmark corpus.
+
+GitHub Actions on Node.js 20 and 22 fetches the same pinned public commit,
+runs this benchmark and uploads `luau-shared-corpus-node-20` and
+`luau-shared-corpus-node-22` as downloadable JSON artifacts.
+The action runs **only our local decompiler**; it does not run or time the LunaUX
+engine. Results still mark `competitorExecution: NOT_RUN` and
+`semanticEquivalence: NOT_MEASURED`.
 
 The corpus is external rather than copied into this repository. No proprietary implementation is imported and no hosted service is scraped. When doing a true head-to-head timing comparison, use a properly licensed offline LunaUX executable on the *same hardware and inputs* and independently record the command, version, timings and outputs.
 
@@ -60,4 +79,4 @@ The runner invokes the compiler with `--only-parse --null <temporary-source-file
 
 ## Next work for v0.3.0
 
-Pin and hash the 22 public benchmark files at an explicit competitor commit; add a sufficiently diverse licensed independent corpus; build controlled source→bytecode→decompile→parse and semantic differential checks, with a holdout separate from optimization; and publish per-sample **both-engine** measurements before reporting any superiority.
+The 22 public fixtures and published outputs are now pinned by Git object hashes and run in CI. Next: add a sufficiently diverse independently licensed corpus and official Luau parsing checks; build controlled source→bytecode→decompile→parse and semantic differential checks, with a holdout separate from optimization. Independently measure **both engines** on the same hardware before reporting any superiority.

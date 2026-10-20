@@ -7,13 +7,56 @@ import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { mkdtemp, readFile, readdir, rm, writeFile, mkdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { basename, dirname, join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { decompile } from "../dist/decompile.js";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
 const DEFAULT_MANIFEST = join(ROOT, "benchmarks/corpus.json");
+const DEFAULT_LUNAUX_LOCK = join(ROOT, "benchmarks/lunaux-lock.json");
 const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const gitBlobSha1 = (bytes) =>
+  createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
+
+async function verifyPinnedFile(path, expected, label) {
+  const bytes = await readFile(path);
+  if (bytes.length !== expected.bytes || gitBlobSha1(bytes) !== expected.gitBlobSha1) {
+    throw new Error(`LunaUX fixture integrity check failed: ${label} (size or Git blob SHA-1 mismatch)`);
+  }
+}
+
+/** Reject missing, additional or modified benchmark inputs and source references. */
+export async function verifyLunauxCheckout(lunauxDir, lockPath = DEFAULT_LUNAUX_LOCK) {
+  const lock = JSON.parse(await readFile(lockPath, "utf8"));
+  if (
+    lock.schemaVersion !== 1 ||
+    lock.repository !== "boydev-1444/lunaux-decompiler" ||
+    !/^[0-9a-f]{40}$/.test(lock.revision) ||
+    !Array.isArray(lock.fixtures)
+  ) {
+    throw new Error("invalid LunaUX corpus lock");
+  }
+  const expected = lock.fixtures.map((entry) => entry.name).sort();
+  const directory = join(lunauxDir, "Tests", "Binary");
+  const actual = (await readdir(directory)).filter((name) => name.endsWith(".luauc")).sort();
+  if (new Set(expected).size !== expected.length || expected.length !== 22 ||
+      JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error(`LunaUX fixture set mismatch: expected exactly ${expected.length} locked .luauc files`);
+  }
+  for (const fixture of lock.fixtures) {
+    if (!/^[A-Za-z0-9_-]+\.luauc$/.test(fixture.name) ||
+        !/^[0-9a-f]{40}$/.test(fixture.binary?.gitBlobSha1) ||
+        !/^[0-9a-f]{40}$/.test(fixture.reference?.gitBlobSha1)) {
+      throw new Error(`invalid LunaUX lock entry ${fixture.name}`);
+    }
+    const base = fixture.name.slice(0, -".luauc".length);
+    await verifyPinnedFile(join(directory, fixture.name), fixture.binary, fixture.name);
+    await verifyPinnedFile(
+      join(lunauxDir, "Tests", "Decompile", base + ".luau"), fixture.reference, base + ".luau",
+    );
+  }
+  return lock;
+}
 
 export function sourceMetrics(source) {
   return {
@@ -46,7 +89,7 @@ export async function syntaxCheck(source, compiler) {
   }
 }
 
-export async function collectFixtures({ manifest = DEFAULT_MANIFEST, lunauxDir } = {}) {
+export async function collectFixtures({ manifest = DEFAULT_MANIFEST, lunauxDir, lunauxLock } = {}) {
   const parsed = JSON.parse(await readFile(manifest, "utf8"));
   if (parsed.schemaVersion !== 1 || !Array.isArray(parsed.fixtures)) {
     throw new Error("unsupported benchmark manifest schema");
@@ -58,15 +101,14 @@ export async function collectFixtures({ manifest = DEFAULT_MANIFEST, lunauxDir }
     provenance: entry.provenance,
   }));
   if (lunauxDir) {
-    const binDir = join(lunauxDir, "Tests", "Binary");
-    const entries = (await readdir(binDir)).filter((name) => name.endsWith(".luauc")).sort();
-    for (const name of entries) {
-      const id = name.slice(0, -".luauc".length);
+    const lock = await verifyLunauxCheckout(lunauxDir, lunauxLock);
+    for (const entry of lock.fixtures) {
+      const id = entry.name.slice(0, -".luauc".length);
       fixtures.push({
         id: "lunaux/" + id,
         group: "lunaux",
-        path: join(binDir, name),
-        provenance: "boydev-1444/lunaux-decompiler Tests/Binary at user checkout",
+        path: join(lunauxDir, "Tests", "Binary", entry.name),
+        provenance: `${lock.repository}@${lock.revision}:Tests/Binary/${entry.name}`,
         reference: join(lunauxDir, "Tests", "Decompile", id + ".luau"),
       });
     }
@@ -81,8 +123,8 @@ export async function collectFixtures({ manifest = DEFAULT_MANIFEST, lunauxDir }
   return fixtures;
 }
 
-export async function runBenchmark({ manifest, lunauxDir, compiler, engine = decompile } = {}) {
-  const fixtures = await collectFixtures({ manifest, lunauxDir });
+export async function runBenchmark({ manifest, lunauxDir, lunauxLock, compiler, engine = decompile } = {}) {
+  const fixtures = await collectFixtures({ manifest, lunauxDir, lunauxLock });
   const packageMetadata = JSON.parse(await readFile(join(ROOT, "package.json"), "utf8"));
   const samples = [];
   for (const fixture of fixtures) {
@@ -157,13 +199,14 @@ function parseOptions(args) {
   const out = {};
   for (let i = 0; i < args.length; i++) {
     const key = args[i];
-    if (!["--manifest", "--lunaux-dir", "--luau-compile", "--output", "--require-lunaux-count"].includes(key)) {
+    if (!["--manifest", "--lunaux-dir", "--lunaux-lock", "--luau-compile", "--output", "--require-lunaux-count"].includes(key)) {
       throw new Error("unknown argument " + key);
     }
     const value = args[++i];
     if (!value || value.startsWith("--")) throw new Error("missing value for " + key);
     if (key === "--manifest") out.manifest = resolve(value);
     if (key === "--lunaux-dir") out.lunauxDir = resolve(value);
+    if (key === "--lunaux-lock") out.lunauxLock = resolve(value);
     if (key === "--luau-compile") out.compiler = resolve(value);
     if (key === "--output") out.output = resolve(value);
     if (key === "--require-lunaux-count") out.requireLunauxCount = Number(value);

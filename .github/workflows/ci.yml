@@ -46,3 +46,24 @@ jobs:
           path: ${{ runner.temp }}/luau-baseline.json
           if-no-files-found: error
           retention-days: 30
+      - name: Fetch pinned LunaUX public corpus
+        shell: bash
+        run: |
+          git init "$RUNNER_TEMP/lunaux-corpus"
+          git -C "$RUNNER_TEMP/lunaux-corpus" remote add origin https://github.com/boydev-1444/lunaux-decompiler.git
+          git -C "$RUNNER_TEMP/lunaux-corpus" fetch --depth 1 origin 910ccd4d546fd0c8e21f770a30732ae246eab5c5
+          git -C "$RUNNER_TEMP/lunaux-corpus" checkout --detach FETCH_HEAD
+      - name: Compare against pinned 22 public fixtures
+        run: |
+          npm run bench:compare -- \
+            --lunaux-dir "$RUNNER_TEMP/lunaux-corpus" \
+            --require-lunaux-count 22 \
+            --output "$RUNNER_TEMP/luau-shared-baseline.json"
+          node scripts/bench-summary.mjs "$RUNNER_TEMP/luau-shared-baseline.json" >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload measured shared-corpus JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-shared-corpus-node-${{ matrix.node }}
+          path: ${{ runner.temp }}/luau-shared-baseline.json
+          if-no-files-found: error
+          retention-days: 30
