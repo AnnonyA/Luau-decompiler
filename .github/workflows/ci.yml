@@ -33,3 +33,7 @@ jobs:
         run: npm run typecheck
       - name: Build
         run: npm run build
+      - name: Test benchmark harness
+        run: npm run bench:test
+      - name: Smoke-test local benchmark
+        run: npm run bench:compare -- --output "$RUNNER_TEMP/luau-baseline.json"
