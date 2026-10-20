@@ -111,11 +111,14 @@ process result, standard output, and standard error are recorded as
 The first run of the eight-case controlled corpus with the pinned official
 Luau VM confirmed **8/8 matching traces**, including table mutation,
 multiple-return forwarding, nested numeric loops, and recursion.
-**All eight O0 fixtures are mandatory CI gates.** The additional eight
-O1 profiles are measured in every run, initially as diagnostic cases until
-verified against the pinned official VM. Each source is compiled, reconstructed,
-executed and compared. These outcomes apply only to selected programs; they are
-not general equivalence proofs or a direct measurement of the LunaUX engine.
+The pinned official Luau VM confirmed **16/16 matching traces** in the first
+O0/O1 matrix run (8 fixtures × 2 compiler optimization profiles), with zero
+mismatches or execution errors. **All sixteen profile-specific checks are
+mandatory CI gates.** Every program is compiled, reconstructed, executed and
+compared for both `-O0 -g1` and `-O1 -g1` on each CI validation run.
+
+These checks cover only the selected eight programs; they are not a general
+semantic equivalence proof or a measurement of the LunaUX executable.
 
 ```sh
 npm run build
