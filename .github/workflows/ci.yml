@@ -96,7 +96,7 @@ jobs:
         run: |
           cmake -S "$RUNNER_TEMP/luau-source" -B "$RUNNER_TEMP/luau-build" \
             -DCMAKE_BUILD_TYPE=Release -DLUAU_BUILD_TESTS=OFF
-          cmake --build "$RUNNER_TEMP/luau-build" --target Luau.Compile.CLI --parallel 2
+          cmake --build "$RUNNER_TEMP/luau-build" --target Luau.Compile.CLI Luau.Repl.CLI --parallel 2
           "$RUNNER_TEMP/luau-build/luau-compile" --help | grep -F -- "--only-parse"
       - name: Fetch pinned LunaUX public fixture corpus
         shell: bash
@@ -116,6 +116,21 @@ jobs:
             --output "$RUNNER_TEMP/luau-syntax-report.json"
           node scripts/bench-summary.mjs "$RUNNER_TEMP/luau-syntax-report.json" >> "$GITHUB_STEP_SUMMARY"
           node scripts/bench-assert-syntax.mjs "$RUNNER_TEMP/luau-syntax-report.json" --require-all-pass
+      - name: Compare behavior of controlled original and decompiled Luau
+        shell: bash
+        run: |
+          npm run bench:semantic -- \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/luau-semantic-report.json"
+      - name: Upload controlled execution comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-controlled-semantic-report
+          path: ${{ runner.temp }}/luau-semantic-report.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Upload generated Luau for parse-error triage
         if: always()
         uses: actions/upload-artifact@v4
