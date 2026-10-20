@@ -2505,6 +2505,21 @@ class SourceBuilder {
       return [{ kind: "local", names: [name], values: [expression] }];
     }
     this.env.set(register, { name: undefined, expression, pinned: false, nilLiteral: isNilLiteral(expression) });
+    // Even if no subsequent instruction reads this register, its evaluation
+    // may still call a metamethod, access a dynamic global, or raise an error.
+    // Dropping a dead MUL/ADD/GETTABLE/GETGLOBAL changes program behavior:
+    // emit a discard binding that preserves the original evaluation point.
+    // The expression-stmt AST form cannot hold arbitrary arithmetic in Luau.
+    const canHaveEffects =
+      expression.kind !== "literal" &&
+      expression.kind !== "vararg" &&
+      expression.kind !== "function-expr" &&
+      (expression.kind !== "identifier" ||
+        insn.opcode === Opcode.GETGLOBAL ||
+        insn.opcode === Opcode.GETIMPORT);
+    if (uses === 0 && !liveAcrossBlocks && !this.inDryRun && canHaveEffects) {
+      return [{ kind: "local", names: ["_"], values: [expression] }];
+    }
     return [];
   }
 
