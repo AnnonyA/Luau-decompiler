@@ -29,8 +29,12 @@ test("records actual syntax failure as a measured result rather than inventing P
 
 test("rejects missing, skipped, or errored official compiler invocation", () => {
   for (const state of ["NOT_CHECKED", "ERROR", undefined]) {
-    assert.throws(() => inspectSyntaxReport(report(state)), /parser did not complete/);
-    assert.throws(() => inspectSyntaxReport(report("PASS", state)), /published reference/);
+    const own = report();
+    own.samples[0].ourEngine.syntax.status = state;
+    assert.throws(() => inspectSyntaxReport(own), /parser did not complete/);
+    const published = report();
+    published.samples[0].competitorPublishedSource.syntax.status = state;
+    assert.throws(() => inspectSyntaxReport(published), /published reference/);
   }
   const missing = report();
   missing.compiler = "NOT_CONFIGURED";
