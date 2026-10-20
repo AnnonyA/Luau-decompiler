@@ -125,9 +125,12 @@ process timeouts and output limits are not a full operating-system sandbox.
 
 The first comparison on bytecode v14 measured **1/4 matching traces**.
 After fixing open CALL argument handling in PR #48, the official VM confirmed
-**3/4 matching traces**: `arithmetic`, `branches`, and `closure` all match
-their originals and are now **blocking CI gates**. The remaining `loop`
-fixture fails to terminate and remains an open fidelity regression (issue #46).
+**3/4 matching traces**. PR #49 corrected while-loop classification for headers
+with comparison setup instructions; the official VM now confirms **4/4 matching
+traces**: `arithmetic`, `branches`, `loop`, and `closure`. All four fixtures
+are **blocking CI gates**, and their input bytecode, reconstructed outputs and
+observed traces remain available in each CI JSON artifact.
+
 These are reproducible checks on selected programs, not proof of general
 semantic equivalence.
 

@@ -144,9 +144,20 @@ function classifyLoop(cfg: ControlFlowGraph, header: number, latch: number, _bod
         headerLast.jumpTarget !== undefined &&
         !loopBlocks(cfg, { header, latch }).has(headerLast.jumpTarget);
       if (preLatch === header) {
-        // The header doubles as the test block: `repeat` unless it is a bare
-        // test (then the body lives in the latch and this is a `while`).
-        if (!headerIsBareTest) {
+        // A while-header may load the comparison constant before its test,
+        // e.g. LOADK 5; JUMPIFNOTLE index, 5. It is not a bare test, but the
+        // following latch contains the real loop body (ADD/MOVE/...). Treat
+        // this as a while, otherwise emission turns it into an empty repeat
+        // and drops the register updates, creating an infinite loop.
+        //
+        // A repeat loop whose body and exit test are in the header instead
+        // has a control-only latch (just the backedge); keep that shape.
+        const latchHasBody = cfg.blocks[latch]!.instructions.some((insn) =>
+          insn.opcode !== Opcode.JUMPBACK &&
+          insn.opcode !== Opcode.JUMP &&
+          insn.opcode !== Opcode.NOP
+        );
+        if (!headerIsBareTest && !(headerExitsLoop && latchHasBody)) {
           return "repeat";
         }
       } else if (!headerExitsLoop) {
