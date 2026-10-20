@@ -21,9 +21,9 @@ const ROOT = fileURLToPath(new URL("../", import.meta.url));
 // independently observed in the pinned official VM on both optimization levels.
 const VERIFIED_CASES = Object.freeze([
   "arithmetic", "branches", "loop", "closure",
-  "tables", "multireturn", "nestedloops", "recursion", "varargs",
+  "tables", "multireturn", "nestedloops", "recursion", "varargs", "shortcircuit",
 ]);
-export const CONTROLLED_CASES = Object.freeze([...VERIFIED_CASES, "shortcircuit"]);
+export const CONTROLLED_CASES = Object.freeze([...VERIFIED_CASES]);
 export const CONTROLLED_OPTIMIZATIONS = Object.freeze([0, 1]);
 export const VERIFIED_BASELINE = Object.freeze([...VERIFIED_CASES, ...VERIFIED_CASES.map((id) => `${id}@O1`)]);
 const digest = (data) => createHash("sha256").update(data).digest("hex");

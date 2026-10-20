@@ -920,6 +920,10 @@ class SourceBuilder {
     const savedPendingState = this.snapshotPendings();
     const savedNames = this.allocator.snapshot();
     const savedScopes = this.scopeStack.map((scope) => new Set(scope));
+    // Failed speculative paths must roll back cached phi bindings together
+    // with the name allocator; otherwise a subsequent value may reuse a name.
+    const savedPhiNames = new Map(this.phiNames);
+    const savedDeclaredPhis = new Set(this.declaredPhis);
     // The value the guard tests before any define inside the block runs.
     const condReg = this.readRegister(last.a, last);
 
@@ -927,7 +931,7 @@ class SourceBuilder {
     // while its other statements are ordinary prelude statements.
     const basicWalk = this.walkGuardBlock(basic, t);
     if (!basicWalk) {
-      this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending, savedPendingState, savedNames, savedScopes);
+      this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending, savedPendingState, savedNames, savedScopes, savedPhiNames, savedDeclaredPhis);
       return undefined;
     }
     const basicValue = basicWalk.value;
@@ -937,7 +941,7 @@ class SourceBuilder {
 
     const thenPath = this.walkValuePath(thenId, join, t, elseId);
     if (!thenPath || (thenPath.value === undefined && basicValue === undefined)) {
-      this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending, savedPendingState, savedNames, savedScopes);
+      this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending, savedPendingState, savedNames, savedScopes, savedPhiNames, savedDeclaredPhis);
       return undefined;
     }
     const elseValue =
@@ -947,7 +951,7 @@ class SourceBuilder {
           guardValue
         : this.buildElseValue(elseId, join, t);
     if (elseValue === undefined) {
-      this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending, savedPendingState, savedNames, savedScopes);
+      this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending, savedPendingState, savedNames, savedScopes, savedPhiNames, savedDeclaredPhis);
       return undefined;
     }
 
@@ -1276,7 +1280,17 @@ class SourceBuilder {
     savedPendingState: PendingSnapshot[],
     savedNames: Set<string>,
     savedScopes: Array<Set<string>>,
+    savedPhiNames: Map<string, string>,
+    savedDeclaredPhis: Set<string>,
   ): void {
+    this.phiNames.clear();
+    for (const [key, name] of savedPhiNames) {
+      this.phiNames.set(key, name);
+    }
+    this.declaredPhis.clear();
+    for (const key of savedDeclaredPhis) {
+      this.declaredPhis.add(key);
+    }
     this.restore(savedEnv, savedOpen, savedConsumed, savedPending);
     this.restorePendings(savedPendingState);
     this.allocator.restore(savedNames);
