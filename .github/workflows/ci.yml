@@ -115,7 +115,7 @@ jobs:
             --source-dir "$RUNNER_TEMP/generated-source" \
             --output "$RUNNER_TEMP/luau-syntax-report.json"
           node scripts/bench-summary.mjs "$RUNNER_TEMP/luau-syntax-report.json" >> "$GITHUB_STEP_SUMMARY"
-          node scripts/bench-assert-syntax.mjs "$RUNNER_TEMP/luau-syntax-report.json"
+          node scripts/bench-assert-syntax.mjs "$RUNNER_TEMP/luau-syntax-report.json" --require-all-pass
       - name: Upload generated Luau for parse-error triage
         if: always()
         uses: actions/upload-artifact@v4
