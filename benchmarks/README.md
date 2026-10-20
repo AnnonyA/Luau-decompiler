@@ -13,6 +13,15 @@ npm run bench:compare -- --output benchmarks/results/local-baseline.json
 
 The three files listed in [corpus.json](corpus.json) already exist under `tests/`. Generated reports under `benchmarks/results/` should record the date, toolchain and relevant revision when published; do not assume older reports apply after subsequent changes.
 
+## Download a baseline report from CI
+
+Each successful Node.js 20 / 22 GitHub Actions job uploads an artifact named
+`luau-baseline-node-20` or `luau-baseline-node-22` containing
+`luau-baseline.json`. The job summary also shows a brief per-fixture table.
+Those files measure **only this project's engine**; they are a factual
+regression baseline, not a head-to-head victory claim. The source revision
+and execution date can be recovered from the linked GitHub Actions run.
+
 ## Optional: benchmark LunaUX's published 22 binary samples
 
 If redistribution/provenance is acceptable for your use, obtain a local checkout of [boydev-1444/lunaux-decompiler](https://github.com/boydev-1444/lunaux-decompiler) yourself, record its exact commit SHA and license, then run:
