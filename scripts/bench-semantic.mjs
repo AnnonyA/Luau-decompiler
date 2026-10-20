@@ -109,6 +109,9 @@ export async function runSemanticBenchmark({
         // Only project-authored fixtures run here; preserve generated text
         // so a failing comparison can be reproduced without guesswork.
         recoveredSource: decompiled.ok ? decompiled.source : null,
+        // Controlled fixtures only: retain the decoded register layout to
+        // diagnose semantic aliasing without running arbitrary bytecode.
+        disassembly: decompiled.ok ? decompiled.disassembly : null,
         reconstructionSucceeded: decompiled.ok,
         originalExecution: originalRun,
         reconstructedExecution: recoveredRun,
