@@ -14,14 +14,15 @@ import { fileURLToPath } from "node:url";
 import { decompile } from "../dist/decompile.js";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
-export const CONTROLLED_CASES = Object.freeze([
+// Keep previously confirmed cases blocking; new scenarios are diagnostic until
+// independently observed in the pinned official VM on both optimization levels.
+const VERIFIED_CASES = Object.freeze([
   "arithmetic", "branches", "loop", "closure",
   "tables", "multireturn", "nestedloops", "recursion",
 ]);
-// Promote a fixture to this CI gate only after its trace has been verified.
-// All other cases remain measured regressions and are never labeled as PASS.
+export const CONTROLLED_CASES = Object.freeze([...VERIFIED_CASES, "varargs", "shortcircuit"]);
 export const CONTROLLED_OPTIMIZATIONS = Object.freeze([0, 1]);
-export const VERIFIED_BASELINE = Object.freeze([...CONTROLLED_CASES, ...CONTROLLED_CASES.map((id) => `${id}@O1`)]);
+export const VERIFIED_BASELINE = Object.freeze([...VERIFIED_CASES, ...VERIFIED_CASES.map((id) => `${id}@O1`)]);
 const digest = (data) => createHash("sha256").update(data).digest("hex");
 
 function launch(program, args, cwd) {
