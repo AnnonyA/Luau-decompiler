@@ -13,6 +13,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
+    "bench:compare": "node scripts/bench-compare.mjs",
+    "bench:test": "node --test scripts/bench-compare.test.mjs",
     "serve": "node dist/cli.js serve"
   },
   "engines": {
