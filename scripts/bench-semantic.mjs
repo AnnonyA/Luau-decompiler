@@ -21,7 +21,7 @@ export const CONTROLLED_CASES = Object.freeze([
 // Promote a fixture to this CI gate only after its trace has been verified.
 // All other cases remain measured regressions and are never labeled as PASS.
 export const CONTROLLED_OPTIMIZATIONS = Object.freeze([0, 1]);
-export const VERIFIED_BASELINE = Object.freeze([...CONTROLLED_CASES]);
+export const VERIFIED_BASELINE = Object.freeze([...CONTROLLED_CASES, ...CONTROLLED_CASES.map((id) => `${id}@O1`)]);
 const digest = (data) => createHash("sha256").update(data).digest("hex");
 
 function launch(program, args, cwd) {
