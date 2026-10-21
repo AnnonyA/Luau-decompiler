@@ -24,6 +24,31 @@ const VERIFIED_CASES = Object.freeze([
   "tables", "multireturn", "nestedloops", "recursion", "varargs", "shortcircuit", "mutablecaptures",
   "repeatbranch", "evaluationorder", "fixedresults", "openmethod", "concatorder", "booleancoercion", "returnbranches", "computednilkey",
   "concatsemantics", "formatsemantics",
+  // numbers
+  "arithsigns", "arithdivision", "arithmodulo", "arithpowers", "arithprecedence",
+  "arithnegzero", "comparisonnan", "comparisonsmixed", "bitwiseops", "mathfunctions",
+  // branches
+  "truthiness", "booleanreturn", "andorvalues", "chainedcomparisons", "elseifladder",
+  "branchassignments", "earlyreturns", "nestedconditions", "nilchecks", "loopconditions",
+  // loops
+  "forascending", "fordescending", "forsteps", "forboundaries", "whilezero",
+  "repeatonce", "repeatlocals", "breakwhile", "continuefor", "repeatcontinue",
+  "genericipairs", "genericpairs",
+  // closures
+  "closuresnapshot", "closuremutations", "closuresiblings", "closureloop", "closurerecursive",
+  "closurefactory", "closureshadow", "closureforward", "callbackarguments", "callbackreturn",
+  // tables
+  "tableholes", "tablelisttail", "tablekeyorder", "tableoverwrite", "tablealias",
+  "tabledelete", "tablelength", "tablesort", "tableclone", "tablefreeze",
+  // calls
+  "callorder", "callnested", "callfixed", "callmultitail", "returnempty",
+  "varargnil", "varargforward", "methodself", "methodmutate", "protectedcalls",
+  // strings
+  "stringbinary", "stringbom", "stringcontrols", "stringunicode", "stringpatterns",
+  "stringformatnumbers", "stringinterpolation", "stringconcatassoc", "stringnumbercoercion", "stringsubbytes",
+  // scope
+  "localsreuse", "compoundread", "localtablesnapshot", "localfunctionbinding", "shadowmath",
+  "shadowsglobals", "functionvaluefield",
 ]);
 export const CONTROLLED_CASES = Object.freeze([...VERIFIED_CASES]);
 export const CONTROLLED_OPTIMIZATIONS = Object.freeze([0, 1]);

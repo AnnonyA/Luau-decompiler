@@ -1,5 +1,6 @@
 import type { Block, Chunk, Expression, Literal, Statement, TableField } from "../ast/Ast.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
+import { escapedByte } from "../decode/BytecodeString.js";
 
 const PREC: Record<string, number> = {
   or: 1,
@@ -315,7 +316,7 @@ function formatParams(params: string[], isVararg: boolean, types?: Array<string 
 }
 
 function escapeInterp(value: string): string {
-  return value.replace(/[\\`{\x00-\x1f]/g, (char) => {
+  return value.replace(/[\\`{\x00-\x1f\udc80-\udcff]/gu, (char) => {
     switch (char) {
       case "\n": return "\\n";
       case "\r": return "\\r";
@@ -324,7 +325,7 @@ function escapeInterp(value: string): string {
       case "`": return "\\`";
       case "{": return "\\{";
       // Three digits prevent a following decimal digit joining the escape.
-      default: return `\\${char.charCodeAt(0).toString().padStart(3, "0")}`;
+      default: return `\\${(escapedByte(char) ?? char.charCodeAt(0)).toString().padStart(3, "0")}`;
     }
   });
 }
@@ -378,7 +379,8 @@ function quote(value: string): string {
         break;
       default: {
         const code = char.charCodeAt(0);
-        out += code < 32 ? `\\${code.toString().padStart(3, "0")}` : char;
+        const raw = escapedByte(char);
+        out += raw !== undefined || code < 32 ? `\\${(raw ?? code).toString().padStart(3, "0")}` : char;
       }
     }
   }

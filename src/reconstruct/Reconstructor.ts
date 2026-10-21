@@ -496,7 +496,7 @@ class SourceBuilder {
    * in slot `base` of a generic-for. */
   private callDefinedSlot(base: number, register: number): boolean {
     for (const insn of this.proto.instructions) {
-      if ((insn.opcode === Opcode.NAMECALL || insn.opcode === Opcode.CALL) && insn.a === base && insn.defs.includes(register)) {
+      if ((insn.opcode === Opcode.NAMECALL || insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) && insn.a === base && insn.defs.includes(register)) {
         return true;
       }
     }
@@ -1368,7 +1368,7 @@ class SourceBuilder {
         liftedStatements.push(lifted);
       }
     }
-    const literalFields = dropScaffoldNilFields(fields.filter((field) => !liftedFields.has(field)));
+    const literalFields = fields.filter((field) => !liftedFields.has(field));
     const statements: Statement[] = [{ kind: "local", names: [name], values: [{ kind: "table", fields: normalizeArrayFields(literalFields) }] }];
     for (const selfRef of pending.selfRefs) {
       const target: Expression = selfRef.name
@@ -1395,7 +1395,7 @@ class SourceBuilder {
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       }
     }
-    return { kind: "table", fields: normalizeArrayFields(dropScaffoldNilFields(fields)) };
+    return { kind: "table", fields: normalizeArrayFields(fields) };
   }
 
   private tableName(pending: PendingTable): string {
@@ -1730,7 +1730,7 @@ class SourceBuilder {
         if (insn.c !== 0) {
           const count = insn.c - 1;
           for (let i = 0; i < count; i++) {
-            fields.push({ key: lit(startIndex + i), value: this.readRegister(insn.b + i, insn) });
+            fields.push({ key: lit(startIndex + i), value: singleValue(this.readRegister(insn.b + i, insn)) });
           }
         } else {
           // MULTRET: fixed elements followed by one open pack register.
@@ -1864,7 +1864,11 @@ class SourceBuilder {
           this.openPacks.add(insn.a);
           const forwarded = this.isPackForwarded(insn.a, insn.pc);
           statements.push(...this.define(insn.a, expression, insn, !forwarded));
-        } else if (resultCount === 1 || this.isGenericPrepTarget(insn.a, insn.pc)) {
+        } else if (this.isGenericPrepTarget(insn.a, insn.pc)) {
+          // The generic loop consumes the whole iterator triple, including
+          // implicit state/control slots. Keep its producer for the loop header.
+          this.env.set(insn.a, { expression, pinned: false });
+        } else if (resultCount === 1) {
           statements.push(...this.define(insn.a, expression, insn));
         } else {
           const names: string[] = [];
@@ -1921,8 +1925,14 @@ class SourceBuilder {
       case Opcode.DUPCLOSURE:
         statements.push(...this.emitClosure(insn));
         break;
-      case Opcode.PREPVARARGS:
       case Opcode.CLOSEUPVALS:
+        for (const [register, binding] of this.env) {
+          if (register >= insn.a && binding.forwardRef) {
+            this.env.set(register, { ...binding, forwardRef: false });
+          }
+        }
+        break;
+      case Opcode.PREPVARARGS:
       case Opcode.FASTCALL:
       case Opcode.FASTCALL1:
       case Opcode.FASTCALL2:
@@ -1969,6 +1979,15 @@ class SourceBuilder {
       // mutates a named local, not a ghost `callback`.
       if (cap.capture?.type === CaptureType.REF && source !== insn.a) {
         statements.push(...this.pinRefCapture(source, insn.pc));
+      }
+      if (cap.capture?.type === CaptureType.VAL && source !== insn.a) {
+        const binding = this.env.get(source);
+        if (binding && !binding.pinned && binding.expression.kind !== "literal") {
+          const name = this.allocator.reserve("captured");
+          statements.push({ kind: "local", names: [name], values: [binding.expression] });
+          this.declareInScope(name);
+          this.env.set(source, { name, expression: ident(name), pinned: true });
+        }
       }
     }
     const debug = child.debugName ?? debugNameAt(this.proto, insn.a, insn.pc + insn.width);
@@ -2045,6 +2064,10 @@ class SourceBuilder {
       line: child.lineDefined || undefined,
     };
 
+    if (existing?.forwardRef && existing.name) {
+      this.env.set(insn.a, { name, expression: ident(name), pinned: true, forwardRef: true });
+      return [...statements, { kind: "assign", targets: [ident(name)], values: [fn] }];
+    }
     if (selfCaptured || mutable) {
       this.env.set(insn.a, { name, expression: ident(name), pinned: true });
       this.declareInScope(name);
@@ -2090,12 +2113,13 @@ class SourceBuilder {
   private pinRefCapture(register: number, fromPc: number): Statement[] {
     const existing = this.env.get(register);
     if (existing?.name && existing.pinned && this.isDeclaredInScope(existing.name)) {
+      this.env.set(register, { ...existing, forwardRef: true });
       return [];
     }
     if (existing && !existing.name) {
       const name = this.allocator.reserve(nameHint(existing.expression) ?? "value");
       this.declareInScope(name);
-      this.env.set(register, { name, expression: ident(name), pinned: true });
+      this.env.set(register, { name, expression: ident(name), pinned: true, forwardRef: true });
       return [{ kind: "local", names: [name], values: [existing.expression] }];
     }
     const hint = this.futureDefineHint(register, fromPc) ?? "value";
@@ -2389,7 +2413,7 @@ class SourceBuilder {
         // An open `return ...` forwards every live register at or after `a`.
         (insn.opcode === Opcode.RETURN && insn.b === 0 && register >= insn.a) ||
         // An open call consumes every live register after `a` as an argument.
-        (insn.opcode === Opcode.CALL && insn.b === 0 && register >= insn.a + 1) ||
+        ((insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) && insn.b === 0 && register >= insn.a + 1) ||
         (insn.opcode === Opcode.SETLIST && insn.c === 0) ||
         (insn.opcode === Opcode.MOVE && insn.b === register)
       ) {
@@ -2477,13 +2501,9 @@ class SourceBuilder {
       return [];
     }
     if (constant.kind === "table") {
-      return constant.keys.flatMap((key) => {
-        const entry = this.proto.constants[key];
-        if (entry?.kind === "string") {
-          return [{ name: entry.value, value: lit(null) }];
-        }
-        return [];
-      });
+      // DUPTABLE key reservations initially contain nil, not source-level
+      // assignments. Explicit subsequent nil writes must remain observable.
+      return [];
     }
     if (constant.kind === "tableWithConstants") {
       return constant.entries.flatMap(({ key, value }) => {
@@ -2537,7 +2557,8 @@ class SourceBuilder {
       this.isEscaping(expression) ||
       phi !== undefined;
     if (pin) {
-      const preferred = debug ?? nameHint(expression) ?? "value";
+      const preferred = debug ?? (nilLiteral && refCaptured ? this.futureClosureHint(register, insn.pc) : undefined)
+        ?? nameHint(expression) ?? "value";
       if (
         expression.kind === "identifier" &&
         expression.name === preferred &&
@@ -2550,7 +2571,6 @@ class SourceBuilder {
         return [];
       }
       const existing = phi;
-      const nilLiteral = isNilLiteral(expression);
       if (existing) {
         if (!this.isDeclaredInScope(existing)) {
           this.declareInScope(existing);
@@ -3074,15 +3094,6 @@ function isLiteralOne(expression: Expression): boolean {
 
 function isNilLiteral(expression: Expression | undefined): boolean {
   return expression?.kind === "literal" && expression.value === null;
-}
-
-function dropScaffoldNilFields(fields: TableField[]): TableField[] {
-  return fields.filter((field) => {
-    if (!isNilLiteral(field.value)) {
-      return true;
-    }
-    return !field.name;
-  });
 }
 
 function isPackish(expression: Expression): boolean {

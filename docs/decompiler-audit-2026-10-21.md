@@ -79,7 +79,33 @@ comparing its reported bytes with JavaScript's UTF-8 encoding of the input.
 These direct-AST VM probes were local validation; permanent regression coverage
 for interpolation emission is in `tests/string-rewrite-fidelity.test.ts`.
 
-The following findings remain outside the completed corrections.
+## Expansion to 100 semantic programs
+
+The corpus now contains 100 independent source programs: the original 21 and
+79 additions with different operations, inputs and branch conditions. O0 and O1
+produce 200 mandatory comparisons, not 200 independent programs. See the
+[corpus catalog](../benchmarks/semantic/README.md) for the source and coverage.
+
+The first expanded run matched 187/200 profiles. The 13 failing profiles across
+eight programs exposed defects that are now corrected:
+
+- String decoding, writing and printing preserve arbitrary bytes and initial
+  BOMs. Invalid UTF-8 bytes use reversible surrogate escapes internally and
+  decimal byte escapes in emitted Luau; valid Unicode remains readable.
+- Coalescing accumulator names retains reinitialization, including signed zero.
+- Generic-for headers retain the producer of their iterator/state/control triple.
+- Value captures materialize expressions before constructing the closure, and
+  forward reference assignments retain the binding used by sibling closures.
+- Fixed final table elements cannot expand multiple results. DUPTABLE key
+  reservations are omitted at reconstruction, while explicit nil writes remain.
+- CALLFB receives the same pack-forwarding treatment as CALL.
+
+Validation: 340 unit tests and 25 benchmark-runner tests passed; all 200 controlled
+comparisons matched using the pinned official compiler and VM. All 25 syntax
+corpus cases passed the official parser, including 22 external sources that were
+not executed. Three worker demo tests and the Chromium browser test also passed.
+The corpus is a development regression suite: its failures informed these fixes,
+so it is not an independent holdout or proof of general semantic equivalence.
 
 ## Remaining findings and next work
 
@@ -87,23 +113,9 @@ These were observed with focused local probes. Some target individual AST
 passes directly rather than the entire compiler/decompiler pipeline; distinguish
 those cases when turning them into permanent regressions.
 
-1. **Preserve string bytes** (`BytecodeReader.ts`, string constants and printer).
-   UTF-8 decoding replaces invalid bytes and strips a leading BOM. Compile and
-   round-trip the following source, then compare byte counts and values:
-
-   ```luau
-   local s = "\255\128\0A"
-   print(#s, string.byte(s, 1, #s))
-   local bom = "\239\187\191x"
-   print(#bom, string.byte(bom, 1, #bom))
-   ```
-
-   This needs a consistent byte-preserving representation and escaping policy,
-   not merely a different replacement character.
-
-2. **Respect binding identity in naming and cleanup** (`NameInference.ts`,
-   `RuntimeContext.ts`). Direct AST probes found that coalescing two zero-valued
-   locals can remove the second initialization, compound assignments can lose
+1. **Respect binding identity in naming and cleanup** (`NameInference.ts`,
+   `RuntimeContext.ts`). Accumulator reinitialization is now preserved. Other
+   direct AST probes found that compound assignments can lose
    the declaration they read, and inlining `{ x = n }` after changing `n` alters
    the captured value. Names used in loop bodies can be dropped. Renaming can
    capture globals, miss parameter/loop declarations or repeat-condition scope,
@@ -111,22 +123,21 @@ those cases when turning them into permanent regressions.
    without renaming its matching access. Start with lexical binding and read/write
    analysis before further cosmetic naming changes.
 
-3. **Constrain other semantic rewrites** (`AstCleanup.ts`). Concatenation and
+2. **Constrain other semantic rewrites** (`AstCleanup.ts`). Concatenation and
    formatting issues are addressed in the string-fidelity follow-up above.
    Approximate numeric constants and a shadowed
    `math` binding make symbolic constant substitution unsafe. Function lifting
    can change which binding a recursive-looking identifier captures, and callback
    parameter renaming can miss assignment targets or introduce collisions.
 
-4. **Preserve evaluation and capture semantics more broadly**
+3. **Preserve evaluation and capture semantics more broadly**
    (`Reconstructor.ts`). The new statement barriers cover the checked cases,
    but do not establish a general ordering guarantee for nested calls and reads.
-   Value captures can retain expressions such as `t.x` or `get()` and evaluate
-   them inside the closure instead of taking a snapshot. Terminal branches can
-   leak register bindings into the other arm. Fixed final table elements also
-   need the single-result protection now used for calls and returns.
+   Value-capture snapshots and fixed final table elements are corrected by the
+   expansion above. Terminal branches can still leak register bindings into the
+   other arm; broader evaluation-order guarantees require further coverage.
 
-5. **Strengthen control-flow boundaries and scalability**
+4. **Strengthen control-flow boundaries and scalability**
    (`ControlFlowGraph.ts`, `Dominators.ts`, `SsaBuilder.ts`). Instructions after
    RETURN can remain in the same reachable block. LOADB skip and FORGPREP
    transfers need their unconditional edges modeled correctly. Large branch
@@ -134,12 +145,12 @@ those cases when turning them into permanent regressions.
    Reconstruction dependencies on the current edge model need regression tests
    before changing it.
 
-6. **Handle remaining source-printing boundaries** (`LuauPrinter.ts`). Direct
+5. **Handle remaining source-printing boundaries** (`LuauPrinter.ts`). Direct
    AST probes found ambiguous adjacent call statements when the next statement
    starts with a parenthesized expression. Interpolation text escaping is fixed
    in the string-fidelity follow-up above.
 
-7. **Contain malformed HTTP URL errors** (`server.ts`). A request with
+6. **Contain malformed HTTP URL errors** (`server.ts`). A request with
    `Host: [` makes URL construction throw outside the request error handler.
    A local child-server probe exited with status 1. Parse malformed request URLs
    within the handler's error boundary and add a process-level regression that

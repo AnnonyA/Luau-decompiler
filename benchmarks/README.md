@@ -99,15 +99,18 @@ generated source can contain private code when benchmarking user files.
 
 ## Controlled behavioral differential (experimental)
 
-The project-owned `benchmarks/semantic/*.luau` files contain twenty-one small,
+The project-owned `benchmarks/semantic/*.luau` files contain one hundred small,
 deterministic programs: arithmetic, branches, while loops, closures,
 tables, multiple returns, nested numeric loops, recursion, open varargs,
 short-circuit side effects, mutable reference captures, repeat-loop branches,
 evaluation order, fixed result counts, open method arguments, concatenation
 order, boolean coercion, return-branch packs, computed nil table keys, concatenation
-coercion/metamethods, and formatting with shadowed bindings. The CI builds
+coercion/metamethods, and formatting with shadowed bindings. The expansion adds
+numeric edge cases, branch alternatives, iterator variants, closure lifetimes,
+table updates, call arity, byte-preserving strings and lexical scope scenarios.
+See the [100-program catalog](semantic/README.md). The CI builds
 the pinned **official Luau interpreter** alongside `luau-compile`, compiles
-each source with both `-O0 -g1` and `-O1 -g1` (42 fixture/profile pairs),
+each source with both `-O0 -g1` and `-O1 -g1` (200 fixture/profile pairs),
 decompiles each bytecode with our engine, then runs both sources in the official
 Luau interpreter. Differences in the
 process result, standard output, and standard error are recorded as
@@ -143,8 +146,17 @@ remaining findings.
 The string-fidelity follow-up added `concatsemantics` and `formatsemantics`:
 concatenation must retain its errors and `__concat` behavior, and a call named
 `string.format` must retain coercion rules and potentially shadowed bindings.
-Both cases match the pinned VM at O0 and O1. **All twenty-one programs
-(42 fixture/profile pairs) are now mandatory CI gates.**
+Both cases match the pinned VM at O0 and O1. All twenty-one programs
+(42 fixture/profile pairs) became mandatory CI gates.
+
+The next expansion added 79 standalone programs with different operations and
+input conditions. Its first diagnostic run matched **187/200** profiles and
+exposed 13 failing profiles. Fixes preserved binary string bytes/BOMs, zero-sign
+initializations, iterator triples, closure capture bindings, explicit nil table
+writes and fixed table-list result counts. The corrected corpus matches
+**200/200**, and **all 100 programs are now mandatory O0/O1 CI gates**. No failing
+program was removed to obtain that result; the runner tests also reject missing
+programs and byte-identical source duplicates.
 
 These selected traces are not proof of general semantic equivalence or a
 comparison with the LunaUX executable.

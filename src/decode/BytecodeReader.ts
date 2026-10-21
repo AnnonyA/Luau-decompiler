@@ -1,5 +1,6 @@
 import type { SafetyLimits } from "../safety/Limits.js";
 import { BytecodeError } from "./BytecodeError.js";
+import { decodeByteString } from "./BytecodeString.js";
 
 export class BytecodeReader {
   readonly bytes: Uint8Array;
@@ -119,7 +120,7 @@ export class BytecodeReader {
 
   utf8(length: number): string {
     const raw = this.bytesOf(length);
-    return new TextDecoder("utf-8", { fatal: false }).decode(raw);
+    return decodeByteString(raw);
   }
 
   skipTo(absolute: number): void {

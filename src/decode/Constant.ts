@@ -1,3 +1,5 @@
+import { escapedByte } from "./BytecodeString.js";
+
 export type LuauConstant =
   | { kind: "nil" }
   | { kind: "boolean"; value: boolean }
@@ -47,6 +49,7 @@ export function quoteLuauString(value: string): string {
   let out = '"';
   for (const char of value) {
     const code = char.charCodeAt(0);
+    const raw = escapedByte(char);
     switch (char) {
       case "\\":
         out += "\\\\";
@@ -64,10 +67,12 @@ export function quoteLuauString(value: string): string {
         out += "\\t";
         break;
       case "\0":
-        out += "\\0";
+        out += "\\000";
         break;
       default:
-        if (code < 32 || code === 127) {
+        if (raw !== undefined) {
+          out += `\\${raw.toString().padStart(3, "0")}`;
+        } else if (code < 32 || code === 127) {
           out += `\\${code.toString().padStart(3, "0")}`;
         } else {
           out += char;

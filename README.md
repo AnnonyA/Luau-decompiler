@@ -102,6 +102,16 @@ const result = decompile(bytes);
 if (result.ok) console.log(result.source);
 ```
 
+Luau string constants preserve arbitrary bytes, including a leading UTF-8 BOM.
+Valid UTF-8 remains ordinary JavaScript text. Invalid UTF-8 bytes are represented
+internally by unpaired surrogate escapes (`U+DC80`–`U+DCFF`) and printed as Luau
+decimal byte escapes. Library consumers can use `encodeByteString(value)` to
+recover the original bytes; plain `TextEncoder` would replace these escapes.
+
+The controlled semantic corpus now contains **100 independent programs**,
+checked under both O0 and O1: **200 mandatory behavior comparisons**. See the
+[coverage catalog](benchmarks/semantic/README.md) for the cases and limitations.
+
 ## What the output looks like
 
 The goal is to produce normal Luau constructs rather than leaking VM details:

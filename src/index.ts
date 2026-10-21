@@ -6,6 +6,7 @@ export { cleanupAst } from "./ast/AstCleanup.js";
 export { decodeBytecode, type DecodeResult } from "./decode/Decoder.js";
 export { writeBytecode, abc, ad, e, packImport, type WrittenPrototype } from "./decode/BytecodeWriter.js";
 export { BytecodeError } from "./decode/BytecodeError.js";
+export { decodeByteString, encodeByteString } from "./decode/BytecodeString.js";
 export { Opcode, CaptureType, BuiltinFunction, ConstantTag, instructionWidth, jumpTarget } from "./decode/Opcode.js";
 export { buildControlFlowGraph } from "./cfg/ControlFlowGraph.js";
 export { computeDominators, computePostDominators } from "./cfg/Dominators.js";

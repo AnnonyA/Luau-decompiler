@@ -1,4 +1,5 @@
 import { LBC_VERSION_TARGET } from "./BytecodeProfile.js";
+import { encodeByteString } from "./BytecodeString.js";
 import { ConstantTag, type Opcode, encodeAbc, encodeAd, encodeE } from "./Opcode.js";
 
 export interface WrittenLocal {
@@ -150,7 +151,7 @@ export function writeBytecode(main: WrittenPrototype, options: WriteOptions = {}
   }
   sink.varint(strings.length);
   for (const value of strings) {
-    const encoded = new TextEncoder().encode(value);
+    const encoded = encodeByteString(value);
     sink.varint(encoded.length);
     sink.raw(encoded);
   }

@@ -459,7 +459,11 @@ function dropRenamedLocals(statements: Statement[], rename: Map<string, string>)
   const mapped = (items: Statement[]): Statement[] =>
     items.flatMap((item): Statement[] => {
       if (item.kind === "local" && item.names.length === 1 && rename.has(item.names[0]!)) {
-        return [];
+        // A new accumulator initialization is still an observable write.
+        // In particular, +0 and -0 compare equal but have different reciprocals.
+        return item.values.length === 0 ? [] : [{
+          kind: "assign", targets: [{ kind: "identifier", name: rename.get(item.names[0]!)! }], values: item.values,
+        }];
       }
       switch (item.kind) {
         case "if":

@@ -7,7 +7,6 @@ import type {
   Expression,
   FunctionExpression,
   Statement,
-  TableField,
 } from "./Ast.js";
 import {
   callbackParamType,
@@ -66,17 +65,6 @@ function declarationTail(name: string): string {
 
 function isNilLiteral(expression: Expression | undefined): boolean {
   return expression?.kind === "literal" && expression.value === null;
-}
-
-function dropScaffoldNilFields(fields: TableField[]): TableField[] {
-  return fields.filter((field) => {
-    if (!isNilLiteral(field.value)) {
-      return true;
-    }
-    // Computed keys still evaluate (and may throw), even when storing nil.
-    // Only named nil fields represent the DUPTABLE scaffolding we can omit.
-    return !field.name;
-  });
 }
 
 /** `local name = function(...) body end` becomes `local function name(...)` when
@@ -1469,13 +1457,11 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
     case "table":
       return {
         ...expression,
-        fields: dropScaffoldNilFields(
-          expression.fields.map((field) => ({
-            ...field,
-            key: field.key ? transformExpr(field.key, options) : undefined,
-            value: transformExpr(field.value, options),
-          })),
-        ),
+        fields: expression.fields.map((field) => ({
+          ...field,
+          key: field.key ? transformExpr(field.key, options) : undefined,
+          value: transformExpr(field.value, options),
+        })),
       };
     case "function-expr":
       return { ...expression, body: transformBlock(expression.body, options) };
