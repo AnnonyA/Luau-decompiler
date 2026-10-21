@@ -34,6 +34,46 @@ On the three real fixtures currently used by the project, the generated output c
 
 ## Quick start
 
+### Browser demo
+
+The static playground is published at
+**[annonya.github.io/Luau-decompiler](https://annonya.github.io/Luau-decompiler/)**
+when the repository's **Browser demo** deployment succeeds. Upload a binary
+chunk (up to 16 MiB), paste Base64, or try the built-in example. The demo shows
+source, disassembly and diagnostics, with copying and `.luau` downloads.
+Processing happens in a cancellable browser worker; uploaded bytecode is never
+sent to a server or executed. A 15-second timeout keeps problematic chunks
+from running indefinitely. Bytecode support and reconstruction limitations
+are the same as the engine; encrypted/compressed wrappers are not raw bytecode.
+
+To run the static site locally:
+
+```sh
+npm ci
+npm run build:demo
+npm run demo:test
+python3 -m http.server 8080 --directory _site
+# Open http://localhost:8080 (do not open index.html as a file:// URL).
+```
+
+`npm run demo:test:browser` additionally checks the real worker and interface
+in headless Chromium, including the repository subpath and mobile layout.
+Install Chromium first, or set `CHROME_BIN` to a compatible Chrome executable.
+CI uses the Chrome executable provided by the Ubuntu runner.
+
+The site uses relative URLs, including worker imports, so it also works under
+the repository's `/Luau-decompiler/` path. No new runtime dependencies or
+backend service are required. The existing Node HTTP interface remains available.
+
+The [Pages workflow](.github/workflows/pages.yml) builds and tests the site on
+pull requests and publishes on `main`. For initial setup, an administrator must
+select **Settings → Pages → Build and deployment → Source: GitHub Actions**,
+then run the **Browser demo** workflow. GitHub's default workflow token cannot
+enable Pages for the first time. Subsequent pushes publish automatically; no
+custom domain or additional secret is required.
+
+### CLI and library
+
 ```bash
 git clone https://github.com/AnnonyA/Luau-decompiler.git
 cd Luau-decompiler
