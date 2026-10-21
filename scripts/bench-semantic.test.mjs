@@ -7,12 +7,13 @@ const run = (stdout, stderr = "") => ({
 });
 
 test("semantic corpus is a fixed allowlist of owned Luau sources", () => {
-  assert.deepEqual(CONTROLLED_CASES, ["arithmetic", "branches", "loop", "closure", "tables", "multireturn", "nestedloops", "recursion", "varargs", "shortcircuit", "mutablecaptures"]);
+  assert.deepEqual(CONTROLLED_CASES, ["arithmetic", "branches", "loop", "closure", "tables", "multireturn", "nestedloops", "recursion", "varargs", "shortcircuit", "mutablecaptures",
+    "repeatbranch", "evaluationorder", "fixedresults", "openmethod", "concatorder", "booleancoercion", "returnbranches", "computednilkey"]);
 });
 
-test("CI gates all 22 behavior profiles verified by the pinned official VM", () => {
-  assert.equal(VERIFIED_BASELINE.length, 22);
-  assert.equal(new Set(VERIFIED_BASELINE).size, 22);
+test("CI gates all 38 behavior profiles verified by the pinned official VM", () => {
+  assert.equal(VERIFIED_BASELINE.length, 38);
+  assert.equal(new Set(VERIFIED_BASELINE).size, 38);
   for (const id of CONTROLLED_CASES) {
     assert.ok(VERIFIED_BASELINE.includes(id));
     assert.ok(VERIFIED_BASELINE.includes(`${id}@O1`));
@@ -22,10 +23,10 @@ test("CI gates all 22 behavior profiles verified by the pinned official VM", () 
   }
 });
 
-test("optimization matrix gates all 22 confirmed pairs", () => {
+test("optimization matrix gates all 38 confirmed pairs", () => {
   assert.deepEqual(CONTROLLED_OPTIMIZATIONS, [0, 1]);
-  assert.equal(CONTROLLED_CASES.length * CONTROLLED_OPTIMIZATIONS.length, 22);
-  assert.equal(VERIFIED_BASELINE.filter((id) => id.endsWith("@O1")).length, 11);
+  assert.equal(CONTROLLED_CASES.length * CONTROLLED_OPTIMIZATIONS.length, 38);
+  assert.equal(VERIFIED_BASELINE.filter((id) => id.endsWith("@O1")).length, 19);
 });
 
 test("matches equal nonempty deterministic traces", () => {

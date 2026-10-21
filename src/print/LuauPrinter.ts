@@ -162,8 +162,12 @@ class Printer {
     switch (expression.kind) {
       case "identifier":
         return expression.name;
-      case "literal":
-        return literalToSource(expression.value);
+      case "literal": {
+        const text = literalToSource(expression.value);
+        // Negative numeric literals parse as unary minus, below exponentiation.
+        // Preserve the base in (-2)^n and (-0)^n, including integer literals.
+        return text.startsWith("-") && parent > (PREC.unary ?? 7) ? `(${text})` : text;
+      }
       case "vararg":
         return "...";
       case "unary": {

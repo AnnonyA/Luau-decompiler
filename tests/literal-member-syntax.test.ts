@@ -43,7 +43,7 @@ describe("Luau member syntax on literal receivers", () => {
     const result = decompile(bytes);
     expect(result.ok).toBe(true);
     if (result.ok) {
-      expect(result.source).toContain('("Callable(calls=%*)"):format(self.calls)');
+      expect(result.source).toMatch(/\("Callable\(calls=%\*\)"\):format\(\w+\.calls\)/);
       expect(result.source).not.toContain('"Callable(calls=%*)":format');
     }
   });

@@ -141,8 +141,8 @@ function classifyLoop(cfg: ControlFlowGraph, header: number, latch: number, _bod
       const headerExitsLoop =
         headerLast !== undefined &&
         isConditionalJump(headerLast.opcode) &&
-        headerLast.jumpTarget !== undefined &&
-        !loopBlocks(cfg, { header, latch }).has(headerLast.jumpTarget);
+        headerBlock?.branch !== undefined &&
+        !loopBlocks(cfg, { header, latch }).has(headerBlock.branch);
       if (preLatch === header) {
         // A while-header may load the comparison constant before its test,
         // e.g. LOADK 5; JUMPIFNOTLE index, 5. It is not a bare test, but the

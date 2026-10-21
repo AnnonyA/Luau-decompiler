@@ -140,12 +140,12 @@ function annotateEffects(insn: DecodedInstruction, constantCount: number): void 
     case Opcode.GETUDATAKS:
       insn.defs = [a];
       insn.uses = [b];
-      insn.constantIndex = aux !== undefined ? aux & 0xffff : undefined;
+      insn.constantIndex = opcode === Opcode.GETUDATAKS && aux !== undefined ? aux & 0xffff : aux;
       break;
     case Opcode.SETTABLEKS:
     case Opcode.SETUDATAKS:
       insn.uses = [a, b];
-      insn.constantIndex = aux !== undefined ? aux & 0xffff : undefined;
+      insn.constantIndex = opcode === Opcode.SETUDATAKS && aux !== undefined ? aux & 0xffff : aux;
       break;
     case Opcode.GETTABLEN:
       insn.defs = [a];
@@ -166,7 +166,7 @@ function annotateEffects(insn: DecodedInstruction, constantCount: number): void 
     case Opcode.NAMECALLUDATA:
       insn.defs = [a, a + 1];
       insn.uses = [b];
-      insn.constantIndex = aux !== undefined ? aux & 0xffff : undefined;
+      insn.constantIndex = opcode === Opcode.NAMECALLUDATA && aux !== undefined ? aux & 0xffff : aux;
       break;
     case Opcode.CALL:
     case Opcode.CALLFB:

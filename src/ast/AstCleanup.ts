@@ -72,8 +72,9 @@ function dropScaffoldNilFields(fields: TableField[]): TableField[] {
     if (!isNilLiteral(field.value)) {
       return true;
     }
-    // Positional array holes can be meaningful; named/keyed nils are DUPTABLE scaffolding.
-    return !field.name && !field.key;
+    // Computed keys still evaluate (and may throw), even when storing nil.
+    // Only named nil fields represent the DUPTABLE scaffolding we can omit.
+    return !field.name;
   });
 }
 
@@ -1416,7 +1417,9 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
   switch (expression.kind) {
     case "unary": {
       const argument = transformExpr(expression.argument, options);
-      if (expression.op === "not") {
+      // A double negation coerces arbitrary values to boolean. Removing both
+      // negations is valid in a condition, but not in a returned/stored value.
+      if (expression.op === "not" && !(argument.kind === "unary" && argument.op === "not")) {
         const simplified = negateCondition(argument);
         if (simplified) {
           return simplified;
@@ -1592,6 +1595,12 @@ function recoverReturnIfExpressions(statements: Statement[]): Statement[] {
 
 function singleReturn(statements: Statement[]): Extract<Statement, { kind: "return" }> | undefined {
   if (statements.length !== 1 || statements[0]?.kind !== "return") {
+    return undefined;
+  }
+  const value = statements[0].values.at(-1);
+  // `return f()` and `return ...` can produce an entire pack. A Luau if
+  // expression always produces one value, so it cannot replace these arms.
+  if (value?.kind === "call" || value?.kind === "method-call" || value?.kind === "vararg") {
     return undefined;
   }
   return statements[0];

@@ -56,7 +56,7 @@ describe("fixed call arguments before an open multret argument", () => {
         ret(),
       ],
     }));
-    expect(source).toContain("print(get())");
+    expect(source).toContain("print((get()))");
     expect(source.match(/get\(/g)).toHaveLength(1);
   });
 });

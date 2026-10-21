@@ -3,7 +3,7 @@ import { buildControlFlowGraph } from "../src/cfg/ControlFlowGraph.ts";
 import { computeDominators } from "../src/cfg/Dominators.ts";
 import { findNaturalLoops } from "../src/cfg/NaturalLoops.ts";
 import { decodeBytecode } from "../src/decode/Decoder.ts";
-import { abc, ad, compile, Opcode, proto, ret } from "./helpers.ts";
+import { abc, ad, compile, Opcode, proto, ret, sourceOf } from "./helpers.ts";
 
 function analysis(words: number[]) {
   const bytes = compile(proto({ instructions: words }));
@@ -13,6 +13,30 @@ function analysis(words: number[]) {
 }
 
 describe("natural loop body boundaries", () => {
+  it("classifies a repeat whose header branches inside its body using block IDs", () => {
+    const words = [
+      ad(Opcode.LOADN, 0, 0),       // pc 0: initializer
+      ad(Opcode.LOADN, 1, 1),       // pc 1: repeat header
+      abc(Opcode.ADD, 0, 0, 1),
+      ad(Opcode.LOADN, 2, 2),
+      abc(Opcode.MOD, 1, 0, 2),
+      ad(Opcode.LOADN, 2, 0),
+      ad(Opcode.JUMPIFNOTEQ, 1, 3), 2, // pc 6 -> pc 10 (inside loop)
+      ad(Opcode.LOADN, 1, 1),
+      abc(Opcode.ADD, 0, 0, 1),
+      ad(Opcode.LOADN, 1, 4),       // pc 10: until x >= 4
+      ad(Opcode.JUMPIFLE, 1, 2), 0, // pc 11 -> pc 14 exit
+      ad(Opcode.JUMPBACK, 0, -13),  // pc 13 -> pc 1
+      ret(),
+    ];
+    const { loops } = analysis(words);
+    expect(loops).toHaveLength(1);
+    expect(loops[0]).toMatchObject({ kind: "repeat", header: 1, testBlock: 3 });
+    // The internal comparison controls a second increment; it is not an
+    // `x or fallback` value assignment and must survive reconstruction.
+    expect(sourceOf(proto({ instructions: words }))).toContain("% 2");
+  });
+
   it("keeps the one-time preheader out of a reachable self-loop", () => {
     const { cfg, loops } = analysis([
       ad(Opcode.LOADN, 0, 10),        // pc 0: preheader

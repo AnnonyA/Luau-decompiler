@@ -7,6 +7,7 @@ import type {
   TableField,
 } from "../ast/Ast.js";
 import { block, ident, lit } from "../ast/Ast.js";
+import { effectOf } from "../analysis/SideEffects.js";
 import { buildControlFlowGraph, type BasicBlock, type ControlFlowGraph } from "../cfg/ControlFlowGraph.js";
 import { computeDominators, computePostDominators, type DominatorTree, type PostDominatorTree } from "../cfg/Dominators.js";
 import { findNaturalLoops, type NaturalLoop } from "../cfg/NaturalLoops.js";
@@ -394,7 +395,7 @@ class SourceBuilder {
         : this.emitRange(loop.header, this.loopFollow(loop), new Set(visited));
     const test =
       last && isCompare(last.opcode)
-        ? this.conditionFrom(last, testBlockId === loop.latch && last.jumpTarget === loop.header)
+        ? this.conditionFrom(last, testBlockId === loop.latch && testBlock.branch === loop.header)
         : lit(false);
     return { kind: "repeat", body: block(body), test };
   }
@@ -913,6 +914,12 @@ class SourceBuilder {
       return undefined;
     }
     const t = phis[0]!.register;
+    // A comparison that skips an assignment is not a truthiness selection
+    // of the destination register. Keep its statements and condition intact.
+    if (elseId === join &&
+        (last.a !== t || (last.opcode !== Opcode.JUMPIF && last.opcode !== Opcode.JUMPIFNOT))) {
+      return undefined;
+    }
     const savedEnv = new Map(this.env);
     const savedOpen = new Set(this.openPacks);
     const savedConsumed = new Set(this.consumed);
@@ -965,7 +972,7 @@ class SourceBuilder {
     if (elseId === join && thenPath.guards.length === 0 && thenPath.value !== undefined) {
       // `JUMPIF t -> join`: the taken branch reuses the guard's value, so the
       // result is `t or <fallback>` (short-circuit).
-      expr = { kind: "binary", op: "or", left: guardValue, right: thenValue };
+      expr = { kind: "binary", op: last.opcode === Opcode.JUMPIFNOT ? "and" : "or", left: guardValue, right: thenValue };
     } else if (orForm) {
       expr = { kind: "binary", op: "or", left: thenValue, right: elseValue };
     } else if (andForm) {
@@ -1508,6 +1515,13 @@ class SourceBuilder {
     pendingTable?: PendingTable,
   ): { statements: Statement[]; pendingTable?: PendingTable } {
     const statements: Statement[] = [];
+    // Reusing a register ends its old open-pack binding. Calls consume their
+    // arguments before overwriting result registers, which can overlap a pack.
+    if (insn.opcode !== Opcode.CALL && insn.opcode !== Opcode.CALLFB) {
+      for (const register of insn.defs) {
+        this.openPacks.delete(register);
+      }
+    }
     switch (insn.opcode) {
       case Opcode.LOADNIL:
         statements.push(...this.define(insn.a, lit(null), insn));
@@ -1787,9 +1801,9 @@ class SourceBuilder {
         );
         break;
       case Opcode.CONCAT: {
-        let expr: Expression = this.readRegister(insn.b, insn);
-        for (let register = insn.b + 1; register <= insn.c; register++) {
-          expr = { kind: "binary", op: "..", left: expr, right: this.readRegister(register, insn) };
+        let expr: Expression = this.readRegister(insn.c, insn);
+        for (let register = insn.c - 1; register >= insn.b; register--) {
+          expr = { kind: "binary", op: "..", left: this.readRegister(register, insn), right: expr };
         }
         statements.push(...this.define(insn.a, expr, insn));
         break;
@@ -1821,11 +1835,12 @@ class SourceBuilder {
         if (calleeBinding?.expression.kind === "method-call") {
           const args: Expression[] = [];
           if (argCount === "multret") {
-            args.push(...this.openArgs(insn.a + 1, insn));
+            args.push(...this.openArgs(insn.a + 2, insn));
           } else {
             const n = Math.max(argCount - 1, 0);
             for (let i = 0; i < n; i++) {
-              args.push(this.readRegister(insn.a + 2 + i, insn));
+              const arg = this.readRegister(insn.a + 2 + i, insn);
+              args.push(i === n - 1 ? singleValue(arg) : arg);
             }
           }
           expression = { ...calleeBinding.expression, args, open: argCount === "multret" };
@@ -1835,11 +1850,14 @@ class SourceBuilder {
             args.push(...this.openArgs(insn.a + 1, insn));
           } else {
             for (let i = 0; i < argCount; i++) {
-              args.push(this.readRegister(insn.a + 1 + i, insn));
+              const arg = this.readRegister(insn.a + 1 + i, insn);
+              args.push(i === argCount - 1 ? singleValue(arg) : arg);
             }
           }
           expression = { kind: "call", callee: this.readRegister(insn.a, insn), args, open: argCount === "multret" };
         }
+        // A call consumes the previous top and establishes its own results.
+        this.openPacks.clear();
         if (resultCount === 0) {
           statements.push({ kind: "expression-stmt", expression });
         } else if (resultCount === "multret") {
@@ -1872,7 +1890,8 @@ class SourceBuilder {
             : [this.readRegister(insn.a, insn)]));
         } else {
           for (let i = 0; i < count; i++) {
-            values.push(this.readRegister(insn.a + i, insn));
+            const value = this.readRegister(insn.a + i, insn);
+            values.push(i === count - 1 ? singleValue(value) : value);
           }
         }
         if (!(count === 0 && this.isTerminalReturn(insn))) {
@@ -1882,6 +1901,7 @@ class SourceBuilder {
       }
       case Opcode.GETVARARGS:
         if (insn.b === 0) {
+          this.openPacks.clear();
           this.openPacks.add(insn.a);
           statements.push(
             ...this.define(insn.a, { kind: "vararg" }, insn, !this.isPackForwarded(insn.a, insn.pc)),
@@ -2480,6 +2500,13 @@ class SourceBuilder {
   // ------------------------------------------------------------ definitions
 
   private define(register: number, expression: Expression, insn: DecodedInstruction, forceLocal = false): Statement[] {
+    // A forwarded open pack cannot be materialized in a single local: doing
+    // so silently truncates it. Its consumer supplies the list context.
+    if (!forceLocal && (insn.call?.resultCount === "multret" ||
+        (insn.opcode === Opcode.GETVARARGS && insn.b === 0))) {
+      this.env.set(register, { expression, pinned: false });
+      return [];
+    }
     const debug = debugNameAt(this.proto, register, insn.pc + insn.width);
     const uses = this.useCount(register, insn.pc);
     const liveAcrossBlocks = this.usedOutsideBlock(register, insn);
@@ -2494,10 +2521,18 @@ class SourceBuilder {
     // name or a phi (real variable slot) pins it.
     const nilLiteral = isNilLiteral(expression);
     const refCaptured = this.willBeRefCaptured(register, insn.pc);
+    const canHaveEffects =
+      expression.kind !== "literal" &&
+      expression.kind !== "vararg" &&
+      expression.kind !== "function-expr" &&
+      (expression.kind !== "identifier" ||
+        insn.opcode === Opcode.GETGLOBAL ||
+        insn.opcode === Opcode.GETIMPORT);
     const pin =
       forceLocal ||
       Boolean(debug) ||
       refCaptured ||
+      (uses > 0 && canHaveEffects && this.crossesStatementBeforeUse(register, insn)) ||
       (!nilLiteral && (uses > 1 || liveAcrossBlocks)) ||
       this.isEscaping(expression) ||
       phi !== undefined;
@@ -2536,17 +2571,39 @@ class SourceBuilder {
     // Dropping a dead MUL/ADD/GETTABLE/GETGLOBAL changes program behavior:
     // emit a discard binding that preserves the original evaluation point.
     // The expression-stmt AST form cannot hold arbitrary arithmetic in Luau.
-    const canHaveEffects =
-      expression.kind !== "literal" &&
-      expression.kind !== "vararg" &&
-      expression.kind !== "function-expr" &&
-      (expression.kind !== "identifier" ||
-        insn.opcode === Opcode.GETGLOBAL ||
-        insn.opcode === Opcode.GETIMPORT);
     if (uses === 0 && !liveAcrossBlocks && !this.inDryRun && canHaveEffects) {
       return [{ kind: "local", names: ["_"], values: [expression] }];
     }
     return [];
+  }
+
+  /** Keep evaluation before statements that cannot become part of its consumer. */
+  private crossesStatementBeforeUse(register: number, definition: DecodedInstruction): boolean {
+    const home = this.ir.cfg.blockOfPc.get(definition.pc);
+    if (home === undefined) {
+      return false;
+    }
+    for (const next of this.ir.cfg.blocks[home]!.instructions) {
+      if (next.pc <= definition.pc || this.fallbackCalls.has(next.pc) || isFastCall(next.opcode)) {
+        continue;
+      }
+      if (next.uses.includes(register) ||
+          (next.call?.argumentCount === "multret" && register > next.a) ||
+          (next.opcode === Opcode.RETURN && next.b === 0 && register >= next.a)) {
+        return false;
+      }
+      if (next.defs.includes(register)) {
+        return false;
+      }
+      // Calls whose results feed another expression may remain nested in
+      // evaluation order. Discarded/multiple results emit a statement here.
+      if (effectOf(next) === "mutation" ||
+          (next.call && (next.call.resultCount === 0 ||
+            (typeof next.call.resultCount === "number" && next.call.resultCount > 1)))) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private usedOutsideBlock(register: number, insn: DecodedInstruction): boolean {
@@ -2827,6 +2884,13 @@ class SourceBuilder {
 
 // --------------------------------------------------------------------- helpers
 
+/** A fixed register result must not expand in the final slot of a Luau list. */
+function singleValue(expression: Expression): Expression {
+  return expression.kind === "call" || expression.kind === "method-call" || expression.kind === "vararg"
+    ? { kind: "paren", expression }
+    : expression;
+}
+
 function fallbackParam(index: number, total: number): string {
   if (total === 1) {
     return "value";
@@ -3017,7 +3081,7 @@ function dropScaffoldNilFields(fields: TableField[]): TableField[] {
     if (!isNilLiteral(field.value)) {
       return true;
     }
-    return !field.name && !field.key;
+    return !field.name;
   });
 }
 

@@ -1,11 +1,44 @@
 import { describe, expect, it } from "vitest";
 import { decodeBytecode } from "../src/decode/Decoder.ts";
 import { decompile } from "../src/decompile.ts";
+import { decodeInstructionWord } from "../src/decode/DecodedInstruction.ts";
 import { abc, ad, compile, Opcode, proto, ret, strings } from "./helpers.ts";
 
 const official = { opcodeEncoding: "official" as const };
 
 describe("constant operands in arithmetic and field bytecode", () => {
+  it("reconstructs a valid property beyond the 16-bit constant boundary", () => {
+    const bytes = compile(proto({
+      numParams: 1,
+      constants: Array.from({ length: 65537 }, (_, index) => ({
+        kind: "string" as const, value: index === 65536 ? "RIGHT" : "WRONG",
+      })),
+      instructions: [abc(Opcode.GETTABLEKS, 1, 0, 0), 65536, abc(Opcode.RETURN, 1, 2, 0)],
+    }));
+    const result = decompile(bytes, official);
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.source).toBe("return value.RIGHT\n");
+  });
+
+  it.each([Opcode.GETUDATAKS, Opcode.SETUDATAKS, Opcode.NAMECALLUDATA])(
+    "retains the 16-bit constant field in userdata opcode %i",
+    (opcode) => {
+      const insn = decodeInstructionWord(new Uint32Array([abc(opcode, 0, 1, 0), 0x12340005]), 0, 6);
+      expect(insn.constantIndex).toBe(5);
+    },
+  );
+
+  it.each([Opcode.GETTABLEKS, Opcode.SETTABLEKS, Opcode.NAMECALL])(
+    "does not truncate the AUX constant index for opcode %i",
+    (opcode) => {
+      const bytes = compile(proto({
+        constants: strings("wrong"),
+        instructions: [abc(opcode, 0, 1, 0), 0x10000, ret()],
+      }));
+      expect(() => decodeBytecode(bytes, official)).toThrow(/references missing constant 65536/);
+    },
+  );
+
   it.each([
     [Opcode.ADDK, 1, 0],
     [Opcode.SUBK, 1, 0],

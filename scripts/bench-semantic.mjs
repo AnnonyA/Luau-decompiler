@@ -22,6 +22,7 @@ const ROOT = fileURLToPath(new URL("../", import.meta.url));
 const VERIFIED_CASES = Object.freeze([
   "arithmetic", "branches", "loop", "closure",
   "tables", "multireturn", "nestedloops", "recursion", "varargs", "shortcircuit", "mutablecaptures",
+  "repeatbranch", "evaluationorder", "fixedresults", "openmethod", "concatorder", "booleancoercion", "returnbranches", "computednilkey",
 ]);
 export const CONTROLLED_CASES = Object.freeze([...VERIFIED_CASES]);
 export const CONTROLLED_OPTIMIZATIONS = Object.freeze([0, 1]);

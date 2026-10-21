@@ -41,9 +41,9 @@ describe("NaN-safe cleanup of comparison negations", () => {
     expect(clean(negated("~="))).toBe("return left == right\n");
   });
 
-  it("still removes a double not", () => {
+  it("preserves double not when its result must be a boolean", () => {
     expect(clean({ kind: "unary", op: "not", argument: { kind: "unary", op: "not", argument: ident("ready") } }))
-      .toBe("return ready\n");
+      .toBe("return not not ready\n");
   });
 
   it("keeps plain identifier negation", () => {

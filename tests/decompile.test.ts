@@ -173,7 +173,7 @@ describe("decompilation", () => {
         ],
       }),
     );
-    expect(source).toMatch(/return call\(\)/);
+    expect(source).toMatch(/return \(call\(\)\)/);
   });
 
   it("reconstructs table literals from NEWTABLE + SETTABLEKS", () => {
