@@ -26,6 +26,7 @@ export interface CleanupOptions {
   typeAnnotations: "off" | "functions" | "useful";
   ifExpressions: boolean;
   earlyReturn: boolean;
+  /** Recover interpolation only when concatenation operands are known strings. */
   interpolatedStrings: boolean;
   mathConstants: boolean;
 }
@@ -1449,12 +1450,8 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
         callee: transformExpr(expression.callee, options),
         args: expression.args.map((arg) => transformExpr(arg, options)),
       };
-      if (options.interpolatedStrings) {
-        const interp = formatToInterp(call);
-        if (interp) {
-          return interp;
-        }
-      }
+      // Keep formatting calls: interpolation has different coercions, and a
+      // property named string.format does not prove builtin binding identity.
       return bindCallback(call, options);
     }
     case "method-call": {
@@ -1701,67 +1698,17 @@ function concatToInterp(expression: Expression): Expression | undefined {
     if (node.kind === "binary" && node.op === "..") {
       return walk(node.left) && walk(node.right);
     }
-    if (node.kind === "identifier" || node.kind === "property" || node.kind === "call" || node.kind === "method-call") {
+    // Only expressions known to produce strings are interchangeable here.
+    // Unknown values may reject concatenation or implement __concat instead
+    // of the __tostring behavior used by interpolation. Retain nested interp
+    // expressions intact so their conversion/evaluation order is preserved.
+    if (node.kind === "interp") {
       parts.push({ kind: "expr", value: node });
       return true;
     }
     return false;
   };
   if (!walk(expression) || parts.length < 2 || !parts.some((part) => part.kind === "text")) {
-    return undefined;
-  }
-  return { kind: "interp", parts };
-}
-
-function formatToInterp(expression: Expression): Expression | undefined {
-  if (expression.kind !== "call" || expression.args.length < 1) {
-    return undefined;
-  }
-  const callee = expression.callee;
-  // Only rewrite the known string.format function, not an arbitrary local
-  // function named "format" that may have unrelated behavior.
-  const isFormat =
-    callee.kind === "property" && callee.object.kind === "identifier" && callee.object.name === "string" && callee.name === "format";
-  if (!isFormat) {
-    return undefined;
-  }
-  const template = expression.args[0];
-  if (template?.kind !== "literal" || typeof template.value !== "string") {
-    return undefined;
-  }
-  const parts: Array<{ kind: "text" | "expr"; value: string | Expression }> = [];
-  const text = template.value;
-  let index = 0;
-  let arg = 1;
-  let interpolations = 0;
-  while (index < text.length) {
-    const percent = text.indexOf("%", index);
-    if (percent === -1) {
-      parts.push({ kind: "text", value: text.slice(index) });
-      break;
-    }
-    if (percent > index) {
-      parts.push({ kind: "text", value: text.slice(index, percent) });
-    }
-    const specifier = text[percent + 1];
-    if (specifier === "%") {
-      parts.push({ kind: "text", value: "%" });
-    } else if (specifier === "s") {
-      const value = expression.args[arg++];
-      if (!value) {
-        return undefined;
-      }
-      parts.push({ kind: "expr", value });
-      interpolations += 1;
-    } else {
-      // Numeric specifiers (%d, %i, %f), flags, precision and width change
-      // formatting semantics. Never rewrite them as simple interpolation.
-      // Reject unrecognized and dangling '%' too; don't silently drop them.
-      return undefined;
-    }
-    index = percent + 2;
-  }
-  if (arg !== expression.args.length || interpolations === 0) {
     return undefined;
   }
   return { kind: "interp", parts };

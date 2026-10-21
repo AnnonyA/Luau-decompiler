@@ -99,14 +99,15 @@ generated source can contain private code when benchmarking user files.
 
 ## Controlled behavioral differential (experimental)
 
-The project-owned `benchmarks/semantic/*.luau` files contain nineteen small,
+The project-owned `benchmarks/semantic/*.luau` files contain twenty-one small,
 deterministic programs: arithmetic, branches, while loops, closures,
 tables, multiple returns, nested numeric loops, recursion, open varargs,
 short-circuit side effects, mutable reference captures, repeat-loop branches,
 evaluation order, fixed result counts, open method arguments, concatenation
-order, boolean coercion, return-branch packs, and computed nil table keys. The CI builds
+order, boolean coercion, return-branch packs, computed nil table keys, concatenation
+coercion/metamethods, and formatting with shadowed bindings. The CI builds
 the pinned **official Luau interpreter** alongside `luau-compile`, compiles
-each source with both `-O0 -g1` and `-O1 -g1` (38 fixture/profile pairs),
+each source with both `-O0 -g1` and `-O1 -g1` (42 fixture/profile pairs),
 decompiles each bytecode with our engine, then runs both sources in the official
 Luau interpreter. Differences in the
 process result, standard output, and standard error are recorded as
@@ -133,11 +134,17 @@ returned functions. The pinned official Luau VM confirmed **22/22 MATCH** in
 with zero mismatches and execution errors, across both O0 and O1. **All eleven
 controlled programs (22 compilation profiles) became mandatory CI gates.**
 The 2026-10-21 correctness audit added eight cases after observing matching
-traces with the pinned official VM under both profiles. **All nineteen
-programs (38 fixture/profile pairs) are now mandatory CI gates.** The added
+traces with the pinned official VM under both profiles. All nineteen
+programs (38 fixture/profile pairs) became mandatory CI gates. The added
 cases cover bugs that previously produced valid syntax with different output.
 See [the audit notes](../docs/decompiler-audit-2026-10-21.md) for the fixes and
 remaining findings.
+
+The string-fidelity follow-up added `concatsemantics` and `formatsemantics`:
+concatenation must retain its errors and `__concat` behavior, and a call named
+`string.format` must retain coercion rules and potentially shadowed bindings.
+Both cases match the pinned VM at O0 and O1. **All twenty-one programs
+(42 fixture/profile pairs) are now mandatory CI gates.**
 
 These selected traces are not proof of general semantic equivalence or a
 comparison with the LunaUX executable.

@@ -315,7 +315,18 @@ function formatParams(params: string[], isVararg: boolean, types?: Array<string 
 }
 
 function escapeInterp(value: string): string {
-  return value.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/{/g, "\\{");
+  return value.replace(/[\\`{\x00-\x1f]/g, (char) => {
+    switch (char) {
+      case "\n": return "\\n";
+      case "\r": return "\\r";
+      case "\t": return "\\t";
+      case "\\": return "\\\\";
+      case "`": return "\\`";
+      case "{": return "\\{";
+      // Three digits prevent a following decimal digit joining the escape.
+      default: return `\\${char.charCodeAt(0).toString().padStart(3, "0")}`;
+    }
+  });
 }
 
 function literalToSource(value: Literal["value"]): string {

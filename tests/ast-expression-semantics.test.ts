@@ -33,14 +33,13 @@ describe("recovered AST expression fidelity", () => {
       consequent: lit("yes"),
       branches: [{
         test: { kind: "binary", op: "<", left: lit(1), right: ident("count") },
-        value: formatCall("name: %s", ident("name")),
+        value: formatCall("value: %s", { kind: "binary", op: "<", left: lit(2), right: ident("count") }),
       }],
       alternate: lit("no"),
     };
     const source = cleanReturn(conditional);
     expect(source).toContain("elseif count > 1 then");
-    expect(source).toContain('name: {name}');
-    expect(source).not.toContain("string.format");
+    expect(source).toContain('string.format("value: %s", count > 2)');
   });
 
   it("validates invalid identifiers inside elseif tests and values", () => {
@@ -72,9 +71,9 @@ describe("recovered AST expression fidelity", () => {
     }
   });
 
-  it("rewrites only safe string placeholders and literal percent escapes", () => {
+  it("retains string placeholders and literal percent escapes in formatting calls", () => {
     expect(cleanReturn(formatCall("Name: %s (100%%)", ident("name")))).toBe(
-      'return `Name: {name} (100%)`\n',
+      'return string.format("Name: %s (100%%)", name)\n',
     );
   });
 

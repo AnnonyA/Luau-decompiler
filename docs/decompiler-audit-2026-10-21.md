@@ -23,7 +23,7 @@ The new semantic fixtures are permanently included in the benchmark allowlist
 and mandatory baseline. Some earlier textual expectations were corrected to
 require parentheses that enforce a single return value.
 
-## Validation
+## Validation of the first round
 
 Validation used Node.js 24.19.0 and official Luau commit
 `9d7748a4f324213a18cb8283fa2a77c330225fa0`, built locally. Results apply to
@@ -53,7 +53,33 @@ node scripts/bench-assert-syntax.mjs /tmp/syntax.json --require-all-pass
 ```
 
 Matching these selected execution traces is not proof of general equivalence.
-The following findings remain outside this first implementation round.
+
+## String-fidelity follow-up
+
+The follow-up fixes two of the findings below:
+
+- Concatenations are converted to interpolation only when their operands are
+  statically known strings (string literals or existing interpolation nodes).
+  Unknown identifiers, properties and calls retain `..`, preserving type errors
+  and `__concat`. Existing interpolation nodes remain nested to preserve their
+  own evaluation and conversion order.
+- `string.format` calls are retained. The AST has no proof that `string` refers
+  to the builtin library, and `%s` has different coercions from interpolation.
+  This also preserves custom format functions and their multiple results.
+- Interpolation text escapes newlines, carriage returns, tabs and control bytes.
+  Decimal escapes use three digits to prevent subsequent digits changing the
+  decoded byte. Backslashes, backticks, braces and Unicode are preserved.
+
+Validation: 331 unit tests, 24 benchmark-runner tests, and 42/42 controlled
+semantic comparisons passed; all 25 generated corpus sources passed the official
+parser. The new `concatsemantics` and `formatsemantics` programs are mandatory
+O0/O1 checks. Separate direct-AST probes exercised all 32 control bytes followed
+by digits, delimiters, Unicode and nested interpolation under the official VM,
+comparing its reported bytes with JavaScript's UTF-8 encoding of the input.
+These direct-AST VM probes were local validation; permanent regression coverage
+for interpolation emission is in `tests/string-rewrite-fidelity.test.ts`.
+
+The following findings remain outside the completed corrections.
 
 ## Remaining findings and next work
 
@@ -85,10 +111,9 @@ those cases when turning them into permanent regressions.
    without renaming its matching access. Start with lexical binding and read/write
    analysis before further cosmetic naming changes.
 
-3. **Constrain semantic rewrites** (`AstCleanup.ts`). Direct AST probes show
-   that replacing concatenation with interpolation changes `__concat` into
-   `__tostring` and permits boolean values that concatenation rejects. Similar
-   `%s` rewrites can change errors. Approximate numeric constants and a shadowed
+3. **Constrain other semantic rewrites** (`AstCleanup.ts`). Concatenation and
+   formatting issues are addressed in the string-fidelity follow-up above.
+   Approximate numeric constants and a shadowed
    `math` binding make symbolic constant substitution unsafe. Function lifting
    can change which binding a recursive-looking identifier captures, and callback
    parameter renaming can miss assignment targets or introduce collisions.
@@ -111,8 +136,8 @@ those cases when turning them into permanent regressions.
 
 6. **Handle remaining source-printing boundaries** (`LuauPrinter.ts`). Direct
    AST probes found ambiguous adjacent call statements when the next statement
-   starts with a parenthesized expression, and invalid interpolation text when
-   newline/control characters are emitted without escaping.
+   starts with a parenthesized expression. Interpolation text escaping is fixed
+   in the string-fidelity follow-up above.
 
 7. **Contain malformed HTTP URL errors** (`server.ts`). A request with
    `Host: [` makes URL construction throw outside the request error handler.

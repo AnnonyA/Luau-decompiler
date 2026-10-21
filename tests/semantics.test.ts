@@ -84,7 +84,7 @@ describe("semantic reconstruction", () => {
     expect(source).not.toMatch(/else\n    if b then/);
   });
 
-  it("turns string.format into an interpolated string", () => {
+  it("preserves formatting calls when interpolation recovery is enabled", () => {
     const ast = cleanupAst(
       chunk([
         {
@@ -107,7 +107,7 @@ describe("semantic reconstruction", () => {
         mathConstants: false,
       },
     );
-    expect(printLuau(ast)).toContain("`Hello, {name}`");
+    expect(printLuau(ast)).toContain('string.format("Hello, %s", name)');
   });
 
   it("prints math.pi instead of the raw literal", () => {
