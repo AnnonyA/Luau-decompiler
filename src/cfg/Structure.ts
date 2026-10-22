@@ -1,6 +1,7 @@
 import type { ControlFlowGraph } from "./ControlFlowGraph.js";
 import type { DominatorTree, PostDominatorTree } from "./Dominators.js";
 import type { NaturalLoop } from "./NaturalLoops.js";
+import { Opcode } from "../decode/Opcode.js";
 
 /**
  * Region-based control-flow structuring (Cifuentes 1993 / Phoenix 2013).
@@ -75,6 +76,11 @@ export function followOfLoop(
   postDominators: PostDominatorTree,
   loop: NaturalLoop,
 ): number | undefined {
+  const latch = cfg.blocks[loop.latch];
+  const opcode = latch?.instructions.at(-1)?.opcode;
+  if ((opcode === Opcode.FORGLOOP || opcode === Opcode.FORNLOOP) && latch?.fallthrough !== undefined) {
+    return latch.fallthrough;
+  }
   const ipdom = postDominators.ipdom[loop.header];
   if (ipdom !== undefined && ipdom >= 0 && ipdom < cfg.blocks.length && !loop.blocks.includes(ipdom) && ipdom !== loop.header) {
     return ipdom;

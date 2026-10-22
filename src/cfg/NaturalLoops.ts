@@ -95,6 +95,11 @@ function collectLoopBody(cfg: ControlFlowGraph, header: number, latch: number): 
   while (stack.length > 0) {
     const id = stack.pop()!;
     for (const pred of cfg.blocks[id]?.predecessors ?? []) {
+      // Generic loops enter at FORGLOOP through FORGPREP. That entry edge
+      // is not a backedge: following it backwards absorbs enclosing loops.
+      if (id === latch && isGenericEntry(cfg, pred, latch)) {
+        continue;
+      }
       if (!cfg.blocks[pred]?.unreachable && !body.has(pred)) {
         body.add(pred);
         stack.push(pred);
@@ -102,6 +107,13 @@ function collectLoopBody(cfg: ControlFlowGraph, header: number, latch: number): 
     }
   }
   return [...body].sort((a, b) => a - b);
+}
+
+function isGenericEntry(cfg: ControlFlowGraph, predecessor: number, latch: number): boolean {
+  const last = cfg.blocks[predecessor]?.instructions.at(-1);
+  return last !== undefined &&
+    (last.opcode === Opcode.FORGPREP || last.opcode === Opcode.FORGPREP_INEXT || last.opcode === Opcode.FORGPREP_NEXT) &&
+    last.jumpTarget === cfg.blocks[latch]?.startPc;
 }
 
 function classifyLoop(cfg: ControlFlowGraph, header: number, latch: number, _body: number[]): NaturalLoop["kind"] {
@@ -212,6 +224,9 @@ function loopBlocks(cfg: ControlFlowGraph, loop: Pick<NaturalLoop, "header" | "l
   while (stack.length > 0) {
     const current = stack.pop()!;
     for (const pred of cfg.blocks[current]?.predecessors ?? []) {
+      if (current === loop.latch && isGenericEntry(cfg, pred, loop.latch)) {
+        continue;
+      }
       if (!cfg.blocks[pred]?.unreachable && !blocks.has(pred)) {
         blocks.add(pred);
         stack.push(pred);

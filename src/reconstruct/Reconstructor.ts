@@ -67,7 +67,19 @@ export function reconstructFunction(
   parentContext?: ChildContext,
 ): ReconstructedFunction {
   const ir = analyzePrototype(proto);
-  const allocator = parentContext?.allocator ?? new NameAllocator();
+  const globals = new Set<string>();
+  for (const prototype of module.prototypes) {
+    for (const insn of prototype.instructions) {
+      if (insn.opcode === Opcode.GETGLOBAL || insn.opcode === Opcode.SETGLOBAL) {
+        const constant = prototype.constants[insn.aux ?? 0];
+        if (constant?.kind === "string") globals.add(constant.value);
+      }
+    }
+    for (const constant of prototype.constants) {
+      if (constant.kind === "import" && constant.path[0]) globals.add(constant.path[0]);
+    }
+  }
+  const allocator = parentContext?.allocator ?? new NameAllocator(globals);
   const builder = new SourceBuilder(module, proto, ir, allocator, parentContext?.captures ?? new Map());
   return {
     name: proto.debugName,
@@ -82,6 +94,9 @@ interface Binding {
   name?: string;
   expression: Expression;
   pinned: boolean;
+  /** An identifier borrowed from another register/global is readable, not an
+   * assignment target when this register is reused for a different value. */
+  alias?: boolean;
   methodSelf?: number;
   /** The binding was created from a literal nil (LOADNIL). */
   nilLiteral?: boolean;
@@ -126,6 +141,7 @@ class SourceBuilder {
   private readonly emittingLoops: NaturalLoop[] = [];
   private readonly consumed = new Set<number>();
   private readonly phiNames = new Map<string, string>();
+  private readonly phiFamilies = new Map<string, Set<string>>();
   private readonly loopPhiNames = new Map<string, string>();
   private readonly declaredPhis = new Set<string>();
   /** Loop phis whose incoming value is never read (`blockId:register`). */
@@ -171,6 +187,27 @@ class SourceBuilder {
           if (loopVarRegisters.has(phi.register) || this.isDeadLoopPhi(loop, phi.register)) {
             this.deadLoopPhis.add(key);
           }
+        }
+      }
+    }
+    // Phi-to-phi edges carry the same register value across nested joins.
+    // Destruct these connected phis into one lexical binding, declared at
+    // the enclosing split, rather than unrelated locals in each arm.
+    for (const phis of ir.ssa.phis.values()) {
+      for (const phi of phis) {
+        const key = `phi:${phi.block}:${phi.register}`;
+        if (this.deadLoopPhis.has(key)) continue;
+        let family = this.phiFamilies.get(key) ?? new Set([key]);
+        this.phiFamilies.set(key, family);
+        for (const operand of phi.operands) {
+          const incoming = ir.ssa.values[operand.value];
+          if (incoming?.op.kind !== "phi" || incoming.register !== phi.register) continue;
+          const other = `phi:${incoming.block}:${incoming.register}`;
+          if (this.deadLoopPhis.has(other)) continue;
+          const merged = this.phiFamilies.get(other) ?? new Set([other]);
+          if (family === merged) continue;
+          family = new Set([...family, ...merged]);
+          for (const member of family) this.phiFamilies.set(member, family);
         }
       }
     }
@@ -379,7 +416,16 @@ class SourceBuilder {
       loop.kind === "infinite"
         ? this.emitRange(loop.header, this.loopFollow(loop), new Set(visited))
         : this.emitLoopBody(loop, visited, bodyStart, bodyStart === loop.header ? undefined : loop.header);
-    return [...declarations, ...headerSetup, { kind: "while", test, body: block(body) }];
+    if (headerSetup.length > 0) {
+      // These instructions belong to the header's backedge, not its preheader.
+      // Materialized calls and register writes must run before EVERY test.
+      return [...declarations, { kind: "while", test: lit(true), body: block([
+        ...headerSetup,
+        { kind: "if", test: { kind: "unary", op: "not", argument: test }, consequent: block([{ kind: "break" }]), branches: [] },
+        ...body,
+      ]) }];
+    }
+    return [...declarations, { kind: "while", test, body: block(body) }];
   }
 
   private emitRepeat(loop: NaturalLoop, header: BasicBlock, visited: Set<number>): Statement {
@@ -403,7 +449,7 @@ class SourceBuilder {
   /** Reuse a live pinned local in this register instead of minting a new phi name. */
   private existingPhiName(register: number): string | undefined {
     const binding = this.env.get(register);
-    if (binding?.name && binding.pinned && this.isDeclaredInScope(binding.name)) {
+    if (binding?.name && binding.pinned && !binding.alias && this.isDeclaredInScope(binding.name)) {
       return binding.name;
     }
     return undefined;
@@ -425,7 +471,7 @@ class SourceBuilder {
           this.phiNameFor(key, phi.register, this.ir.cfg.blocks[blockId]!.startPc);
         namesByRegister.set(phi.register, name);
         this.loopPhiNames.set(`${blockId}:${phi.register}`, name);
-        this.phiNames.set(key, name);
+        this.setPhiName(key, name);
         if (this.declaredPhis.has(key) || this.isDeclaredInScope(name)) {
           this.declaredPhis.add(key);
           this.env.set(phi.register, { name, expression: ident(name), pinned: true });
@@ -604,7 +650,7 @@ class SourceBuilder {
     const header = this.ir.cfg.blocks[loop.header];
     if (header) {
       const ipdom = this.ir.postDominators.ipdom[loop.header];
-      if (ipdom !== undefined && ipdom < this.ir.cfg.blocks.length && !loop.blocks.includes(ipdom) && ipdom !== loop.header) {
+      if (ipdom !== undefined && ipdom >= 0 && ipdom < this.ir.cfg.blocks.length && !loop.blocks.includes(ipdom) && ipdom !== loop.header) {
         return ipdom;
       }
     }
@@ -723,8 +769,30 @@ class SourceBuilder {
       this.consumed.add(last.pc);
       const statements = this.emitStraight(basic);
       const test = this.conditionFrom(last, true);
+      const branchEnv = new Map(this.env);
+      const branchEmitted = new Set(this.emitted);
+      const branchConsumed = new Set(this.consumed);
+      const branchPhis = new Map(this.phiNames);
+      const branchDeclared = new Set(this.declaredPhis);
+      this.pushScope();
       const consequent = block(this.emitRange(thenId, stop, new Set(visited)));
+      this.popScope();
+      // With no post-dominating join, shared terminal regions belong to both
+      // alternatives. Emission and register state in one arm cannot suppress
+      // a return (or supply a value) in the other.
+      this.env.clear();
+      for (const [register, binding] of branchEnv) this.env.set(register, binding);
+      this.emitted.clear();
+      for (const id of branchEmitted) this.emitted.add(id);
+      this.consumed.clear();
+      for (const pc of branchConsumed) this.consumed.add(pc);
+      this.phiNames.clear();
+      for (const [key, name] of branchPhis) this.setPhiName(key, name);
+      this.declaredPhis.clear();
+      for (const key of branchDeclared) this.declaredPhis.add(key);
+      this.pushScope();
       const alternateStmts = this.emitRange(elseId, stop, new Set(visited));
+      this.popScope();
       statements.push({
         kind: "if",
         test,
@@ -744,12 +812,23 @@ class SourceBuilder {
     const statements = this.emitStraight(basic);
     this.declareJoinPhis(join, statements);
     const test = this.conditionFrom(last, true);
+    const branchEnv = new Map(this.env);
     this.pushScope();
     const consequent = block(this.emitRange(thenId, join, new Set(visited)));
     this.popScope();
+    this.env.clear();
+    for (const [register, binding] of branchEnv) this.env.set(register, binding);
     this.pushScope();
     const alternateStmts = this.emitRange(elseId, join, new Set(visited));
     this.popScope();
+    // Only the split's live bindings and the join's phis survive both arms.
+    // Branch-local temporaries have no lexical ownership after the join.
+    this.env.clear();
+    for (const [register, binding] of branchEnv) this.env.set(register, binding);
+    for (const phi of this.ir.ssa.phis.get(join) ?? []) {
+      const name = this.phiNames.get(`phi:${join}:${phi.register}`);
+      if (name && this.isDeclaredInScope(name)) this.env.set(phi.register, { name, expression: ident(name), pinned: true });
+    }
     const ifStmt: Statement = {
       kind: "if",
       test,
@@ -769,7 +848,7 @@ class SourceBuilder {
     const structured = this.ir.structure.ifFollow.get(basic.id);
     const ipdom = structured ?? this.ir.postDominators.ipdom[basic.id];
     const loop = this.currentLoop() ?? this.innermostLoopContaining(basic.id);
-    if (ipdom !== undefined && ipdom < this.ir.cfg.blocks.length && ipdom !== basic.id) {
+    if (ipdom !== undefined && ipdom >= 0 && ipdom < this.ir.cfg.blocks.length && ipdom !== basic.id) {
       if (!loop || loop.blocks.includes(ipdom)) {
         return ipdom;
       }
@@ -777,7 +856,9 @@ class SourceBuilder {
       // branch); the structural join is where the non-exiting flows merge.
       return this.commonJoin(basic.fallthrough, basic.branch, undefined) ?? ipdom;
     }
-    return this.commonJoin(basic.fallthrough, basic.branch, undefined);
+    // Reachability alone does not establish a join: an alternative may
+    // return before reaching that block. Terminal regions have no follow.
+    return loop ? this.commonJoin(basic.fallthrough, basic.branch, undefined) : undefined;
   }
 
   private commonJoin(a: number, b: number, stop: number | undefined): number | undefined {
@@ -817,7 +898,7 @@ class SourceBuilder {
       const key = `phi:${join}:${phi.register}`;
       const reused = this.existingPhiName(phi.register);
       if (reused) {
-        this.phiNames.set(key, reused);
+        this.setPhiName(key, reused);
         this.declaredPhis.add(key);
         continue;
       }
@@ -831,6 +912,10 @@ class SourceBuilder {
       // consults the join's phi); pre-setting it here would make a temporary
       // define inside a branch (e.g. GETIMPORT before CALL) reuse the name.
     }
+  }
+
+  private setPhiName(key: string, name: string): void {
+    for (const member of this.phiFamilies.get(key) ?? [key]) this.phiNames.set(member, name);
   }
 
   private phiNameFor(key: string, register: number, pc: number): string {
@@ -848,12 +933,12 @@ class SourceBuilder {
     }
     const reused = this.existingPhiName(register);
     if (reused) {
-      this.phiNames.set(key, reused);
+      this.setPhiName(key, reused);
       return reused;
     }
     const debug = debugNameAt(this.proto, register, pc);
     const name = this.allocator.reserve(debug ?? "result");
-    this.phiNames.set(key, name);
+    this.setPhiName(key, name);
     return name;
   }
 
@@ -945,12 +1030,23 @@ class SourceBuilder {
     // The value `t` carries when the jump is taken: the guard block's define,
     // or the pre-existing binding when the block only tests the register.
     const guardValue = basicValue ?? condReg;
+    // Branch dry runs reuse temporary registers, including BOTH operands of
+    // the comparison. Capture the guard after its prelude, before either arm.
+    const guardTest = this.conditionFrom(last, true);
+    const guardEnv = new Map(this.env);
+    const restoreGuardEnv = (): void => {
+      this.env.clear();
+      for (const [register, binding] of guardEnv) this.env.set(register, binding);
+    };
 
     const thenPath = this.walkValuePath(thenId, join, t, elseId);
     if (!thenPath || (thenPath.value === undefined && basicValue === undefined)) {
       this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending, savedPendingState, savedNames, savedScopes, savedPhiNames, savedDeclaredPhis);
       return undefined;
     }
+    // Both alternatives start with the values at the split. In particular an
+    // in-place update in one arm must not become the input of the other arm.
+    restoreGuardEnv();
     const elseValue =
       elseId === join
         ? // The taken branch lands directly on the join: it carries the value
@@ -978,7 +1074,7 @@ class SourceBuilder {
     } else if (andForm) {
       expr = { kind: "binary", op: "and", left: condReg, right: thenValue };
     } else if (thenPath.guards.length > 0) {
-      const test = foldAnd([this.conditionFrom(last, true), ...thenPath.guards]);
+      const test = foldAnd([guardTest, ...thenPath.guards]);
       const lastGuardInsn = thenPath.lastGuardBlock?.instructions.at(-1);
       const lastGuardReg =
         lastGuardInsn && lastGuardInsn.a === t
@@ -990,7 +1086,7 @@ class SourceBuilder {
         expr = makeIfExpr(test, thenValue, elseValue);
       }
     } else {
-      expr = makeIfExpr(this.conditionFrom(last, true), thenValue, elseValue);
+      expr = makeIfExpr(guardTest, thenValue, elseValue);
     }
 
     this.consumed.add(last.pc);
@@ -1001,7 +1097,9 @@ class SourceBuilder {
       this.scopeStack.push(new Set(scope));
     }
     const usedAfterJoin = this.usedAfterPc(this.ir.cfg.blocks[join]!.startPc, t);
-    const statements = [...basicWalk.statements, ...this.define(t, expr, last, usedAfterJoin)];
+    restoreGuardEnv();
+    const mergedName = this.phiNameFor(`phi:${join}:${t}`, t, this.ir.cfg.blocks[join]!.startPc);
+    const statements = [...basicWalk.statements, ...this.define(t, expr, last, usedAfterJoin, mergedName)];
     return { statements, follow: join };
   }
 
@@ -1052,7 +1150,10 @@ class SourceBuilder {
         if (captured === undefined) {
           return fail();
         }
+        // The assignment is removed from the prelude, so subsequent reads
+        // must see its captured value, not the old local occupying this slot.
         value = captured;
+        this.env.set(t, { expression: captured, pinned: false });
         continue;
       }
       const before = new Map(this.env);
@@ -1292,7 +1393,7 @@ class SourceBuilder {
   ): void {
     this.phiNames.clear();
     for (const [key, name] of savedPhiNames) {
-      this.phiNames.set(key, name);
+      this.setPhiName(key, name);
     }
     this.declaredPhis.clear();
     for (const key of savedDeclaredPhis) {
@@ -1324,11 +1425,15 @@ class SourceBuilder {
   }
 
   /** Materialize every pending table observed by `insn` (via uses or defs). */
-  private flushObserved(insn: DecodedInstruction): Statement[] {
+  private flushObserved(insn: DecodedInstruction, except?: PendingTable): Statement[] {
     const statements: Statement[] = [];
     const observed: PendingTable[] = [];
+    const openEnd = insn.opcode === Opcode.SETLIST && insn.c === 0
+      ? Math.min(...[...this.openPacks].filter(register => register >= insn.b), this.proto.maxStackSize)
+      : -1;
     for (const pending of this.pendingStack) {
-      if (insn.defs.includes(pending.register) || insn.uses.includes(pending.register)) {
+      if (pending !== except && (insn.defs.includes(pending.register) || insn.uses.includes(pending.register) ||
+          (pending.register >= insn.b && pending.register < openEnd))) {
         observed.push(pending);
       }
     }
@@ -1479,6 +1584,11 @@ class SourceBuilder {
       const writeTarget = this.writeTargetOf(insn);
       if (writeTarget === undefined) {
         statements.push(...this.flushObserved(insn));
+      } else if (insn.opcode === Opcode.SETLIST) {
+        // SETLIST reads every element register, which may itself hold an
+        // unfinished constructor. Materialize those values before taking the
+        // parent snapshot, without prematurely flushing the parent itself.
+        statements.push(...this.flushObserved(insn, writeTarget));
       }
       const produced = this.interpret(insn, writeTarget ?? this.topPending());
       if (produced.pendingTable) {
@@ -2448,7 +2558,7 @@ class SourceBuilder {
           names.push(this.bindLocal(moves[i]!.dst, insn.pc, i === 0 ? "result" : "value"));
         }
         for (let i = 0; i < moves.length; i++) {
-          this.env.set(moves[i]!.src, { name: names[i], expression: ident(names[i]!), pinned: true });
+          this.env.set(moves[i]!.src, { name: names[i], expression: ident(names[i]!), pinned: true, alias: true });
         }
         return [{ kind: "local", names, values: [source.expression] }];
       }
@@ -2519,7 +2629,7 @@ class SourceBuilder {
 
   // ------------------------------------------------------------ definitions
 
-  private define(register: number, expression: Expression, insn: DecodedInstruction, forceLocal = false): Statement[] {
+  private define(register: number, expression: Expression, insn: DecodedInstruction, forceLocal = false, mergedName?: string): Statement[] {
     // A forwarded open pack cannot be materialized in a single local: doing
     // so silently truncates it. Its consumer supplies the list context.
     if (!forceLocal && (insn.call?.resultCount === "multret" ||
@@ -2530,7 +2640,7 @@ class SourceBuilder {
     const debug = debugNameAt(this.proto, register, insn.pc + insn.width);
     const uses = this.useCount(register, insn.pc);
     const liveAcrossBlocks = this.usedOutsideBlock(register, insn);
-    const phi = this.phiBinding(register, insn);
+    const phi = mergedName ?? this.phiBinding(register, insn);
     const envBind = this.env.get(register);
     if (envBind?.forwardRef && envBind.name) {
       const nilLiteral = isNilLiteral(expression);
@@ -2567,7 +2677,7 @@ class SourceBuilder {
         phi === undefined &&
         !refCaptured
       ) {
-        this.env.set(register, { name: preferred, expression, pinned: true });
+        this.env.set(register, { name: preferred, expression, pinned: true, alias: true });
         return [];
       }
       const existing = phi;
@@ -2692,7 +2802,8 @@ class SourceBuilder {
       return undefined;
     }
     const existing = this.env.get(register);
-    if (existing?.name && existing.pinned && !this.redefinedInBlock(home, insn.pc, register)) {
+    if (existing?.name && existing.pinned && !existing.alias && this.isDeclaredInScope(existing.name) &&
+        !this.redefinedInBlock(home, insn.pc, register)) {
       return existing.name;
     }
     for (const succ of this.ir.cfg.blocks[home]?.successors ?? []) {

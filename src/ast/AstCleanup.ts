@@ -1,4 +1,5 @@
 import { block } from "./Ast.js";
+import { analyzeBindings } from "../analysis/Bindings.js";
 import type {
   BinaryOperator,
   Block,
@@ -12,7 +13,6 @@ import {
   callbackParamType,
   callbackParamsFor,
   eventCallbackName,
-  MATH_CONSTANTS,
   typeFromExpression,
 } from "../reconstruct/RobloxSemantics.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
@@ -27,6 +27,7 @@ export interface CleanupOptions {
   earlyReturn: boolean;
   /** Recover interpolation only when concatenation operands are known strings. */
   interpolatedStrings: boolean;
+  /** Compatibility option; numeric literals are retained without builtin binding proof. */
   mathConstants: boolean;
 }
 
@@ -249,42 +250,19 @@ function stripTrailingContinues(statement: Extract<Statement, { kind: "if" }>): 
 /** Drop `local x = <fn>` declarations whose name is never referenced again
  * (they are superseded by lifted method declarations), and drop `local _ = nil`. */
 function removeUnusedLocals(statements: Statement[]): Statement[] {
-  const referenced = new Set<string>();
-  const liftedNames = new Set<string>();
-  const locals: Array<{ name: string; statement: Statement }> = [];
-  for (const statement of statements) {
-    if (statement.kind === "local" && statement.names.length === 1) {
-      locals.push({ name: statement.names[0]!, statement });
-    }
-    if (statement.kind === "function-decl" && !statement.local) {
-      liftedNames.add(declarationTail(statement.name));
-    }
-    collectIdentifiers(statement, (name) => {
-      referenced.add(name);
-    });
-  }
-  return statements.filter((statement) => {
-    if (statement.kind !== "local" || statement.names.length !== 1) {
-      return true;
-    }
-    const name = statement.names[0]!;
+  const { bindings } = analyzeBindings(block(statements));
+  const byDeclaration = new Map(bindings.map(binding => [binding.declaration, binding]));
+  const liftedNames = new Set(statements.flatMap(statement =>
+    statement.kind === "function-decl" && !statement.local ? [declarationTail(statement.name)] : []));
+  return statements.filter(statement => {
+    if (statement.kind !== "local" || statement.names.length !== 1) return true;
+    const binding = byDeclaration.get(statement);
+    // A write still needs its lexical declaration, even when the value is not
+    // subsequently read. `_` is an ordinary local, not a discard instruction.
+    if (!binding || binding.reads.length || binding.writes.length) return true;
     const value = statement.values[0];
-    // `_` is the unused-binding convention; a nil initializer is dead.
-    if (name === "_" && (statement.values.length === 0 || isNilLiteral(value))) {
-      return false;
-    }
-    const local = locals.find((candidate) => candidate.statement === statement);
-    if (!local || referenced.has(name)) {
-      return true;
-    }
-    if (statement.values.length === 0 || isNilLiteral(value)) {
-      return false;
-    }
-    if (!value || value.kind !== "function-expr") {
-      return true;
-    }
-    // Drop closure locals superseded by a lifted method/field declaration.
-    return !liftedNames.has(name);
+    if (statement.values.length === 0 || isNilLiteral(value)) return false;
+    return value?.kind !== "function-expr" || !liftedNames.has(binding.name);
   });
 }
 
@@ -1427,9 +1405,6 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
         }
       }
       rewritten = normalizeComparison(rewritten);
-      if (options.mathConstants) {
-        return rewriteMathConstant(rewritten);
-      }
       return rewritten;
     }
     case "call": {
@@ -1488,7 +1463,9 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
         ),
       };
     default:
-      return options.mathConstants ? rewriteMathConstant(expression) : expression;
+      // A literal cannot safely become a mutable global/property lookup.
+      // Approximate matching also changes the exact floating-point value.
+      return expression;
   }
 }
 
@@ -1698,18 +1675,6 @@ function concatToInterp(expression: Expression): Expression | undefined {
     return undefined;
   }
   return { kind: "interp", parts };
-}
-
-function rewriteMathConstant(expression: Expression): Expression {
-  if (expression.kind !== "literal" || typeof expression.value !== "number") {
-    return expression;
-  }
-  for (const entry of MATH_CONSTANTS) {
-    if (Math.abs(expression.value - entry.value) < 1e-12) {
-      return { kind: "property", object: { kind: "identifier", name: entry.object }, name: entry.name };
-    }
-  }
-  return expression;
 }
 
 function bindCallback(expression: Expression, options: CleanupOptions): Expression {
