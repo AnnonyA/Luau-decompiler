@@ -138,6 +138,20 @@ jobs:
             --luau "$RUNNER_TEMP/luau-build/luau" \
             --output "$RUNNER_TEMP/competition" \
             --require-local-match
+      - name: Check scope, register and CFG regressions with extra inputs
+        run: |
+          npm run bench:regressions -- \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/pr58-regressions"
+      - name: Upload regression traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-scope-register-regressions
+          path: ${{ runner.temp }}/pr58-regressions
+          if-no-files-found: warn
+          retention-days: 30
       - name: Upload original-source comparison evidence
         if: always()
         uses: actions/upload-artifact@v4

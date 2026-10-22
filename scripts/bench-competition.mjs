@@ -74,6 +74,7 @@ export async function runCompetition({compiler,interpreter,output,cache,external
           metadata={elapsedMs:performance.now()-begin,diagnostics:result.diagnostics};
           if(result.ok){
             recovered=Buffer.from(result.source);await writeFile(join(directory,'annony.disasm.txt'),result.disassembly);
+            await writeFile(join(directory,'annony.ast.json'),JSON.stringify(result.ast,null,2)+'\n');
             const raw=printLuau(chunk(reconstructFunction(result.module,result.module.prototypes[result.module.mainProtoId]).body.statements));
             await writeFile(join(directory,'annony.raw.luau'),raw);
           }

@@ -1,5 +1,6 @@
 import type { Block, Chunk, Expression, Statement } from "../ast/Ast.js";
 import { NameAllocator, isValidIdentifier } from "./Naming.js";
+import { analyzeBindings, replaceReferences } from "../analysis/Bindings.js";
 
 const GENERATED = /^(?:value|result|config|index|key|item|entry|state|data|count|tmp|player|function_?|callback)(\d*)$/;
 const MAKE_STEM = /^(?:make|create|build|get)([A-Z][A-Za-z0-9]*)$/;
@@ -730,287 +731,27 @@ function mapNestedInline(statement: Statement): Statement {
 }
 
 function inlineStatements(statements: Statement[]): Statement[] {
-  const tables = new Map<string, { index: number; table: Expression }>();
-  for (let i = 0; i < statements.length; i++) {
-    const statement = statements[i]!;
-    if (
-      statement.kind === "local" &&
-      statement.names.length === 1 &&
-      statement.values.length === 1 &&
-      statement.values[0]?.kind === "table" &&
-      isGeneratedName(statement.names[0]!)
-    ) {
-      tables.set(statement.names[0]!, { index: i, table: statement.values[0] });
-    }
-  }
-  const drop = new Set<number>();
-  const replacements = new Map<string, Expression>();
-  const ordered = [...tables.entries()].sort((left, right) => right[1].index - left[1].index);
-  for (const [name, record] of ordered) {
-    const uses = countUses(statements, name, record.index);
-    if (uses.reads === 1 && uses.writes === 0 && !uses.unsafe) {
-      replacements.set(name, substExpr(record.table, replacements));
-      drop.add(record.index);
-    }
-  }
-  if (replacements.size === 0) {
-    return statements;
-  }
-  return statements.flatMap((statement, index) => (drop.has(index) ? [] : [replaceIdents(statement, replacements)]));
-}
-
-function substExpr(expression: Expression, replacements: Map<string, Expression>, seen = new Set<string>()): Expression {
-  if (expression.kind === "identifier") {
-    const next = replacements.get(expression.name);
-    if (next && !seen.has(expression.name)) {
-      const nested = new Set(seen);
-      nested.add(expression.name);
-      return substExpr(next, replacements, nested);
-    }
-    return expression;
-  }
-  if (expression.kind === "table") {
-    return {
-      ...expression,
-      fields: expression.fields.map((field) => ({
-        ...field,
-        key: field.key ? substExpr(field.key, replacements, seen) : undefined,
-        value: substExpr(field.value, replacements, seen),
-      })),
-    };
-  }
-  return expression;
-}
-
-function countUses(statements: Statement[], name: string, after: number): { reads: number; writes: number; unsafe: boolean } {
-  let reads = 0;
-  let writes = 0;
-  let unsafe = false;
-  const visitExpr = (expression: Expression): void => {
-    switch (expression.kind) {
-      case "identifier":
-        if (expression.name === name) {
-          reads += 1;
-        }
-        break;
-      case "unary":
-        visitExpr(expression.argument);
-        break;
-      case "binary":
-        visitExpr(expression.left);
-        visitExpr(expression.right);
-        break;
-      case "call":
-        visitExpr(expression.callee);
-        expression.args.forEach(visitExpr);
-        break;
-      case "method-call":
-        if (expression.object.kind === "identifier" && expression.object.name === name) {
-          unsafe = true;
-        }
-        visitExpr(expression.object);
-        expression.args.forEach(visitExpr);
-        break;
-      case "index":
-      case "property":
-        if (
-          (expression.kind === "index" ? expression.table : expression.object).kind === "identifier" &&
-          (expression.kind === "index" ? expression.table : expression.object).kind === "identifier" &&
-          ((expression.kind === "index" ? expression.table : expression.object) as { name: string }).name === name
-        ) {
-          unsafe = true;
-        }
-        if (expression.kind === "index") {
-          visitExpr(expression.table);
-          visitExpr(expression.key);
-        } else {
-          visitExpr(expression.object);
-        }
-        break;
-      case "table":
-        expression.fields.forEach((field) => {
-          if (field.key) {
-            visitExpr(field.key);
-          }
-          visitExpr(field.value);
-        });
-        break;
-      case "function-expr":
-        expression.body.statements.forEach(visitStmt);
-        break;
-      case "interp":
-        expression.parts.forEach((part) => {
-          if (part.kind === "expr" && typeof part.value !== "string") {
-            visitExpr(part.value);
-          }
-        });
-        break;
-      case "paren":
-        visitExpr(expression.expression);
-        break;
-      case "if-expr":
-        visitExpr(expression.test);
-        visitExpr(expression.consequent);
-        expression.branches.forEach((branch) => {
-          visitExpr(branch.test);
-          visitExpr(branch.value);
-        });
-        visitExpr(expression.alternate);
-        break;
-      default:
-        break;
-    }
-  };
-  const visitStmt = (item: Statement): void => {
-    switch (item.kind) {
-      case "local":
-        item.values.forEach(visitExpr);
-        break;
-      case "assign":
-        item.targets.forEach((target) => {
-          if (target.kind === "identifier" && target.name === name) {
-            writes += 1;
-          } else {
-            visitExpr(target);
-          }
-        });
-        item.values.forEach(visitExpr);
-        break;
-      case "compound-assign":
-        if (item.target.kind === "identifier" && item.target.name === name) {
-          writes += 1;
-        } else {
-          visitExpr(item.target);
-        }
-        visitExpr(item.value);
-        break;
-      case "expression-stmt":
-        visitExpr(item.expression);
-        break;
-      case "return":
-        item.values.forEach(visitExpr);
-        break;
-      case "if":
-        visitExpr(item.test);
-        item.consequent.statements.forEach(visitStmt);
-        item.branches.forEach((branch) => {
-          visitExpr(branch.test);
-          branch.body.statements.forEach(visitStmt);
-        });
-        item.alternate?.statements.forEach(visitStmt);
-        break;
-      case "while":
-        visitExpr(item.test);
-        item.body.statements.forEach(visitStmt);
-        break;
-      case "repeat":
-        item.body.statements.forEach(visitStmt);
-        visitExpr(item.test);
-        break;
-      case "numeric-for":
-        visitExpr(item.start);
-        visitExpr(item.stop);
-        item.step && visitExpr(item.step);
-        item.body.statements.forEach(visitStmt);
-        break;
-      case "generic-for":
-        item.iterators.forEach(visitExpr);
-        item.body.statements.forEach(visitStmt);
-        break;
-      case "function-decl":
-        if (item.name.split(/[.:]/)[0] === name) {
-          unsafe = true;
-        }
-        item.body.statements.forEach(visitStmt);
-        break;
-      case "do":
-        item.body.statements.forEach(visitStmt);
-        break;
-      default:
-        break;
-    }
-  };
-  for (let i = after + 1; i < statements.length; i++) {
-    visitStmt(statements[i]!);
-  }
-  return { reads, writes, unsafe };
-}
-
-function replaceIdents(statement: Statement, replacements: Map<string, Expression>): Statement {
-  const swap = (expression: Expression): Expression => {
-    if (expression.kind === "identifier") {
-      return substExpr(expression, replacements);
-    }
-    if (expression.kind === "unary") {
-      return { ...expression, argument: swap(expression.argument) };
-    }
-    if (expression.kind === "binary") {
-      return { ...expression, left: swap(expression.left), right: swap(expression.right) };
-    }
-    if (expression.kind === "call") {
-      return { ...expression, callee: swap(expression.callee), args: expression.args.map(swap) };
-    }
-    if (expression.kind === "method-call") {
-      return { ...expression, object: swap(expression.object), args: expression.args.map(swap) };
-    }
-    if (expression.kind === "index") {
-      return { ...expression, table: swap(expression.table), key: swap(expression.key) };
-    }
-    if (expression.kind === "property") {
-      return { ...expression, object: swap(expression.object) };
-    }
-    if (expression.kind === "table") {
-      return {
-        ...expression,
-        fields: expression.fields.map((field) => ({
-          ...field,
-          key: field.key ? swap(field.key) : undefined,
-          value: swap(field.value),
-        })),
-      };
-    }
-    if (expression.kind === "paren") {
-      return { ...expression, expression: swap(expression.expression) };
-    }
-    if (expression.kind === "if-expr") {
-      return {
-        ...expression,
-        test: swap(expression.test),
-        consequent: swap(expression.consequent),
-        branches: expression.branches.map((branch) => ({ test: swap(branch.test), value: swap(branch.value) })),
-        alternate: swap(expression.alternate),
-      };
-    }
-    return expression;
-  };
-  switch (statement.kind) {
-    case "local":
-      return { ...statement, values: statement.values.map(swap) };
-    case "assign":
-      return { ...statement, targets: statement.targets.map(swap), values: statement.values.map(swap) };
-    case "compound-assign":
-      return { ...statement, target: swap(statement.target), value: swap(statement.value) };
-    case "expression-stmt":
-      return { ...statement, expression: swap(statement.expression) };
-    case "return":
-      return { ...statement, values: statement.values.map(swap) };
-    case "if":
-      return {
-        ...statement,
-        test: swap(statement.test),
-        consequent: { kind: "block", statements: statement.consequent.statements.map((item) => replaceIdents(item, replacements)) },
-        branches: statement.branches.map((branch) => ({
-          test: swap(branch.test),
-          body: { kind: "block", statements: branch.body.statements.map((item) => replaceIdents(item, replacements)) },
-        })),
-        alternate: statement.alternate
-          ? { kind: "block", statements: statement.alternate.statements.map((item) => replaceIdents(item, replacements)) }
-          : undefined,
-      };
-    case "function-decl":
-      return { ...statement, body: { kind: "block", statements: statement.body.statements.map((item) => replaceIdents(item, replacements)) } };
-    default:
-      return statement;
+  let body: Block = {kind: "block", statements};
+  // Move only dependency-free constructors. Even a single read of a captured
+  // table may run repeatedly, and fields read from locals are snapshots.
+  const constantTable = (value: Expression): boolean => value.kind === "literal" ||
+    (value.kind === "table" && value.fields.every(f =>
+      (!f.key || (f.key.kind === "literal" && f.key.value !== null &&
+        !(typeof f.key.value === "number" && Number.isNaN(f.key.value)))) && constantTable(f.value)));
+  for (;;) {
+    const candidate = analyzeBindings(body).bindings.find(binding => {
+      const s = binding.declaration;
+      const use = binding.reads[0];
+      return binding.scope === body && s.kind === "local" && s.names.length === 1 &&
+        isGeneratedName(binding.name) && s.values.length === 1 && s.values[0]?.kind === "table" &&
+        constantTable(s.values[0]) && binding.reads.length === 1 && binding.writes.length === 0 &&
+        !binding.captured && use?.scope === body && use.statement.kind !== "while" &&
+        use.statement.kind !== "repeat" && use.statement.kind !== "function-decl";
+    });
+    if (!candidate || candidate.declaration.kind !== "local") return body.statements;
+    const declaration = candidate.declaration;
+    const replacements = new Map<Expression, Expression>([[candidate.reads[0]!.node, declaration.values[0]!]]);
+    body = replaceReferences({kind: "block", statements: body.statements.filter(s => s !== declaration)}, replacements);
   }
 }
 
@@ -1039,7 +780,8 @@ function renameChunk(ast: Chunk): Chunk {
   collect(ast.body.statements, bindings, [new Map()], 0, 0);
   applyHints(ast.body.statements, bindings);
   const names = allocate(bindings);
-  const state: ApplyState = { next: 0, allocators: [new NameAllocator()] };
+  const globals = analyzeBindings(ast.body).globals;
+  const state: ApplyState = { next: 0, globals, allocators: [new NameAllocator()] };
   return { kind: "chunk", body: applyBlock(ast.body, names, [new Map()], state) };
 }
 
@@ -1565,7 +1307,16 @@ function paramLooksLikeSelf(fn: { body: Block }, name: string): boolean {
 
 interface ApplyState {
   next: number;
+  globals: Set<string>;
   allocators: NameAllocator[];
+}
+
+// An unchanged binding already has the correct lexical identity. Renaming it
+// must not capture a free identifier, including a numbered allocator fallback.
+function takeSafeName(preferred: string, old: string, state: ApplyState): string {
+  let name = currentAllocator(state).take(preferred);
+  while (name !== old && state.globals.has(name)) name = currentAllocator(state).take(preferred);
+  return name;
 }
 
 function currentAllocator(state: ApplyState): NameAllocator {
@@ -1603,7 +1354,7 @@ function applyStmt(statement: Statement, names: Map<number, string>, scopes: Arr
     const id = state.next++;
     scopes[scopes.length - 1]!.set(old, id);
     const preferred = names.get(id) ?? old;
-    const final = currentAllocator(state).take(preferred);
+    const final = takeSafeName(preferred, old, state);
     names.set(id, final);
     return final;
   };
@@ -1741,7 +1492,7 @@ function applyExpr(expression: Expression, names: Map<number, string>, scopes: A
         const id = state.next++;
         scopes[scopes.length - 1]!.set(param, id);
         const preferred = names.get(id) ?? param;
-        const final = currentAllocator(state).take(preferred);
+        const final = takeSafeName(preferred, param, state);
         names.set(id, final);
         return final;
       });
