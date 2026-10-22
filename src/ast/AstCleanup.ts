@@ -1,5 +1,5 @@
 import { block } from "./Ast.js";
-import { analyzeBindings } from "../analysis/Bindings.js";
+import { analyzeBindings, renameFreeBindings } from "../analysis/Bindings.js";
 import type {
   BinaryOperator,
   Block,
@@ -1718,79 +1718,5 @@ function renameFunctionParams(fn: FunctionExpression, names: string[], options: 
 }
 
 function renameIdentifiers(body: Block, rename: Map<string, string>): Block {
-  const walkExpr = (expression: Expression): Expression => {
-    if (expression.kind === "identifier") {
-      const next = rename.get(expression.name);
-      return next ? { ...expression, name: next } : expression;
-    }
-    if (expression.kind === "unary") {
-      return { ...expression, argument: walkExpr(expression.argument) };
-    }
-    if (expression.kind === "binary") {
-      return { ...expression, left: walkExpr(expression.left), right: walkExpr(expression.right) };
-    }
-    if (expression.kind === "call") {
-      return { ...expression, callee: walkExpr(expression.callee), args: expression.args.map(walkExpr) };
-    }
-    if (expression.kind === "method-call") {
-      return { ...expression, object: walkExpr(expression.object), args: expression.args.map(walkExpr) };
-    }
-    if (expression.kind === "index") {
-      return { ...expression, table: walkExpr(expression.table), key: walkExpr(expression.key) };
-    }
-    if (expression.kind === "property") {
-      return { ...expression, object: walkExpr(expression.object) };
-    }
-    if (expression.kind === "function-expr") {
-      return expression;
-    }
-    if (expression.kind === "paren") {
-      return { ...expression, expression: walkExpr(expression.expression) };
-    }
-    if (expression.kind === "table") {
-      return {
-        ...expression,
-        fields: expression.fields.map((field) => ({
-          ...field,
-          key: field.key ? walkExpr(field.key) : undefined,
-          value: walkExpr(field.value),
-        })),
-      };
-    }
-    return expression;
-  };
-  const walkStmt = (statement: Statement): Statement => {
-    switch (statement.kind) {
-      case "local":
-        return { ...statement, values: statement.values.map(walkExpr) };
-      case "assign":
-        return { ...statement, targets: statement.targets.map(walkExpr), values: statement.values.map(walkExpr) };
-      case "expression-stmt":
-        return { ...statement, expression: walkExpr(statement.expression) };
-      case "return":
-        return { ...statement, values: statement.values.map(walkExpr) };
-      case "if":
-        return {
-          ...statement,
-          test: walkExpr(statement.test),
-          consequent: renameIdentifiers(statement.consequent, rename),
-          branches: statement.branches.map((branch) => ({
-            test: walkExpr(branch.test),
-            body: renameIdentifiers(branch.body, rename),
-          })),
-          alternate: statement.alternate ? renameIdentifiers(statement.alternate, rename) : undefined,
-        };
-      case "while":
-        return { ...statement, test: walkExpr(statement.test), body: renameIdentifiers(statement.body, rename) };
-      case "repeat":
-        return { ...statement, test: walkExpr(statement.test), body: renameIdentifiers(statement.body, rename) };
-      case "do":
-        return { ...statement, body: renameIdentifiers(statement.body, rename) };
-      default:
-        return statement;
-    }
-  };
-  return { kind: "block", statements: body.statements.map(walkStmt) };
+  return renameFreeBindings(body, rename);
 }
-
-

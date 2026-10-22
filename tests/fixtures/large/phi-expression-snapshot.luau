@@ -1,0 +1,1 @@
+local x,y,z=0,1,7;if x%2==0 and y%3==0 then z=1;for j=1,2 do x=4;y=x+z;z=3 end elseif z%2==1 then z=y+x;x=6;local snapshot=z;z=3;print(snapshot) end;print(x,z)

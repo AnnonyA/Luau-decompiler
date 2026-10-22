@@ -85,9 +85,32 @@ export function analyzeBindings(root: Block): { bindings: LexicalBinding[]; glob
 
 /** Substitution uses resolved node identity; it cannot capture a same-named
  * parameter or miss a newly added statement/expression container. */
-export function replaceReferences<T>(tree: T, replacements: Map<Expression, Expression>): T {
+export function replaceReferences<T>(tree: T, replacements: ReadonlyMap<object, object>): T {
   if(!tree || typeof tree!=='object')return tree;
-  if(replacements.has(tree as unknown as Expression))return replacements.get(tree as unknown as Expression) as T;
+  if(replacements.has(tree as object))return replacements.get(tree as object) as T;
   if(Array.isArray(tree))return tree.map(value=>replaceReferences(value,replacements)) as T;
   return Object.fromEntries(Object.entries(tree).map(([key,value])=>[key,replaceReferences(value,replacements)])) as T;
+}
+
+/** Rename only references resolved to parameters outside this body. Seed their
+ * declarations before walking so nested local/parameter shadows stay distinct. */
+export function renameFreeBindings(body: Block, rename: ReadonlyMap<string, string>): Block {
+  const declarations: Statement[] = [...rename.keys()].map(name => ({kind: "local", names: [name], values: []}));
+  const root: Block = {kind: "block", statements: [...declarations, ...body.statements]};
+  const { bindings } = analyzeBindings(root);
+  const replacements = new Map<object, object>();
+  for (const binding of bindings) {
+    if (!declarations.includes(binding.declaration as Statement)) continue;
+    const name = rename.get(binding.name)!;
+    for (const reference of [...binding.reads, ...binding.writes]) {
+      replacements.set(reference.node, {...reference.node, name});
+      const statement = reference.statement;
+      if (statement.kind === "function-decl" && !statement.local &&
+          statement.name.split(/[.:]/)[0] === binding.name) {
+        replacements.set(statement, {...statement, name: name + statement.name.slice(binding.name.length),
+          body: renameFreeBindings(statement.body, new Map([...rename].filter(([old]) => !statement.params.includes(old))))});
+      }
+    }
+  }
+  return replaceReferences(body, replacements);
 }

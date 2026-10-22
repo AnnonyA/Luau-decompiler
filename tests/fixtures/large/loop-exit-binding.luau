@@ -1,0 +1,1 @@
+local x,y,z=0,1,2;y=0+0;for j=1,2 do y=0+4;if y%2==0 and y%3==0 then x=2+0;y=z+x;x=3+0;z=z+y; elseif 3%2==1 then z=z+y;x=4+1;y=y+x;z=1+3; end; end; print(x,y,z)

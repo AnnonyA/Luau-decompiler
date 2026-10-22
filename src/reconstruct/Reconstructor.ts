@@ -7,6 +7,7 @@ import type {
   TableField,
 } from "../ast/Ast.js";
 import { block, ident, lit } from "../ast/Ast.js";
+import { renameFreeBindings } from "../analysis/Bindings.js";
 import { effectOf } from "../analysis/SideEffects.js";
 import { buildControlFlowGraph, type BasicBlock, type ControlFlowGraph } from "../cfg/ControlFlowGraph.js";
 import { computeDominators, computePostDominators, type DominatorTree, type PostDominatorTree } from "../cfg/Dominators.js";
@@ -141,6 +142,7 @@ class SourceBuilder {
   private readonly emittingLoops: NaturalLoop[] = [];
   private readonly consumed = new Set<number>();
   private readonly phiNames = new Map<string, string>();
+  private readonly phiInputs = new Map<number, string[]>();
   private readonly phiFamilies = new Map<string, Set<string>>();
   private readonly loopPhiNames = new Map<string, string>();
   private readonly declaredPhis = new Set<string>();
@@ -209,6 +211,15 @@ class SourceBuilder {
           family = new Set([...family, ...merged]);
           for (const member of family) this.phiFamilies.set(member, family);
         }
+      }
+    }
+    for (const phis of ir.ssa.phis.values()) for (const phi of phis) {
+      const key = `phi:${phi.block}:${phi.register}`;
+      if (this.deadLoopPhis.has(key)) continue;
+      for (const operand of phi.operands) {
+        const keys = this.phiInputs.get(operand.value) ?? [];
+        keys.push(key);
+        this.phiInputs.set(operand.value, keys);
       }
     }
     this.mainProto = module.prototypes[module.mainProtoId];
@@ -305,19 +316,19 @@ class SourceBuilder {
       if (!block || block.unreachable) {
         break;
       }
+      const loop = this.loopByHeader.get(current);
+      if (loop && !visited.has(-loop.header - 1)) {
+        visited.add(-loop.header - 1);
+        statements.push(...this.emitLoop(loop, visited));
+        current = this.loopFollow(loop);
+        continue;
+      }
       const preparedLoop = this.preparedLoop(block);
       if (preparedLoop && !visited.has(-preparedLoop.header - 1)) {
         statements.push(...this.emitStraight(block));
         visited.add(-preparedLoop.header - 1);
         statements.push(...this.emitLoop(preparedLoop, visited));
         current = this.loopFollow(preparedLoop);
-        continue;
-      }
-      const loop = this.loopByHeader.get(current);
-      if (loop && !visited.has(-loop.header - 1)) {
-        visited.add(-loop.header - 1);
-        statements.push(...this.emitLoop(loop, visited));
-        current = this.loopFollow(loop);
         continue;
       }
       const branch = this.tryIf(block, stop, visited);
@@ -335,7 +346,7 @@ class SourceBuilder {
         const loop = this.currentLoop();
         const last = block.instructions.at(-1);
         if (loop && last?.opcode === Opcode.JUMP) {
-          if (successor === loop.header || successor === loop.latch) {
+          if (successor === loop.header || this.isPureLoopLatch(successor, loop)) {
             statements.push({ kind: "continue" });
             current = successor;
             continue;
@@ -478,7 +489,8 @@ class SourceBuilder {
           continue;
         }
         this.declaredPhis.add(key);
-        statements.push({ kind: "local", names: [name], values: [] });
+        const incoming = this.env.get(phi.register)?.expression;
+        statements.push({ kind: "local", names: [name], values: incoming ? [incoming] : [] });
         this.declareInScope(name);
         this.env.set(phi.register, { name, expression: ident(name), pinned: true });
       }
@@ -489,25 +501,30 @@ class SourceBuilder {
   /** Whether the loop redefines `register` before anything reads its incoming
    * value, making the phi's entry value dead. */
   private isDeadLoopPhi(loop: NaturalLoop, register: number): boolean {
-    let firstUse: number | undefined;
-    let firstDef: number | undefined;
-    for (const blockId of loop.blocks) {
-      for (const insn of this.ir.cfg.blocks[blockId]?.instructions ?? []) {
-        if (firstDef === undefined && insn.defs.includes(register)) {
-          firstDef = insn.pc;
-        }
-        if (firstUse === undefined && insn.uses.includes(register) && !isFakeUse(insn.opcode)) {
-          firstUse = insn.pc;
-        }
-        if (firstUse !== undefined && firstDef !== undefined) {
-          break;
-        }
+    // An entry value is dead only if every reachable path overwrites it
+    // before any read. Linear pc order misses conditional writes and values
+    // consumed after a zero-iteration loop.
+    const pending = [loop.header, loop.latch];
+    // Even when every iteration kills the entry value, its final definition
+    // needs an outer binding if the continuation reads it (including zero
+    // iterations). Do not confuse a dead input with a dead lexical binding.
+    const follow = this.loopFollow(loop);
+    if (follow !== undefined) pending.push(follow);
+    const visited = new Set<number>();
+    while (pending.length) {
+      const id = pending.pop()!;
+      if (visited.has(id)) continue;
+      visited.add(id);
+      const basic = this.ir.cfg.blocks[id];
+      if (!basic || basic.unreachable) continue;
+      let killed = false;
+      for (const insn of basic.instructions) {
+        if (insn.uses.includes(register) && !isFakeUse(insn.opcode)) return false;
+        if (insn.defs.includes(register)) { killed = true; break; }
       }
-      if (firstUse !== undefined && firstDef !== undefined) {
-        break;
-      }
+      if (!killed) pending.push(...basic.successors);
     }
-    return firstDef !== undefined && (firstUse === undefined || firstUse > firstDef);
+    return true;
   }
 
   private emitLoopBody(loop: NaturalLoop, visited: Set<number>, start: number, skipHeader?: number): Statement[] {
@@ -813,11 +830,17 @@ class SourceBuilder {
     this.declareJoinPhis(join, statements);
     const test = this.conditionFrom(last, true);
     const branchEnv = new Map(this.env);
+    const branchEmitted = new Set(this.emitted);
+    const branchConsumed = new Set(this.consumed);
     this.pushScope();
     const consequent = block(this.emitRange(thenId, join, new Set(visited)));
     this.popScope();
     this.env.clear();
     for (const [register, binding] of branchEnv) this.env.set(register, binding);
+    this.emitted.clear();
+    for (const id of branchEmitted) this.emitted.add(id);
+    this.consumed.clear();
+    for (const pc of branchConsumed) this.consumed.add(pc);
     this.pushScope();
     const alternateStmts = this.emitRange(elseId, join, new Set(visited));
     this.popScope();
@@ -896,7 +919,9 @@ class SourceBuilder {
   private declareJoinPhis(join: number, statements: Statement[]): void {
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
       const key = `phi:${join}:${phi.register}`;
-      const reused = this.existingPhiName(phi.register);
+      const established = this.phiNames.get(key);
+      const reused = established && this.isDeclaredInScope(established)
+        ? established : this.existingPhiName(phi.register);
       if (reused) {
         this.setPhiName(key, reused);
         this.declaredPhis.add(key);
@@ -981,7 +1006,8 @@ class SourceBuilder {
     const expr: Expression = thenValue ? { kind: "unary", op: "not", argument: jumpCond } : jumpCond;
     this.consumed.add(last.pc);
     const usedAfterJoin = this.usedAfterPc(this.ir.cfg.blocks[join]!.startPc, thenInsn.a);
-    const statements = [...walk.statements, ...this.define(thenInsn.a, expr, last, usedAfterJoin)];
+    const mergedName = this.phiNameFor(`phi:${join}:${thenInsn.a}`, thenInsn.a, this.ir.cfg.blocks[join]!.startPc);
+    const statements = [...walk.statements, ...this.define(thenInsn.a, expr, last, usedAfterJoin, mergedName)];
     return { statements, follow: join };
   }
 
@@ -1660,7 +1686,9 @@ class SourceBuilder {
         });
         break;
       case Opcode.GETUPVAL:
-        statements.push(...this.define(insn.a, this.upvalueExpr(insn.b), insn));
+        statements.push(...this.define(insn.a, this.upvalueExpr(insn.b), insn,
+          this.captures.get(insn.b)?.mutable !== false &&
+          (this.usedOutsideBlock(insn.a, insn) || this.crossesStatementBeforeUse(insn.a, insn))));
         break;
       case Opcode.SETUPVAL:
         statements.push({
@@ -1969,6 +1997,9 @@ class SourceBuilder {
         // A call consumes the previous top and establishes its own results.
         this.openPacks.clear();
         if (resultCount === 0) {
+          // CALL consumes the callee slot. Keeping a NAMECALL placeholder
+          // here lets a later phi initializer execute that method again.
+          this.env.delete(insn.a);
           statements.push({ kind: "expression-stmt", expression });
         } else if (resultCount === "multret") {
           this.openPacks.add(insn.a);
@@ -2644,7 +2675,7 @@ class SourceBuilder {
     const envBind = this.env.get(register);
     if (envBind?.forwardRef && envBind.name) {
       const nilLiteral = isNilLiteral(expression);
-      this.env.set(register, { name: envBind.name, expression: ident(envBind.name), pinned: true, nilLiteral });
+      this.env.set(register, { name: envBind.name, expression: ident(envBind.name), pinned: true, nilLiteral, forwardRef: true });
       return [{ kind: "assign", targets: [ident(envBind.name)], values: [expression] }];
     }
     // A literal nil has no identity worth keeping in a local: only a debug
@@ -2662,7 +2693,8 @@ class SourceBuilder {
       forceLocal ||
       Boolean(debug) ||
       refCaptured ||
-      (uses > 0 && canHaveEffects && this.crossesStatementBeforeUse(register, insn)) ||
+      (uses > 0 && (canHaveEffects || expression.kind === "identifier") &&
+        this.crossesStatementBeforeUse(register, insn, expression)) ||
       (!nilLiteral && (uses > 1 || liveAcrossBlocks)) ||
       this.isEscaping(expression) ||
       phi !== undefined;
@@ -2708,7 +2740,16 @@ class SourceBuilder {
   }
 
   /** Keep evaluation before statements that cannot become part of its consumer. */
-  private crossesStatementBeforeUse(register: number, definition: DecodedInstruction): boolean {
+  private crossesStatementBeforeUse(register: number, definition: DecodedInstruction, expression?: Expression): boolean {
+    const dependencies = new Set<string>();
+    const collect = (value: unknown): void => {
+      if (!value || typeof value !== "object") return;
+      const node = value as {kind?: string; name?: string};
+      if (node.kind === "function-expr") return;
+      if (node.kind === "identifier" && node.name) dependencies.add(node.name);
+      Object.values(value).forEach(collect);
+    };
+    collect(expression);
     const home = this.ir.cfg.blockOfPc.get(definition.pc);
     if (home === undefined) {
       return false;
@@ -2725,6 +2766,12 @@ class SourceBuilder {
       if (next.defs.includes(register)) {
         return false;
       }
+      // A pure bytecode write can mutate a lexical phi used by this deferred
+      // expression. Snapshot the operands before that write, even for LOADN.
+      if (next.defs.some(slot => {
+        const name = this.env.get(slot)?.name;
+        return name !== undefined && dependencies.has(name);
+      })) return true;
       // Calls whose results feed another expression may remain nested in
       // evaluation order. Discarded/multiple results emit a statement here.
       if (effectOf(next) === "mutation" ||
@@ -2802,35 +2849,17 @@ class SourceBuilder {
       return undefined;
     }
     const existing = this.env.get(register);
-    if (existing?.name && existing.pinned && !existing.alias && this.isDeclaredInScope(existing.name) &&
-        !this.redefinedInBlock(home, insn.pc, register)) {
-      return existing.name;
+    const debug = debugNameAt(this.proto, register, insn.pc + insn.width);
+    if (debug && existing?.name === debug && !existing.alias && insn.uses.includes(register) &&
+        ![...this.env].some(([slot, binding]) => slot !== register && binding.name === debug)) {
+      return debug;
     }
-    for (const succ of this.ir.cfg.blocks[home]?.successors ?? []) {
-      const phi = this.ir.ssa.phis.get(succ)?.find((node) => node.register === register);
-      if (!phi) {
-        continue;
-      }
-      // The definition only flows into the phi when the register is not
-      // redefined later in the same block; otherwise it is a temporary (e.g.
-      // `GETIMPORT f` followed by `CALL f` reuses the register for the result).
-      if (this.redefinedInBlock(home, insn.pc, register)) {
-        continue;
-      }
-      const key = `phi:${succ}:${register}`;
-      if (this.deadLoopPhis.has(key)) {
-        continue;
-      }
-      return this.phiNameFor(key, register, this.ir.cfg.blocks[succ]!.startPc);
-    }
-    const homePhi = this.ir.ssa.phis.get(home)?.find((node) => node.register === register);
-    if (homePhi) {
-      const key = `phi:${home}:${register}`;
-      if (this.deadLoopPhis.has(key)) {
-        return undefined;
-      }
-      return this.phiNameFor(key, register, this.ir.cfg.blocks[home]!.startPc);
-    }
+    // Consult the actual SSA definition reaching a phi, including paths
+    // through intervening blocks. An entry phi does not own later slot reuse.
+    const value = this.ir.ssa.defAt.get(`${home}:${insn.pc}:${register}`);
+    const keys = value === undefined ? [] : this.phiInputs.get(value) ?? [];
+    const key = keys.find(key => this.phiNames.has(key)) ?? keys[0];
+    if (key) return this.phiNameFor(key, register, insn.pc);
     return undefined;
   }
 
@@ -3536,115 +3565,7 @@ function firstParamIsReceiver(fn: { params: string[]; body: Block }): boolean {
 }
 
 function renameIdentifiers(body: Block, rename: Map<string, string>): Block {
-  const walkExpr = (expression: Expression): Expression => {
-    if (expression.kind === "identifier") {
-      const next = rename.get(expression.name);
-      return next ? { ...expression, name: next } : expression;
-    }
-    if (expression.kind === "unary") {
-      return { ...expression, argument: walkExpr(expression.argument) };
-    }
-    if (expression.kind === "binary") {
-      return { ...expression, left: walkExpr(expression.left), right: walkExpr(expression.right) };
-    }
-    if (expression.kind === "call") {
-      return { ...expression, callee: walkExpr(expression.callee), args: expression.args.map(walkExpr) };
-    }
-    if (expression.kind === "method-call") {
-      return { ...expression, object: walkExpr(expression.object), args: expression.args.map(walkExpr) };
-    }
-    if (expression.kind === "index") {
-      return { ...expression, table: walkExpr(expression.table), key: walkExpr(expression.key) };
-    }
-    if (expression.kind === "property") {
-      return { ...expression, object: walkExpr(expression.object) };
-    }
-    if (expression.kind === "function-expr") {
-      return { ...expression, body: renameIdentifiers(expression.body, rename) };
-    }
-    if (expression.kind === "paren") {
-      return { ...expression, expression: walkExpr(expression.expression) };
-    }
-    if (expression.kind === "table") {
-      return {
-        ...expression,
-        fields: expression.fields.map((field) => ({
-          ...field,
-          key: field.key ? walkExpr(field.key) : undefined,
-          value: walkExpr(field.value),
-        })),
-      };
-    }
-    if (expression.kind === "if-expr") {
-      return {
-        ...expression,
-        test: walkExpr(expression.test),
-        consequent: walkExpr(expression.consequent),
-        branches: expression.branches.map((branch) => ({
-          test: walkExpr(branch.test),
-          value: walkExpr(branch.value),
-        })),
-        alternate: walkExpr(expression.alternate),
-      };
-    }
-    if (expression.kind === "interp") {
-      return {
-        ...expression,
-        parts: expression.parts.map((part) =>
-          part.kind === "expr" && typeof part.value !== "string"
-            ? { kind: "expr" as const, value: walkExpr(part.value) }
-            : part,
-        ),
-      };
-    }
-    return expression;
-  };
-  const walkStmt = (statement: Statement): Statement => {
-    switch (statement.kind) {
-      case "local":
-        return { ...statement, values: statement.values.map(walkExpr) };
-      case "assign":
-        return { ...statement, targets: statement.targets.map(walkExpr), values: statement.values.map(walkExpr) };
-      case "compound-assign":
-        return { ...statement, target: walkExpr(statement.target), value: walkExpr(statement.value) };
-      case "expression-stmt":
-        return { ...statement, expression: walkExpr(statement.expression) };
-      case "return":
-        return { ...statement, values: statement.values.map(walkExpr) };
-      case "if":
-        return {
-          ...statement,
-          test: walkExpr(statement.test),
-          consequent: renameIdentifiers(statement.consequent, rename),
-          branches: statement.branches.map((branch) => ({
-            test: walkExpr(branch.test),
-            body: renameIdentifiers(branch.body, rename),
-          })),
-          alternate: statement.alternate ? renameIdentifiers(statement.alternate, rename) : undefined,
-        };
-      case "while":
-        return { ...statement, test: walkExpr(statement.test), body: renameIdentifiers(statement.body, rename) };
-      case "repeat":
-        return { ...statement, test: walkExpr(statement.test), body: renameIdentifiers(statement.body, rename) };
-      case "numeric-for":
-        return {
-          ...statement,
-          start: walkExpr(statement.start),
-          stop: walkExpr(statement.stop),
-          step: statement.step ? walkExpr(statement.step) : undefined,
-          body: renameIdentifiers(statement.body, rename),
-        };
-      case "generic-for":
-        return { ...statement, iterators: statement.iterators.map(walkExpr), body: renameIdentifiers(statement.body, rename) };
-      case "do":
-        return { ...statement, body: renameIdentifiers(statement.body, rename) };
-      case "function-decl":
-        return { ...statement, body: renameIdentifiers(statement.body, rename) };
-      default:
-        return statement;
-    }
-  };
-  return { kind: "block", statements: body.statements.map(walkStmt) };
+  return renameFreeBindings(body, rename);
 }
 
 
