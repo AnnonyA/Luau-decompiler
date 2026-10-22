@@ -12,7 +12,6 @@ import {
   callbackParamType,
   callbackParamsFor,
   eventCallbackName,
-  MATH_CONSTANTS,
   typeFromExpression,
 } from "../reconstruct/RobloxSemantics.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
@@ -27,6 +26,7 @@ export interface CleanupOptions {
   earlyReturn: boolean;
   /** Recover interpolation only when concatenation operands are known strings. */
   interpolatedStrings: boolean;
+  /** Compatibility option; numeric literals are retained without builtin binding proof. */
   mathConstants: boolean;
 }
 
@@ -1427,9 +1427,6 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
         }
       }
       rewritten = normalizeComparison(rewritten);
-      if (options.mathConstants) {
-        return rewriteMathConstant(rewritten);
-      }
       return rewritten;
     }
     case "call": {
@@ -1488,7 +1485,9 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
         ),
       };
     default:
-      return options.mathConstants ? rewriteMathConstant(expression) : expression;
+      // A literal cannot safely become a mutable global/property lookup.
+      // Approximate matching also changes the exact floating-point value.
+      return expression;
   }
 }
 
@@ -1698,18 +1697,6 @@ function concatToInterp(expression: Expression): Expression | undefined {
     return undefined;
   }
   return { kind: "interp", parts };
-}
-
-function rewriteMathConstant(expression: Expression): Expression {
-  if (expression.kind !== "literal" || typeof expression.value !== "number") {
-    return expression;
-  }
-  for (const entry of MATH_CONSTANTS) {
-    if (Math.abs(expression.value - entry.value) < 1e-12) {
-      return { kind: "property", object: { kind: "identifier", name: entry.object }, name: entry.name };
-    }
-  }
-  return expression;
 }
 
 function bindCallback(expression: Expression, options: CleanupOptions): Expression {

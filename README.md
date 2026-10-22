@@ -112,6 +112,13 @@ The controlled semantic corpus now contains **100 independent programs**,
 checked under both O0 and O1: **200 mandatory behavior comparisons**. See the
 [coverage catalog](benchmarks/semantic/README.md) for the cases and limitations.
 
+A separate [three-engine benchmark](benchmarks/originals/README.md) compares
+12 new originals against AnnonyA, LunaUX and Lua.Expert with identical official
+O0/O1 bytecode, cached API responses and input-specific runtime traces. See its
+[measured results and unresolved failures](benchmarks/results/competition-2026-10-21/README.md).
+The `mathConstants` compatibility option now retains numeric literals: replacing
+them with `math.pi` cannot preserve exact values and binding identity generally.
+
 ## What the output looks like
 
 The goal is to produce normal Luau constructs rather than leaking VM details:

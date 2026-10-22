@@ -110,7 +110,7 @@ describe("semantic reconstruction", () => {
     expect(printLuau(ast)).toContain('string.format("Hello, %s", name)');
   });
 
-  it("prints math.pi instead of the raw literal", () => {
+  it("retains the raw numeric literal without assuming the math binding", () => {
     const ast = cleanupAst(chunk([{ kind: "return", values: [lit(Math.PI)] }]), {
       typeAnnotations: "off",
       ifExpressions: false,
@@ -118,7 +118,7 @@ describe("semantic reconstruction", () => {
       interpolatedStrings: false,
       mathConstants: true,
     });
-    expect(printLuau(ast)).toContain("math.pi");
+    expect(printLuau(ast)).toBe("return 3.141592653589793\n");
   });
 
   it("types InputBegan callbacks as InputObject + boolean", () => {

@@ -379,7 +379,16 @@ class SourceBuilder {
       loop.kind === "infinite"
         ? this.emitRange(loop.header, this.loopFollow(loop), new Set(visited))
         : this.emitLoopBody(loop, visited, bodyStart, bodyStart === loop.header ? undefined : loop.header);
-    return [...declarations, ...headerSetup, { kind: "while", test, body: block(body) }];
+    if (headerSetup.length > 0) {
+      // These instructions belong to the header's backedge, not its preheader.
+      // Materialized calls and register writes must run before EVERY test.
+      return [...declarations, { kind: "while", test: lit(true), body: block([
+        ...headerSetup,
+        { kind: "if", test: { kind: "unary", op: "not", argument: test }, consequent: block([{ kind: "break" }]), branches: [] },
+        ...body,
+      ]) }];
+    }
+    return [...declarations, { kind: "while", test, body: block(body) }];
   }
 
   private emitRepeat(loop: NaturalLoop, header: BasicBlock, visited: Set<number>): Statement {
@@ -945,6 +954,9 @@ class SourceBuilder {
     // The value `t` carries when the jump is taken: the guard block's define,
     // or the pre-existing binding when the block only tests the register.
     const guardValue = basicValue ?? condReg;
+    // Branch dry runs reuse temporary registers, including BOTH operands of
+    // the comparison. Capture the guard after its prelude, before either arm.
+    const guardTest = this.conditionFrom(last, true);
 
     const thenPath = this.walkValuePath(thenId, join, t, elseId);
     if (!thenPath || (thenPath.value === undefined && basicValue === undefined)) {
@@ -978,7 +990,7 @@ class SourceBuilder {
     } else if (andForm) {
       expr = { kind: "binary", op: "and", left: condReg, right: thenValue };
     } else if (thenPath.guards.length > 0) {
-      const test = foldAnd([this.conditionFrom(last, true), ...thenPath.guards]);
+      const test = foldAnd([guardTest, ...thenPath.guards]);
       const lastGuardInsn = thenPath.lastGuardBlock?.instructions.at(-1);
       const lastGuardReg =
         lastGuardInsn && lastGuardInsn.a === t
@@ -990,7 +1002,7 @@ class SourceBuilder {
         expr = makeIfExpr(test, thenValue, elseValue);
       }
     } else {
-      expr = makeIfExpr(this.conditionFrom(last, true), thenValue, elseValue);
+      expr = makeIfExpr(guardTest, thenValue, elseValue);
     }
 
     this.consumed.add(last.pc);

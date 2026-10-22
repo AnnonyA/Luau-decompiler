@@ -131,6 +131,21 @@ jobs:
           path: ${{ runner.temp }}/luau-semantic-report.json
           if-no-files-found: warn
           retention-days: 30
+      - name: Check 12 independent originals against the official VM
+        run: |
+          npm run bench:competition -- \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/competition" \
+            --require-local-match
+      - name: Upload original-source comparison evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-original-source-comparison
+          path: ${{ runner.temp }}/competition
+          if-no-files-found: warn
+          retention-days: 30
       - name: Upload generated Luau for parse-error triage
         if: always()
         uses: actions/upload-artifact@v4

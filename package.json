@@ -18,7 +18,8 @@
     "test:watch": "vitest",
     "bench:compare": "node scripts/bench-compare.mjs",
     "bench:semantic": "node scripts/bench-semantic.mjs",
-    "bench:test": "node --test scripts/bench-compare.test.mjs scripts/bench-summary.test.mjs scripts/bench-assert-syntax.test.mjs scripts/bench-semantic.test.mjs",
+    "bench:competition": "node scripts/bench-competition.mjs",
+    "bench:test": "node --test scripts/bench-compare.test.mjs scripts/bench-summary.test.mjs scripts/bench-assert-syntax.test.mjs scripts/bench-semantic.test.mjs scripts/competition/benchmark.test.mjs",
     "serve": "node dist/cli.js serve"
   },
   "engines": {
