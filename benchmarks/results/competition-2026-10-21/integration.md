@@ -1,33 +1,37 @@
-# Integration status
+# Integration evidence for PR58
 
-**Unmerged, draft [PR #58](https://github.com/AnnonyA/Luau-decompiler/pull/58).**
-The implementation commit is `c26796f5576cc84dafd03adecf83c29666914d92`.
-Nine of 24 new local profiles remain MISMATCH; the CI gate requires all 24 and
-has not been weakened. Subsequent integration-note changes do not alter code.
+Engine corrections: `45e4157` on `benchmark/three-engine-originals`.
+[PR #58](https://github.com/AnnonyA/Luau-decompiler/pull/58) is the integration
+record; its Checks tab records the final tested commit and its timeline records
+readiness and the squash merge SHA. No merge is authorized while a gate fails.
 
-Verified [GitHub Actions run 39710271449](https://github.com/AnnonyA/Luau-decompiler/actions/runs/39710271449):
+Local verification of the corrected engine:
 
 | Check | Result |
 |---|---|
-| Test, typecheck and build — Node 20 | PASS |
-| Test, typecheck and build — Node 22 | PASS |
-| Official syntax comparison, 25 corpus files | PASS |
-| Existing controlled semantics, 200 profiles | PASS |
-| New originals, 24 profiles | FAIL: 15 MATCH, 9 MISMATCH |
+| Unit tests | 355 PASS |
+| Benchmark harness tests | 34 PASS |
+| TypeScript check/build | PASS |
+| Official syntax corpus | 25/25 PASS |
+| Existing controlled semantics | 200/200 MATCH |
+| Competition originals, three inputs each | 24/24 MATCH |
+| Extra regression profiles, three inputs each | 36/36 MATCH |
+| Demo workers / Chromium subpath | 3 + 1 PASS |
+| Cached competitor replay | 48/48 MATCH, zero requests |
+| Reference integrity | 96/96 byte-identical files |
 
-The failing step is **Check 12 independent originals against the official VM**.
-It reproduces matrix-scope O0/O1, rollback O0/O1, codec O0/O1, graph-walk O0/O1,
-and branch-phis O0 failures. External engines are NO MEDIDO in this CI run
-because CI intentionally makes no API requests and has no extracted API cache;
-this does not replace the measured, cached external results in `after.json`.
-The job uploaded comparison evidence despite the failed gate. Machine-readable
-job/step results are retained in [actions.json](actions.json).
+The CI workflow independently runs tests/typecheck/build on Node 20 and 22,
+then builds the pinned official compiler/runtime and gates syntax, the old 200
+comparisons, the 24 originals, and the 36 extra profiles. The Browser demo
+workflow runs worker tests and the real browser check. PR deployment is skipped;
+GitHub Pages deployment follows the main push after a successful merge.
 
-The separate [Browser demo run 39710271441](https://github.com/AnnonyA/Luau-decompiler/actions/runs/39710271441)
-passed its build and real-browser checks. Deployment was correctly skipped for
-the draft PR. The previous main Chromium-startup failure did not recur here.
+Historical failure evidence is intentionally retained in `actions.json`:
+[CI run 39710271449](https://github.com/AnnonyA/Luau-decompiler/actions/runs/39710271449)
+failed the new-original gate at 15/24 before this continuation. It does not
+represent the corrected engine. The prior
+[Browser demo run 39710271441](https://github.com/AnnonyA/Luau-decompiler/actions/runs/39710271441)
+passed. Current run links and conclusions are recorded in the PR description.
 
-Local checks: 344 unit tests; 34 benchmark tests; 200/200 prior semantic profiles;
-25/25 syntax corpus files. Extracting the committed archive into a fresh temporary
-directory and replaying it reproduced all 24 bytecode hashes and 72 engine
-classifications with zero HTTP requests. Archive/report SHA-256 checks passed.
+`final-evidence.tar.gz` holds the local final reports and full comparison files.
+Historical before/after API evidence remains unchanged in `evidence.tar.gz`.
