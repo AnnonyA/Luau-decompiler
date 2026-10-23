@@ -23,9 +23,9 @@ export function summarize(before,development,holdout) {
   }]))};
 }
 export function render(summary) {
- const rows=['# Large original systems: five-program pilot','',
+ const rows=['# Large original systems: measured comparison','',
   'Each profile uses 12 deterministic inputs. MATCH means the official VM produced identical observable traces on those inputs, not universal equivalence.',
-  'Development cases informed engine fixes; reserved cases were first evaluated after the recorded engine freeze. They must not be pooled as a blind generalization score.','',
+  'Partition labels record evaluation provenance. Development and development-regression cases informed fixes; only a first frozen holdout run is blind evidence. Do not pool tuned results as a blind generalization score.','',
   '| Program | Partition | O | AnnonyA before | AnnonyA after | LunaUX | Lua.Expert |',
   '|---|---|---:|---|---|---|---|'];
  for(const p of summary.profiles)rows.push(`| ${p.id} | ${p.partition} | ${p.optimization} | ${p.before} | ${p.engines.annony.status} | ${p.engines.lunaux.status} | ${p.engines.luaexpert.status} |`);

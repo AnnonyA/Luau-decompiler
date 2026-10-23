@@ -13,10 +13,8 @@ npm ci
 npm run build
 npm run bench:large -- --luau-compile /path/luau-compile --luau /path/luau \
   --output /tmp/large-development --cache /path/api-cache --require-local-match
-node scripts/large/freeze-engine.mjs /tmp/large-development/report.json /tmp/engine-freeze.json
 npm run bench:large -- --luau-compile /path/luau-compile --luau /path/luau \
-  --output /tmp/large-holdout --cache /path/api-cache --partition holdout \
-  --freeze /tmp/engine-freeze.json --require-local-match
+  --output /tmp/large-holdout --cache /path/api-cache --partition observed --require-local-match
 npm run bench:large:regressions -- --luau-compile /path/luau-compile --luau /path/luau \
   --output /tmp/large-regressions
 ```
@@ -25,6 +23,6 @@ External requests default to disabled and a zero budget. Only an explicit `--ext
 
 Local decoding runs in a disposable process with a 512 MiB V8 heap limit and a 30-second timeout. The heap limit is **not** a total process-memory ceiling. Official parser/runtime processes have separate timeouts. Only owned fixtures are executed. Reports retain peak worker RSS, decompile time, syntax, VM traces, raw reconstruction, final AST, disassembly, compiler hashes and full external response records. API latency and local elapsed time are different measurements and cannot establish relative throughput.
 
-Only the first reserved-corpus run is a blind evaluation of this cohort. Later CI runs are regressions, not fresh holdout evidence. Preserve the first engine freeze and results. MATCH requires every tested input to match; lexical structure/token metrics are secondary and do not prove scope equivalence or readability. Expansion to 50 systems remains pending while the pilot has real semantic failures.
+Only the first reserved-corpus run is a blind evaluation of this cohort. Later CI runs are regressions, not fresh holdout evidence. Preserve the first engine freeze and results. MATCH requires every tested input to match; lexical structure/token metrics are secondary and do not prove scope equivalence or readability. The first pilot now passes 15/15 after development on the observed query-planner and reactive-simulation cases. They are development regressions, not blind evidence. Expansion toward 50 systems continues in separately sealed cohorts.
 
-See [measured results](../results/large-2026-10-22/README.md).
+See [first measurements](../results/large-2026-10-22/README.md) and [15/15 follow-up](../results/large-2026-10-23/README.md). New cohorts use `--manifest <cohort>/manifest.json`; their first evaluation also requires a recorded `--freeze`.

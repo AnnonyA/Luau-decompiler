@@ -997,8 +997,22 @@ class SourceBuilder {
       return undefined;
     }
     // The fallthrough (then) block runs when the jump condition is false.
+    // A failed boolean pattern is speculative just like a value-if. Its
+    // prelude may have reused key/value registers or materialized tables.
+    // Restore all of that state before ordinary statement reconstruction.
+    const savedEnv = new Map(this.env);
+    const savedOpen = new Set(this.openPacks);
+    const savedConsumed = new Set(this.consumed);
+    const savedPending = [...this.pendingStack];
+    const savedPendingState = this.snapshotPendings();
+    const savedNames = this.allocator.snapshot();
+    const savedScopes = this.scopeStack.map(scope => new Set(scope));
+    const savedPhiNames = new Map(this.phiNames);
+    const savedDeclaredPhis = new Set(this.declaredPhis);
     const walk = this.walkGuardBlock(basic, thenInsn.a);
     if (!walk) {
+      this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending,
+        savedPendingState, savedNames, savedScopes, savedPhiNames, savedDeclaredPhis);
       return undefined;
     }
     const thenValue = thenInsn.b !== 0;
@@ -1486,7 +1500,14 @@ class SourceBuilder {
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       }
     }
-    const name = pending.name ?? this.bindLocal(pending.register, pending.startPc, pending.role);
+    // Constructors are SSA definitions too. A table created in one branch
+    // must assign the join binding, rather than disappear in a branch local.
+    const definition = this.proto.instructions.find(insn => insn.pc === pending.startPc);
+    const phi = definition ? this.phiBinding(pending.register, definition) : undefined;
+    const name = pending.name ?? phi ?? this.bindLocal(pending.register, pending.startPc, pending.role);
+    const assignment = phi === name && this.isDeclaredInScope(name);
+    this.declareInScope(name);
+    this.env.set(pending.register, { name, expression: ident(name), pinned: true });
     pending.name = name;
     // Method lifting: closures assigned to fields become method declarations
     // after the table literal (and are dropped from it).
@@ -1500,7 +1521,10 @@ class SourceBuilder {
       }
     }
     const literalFields = fields.filter((field) => !liftedFields.has(field));
-    const statements: Statement[] = [{ kind: "local", names: [name], values: [{ kind: "table", fields: normalizeArrayFields(literalFields) }] }];
+    const literal: Expression = { kind: "table", fields: normalizeArrayFields(literalFields) };
+    const statements: Statement[] = [assignment
+      ? { kind: "assign", targets: [ident(name)], values: [literal] }
+      : { kind: "local", names: [name], values: [literal] }];
     for (const selfRef of pending.selfRefs) {
       const target: Expression = selfRef.name
         ? { kind: "property", object: ident(name), name: selfRef.name }
@@ -1868,15 +1892,15 @@ class SourceBuilder {
         if (insn.c !== 0) {
           const count = insn.c - 1;
           for (let i = 0; i < count; i++) {
-            fields.push({ key: lit(startIndex + i), value: singleValue(this.readRegister(insn.b + i, insn)) });
+            fields.push({ list: true, key: lit(startIndex + i), value: singleValue(this.readRegister(insn.b + i, insn)) });
           }
         } else {
           // MULTRET: fixed elements followed by one open pack register.
           const fixed = this.openPackFixed(insn.b);
           for (let i = 0; i < fixed; i++) {
-            fields.push({ key: lit(startIndex + i), value: this.readRegister(insn.b + i, insn) });
+            fields.push({ list: true, key: lit(startIndex + i), value: this.readRegister(insn.b + i, insn) });
           }
-          fields.push({ key: lit(startIndex + fixed), value: this.readRegister(insn.b + fixed, insn) });
+          fields.push({ list: true, key: lit(startIndex + fixed), value: this.readRegister(insn.b + fixed, insn) });
         }
         if (pendingTable && pendingTable.register === insn.a) {
           for (const field of fields) {
@@ -2069,7 +2093,10 @@ class SourceBuilder {
       case Opcode.CLOSEUPVALS:
         for (const [register, binding] of this.env) {
           if (register >= insn.a && binding.forwardRef) {
-            this.env.set(register, { ...binding, forwardRef: false });
+            // The register still holds a readable value, but its closed cell
+            // belongs to existing closures. A later definition in this slot
+            // must not adopt that cell as its phi assignment target.
+            this.env.set(register, { ...binding, forwardRef: false, alias: true });
           }
         }
         break;
@@ -2631,7 +2658,7 @@ class SourceBuilder {
 
   private removePureField(pending: PendingTable, field: TableField): void {
     const previous = pending.fields.findIndex((candidate) => sameFieldKey(candidate, field));
-    if (previous >= 0 && isPureValue(pending.fields[previous]!.value)) {
+    if (previous >= 0 && !pending.fields[previous]!.list && isPureValue(pending.fields[previous]!.value)) {
       pending.fields.splice(previous, 1);
     }
   }
@@ -2772,6 +2799,10 @@ class SourceBuilder {
         const name = this.env.get(slot)?.name;
         return name !== undefined && dependencies.has(name);
       })) return true;
+      // A call can mutate the state observed by a later read. In particular
+      // Luau evaluates assignment targets before RHS expressions, so moving
+      // table.remove into an RHS would evaluate #table against the old state.
+      if (definition.call && ["table-read", "metamethod"].includes(effectOf(next))) return true;
       // Calls whose results feed another expression may remain nested in
       // evaluation order. Discarded/multiple results emit a statement here.
       if (effectOf(next) === "mutation" ||
@@ -3337,22 +3368,20 @@ function isPureValue(expression: Expression): boolean {
   }
 }
 
-/** Converts `[1] = a, [2] = b, ...` keyed fields back to positional fields. */
+/** Recover positional slots without letting named fields truncate an open tail.
+ * Keyed stores remain single-valued even when a compact array form is possible. */
 function normalizeArrayFields(fields: TableField[]): TableField[] {
   let position = 1;
-  let allPositional = true;
-  for (const field of fields) {
-    if (field.key?.kind === "literal" && typeof field.key.value === "number" && field.key.value === position) {
-      position += 1;
-      continue;
+  const hasList = fields.some(field => field.list);
+  const plainArray = !hasList && fields.every((field, index) =>
+    field.key?.kind === "literal" && field.key.value === index + 1);
+  return fields.map(({list, ...field}) => {
+    if ((list || plainArray) && field.key?.kind === "literal" && field.key.value === position) {
+      position++;
+      return { value: list ? field.value : singleValue(field.value) };
     }
-    allPositional = false;
-    break;
-  }
-  if (!allPositional || fields.length === 0) {
-    return fields;
-  }
-  return fields.map((field) => ({ value: field.value }));
+    return field;
+  });
 }
 
 function captureDefine(statements: Statement[], _register: number): Expression | undefined {

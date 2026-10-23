@@ -189,13 +189,12 @@ jobs:
             --luau "$RUNNER_TEMP/luau-build/luau" \
             --output "$RUNNER_TEMP/large-development" --require-local-match
           node scripts/large/freeze-engine.mjs "$RUNNER_TEMP/large-development/report.json" "$RUNNER_TEMP/large-freeze.json"
-      - name: Check reserved large systems without external requests
+      - name: Check observed large regressions without external requests
         run: |
           npm run bench:large -- \
             --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
             --luau "$RUNNER_TEMP/luau-build/luau" \
-            --output "$RUNNER_TEMP/large-holdout" --partition holdout \
-            --freeze "$RUNNER_TEMP/large-freeze.json" --require-local-match
+            --output "$RUNNER_TEMP/large-holdout" --partition observed --require-local-match
       - name: Upload large-system evidence including failures
         if: always()
         uses: actions/upload-artifact@v4

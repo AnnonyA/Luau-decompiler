@@ -2,11 +2,13 @@
 // Run once after validating authored originals, before any decompiler results
 // are inspected. Subsequent checks must not regenerate this manifest.
 import {readFile,readdir,writeFile,access} from 'node:fs/promises';
-import {join} from 'node:path';
+import {join,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {digest} from '../competition/external.mjs';
 import {significantLines} from './corpus.mjs';
-const directory=fileURLToPath(new URL('../../benchmarks/large/',import.meta.url));
+const args=process.argv.slice(2);
+if(args.length&&!(args.length===2&&args[0]==='--root'))throw Error('usage: seal-corpus.mjs [--root directory]');
+const directory=args.length?resolve(args[1]):fileURLToPath(new URL('../../benchmarks/large/',import.meta.url));
 const path=join(directory,'manifest.json');
 try{await access(path);throw Error('manifest already sealed; do not overwrite reference sources');}catch(e){if(e.code!=='ENOENT')throw e;}
 const inputs=[[-7,0],[-3,1],[-1,2],[0,0],[1,1],[2,2],[3,3],[5,0],[8,1],[13,2],[21,3],[34,4]].map(input=>input.map(String));

@@ -198,6 +198,8 @@ export interface PropertyExpression {
 }
 
 export interface TableField {
+  /** Reconstruction provenance: SETLIST entries consume positional slots. */
+  list?: boolean;
   key?: Expression;
   name?: string;
   value: Expression;

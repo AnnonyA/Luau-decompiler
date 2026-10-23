@@ -120,3 +120,48 @@ it('hoists a loop value read after the loop even when every iteration overwrites
  expect(result.ok).toBe(true);if(!result.ok)return;
  expect([...analyzeBindings(result.ast.body).globals]).toEqual(['print']);
 });
+
+it('keeps the open SETLIST tail positional after named constructor fields',async()=>{
+ const {readFileSync}=await import('node:fs');const {decompile}=await import('../src/decompile.ts');
+ const result=decompile(readFileSync(new URL('./fixtures/large/mixed-table-packs.luauc',import.meta.url)),{opcodeEncoding:'official'});
+ expect(result.ok).toBe(true);if(!result.ok)return;
+ const fn=result.ast.body.statements.find(s=>s.kind==='function-decl'&&s.name==='pack');
+ expect(fn?.kind).toBe('function-decl');if(fn?.kind!=='function-decl')return;
+ const ret=fn.body.statements.find(s=>s.kind==='return');
+ let table=ret?.kind==='return'?ret.values[0]:undefined;
+ if(table?.kind==='identifier'){
+  const name=table.name;const declaration=analyzeBindings(fn.body).bindings.find(b=>b.name===name)?.declaration;
+  if(declaration?.kind==='local')table=declaration.values[0];
+ }
+ expect(table?.kind).toBe('table');if(table?.kind!=='table')return;
+ expect(table.fields.at(-1)).toEqual({value:{kind:'vararg'}});
+});
+it('does not assign a constructor phi into a closed captured cell',async()=>{
+ const {readFileSync}=await import('node:fs');const {decompile}=await import('../src/decompile.ts');
+ const result=decompile(readFileSync(new URL('./fixtures/large/closed-capture-reuse.luauc',import.meta.url)),{opcodeEncoding:'official'});
+ expect(result.ok).toBe(true);if(!result.ok)return;
+ const captured=analyzeBindings(result.ast.body).bindings.filter(b=>b.captured);
+ expect(captured.length).toBeGreaterThan(0);
+ for(const binding of captured){
+  expect(binding.writes.some(w=>w.statement.kind==='assign'&&w.statement.values.some(v=>v.kind==='table'))).toBe(false);
+ }
+});
+it('binds a conditional constructor to the enclosing phi',async()=>{
+ const {readFileSync}=await import('node:fs');const {decompile}=await import('../src/decompile.ts');
+ const result=decompile(readFileSync(new URL('./fixtures/large/conditional-table-fields.luauc',import.meta.url)),{opcodeEncoding:'official'});
+ expect(result.ok).toBe(true);if(!result.ok)return;
+ const bindings=analyzeBindings(result.ast.body).bindings;
+ expect(bindings.some(b=>b.writes.some(w=>w.statement.kind==='assign'&&w.statement.values.some(v=>v.kind==='table'))&&b.reads.length>0)).toBe(true);
+ expect([...analyzeBindings(result.ast.body).globals].sort()).toEqual(['print','type']);
+});
+it('evaluates a state-changing call before the following assignment target reads it',async()=>{
+ const {readFileSync}=await import('node:fs');const {decompile}=await import('../src/decompile.ts');
+ const result=decompile(readFileSync(new URL('./fixtures/large/call-before-target-read.luauc',import.meta.url)),{opcodeEncoding:'official'});
+ expect(result.ok).toBe(true);if(!result.ok)return;
+ const fn=result.ast.body.statements.find(s=>s.kind==='function-decl'&&s.name==='rotate');
+ expect(fn?.kind).toBe('function-decl');if(fn?.kind!=='function-decl')return;
+ expect(fn.body.statements[0]?.kind).toBe('local');
+ const local=fn.body.statements[0];if(local?.kind!=='local')return;
+ expect(local.values[0]?.kind).toBe('call');
+ expect(analyzeBindings(fn.body).bindings.find(b=>b.declaration===local)?.reads.length).toBeGreaterThan(0);
+});
