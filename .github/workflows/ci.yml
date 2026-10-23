@@ -207,3 +207,29 @@ jobs:
             ${{ runner.temp }}/large-freeze.json
           if-no-files-found: warn
           retention-days: 30
+      - name: Check sealed second-cohort development systems
+        run: |
+          npm run bench:large -- \
+            --manifest benchmarks/large/cohort2/manifest.json \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/cohort2-development" --require-local-match
+      - name: Recheck second-cohort reserved systems (regression, not a new blind score)
+        if: always()
+        run: |
+          npm run bench:large -- \
+            --manifest benchmarks/large/cohort2/manifest.json --partition holdout \
+            --freeze "$RUNNER_TEMP/large-freeze.json" \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/cohort2-holdout" --require-local-match
+      - name: Upload second-cohort evidence including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-cohort2-evidence
+          path: |
+            ${{ runner.temp }}/cohort2-development
+            ${{ runner.temp }}/cohort2-holdout
+          if-no-files-found: warn
+          retention-days: 30

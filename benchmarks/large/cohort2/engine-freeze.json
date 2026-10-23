@@ -1,0 +1,5 @@
+{
+  "buildSha256": "f595c6f82844f0fd95b755263fb9bbf251bb3ef9a9e9efb58d85ffbe455a9376",
+  "frozenAt": "2026-10-23T00:12:23.082Z",
+  "purpose": "Engine frozen before generation and first evaluation of cohort2; no tuning on these sources"
+}

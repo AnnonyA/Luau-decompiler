@@ -1,0 +1,287 @@
+[
+  {
+    "id": "archive-filesystem",
+    "source": "development/archive-filesystem.luau",
+    "partition": "development",
+    "sourceSha256": "55987296adaf47b47db98638daa7f8401d898e7a0924acd682300b7efcb46293",
+    "significantLines": 1325,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  },
+  {
+    "id": "document-layout",
+    "source": "development/document-layout.luau",
+    "partition": "development",
+    "sourceSha256": "2c8f73b3bbaed3dfb2dc80a2287e264343b3106bec2473e91d29b052b65788b1",
+    "significantLines": 1695,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  },
+  {
+    "id": "symbolic-algebra",
+    "source": "development/symbolic-algebra.luau",
+    "partition": "development",
+    "sourceSha256": "0771b2a64692745d524957400c1540485d3caaa0f01221e3555c76b9e205bf4b",
+    "significantLines": 1431,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  },
+  {
+    "id": "constraint-search",
+    "source": "holdout/constraint-search.luau",
+    "partition": "holdout",
+    "sourceSha256": "7be15c3a4a35d06a6e0edd12a77452213f1f59c639faa51786f904b39254b6e0",
+    "significantLines": 1027,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  },
+  {
+    "id": "geometry-pipeline",
+    "source": "holdout/geometry-pipeline.luau",
+    "partition": "holdout",
+    "sourceSha256": "44615fa268fde9d089d7c52081530e986bbd3f62cd4e21f194702d1eb50e3028",
+    "significantLines": 1163,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  }
+]
