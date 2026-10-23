@@ -413,6 +413,7 @@ class SourceBuilder {
     let test: Expression = lit(true);
     let bodyStart = loop.header;
     const headerSetup: Statement[] = [];
+    const exitSetup: Statement[] = [];
     if (loop.kind !== "infinite" && last && isCompare(last.opcode) && header.successors.length === 2) {
       // while: the header test jumps to the exit when true, so the loop test is its negation
       this.consumed.add(last.pc);
@@ -421,18 +422,31 @@ class SourceBuilder {
         bodyStart = bodyCandidate;
       }
       headerSetup.push(...this.emitStraight(header));
-      test = this.conditionFrom(last, true);
+      // Either edge can enter the body (e.g. while true / if not value
+      // then break). Derive polarity from that edge, not bytecode layout.
+      test = this.conditionFrom(last, bodyCandidate === header.fallthrough);
+      const exit = header.successors.find(id => !loop.blocks.includes(id));
+      const follow = this.loopFollow(loop);
+      if (exit !== undefined && follow !== undefined && exit !== follow) {
+        // Inlined returns may join after a normal-exit fallback assignment.
+        // Execute that region only when the entry test fails, not on break.
+        this.declareJoinPhis(follow, declarations);
+        const savedEnv = new Map(this.env);
+        exitSetup.push(...this.emitRange(exit, follow, new Set(visited)));
+        this.env.clear();
+        for (const [register, binding] of savedEnv) this.env.set(register, binding);
+      }
     }
     const body =
       loop.kind === "infinite"
         ? this.emitRange(loop.header, this.loopFollow(loop), new Set(visited))
         : this.emitLoopBody(loop, visited, bodyStart, bodyStart === loop.header ? undefined : loop.header);
-    if (headerSetup.length > 0) {
+    if (headerSetup.length > 0 || exitSetup.length > 0) {
       // These instructions belong to the header's backedge, not its preheader.
       // Materialized calls and register writes must run before EVERY test.
       return [...declarations, { kind: "while", test: lit(true), body: block([
         ...headerSetup,
-        { kind: "if", test: { kind: "unary", op: "not", argument: test }, consequent: block([{ kind: "break" }]), branches: [] },
+        { kind: "if", test: { kind: "unary", op: "not", argument: test }, consequent: block([...exitSetup, { kind: "break" }]), branches: [] },
         ...body,
       ]) }];
     }
@@ -943,7 +957,7 @@ class SourceBuilder {
     for (const member of this.phiFamilies.get(key) ?? [key]) this.phiNames.set(member, name);
   }
 
-  private phiNameFor(key: string, register: number, pc: number): string {
+  private phiNameFor(key: string, register: number, pc: number, reuse = true): string {
     const existing = this.phiNames.get(key);
     if (existing) {
       return existing;
@@ -956,7 +970,7 @@ class SourceBuilder {
         return loopName;
       }
     }
-    const reused = this.existingPhiName(register);
+    const reused = reuse ? this.existingPhiName(register) : undefined;
     if (reused) {
       this.setPhiName(key, reused);
       return reused;
@@ -1183,6 +1197,9 @@ class SourceBuilder {
         // value, but earlier definitions must not carry side effects we drop.
         const before = new Map(this.env);
         const produced = this.interpret(insn, target);
+        // Alias snapshots are real prelude statements. A scalar value path
+        // cannot absorb them by taking the first statement's initializer.
+        if (produced.statements.length > 1) return fail();
         if (value !== undefined && produced.statements.length > 0) {
           return fail();
         }
@@ -1207,6 +1224,11 @@ class SourceBuilder {
       } else if (insn.defs.length > 0 && this.capturedEnvDiff(before, insn.a) === undefined) {
         return fail();
       }
+    }
+    // Match emitStraight at the guard boundary: fields already written
+    // must capture their values before either branch reuses a register.
+    for (const pending of [...this.pendingStack].reverse()) {
+      if (!pending.flushed) statements.push(...this.flushPending(pending));
     }
     this.inDryRun = false;
     return { statements, value };
@@ -1277,19 +1299,26 @@ class SourceBuilder {
     }
     const last = block.instructions.at(-1);
     if (last && isCompare(last.opcode) && block.successors.length === 2) {
-      // Nested elseif chain.
+      // An elseif owns its guard prelude, and its alternatives start with
+      // the same register state. Capture the test before either arm reuses
+      // its temporary registers. Unsupported preludes remain statements.
+      if (this.blockDefines(block, t) || !this.dryRunBlock(block, t, () => undefined)) return undefined;
+      const guard = this.conditionFrom(last, true);
+      const guardEnv = new Map(this.env);
       const path = this.walkValuePath(block.fallthrough!, join, t, block.branch!);
       if (!path || path.value === undefined) {
         return undefined;
       }
+      this.env.clear();
+      for (const [register, binding] of guardEnv) this.env.set(register, binding);
       const elseValue = this.buildElseValue(block.branch!, join, t);
       if (elseValue === undefined) {
         return undefined;
       }
       const test =
         path.guards.length > 0
-          ? foldAnd([this.conditionFrom(last, true), ...path.guards])
-          : this.conditionFrom(last, true);
+          ? foldAnd([guard, ...path.guards])
+          : guard;
       return makeIfExpr(test, path.value, elseValue);
     }
     return this.blockValue(block, join, t);
@@ -1352,11 +1381,13 @@ class SourceBuilder {
       if (insn.defs.includes(t)) {
         const before = new Map(this.env);
         const produced = this.interpret(insn, target);
+        if (produced.statements.length > 1) return fail();
         const value = captureDefine(produced.statements, t) ?? this.capturedEnvDiff(before, insn.a);
         if (value === undefined) {
           return fail();
         }
         capture(value);
+        this.env.set(t, { expression: value, pinned: false });
         continue;
       }
       const before = new Map(this.env);
@@ -1467,6 +1498,28 @@ class SourceBuilder {
   /** Materialize every pending table observed by `insn` (via uses or defs). */
   private flushObserved(insn: DecodedInstruction, except?: PendingTable): Statement[] {
     const statements: Statement[] = [];
+    if (["call", "mutation", "metamethod", "table-read"].includes(effectOf(insn))) {
+      // Constructor fields are writes at their bytecode position. Delaying
+      // their reads/calls until the literal is flushed can snapshot state
+      // AFTER a callback mutates it. Materialize scalar field expressions,
+      // keeping the constructor open for a later SETLIST multret tail.
+      for (const pending of this.pendingStack) {
+        if (pending.flushed) continue;
+        const snapshot = (value: Expression): Expression => {
+          if (value.kind === "literal" || value.kind === "identifier" || value.kind === "function-expr") return value;
+          const name = this.allocator.reserve("field");
+          this.declareInScope(name);
+          statements.push({kind: "local", names: [name], values: [singleValue(value)]});
+          return ident(name);
+        };
+        pending.fields = pending.fields.map(field => {
+          // An open list tail must remain multiple-valued. Its table will
+          // be materialized by the normal register observation below.
+          if (field.list && isPackish(field.value)) return field;
+          return {...field, ...(field.key ? {key: snapshot(field.key)} : {}), value: snapshot(field.value)};
+        });
+      }
+    }
     const observed: PendingTable[] = [];
     const openEnd = insn.opcode === Opcode.SETLIST && insn.c === 0
       ? Math.min(...[...this.openPacks].filter(register => register >= insn.b), this.proto.maxStackSize)
@@ -1487,14 +1540,15 @@ class SourceBuilder {
 
   private flushPending(pending: PendingTable): Statement[] {
     pending.flushed = true;
+    const prefix: Statement[] = [];
     const fields: TableField[] = [...pending.fields];
     for (const nested of pending.nested) {
       const child = nested.child;
-      if (!child.flushed && child.selfRefs.length === 0) {
-        fields.push({ ...nested.field, value: this.nestedLiteral(child) });
+      if (!child.flushed && child.selfRefs.length === 0 && !this.hasMultipleTableReads(child)) {
+        fields.push({ ...nested.field, value: this.nestedLiteral(child, prefix) });
       } else if (!child.flushed) {
         // The child has self references and cannot be inlined; materialize it.
-        this.flushPending(child);
+        prefix.push(...this.flushPending(child));
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       } else {
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
@@ -1506,6 +1560,7 @@ class SourceBuilder {
     const phi = definition ? this.phiBinding(pending.register, definition) : undefined;
     const name = pending.name ?? phi ?? this.bindLocal(pending.register, pending.startPc, pending.role);
     const assignment = phi === name && this.isDeclaredInScope(name);
+    const aliases = assignment ? this.snapshotRegisterAliases(pending.register, name) : [];
     this.declareInScope(name);
     this.env.set(pending.register, { name, expression: ident(name), pinned: true });
     pending.name = name;
@@ -1522,7 +1577,7 @@ class SourceBuilder {
     }
     const literalFields = fields.filter((field) => !liftedFields.has(field));
     const literal: Expression = { kind: "table", fields: normalizeArrayFields(literalFields) };
-    const statements: Statement[] = [assignment
+    const statements: Statement[] = [...prefix, ...aliases, assignment
       ? { kind: "assign", targets: [ident(name)], values: [literal] }
       : { kind: "local", names: [name], values: [literal] }];
     for (const selfRef of pending.selfRefs) {
@@ -1536,21 +1591,33 @@ class SourceBuilder {
     return statements;
   }
 
-  private nestedLiteral(pending: PendingTable): Expression {
+  private nestedLiteral(pending: PendingTable, prefix: Statement[]): Expression {
     pending.flushed = true;
     const fields: TableField[] = [...pending.fields];
     for (const nested of pending.nested) {
       const child = nested.child;
-      if (!child.flushed && child.selfRefs.length === 0) {
-        fields.push({ ...nested.field, value: this.nestedLiteral(child) });
+      if (!child.flushed && child.selfRefs.length === 0 && !this.hasMultipleTableReads(child)) {
+        fields.push({ ...nested.field, value: this.nestedLiteral(child, prefix) });
       } else if (!child.flushed) {
-        this.flushPending(child);
+        prefix.push(...this.flushPending(child));
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       } else {
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       }
     }
     return { kind: "table", fields: normalizeArrayFields(fields) };
+  }
+
+  private hasMultipleTableReads(pending: PendingTable): boolean {
+    let reads = 0;
+    for (const insn of this.proto.instructions) {
+      if (insn.pc <= pending.startPc) continue;
+      const ownWrite = (insn.opcode === Opcode.SETLIST && insn.a === pending.register) ||
+        ([Opcode.SETTABLE, Opcode.SETTABLEKS, Opcode.SETTABLEN].includes(insn.opcode) && insn.b === pending.register);
+      if (!ownWrite && insn.uses.includes(pending.register) && ++reads > 1) return true;
+      if (insn.defs.includes(pending.register)) break;
+    }
+    return false;
   }
 
   private tableName(pending: PendingTable): string {
@@ -1763,17 +1830,6 @@ class SourceBuilder {
             // The value is a mutable local that gets reassigned later in the
             // block; capture the write as a statement so the table literal
             // does not read the final value.
-            if (this.inDryRun) {
-              if (pendingTable.name === undefined) {
-                pendingTable.name = this.bindLocal(pendingTable.register, pendingTable.startPc, pendingTable.role);
-              }
-              statements.push({
-                kind: "assign",
-                targets: [{ kind: "index", table: ident(pendingTable.name), key: this.readRegister(insn.c, insn) }],
-                values: [this.readRegister(insn.a, insn)],
-              });
-              return { statements };
-            }
             statements.push(...this.flushPending(pendingTable));
             statements.push({
               kind: "assign",
@@ -1818,19 +1874,6 @@ class SourceBuilder {
             // The value is a mutable local that gets reassigned later in the
             // block; capture the write as a statement so the table literal
             // does not read the final value.
-            if (this.inDryRun) {
-              // A dry run must not flush (a failed walk would lose the local
-              // declaration); name the table and emit the plain write.
-              if (pendingTable.name === undefined) {
-                pendingTable.name = this.bindLocal(pendingTable.register, pendingTable.startPc, pendingTable.role);
-              }
-              statements.push({
-                kind: "assign",
-                targets: [targetFor(ident(pendingTable.name))],
-                values: [this.readRegister(insn.a, insn)],
-              });
-              return { statements };
-            }
             statements.push(...this.flushPending(pendingTable));
             statements.push({
               kind: "assign",
@@ -2626,6 +2669,34 @@ class SourceBuilder {
 
   // -------------------------------------------------------- tables details
 
+  /** Register copies retain the old value when an SSA binding is assigned. */
+  private snapshotRegisterAliases(register: number, name: string): Statement[] {
+    const reads = (value: unknown): boolean => {
+      if (!value || typeof value !== "object") return false;
+      const node = value as {kind?: string; name?: string};
+      if (node.kind === "function-expr") return false;
+      if (node.kind === "identifier") return node.name === name;
+      return Object.values(value).some(reads);
+    };
+    const aliases = [...this.env].filter(([slot, binding]) => slot !== register &&
+      !binding.forwardRef && reads(binding.expression));
+    if (!aliases.length) return [];
+    const snapshot = this.allocator.reserve("snapshot");
+    this.declareInScope(snapshot);
+    const replace = (value: any): any => {
+      if (!value || typeof value !== "object" || value.kind === "function-expr") return value;
+      if (value.kind === "identifier" && value.name === name) return ident(snapshot);
+      if (Array.isArray(value)) return value.map(replace);
+      return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, replace(child)]));
+    };
+    for (const [slot, binding] of aliases) {
+      const expression = replace(binding.expression) as Expression;
+      this.env.set(slot, {...binding, expression,
+        ...(expression.kind === "identifier" ? {name: snapshot, pinned: true, alias: true} : {})});
+    }
+    return [{kind: "local", names: [snapshot], values: [ident(name)]}];
+  }
+
   private tableRole(insn: DecodedInstruction): string {
     if (this.proto === this.mainProto) {
       const ret = this.proto.instructions.find((i) => i.opcode === Opcode.RETURN);
@@ -2702,8 +2773,9 @@ class SourceBuilder {
     const envBind = this.env.get(register);
     if (envBind?.forwardRef && envBind.name) {
       const nilLiteral = isNilLiteral(expression);
+      const aliases = this.snapshotRegisterAliases(register, envBind.name);
       this.env.set(register, { name: envBind.name, expression: ident(envBind.name), pinned: true, nilLiteral, forwardRef: true });
-      return [{ kind: "assign", targets: [ident(envBind.name)], values: [expression] }];
+      return [...aliases, { kind: "assign", targets: [ident(envBind.name)], values: [expression] }];
     }
     // A literal nil has no identity worth keeping in a local: only a debug
     // name or a phi (real variable slot) pins it.
@@ -2746,8 +2818,9 @@ class SourceBuilder {
           this.env.set(register, { name: existing, expression: ident(existing), pinned: true, nilLiteral });
           return [{ kind: "local", names: [existing], values: [expression] }];
         }
+        const aliases = this.snapshotRegisterAliases(register, existing);
         this.env.set(register, { name: existing, expression: ident(existing), pinned: true, nilLiteral });
-        return [{ kind: "assign", targets: [ident(existing)], values: [expression] }];
+        return [...aliases, { kind: "assign", targets: [ident(existing)], values: [expression] }];
       }
       const name = this.allocator.reserve(preferred);
       this.declareInScope(name);
@@ -2769,10 +2842,12 @@ class SourceBuilder {
   /** Keep evaluation before statements that cannot become part of its consumer. */
   private crossesStatementBeforeUse(register: number, definition: DecodedInstruction, expression?: Expression): boolean {
     const dependencies = new Set<string>();
+    let containsCall = Boolean(definition.call);
     const collect = (value: unknown): void => {
       if (!value || typeof value !== "object") return;
       const node = value as {kind?: string; name?: string};
       if (node.kind === "function-expr") return;
+      if (node.kind === "call" || node.kind === "method-call") containsCall = true;
       if (node.kind === "identifier" && node.name) dependencies.add(node.name);
       Object.values(value).forEach(collect);
     };
@@ -2802,7 +2877,7 @@ class SourceBuilder {
       // A call can mutate the state observed by a later read. In particular
       // Luau evaluates assignment targets before RHS expressions, so moving
       // table.remove into an RHS would evaluate #table against the old state.
-      if (definition.call && ["table-read", "metamethod"].includes(effectOf(next))) return true;
+      if (containsCall && ["table-read", "metamethod"].includes(effectOf(next))) return true;
       // Calls whose results feed another expression may remain nested in
       // evaluation order. Discarded/multiple results emit a statement here.
       if (effectOf(next) === "mutation" ||
@@ -2890,7 +2965,10 @@ class SourceBuilder {
     const value = this.ir.ssa.defAt.get(`${home}:${insn.pc}:${register}`);
     const keys = value === undefined ? [] : this.phiInputs.get(value) ?? [];
     const key = keys.find(key => this.phiNames.has(key)) ?? keys[0];
-    if (key) return this.phiNameFor(key, register, insn.pc);
+    // A fresh definition feeding an as-yet unbound phi need not belong to
+    // the old local in the same physical slot (e.g. a nested table followed
+    // by a loop counter). Established phi families still keep their owner.
+    if (key) return this.phiNameFor(key, register, insn.pc, insn.uses.includes(register));
     return undefined;
   }
 

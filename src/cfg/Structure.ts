@@ -85,6 +85,13 @@ export function followOfLoop(
   if (ipdom !== undefined && ipdom >= 0 && ipdom < cfg.blocks.length && !loop.blocks.includes(ipdom) && ipdom !== loop.header) {
     return ipdom;
   }
+  // Without a common post-dominator, prefer the failed entry test. An earlier
+  // numbered exit may instead be a return from inside the body; treating
+  // that return as the follow loses both its scope and the fallback path.
+  if (loop.kind === "while") {
+    const exit = cfg.blocks[loop.header]?.successors.find(id => !loop.blocks.includes(id));
+    if (exit !== undefined) return exit;
+  }
   const outside: number[] = [];
   for (const id of loop.blocks) {
     for (const succ of cfg.blocks[id]?.successors ?? []) {
