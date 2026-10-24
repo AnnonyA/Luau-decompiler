@@ -1,4 +1,5 @@
 import { test } from "node:test";
+import { waitForBrowser } from "./browser-startup.mjs";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { once } from "node:events";
@@ -32,19 +33,10 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     "--no-first-run", "--remote-debugging-port=0", `--user-data-dir=${profile}`, "about:blank",
   ], { stdio: ["ignore", "ignore", "pipe"] });
   t.after(async () => {
-    if (browser.pid && browser.exitCode === null) { const done = once(browser, "exit"); browser.kill(); await done; }
+    if (browser.pid && browser.exitCode === null && browser.signalCode === null) { const done = once(browser, "exit"); browser.kill(); await done; }
     await rm(profile, { recursive: true, force: true, maxRetries: 3 });
   });
-  const endpoint = await new Promise((resolve, reject) => {
-    let log = "";
-    const timer = setTimeout(() => reject(new Error("Chromium did not start")), 10_000);
-    browser.once("error", (error) => { clearTimeout(timer); reject(error); });
-    browser.stderr.on("data", (chunk) => {
-      log += chunk;
-      const match = log.match(/DevTools listening on (ws:\/\/\S+)/);
-      if (match) { clearTimeout(timer); resolve(match[1]); }
-    });
-  });
+  const endpoint = await waitForBrowser(browser, profile);
   const socket = new WebSocket(endpoint);
   await once(socket, "open");
   t.after(() => socket.close());
