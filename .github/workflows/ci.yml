@@ -176,3 +176,59 @@ jobs:
           path: ${{ runner.temp }}/luau-syntax-report.json
           if-no-files-found: warn
           retention-days: 30
+      - name: Check reduced large-system regressions in the official VM
+        run: |
+          npm run bench:large:regressions -- \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/large-regressions"
+      - name: Check sealed large development systems
+        run: |
+          npm run bench:large -- \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/large-development" --require-local-match
+          node scripts/large/freeze-engine.mjs "$RUNNER_TEMP/large-development/report.json" "$RUNNER_TEMP/large-freeze.json"
+      - name: Check observed large regressions without external requests
+        run: |
+          npm run bench:large -- \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/large-holdout" --partition observed --require-local-match
+      - name: Upload large-system evidence including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-large-system-evidence
+          path: |
+            ${{ runner.temp }}/large-development
+            ${{ runner.temp }}/large-holdout
+            ${{ runner.temp }}/large-regressions
+            ${{ runner.temp }}/large-freeze.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Check sealed second-cohort development systems
+        run: |
+          npm run bench:large -- \
+            --manifest benchmarks/large/cohort2/manifest.json \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/cohort2-development" --require-local-match
+      - name: Check observed second-cohort regressions
+        if: always()
+        run: |
+          npm run bench:large -- \
+            --manifest benchmarks/large/cohort2/manifest.json --partition observed \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --output "$RUNNER_TEMP/cohort2-holdout" --require-local-match
+      - name: Upload second-cohort evidence including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-cohort2-evidence
+          path: |
+            ${{ runner.temp }}/cohort2-development
+            ${{ runner.temp }}/cohort2-holdout
+          if-no-files-found: warn
+          retention-days: 30

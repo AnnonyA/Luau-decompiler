@@ -13,6 +13,45 @@ function analyze(instructions: number[]) {
 }
 
 describe("SSA phi placement at reachable control-flow joins", () => {
+  it("joins parameters and backedge values when the entry block is a loop header", () => {
+    const { module } = decodeBytecode(compile(proto({numParams: 1,
+      constants: [{kind: "number", value: 1}], instructions: [
+        ad(Opcode.JUMPIFNOT, 0, 2),
+        abc(Opcode.SUBK, 0, 0, 0),
+        ad(Opcode.JUMPBACK, 0, -3),
+        abc(Opcode.RETURN, 0, 2, 0),
+      ]})), {opcodeEncoding: "official"});
+    const cfg = buildControlFlowGraph(module.prototypes[0]!);
+    const ssa = buildSsa(cfg, computeDominators(cfg));
+    const phi = ssa.phis.get(cfg.entry)?.find(p => p.register === 0);
+    expect(phi).toBeDefined();
+    expect(phi!.operands).toHaveLength(2);
+    expect(phi!.operands.map(p => ssa.values[p.value]!.op.kind).sort()).toEqual(["binary", "parameter"]);
+    expect(phi!.operands.find(p => p.pred === -1)).toBeDefined();
+  });
+  it.each([
+    {name: "SETLIST", consumer: [abc(Opcode.SETLIST, 3, 4, 0), 1], opcode: Opcode.SETLIST, uses: [3, 4, 5, 6]},
+    {name: "CALL", consumer: [abc(Opcode.CALL, 3, 0, 1)], opcode: Opcode.CALL, uses: [3, 4, 5, 6]},
+    {name: "RETURN", consumer: [abc(Opcode.RETURN, 4, 0, 0)], opcode: Opcode.RETURN, uses: [4, 5, 6]},
+  ])("keeps fixed $name inputs live before an open call tail", ({consumer, opcode, uses}) => {
+    const { module } = decodeBytecode(compile(proto({numParams: 3, instructions: [
+      abc(Opcode.NEWTABLE, 3, 0, 0), 3,
+      ad(Opcode.JUMPIFNOT, 0, 2),
+      ad(Opcode.LOADN, 5, 11),
+      ad(Opcode.JUMP, 0, 1),
+      ad(Opcode.LOADN, 5, 22),
+      abc(Opcode.MOVE, 4, 1, 0),
+      abc(Opcode.MOVE, 6, 2, 0),
+      abc(Opcode.CALL, 6, 1, 0),
+      ...consumer,
+      abc(Opcode.RETURN, 3, 2, 0),
+    ]})), {opcodeEncoding: "official"});
+    const prototype = module.prototypes[0]!;
+    expect(prototype.instructions.find(i => i.pc === 9 && i.opcode === opcode)!.uses).toEqual(uses);
+    const cfg = buildControlFlowGraph(prototype);
+    const ssa = buildSsa(cfg, computeDominators(cfg));
+    expect([...ssa.phis.values()].flat().some(p => p.register === 5 && p.operands.length === 2)).toBe(true);
+  });
   it("does not create a phi for a dead predecessor entering a live return block", () => {
     const { cfg, dom, ssa } = analyze([
       ad(Opcode.LOADN, 1, 3),         // 0: live initializer

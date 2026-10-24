@@ -1,0 +1,287 @@
+[
+  {
+    "id": "protocol-router",
+    "source": "development/protocol-router.luau",
+    "partition": "development",
+    "sourceSha256": "e0f164970ea66b3ca5650f760c8b384865003c0238c888b4b12bb86bbdef3afd",
+    "significantLines": 1429,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  },
+  {
+    "id": "transaction-store",
+    "source": "development/transaction-store.luau",
+    "partition": "development",
+    "sourceSha256": "1919878ebb2c4a102b0e5a924ef6f7039276c5642a9f37977baaf7a0ee68fd3d",
+    "significantLines": 1302,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  },
+  {
+    "id": "workflow-scheduler",
+    "source": "development/workflow-scheduler.luau",
+    "partition": "development",
+    "sourceSha256": "d17377e6ccebcbca764dfa718a804bf7e23dd49f8fd527446824cdfdeccada46",
+    "significantLines": 1274,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  },
+  {
+    "id": "query-planner",
+    "source": "holdout/query-planner.luau",
+    "partition": "holdout",
+    "sourceSha256": "ca7982feea54b381e8b8cc494acf2db84a9adba00476ec5b04f83142e713f1d1",
+    "significantLines": 1072,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  },
+  {
+    "id": "reactive-simulation",
+    "source": "holdout/reactive-simulation.luau",
+    "partition": "holdout",
+    "sourceSha256": "f4ea6ccab01801e5cd1a3d573e83c38a3abb8a98a8d5f865ac0fc2b5eaf7c35c",
+    "significantLines": 1164,
+    "inputs": [
+      [
+        "-7",
+        "0"
+      ],
+      [
+        "-3",
+        "1"
+      ],
+      [
+        "-1",
+        "2"
+      ],
+      [
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "2"
+      ],
+      [
+        "3",
+        "3"
+      ],
+      [
+        "5",
+        "0"
+      ],
+      [
+        "8",
+        "1"
+      ],
+      [
+        "13",
+        "2"
+      ],
+      [
+        "21",
+        "3"
+      ],
+      [
+        "34",
+        "4"
+      ]
+    ]
+  }
+]

@@ -145,6 +145,15 @@ export function buildSsa(cfg: ControlFlowGraph, dominators: DominatorTree): SsaF
     }
   };
 
+  // The virtual entry edge supplies the original parameter value before
+  // any backedge definition. -1 denotes that edge, not a bytecode block.
+  for (const phi of phis.get(cfg.entry) ?? []) {
+    const incoming = lookup(phi.register, cfg.entry, -1);
+    phi.operands.push({ pred: -1, value: incoming });
+    const value = values[phi.value]!;
+    if (value.op.kind === "phi") value.op.operands.push({ pred: -1, value: incoming });
+    values[incoming]!.uses.push(phi.value);
+  }
   rename(cfg.entry);
 
   const registerAt = new Map<string, number>();

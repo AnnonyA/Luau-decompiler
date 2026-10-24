@@ -80,3 +80,49 @@ describe("natural loop body boundaries", () => {
     expect(loops).toEqual([]);
   });
 });
+
+
+it("separates an unreachable jump after RETURN from its terminal block", () => {
+  const { cfg, loops } = analysis([
+    ad(Opcode.LOADN, 0, 7),
+    ret(),
+    ad(Opcode.JUMPBACK, 0, -3),
+  ]);
+  expect(cfg.blocks[0]!.successors).toEqual([]);
+  expect(cfg.blocks[1]!.unreachable).toBe(true);
+  expect(loops).toEqual([]);
+});
+
+
+it("retains an inner while sharing its header with a generic for", () => {
+  const { loops } = analysis([
+    ad(Opcode.FORGPREP, 0, 4),       // pc 0 -> iterator latch pc 5
+    ad(Opcode.JUMPIFNOT, 4, 2),      // pc 1 -> inner exit pc 4
+    abc(Opcode.LOADB, 4, 0, 0),
+    ad(Opcode.JUMPBACK, 0, -3),      // pc 3 -> inner header pc 1
+    abc(Opcode.MOVE, 5, 4, 0),
+    ad(Opcode.FORGLOOP, 0, -5), 2,  // pc 5 -> outer body pc 1
+    ret(),
+  ]);
+  expect(loops).toHaveLength(2);
+  expect(loops.map(loop => loop.kind).sort()).toEqual(["generic-for", "while"]);
+  expect(loops[0]!.header).toBe(loops[1]!.header);
+  expect(loops.find(loop => loop.kind === "while")!.blocks).toEqual([1, 2]);
+});
+
+it("includes a shared-header repeat's backedge in its enclosing iterator region", () => {
+  const { loops } = analysis([
+    ad(Opcode.FORGPREP, 0, 3),       // pc 0 -> iterator latch pc 4
+    abc(Opcode.LOADB, 4, 0, 0),      // pc 1: repeat body/header
+    ad(Opcode.JUMPIFNOT, 4, 1),      // pc 2 -> iterator latch pc 4
+    ad(Opcode.JUMPBACK, 0, -3),      // pc 3 -> repeat header pc 1
+    ad(Opcode.FORGLOOP, 0, -4), 2,  // pc 4 -> outer body pc 1
+    ret(),
+  ]);
+  const outer = loops.find(loop => loop.kind === "generic-for")!;
+  const inner = loops.find(loop => loop.kind === "repeat")!;
+  expect(loops).toHaveLength(2);
+  expect(inner.blocks).toEqual([1, 2]);
+  expect(outer.blocks).toEqual([1, 2, 3]);
+  expect(outer.blocks.length).toBeGreaterThan(inner.blocks.length);
+});

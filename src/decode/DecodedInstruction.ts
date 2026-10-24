@@ -311,6 +311,17 @@ function annotateEffects(insn: DecodedInstruction, constantCount: number): void 
         insn.uses = [b, r2, r3];
       }
       break;
+    case Opcode.CONSTRUCT:
+      // Bytecode.h / lvmexecute.cpp: AUX is a feedback template slot, not
+      // a constant index; R[A] receives an object or its fallback table.
+      insn.defs = [a];
+      insn.uses = [b];
+      break;
+    case Opcode.FINCONSTRUCT:
+      // The successful path takes its result arity/base from the following
+      // CALL. Its local operand is the constructed object in R[A].
+      insn.uses = [a];
+      break;
     case Opcode.NEWCLASS:
       insn.defs = [a];
       insn.constantIndex = aux;
@@ -351,8 +362,29 @@ function collectRange(from: number, to: number): number[] {
 export function decodeCodeStream(words: Uint32Array, constantCount: number): DecodedInstruction[] {
   const instructions: DecodedInstruction[] = [];
   let pc = 0;
+  let openBase: number | undefined;
   while (pc < words.length) {
     const insn = decodeInstructionWord(words, pc, constantCount);
+    if (openBase !== undefined) {
+      // Open consumers also read every fixed slot before their dynamic
+      // tail. Those uses keep conditional arguments/fields/returns in SSA.
+      if (insn.opcode === Opcode.SETLIST && insn.c === 0 && openBase >= insn.b) {
+        insn.uses = [insn.a, ...collectRange(insn.b, openBase)];
+      } else if ((insn.call?.argumentCount === "multret" ||
+          (insn.opcode === Opcode.RETURN && insn.b === 0)) && openBase >= insn.a) {
+        insn.uses = collectRange(insn.a, openBase);
+      }
+    }
+    if (insn.call) {
+      openBase = insn.call.resultCount === "multret" ? insn.a : undefined;
+    } else if (insn.opcode === Opcode.GETVARARGS && insn.b === 0) {
+      openBase = insn.a;
+    } else if (insn.opcode === Opcode.SETLIST || insn.opcode === Opcode.RETURN ||
+        (insn.jumpTarget !== undefined && !isFastCall(insn.opcode))) {
+      // Do not infer a top across control-flow joins. FASTCALL fallback
+      // setup may sit between an open producer and its consuming call.
+      openBase = undefined;
+    }
     instructions.push(insn);
     pc += insn.width;
   }

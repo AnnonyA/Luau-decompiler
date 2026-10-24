@@ -245,15 +245,19 @@ function computeDominanceFrontiers(cfg: ControlFlowGraph, idom: number[]): numbe
     // Dead bytecode may still jump into a reachable join. Those edges are
     // not executable and must not create dominance frontiers or SSA phis.
     const reachablePreds = block.predecessors.filter((pred) => !cfg.blocks[pred]?.unreachable);
-    if (reachablePreds.length < 2) {
+    // Entry has an implicit predecessor supplying parameters. A backedge
+    // into entry is therefore a join even with one explicit predecessor.
+    const entryJoin = block.id === cfg.entry && reachablePreds.length > 0;
+    if (reachablePreds.length < 2 && !entryJoin) {
       continue;
     }
     for (const pred of reachablePreds) {
       let runner = pred;
-      while (runner !== -1 && runner !== idom[block.id]) {
+      while (runner !== -1 && (entryJoin || runner !== idom[block.id])) {
         if (!frontier[runner]!.includes(block.id)) {
           frontier[runner]!.push(block.id);
         }
+        if (idom[runner] === runner) break;
         runner = idom[runner]!;
       }
     }

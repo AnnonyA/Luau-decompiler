@@ -1,0 +1,1781 @@
+{
+  "schemaVersion": 1,
+  "engine": {
+    "commit": "70027385525abdd3aa26b73c177c76b592c34067",
+    "dirty": true,
+    "buildSha256": "8f79112d42f086b5554ff6fc4e20511f4421f1892e7705ccf3e3121ca78df501",
+    "options": {
+      "opcodeEncoding": "official"
+    },
+    "cleanup": {
+      "typeAnnotations": "useful",
+      "ifExpressions": true,
+      "earlyReturn": true,
+      "interpolatedStrings": true,
+      "mathConstants": true
+    }
+  },
+  "holdoutEngine": {
+    "commit": "70027385525abdd3aa26b73c177c76b592c34067",
+    "dirty": true,
+    "buildSha256": "8f79112d42f086b5554ff6fc4e20511f4421f1892e7705ccf3e3121ca78df501",
+    "options": {
+      "opcodeEncoding": "official"
+    },
+    "cleanup": {
+      "typeAnnotations": "useful",
+      "ifExpressions": true,
+      "earlyReturn": true,
+      "interpolatedStrings": true,
+      "mathConstants": true
+    }
+  },
+  "freeze": {
+    "buildSha256": "8f79112d42f086b5554ff6fc4e20511f4421f1892e7705ccf3e3121ca78df501",
+    "frozenAt": "2026-10-22T18:21:39.305Z",
+    "developmentProfiles": 9,
+    "inputsPerProfile": 12,
+    "purpose": "First evaluation of two untouched holdout systems"
+  },
+  "profiles": [
+    {
+      "id": "protocol-router",
+      "optimization": 0,
+      "partition": "development",
+      "inputs": 12,
+      "sourceSha256": "e0f164970ea66b3ca5650f760c8b384865003c0238c888b4b12bb86bbdef3afd",
+      "bytecodeSha256": "3443d71a8c9f3d1ad099f23004871ebaf3f53e173f9fa18393af6f495da1dac1",
+      "bytecodeBytes": 44022,
+      "significantLines": 1429,
+      "originalMetrics": {
+        "structures": {
+          "if": 98,
+          "elseif": 16,
+          "while": 9,
+          "for": 35,
+          "repeat": 0,
+          "function": 76,
+          "return": 124,
+          "local": 484,
+          "break": 8,
+          "continue": 0
+        },
+        "assignments": 905,
+        "tokens": 12269,
+        "lines": 1599,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "MISMATCH",
+      "engines": {
+        "annony": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 214.97740000000002,
+          "peakRssKiB": 103600,
+          "similarity": 0.872164461247637,
+          "metrics": {
+            "structures": {
+              "if": 126,
+              "elseif": 24,
+              "while": 9,
+              "for": 35,
+              "repeat": 0,
+              "function": 76,
+              "return": 124,
+              "local": 585,
+              "break": 8,
+              "continue": 1
+            },
+            "assignments": 1014,
+            "tokens": 13127,
+            "lines": 1927,
+            "generatedNames": 1466,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "29a085e383c0670acfdb960d346ea5c8d6d072d9f3b767311a6a1bac7635a67e"
+        },
+        "lunaux": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 657.538306,
+          "similarity": 0.9476023873224944,
+          "metrics": {
+            "structures": {
+              "if": 98,
+              "elseif": 16,
+              "while": 9,
+              "for": 35,
+              "repeat": 0,
+              "function": 76,
+              "return": 124,
+              "local": 412,
+              "break": 8,
+              "continue": 0
+            },
+            "assignments": 839,
+            "tokens": 12030,
+            "lines": 1653,
+            "generatedNames": 64,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "9f3dd047c40232d156bd37f4e3ba464829cd4c47bac8ff2bd8bc2d2582333735"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 1502.632998,
+          "similarity": 0.9667143148866653,
+          "metrics": {
+            "structures": {
+              "if": 106,
+              "elseif": 16,
+              "while": 9,
+              "for": 35,
+              "repeat": 0,
+              "function": 76,
+              "return": 124,
+              "local": 479,
+              "break": 8,
+              "continue": 0
+            },
+            "assignments": 906,
+            "tokens": 12220,
+            "lines": 1815,
+            "generatedNames": 2010,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "947f6a814703059053c273d0a0571337dade15ec540164266d0c0966d9d0beb1"
+        }
+      }
+    },
+    {
+      "id": "protocol-router",
+      "optimization": 1,
+      "partition": "development",
+      "inputs": 12,
+      "sourceSha256": "e0f164970ea66b3ca5650f760c8b384865003c0238c888b4b12bb86bbdef3afd",
+      "bytecodeSha256": "7201814c1f9079eafb2dd37dbcc1eed8348cf716c1e930f30421b2de2e52346b",
+      "bytecodeBytes": 41749,
+      "significantLines": 1429,
+      "originalMetrics": {
+        "structures": {
+          "if": 98,
+          "elseif": 16,
+          "while": 9,
+          "for": 35,
+          "repeat": 0,
+          "function": 76,
+          "return": 124,
+          "local": 484,
+          "break": 8,
+          "continue": 0
+        },
+        "assignments": 905,
+        "tokens": 12269,
+        "lines": 1599,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "MISMATCH",
+      "engines": {
+        "annony": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 188.49910699999998,
+          "peakRssKiB": 87544,
+          "similarity": 0.8574676597412779,
+          "metrics": {
+            "structures": {
+              "if": 124,
+              "elseif": 24,
+              "while": 9,
+              "for": 35,
+              "repeat": 0,
+              "function": 76,
+              "return": 124,
+              "local": 638,
+              "break": 8,
+              "continue": 1
+            },
+            "assignments": 1042,
+            "tokens": 13245,
+            "lines": 1911,
+            "generatedNames": 1496,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "bd5c0667806f6fa544152f347596686c3ba619150970966a70cd52d16f775c9b"
+        },
+        "lunaux": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 600.6178330000002,
+          "similarity": 0.9382807668521954,
+          "metrics": {
+            "structures": {
+              "if": 106,
+              "elseif": 16,
+              "while": 9,
+              "for": 35,
+              "repeat": 0,
+              "function": 76,
+              "return": 124,
+              "local": 412,
+              "break": 8,
+              "continue": 0
+            },
+            "assignments": 839,
+            "tokens": 11990,
+            "lines": 1653,
+            "generatedNames": 64,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "c1c67ffafe9dbc04efe8dbdf323276fff9a1abaf113f80cf68be89a4f6ad9622"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 1874.2009630000002,
+          "similarity": 0.9625143231298084,
+          "metrics": {
+            "structures": {
+              "if": 106,
+              "elseif": 16,
+              "while": 9,
+              "for": 35,
+              "repeat": 0,
+              "function": 76,
+              "return": 124,
+              "local": 477,
+              "break": 8,
+              "continue": 0
+            },
+            "assignments": 906,
+            "tokens": 12171,
+            "lines": 1815,
+            "generatedNames": 2012,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "2fbc7d1c75392bed8fed751b98c81455a783fc630f51444fcd22765c9c58eab6"
+        }
+      }
+    },
+    {
+      "id": "protocol-router",
+      "optimization": 2,
+      "partition": "development",
+      "inputs": 12,
+      "sourceSha256": "e0f164970ea66b3ca5650f760c8b384865003c0238c888b4b12bb86bbdef3afd",
+      "bytecodeSha256": "3d847d6d4354d3b7efc5c39a94516bd4f6cfac6d55a25de8b8247f71d6a0c458",
+      "bytecodeBytes": 60746,
+      "significantLines": 1429,
+      "originalMetrics": {
+        "structures": {
+          "if": 98,
+          "elseif": 16,
+          "while": 9,
+          "for": 35,
+          "repeat": 0,
+          "function": 76,
+          "return": 124,
+          "local": 484,
+          "break": 8,
+          "continue": 0
+        },
+        "assignments": 905,
+        "tokens": 12269,
+        "lines": 1599,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "MISMATCH",
+      "engines": {
+        "annony": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 245.66212499999997,
+          "peakRssKiB": 118224,
+          "similarity": 0.7561678498629367,
+          "metrics": {
+            "structures": {
+              "if": 141,
+              "elseif": 24,
+              "while": 9,
+              "for": 108,
+              "repeat": 0,
+              "function": 76,
+              "return": 132,
+              "local": 789,
+              "break": 8,
+              "continue": 1
+            },
+            "assignments": 1445,
+            "tokens": 16189,
+            "lines": 2477,
+            "generatedNames": 1779,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "501fcda7197108bd6fe29b485e48d7a0daafd6700798f1772faca50ffdd5d28b"
+        },
+        "lunaux": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 455.46867100000054,
+          "similarity": 0.8560419004863449,
+          "metrics": {
+            "structures": {
+              "if": 131,
+              "elseif": 16,
+              "while": 9,
+              "for": 108,
+              "repeat": 0,
+              "function": 84,
+              "return": 140,
+              "local": 523,
+              "break": 8,
+              "continue": 0
+            },
+            "assignments": 1122,
+            "tokens": 14465,
+            "lines": 2124,
+            "generatedNames": 128,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "376356c7f96e558eecc446524d46cf23080e2cc19c2bee9bcfdf60a1c71956e9"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 1426.9386259999992,
+          "similarity": 0.8589955022488756,
+          "metrics": {
+            "structures": {
+              "if": 131,
+              "elseif": 16,
+              "while": 9,
+              "for": 108,
+              "repeat": 0,
+              "function": 84,
+              "return": 140,
+              "local": 538,
+              "break": 8,
+              "continue": 0
+            },
+            "assignments": 1110,
+            "tokens": 14415,
+            "lines": 2248,
+            "generatedNames": 2072,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "6acb0d7c29c2c88ad59c23bd28895b8cf4bb0ea4a40dfb78c884353d1a82d83d"
+        }
+      }
+    },
+    {
+      "id": "transaction-store",
+      "optimization": 0,
+      "partition": "development",
+      "inputs": 12,
+      "sourceSha256": "1919878ebb2c4a102b0e5a924ef6f7039276c5642a9f37977baaf7a0ee68fd3d",
+      "bytecodeSha256": "f9f62b95ed3a503cb449e939fbe8c8f86f2f6f127046fe4eb8e46e827943fbdb",
+      "bytecodeBytes": 46643,
+      "significantLines": 1302,
+      "originalMetrics": {
+        "structures": {
+          "if": 114,
+          "elseif": 6,
+          "while": 0,
+          "for": 56,
+          "repeat": 0,
+          "function": 88,
+          "return": 94,
+          "local": 452,
+          "break": 0,
+          "continue": 0
+        },
+        "assignments": 874,
+        "tokens": 11126,
+        "lines": 1577,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "MISMATCH",
+      "engines": {
+        "annony": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 215.938439,
+          "peakRssKiB": 111536,
+          "similarity": 0.8501971660094466,
+          "metrics": {
+            "structures": {
+              "if": 125,
+              "elseif": 18,
+              "while": 0,
+              "for": 56,
+              "repeat": 0,
+              "function": 88,
+              "return": 94,
+              "local": 553,
+              "break": 0,
+              "continue": 24
+            },
+            "assignments": 991,
+            "tokens": 11955,
+            "lines": 1860,
+            "generatedNames": 1348,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "63a12906d92cb81ca6b9ba0b7cc78706a52edc54c6926be679f5c692d8515cbe"
+        },
+        "lunaux": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 706.1970640000001,
+          "similarity": 0.9196307358131958,
+          "metrics": {
+            "structures": {
+              "if": 101,
+              "elseif": 19,
+              "while": 0,
+              "for": 56,
+              "repeat": 0,
+              "function": 88,
+              "return": 95,
+              "local": 450,
+              "break": 0,
+              "continue": 12
+            },
+            "assignments": 865,
+            "tokens": 10976,
+            "lines": 1716,
+            "generatedNames": 240,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "2cbba22f98bf5b766a5f803d3b283c7b229e5f2fe5ec65d1761e221ce5736b93",
+          "reason": "execution error or different observable trace"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 2005.397907,
+          "similarity": 0.9097703244622676,
+          "metrics": {
+            "structures": {
+              "if": 108,
+              "elseif": 12,
+              "while": 0,
+              "for": 56,
+              "repeat": 0,
+              "function": 88,
+              "return": 94,
+              "local": 419,
+              "break": 0,
+              "continue": 0
+            },
+            "assignments": 833,
+            "tokens": 10822,
+            "lines": 1708,
+            "generatedNames": 1643,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "c77d58c126883aacb895b4dfaa705dd6a810ada01f5be35b71c6964dcf7371a0"
+        }
+      }
+    },
+    {
+      "id": "transaction-store",
+      "optimization": 1,
+      "partition": "development",
+      "inputs": 12,
+      "sourceSha256": "1919878ebb2c4a102b0e5a924ef6f7039276c5642a9f37977baaf7a0ee68fd3d",
+      "bytecodeSha256": "7ab1e6013e0dd2cbb2ca08ced2d5b242c04b5d9dcb7effc3862858b92a51b97d",
+      "bytecodeBytes": 43535,
+      "significantLines": 1302,
+      "originalMetrics": {
+        "structures": {
+          "if": 114,
+          "elseif": 6,
+          "while": 0,
+          "for": 56,
+          "repeat": 0,
+          "function": 88,
+          "return": 94,
+          "local": 452,
+          "break": 0,
+          "continue": 0
+        },
+        "assignments": 874,
+        "tokens": 11126,
+        "lines": 1577,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "MISMATCH",
+      "engines": {
+        "annony": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 191.860263,
+          "peakRssKiB": 108048,
+          "similarity": 0.8090535698680416,
+          "metrics": {
+            "structures": {
+              "if": 117,
+              "elseif": 18,
+              "while": 0,
+              "for": 56,
+              "repeat": 0,
+              "function": 88,
+              "return": 94,
+              "local": 616,
+              "break": 0,
+              "continue": 18
+            },
+            "assignments": 976,
+            "tokens": 11764,
+            "lines": 1893,
+            "generatedNames": 1240,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "7063019d7547a6253c332f4b3600522ea55545d9db8f23ae36524f3dc918970c"
+        },
+        "lunaux": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 438.9424390000004,
+          "similarity": 0.8646692321788528,
+          "metrics": {
+            "structures": {
+              "if": 101,
+              "elseif": 19,
+              "while": 0,
+              "for": 56,
+              "repeat": 0,
+              "function": 88,
+              "return": 95,
+              "local": 396,
+              "break": 0,
+              "continue": 12
+            },
+            "assignments": 811,
+            "tokens": 10706,
+            "lines": 1662,
+            "generatedNames": 85,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "6f24d038866f519e8d59d7273ac903e31ed465caf691470ed0d7394ccbbc0581",
+          "reason": "execution error or different observable trace"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 2292.514537,
+          "similarity": 0.8658688721526591,
+          "metrics": {
+            "structures": {
+              "if": 108,
+              "elseif": 12,
+              "while": 0,
+              "for": 56,
+              "repeat": 0,
+              "function": 88,
+              "return": 94,
+              "local": 407,
+              "break": 0,
+              "continue": 0
+            },
+            "assignments": 767,
+            "tokens": 10521,
+            "lines": 1697,
+            "generatedNames": 1598,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "42ae435d0bacd0a84b94321301bf7cb77da613bad706cd267c233c47f3bae6d2"
+        }
+      }
+    },
+    {
+      "id": "transaction-store",
+      "optimization": 2,
+      "partition": "development",
+      "inputs": 12,
+      "sourceSha256": "1919878ebb2c4a102b0e5a924ef6f7039276c5642a9f37977baaf7a0ee68fd3d",
+      "bytecodeSha256": "c6b96adca3b689f242601355114b383fbbd41091d768321f72fec9327b1013e5",
+      "bytecodeBytes": 50731,
+      "significantLines": 1302,
+      "originalMetrics": {
+        "structures": {
+          "if": 114,
+          "elseif": 6,
+          "while": 0,
+          "for": 56,
+          "repeat": 0,
+          "function": 88,
+          "return": 94,
+          "local": 452,
+          "break": 0,
+          "continue": 0
+        },
+        "assignments": 874,
+        "tokens": 11126,
+        "lines": 1577,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "MISMATCH",
+      "engines": {
+        "annony": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 192.22268599999998,
+          "peakRssKiB": 117140,
+          "similarity": 0.7826856612998399,
+          "metrics": {
+            "structures": {
+              "if": 123,
+              "elseif": 24,
+              "while": 0,
+              "for": 63,
+              "repeat": 0,
+              "function": 88,
+              "return": 94,
+              "local": 656,
+              "break": 0,
+              "continue": 18
+            },
+            "assignments": 1120,
+            "tokens": 12604,
+            "lines": 2086,
+            "generatedNames": 1219,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "2cb0b81c607c092af0a72d7c70f8e31faac6451cf97ab0ea1b6a876a275fe7ae"
+        },
+        "lunaux": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 394.9977710000003,
+          "similarity": 0.8389068521061257,
+          "metrics": {
+            "structures": {
+              "if": 107,
+              "elseif": 25,
+              "while": 0,
+              "for": 63,
+              "repeat": 0,
+              "function": 88,
+              "return": 95,
+              "local": 421,
+              "break": 0,
+              "continue": 12
+            },
+            "assignments": 941,
+            "tokens": 11455,
+            "lines": 1834,
+            "generatedNames": 71,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "53c1db93d2f0483d31b2e92779fa5325fe0fdd76e48327d1cbec4cd96c418fc7",
+          "reason": "execution error or different observable trace"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 1592.8214910000006,
+          "similarity": 0.8381557175439381,
+          "metrics": {
+            "structures": {
+              "if": 114,
+              "elseif": 18,
+              "while": 0,
+              "for": 63,
+              "repeat": 0,
+              "function": 88,
+              "return": 94,
+              "local": 429,
+              "break": 0,
+              "continue": 0
+            },
+            "assignments": 887,
+            "tokens": 11239,
+            "lines": 1866,
+            "generatedNames": 1669,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "fc0d74ee5efe8edabcd407a89c18f1e7e5274075bae6e7a5c0c811b1f6aa0da9"
+        }
+      }
+    },
+    {
+      "id": "workflow-scheduler",
+      "optimization": 0,
+      "partition": "development",
+      "inputs": 12,
+      "sourceSha256": "d17377e6ccebcbca764dfa718a804bf7e23dd49f8fd527446824cdfdeccada46",
+      "bytecodeSha256": "61d48c5800360f943e2607b857cce8057acb7423338fd46393ee0083661b8db6",
+      "bytecodeBytes": 51118,
+      "significantLines": 1274,
+      "originalMetrics": {
+        "structures": {
+          "if": 116,
+          "elseif": 21,
+          "while": 3,
+          "for": 79,
+          "repeat": 0,
+          "function": 78,
+          "return": 82,
+          "local": 383,
+          "break": 4,
+          "continue": 0
+        },
+        "assignments": 1004,
+        "tokens": 12681,
+        "lines": 1574,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "MISMATCH",
+      "engines": {
+        "annony": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 233.60612700000001,
+          "peakRssKiB": 127680,
+          "similarity": 0.7787708671886542,
+          "metrics": {
+            "structures": {
+              "if": 137,
+              "elseif": 22,
+              "while": 3,
+              "for": 79,
+              "repeat": 0,
+              "function": 78,
+              "return": 82,
+              "local": 591,
+              "break": 4,
+              "continue": 31
+            },
+            "assignments": 1255,
+            "tokens": 14399,
+            "lines": 2235,
+            "generatedNames": 1020,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "fdacddde706bad04036dadd3554328050db9fda492168a3273d2f2707dd87922"
+        },
+        "lunaux": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 616.2681639999992,
+          "similarity": 0.9148969639767186,
+          "metrics": {
+            "structures": {
+              "if": 116,
+              "elseif": 21,
+              "while": 3,
+              "for": 79,
+              "repeat": 0,
+              "function": 78,
+              "return": 80,
+              "local": 435,
+              "break": 4,
+              "continue": 0
+            },
+            "assignments": 1034,
+            "tokens": 12751,
+            "lines": 2000,
+            "generatedNames": 54,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "542322b1a0fc605f910e77f2a3ef539e1cb845eb18b570cb3198424e85daaf3f"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 2116.097266999999,
+          "similarity": 0.9249507292077257,
+          "metrics": {
+            "structures": {
+              "if": 128,
+              "elseif": 15,
+              "while": 3,
+              "for": 79,
+              "repeat": 0,
+              "function": 78,
+              "return": 82,
+              "local": 445,
+              "break": 3,
+              "continue": 2
+            },
+            "assignments": 1025,
+            "tokens": 12693,
+            "lines": 2034,
+            "generatedNames": 1496,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "1d35633a90ee67080c1220586c2c42c2e716f1685fe3bdb45d44b8e8a72a34fb"
+        }
+      }
+    },
+    {
+      "id": "workflow-scheduler",
+      "optimization": 1,
+      "partition": "development",
+      "inputs": 12,
+      "sourceSha256": "d17377e6ccebcbca764dfa718a804bf7e23dd49f8fd527446824cdfdeccada46",
+      "bytecodeSha256": "c7892deb5f007857114af1a06db485efcdabe5d022bb97d515242d2a76bb6c4d",
+      "bytecodeBytes": 49208,
+      "significantLines": 1274,
+      "originalMetrics": {
+        "structures": {
+          "if": 116,
+          "elseif": 21,
+          "while": 3,
+          "for": 79,
+          "repeat": 0,
+          "function": 78,
+          "return": 82,
+          "local": 383,
+          "break": 4,
+          "continue": 0
+        },
+        "assignments": 1004,
+        "tokens": 12681,
+        "lines": 1574,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "MISMATCH",
+      "engines": {
+        "annony": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 258.53099699999996,
+          "peakRssKiB": 123572,
+          "similarity": 0.8110825688073394,
+          "metrics": {
+            "structures": {
+              "if": 141,
+              "elseif": 22,
+              "while": 3,
+              "for": 79,
+              "repeat": 0,
+              "function": 78,
+              "return": 82,
+              "local": 740,
+              "break": 4,
+              "continue": 31
+            },
+            "assignments": 1413,
+            "tokens": 14573,
+            "lines": 2319,
+            "generatedNames": 947,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "ce3e5e67bc4801e61c2e4f8d72f0b7cb8e94eeaee69a7e43df55c3ca3df8d2e7"
+        },
+        "lunaux": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 395.465275999999,
+          "similarity": 0.9111425650703783,
+          "metrics": {
+            "structures": {
+              "if": 122,
+              "elseif": 21,
+              "while": 3,
+              "for": 79,
+              "repeat": 0,
+              "function": 78,
+              "return": 80,
+              "local": 435,
+              "break": 4,
+              "continue": 0
+            },
+            "assignments": 1034,
+            "tokens": 12757,
+            "lines": 2000,
+            "generatedNames": 54,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "1a42faea1416695355af7ffbbc49750de27d16ab0f8ba4ab39a4b1e8811c88e6"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 1363.8669799999989,
+          "similarity": 0.9225610477730877,
+          "metrics": {
+            "structures": {
+              "if": 128,
+              "elseif": 15,
+              "while": 3,
+              "for": 79,
+              "repeat": 0,
+              "function": 78,
+              "return": 82,
+              "local": 446,
+              "break": 3,
+              "continue": 2
+            },
+            "assignments": 1020,
+            "tokens": 12672,
+            "lines": 2035,
+            "generatedNames": 1466,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "8a6ece430bc792184a5dfc90406fa96202f46b5aa6171ba7a7431051db2d402a"
+        }
+      }
+    },
+    {
+      "id": "workflow-scheduler",
+      "optimization": 2,
+      "partition": "development",
+      "inputs": 12,
+      "sourceSha256": "d17377e6ccebcbca764dfa718a804bf7e23dd49f8fd527446824cdfdeccada46",
+      "bytecodeSha256": "9ba5493ad511f9947cd23f34795f10ae0e65208a04784531813255c7eaf67e62",
+      "bytecodeBytes": 64309,
+      "significantLines": 1274,
+      "originalMetrics": {
+        "structures": {
+          "if": 116,
+          "elseif": 21,
+          "while": 3,
+          "for": 79,
+          "repeat": 0,
+          "function": 78,
+          "return": 82,
+          "local": 383,
+          "break": 4,
+          "continue": 0
+        },
+        "assignments": 1004,
+        "tokens": 12681,
+        "lines": 1574,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "MISMATCH",
+      "engines": {
+        "annony": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 280.41085599999997,
+          "peakRssKiB": 108972,
+          "similarity": 0.7624359152002217,
+          "metrics": {
+            "structures": {
+              "if": 160,
+              "elseif": 22,
+              "while": 3,
+              "for": 115,
+              "repeat": 0,
+              "function": 84,
+              "return": 94,
+              "local": 845,
+              "break": 10,
+              "continue": 31
+            },
+            "assignments": 1590,
+            "tokens": 16191,
+            "lines": 2591,
+            "generatedNames": 1043,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "0c6b68c4026aa7f470286f5db34f53687d6b101c5db1f722dd385f3e005d6e06"
+        },
+        "lunaux": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 466.9041279999983,
+          "similarity": 0.8610174571064658,
+          "metrics": {
+            "structures": {
+              "if": 141,
+              "elseif": 21,
+              "while": 3,
+              "for": 115,
+              "repeat": 0,
+              "function": 84,
+              "return": 92,
+              "local": 483,
+              "break": 10,
+              "continue": 0
+            },
+            "assignments": 1158,
+            "tokens": 14017,
+            "lines": 2189,
+            "generatedNames": 139,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "24635b95c9069ba5d680a44077b4c5823d1291204e45891f871b0b2826d9f263"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 2660.741721999999,
+          "similarity": 0.8726782504493709,
+          "metrics": {
+            "structures": {
+              "if": 144,
+              "elseif": 18,
+              "while": 3,
+              "for": 115,
+              "repeat": 0,
+              "function": 84,
+              "return": 94,
+              "local": 519,
+              "break": 9,
+              "continue": 2
+            },
+            "assignments": 1159,
+            "tokens": 14027,
+            "lines": 2294,
+            "generatedNames": 1498,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "01d99eb45e639f812a35076dfa6d21c5596ab47387824a3b83e3285c44efedb8"
+        }
+      }
+    },
+    {
+      "id": "query-planner",
+      "optimization": 0,
+      "partition": "holdout",
+      "inputs": 12,
+      "sourceSha256": "ca7982feea54b381e8b8cc494acf2db84a9adba00476ec5b04f83142e713f1d1",
+      "bytecodeSha256": "06a782c14c0f4dab1bafa225896e0d3f1d5b3ecb9a0770b0c8ca6829b59a2944",
+      "bytecodeBytes": 45161,
+      "significantLines": 1072,
+      "originalMetrics": {
+        "structures": {
+          "if": 112,
+          "elseif": 69,
+          "while": 0,
+          "for": 37,
+          "repeat": 0,
+          "function": 76,
+          "return": 112,
+          "local": 327,
+          "break": 0,
+          "continue": 0
+        },
+        "assignments": 836,
+        "tokens": 11153,
+        "lines": 1355,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "NO MEDIDO",
+      "engines": {
+        "annony": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 201.79514899999998,
+          "peakRssKiB": 118900,
+          "similarity": 0.8076663858466723,
+          "metrics": {
+            "structures": {
+              "if": 138,
+              "elseif": 67,
+              "while": 0,
+              "for": 37,
+              "repeat": 0,
+              "function": 76,
+              "return": 121,
+              "local": 476,
+              "break": 0,
+              "continue": 4
+            },
+            "assignments": 991,
+            "tokens": 12591,
+            "lines": 1811,
+            "generatedNames": 961,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "74a3918962d50043d7ad3b6640e98827fc149e7c18ca5a23d7a1452106be53c9",
+          "reason": "execution error or different observable trace"
+        },
+        "lunaux": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 488.0906409999999,
+          "similarity": 0.9307310973158859,
+          "metrics": {
+            "structures": {
+              "if": 128,
+              "elseif": 53,
+              "while": 0,
+              "for": 37,
+              "repeat": 0,
+              "function": 76,
+              "return": 108,
+              "local": 326,
+              "break": 0,
+              "continue": 2
+            },
+            "assignments": 831,
+            "tokens": 11242,
+            "lines": 1616,
+            "generatedNames": 57,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "5f1126aa20f29673fb2d2f1b868ab2d46551f219295c207afd24a86e05150a7d"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 3739.361912,
+          "similarity": 0.9391351254158051,
+          "metrics": {
+            "structures": {
+              "if": 144,
+              "elseif": 42,
+              "while": 0,
+              "for": 37,
+              "repeat": 0,
+              "function": 76,
+              "return": 114,
+              "local": 310,
+              "break": 0,
+              "continue": 1
+            },
+            "assignments": 820,
+            "tokens": 11097,
+            "lines": 1702,
+            "generatedNames": 957,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "d0718dc8080e93384a1e416557dd6cfd1780de16d895c1fd2364dc1545fc5612"
+        }
+      }
+    },
+    {
+      "id": "query-planner",
+      "optimization": 1,
+      "partition": "holdout",
+      "inputs": 12,
+      "sourceSha256": "ca7982feea54b381e8b8cc494acf2db84a9adba00476ec5b04f83142e713f1d1",
+      "bytecodeSha256": "076cb77679aa0ece24d48490d1511259f19d9ac7928973a6928f3181136d08ca",
+      "bytecodeBytes": 41772,
+      "significantLines": 1072,
+      "originalMetrics": {
+        "structures": {
+          "if": 112,
+          "elseif": 69,
+          "while": 0,
+          "for": 37,
+          "repeat": 0,
+          "function": 76,
+          "return": 112,
+          "local": 327,
+          "break": 0,
+          "continue": 0
+        },
+        "assignments": 836,
+        "tokens": 11153,
+        "lines": 1355,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "NO MEDIDO",
+      "engines": {
+        "annony": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 200.412472,
+          "peakRssKiB": 120988,
+          "similarity": 0.8347265243773072,
+          "metrics": {
+            "structures": {
+              "if": 140,
+              "elseif": 65,
+              "while": 0,
+              "for": 37,
+              "repeat": 0,
+              "function": 76,
+              "return": 121,
+              "local": 534,
+              "break": 0,
+              "continue": 4
+            },
+            "assignments": 1053,
+            "tokens": 12418,
+            "lines": 1732,
+            "generatedNames": 901,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "6cb8da28b8a0bfb218de363277f5772801262c230df014eb47a1870a22771489",
+          "reason": "execution error or different observable trace"
+        },
+        "lunaux": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 465.05150500000036,
+          "similarity": 0.9112076299646263,
+          "metrics": {
+            "structures": {
+              "if": 130,
+              "elseif": 53,
+              "while": 0,
+              "for": 37,
+              "repeat": 0,
+              "function": 76,
+              "return": 108,
+              "local": 311,
+              "break": 0,
+              "continue": 2
+            },
+            "assignments": 816,
+            "tokens": 11184,
+            "lines": 1601,
+            "generatedNames": 12,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "5749773ec031f0dbc7d72a2360f93d0b031e827e1d63a7a880054438791e6f10"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 3578.164232000001,
+          "similarity": 0.928808690187629,
+          "metrics": {
+            "structures": {
+              "if": 145,
+              "elseif": 42,
+              "while": 0,
+              "for": 37,
+              "repeat": 0,
+              "function": 76,
+              "return": 114,
+              "local": 313,
+              "break": 0,
+              "continue": 1
+            },
+            "assignments": 825,
+            "tokens": 11129,
+            "lines": 1708,
+            "generatedNames": 966,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "e454e30fa01f9f83b81ed19c627c3c994cf59fd6660976c6d0bc9818db687d59"
+        }
+      }
+    },
+    {
+      "id": "query-planner",
+      "optimization": 2,
+      "partition": "holdout",
+      "inputs": 12,
+      "sourceSha256": "ca7982feea54b381e8b8cc494acf2db84a9adba00476ec5b04f83142e713f1d1",
+      "bytecodeSha256": "1a24beded21402c2d6ecef3375cbb805ac74ce07b7137b32e918311c6647192a",
+      "bytecodeBytes": 74163,
+      "significantLines": 1072,
+      "originalMetrics": {
+        "structures": {
+          "if": 112,
+          "elseif": 69,
+          "while": 0,
+          "for": 37,
+          "repeat": 0,
+          "function": 76,
+          "return": 112,
+          "local": 327,
+          "break": 0,
+          "continue": 0
+        },
+        "assignments": 836,
+        "tokens": 11153,
+        "lines": 1355,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "NO MEDIDO",
+      "engines": {
+        "annony": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 293.826505,
+          "peakRssKiB": 107760,
+          "similarity": 0.6688471548146585,
+          "metrics": {
+            "structures": {
+              "if": 209,
+              "elseif": 65,
+              "while": 0,
+              "for": 37,
+              "repeat": 0,
+              "function": 140,
+              "return": 233,
+              "local": 911,
+              "break": 0,
+              "continue": 5
+            },
+            "assignments": 1644,
+            "tokens": 17285,
+            "lines": 2629,
+            "generatedNames": 1173,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "a522477e6aba2a35a1d13c5ff54e6717e2341f110721210ae6bc4a39f678fba6",
+          "reason": "execution error or different observable trace"
+        },
+        "lunaux": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 603.8852470000002,
+          "similarity": 0.747964371726748,
+          "metrics": {
+            "structures": {
+              "if": 174,
+              "elseif": 53,
+              "while": 0,
+              "for": 37,
+              "repeat": 0,
+              "function": 140,
+              "return": 196,
+              "local": 514,
+              "break": 0,
+              "continue": 2
+            },
+            "assignments": 1188,
+            "tokens": 15010,
+            "lines": 2251,
+            "generatedNames": 614,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "722ed542cb69685b3169bb00c349476e645d0bb30c1d02dcbf73a34ddf2c0583"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 4764.253165,
+          "similarity": 0.7303048151965837,
+          "metrics": {
+            "structures": {
+              "if": 253,
+              "elseif": 42,
+              "while": 0,
+              "for": 37,
+              "repeat": 0,
+              "function": 140,
+              "return": 202,
+              "local": 640,
+              "break": 0,
+              "continue": 1
+            },
+            "assignments": 1368,
+            "tokens": 16015,
+            "lines": 2852,
+            "generatedNames": 1830,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "bb302c63551eb6aac2a52163e1de7abb605a0a0dd800f0bec3caa315bbcc10b2"
+        }
+      }
+    },
+    {
+      "id": "reactive-simulation",
+      "optimization": 0,
+      "partition": "holdout",
+      "inputs": 12,
+      "sourceSha256": "f4ea6ccab01801e5cd1a3d573e83c38a3abb8a98a8d5f865ac0fc2b5eaf7c35c",
+      "bytecodeSha256": "2f71242b003fe9391b1e55b5a67021ff214fcfeec297d0b140ad35960aee6c9e",
+      "bytecodeBytes": 45046,
+      "significantLines": 1164,
+      "originalMetrics": {
+        "structures": {
+          "if": 116,
+          "elseif": 44,
+          "while": 3,
+          "for": 23,
+          "repeat": 0,
+          "function": 100,
+          "return": 102,
+          "local": 334,
+          "break": 2,
+          "continue": 0
+        },
+        "assignments": 667,
+        "tokens": 11178,
+        "lines": 1402,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "NO MEDIDO",
+      "engines": {
+        "annony": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 191.461142,
+          "peakRssKiB": 102276,
+          "similarity": 0.8482195470999242,
+          "metrics": {
+            "structures": {
+              "if": 148,
+              "elseif": 44,
+              "while": 3,
+              "for": 23,
+              "repeat": 0,
+              "function": 100,
+              "return": 102,
+              "local": 544,
+              "break": 2,
+              "continue": 4
+            },
+            "assignments": 853,
+            "tokens": 12584,
+            "lines": 1835,
+            "generatedNames": 1042,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "80afe3c49ebac855b7fab4a047f7106ee9e120177d263071b020c6a0d97b5a59",
+          "reason": "execution error or different observable trace"
+        },
+        "lunaux": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 402.8004409999994,
+          "similarity": 0.9702572347266881,
+          "metrics": {
+            "structures": {
+              "if": 119,
+              "elseif": 41,
+              "while": 3,
+              "for": 23,
+              "repeat": 0,
+              "function": 100,
+              "return": 98,
+              "local": 333,
+              "break": 2,
+              "continue": 1
+            },
+            "assignments": 663,
+            "tokens": 11218,
+            "lines": 1526,
+            "generatedNames": 105,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "a2e9d39be018db7abbab31ab5abbbdb5964037b3717a0518bb3efc03278885a4",
+          "reason": "execution error or different observable trace"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 2876.746465,
+          "similarity": 0.9771571339341483,
+          "metrics": {
+            "structures": {
+              "if": 120,
+              "elseif": 42,
+              "while": 3,
+              "for": 23,
+              "repeat": 0,
+              "function": 100,
+              "return": 103,
+              "local": 333,
+              "break": 2,
+              "continue": 0
+            },
+            "assignments": 667,
+            "tokens": 11240,
+            "lines": 1644,
+            "generatedNames": 1005,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "8b2b63bf5d544afb73ceea95819f9d7efec4065ad4af88f59a162e35a1f4798b"
+        }
+      }
+    },
+    {
+      "id": "reactive-simulation",
+      "optimization": 1,
+      "partition": "holdout",
+      "inputs": 12,
+      "sourceSha256": "f4ea6ccab01801e5cd1a3d573e83c38a3abb8a98a8d5f865ac0fc2b5eaf7c35c",
+      "bytecodeSha256": "912d096e0d42a25f9ea4db6d7ff288e060826b78366b3e56a150f416b7491204",
+      "bytecodeBytes": 42194,
+      "significantLines": 1164,
+      "originalMetrics": {
+        "structures": {
+          "if": 116,
+          "elseif": 44,
+          "while": 3,
+          "for": 23,
+          "repeat": 0,
+          "function": 100,
+          "return": 102,
+          "local": 334,
+          "break": 2,
+          "continue": 0
+        },
+        "assignments": 667,
+        "tokens": 11178,
+        "lines": 1402,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "NO MEDIDO",
+      "engines": {
+        "annony": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 183.445558,
+          "peakRssKiB": 93284,
+          "similarity": 0.850634178905207,
+          "metrics": {
+            "structures": {
+              "if": 157,
+              "elseif": 43,
+              "while": 3,
+              "for": 23,
+              "repeat": 0,
+              "function": 100,
+              "return": 102,
+              "local": 595,
+              "break": 2,
+              "continue": 4
+            },
+            "assignments": 914,
+            "tokens": 12794,
+            "lines": 1893,
+            "generatedNames": 1047,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "f1863a8dfbabdf126d3905af99437db8b3f9901154aa5df3ca643f857fa80146",
+          "reason": "execution error or different observable trace"
+        },
+        "lunaux": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 550.0856490000006,
+          "similarity": 0.9623711110119181,
+          "metrics": {
+            "structures": {
+              "if": 130,
+              "elseif": 41,
+              "while": 3,
+              "for": 23,
+              "repeat": 0,
+              "function": 100,
+              "return": 98,
+              "local": 333,
+              "break": 2,
+              "continue": 1
+            },
+            "assignments": 663,
+            "tokens": 11229,
+            "lines": 1526,
+            "generatedNames": 103,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "f331dce91fc225b154ad97191b72546916f51ca5543311b02d033d30444cf3b4",
+          "reason": "execution error or different observable trace"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 3075.2465389999998,
+          "similarity": 0.9693913974656434,
+          "metrics": {
+            "structures": {
+              "if": 120,
+              "elseif": 42,
+              "while": 3,
+              "for": 23,
+              "repeat": 0,
+              "function": 100,
+              "return": 103,
+              "local": 321,
+              "break": 2,
+              "continue": 0
+            },
+            "assignments": 678,
+            "tokens": 11238,
+            "lines": 1662,
+            "generatedNames": 1058,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "4cb56ae412ad42250a3a6d0726708e50786d0b8a2f747d09295128214bcd927f"
+        }
+      }
+    },
+    {
+      "id": "reactive-simulation",
+      "optimization": 2,
+      "partition": "holdout",
+      "inputs": 12,
+      "sourceSha256": "f4ea6ccab01801e5cd1a3d573e83c38a3abb8a98a8d5f865ac0fc2b5eaf7c35c",
+      "bytecodeSha256": "0484bc5b76f8a22a2c006c62e4f4cfa108f1f4e96c3e0c838f8fc803bfbef828",
+      "bytecodeBytes": 67948,
+      "significantLines": 1164,
+      "originalMetrics": {
+        "structures": {
+          "if": 116,
+          "elseif": 44,
+          "while": 3,
+          "for": 23,
+          "repeat": 0,
+          "function": 100,
+          "return": 102,
+          "local": 334,
+          "break": 2,
+          "continue": 0
+        },
+        "assignments": 667,
+        "tokens": 11178,
+        "lines": 1402,
+        "generatedNames": 0,
+        "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+      },
+      "before": "NO MEDIDO",
+      "engines": {
+        "annony": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 204.9072,
+          "peakRssKiB": 93976,
+          "similarity": 0.7183167021713944,
+          "metrics": {
+            "structures": {
+              "if": 175,
+              "elseif": 43,
+              "while": 3,
+              "for": 23,
+              "repeat": 0,
+              "function": 141,
+              "return": 144,
+              "local": 825,
+              "break": 2,
+              "continue": 5
+            },
+            "assignments": 1235,
+            "tokens": 15583,
+            "lines": 2363,
+            "generatedNames": 1182,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "34abb6bc15467d7e996cf855685fb222b92599869b9b5ce0bb86d8514e2660d9",
+          "reason": "execution error or different observable trace"
+        },
+        "lunaux": {
+          "status": "MISMATCH",
+          "matchingInputs": 0,
+          "parser": true,
+          "elapsedMs": 525.4673210000001,
+          "similarity": 0.8485967503692762,
+          "metrics": {
+            "structures": {
+              "if": 148,
+              "elseif": 41,
+              "while": 3,
+              "for": 23,
+              "repeat": 0,
+              "function": 141,
+              "return": 140,
+              "local": 466,
+              "break": 2,
+              "continue": 1
+            },
+            "assignments": 856,
+            "tokens": 13198,
+            "lines": 1870,
+            "generatedNames": 636,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "470c1f455a9a75c42c45eca361bf6a4708d7618a474f75b68489f7c9d7ddfd4a",
+          "reason": "execution error or different observable trace"
+        },
+        "luaexpert": {
+          "status": "MATCH",
+          "matchingInputs": 12,
+          "parser": true,
+          "elapsedMs": 3893.0172969999985,
+          "similarity": 0.8600626339212131,
+          "metrics": {
+            "structures": {
+              "if": 134,
+              "elseif": 46,
+              "while": 3,
+              "for": 23,
+              "repeat": 0,
+              "function": 141,
+              "return": 145,
+              "local": 453,
+              "break": 2,
+              "continue": 0
+            },
+            "assignments": 837,
+            "tokens": 13094,
+            "lines": 1975,
+            "generatedNames": 1275,
+            "caveat": "lexical proxies, not AST, lexical-scope verification, or a readability verdict; interpolation bodies opaque"
+          },
+          "sourceSha256": "e7b653805f128e0a83de0edc4ff7e09eb7c7bd680f93dcb3c64b74780a2b26e6"
+        }
+      }
+    }
+  ],
+  "counts": {
+    "annony": {
+      "match": 9,
+      "total": 15,
+      "matchingInputs": 108
+    },
+    "lunaux": {
+      "match": 9,
+      "total": 15,
+      "matchingInputs": 108
+    },
+    "luaexpert": {
+      "match": 15,
+      "total": 15,
+      "matchingInputs": 180
+    }
+  }
+}

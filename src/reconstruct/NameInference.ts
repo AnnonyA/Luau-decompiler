@@ -367,17 +367,33 @@ function coalesceInStatements(statements: Statement[]): Statement[] {
   const empties: string[] = [];
   gatherEmptyGenerated(statements, empties);
   const rename = new Map<string, string>();
+  const root: Block = { kind: "block", statements };
+  const { bindings } = analyzeBindings(root);
+  const bindingOf = (name: string) => {
+    const matches = bindings.filter(binding => binding.name === name);
+    return matches.length === 1 ? matches[0] : undefined;
+  };
   let acc: string | undefined;
+  let members: string[] = [];
   for (const name of empties) {
+    const binding = bindingOf(name);
+    // Captures outlive their lexical last use; duplicate spellings may denote
+    // different bindings. Neither can be coalesced by a name-based rewrite.
+    if (!binding || binding.captured) continue;
     if (!acc) {
       acc = name;
+      members = [name];
       continue;
     }
-    if (nameReadAfterDecl(statements, acc, name)) {
+    const owner = bindingOf(acc)!;
+    if ((owner.scope !== root && owner.scope !== binding.scope) ||
+        members.some(member => nameReadAfterDecl(statements, member, name))) {
       acc = name;
+      members = [name];
       continue;
     }
     rename.set(name, acc);
+    members.push(name);
   }
   if (rename.size === 0) {
     return statements;
@@ -575,9 +591,8 @@ function statementReadsName(statement: Statement, name: string): boolean {
         item.values.forEach(visitExpr);
         break;
       case "compound-assign":
-        if (!(item.target.kind === "identifier" && item.target.name === name)) {
-          visitExpr(item.target);
-        }
+        // Compound assignment reads the old value before writing the new one.
+        visitExpr(item.target);
         visitExpr(item.value);
         break;
       case "expression-stmt":

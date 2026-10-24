@@ -1,0 +1,7 @@
+{
+  "buildSha256": "8f79112d42f086b5554ff6fc4e20511f4421f1892e7705ccf3e3121ca78df501",
+  "frozenAt": "2026-10-22T18:21:39.305Z",
+  "developmentProfiles": 9,
+  "inputsPerProfile": 12,
+  "purpose": "First evaluation of two untouched holdout systems"
+}

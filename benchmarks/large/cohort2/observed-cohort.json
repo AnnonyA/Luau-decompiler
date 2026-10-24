@@ -1,0 +1,13 @@
+{
+  "cohort": "cohort2",
+  "formerPartition": "holdout",
+  "programs": [
+    "constraint-search",
+    "geometry-pipeline"
+  ],
+  "status": "development-regression",
+  "promotedAt": "2026-10-23T22:54:47.930Z",
+  "reason": "After preserving first frozen independent measurement and a recheck without tuning, use the observed failures to diagnose general algorithms. Future tuned runs are not blind evaluations.",
+  "firstBlindEvidence": "benchmarks/results/cohort2-2026-10-23/first-summary.json",
+  "sealedManifestUnchanged": true
+}

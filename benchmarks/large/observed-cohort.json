@@ -1,0 +1,12 @@
+{
+  "cohort": "pilot",
+  "formerPartition": "holdout",
+  "programs": [
+    "query-planner",
+    "reactive-simulation"
+  ],
+  "status": "development-regression",
+  "reason": "User authorized diagnosis and fixes using previously observed sources. These cases are no longer blind evidence.",
+  "firstBlindEvidence": "benchmarks/results/large-2026-10-22/blind-summary.json",
+  "sealedManifestUnchanged": true
+}

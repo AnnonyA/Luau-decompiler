@@ -1,0 +1,7 @@
+{
+  "buildSha256": "360d4f9118159205023adb7794ccc18cae623236c17ee0487d9ce6002809fc80",
+  "frozenAt": "2026-10-23T07:07:05.651Z",
+  "supersedes": "engine-freeze.json",
+  "reason": "Independent review found closed captured register reuse before any cohort2 decompilation. Fixed and revalidated first pilot; no cohort2 results inspected.",
+  "purpose": "Engine for first evaluation of sealed cohort2"
+}

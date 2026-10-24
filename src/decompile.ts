@@ -6,6 +6,7 @@ import { decodeBytecode, type DecodeOptions, type DecodeResult } from "./decode/
 import { BytecodeError } from "./decode/BytecodeError.js";
 import type { BytecodeModule } from "./decode/Prototype.js";
 import type { BytecodeProfile } from "./decode/BytecodeProfile.js";
+import { Opcode } from "./decode/Opcode.js";
 import { DiagnosticBag, type Diagnostic } from "./diagnostics.js";
 import { disassembleModule } from "./disasm/Disassembler.js";
 import { printLuau, hasArtificialComments, type PrintOptions } from "./print/LuauPrinter.js";
@@ -72,6 +73,20 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
 
   for (const note of decoded.profile.notes) {
     diagnostics.info("profile", note);
+  }
+
+  // Decoding experimental class instructions is useful for inspection, but
+  // the source AST does not represent classes yet. Do not report success
+  // after silently dropping their constructors or method registration.
+  for (const prototype of decoded.module.prototypes) {
+    for (const instruction of prototype.instructions) {
+      if (instruction.opcode === Opcode.NEWCLASS || instruction.opcode === Opcode.NEWCLASSMEMBER ||
+          instruction.opcode === Opcode.CONSTRUCT || instruction.opcode === Opcode.FINCONSTRUCT) {
+        const error = `unsupported opcode ${instruction.mnemonic} in prototype ${prototype.id} at pc ${instruction.pc}: experimental class source reconstruction is not implemented`;
+        diagnostics.error("unsupported-opcode", error, { prototypeId: prototype.id, pc: instruction.pc });
+        return { ok: false, error, code: "unsupported-opcode", diagnostics: [...diagnostics.all] };
+      }
+    }
   }
 
   const main = decoded.module.prototypes[decoded.module.mainProtoId];

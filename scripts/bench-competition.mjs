@@ -14,7 +14,7 @@ import { launch, classify, sourceMetrics, similarity } from './competition/evalu
 const ROOT=fileURLToPath(new URL('../',import.meta.url));
 const ENGINE_OPTIONS={opcodeEncoding:'official'};
 const PIN='9d7748a4f324213a18cb8283fa2a77c330225fa0';
-async function buildDigest() {
+export async function buildDigest() {
   const files=(await readdir(join(ROOT,'dist'),{recursive:true})).filter(f=>f.endsWith('.js')).sort();
   const entries=[];
   for(const file of files)entries.push([file,digest(await readFile(join(ROOT,'dist',file)))]);
@@ -22,8 +22,8 @@ async function buildDigest() {
 }
 export function markdown(report) {
   const rows=['# Three-engine comparison against authored originals','',
-    `Compiler revision (declared): ${report.compiler.revision}. Profiles: O0/O1, debug level 1.`,
-    'Each of the 12 independent programs runs with three inputs. MATCH means identical observed traces, not universal equivalence.',
+    `Compiler revision (declared): ${report.compiler.revision}. Profiles: ${[...new Set(report.results.map(r=>'O'+r.optimization))].join('/')}, debug level 1.`,
+    `${new Set(report.results.map(r=>r.id)).size} programs; ${report.results.length} profiles; ${report.results.reduce((n,r)=>n+r.inputs.length,0)} input executions per measured engine. MATCH means identical observed traces, not universal equivalence.`,
     'No ranking is assigned to unmeasured engines. Structural/token metrics are secondary lexical diagnostics, not semantic scores.','',
     '| Program | O | AnnonyA | LunaUX | Lua.Expert |','|---|---:|---|---|---|'];
   for(const r of report.results)rows.push(`| ${r.id} | ${r.optimization} | ${r.engines.annony.status} | ${r.engines.lunaux.status} | ${r.engines.luaexpert.status} |`);
@@ -38,10 +38,11 @@ export function markdown(report) {
   for(const r of report.results)for(const [name,e]of Object.entries(r.engines))if(e.reason)rows.push(`- ${r.id}/O${r.optimization} ${name}: ${e.status} — ${String(e.reason).replace(/[\r\n|<>]/g,' ').slice(0,300)}`);
   return rows.join('\n')+'\n';
 }
-export async function runCompetition({compiler,interpreter,output,cache,external=false,maxRequests=48,compilerRevision=PIN}={}) {
+export async function runCompetition({compiler,interpreter,output,cache,external=false,maxRequests=48,compilerRevision=PIN,corpus,optimizations=[0,1],localRunner}={}) {
   if(!compiler||!interpreter||!output)throw new Error('--luau-compile, --luau and --output are required');
-  const manifest=JSON.parse(await readFile(join(ROOT,'benchmarks/originals/manifest.json'),'utf8'));
-  if(manifest.length!==12 || new Set(manifest.map(c=>c.id)).size!==12)throw new Error('expected 12 independent originals');
+  const manifest=corpus ?? JSON.parse(await readFile(join(ROOT,'benchmarks/originals/manifest.json'),'utf8'));
+  if(!corpus && (manifest.length!==12 || new Set(manifest.map(c=>c.id)).size!==12))throw new Error('expected 12 independent originals');
+  if(!manifest.length || !optimizations.length || optimizations.some(o=>![0,1,2].includes(o)))throw new Error('empty corpus or invalid optimization');
   await mkdir(output,{recursive:true});
   const client=new ExternalClient({cache:cache??join(output,'api-cache'),enabled:external,maxRequests});
   const report={schemaVersion:1,measuredAt:new Date().toISOString(),
@@ -52,24 +53,31 @@ export async function runCompetition({compiler,interpreter,output,cache,external
       buildSha256:await buildDigest(),options:ENGINE_OPTIONS,cleanup:defaultCleanupOptions(ENGINE_OPTIONS)},
     externalRequests:0,results:[]};
   for(const entry of manifest){
-    if(!/^[a-z-]+$/.test(entry.id)||!Array.isArray(entry.inputs)||entry.inputs.length<3)throw new Error('invalid owned fixture manifest');
-    const source=await readFile(join(ROOT,'benchmarks/originals',entry.id+'.luau'));
-    for(const optimization of [0,1]){
+    if(!/^[a-z][a-z0-9-]*$/.test(entry.id)||!Array.isArray(entry.inputs)||entry.inputs.length<3)throw new Error('invalid owned fixture manifest');
+    const source=await readFile(entry.sourcePath ?? join(ROOT,'benchmarks/originals',entry.id+'.luau'));
+    if(entry.sourceSha256 && entry.sourceSha256!==digest(source))throw new Error('source hash changed: '+entry.id);
+    for(const optimization of optimizations){
       const directory=join(output,entry.id,`O${optimization}`);await mkdir(directory,{recursive:true});
       const original=join(directory,'original.luau');await writeFile(original,source);
       const args=['--binary',`-O${optimization}`,'-g1',original];
       const start=performance.now();
       const compiled=spawnSync(compiler,args,{timeout:15000,maxBuffer:4*1024*1024});
       if(compiled.status!==0||compiled.error||!compiled.stdout?.length)throw new Error(`compile ${entry.id}: ${compiled.stderr?.toString()??compiled.error}`);
-      const bytes=compiled.stdout;await writeFile(join(directory,'bytecode.luauc'),bytes);
-      const item={id:entry.id,optimization,inputs:entry.inputs,sourceSha256:digest(source),bytecodeSha256:digest(bytes),
-        bytecodeVersion:bytes[0],compilerArgs:args,compileMs:performance.now()-start,
+      const bytes=compiled.stdout;
+      if(entry.bytecodeSha256 && entry.bytecodeSha256[optimization]!==digest(bytes))throw Error(`reference bytecode hash changed: ${entry.id}/O${optimization}`);
+      await writeFile(join(directory,'bytecode.luauc'),bytes);
+      const item={id:entry.id,partition:entry.partition,significantLines:entry.significantLines,optimization,inputs:entry.inputs,sourceSha256:digest(source),bytecodeSha256:digest(bytes),
+        sourceBytes:source.length,bytecodeBytes:bytes.length,bytecodeVersion:bytes[0],compilerArgs:args,compileMs:performance.now()-start,
         originalMetrics:sourceMetrics(source.toString('utf8')),
         originalRuns:entry.inputs.map(input=>launch(interpreter,[`-O${optimization}`,original,'-a',...input],directory)),engines:{}};
       if(item.originalRuns.some(r=>!r.ok||!r.stdout))throw new Error(`invalid original ${entry.id}: ${JSON.stringify(item.originalRuns)}`);
       for(const name of ['annony','lunaux','luaexpert']){
         let recovered=null,metadata={};
-        if(name==='annony'){
+        if(name==='annony' && localRunner){
+          const local=await localRunner(bytes,directory,ENGINE_OPTIONS);
+          recovered=local.source===undefined?null:Buffer.from(local.source);
+          metadata=local.metadata;
+        } else if(name==='annony'){
           const begin=performance.now();const result=decompile(new Uint8Array(bytes),ENGINE_OPTIONS);
           metadata={elapsedMs:performance.now()-begin,diagnostics:result.diagnostics};
           if(result.ok){
