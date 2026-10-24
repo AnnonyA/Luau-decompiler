@@ -211,13 +211,16 @@ describe("loop reconstruction", () => {
   it("recovers while with an inverted header test", () => {
     const source = sourceOf(
       proto({
-        numParams: 1,
+        numParams: 2,
         locals: [{ name: "n", startPc: 0, endPc: 8, register: 0 }],
         instructions: [
-          ad(Opcode.JUMPIFNOT, 0, 3),
-          abc(Opcode.LOADN, 1, 1, 0),
-          abc(Opcode.RETURN, 1, 2, 0),
-          ad(Opcode.JUMPBACK, 0, -4),
+          ad(Opcode.JUMPIFNOT, 0, 4),
+          // Keep a reachable backedge: a return on every iteration describes
+          // a one-shot conditional, not a natural loop.
+          ad(Opcode.JUMPIFNOT, 1, 2),
+          abc(Opcode.LOADN, 2, 1, 0),
+          abc(Opcode.RETURN, 2, 2, 0),
+          ad(Opcode.JUMPBACK, 0, -5),
           abc(Opcode.RETURN, 0, 2, 0),
         ],
       }),

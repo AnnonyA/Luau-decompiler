@@ -7,7 +7,7 @@ import type {
   TableField,
 } from "../ast/Ast.js";
 import { block, ident, lit } from "../ast/Ast.js";
-import { renameFreeBindings } from "../analysis/Bindings.js";
+import { analyzeBindings, renameFreeBindings } from "../analysis/Bindings.js";
 import { effectOf } from "../analysis/SideEffects.js";
 import { buildControlFlowGraph, type BasicBlock, type ControlFlowGraph } from "../cfg/ControlFlowGraph.js";
 import { computeDominators, computePostDominators, type DominatorTree, type PostDominatorTree } from "../cfg/Dominators.js";
@@ -135,7 +135,8 @@ class SourceBuilder {
   readonly params: string[] = [];
   private readonly env = new Map<number, Binding>();
   private readonly emitted = new Set<number>();
-  private readonly loopByHeader: Map<number, NaturalLoop>;
+  private readonly loopsByHeader = new Map<number, NaturalLoop[]>();
+  private readonly loopVisitKeys = new Map<NaturalLoop, number>();
   /** Blocks that are the exit (follow) of some natural loop. */
   private readonly loopFollows = new Set<number>();
   /** Loops whose AST is currently being emitted. Break/continue are only valid here. */
@@ -166,7 +167,14 @@ class SourceBuilder {
     private readonly allocator: NameAllocator,
     private readonly captures: Map<number, CaptureBinding> = new Map(),
   ) {
-    this.loopByHeader = new Map(ir.loops.map((loop) => [loop.header, loop]));
+    for (const [index, loop] of ir.loops.entries()) {
+      const siblings = this.loopsByHeader.get(loop.header) ?? [];
+      siblings.push(loop);
+      siblings.sort((a, b) => b.blocks.length - a.blocks.length);
+      this.loopsByHeader.set(loop.header, siblings);
+      this.loopVisitKeys.set(loop, -index - 1);
+    }
+    const requiredLoopPhis = new Set<string>();
     for (const loop of ir.loops) {
       const follow = this.loopFollow(loop);
       if (follow !== undefined) {
@@ -188,10 +196,15 @@ class SourceBuilder {
           const key = `phi:${blockId}:${phi.register}`;
           if (loopVarRegisters.has(phi.register) || this.isDeadLoopPhi(loop, phi.register)) {
             this.deadLoopPhis.add(key);
+          } else {
+            requiredLoopPhis.add(key);
           }
         }
       }
     }
+    // Shared headers can carry an inner loop's mutable iterator variable.
+    // Being control machinery for the outer loop does not kill that phi.
+    for (const key of requiredLoopPhis) this.deadLoopPhis.delete(key);
     // Phi-to-phi edges carry the same register value across nested joins.
     // Destruct these connected phis into one lexical binding, declared at
     // the enclosing split, rather than unrelated locals in each arm.
@@ -312,21 +325,29 @@ class SourceBuilder {
       if (visited.has(current) || this.emitted.has(current)) {
         break;
       }
+      const activeLoop = this.currentLoop();
+      if (activeLoop && current === this.loopFollow(activeLoop)) {
+        // A nested conditional may have its own follow beyond this region.
+        // Crossing the enclosing loop exit is a break, never permission to
+        // emit the post-loop statements inside one alternative.
+        statements.push({ kind: "break" });
+        break;
+      }
       const block = this.ir.cfg.blocks[current];
       if (!block || block.unreachable) {
         break;
       }
-      const loop = this.loopByHeader.get(current);
-      if (loop && !visited.has(-loop.header - 1)) {
-        visited.add(-loop.header - 1);
+      const loop = this.loopsByHeader.get(current)?.find(candidate => !visited.has(this.loopVisitKeys.get(candidate)!));
+      if (loop) {
+        visited.add(this.loopVisitKeys.get(loop)!);
         statements.push(...this.emitLoop(loop, visited));
         current = this.loopFollow(loop);
         continue;
       }
       const preparedLoop = this.preparedLoop(block);
-      if (preparedLoop && !visited.has(-preparedLoop.header - 1)) {
+      if (preparedLoop && !visited.has(this.loopVisitKeys.get(preparedLoop)!)) {
         statements.push(...this.emitStraight(block));
-        visited.add(-preparedLoop.header - 1);
+        visited.add(this.loopVisitKeys.get(preparedLoop)!);
         statements.push(...this.emitLoop(preparedLoop, visited));
         current = this.loopFollow(preparedLoop);
         continue;
@@ -338,6 +359,14 @@ class SourceBuilder {
         continue;
       }
       statements.push(...this.emitStraight(block));
+      if (activeLoop && block.id === activeLoop.latch &&
+          (activeLoop.kind === "numeric-for" || activeLoop.kind === "generic-for")) {
+        // Reaching the iterator latch ends this iteration. In a branch
+        // whose join is elsewhere, implicit fallthrough would execute that
+        // other region instead of advancing the iterator.
+        statements.push({ kind: "continue" });
+        break;
+      }
       if (block.successors.length === 0) {
         break;
       }
@@ -348,8 +377,7 @@ class SourceBuilder {
         if (loop && last?.opcode === Opcode.JUMP) {
           if (successor === loop.header || this.isPureLoopLatch(successor, loop)) {
             statements.push({ kind: "continue" });
-            current = successor;
-            continue;
+            break;
           }
           if (!loop.blocks.includes(successor)) {
             statements.push({ kind: "break" });
@@ -390,8 +418,20 @@ class SourceBuilder {
 
   private emitLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
     this.emittingLoops.push(loop);
+    const entryEnv = new Map(this.env);
     try {
-      return this.emitStructuredLoop(loop, visited);
+      const statements = this.emitStructuredLoop(loop, visited);
+      const written = new Set(loop.blocks.flatMap(id => this.ir.cfg.blocks[id]!.instructions.flatMap(insn => insn.defs)));
+      const follow = this.loopFollow(loop);
+      const merged = new Set((follow === undefined ? [] : this.ir.ssa.phis.get(follow) ?? []).map(phi => phi.register));
+      // Terminal alternatives are not natural-loop members: their register
+      // writes cannot leak into the normal exit. Preserve the entry value
+      // of registers unchanged by every completing iteration, unless an
+      // exit phi explicitly merges a break-path definition.
+      for (const [register, binding] of entryEnv) {
+        if (!written.has(register) && !merged.has(register)) this.env.set(register, binding);
+      }
+      return statements;
     } finally {
       this.emittingLoops.pop();
     }
@@ -400,57 +440,69 @@ class SourceBuilder {
   private emitStructuredLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
     const header = this.ir.cfg.blocks[loop.header]!;
     const declarations = this.hoistLoopPhis(loop);
-    if (loop.kind === "numeric-for") {
-      return [...declarations, this.emitNumericFor(loop, header, visited)];
-    }
-    if (loop.kind === "generic-for") {
-      return [...declarations, this.emitGenericFor(loop, header, visited)];
-    }
-    if (loop.kind === "repeat") {
-      return [...declarations, this.emitRepeat(loop, header, visited)];
-    }
-    const last = header.instructions.at(-1);
-    let test: Expression = lit(true);
-    let bodyStart = loop.header;
-    const headerSetup: Statement[] = [];
-    const exitSetup: Statement[] = [];
-    if (loop.kind !== "infinite" && last && isCompare(last.opcode) && header.successors.length === 2) {
-      // while: the header test jumps to the exit when true, so the loop test is its negation
-      this.consumed.add(last.pc);
-      const bodyCandidate = header.successors.find((id) => loop.blocks.includes(id) && id !== loop.header);
-      if (bodyCandidate !== undefined) {
-        bodyStart = bodyCandidate;
+    this.pushScope();
+    try {
+      if (loop.kind === "numeric-for") {
+        return [...declarations, this.emitNumericFor(loop, header, visited)];
       }
-      headerSetup.push(...this.emitStraight(header));
-      // Either edge can enter the body (e.g. while true / if not value
-      // then break). Derive polarity from that edge, not bytecode layout.
-      test = this.conditionFrom(last, bodyCandidate === header.fallthrough);
-      const exit = header.successors.find(id => !loop.blocks.includes(id));
-      const follow = this.loopFollow(loop);
-      if (exit !== undefined && follow !== undefined && exit !== follow) {
-        // Inlined returns may join after a normal-exit fallback assignment.
-        // Execute that region only when the entry test fails, not on break.
-        this.declareJoinPhis(follow, declarations);
-        const savedEnv = new Map(this.env);
-        exitSetup.push(...this.emitRange(exit, follow, new Set(visited)));
-        this.env.clear();
-        for (const [register, binding] of savedEnv) this.env.set(register, binding);
+      if (loop.kind === "generic-for") {
+        return [...declarations, this.emitGenericFor(loop, header, visited)];
       }
+      if (loop.kind === "repeat") {
+        return [...declarations, this.emitRepeat(loop, header, visited)];
+      }
+      const last = header.instructions.at(-1);
+      let test: Expression = lit(true);
+      let bodyStart = loop.header;
+      const headerSetup: Statement[] = [];
+      const exitSetup: Statement[] = [];
+      if (loop.kind !== "infinite" && last && isCompare(last.opcode) && header.successors.length === 2) {
+        // while: the header test jumps to the exit when true, so the loop test is its negation
+        this.consumed.add(last.pc);
+        const bodyCandidate = header.successors.find((id) => loop.blocks.includes(id) && id !== loop.header);
+        if (bodyCandidate !== undefined) {
+          bodyStart = bodyCandidate;
+        }
+        headerSetup.push(...this.emitStraight(header));
+        // Either edge can enter the body (e.g. while true / if not value
+        // then break). Derive polarity from that edge, not bytecode layout.
+        test = this.conditionFrom(last, bodyCandidate === header.fallthrough);
+        const exit = header.successors.find(id => !loop.blocks.includes(id));
+        const follow = this.loopFollow(loop);
+        if (exit !== undefined && follow !== undefined && exit !== follow) {
+          // Inlined returns may join after a normal-exit fallback assignment.
+          // Execute that region only when the entry test fails, not on break.
+          this.declareJoinPhis(follow, declarations, 1);
+          const savedEnv = new Map(this.env);
+          exitSetup.push(...this.emitRange(exit, follow, new Set(visited)));
+          this.env.clear();
+          for (const [register, binding] of savedEnv) this.env.set(register, binding);
+        }
+      }
+      const body =
+        loop.kind === "infinite"
+          ? this.emitRange(loop.header, this.loopFollow(loop), new Set(visited))
+          : this.emitLoopBody(loop, visited, bodyStart, bodyStart === loop.header ? undefined : loop.header);
+      if (headerSetup.length > 0 || exitSetup.length > 0) {
+        // These instructions belong to the header's backedge, not its preheader.
+        // Materialized calls and register writes must run before EVERY test.
+        return [...declarations, { kind: "while", test: lit(true), body: block([
+          ...headerSetup,
+          { kind: "if", test: { kind: "unary", op: "not", argument: test }, consequent: block([...exitSetup, { kind: "break" }]), branches: [] },
+          ...body,
+        ]) }];
+      }
+      return [...declarations, { kind: "while", test, body: block(body) }];
+    } finally {
+      // Deferred register expressions cannot refer to locals whose loop
+      // scope has ended. Keep only bindings owned by an enclosing scope.
+      const leaving = this.scopeStack.at(-1)!;
+      for (const [register, binding] of this.env) {
+        const free = analyzeBindings(block([{ kind: "expression-stmt", expression: binding.expression }])).globals;
+        if ([...free].some(name => leaving.has(name))) this.env.delete(register);
+      }
+      this.popScope();
     }
-    const body =
-      loop.kind === "infinite"
-        ? this.emitRange(loop.header, this.loopFollow(loop), new Set(visited))
-        : this.emitLoopBody(loop, visited, bodyStart, bodyStart === loop.header ? undefined : loop.header);
-    if (headerSetup.length > 0 || exitSetup.length > 0) {
-      // These instructions belong to the header's backedge, not its preheader.
-      // Materialized calls and register writes must run before EVERY test.
-      return [...declarations, { kind: "while", test: lit(true), body: block([
-        ...headerSetup,
-        { kind: "if", test: { kind: "unary", op: "not", argument: test }, consequent: block([...exitSetup, { kind: "break" }]), branches: [] },
-        ...body,
-      ]) }];
-    }
-    return [...declarations, { kind: "while", test, body: block(body) }];
   }
 
   private emitRepeat(loop: NaturalLoop, header: BasicBlock, visited: Set<number>): Statement {
@@ -482,11 +534,14 @@ class SourceBuilder {
 
   private hoistLoopPhis(loop: NaturalLoop): Statement[] {
     const statements: Statement[] = [];
+    const controlRegisters = new Set(this.ir.cfg.blocks[loop.latch]!.instructions
+      .filter(insn => insn.opcode === Opcode.FORGLOOP || insn.opcode === Opcode.FORNLOOP)
+      .flatMap(insn => insn.defs));
     const namesByRegister = new Map<number, string>();
     for (const blockId of [loop.header, loop.latch]) {
       for (const phi of this.ir.ssa.phis.get(blockId) ?? []) {
         const key = `phi:${blockId}:${phi.register}`;
-        if (this.deadLoopPhis.has(key)) {
+        if (this.deadLoopPhis.has(key) || controlRegisters.has(phi.register)) {
           continue;
         }
         const name =
@@ -503,7 +558,11 @@ class SourceBuilder {
           continue;
         }
         this.declaredPhis.add(key);
-        const incoming = this.env.get(phi.register)?.expression;
+        // A latch phi may merge values defined during this iteration rather
+        // than carry a value from entry. It still needs an outer declaration,
+        // but evaluating a stale incoming register can access a dead scope.
+        const incoming = this.isDeadLoopPhi(loop, phi.register, false)
+          ? undefined : this.env.get(phi.register)?.expression;
         statements.push({ kind: "local", names: [name], values: incoming ? [incoming] : [] });
         this.declareInScope(name);
         this.env.set(phi.register, { name, expression: ident(name), pinned: true });
@@ -514,11 +573,11 @@ class SourceBuilder {
 
   /** Whether the loop redefines `register` before anything reads its incoming
    * value, making the phi's entry value dead. */
-  private isDeadLoopPhi(loop: NaturalLoop, register: number): boolean {
+  private isDeadLoopPhi(loop: NaturalLoop, register: number, includeLatch = true): boolean {
     // An entry value is dead only if every reachable path overwrites it
     // before any read. Linear pc order misses conditional writes and values
     // consumed after a zero-iteration loop.
-    const pending = [loop.header, loop.latch];
+    const pending = includeLatch ? [loop.header, loop.latch] : [loop.header];
     // Even when every iteration kills the entry value, its final definition
     // needs an outer binding if the continuation reads it (including zero
     // iterations). Do not confuse a dead input with a dead lexical binding.
@@ -555,7 +614,7 @@ class SourceBuilder {
     if (last?.opcode !== Opcode.FORNPREP || block.fallthrough === undefined) {
       return undefined;
     }
-    const loop = this.loopByHeader.get(block.fallthrough);
+    const loop = this.loopsByHeader.get(block.fallthrough)?.find(loop => loop.kind === "numeric-for");
     return loop?.kind === "numeric-for" ? loop : undefined;
   }
 
@@ -674,7 +733,7 @@ class SourceBuilder {
   }
 
   private loopFollow(loop: NaturalLoop): number | undefined {
-    const structured = this.ir.structure.loopFollow.get(loop.header);
+    const structured = this.ir.structure.loopFollowByLoop.get(loop);
     if (structured !== undefined) {
       return structured;
     }
@@ -743,16 +802,17 @@ class SourceBuilder {
       const thenLatch = this.isPureLoopLatch(thenId, activeLoop);
       const elseLatch = this.isPureLoopLatch(elseId, activeLoop);
       if (thenLatch || elseLatch) {
-        const jumpExits = thenLatch;
         this.consumed.add(last.pc);
         const statements = this.emitStraight(basic);
+        const other = thenLatch ? elseId : thenId;
+        const exits = other === this.loopFollow(activeLoop);
         statements.push({
           kind: "if",
-          test: this.conditionFrom(last, false),
-          consequent: block([{ kind: jumpExits ? "break" : "continue" }]),
+          test: this.conditionFrom(last, exits ? !thenLatch : thenLatch),
+          consequent: block([{ kind: exits ? "break" : "continue" }]),
           branches: [],
         });
-        return { statements, follow: jumpExits ? elseId : thenId };
+        return { statements, follow: exits ? (thenLatch ? thenId : elseId) : other };
       }
       if (elseId === activeLoop.header) {
         this.consumed.add(last.pc);
@@ -930,7 +990,7 @@ class SourceBuilder {
     return joins[0];
   }
 
-  private declareJoinPhis(join: number, statements: Statement[]): void {
+  private declareJoinPhis(join: number, statements: Statement[], outerScopes = 0): void {
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
       const key = `phi:${join}:${phi.register}`;
       const established = this.phiNames.get(key);
@@ -945,7 +1005,7 @@ class SourceBuilder {
       if (!this.declaredPhis.has(key) && !this.isDeclaredInScope(name)) {
         this.declaredPhis.add(key);
         statements.push({ kind: "local", names: [name], values: [] });
-        this.declareInScope(name);
+        this.scopeStack[this.scopeStack.length - 1 - outerScopes]!.add(name);
       }
       // The phi name is bound by the branch defines themselves (phiBinding
       // consults the join's phi); pre-setting it here would make a temporary
@@ -1149,6 +1209,13 @@ class SourceBuilder {
     this.scopeStack.length = 0;
     for (const scope of savedScopes) {
       this.scopeStack.push(new Set(scope));
+    }
+    // Guard preludes are retained statements, so their declarations survive
+    // successful speculation. Only declarations from discarded value arms
+    // must be rolled back.
+    for (const statement of basicWalk.statements) {
+      if (statement.kind === "local") statement.names.forEach(name => this.declareInScope(name));
+      if (statement.kind === "function-decl" && statement.local) this.declareInScope(statement.name);
     }
     const usedAfterJoin = this.usedAfterPc(this.ir.cfg.blocks[join]!.startPc, t);
     restoreGuardEnv();
@@ -2877,9 +2944,11 @@ class SourceBuilder {
       // A call can mutate the state observed by a later read. In particular
       // Luau evaluates assignment targets before RHS expressions, so moving
       // table.remove into an RHS would evaluate #table against the old state.
-      if (containsCall && ["table-read", "metamethod"].includes(effectOf(next))) return true;
-      // Calls whose results feed another expression may remain nested in
-      // evaluation order. Discarded/multiple results emit a statement here.
+      if (containsCall && ["call", "table-read", "metamethod"].includes(effectOf(next))) return true;
+      // An independent call can later be materialized before this deferred
+      // value (e.g. an inlined constructor argument). Only a direct consumer
+      // may nest it; that case returned above when checking register uses.
+      // Discarded/multiple results also force non-call reads to be captured.
       if (effectOf(next) === "mutation" ||
           (next.call && (next.call.resultCount === 0 ||
             (typeof next.call.resultCount === "number" && next.call.resultCount > 1)))) {

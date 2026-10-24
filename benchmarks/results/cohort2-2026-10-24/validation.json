@@ -1,0 +1,26 @@
+{
+  "unit": 387,
+  "benchmark": 39,
+  "smallVm": {
+    "match": 90,
+    "total": 90
+  },
+  "baselineExitCodes": {
+    "24": 0,
+    "36": 0,
+    "200": 0,
+    "pilot": 0,
+    "observed": 0,
+    "development": 0
+  },
+  "parser": {
+    "local": 25,
+    "published": 22
+  },
+  "demo": {
+    "unit": 3,
+    "browser": 1
+  },
+  "externalRequests": 0,
+  "ci": "pending"
+}

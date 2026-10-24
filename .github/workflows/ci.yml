@@ -214,12 +214,11 @@ jobs:
             --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
             --luau "$RUNNER_TEMP/luau-build/luau" \
             --output "$RUNNER_TEMP/cohort2-development" --require-local-match
-      - name: Recheck second-cohort reserved systems (regression, not a new blind score)
+      - name: Check observed second-cohort regressions
         if: always()
         run: |
           npm run bench:large -- \
-            --manifest benchmarks/large/cohort2/manifest.json --partition holdout \
-            --freeze "$RUNNER_TEMP/large-freeze.json" \
+            --manifest benchmarks/large/cohort2/manifest.json --partition observed \
             --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
             --luau "$RUNNER_TEMP/luau-build/luau" \
             --output "$RUNNER_TEMP/cohort2-holdout" --require-local-match

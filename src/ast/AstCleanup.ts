@@ -42,11 +42,7 @@ function transformBlock(body: Block, options: CleanupOptions): Block {
   // absorb those into elseif branches at this level.
   let statements = body.statements.map((statement) => transformStatement(statement, options));
   statements = flattenElseIf(statements);
-  // Fold before invertContinueIfs: that pass may wrap later statements into a
-  // new `if` body that would otherwise skip the compound-assign rewrite.
   statements = foldCompoundAssigns(statements);
-  statements = invertContinueIfs(statements);
-  statements = flattenElseIf(statements);
   const withIfExpr = options.ifExpressions ? recoverIfExpressions(statements) : statements;
   const withReturnIf = options.ifExpressions ? recoverReturnIfExpressions(withIfExpr) : withIfExpr;
   const withReturns = options.earlyReturn ? recoverEarlyReturns(withReturnIf) : withReturnIf;
@@ -135,7 +131,10 @@ function invertContinueIfs(statements: Statement[]): Statement[] {
 
 /** Phoenix/Cifuentes post-pass: turn loop CFGs into continue/break guards. */
 function structureLoopBody(body: Block): Block {
-  let statements = sequentializeExitingBranches(body.statements);
+  // Inversion is valid only for the entire loop body: a nested block can
+  // have an enclosing continuation that its `continue` must still skip.
+  let statements = invertContinueIfs(body.statements);
+  statements = sequentializeExitingBranches(statements);
   statements = expandLoopGuards(statements);
   statements = dropRedundantContinues(statements);
   return { kind: "block", statements };

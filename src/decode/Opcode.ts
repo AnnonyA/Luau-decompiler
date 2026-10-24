@@ -470,7 +470,7 @@ export function jumpTarget(word: number, pc: number): number | undefined {
   if (isJumpD(op)) {
     return pc + insnD(word) + 1;
   }
-  if (isFastCall(op)) {
+  if (isFastCall(op) || op === Opcode.FINCONSTRUCT) {
     return pc + insnC(word) + 2;
   }
   if (op === Opcode.LOADB && insnC(word) !== 0) {

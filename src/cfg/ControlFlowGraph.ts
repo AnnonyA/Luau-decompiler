@@ -32,12 +32,10 @@ export function buildControlFlowGraph(prototype: Prototype): ControlFlowGraph {
     }
     const next = insn.pc + insn.width;
     if (!isFallthrough(insn.opcode) || structuralJump) {
-      if (next < prototype.code.length && isFallthrough(insn.opcode)) {
-        leaders.add(next);
-      } else if (next < prototype.code.length && insn.opcode !== Opcode.RETURN) {
-        leaders.add(next);
-      }
-      if (isConditional(insn) && next < prototype.code.length) {
+      // A terminator ends its basic block even when the compiler leaves an
+      // unreachable jump after it. Including that jump would give RETURN a
+      // successor, inventing loop backedges and executable continuation code.
+      if (next < prototype.code.length) {
         leaders.add(next);
       }
     }

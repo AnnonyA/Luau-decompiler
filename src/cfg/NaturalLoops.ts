@@ -50,11 +50,17 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
   // Several continue paths may branch back to the same loop header. They
   // describe ONE natural loop, not separate nested loops with identical
   // headers. Merge their bodies and retain all backedges for downstream SSA.
-  const byHeader = new Map<number, NaturalLoop>();
+  const byHeader = new Map<string, NaturalLoop>();
   for (const loop of loops) {
-    const existing = byHeader.get(loop.header);
+    // A for-loop's iteration edge and an inner while backedge can target
+    // the same first body block. They own different iteration machinery and
+    // must not be collapsed merely because their headers coincide.
+    const latchOpcode = cfg.blocks[loop.latch]?.instructions.at(-1)?.opcode;
+    const iterationEdge = latchOpcode === Opcode.FORGLOOP || latchOpcode === Opcode.FORNLOOP;
+    const key = `${loop.header}:${iterationEdge ? loop.latch : "natural"}`;
+    const existing = byHeader.get(key);
     if (!existing) {
-      byHeader.set(loop.header, loop);
+      byHeader.set(key, loop);
       continue;
     }
     existing.backEdges.push(...loop.backEdges);
@@ -65,6 +71,16 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
   }
 
   const merged = [...byHeader.values()].sort((a, b) => a.header - b.header);
+  // Reverse collection stops at the header. When a for body begins with
+  // another loop, include that loop's backedge region as well: otherwise
+  // the outer region can appear smaller than its own first statement.
+  for (const outer of merged) {
+    const opcode = cfg.blocks[outer.latch]?.instructions.at(-1)?.opcode;
+    if (opcode !== Opcode.FORGLOOP && opcode !== Opcode.FORNLOOP) continue;
+    const nested = merged.filter(inner => inner !== outer && inner.header === outer.header &&
+      !inner.blocks.includes(outer.latch));
+    outer.blocks = [...new Set([...outer.blocks, ...nested.flatMap(inner => inner.blocks)])].sort((a, b) => a - b);
+  }
   for (const loop of merged) {
     loop.kind = classifyLoop(cfg, loop.header, loop.latch, loop.blocks);
     if (loop.kind === "repeat" && loop.header !== loop.latch) {

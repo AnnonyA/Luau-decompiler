@@ -165,3 +165,20 @@ it('evaluates a state-changing call before the following assignment target reads
  expect(local.values[0]?.kind).toBe('call');
  expect(analyzeBindings(fn.body).bindings.find(b=>b.declaration===local)?.reads.length).toBeGreaterThan(0);
 });
+
+it('keeps sequential loop bindings lexically distinct even when a register is reused',async()=>{
+ const {readFileSync}=await import('node:fs');const {decompile}=await import('../src/decompile.ts');
+ const result=decompile(readFileSync(new URL('./fixtures/large/sequential-loop-scopes.luauc',import.meta.url)),{opcodeEncoding:'official'});
+ expect(result.ok).toBe(true);if(!result.ok)return;
+ expect([...analyzeBindings(result.ast.body).globals].sort()).toEqual(['ipairs','math','print','setmetatable']);
+});
+
+it.each([
+ ['latch-phi-entry', ['ipairs','math','print','table']],
+ ['iterator-exit-phi', ['ipairs','print','table']],
+] as const)('does not leak an iterator or discarded prelude binding in %s',async(name,globals)=>{
+ const {readFileSync}=await import('node:fs');const {decompile}=await import('../src/decompile.ts');
+ const result=decompile(readFileSync(new URL(`./fixtures/large/${name}.luauc`,import.meta.url)),{opcodeEncoding:'official'});
+ expect(result.ok).toBe(true);if(!result.ok)return;
+ expect([...analyzeBindings(result.ast.body).globals].sort()).toEqual(globals);
+});

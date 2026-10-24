@@ -30,3 +30,17 @@ describe("cleanup preserves observable values and effects", () => {
     expect(printLuau(cleanupAst(ast, options))).toContain("[key()] = nil");
   });
 });
+
+it("keeps a nested continue that skips the enclosing block's remaining effects", () => {
+  const ast = chunk([{ kind: "while", test: ident("running"), body: block([
+    { kind: "if", test: ident("inside"), branches: [], consequent: block([
+      { kind: "if", test: ident("skip"), branches: [], consequent: block([{ kind: "continue" }]) },
+      { kind: "expression-stmt", expression: call("inner") },
+    ]) },
+    { kind: "expression-stmt", expression: call("tail") },
+  ]) }]);
+  const source = printLuau(cleanupAst(ast, options));
+  expect(source).toContain("continue");
+  expect(source).toContain("inner()");
+  expect(source).toContain("tail()");
+});

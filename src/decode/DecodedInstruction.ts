@@ -311,6 +311,17 @@ function annotateEffects(insn: DecodedInstruction, constantCount: number): void 
         insn.uses = [b, r2, r3];
       }
       break;
+    case Opcode.CONSTRUCT:
+      // Bytecode.h / lvmexecute.cpp: AUX is a feedback template slot, not
+      // a constant index; R[A] receives an object or its fallback table.
+      insn.defs = [a];
+      insn.uses = [b];
+      break;
+    case Opcode.FINCONSTRUCT:
+      // The successful path takes its result arity/base from the following
+      // CALL. Its local operand is the constructed object in R[A].
+      insn.uses = [a];
+      break;
     case Opcode.NEWCLASS:
       insn.defs = [a];
       insn.constantIndex = aux;

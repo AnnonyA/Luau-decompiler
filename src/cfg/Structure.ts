@@ -34,6 +34,8 @@ export interface StructureInfo {
   ifFollow: Map<number, number>;
   /** Natural-loop header → first block after the loop. */
   loopFollow: Map<number, number>;
+  /** Region identity disambiguates nested loops sharing a body header. */
+  loopFollowByLoop: Map<NaturalLoop, number>;
   regions: StructuredRegion[];
 }
 
@@ -45,15 +47,17 @@ export function structureControlFlow(
 ): StructureInfo {
   const ifFollow = computeIfFollows(cfg, postDominators);
   const loopFollow = new Map<number, number>();
+  const loopFollowByLoop = new Map<NaturalLoop, number>();
   for (const loop of loops) {
     const follow = followOfLoop(cfg, postDominators, loop);
     if (follow !== undefined) {
       loopFollow.set(loop.header, follow);
+      loopFollowByLoop.set(loop, follow);
     }
   }
-  const regions = classifyRegions(cfg, ifFollow, loops, loopFollow);
+  const regions = classifyRegions(cfg, ifFollow, loops, loopFollowByLoop);
   void dominators;
-  return { ifFollow, loopFollow, regions };
+  return { ifFollow, loopFollow, loopFollowByLoop, regions };
 }
 
 /** Cifuentes: the follow of a 2-way node is its immediate post-dominator. */
@@ -107,7 +111,7 @@ function classifyRegions(
   cfg: ControlFlowGraph,
   ifFollow: Map<number, number>,
   loops: NaturalLoop[],
-  loopFollow: Map<number, number>,
+  loopFollow: Map<NaturalLoop, number>,
 ): StructuredRegion[] {
   const regions: StructuredRegion[] = [];
   const claimed = new Set<number>();
@@ -118,7 +122,7 @@ function classifyRegions(
       loop.kind === "numeric-for" || loop.kind === "generic-for" || loop.kind === "while" || loop.kind === "repeat" || loop.kind === "infinite"
         ? loop.kind
         : "improper";
-    regions.push({ kind, header: loop.header, follow: loopFollow.get(loop.header), nodes: loop.blocks });
+    regions.push({ kind, header: loop.header, follow: loopFollow.get(loop), nodes: loop.blocks });
     for (const id of loop.blocks) {
       claimed.add(id);
     }
