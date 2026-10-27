@@ -1,3 +1,4 @@
+import { renderCode } from "./highlight.js";
 import { decodeBase64, validateSize } from "./input.js";
 
 const $ = (id) => document.getElementById(id);
@@ -30,6 +31,7 @@ function chooseFile(file) {
   selectedFile = file;
   setMode("file");
   $("file-name").textContent = file.name;
+  $("loaded-name").textContent = file.name;
   $("file-detail").textContent = `${file.size.toLocaleString()} bytes · click to replace`;
   try { validateSize(file.size); status("File ready. Select Decompile to inspect it."); }
   catch (error) { status(error.message, true); }
@@ -49,7 +51,7 @@ function displayedText() {
 function render() {
   $("empty").hidden = last !== null;
   $("output").hidden = last === null;
-  $("code").textContent = displayedText();
+  renderCode($("code"), $("line-numbers"), displayedText(), activeTab === "source" && last?.ok);
   $("diagnostic-count").textContent = String(last?.diagnostics?.length ?? 0);
   $("copy").disabled = !last;
   $("download").disabled = !last?.ok;
@@ -105,8 +107,9 @@ async function run(example = false) {
   const options = {
     typeAnnotations: $("types").value,
     opcodeEncoding: $("encoding").value,
-    // Avoid optional cosmetic rewrites that can alter runtime behavior.
-    interpolatedStrings: false, mathConstants: false,
+    indent: $("indent").value === "tab" ? "tab" : Number($("indent").value),
+    ifExpressions: $("if-expressions").checked, earlyReturn: $("early-return").checked,
+    interpolatedStrings: $("interpolation").checked, mathConstants: false,
   };
   const started = performance.now();
   timer = setTimeout(() => {
@@ -119,6 +122,7 @@ async function run(example = false) {
       if (!response.ok) throw new Error("Could not load the example. Try uploading your own bytecode.");
       bytes = new Uint8Array(await response.arrayBuffer());
       filename = "hello-luau";
+      $("loaded-name").textContent = "example.luauc";
       options.opcodeEncoding = "official";
     } else if (inputMode === "file") {
       if (!selectedFile) throw new Error("Choose a bytecode file or switch to Paste Base64.");

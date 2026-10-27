@@ -1,56 +1,8 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore Luau bytecode in your browser. Upload a binary or paste Base64, then inspect and download the reconstructed source.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; worker-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'">
-  <meta name="color-scheme" content="dark">
-  <title>Luau Decompiler · Playground</title>
-  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./assets/style.css">
-  <script type="module" src="./assets/app.js"></script>
-</head>
-<body>
-  <header class="header">
-    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">L</span>Luau<span class="brand-light">Decompiler</span><span class="badge">PLAYGROUND</span></a>
-    <a class="repo" href="https://github.com/AnnonyA/Luau-decompiler" target="_blank" rel="noopener noreferrer">View on GitHub <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a>
-  </header>
-  <main>
-    <section class="intro">
-      <div><p class="eyebrow">THE BYTECODE WORKBENCH</p><h1>Bytecode in.<br><span>Luau out.</span></h1><p class="lead">Open a compiled chunk. Explore the reconstructed source.</p></div>
-      <div class="local-note"><span class="dot"></span><div><strong>Runs entirely in your browser</strong><p>Your bytecode stays on your device.<br>Static analysis. Nothing is executed.</p></div></div>
-    </section>
-    <div class="workspace">
-      <section class="input-panel" aria-labelledby="input-title">
-        <div class="section-heading"><h2 id="input-title"><span class="step">01</span> Input</h2><span class="subtle">MAX 16 MiB</span></div>
-        <div class="segmented" aria-label="Input method"><button id="mode-file" class="selected" aria-pressed="true">Upload file</button><button id="mode-base64" aria-pressed="false">Paste Base64</button></div>
-        <div id="file-panel">
-          <label class="dropzone" id="dropzone" for="file"><svg class="upload-icon" aria-hidden="true"><use href="./assets/icons.svg#upload"/></svg><strong id="file-name">Drop your bytecode here</strong><span id="file-detail">or click to choose a file</span><span class="file-hint">.luauc, .luac, .bin or any binary chunk</span><input id="file" type="file" aria-label="Choose Luau bytecode"></label>
-        </div>
-        <div id="base64-panel" hidden><label class="field-label" for="base64">Encoded bytecode</label><textarea id="base64" placeholder="Paste Base64 here…" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="23418152"></textarea></div>
-        <button id="example" class="example">No file handy? <strong>Try an example <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></strong></button>
-        <div class="divider"></div>
-        <div class="options">
-          <label for="types">Type annotations<select id="types"><option value="useful">Useful annotations</option><option value="functions">Functions only</option><option value="off">Off</option></select></label>
-          <label for="encoding">Opcode encoding<select id="encoding"><option value="auto">Auto-detect</option><option value="official">Official Luau</option><option value="roblox">Roblox</option></select></label>
-        </div>
-        <div class="run-row"><button id="run" class="primary">Decompile <span aria-hidden="true">→</span></button><button id="cancel" hidden>Cancel</button></div>
-        <p id="status" role="status" aria-live="polite">Ready when you are.</p>
-        <p class="support">Official Luau v3–9 · v10–14 experimental.<br>Encrypted or compressed wrappers need decoding first. Reconstruction may be incomplete.</p>
-      </section>
-      <section class="output-panel" aria-labelledby="output-title">
-        <div class="section-heading"><h2 id="output-title"><span class="step">02</span> Output</h2><div class="output-actions"><button id="copy" disabled>Copy</button><button id="download" disabled>Download .luau <span aria-hidden="true">↓</span></button></div></div>
-        <div class="output-nav"><div class="tabs" role="tablist" aria-label="Output view"><button id="tab-source" role="tab" data-tab="source" aria-selected="true" aria-controls="result">Source</button><button id="tab-disassembly" role="tab" data-tab="disassembly" aria-selected="false" aria-controls="result" tabindex="-1">Disassembly</button><button id="tab-diagnostics" role="tab" data-tab="diagnostics" aria-selected="false" aria-controls="result" tabindex="-1">Diagnostics <span id="diagnostic-count">0</span></button></div><span id="result-meta"></span></div>
-        <div class="result" id="result" role="tabpanel" aria-labelledby="tab-source" tabindex="0">
-          <div class="empty" id="empty"><div class="empty-symbol" aria-hidden="true">{ <span>…</span> }</div><h3>A little bytecode. A clearer picture.</h3><p>Your reconstructed Luau will appear here.<br>Upload a chunk or try the built-in example.</p></div>
-          <pre id="output" hidden><code id="code"></code></pre>
-        </div>
-        <div class="output-footer"><span id="output-info">Waiting for input</span><span>Luau <span class="dot small"></span></span></div>
-      </section>
-    </div>
-    <footer><span>Open source. Built for understanding.</span><span>AnnonyA / Luau-decompiler <span id="revision"></span></span></footer>
-    <noscript><p class="no-script">Enable JavaScript to run the decompiler locally in your browser.</p></noscript>
-  </main>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Turn Luau bytecode into readable source. Open source, local processing, no API key required."><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'"><meta name="color-scheme" content="dark"><title>AnnonyA · Luau Decompiler</title><link rel="icon" href="./assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./assets/style.css"><script type="module" src="./assets/home.js"></script></head>
+<body class="landing-page">
+<header class="landing-header"><a class="brand" href="./"><img src="./assets/icon.svg" width="32" height="32" alt="">Annony<span>A</span></a><nav aria-label="Main navigation"><a href="#features">Features</a><a href="https://github.com/AnnonyA/Luau-decompiler#readme" target="_blank" rel="noopener noreferrer">Docs <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></nav><a class="primary pill" href="./decompiler/">Open decompiler <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></header>
+<main class="landing-main"><section class="hero"><p class="eyebrow"><span class="dot"></span> OPEN SOURCE LUAU DECOMPILER</p><h1>Bytecode in.<br><span>Understanding out.</span></h1><p class="lead">A closer look at compiled Luau. Recover readable source,<br class="desktop-break"> inspect instructions, and follow the logic.</p><div class="hero-actions"><a class="primary" href="./decompiler/">Upload bytecode <span><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></span></a><a class="secondary" href="https://github.com/AnnonyA/Luau-decompiler" target="_blank" rel="noopener noreferrer">Explore the source <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></div><p class="hero-note">Runs on your device. No account. No API key.</p></section>
+<section class="preview" aria-label="Example source comparison"><div class="preview-top"><div class="preview-tabs" role="tablist" aria-label="Example view"><button id="sample-before" role="tab" aria-selected="false" aria-controls="preview-code" tabindex="-1">Anonymous locals</button><button id="sample-after" role="tab" aria-selected="true" aria-controls="preview-code">Readable Luau</button></div><span class="sample-label">ILLUSTRATIVE EXAMPLE</span></div><div class="preview-body"><div class="preview-editor" id="preview-code" role="tabpanel" aria-labelledby="sample-after"><div class="code-view"><pre class="line-numbers" id="sample-lines" aria-hidden="true"></pre><pre><code id="sample-code"></code></pre></div></div><aside class="symbols"><p class="eyebrow">FOLLOW THE LOGIC</p><div><strong>Players</strong><span>A service with a useful name</span></div><div><strong>formatName</strong><span>A small, readable function</span></div><div><strong>player: Player</strong><span>Types where evidence allows</span></div><div><strong>Source + instructions</strong><span>Two ways to inspect a chunk</span></div><a href="./decompiler/">Try your own bytecode <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></aside></div></section>
+<section class="features" id="features"><div class="section-intro"><p class="eyebrow">A WORKBENCH FOR LUAU</p><h2>See what’s inside.</h2><p>From a compiled chunk to something you can explore.</p></div><div class="feature-grid"><article><span class="feature-icon">01 /</span><h3>Your bytecode stays yours.</h3><p>Decompilation runs locally in an isolated browser worker. Your file is never uploaded to a decompiler service.</p><code>Local input → local result</code></article><article><span class="feature-icon">02 /</span><h3>Read beyond the source.</h3><p>Switch between reconstructed Luau, disassembly, and diagnostics to investigate the same chunk.</p><code>Source · Disassembly · Diagnostics</code></article><article><span class="feature-icon">03 /</span><h3>Make the output yours.</h3><p>Choose types, indentation, and supported rewrites. Copy the result or download a Luau file.</p><code>2 spaces · 4 spaces · tabs</code></article><article><span class="feature-icon">04 /</span><h3>Open from end to end.</h3><p>Inspect the engine, reproduce the benchmarks, or run the CLI. Reconstruction can be incomplete; diagnostics keep limitations visible.</p><code>Built in public. Tested against Luau.</code></article></div></section>
+<section class="closing"><p class="eyebrow">READY TO TAKE A LOOK?</p><h2>Bring your bytecode.</h2><p>Choose a file, paste Base64, or start with the built-in example.</p><a href="./decompiler/" class="primary">Open decompiler <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></section><footer><a class="brand" href="./"><img src="./assets/icon.svg" width="24" height="24" alt="">Annony<span>A</span></a><span>Luau Decompiler · Open source</span><a href="https://github.com/AnnonyA/Luau-decompiler">GitHub <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></footer></main></body></html>
