@@ -178,7 +178,7 @@ jobs:
           retention-days: 30
       - name: Check reduced large-system regressions in the official VM
         run: |
-          npm run bench:large:regressions -- \
+          npm run bench:large:regressions -- --name-styles \
             --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
             --luau "$RUNNER_TEMP/luau-build/luau" \
             --output "$RUNNER_TEMP/large-regressions"
@@ -230,5 +230,31 @@ jobs:
           path: |
             ${{ runner.temp }}/cohort2-development
             ${{ runner.temp }}/cohort2-holdout
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Check seeded captures, effects and multiple returns
+        run: |
+          npm run bench:fuzz -- --count 6 --reduce-attempts 12 \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" --output "$RUNNER_TEMP/semantic-fuzz"
+      - name: Upload generated semantic observations and reductions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-semantic-fuzz
+          path: ${{ runner.temp }}/semantic-fuzz
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Check sealed independent systems now tracked as regressions
+        run: |
+          npm run bench:independent -- \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" --output "$RUNNER_TEMP/independent-regressions"
+      - name: Upload independent regression observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-independent-regressions
+          path: ${{ runner.temp }}/independent-regressions
           if-no-files-found: warn
           retention-days: 30

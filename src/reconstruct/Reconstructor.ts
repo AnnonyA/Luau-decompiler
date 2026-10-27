@@ -109,7 +109,6 @@ interface PendingTable {
   register: number;
   fields: TableField[];
   nested: Array<{ field: { name?: string; key?: Expression }; child: PendingTable }>;
-  selfRefs: Array<{ name?: string; key?: Expression }>;
   startPc: number;
   role: string;
   flushed: boolean;
@@ -121,7 +120,6 @@ interface PendingSnapshot {
   pending: PendingTable;
   fields: TableField[];
   nested: PendingTable["nested"];
-  selfRefs: PendingTable["selfRefs"];
   flushed: boolean;
   name?: string;
 }
@@ -1502,7 +1500,6 @@ class SourceBuilder {
       pending,
       fields: [...pending.fields],
       nested: [...pending.nested],
-      selfRefs: [...pending.selfRefs],
       flushed: pending.flushed,
       name: pending.name,
     }));
@@ -1512,7 +1509,6 @@ class SourceBuilder {
     for (const snap of snapshot) {
       snap.pending.fields = snap.fields;
       snap.pending.nested = snap.nested;
-      snap.pending.selfRefs = snap.selfRefs;
       snap.pending.flushed = snap.flushed;
       snap.pending.name = snap.name;
     }
@@ -1611,10 +1607,10 @@ class SourceBuilder {
     const fields: TableField[] = [...pending.fields];
     for (const nested of pending.nested) {
       const child = nested.child;
-      if (!child.flushed && child.selfRefs.length === 0 && !this.hasMultipleTableReads(child)) {
+      if (!child.flushed && !this.hasMultipleTableReads(child)) {
         fields.push({ ...nested.field, value: this.nestedLiteral(child, prefix) });
       } else if (!child.flushed) {
-        // The child has self references and cannot be inlined; materialize it.
+        // A child with multiple readers must keep its table identity.
         prefix.push(...this.flushPending(child));
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       } else {
@@ -1647,12 +1643,6 @@ class SourceBuilder {
     const statements: Statement[] = [...prefix, ...aliases, assignment
       ? { kind: "assign", targets: [ident(name)], values: [literal] }
       : { kind: "local", names: [name], values: [literal] }];
-    for (const selfRef of pending.selfRefs) {
-      const target: Expression = selfRef.name
-        ? { kind: "property", object: ident(name), name: selfRef.name }
-        : { kind: "index", table: ident(name), key: selfRef.key ?? lit(null) };
-      statements.push({ kind: "assign", targets: [target], values: [ident(name)] });
-    }
     statements.push(...liftedStatements);
     this.pendingStack = this.pendingStack.filter((p) => p !== pending);
     return statements;
@@ -1663,7 +1653,7 @@ class SourceBuilder {
     const fields: TableField[] = [...pending.fields];
     for (const nested of pending.nested) {
       const child = nested.child;
-      if (!child.flushed && child.selfRefs.length === 0 && !this.hasMultipleTableReads(child)) {
+      if (!child.flushed && !this.hasMultipleTableReads(child)) {
         fields.push({ ...nested.field, value: this.nestedLiteral(child, prefix) });
       } else if (!child.flushed) {
         prefix.push(...this.flushPending(child));
@@ -1731,17 +1721,11 @@ class SourceBuilder {
     if (!field.name || field.name.startsWith("__")) {
       return undefined;
     }
-    let fn: Expression | undefined;
-    if (field.value.kind === "identifier") {
-      const record = this.closureFields.get(field.value.name);
-      if (!record || record.fieldName !== field.name) {
-        return undefined;
-      }
-      fn = record.fn;
-    } else if (field.value.kind === "function-expr") {
-      fn = field.value;
-    }
-    if (!fn || fn.kind !== "function-expr") {
+    // An identifier refers to an existing closure. Copying its body into a
+    // method declaration changes identity when another field or local holds
+    // the same function. Only an unbound function expression can be lifted.
+    const fn = field.value;
+    if (fn.kind !== "function-expr") {
       return undefined;
     }
     const receiver = fn.params.length > 0 && firstParamIsReceiver(fn);
@@ -1809,6 +1793,14 @@ class SourceBuilder {
     pendingTable?: PendingTable,
   ): { statements: Statement[]; pendingTable?: PendingTable } {
     const statements: Statement[] = [];
+    if (pendingTable && insn.a === pendingTable.register && insn.b === pendingTable.register &&
+        [Opcode.SETTABLE, Opcode.SETTABLEKS, Opcode.SETUDATAKS, Opcode.SETTABLEN].includes(insn.opcode)) {
+      // A self reference needs the table's identity now. Deferring this write
+      // until the constructor closes would move it after later overwrites
+      // (for example, replacing a module's initial __index = module).
+      statements.push(...this.flushPending(pendingTable));
+      pendingTable = undefined;
+    }
     // Reusing a register ends its old open-pack binding. Calls consume their
     // arguments before overwriting result registers, which can overlap a pack.
     if (insn.opcode !== Opcode.CALL && insn.opcode !== Opcode.CALLFB) {
@@ -1885,10 +1877,6 @@ class SourceBuilder {
         break;
       case Opcode.SETTABLE:
         if (pendingTable && pendingTable.register === insn.b) {
-          if (insn.a === pendingTable.register) {
-            pendingTable.selfRefs.push({ key: this.readRegister(insn.c, insn) });
-            return { statements };
-          }
           const nested = this.nestedChildOf(insn.a, pendingTable);
           if (nested) {
             this.removePureField(pendingTable, { key: this.readRegister(insn.c, insn), value: lit(null) });
@@ -1928,11 +1916,6 @@ class SourceBuilder {
             validFieldName
               ? { kind: "property", object: table, name }
               : { kind: "index", table, key: lit(name) };
-          if (insn.a === pendingTable.register) {
-            this.removePureField(pendingTable, { ...fieldKey, value: lit(null) });
-            pendingTable.selfRefs.push(fieldKey);
-            return { statements };
-          }
           const nested = this.nestedChildOf(insn.a, pendingTable);
           if (nested) {
             this.removePureField(pendingTable, { ...fieldKey, value: lit(null) });
@@ -1971,10 +1954,6 @@ class SourceBuilder {
       }
       case Opcode.SETTABLEN:
         if (pendingTable && pendingTable.register === insn.b) {
-          if (insn.a === pendingTable.register) {
-            pendingTable.selfRefs.push({ key: lit(insn.c + 1) });
-            return { statements };
-          }
           const nested = this.nestedChildOf(insn.a, pendingTable);
           if (nested) {
             this.removePureField(pendingTable, { key: lit(insn.c + 1), value: lit(null) });
@@ -1991,10 +1970,10 @@ class SourceBuilder {
         });
         break;
       case Opcode.NEWTABLE:
-        return { statements, pendingTable: { register: insn.a, fields: [], nested: [], selfRefs: [], startPc: insn.pc, role: this.tableRole(insn), flushed: false } };
+        return { statements, pendingTable: { register: insn.a, fields: [], nested: [], startPc: insn.pc, role: this.tableRole(insn), flushed: false } };
       case Opcode.DUPTABLE: {
         const fields = this.dupTableFields(insn.d);
-        return { statements, pendingTable: { register: insn.a, fields, nested: [], selfRefs: [], startPc: insn.pc, role: this.tableRole(insn), flushed: false } };
+        return { statements, pendingTable: { register: insn.a, fields, nested: [], startPc: insn.pc, role: this.tableRole(insn), flushed: false } };
       }
       case Opcode.SETLIST: {
         const startIndex = insn.aux ?? 1;
@@ -2247,6 +2226,8 @@ class SourceBuilder {
     const captures = this.capturesAfter(insn.pc);
     // Captured pending tables must be materialized before their names are read.
     const statements: Statement[] = [];
+    const valueSnapshots = new Map<number, string>();
+    const mergedLocals = new Set(this.phiNames.values());
     for (const cap of captures) {
       const source = cap.capture?.source ?? -1;
       const pending = this.pendingOf(source);
@@ -2260,11 +2241,17 @@ class SourceBuilder {
       }
       if (cap.capture?.type === CaptureType.VAL && source !== insn.a) {
         const binding = this.env.get(source);
-        if (binding && !binding.pinned && binding.expression.kind !== "literal") {
+        // Pinning only gives an expression a name. A phi's named cell can
+        // still be assigned on the next loop iteration; VAL captures the
+        // current value, not that cell. Keep the snapshot separate from the
+        // register environment so REF captures retain their original owner.
+        if (binding && binding.expression.kind !== "literal" && !valueSnapshots.has(source) &&
+            (!binding.pinned || binding.forwardRef || (binding.name && mergedLocals.has(binding.name)))) {
           const name = this.allocator.reserve("captured");
           statements.push({ kind: "local", names: [name], values: [binding.expression] });
           this.declareInScope(name);
-          this.env.set(source, { name, expression: ident(name), pinned: true });
+          valueSnapshots.set(source, name);
+          if (!binding.pinned) this.env.set(source, { name, expression: ident(name), pinned: true });
         }
       }
     }
@@ -2292,6 +2279,11 @@ class SourceBuilder {
     const captureMap = new Map<number, CaptureBinding>();
     captures.forEach((cap, index) => {
       const source = cap.capture!.source;
+      const snapshot = cap.capture!.type === CaptureType.VAL ? valueSnapshots.get(source) : undefined;
+      if (snapshot) {
+        captureMap.set(index, {name: snapshot, expression: ident(snapshot), mutable: false});
+        return;
+      }
       if (source === insn.a && cap.capture!.type !== CaptureType.UPVAL) {
         captureMap.set(index, { name, expression: ident(name), mutable: cap.capture!.type === CaptureType.REF });
         return;

@@ -1039,7 +1039,6 @@ function collect(
       case "repeat":
         scopes.push(new Map());
         collect(statement.body.statements, bindings, scopes, depth, forNest);
-        scopes.pop();
         if (statement.test.kind === "binary" && statement.test.left.kind === "identifier") {
           const binding = resolve(statement.test.left.name);
           if (binding) {
@@ -1047,6 +1046,7 @@ function collect(
           }
         }
         visitExpr(statement.test);
+        scopes.pop();
         break;
       case "numeric-for":
         visitExpr(statement.start);
@@ -1402,8 +1402,13 @@ function applyStmt(statement: Statement, names: Map<number, string>, scopes: Arr
       };
     case "while":
       return { ...statement, test: expr(statement.test), body: push(statement.body, names, scopes, state) };
-    case "repeat":
-      return { ...statement, body: push(statement.body, names, scopes, state), test: expr(statement.test) };
+    case "repeat": {
+      scopes.push(new Map());
+      const body = applyBlock(statement.body, names, scopes, state);
+      const test = expr(statement.test);
+      scopes.pop();
+      return { ...statement, body, test };
+    }
     case "numeric-for": {
       const start = expr(statement.start);
       const stop = expr(statement.stop);
@@ -1441,13 +1446,8 @@ function push(body: Block, names: Map<number, string>, scopes: Array<Map<string,
 }
 
 function renameDecl(name: string, resolve: (name: string) => string): string {
-  return name
-    .split(".")
-    .map((part) => {
-      const [head, ...rest] = part.split(":");
-      return [resolve(head ?? ""), ...rest].join(":");
-    })
-    .join(".");
+  // Only the root is a binding; the remaining path is a public table key.
+  return name.replace(/^[^.:]+/, resolve);
 }
 
 function applyExpr(expression: Expression, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Expression {

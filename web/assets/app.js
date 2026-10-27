@@ -106,6 +106,8 @@ async function run(example = false) {
   status(example ? "Loading the example…" : "Reading bytecode…");
   const options = {
     typeAnnotations: $("types").value,
+    generatedNames: $("generated-names").value,
+    nameCasing: $("name-casing").value,
     opcodeEncoding: $("encoding").value,
     indent: $("indent").value === "tab" ? "tab" : Number($("indent").value),
     ifExpressions: $("if-expressions").checked, earlyReturn: $("early-return").checked,

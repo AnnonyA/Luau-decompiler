@@ -12,10 +12,12 @@ import { disassembleModule } from "./disasm/Disassembler.js";
 import { printLuau, hasArtificialComments, type PrintOptions } from "./print/LuauPrinter.js";
 import { reconstructFunction } from "./reconstruct/Reconstructor.js";
 import { applyRuntimeContext, parseRuntimeContext, type RuntimeContext } from "./reconstruct/RuntimeContext.js";
+import { styleLocalNames, type NameStyleOptions } from "./reconstruct/NameStyle.js";
+import { recoverFunctionEvidence } from "./reconstruct/FunctionEvidence.js";
 
 export type TypeAnnotationMode = "off" | "functions" | "useful";
 
-export interface DecompileOptions extends DecodeOptions, PrintOptions {
+export interface DecompileOptions extends DecodeOptions, PrintOptions, NameStyleOptions {
   debugNames?: boolean;
   typeAnnotations?: TypeAnnotationMode;
   ifExpressions?: boolean;
@@ -98,7 +100,8 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
     const reconstructed = reconstructFunction(decoded.module, main);
     const raw = chunk(reconstructed.body.statements);
     const cleaned = cleanupAst(raw, defaultCleanupOptions(options));
-    const ast = options.runtimeContext === false ? cleaned : applyRuntimeContext(cleaned, options.runtimeContext);
+    const contextual = options.runtimeContext === false ? cleaned : applyRuntimeContext(cleaned, options.runtimeContext);
+    const ast = styleLocalNames(recoverFunctionEvidence(contextual, options), options);
     const validation = validateAst(ast);
     for (const failure of validation) {
       diagnostics.error(failure.code, failure.message);
@@ -148,6 +151,8 @@ export function parseQueryOptions(query: URLSearchParams): DecompileOptions {
   }
   return {
     indent,
+    generatedNames: query.get("generated_names") === "compact" ? "compact" : "readable",
+    nameCasing: parseNameCasing(query.get("name_casing")),
     typeAnnotations: ["off", "functions", "useful"].includes(typeAnnotations) ? typeAnnotations : "useful",
     ifExpressions: query.get("if_expressions") !== "false",
     earlyReturn: query.get("early_return") !== "false",
@@ -155,4 +160,8 @@ export function parseQueryOptions(query: URLSearchParams): DecompileOptions {
     mathConstants: query.get("math_constants") !== "false",
     runtimeContext,
   };
+}
+
+function parseNameCasing(value: string | null): NameStyleOptions['nameCasing'] {
+  return value === 'camelCase' || value === 'snake_case' || value === 'PascalCase' ? value : 'preserve';
 }

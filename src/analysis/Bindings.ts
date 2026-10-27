@@ -5,9 +5,13 @@ export interface Reference {
   node: Identifier;
   scope: Block;
   statement: Statement;
+  /** A function declaration stores its root binding in a string path. */
+  declarationRoot?: boolean;
 }
 export interface LexicalBinding {
   name: string;
+  /** Position in a local/iterator/parameter declaration, including duplicates. */
+  declarationIndex?: number;
   declaration: Statement | Expression;
   scope: Block;
   depth: number;
@@ -22,14 +26,14 @@ export function analyzeBindings(root: Block): { bindings: LexicalBinding[]; glob
   const bindings: LexicalBinding[] = [], globals = new Set<string>();
   const scopes: Map<string, LexicalBinding>[] = [new Map()];
   let depth = 0;
-  const declare = (name: string, declaration: Statement | Expression, scope: Block) => {
-    const binding: LexicalBinding = {name,declaration,scope,depth,reads:[],writes:[],captured:false};
+  const declare = (name: string, declaration: Statement | Expression, scope: Block, declarationIndex?: number) => {
+    const binding: LexicalBinding = {name,declaration,declarationIndex,scope,depth,reads:[],writes:[],captured:false};
     bindings.push(binding); scopes.at(-1)!.set(name,binding);
   };
-  const reference = (node: Identifier, scope: Block, statement: Statement, write=false) => {
+  const reference = (node: Identifier, scope: Block, statement: Statement, write=false, declarationRoot=false) => {
     const binding = [...scopes].reverse().map(s=>s.get(node.name)).find(Boolean);
     if (!binding) { globals.add(node.name); return; }
-    (write ? binding.writes : binding.reads).push({node,scope,statement});
+    (write ? binding.writes : binding.reads).push({node,scope,statement,declarationRoot});
     if(depth > binding.depth) binding.captured=true;
   };
   const nested = (body: Block, setup?:()=>void, tail?:()=>void) => {
@@ -50,7 +54,7 @@ export function analyzeBindings(root: Block): { bindings: LexicalBinding[]; glob
       case 'if-expr':visit(value.test);visit(value.consequent);value.branches.forEach(b=>{visit(b.test);visit(b.value);});visit(value.alternate);break;
       case 'interp':value.parts.forEach(p=>{if(p.kind==='expr' && typeof p.value !== 'string')visit(p.value);});break;
       case 'function-expr':
-        depth++;nested(value.body,()=>value.params.forEach(p=>declare(p,value,value.body)));depth--;break;
+        depth++;nested(value.body,()=>value.params.forEach((p,i)=>declare(p,value,value.body,i)));depth--;break;
     }
   };
   const walk = (body: Block): void => {
@@ -58,23 +62,23 @@ export function analyzeBindings(root: Block): { bindings: LexicalBinding[]; glob
       const visit=(e:Expression)=>expr(e,body,s);
       const target=(e:Expression)=>e.kind==='identifier'?reference(e,body,s,true):visit(e);
       switch(s.kind){
-        case 'local':s.values.forEach(visit);s.names.forEach(n=>declare(n,s,body));break;
+        case 'local':s.values.forEach(visit);s.names.forEach((n,i)=>declare(n,s,body,i));break;
         case 'assign':s.values.forEach(visit);s.targets.forEach(target);break;
         case 'compound-assign':visit(s.target);target(s.target);visit(s.value);break;
         case 'expression-stmt':visit(s.expression);break;
         case 'return':s.values.forEach(visit);break;
         case 'function-decl':
           if(s.local)declare(s.name,s,body);
-          else reference({kind:'identifier',name:s.name.split(/[.:]/)[0]!},body,s,!/[.:]/.test(s.name));
+          else reference({kind:'identifier',name:s.name.split(/[.:]/)[0]!},body,s,!/[.:]/.test(s.name),true);
           depth++;nested(s.body,()=>{
             if(s.name.includes(':'))declare('self',s,s.body);
-            s.params.forEach(n=>declare(n,s,s.body));
+            s.params.forEach((n,i)=>declare(n,s,s.body,i));
           });depth--;break;
         case 'if':visit(s.test);nested(s.consequent);s.branches.forEach(b=>{visit(b.test);nested(b.body);});if(s.alternate)nested(s.alternate);break;
         case 'while':visit(s.test);nested(s.body);break;
         case 'repeat':nested(s.body,undefined,()=>expr(s.test,s.body,s));break;
         case 'numeric-for':visit(s.start);visit(s.stop);if(s.step)visit(s.step);nested(s.body,()=>declare(s.name,s,s.body));break;
-        case 'generic-for':s.iterators.forEach(visit);nested(s.body,()=>s.names.forEach(n=>declare(n,s,s.body)));break;
+        case 'generic-for':s.iterators.forEach(visit);nested(s.body,()=>s.names.forEach((n,i)=>declare(n,s,s.body,i)));break;
         case 'do':nested(s.body);break;
       }
     }

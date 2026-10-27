@@ -19,11 +19,13 @@
     "bench:compare": "node scripts/bench-compare.mjs",
     "bench:semantic": "node scripts/bench-semantic.mjs",
     "bench:competition": "node scripts/bench-competition.mjs",
-    "bench:test": "node --test scripts/bench-compare.test.mjs scripts/bench-summary.test.mjs scripts/bench-assert-syntax.test.mjs scripts/bench-semantic.test.mjs scripts/competition/benchmark.test.mjs scripts/large/benchmark.test.mjs",
+    "bench:test": "node --test scripts/bench-compare.test.mjs scripts/bench-summary.test.mjs scripts/bench-assert-syntax.test.mjs scripts/bench-semantic.test.mjs scripts/competition/benchmark.test.mjs scripts/large/benchmark.test.mjs scripts/fuzz/generator.test.mjs scripts/fuzz/observe.test.mjs scripts/fuzz/reducer.test.mjs",
     "serve": "node dist/cli.js serve",
     "bench:regressions": "node scripts/bench-regressions.mjs",
     "bench:large": "node scripts/bench-large.mjs",
-    "bench:large:regressions": "node scripts/bench-large-regressions.mjs"
+    "bench:large:regressions": "node scripts/bench-large-regressions.mjs",
+    "bench:fuzz": "node scripts/bench-fuzz.mjs",
+    "bench:independent": "node scripts/bench-independent.mjs"
   },
   "engines": {
     "node": ">=20"

@@ -173,6 +173,32 @@ and loop regions with real `break` / `continue` instead of flattened jumps.
 - `Touched` → `hit: BasePart`
 - `CameraShaker` callbacks → `cframe: CFrame`
 
+## Local naming options
+
+The web decompiler supports readable or compact local names and optional
+`camelCase`, `snake_case`, or `PascalCase`. Renaming follows lexical bindings,
+including captured variables and shadowed parameters. Public table keys, globals,
+method names, implicit `self`, and identifiers mentioned in opaque type annotations
+keep their spelling. Compact mode takes precedence over casing.
+
+```js
+decompile(bytes, { generatedNames: "readable", nameCasing: "snake_case" });
+```
+
+The HTTP parameters are `generated_names` and `name_casing`; the CLI accepts them
+through `LUAU_DECOMPILE_OPTS`:
+
+```bash
+LUAU_DECOMPILE_OPTS='generated_names=compact' node dist/cli.js decompile chunk.luac
+```
+
+Check all five naming configurations against the existing reduced originals:
+
+```bash
+npm run bench:large:regressions -- --name-styles \
+  --luau-compile /path/to/luau-compile --luau /path/to/luau --output /tmp/naming-results
+```
+
 ## Optional runtime context
 
 Static bytecode cannot always preserve source-level names. If you have runtime context from a live environment, it can be supplied separately to improve names without changing the core decompiler into a dynamic executor.
@@ -236,3 +262,30 @@ npm run build
 Contributions that improve semantic reconstruction, reduce false-positive naming, add bytecode-version coverage, or provide small reproducible fixtures are especially useful.
 
 If you find a case that reconstructs incorrectly, open an issue with the smallest bytecode/source example you can share and the output you expected.
+
+## Evidence across functions and semantic fuzzing
+
+The reconstruction pipeline can infer parameter names from consistent direct
+call sites and recognized method usage. Primitive parameter types require a
+complete set of direct calls; escaped/reassigned functions, mutable parameters,
+unknown arguments and open packs remain unannotated by this analysis. Conflicting
+known primitive inputs produce unions. Fixed returns propagate through local
+call chains with a bounded fixed point; fallthrough and unknown packs stay broad.
+This pass does not move evaluations or rebuild compiler-eliminated functions.
+
+```bash
+npm run bench:fuzz -- --count 30 --seed 1 --reduce-attempts 20 \
+  --luau-compile /path/to/luau-compile --luau /path/to/luau --output /tmp/fuzz-results
+```
+
+The generator exercises mutable captures, aliases, ordered effects, loops and
+multiple returns. Failures retain sources, exact bytes, hashes and traces.
+The bounded reducer accepts smaller sources only when their originals execute
+successfully and the same failure category remains. Timeouts and invalid
+originals are not semantic mismatches. Generated variants share a grammar;
+their count does not measure independent architecture coverage.
+
+The [independent corpus report](benchmarks/results/independent-2026-10-27/README.md)
+preserves the first competitive measurement separately from later regression
+results. The [Tovek reference note](docs/references/tovek-capture-reconstruction.md)
+explains the capture invariant used in our SSA reconstruction fix.

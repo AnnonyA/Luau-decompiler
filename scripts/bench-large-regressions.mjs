@@ -10,27 +10,42 @@ import {decompile} from '../dist/decompile.js';
 import {launch,classify} from './competition/evaluate.mjs';
 import {digest} from './competition/external.mjs';
 const args=process.argv.slice(2),options={};
-for(let i=0;i<args.length;i+=2){
+let nameStyles=false;
+for(let i=0;i<args.length;i++){
+ if(args[i]==='--name-styles'){nameStyles=true;continue;}
  if(!['--luau','--luau-compile','--output'].includes(args[i])||!args[i+1])throw Error('invalid arguments');
  options[args[i]]=resolve(args[i+1]);
+ i++;
 }
 const compiler=options['--luau-compile'],vm=options['--luau'],output=options['--output'];
 if(!compiler||!vm||!output)throw Error('--luau-compile, --luau and --output are required');
-const root=fileURLToPath(new URL('../tests/fixtures/large/',import.meta.url)),results=[];
-for(const file of (await readdir(root)).filter(f=>f.endsWith('.luau')).sort())for(const optimization of [0,1,2]){
- const original=join(root,file),source=await readFile(original),dir=join(output,file.slice(0,-5),`O${optimization}`);
+const styles = nameStyles ? [
+ ['default',{}], ['compact',{generatedNames:'compact'}],
+ ...['camelCase','snake_case','PascalCase'].map(nameCasing=>[nameCasing,{nameCasing}]),
+] : [['default',{}]];
+const results=[], fixtures=[];
+for(const family of ['large','object-optimized']) {
+ const root=fileURLToPath(new URL(`../tests/fixtures/${family}/`,import.meta.url));
+ for(const file of (await readdir(root)).filter(f=>f.endsWith('.luau')).sort())fixtures.push({file:family+'/'+file,original:join(root,file)});
+}
+for(const {file,original} of fixtures)for(const optimization of [0,1,2]){
+ const source=await readFile(original),dir=join(output,file.slice(0,-5),`O${optimization}`);
  await mkdir(dir,{recursive:true});
  const compiled=spawnSync(compiler,['--binary',`-O${optimization}`,'-g1',original],{timeout:15000,maxBuffer:4*1024*1024});
  if(compiled.status!==0||compiled.error)throw Error(`compile failed: ${file}`);
  await writeFile(join(dir,'bytecode.luauc'),compiled.stdout);
- const result=decompile(compiled.stdout,{opcodeEncoding:'official'}),target=join(dir,'annony.luau');
- await writeFile(target,result.ok?result.source:'');
  const originals=[launch(vm,[`-O${optimization}`,original],dir)];
- const parser=result.ok?launch(compiler,['--only-parse',target],dir):undefined;
- const runs=parser?.ok?[launch(vm,[`-O${optimization}`,target],dir)]:[];
- const comparison=classify({parser,originals,runs});
- results.push({id:file,optimization,sourceSha256:digest(source),bytecodeSha256:digest(compiled.stdout),...comparison,parser,originals,runs});
- console.log(`${file}/O${optimization}: ${comparison.status}`);
+ for(const [style,naming] of styles){
+  const result=decompile(compiled.stdout,{opcodeEncoding:'official',...naming});
+  const target=join(dir,style==='default'?'annony.luau':`annony-${style}.luau`);
+  await writeFile(target,result.ok?result.source:'');
+  const parser=result.ok?launch(compiler,['--only-parse',target],dir):undefined;
+  const runs=parser?.ok?[launch(vm,[`-O${optimization}`,target],dir)]:[];
+  const comparison=classify({parser,originals,runs});
+  results.push({id:file,optimization,style,options:naming,sourceSha256:digest(source),bytecodeSha256:digest(compiled.stdout),...comparison,parser,originals,runs});
+  console.log(`${file}/O${optimization}/${style}: ${comparison.status}`);
+ }
+
 }
 await writeFile(join(output,'report.json'),JSON.stringify({results},null,2)+'\n');
 if(!results.length||results.some(r=>r.status!=='MATCH'))process.exitCode=1;
