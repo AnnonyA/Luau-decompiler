@@ -20,31 +20,31 @@ No ranking is assigned to unmeasured engines. Structural/token metrics are secon
 
 | Program/profile | Engine | Matching inputs | Normalized token similarity | Time (ms) |
 |---|---|---:|---:|---:|
-| entity-store/O0 | annony | 24/24 | 0.800 | 92.3 |
+| entity-store/O0 | annony | 24/24 | 0.800 | 91.5 |
 | entity-store/O0 | lunaux | 24/24 | 0.924 | 572.9 |
 | entity-store/O0 | luaexpert | 24/24 | 0.934 | 1260.0 |
-| entity-store/O1 | annony | 24/24 | 0.833 | 45.9 |
+| entity-store/O1 | annony | 24/24 | 0.833 | 39.8 |
 | entity-store/O1 | lunaux | 24/24 | 0.920 | 212.9 |
 | entity-store/O1 | luaexpert | 24/24 | 0.932 | 1403.5 |
-| entity-store/O2 | annony | 24/24 | 0.761 | 51.2 |
+| entity-store/O2 | annony | 24/24 | 0.761 | 34.5 |
 | entity-store/O2 | lunaux | 24/24 | 0.847 | 190.4 |
 | entity-store/O2 | luaexpert | 24/24 | 0.863 | 841.3 |
-| incremental-workbook/O0 | annony | 24/24 | 0.736 | 36.8 |
+| incremental-workbook/O0 | annony | 24/24 | 0.736 | 39.9 |
 | incremental-workbook/O0 | lunaux | 24/24 | 0.961 | 354.1 |
 | incremental-workbook/O0 | luaexpert | 24/24 | 0.960 | 1005.1 |
-| incremental-workbook/O1 | annony | 24/24 | 0.753 | 36.8 |
+| incremental-workbook/O1 | annony | 24/24 | 0.753 | 38.0 |
 | incremental-workbook/O1 | lunaux | 24/24 | 0.957 | 243.7 |
 | incremental-workbook/O1 | luaexpert | 24/24 | 0.956 | 761.6 |
-| incremental-workbook/O2 | annony | 24/24 | 0.728 | 55.6 |
+| incremental-workbook/O2 | annony | 24/24 | 0.728 | 34.8 |
 | incremental-workbook/O2 | lunaux | 24/24 | 0.910 | 412.5 |
 | incremental-workbook/O2 | luaexpert | 24/24 | 0.902 | 312.4 |
-| streaming-audio/O0 | annony | 24/24 | 0.753 | 39.3 |
+| streaming-audio/O0 | annony | 24/24 | 0.753 | 31.7 |
 | streaming-audio/O0 | lunaux | 24/24 | 0.908 | 384.8 |
 | streaming-audio/O0 | luaexpert | 24/24 | 0.938 | 1130.4 |
-| streaming-audio/O1 | annony | 24/24 | 0.775 | 35.4 |
+| streaming-audio/O1 | annony | 24/24 | 0.775 | 28.3 |
 | streaming-audio/O1 | lunaux | 24/24 | 0.905 | 297.5 |
 | streaming-audio/O1 | luaexpert | 24/24 | 0.934 | 837.0 |
-| streaming-audio/O2 | annony | 24/24 | 0.654 | 36.0 |
+| streaming-audio/O2 | annony | 24/24 | 0.654 | 31.7 |
 | streaming-audio/O2 | lunaux | 0/24 | 0.763 | 284.6 |
 | streaming-audio/O2 | luaexpert | 24/24 | 0.778 | 336.8 |
 

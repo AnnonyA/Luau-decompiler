@@ -1,7 +1,7 @@
 {
   "styles": {
-    "profiles": 525,
-    "match": 525
+    "profiles": 540,
+    "match": 540
   },
   "generated": {
     "profiles": 90,
@@ -15,6 +15,6 @@
     "observed": 0,
     "development": 0
   },
-  "unitTests": 424,
+  "unitTests": 425,
   "harnessTests": 44
 }

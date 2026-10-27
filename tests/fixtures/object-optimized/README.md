@@ -12,3 +12,7 @@ exercise related construction and O2 paths.
 Unit tests use the exact saved bytes. `bench:large:regressions` recompiles these
 sources with the official compiler, parses and executes the reconstructions,
 and compares observed traces. `--name-styles` covers all naming configurations.
+
+`duplicate-closure-constant` preserves function equality when O2 inlines two
+loads of one capture-free closure constant. O0 intentionally produces distinct
+closures; O1/O2 share the constant. Each profile must retain its own behavior.

@@ -157,6 +157,8 @@ class SourceBuilder {
     { fieldName: string; tableRegister: number; fn: Expression; params: string[]; isVararg: boolean }
   >();
   private readonly mainProto: Prototype | undefined;
+  /** Repeated loads of a capture-free constant within one effect-free block. */
+  private readonly sharedClosureConstants = new Map<number, {pc: number; name: string}>();
 
   constructor(
     private readonly module: BytecodeModule,
@@ -242,6 +244,32 @@ class SourceBuilder {
       this.env.set(i, { name, expression: ident(name), pinned: true });
     }
     this.fallbackCalls = this.collectFallbackCalls();
+    this.indexSharedClosureConstants();
+  }
+
+  private indexSharedClosureConstants(): void {
+    const loads = new Map<number, DecodedInstruction[]>();
+    for (const insn of this.proto.instructions) {
+      if (insn.opcode !== Opcode.DUPCLOSURE) continue;
+      const constant = this.proto.constants[insn.d];
+      const child = constant?.kind === "closure" ? this.module.prototypes[constant.protoId] : undefined;
+      if (!child || child.numUpvalues !== 0) continue;
+      const sites = loads.get(insn.d) ?? [];
+      sites.push(insn);
+      loads.set(insn.d, sites);
+    }
+    const inert = new Set([Opcode.NOP, Opcode.MOVE, Opcode.LOADNIL, Opcode.LOADB, Opcode.LOADN, Opcode.LOADK, Opcode.LOADKX]);
+    for (const [constant, sites] of loads) {
+      if (sites.length < 2) continue;
+      const first = sites[0]!, last = sites.at(-1)!;
+      const home = this.ir.cfg.blockOfPc.get(first.pc);
+      if (home === undefined || sites.some(s => this.ir.cfg.blockOfPc.get(s.pc) !== home)) continue;
+      // Calls/metamethods can change environments. Share only within a straight
+      // interval of loads/copies, and keep creation at the first original site.
+      const interval = this.ir.cfg.blocks[home]!.instructions.filter(i => i.pc > first.pc && i.pc < last.pc);
+      if (interval.some(i => !inert.has(i.opcode) && !(i.opcode === Opcode.DUPCLOSURE && loads.has(i.d)))) continue;
+      this.sharedClosureConstants.set(constant, {pc: first.pc, name: this.allocator.reserve("sharedFunction")});
+    }
   }
 
   /** Index of the first decoded instruction strictly after the given pc.
@@ -2222,6 +2250,19 @@ class SourceBuilder {
     }
     if (!child) {
       return [];
+    }
+    const shared = insn.opcode === Opcode.DUPCLOSURE ? this.sharedClosureConstants.get(insn.d) : undefined;
+    if (shared) {
+      const statements: Statement[] = [];
+      if (shared.pc === insn.pc) {
+        const reconstructed = reconstructFunction(this.module, child, {allocator: this.allocator, captures: new Map()});
+        statements.push({kind: "local", names: [shared.name], values: [{kind: "function-expr",
+          params: reconstructed.params, isVararg: child.isVararg, body: reconstructed.body, line: child.lineDefined || undefined}]});
+        this.declareInScope(shared.name);
+      }
+      // Use the normal register definition path: a destination can still be a
+      // phi or a mutable REF cell even though the loaded function has no captures.
+      return [...statements, ...this.define(insn.a, ident(shared.name), insn)];
     }
     const captures = this.capturesAfter(insn.pc);
     // Captured pending tables must be materialized before their names are read.

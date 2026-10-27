@@ -29,3 +29,21 @@ this fix makes subsequent evaluations development regressions.
 Other promising Tovek work, not claimed as implemented here: general de-inlining
 of O2 helpers, a full capture-effect graph, and structured fallback for arbitrary
 irreducible CFGs. These require their own evidence and regression work.
+
+## Shared closure constants after O2 inlining
+
+[closure_identity.rs](https://github.com/Kiet1308/Tovek/blob/77edf387bf280a2f4d46d57ac85d5c4f071b763f/ast/src/closure_identity.rs)
+tracks `(prototype, constant slot)`, rather than assuming identical function
+bodies imply identical objects. Official Luau `lvmload.cpp` creates a closure
+per constant, and `lvmexecute.cpp`'s DUPCLOSURE reuses it when environment and
+captured values agree.
+
+Our additional independent reduction calls a factory twice. O2 emits two loads
+of one capture-free closure constant; formerly we printed two function literals,
+changing `first == second` from true to false. We now share one lexical binding
+for repeated capture-free constant loads in the same basic block, with only
+inert loads/copies between them. Creation remains at the first original site.
+Register assignment still uses the normal phi/REF path. This does not merge
+NEWCLOSURE, different constant slots, captured closures, cross-block loads or
+loads separated by potentially effectful instructions. General environment- and
+capture-sensitive cache reconstruction remains future work.

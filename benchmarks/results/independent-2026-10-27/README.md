@@ -37,9 +37,9 @@ External access is opt-in (`--external`); the cap is 18 requests, with timeouts,
 rate spacing and a circuit breaker. Existing response artifacts can be inspected
 without any network access. Recompilation must reproduce the sealed bytecode.
 
-Additional validation of the integrated engine: 424 unit tests, 44 harness tests,
+Additional validation of the integrated engine: 425 unit tests, 44 harness tests,
 200/200 original semantic comparisons, 24/24 original competition profiles,
-36/36 scope/CFG regressions, 30/30 large-system profiles, 525/525 reduced profiles
+36/36 scope/CFG regressions, 30/30 large-system profiles, 540/540 reduced profiles
 across five naming modes, and 90/90 seeded profiles (30 generated programs).
 Chromium covers the naming controls and existing upload/copy/download flows.
 Generated programs share a grammar and are not 30 independent architectures.
