@@ -47,3 +47,34 @@ Register assignment still uses the normal phi/REF path. This does not merge
 NEWCLOSURE, different constant slots, captured closures, cross-block loads or
 loads separated by potentially effectful instructions. General environment- and
 capture-sensitive cache reconstruction remains future work.
+
+
+## Constant sharing across dominated regions
+
+The follow-up retains creation at the first original load but extends identity
+recovery beyond one straight block. A load may reuse the first binding when it
+is dominated by that first load, all intervening instructions are inert loads,
+copies or truthiness branches, and no participating load is in a loop. A local
+slot declared in the enclosing function keeps the binding visible across branches;
+only its declaration moves, not closure creation or capture evaluation.
+
+SSA now records the reaching definition at each register read. VAL capture lists
+are compared by those identities, following MOVE aliases. Reusing a register with
+a new definition does not count as the same capture. Captured sharing is restricted
+to non-repeating top-level regions of the chunk: a nested function can execute
+again with different captures while its prototype constant still caches the first
+activation's values. REF/UPVAL captures, self captures and uncertain activation
+lifetimes remain excluded. This is not general captured-closure cache emulation.
+
+Project-authored `stable-capture-constant` and `branch-closure-constant` failed
+identity comparisons at O2 before the change; both now match at O0/O1/O2. The
+former also verifies table alias identity, mutation visibility and multiple
+returns. The latter runs with both truthiness outcomes. `different-closure-captures`
+and a synthetic SSA-version test protect against merging distinct captures.
+The same Tovek `closure_identity.rs` and official VM DUPCLOSURE implementation
+listed above informed the invariant; the implementation is independent.
+
+Cycle exclusion uses iterative strongly connected components, not only natural
+loops: irreducible regions can revisit a load despite having no dominating loop
+header. The graph walk is linear in blocks and edges and does not recurse on
+the host stack. Interval scans start at a binary-searched instruction index.

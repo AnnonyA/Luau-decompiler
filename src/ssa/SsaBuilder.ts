@@ -12,9 +12,12 @@ export interface SsaFunction {
   defAt: Map<string, number>;
   blockValues: Map<number, number[]>;
   registerAt: Map<string, number>;
+  /** Reaching SSA definition for each register read at an instruction. */
+  useAt: Map<string, number>;
 }
 
 export function buildSsa(cfg: ControlFlowGraph, dominators: DominatorTree): SsaFunction {
+  const useAt = new Map<string, number>();
   const liveness = computeLiveness(cfg);
   const values: SsaValue[] = [];
   const phis = new Map<number, PhiNode[]>();
@@ -105,7 +108,11 @@ export function buildSsa(cfg: ControlFlowGraph, dominators: DominatorTree): SsaF
     }
 
     for (const insn of cfg.blocks[blockId]!.instructions) {
-      const produced = lowerInstruction(insn, (register) => lookup(register, blockId, insn.pc));
+      const produced = lowerInstruction(insn, (register) => {
+        const value = lookup(register, blockId, insn.pc);
+        useAt.set(`${blockId}:${insn.pc}:${register}`, value);
+        return value;
+      });
       for (const use of produced.uses) {
         values[use]?.uses.push(insn.pc);
       }
@@ -161,7 +168,7 @@ export function buildSsa(cfg: ControlFlowGraph, dominators: DominatorTree): SsaF
     registerAt.set(`${value.block}:${value.pc}:${value.register}`, value.id);
   }
 
-  return { values, phis, defAt, blockValues, registerAt };
+  return { values, phis, defAt, blockValues, registerAt, useAt };
 }
 
 function defsByRegisterFromCfg(cfg: ControlFlowGraph): Map<number, number[]> {

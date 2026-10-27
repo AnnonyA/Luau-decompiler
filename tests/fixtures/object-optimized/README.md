@@ -16,3 +16,9 @@ and compares observed traces. `--name-styles` covers all naming configurations.
 `duplicate-closure-constant` preserves function equality when O2 inlines two
 loads of one capture-free closure constant. O0 intentionally produces distinct
 closures; O1/O2 share the constant. Each profile must retain its own behavior.
+
+`stable-capture-constant` and `branch-closure-constant` extend the O2 identity
+regressions to a shared table capture and separate dominated blocks.
+`different-closure-captures` must retain distinct function objects. The optional
+`inputs.json` matrix runs the branch program with both outcomes; all inputs must
+match for any profile to pass.

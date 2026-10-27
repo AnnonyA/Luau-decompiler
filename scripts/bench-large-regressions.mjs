@@ -26,23 +26,32 @@ const styles = nameStyles ? [
 const results=[], fixtures=[];
 for(const family of ['large','object-optimized']) {
  const root=fileURLToPath(new URL(`../tests/fixtures/${family}/`,import.meta.url));
- for(const file of (await readdir(root)).filter(f=>f.endsWith('.luau')).sort())fixtures.push({file:family+'/'+file,original:join(root,file)});
+ let inputMatrix = {};
+ try { inputMatrix = JSON.parse(await readFile(join(root,'inputs.json'),'utf8')); }
+ catch(error) { if(error.code !== 'ENOENT') throw error; }
+ const files = (await readdir(root)).filter(f=>f.endsWith('.luau')).sort();
+ if(Object.keys(inputMatrix).some(file=>!files.includes(file))) throw Error('unknown input fixture');
+ for(const file of files){
+  const inputs = inputMatrix[file] ?? [[]];
+  if(!Array.isArray(inputs)||!inputs.length||inputs.some(args=>!Array.isArray(args)||args.some(arg=>typeof arg!=='string')))throw Error('invalid input matrix');
+  fixtures.push({file:family+'/'+file,original:join(root,file),inputs});
+ }
 }
-for(const {file,original} of fixtures)for(const optimization of [0,1,2]){
+for(const {file,original,inputs} of fixtures)for(const optimization of [0,1,2]){
  const source=await readFile(original),dir=join(output,file.slice(0,-5),`O${optimization}`);
  await mkdir(dir,{recursive:true});
  const compiled=spawnSync(compiler,['--binary',`-O${optimization}`,'-g1',original],{timeout:15000,maxBuffer:4*1024*1024});
  if(compiled.status!==0||compiled.error)throw Error(`compile failed: ${file}`);
  await writeFile(join(dir,'bytecode.luauc'),compiled.stdout);
- const originals=[launch(vm,[`-O${optimization}`,original],dir)];
+ const originals=inputs.map(args=>launch(vm,[`-O${optimization}`,original,'-a',...args],dir));
  for(const [style,naming] of styles){
   const result=decompile(compiled.stdout,{opcodeEncoding:'official',...naming});
   const target=join(dir,style==='default'?'annony.luau':`annony-${style}.luau`);
   await writeFile(target,result.ok?result.source:'');
   const parser=result.ok?launch(compiler,['--only-parse',target],dir):undefined;
-  const runs=parser?.ok?[launch(vm,[`-O${optimization}`,target],dir)]:[];
+  const runs=parser?.ok?inputs.map(args=>launch(vm,[`-O${optimization}`,target,'-a',...args],dir)):[];
   const comparison=classify({parser,originals,runs});
-  results.push({id:file,optimization,style,options:naming,sourceSha256:digest(source),bytecodeSha256:digest(compiled.stdout),...comparison,parser,originals,runs});
+  results.push({id:file,optimization,style,inputs,options:naming,sourceSha256:digest(source),bytecodeSha256:digest(compiled.stdout),...comparison,parser,originals,runs});
   console.log(`${file}/O${optimization}/${style}: ${comparison.status}`);
  }
 

@@ -1,3 +1,4 @@
+import { findCyclicBlocks } from "../cfg/Cycles.js";
 import type {
   BinaryOperator,
   Block,
@@ -157,8 +158,8 @@ class SourceBuilder {
     { fieldName: string; tableRegister: number; fn: Expression; params: string[]; isVararg: boolean }
   >();
   private readonly mainProto: Prototype | undefined;
-  /** Repeated loads of a capture-free constant within one effect-free block. */
-  private readonly sharedClosureConstants = new Map<number, {pc: number; name: string}>();
+  /** Repeated constant loads with proven capture identity and a dominating first load. */
+  private readonly sharedClosureConstants = new Map<number, {pc: number; name: string; hoisted: boolean}>();
 
   constructor(
     private readonly module: BytecodeModule,
@@ -253,23 +254,70 @@ class SourceBuilder {
       if (insn.opcode !== Opcode.DUPCLOSURE) continue;
       const constant = this.proto.constants[insn.d];
       const child = constant?.kind === "closure" ? this.module.prototypes[constant.protoId] : undefined;
-      if (!child || child.numUpvalues !== 0) continue;
+      if (!child) continue;
       const sites = loads.get(insn.d) ?? [];
       sites.push(insn);
       loads.set(insn.d, sites);
     }
-    const inert = new Set([Opcode.NOP, Opcode.MOVE, Opcode.LOADNIL, Opcode.LOADB, Opcode.LOADN, Opcode.LOADK, Opcode.LOADKX]);
+    if (![...loads.values()].some(sites => sites.length > 1)) return;
+    const cyclic = findCyclicBlocks(this.ir.cfg);
+    const inert = new Set([Opcode.NOP, Opcode.MOVE, Opcode.LOADNIL, Opcode.LOADB, Opcode.LOADN, Opcode.LOADK, Opcode.LOADKX,
+      Opcode.CAPTURE, Opcode.JUMP, Opcode.JUMPIF, Opcode.JUMPIFNOT]);
     for (const [constant, sites] of loads) {
       if (sites.length < 2) continue;
       const first = sites[0]!, last = sites.at(-1)!;
       const home = this.ir.cfg.blockOfPc.get(first.pc);
-      if (home === undefined || sites.some(s => this.ir.cfg.blockOfPc.get(s.pc) !== home)) continue;
-      // Calls/metamethods can change environments. Share only within a straight
-      // interval of loads/copies, and keep creation at the first original site.
-      const interval = this.ir.cfg.blocks[home]!.instructions.filter(i => i.pc > first.pc && i.pc < last.pc);
-      if (interval.some(i => !inert.has(i.opcode) && !(i.opcode === Opcode.DUPCLOSURE && loads.has(i.d)))) continue;
-      this.sharedClosureConstants.set(constant, {pc: first.pc, name: this.allocator.reserve("sharedFunction")});
+      if (home === undefined || sites.some(s => !this.ir.dominators.dominates(home, this.ir.cfg.blockOfPc.get(s.pc)!))) continue;
+      const hoisted = sites.some(s => this.ir.cfg.blockOfPc.get(s.pc) !== home);
+      const signature = this.constantCaptureSignature(first);
+      if (signature === undefined || sites.some(s => this.constantCaptureSignature(s) !== signature)) continue;
+      // A constant caches the first capture values across activations. Equal
+      // values at two sites in a later activation do NOT prove a cache hit.
+      // Captured sharing therefore requires a single top-level execution, with
+      // every load outside loops. Capture-free constants retain the old scope.
+      if (signature && this.proto !== this.mainProto) continue;
+      if ((hoisted || signature) && sites.some(s => cyclic.has(this.ir.cfg.blockOfPc.get(s.pc)!))) continue;
+      // Calls/metamethods can change environments or captured cells. Only inert
+      // copies, constant loads and truthiness branches may separate shared sites.
+      let effectful = false;
+      for (let index = this.firstInstructionAfter(first.pc); index < this.proto.instructions.length; index++) {
+        const instruction = this.proto.instructions[index]!;
+        if (instruction.pc >= last.pc) break;
+        if (!inert.has(instruction.opcode) && !(instruction.opcode === Opcode.DUPCLOSURE && loads.has(instruction.d))) {
+          effectful = true;
+          break;
+        }
+      }
+      if (effectful) continue;
+      const name = this.allocator.reserve("sharedFunction");
+      this.sharedClosureConstants.set(constant, {pc: first.pc, name, hoisted});
+      if (hoisted) this.declareInScope(name);
     }
+  }
+
+  private constantCaptureSignature(insn: DecodedInstruction): string | undefined {
+    const constant = this.proto.constants[insn.d];
+    const child = constant?.kind === "closure" ? this.module.prototypes[constant.protoId] : undefined;
+    const captures = this.capturesAfter(insn.pc);
+    if (!child || captures.length !== child.numUpvalues) return undefined;
+    const signature: number[] = [];
+    for (const cap of captures) {
+      // REF/UPVAL forwarding may designate a mutable cell; it needs a separate
+      // proof across parent activations. Self captures also need cache modeling.
+      if (cap.capture?.type !== CaptureType.VAL || cap.capture.source === insn.a) return undefined;
+      const home = this.ir.cfg.blockOfPc.get(cap.pc)!;
+      let value = this.ir.ssa.useAt.get(`${home}:${cap.pc}:${cap.capture.source}`);
+      const seen = new Set<number>();
+      while (value !== undefined && !seen.has(value)) {
+        seen.add(value);
+        const op = this.ir.ssa.values[value]?.op;
+        if (op?.kind !== "move") break;
+        value = op.source;
+      }
+      if (value === undefined || this.ir.ssa.values[value]?.op.kind === "undefined") return undefined;
+      signature.push(value);
+    }
+    return signature.join(",");
   }
 
   /** Index of the first decoded instruction strictly after the given pc.
@@ -316,7 +364,9 @@ class SourceBuilder {
   }
 
   build(): Statement[] {
-    return this.emitRange(0, undefined, new Set());
+    const declarations: Statement[] = [...this.sharedClosureConstants.values()].filter(s => s.hoisted)
+      .map(s => ({kind: "local", names: [s.name], values: []}));
+    return [...declarations, ...this.emitRange(0, undefined, new Set())];
   }
 
   // ------------------------------------------------------------------ scopes
@@ -2252,18 +2302,7 @@ class SourceBuilder {
       return [];
     }
     const shared = insn.opcode === Opcode.DUPCLOSURE ? this.sharedClosureConstants.get(insn.d) : undefined;
-    if (shared) {
-      const statements: Statement[] = [];
-      if (shared.pc === insn.pc) {
-        const reconstructed = reconstructFunction(this.module, child, {allocator: this.allocator, captures: new Map()});
-        statements.push({kind: "local", names: [shared.name], values: [{kind: "function-expr",
-          params: reconstructed.params, isVararg: child.isVararg, body: reconstructed.body, line: child.lineDefined || undefined}]});
-        this.declareInScope(shared.name);
-      }
-      // Use the normal register definition path: a destination can still be a
-      // phi or a mutable REF cell even though the loaded function has no captures.
-      return [...statements, ...this.define(insn.a, ident(shared.name), insn)];
-    }
+    if (shared && shared.pc !== insn.pc) return this.define(insn.a, ident(shared.name), insn);
     const captures = this.capturesAfter(insn.pc);
     // Captured pending tables must be materialized before their names are read.
     const statements: Statement[] = [];
@@ -2309,12 +2348,12 @@ class SourceBuilder {
       this.pendingCallbackHint(insn.a) ??
       peekPredicateName(child) ??
       "function";
-    const name =
+    const name = shared?.name ?? (
       existing?.forwardRef && existing.name
         ? existing.name
         : onlyField
           ? preferred
-          : this.allocator.reserve(preferred);
+          : this.allocator.reserve(preferred));
 
     // Build the capture bindings for the child.
     const captureMap = new Map<number, CaptureBinding>();
@@ -2374,6 +2413,14 @@ class SourceBuilder {
       body: reconstructed.body,
       line: child.lineDefined || undefined,
     };
+
+    if (shared) {
+      const declaration: Statement = shared.hoisted
+        ? {kind: "assign", targets: [ident(shared.name)], values: [fn]}
+        : {kind: "local", names: [shared.name], values: [fn]};
+      this.declareInScope(shared.name);
+      return [...statements, declaration, ...this.define(insn.a, ident(shared.name), insn)];
+    }
 
     if (existing?.forwardRef && existing.name) {
       this.env.set(insn.a, { name, expression: ident(name), pinned: true, forwardRef: true });
