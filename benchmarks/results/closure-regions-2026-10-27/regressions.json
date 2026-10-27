@@ -1,0 +1,1247 @@
+{
+  "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "results": [
+    {
+      "id": "object-optimized/branch-closure-constant.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "false"
+        ],
+        [
+          "true"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "bd7bb586c0151646394005e28a358abd76d38fc79a4b197ae6167b35a482c931",
+      "bytecodeSha256": "72fd772512ea3f48f977a6d3515ce35bbfeeb6d57f3f99ddd032f44e07294ead",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.083889999999883
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJNAk4Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.5820340000000215
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 7.247552000000724
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJNAk4Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.667365999999674
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJNAk4Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.9576349999997547
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 9.343275999999605
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJNAk4Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.795759999999973
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/branch-closure-constant.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "false"
+        ],
+        [
+          "true"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "bd7bb586c0151646394005e28a358abd76d38fc79a4b197ae6167b35a482c931",
+      "bytecodeSha256": "18f111be3a7ed639bcd58ab428fc348bd55b57c59f596c983f2d90ac9fee5081",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.3639909999992597
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.525994000000537
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.566595999999663
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.7591859999993176
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.291497000000163
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 6.327228000000105
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.929215999999542
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/branch-closure-constant.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "false"
+        ],
+        [
+          "true"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "bd7bb586c0151646394005e28a358abd76d38fc79a4b197ae6167b35a482c931",
+      "bytecodeSha256": "485d66a6204584778536aa2a25d62db6c2b52a903e2a941fc88565eae28ba311",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 5.618017000000691
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 11.134675999999672
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.508397000000514
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.668021999999837
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.4341599999997925
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 8.218710000000101
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQk0CTgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 9.502416000000267
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/capture-free-after-call.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "6a624f060cb82b56e5a03e0656fc355007731475e498915971cb9c83870b4ede",
+      "bytecodeSha256": "5ef82a920bcd1dee90c06de03ef0b93d671ed09f334d0f45aae570467fbc31f4",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.0289670000001934
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YmVmb3JlCmZhbHNlCTMJNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.3144170000005033
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YmVmb3JlCmZhbHNlCTMJNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.773707000000286
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/capture-free-after-call.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "6a624f060cb82b56e5a03e0656fc355007731475e498915971cb9c83870b4ede",
+      "bytecodeSha256": "02c7baabf4be783eaec710a5c92fca48f97e75c1637664f92082e9e1330334de",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 4.214270000000397
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YmVmb3JlCnRydWUJMwk0Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.499565000000075
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YmVmb3JlCnRydWUJMwk0Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.2620069999993575
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/capture-free-after-call.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "6a624f060cb82b56e5a03e0656fc355007731475e498915971cb9c83870b4ede",
+      "bytecodeSha256": "066e3ba9307408450da0e5b9e239cba7ccd7c7192d4257594895a0130c948fad",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 4.469264000000294
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YmVmb3JlCnRydWUJMwk0Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.5713830000004236
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YmVmb3JlCnRydWUJMwk0Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.6035519999995813
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/changed-closure-environment.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "0350331128c29d94f17ace8b603def6cc7d5b6d5ba9dc47ec737b1aae13a2570",
+      "bytecodeSha256": "24d168f067f07ac2d4bfa39966682da5fbf613845a4c0ea3fc4170edc8f042dc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.955406000000039
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.2417270000005374
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.939405999999508
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/changed-closure-environment.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "0350331128c29d94f17ace8b603def6cc7d5b6d5ba9dc47ec737b1aae13a2570",
+      "bytecodeSha256": "69e789f2722b2cd83f9b2b9fd802e191f5a95ff2f06eecce5175e5949019e533",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.064991000000191
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQl0cnVlCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.888659000000189
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQl0cnVlCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.1274750000002314
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/changed-closure-environment.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "0350331128c29d94f17ace8b603def6cc7d5b6d5ba9dc47ec737b1aae13a2570",
+      "bytecodeSha256": "6df935174a35d02c4c68b871f8e93675828a46e4fbbfb7e83995fdb73c1ff625",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 8.961460999999872
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.104495000000497
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.22378899999967
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/different-closure-captures.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "555b550bc75ca42aa76fc6cc5ed3936279ce95dffb7f372ac7a02a7ec3d4003f",
+      "bytecodeSha256": "a71ef2494bfa46749a06dc43f78f7ad74f3e42c4ab282e99a2ae59dedb6833ea",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.893583000000035
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJZmFsc2UJMwk3CTMK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9307739999994737
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJZmFsc2UJMwk3CTMK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.6103210000001127
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/different-closure-captures.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "555b550bc75ca42aa76fc6cc5ed3936279ce95dffb7f372ac7a02a7ec3d4003f",
+      "bytecodeSha256": "cd756cebb6c313f338dc16ca4a500ed0e98f877294c8ff4589f6bfedf4100684",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.1722920000001977
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJZmFsc2UJMwk3CTMK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.013012000000344
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJZmFsc2UJMwk3CTMK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.823381999999583
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/different-closure-captures.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "555b550bc75ca42aa76fc6cc5ed3936279ce95dffb7f372ac7a02a7ec3d4003f",
+      "bytecodeSha256": "73c05c461c5ad8631e6ba8e921aa8e9b5939e613ebae10d15ed12b841eabc4a9",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.1397829999996247
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJZmFsc2UJMwk3CTMK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.000152999999955
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJZmFsc2UJMwk3CTMK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.589234999999462
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/nan-closure-capture.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "06ba389a88184221394702758df5a800325d028d0a5fff64e657f6667d924faf",
+      "bytecodeSha256": "0c3c0366e56a03281ebc8168abbdecd34130dc554129ed991da929ab987a0d87",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 9.488344000001234
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.1183060000003024
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 9.40863999999965
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.330048999998326
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 6.691683000000921
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.704447000000073
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.855578999999125
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/nan-closure-capture.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "06ba389a88184221394702758df5a800325d028d0a5fff64e657f6667d924faf",
+      "bytecodeSha256": "639f46522c780d9a4483ac218da0a29ee6145574dd5623eea4dd91205d3459e9",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 4.248462000001382
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.301180000000386
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 6.551601999999548
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.002540999999837
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.8038830000004964
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9347150000012334
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 9.475023000000874
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/nan-closure-capture.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "06ba389a88184221394702758df5a800325d028d0a5fff64e657f6667d924faf",
+      "bytecodeSha256": "f01db6fbed3019d8635a925f9c34527b4a973f027bf4be111a18a2b3b8ff4d50",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.278872999999294
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.6873880000002828
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 7.15176000000065
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.536439999999857
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.408508000000438
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7560369999991963
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJdHJ1ZQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.2320570000010775
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/nested-capture-free.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "0f165323506eb0804ca5b79857de40771fabf96deb848ced4b5d2cd5c828b4fb",
+      "bytecodeSha256": "ffeab88655649ad47f7146a9ae033ca35fc2b83577f47ab31357904889c21727",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.854815000000599
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJMwk0Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.2223570000005566
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJMwk0Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7455100000006496
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/nested-capture-free.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "0f165323506eb0804ca5b79857de40771fabf96deb848ced4b5d2cd5c828b4fb",
+      "bytecodeSha256": "3eace1f7f1ab9d5e36499f6c7c3621ed8b5c7a7b808d4af7d85f3bd59b6817c4",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.585309000000052
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQkzCTQK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.3829699999987497
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQkzCTQK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4517589999995835
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/nested-capture-free.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "0f165323506eb0804ca5b79857de40771fabf96deb848ced4b5d2cd5c828b4fb",
+      "bytecodeSha256": "7e4066463ef58c1bb905d7f6aa6851a0530caac046edb19668905f47beaae827",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.6658299999999144
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQkzCTQK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.986652999999933
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQkzCTQK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.333264999999301
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/stable-capture-constant.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "75f055afe3e7c4cb127943432b47fec2894afc879a22d18434349bed14e0b7d1",
+      "bytecodeSha256": "1272cab97827f6596292694a2af70b604164c9a22807575ef31843aca84e6439",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.1702900000000227
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJMTAJdHJ1ZQkxMwl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 7.3813350000000355
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UJMTAJdHJ1ZQkxMwl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 6.3718060000010155
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/stable-capture-constant.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "75f055afe3e7c4cb127943432b47fec2894afc879a22d18434349bed14e0b7d1",
+      "bytecodeSha256": "fec7ef1164835a9a6a18b08d22c497b8af7f7b39d9e2a072d6996e7717622720",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 4.212317000001349
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQkxMAl0cnVlCTEzCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 10.800457999999708
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQkxMAl0cnVlCTEzCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.1300889999984065
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/stable-capture-constant.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "75f055afe3e7c4cb127943432b47fec2894afc879a22d18434349bed14e0b7d1",
+      "bytecodeSha256": "bfacaf6cccd61ab62a0813861cca9a447dba10a0c1129629c56bfdd5cebfb777",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 4.680362000000969
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQkxMAl0cnVlCTEzCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.426529000000301
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQkxMAl0cnVlCTEzCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 7.396577999999863
+        }
+      ]
+    }
+  ]
+}

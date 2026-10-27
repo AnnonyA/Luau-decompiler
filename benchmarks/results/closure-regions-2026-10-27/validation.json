@@ -1,0 +1,24 @@
+{
+  "unitTests": 436,
+  "harnessTests": 44,
+  "styles": {
+    "profiles": 645,
+    "match": 645,
+    "inputRuns": 705
+  },
+  "fuzz": {
+    "profiles": 90,
+    "match": 90
+  },
+  "baselines": {
+    "24": 0,
+    "36": 0,
+    "200": 0,
+    "pilot": 0,
+    "observed": 0,
+    "development": 0
+  },
+  "largeProfiles": 30,
+  "independentRegressions": 9,
+  "engineBuildSha256": "752527a950e351e47db9507728473cdadd0fa527c13023b6476bd3e59ad282fd"
+}

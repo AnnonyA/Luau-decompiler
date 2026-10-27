@@ -47,3 +47,61 @@ Register assignment still uses the normal phi/REF path. This does not merge
 NEWCLOSURE, different constant slots, captured closures, cross-block loads or
 loads separated by potentially effectful instructions. General environment- and
 capture-sensitive cache reconstruction remains future work.
+
+
+## Constant sharing across dominated regions
+
+The follow-up retains creation at the first original load but extends identity
+recovery beyond one straight block. A load may reuse the first binding when it
+is dominated by that first load, all intervening instructions are inert loads,
+copies or truthiness branches, and no participating load is in a loop. A local
+slot declared in the enclosing function keeps the binding visible across branches;
+only its declaration moves, not closure creation or capture evaluation.
+
+SSA now records the reaching definition at each register read. VAL capture lists
+are compared by those identities, following MOVE aliases, and require positive
+evidence that the captured value is raw-equal to itself. Reusing a register with
+a new definition does not count as the same capture. Captured sharing is restricted
+to non-repeating top-level regions of the chunk: a nested function can execute
+again with different captures while its prototype constant still caches the first
+activation's values. REF/UPVAL captures, self captures and uncertain activation
+lifetimes remain excluded. This is not general captured-closure cache emulation.
+
+Project-authored `stable-capture-constant` and `branch-closure-constant` failed
+identity comparisons at O2 before the change; both now match at O0/O1/O2. The
+former also verifies table alias identity, mutation visibility and multiple
+returns. The latter runs with both truthiness outcomes. `different-closure-captures`
+and a synthetic SSA-version test protect against merging distinct captures.
+The same Tovek `closure_identity.rs` and official VM DUPCLOSURE implementation
+listed above informed the invariant; the implementation is independent.
+
+Cycle exclusion uses iterative strongly connected components, not only natural
+loops: irreducible regions can revisit a load despite having no dominating loop
+header. The graph walk is linear in blocks and edges and does not recurse on
+the host stack.
+
+### Review regressions
+
+The official VM's `luaO_rawequalObj` rejects numeric and vector NaNs even when
+the two captures use the same SSA definition. Only known reflexive captures
+(such as table identities or non-NaN constants) qualify. Unknown values fail
+closed. We do not emit `value == value` guards: Luau can invoke `__eq` even for
+the same table or userdata, introducing an extra effect.
+
+New captured/cross-block sharing also proves that every path before the first
+load contains only environment-neutral instructions in the main chunk. An
+earlier `_G.setfenv(1, ...)` can force every DUPCLOSURE to clone, even when its
+captures agree. Nested activation environments are not assumed to match the
+constant's original environment.
+
+Between loads, a predecessor walk checks the actual CFG paths back to the
+dominating load. An acyclic detour may execute a call with a PC after both
+loads, so checking only a numeric PC interval is insufficient. A synthetic
+regression changes the first function's environment on precisely this detour;
+the two returned functions must remain distinct.
+
+The earlier capture-free, same-block rule is preserved, including after a call
+and inside a nested function, with two permanent runtime fixtures. Its general
+environment-sensitive and cross-activation cache emulation remains a preexisting
+limitation; these stronger proofs govern the newly supported regions. The new
+NaN and environment fixtures are development regressions, not blind evaluations.

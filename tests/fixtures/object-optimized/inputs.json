@@ -1,0 +1,4 @@
+{
+  "branch-closure-constant.luau": [[], ["false"], ["true"]],
+  "nan-closure-capture.luau": [[], ["3"], ["-9"]]
+}
