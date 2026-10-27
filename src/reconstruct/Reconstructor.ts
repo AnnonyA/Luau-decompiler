@@ -263,36 +263,61 @@ class SourceBuilder {
     const cyclic = findCyclicBlocks(this.ir.cfg);
     const inert = new Set([Opcode.NOP, Opcode.MOVE, Opcode.LOADNIL, Opcode.LOADB, Opcode.LOADN, Opcode.LOADK, Opcode.LOADKX,
       Opcode.CAPTURE, Opcode.JUMP, Opcode.JUMPIF, Opcode.JUMPIFNOT]);
+    const environmentNeutral = new Set([...inert, Opcode.NEWTABLE, Opcode.DUPTABLE, Opcode.NEWCLOSURE,
+      Opcode.DUPCLOSURE, Opcode.GETVARARGS, Opcode.PREPVARARGS, Opcode.NOT, Opcode.AND, Opcode.OR,
+      Opcode.ANDK, Opcode.ORK, Opcode.JUMPXEQKNIL, Opcode.JUMPXEQKB, Opcode.JUMPXEQKN, Opcode.JUMPXEQKS]);
     for (const [constant, sites] of loads) {
       if (sites.length < 2) continue;
-      const first = sites[0]!, last = sites.at(-1)!;
+      const first = sites[0]!;
       const home = this.ir.cfg.blockOfPc.get(first.pc);
       if (home === undefined || sites.some(s => !this.ir.dominators.dominates(home, this.ir.cfg.blockOfPc.get(s.pc)!))) continue;
       const hoisted = sites.some(s => this.ir.cfg.blockOfPc.get(s.pc) !== home);
       const signature = this.constantCaptureSignature(first);
       if (signature === undefined || sites.some(s => this.constantCaptureSignature(s) !== signature)) continue;
-      // A constant caches the first capture values across activations. Equal
-      // values at two sites in a later activation do NOT prove a cache hit.
-      // Captured sharing therefore requires a single top-level execution, with
-      // every load outside loops. Capture-free constants retain the old scope.
-      if (signature && this.proto !== this.mainProto) continue;
-      if ((hoisted || signature) && sites.some(s => cyclic.has(this.ir.cfg.blockOfPc.get(s.pc)!))) continue;
-      // Calls/metamethods can change environments or captured cells. Only inert
-      // copies, constant loads and truthiness branches may separate shared sites.
-      let effectful = false;
-      for (let index = this.firstInstructionAfter(first.pc); index < this.proto.instructions.length; index++) {
-        const instruction = this.proto.instructions[index]!;
-        if (instruction.pc >= last.pc) break;
-        if (!inert.has(instruction.opcode) && !(instruction.opcode === Opcode.DUPCLOSURE && loads.has(instruction.d))) {
-          effectful = true;
-          break;
-        }
+      // Keep the existing capture-free, same-block rule. Extending sharing to
+      // captures or other blocks requires stronger lifetime/environment proof.
+      // A constant caches its initial environment and first capture values.
+      // A nested function can be called again or have setfenv applied by its
+      // caller. Even the main chunk can change its environment before a load.
+      // Prove an environment-neutral prefix in a non-repeating top-level
+      // execution; arbitrary calls and metamethod-capable instructions fail closed.
+      if (hoisted || signature) {
+        if (this.proto !== this.mainProto || sites.some(s => cyclic.has(this.ir.cfg.blockOfPc.get(s.pc)!))) continue;
+        if (!this.everyInstructionBefore(first, i => environmentNeutral.has(i.opcode))) continue;
       }
-      if (effectful) continue;
+      // PC order is not execution order. Follow predecessor edges back to the
+      // dominating load, including acyclic detours outside the lexical interval.
+      if (sites.slice(1).some(site => !this.everyInstructionBefore(site,
+        i => inert.has(i.opcode) || (i.opcode === Opcode.DUPCLOSURE && loads.has(i.d)), first))) continue;
       const name = this.allocator.reserve("sharedFunction");
       this.sharedClosureConstants.set(constant, {pc: first.pc, name, hoisted});
       if (hoisted) this.declareInScope(name);
     }
+  }
+
+  /** Check every path ending immediately before end, optionally stopping after
+   * a dominating instruction. A block may be revisited with a larger PC bound. */
+  private everyInstructionBefore(end: DecodedInstruction, accept: (i: DecodedInstruction) => boolean,
+    start?: DecodedInstruction): boolean {
+    const cfg = this.ir.cfg;
+    const startBlock = start ? cfg.blockOfPc.get(start.pc) : undefined;
+    const pending = [{block: cfg.blockOfPc.get(end.pc)!, limit: end.pc}];
+    const checked = new Map<number, number>();
+    while (pending.length) {
+      const {block: id, limit} = pending.pop()!;
+      const block = cfg.blocks[id]!;
+      if (block.unreachable || (checked.get(id) ?? -1) >= limit) continue;
+      const previous = checked.get(id) ?? -1;
+      checked.set(id, limit);
+      for (const instruction of block.instructions) {
+        if (instruction.pc >= limit) break;
+        if (instruction.pc < previous || (id === startBlock && instruction.pc <= start!.pc)) continue;
+        if (!accept(instruction)) return false;
+      }
+      if (id !== startBlock)
+        for (const parent of block.predecessors) pending.push({block: parent, limit: Infinity});
+    }
+    return true;
   }
 
   private constantCaptureSignature(insn: DecodedInstruction): string | undefined {
@@ -314,10 +339,32 @@ class SourceBuilder {
         if (op?.kind !== "move") break;
         value = op.source;
       }
-      if (value === undefined || this.ir.ssa.values[value]?.op.kind === "undefined") return undefined;
+      if (value === undefined || !this.isRawReflexiveCapture(value)) return undefined;
       signature.push(value);
     }
     return signature.join(",");
+  }
+
+  private isRawReflexiveCapture(value: number): boolean {
+    const op = this.ir.ssa.values[value]?.op;
+    if (!op) return false;
+    switch (op.kind) {
+      case "new-table": case "dup-table": case "closure": return true;
+      case "immediate": return !Number.isNaN(op.value);
+      case "constant": {
+        const constant = this.proto.constants[op.constantIndex];
+        if (!constant) return false;
+        switch (constant.kind) {
+          case "nil": case "boolean": case "string": case "integer": case "closure": return true;
+          case "number": return !Number.isNaN(constant.value);
+          case "vector": return [constant.x, constant.y, constant.z, constant.w].every(n => !Number.isNaN(n));
+          default: return false;
+        }
+      }
+      // Matching SSA IDs alone do not prove rawequal(v, v): numeric/vector
+      // NaNs compare unequal. Do not inject == guards, which can invoke __eq.
+      default: return false;
+    }
   }
 
   /** Index of the first decoded instruction strictly after the given pc.

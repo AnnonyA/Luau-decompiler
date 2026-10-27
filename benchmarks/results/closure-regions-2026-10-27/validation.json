@@ -1,10 +1,10 @@
 {
-  "unitTests": 430,
+  "unitTests": 436,
   "harnessTests": 44,
   "styles": {
-    "profiles": 585,
-    "match": 585,
-    "inputRuns": 615
+    "profiles": 645,
+    "match": 645,
+    "inputRuns": 705
   },
   "fuzz": {
     "profiles": 90,
@@ -18,5 +18,7 @@
     "observed": 0,
     "development": 0
   },
-  "engineBuildSha256": "b6895d6f84f852eb412c61ef417c537698c8df73f75a1adb49a917ea60a3cb02"
+  "largeProfiles": 30,
+  "independentRegressions": 9,
+  "engineBuildSha256": "752527a950e351e47db9507728473cdadd0fa527c13023b6476bd3e59ad282fd"
 }
