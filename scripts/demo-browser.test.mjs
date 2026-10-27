@@ -111,6 +111,8 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     Worker.prototype.postMessage = function(message,...args) {window.lastOptions=message.options;return originalPostMessage.call(this,message,...args)};
     document.getElementById('indent').value='2';
     document.getElementById('types').value='off';
+    document.getElementById('generated-names').value='compact';
+    document.getElementById('name-casing').value='snake_case';
     document.getElementById('if-expressions').checked=false;
     document.getElementById('early-return').checked=false;
     document.getElementById('interpolation').checked=true;
@@ -120,7 +122,7 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
   await waitFor('document.getElementById("cancel").hidden && document.getElementById("code").textContent');
   assert.match(await evaluate('document.getElementById("code").textContent'), /print\("Hello from Luau!"\)/);
   assert.equal(await evaluate('document.getElementById("download").disabled'), false);
-  assert.deepEqual(await evaluate('window.lastOptions'), {typeAnnotations:'off',opcodeEncoding:'official',indent:2,ifExpressions:false,earlyReturn:false,interpolatedStrings:true,mathConstants:false});
+  assert.deepEqual(await evaluate('window.lastOptions'), {typeAnnotations:'off',opcodeEncoding:'official',indent:2,generatedNames:'compact',nameCasing:'snake_case',ifExpressions:false,earlyReturn:false,interpolatedStrings:true,mathConstants:false});
   assert.equal(await evaluate('document.getElementById("line-numbers").textContent.split("\\n").length >= 1'),true);
 
   // Browser file selection exercises File.arrayBuffer and transferable bytes.
