@@ -16,7 +16,8 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     try {
       const path = new URL(request.url, "http://localhost").pathname;
       if (!path.startsWith("/Luau-decompiler/")) throw new Error("outside site");
-      const file = new URL(path.slice("/Luau-decompiler/".length) || "index.html", root);
+      const relative = path.slice("/Luau-decompiler/".length);
+      const file = new URL(relative.endsWith("/") ? relative + "index.html" : relative || "index.html", root);
       if (!file.href.startsWith(root.href)) throw new Error("outside site");
       const body = await readFile(file);
       const types = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".json": "application/json" };
@@ -79,11 +80,48 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
   })`);
   const base = `http://127.0.0.1:${server.address().port}/Luau-decompiler/`;
   await page("Page.navigate", { url: base });
+  await waitFor('document.getElementById("sample-code")?.textContent');
+  assert.equal(await evaluate(`document.querySelectorAll('a[href*="discord"], a[href*="pricing"]').length`), 0);
+  await evaluate('document.getElementById("sample-before").click()');
+  assert.match(await evaluate('document.getElementById("sample-code").textContent'), /local v0/);
+  await evaluate('document.getElementById("sample-after").click()');
+  assert.match(await evaluate('document.getElementById("sample-code").textContent'), /local Players/);
+  await page("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
+  assert.equal(await evaluate('document.documentElement.scrollWidth <= window.innerWidth'), true);
+  if (process.env.DEMO_SCREENSHOT) {
+    const shot = await page("Page.captureScreenshot", { format: "png", captureBeyondViewport: true });
+    await writeFile(process.env.DEMO_SCREENSHOT.replace(/\.png$/, "-landing-mobile.png"), Buffer.from(shot.data, "base64"));
+  }
+  await page("Emulation.setDeviceMetricsOverride", { width: 1440, height: 1100, deviceScaleFactor: 1, mobile: false });
+  if (process.env.DEMO_SCREENSHOT) {
+    const shot = await page("Page.captureScreenshot", { format: "png", captureBeyondViewport: true });
+    await writeFile(process.env.DEMO_SCREENSHOT.replace(/\.png$/, "-landing.png"), Buffer.from(shot.data, "base64"));
+  }
+  await page("Page.navigate", { url: base + "decompiler/" });
   await waitFor('document.getElementById("revision")?.textContent');
-  await evaluate('document.getElementById("example").click()');
+  assert.equal(await evaluate(`(async()=>{
+    const {renderCode}=await import('../assets/highlight.js');
+    const code=document.createElement('code'),lines=document.createElement('pre');
+    const source='<img src=x onerror=alert(1)> local value = "safe"';
+    renderCode(code,lines,source);
+    return code.textContent===source && !code.querySelector('img');
+  })()`), true);
+  await evaluate(`
+    window.originalPostMessage = Worker.prototype.postMessage;
+    Worker.prototype.postMessage = function(message,...args) {window.lastOptions=message.options;return originalPostMessage.call(this,message,...args)};
+    document.getElementById('indent').value='2';
+    document.getElementById('types').value='off';
+    document.getElementById('if-expressions').checked=false;
+    document.getElementById('early-return').checked=false;
+    document.getElementById('interpolation').checked=true;
+    document.getElementById('example').click();
+  `);
+
   await waitFor('document.getElementById("cancel").hidden && document.getElementById("code").textContent');
   assert.match(await evaluate('document.getElementById("code").textContent'), /print\("Hello from Luau!"\)/);
   assert.equal(await evaluate('document.getElementById("download").disabled'), false);
+  assert.deepEqual(await evaluate('window.lastOptions'), {typeAnnotations:'off',opcodeEncoding:'official',indent:2,ifExpressions:false,earlyReturn:false,interpolatedStrings:true,mathConstants:false});
+  assert.equal(await evaluate('document.getElementById("line-numbers").textContent.split("\\n").length >= 1'),true);
 
   // Browser file selection exercises File.arrayBuffer and transferable bytes.
   const { root: documentRoot } = await page("DOM.getDocument");
