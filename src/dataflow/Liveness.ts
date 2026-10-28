@@ -25,11 +25,15 @@ export function computeLiveness(cfg: ControlFlowGraph): Liveness {
         if (!k.has(register)) {
           g.add(register);
         }
-        uses.set(register, [...(uses.get(register) ?? []), insn.pc]);
+        const reads = uses.get(register);
+        if (reads) reads.push(insn.pc);
+        else uses.set(register, [insn.pc]);
       }
       for (const register of insn.defs) {
         k.add(register);
-        defs.set(register, [...(defs.get(register) ?? []), insn.pc]);
+        const writes = defs.get(register);
+        if (writes) writes.push(insn.pc);
+        else defs.set(register, [insn.pc]);
       }
     }
     gen.push(g);

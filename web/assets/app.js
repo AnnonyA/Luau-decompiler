@@ -112,6 +112,7 @@ async function run(example = false) {
     indent: $("indent").value === "tab" ? "tab" : Number($("indent").value),
     ifExpressions: $("if-expressions").checked, earlyReturn: $("early-return").checked,
     interpolatedStrings: $("interpolation").checked, mathConstants: false,
+    recoverInlinedFunctions: $("recover-inlined").checked,
   };
   const started = performance.now();
   timer = setTimeout(() => {

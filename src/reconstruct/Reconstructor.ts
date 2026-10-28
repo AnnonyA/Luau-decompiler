@@ -69,6 +69,19 @@ export function reconstructFunction(
   parentContext?: ChildContext,
 ): ReconstructedFunction {
   const ir = analyzePrototype(proto);
+  const allocator = parentContext?.allocator ?? moduleNameAllocator(module);
+  const builder = new SourceBuilder(module, proto, ir, allocator, parentContext?.captures ?? new Map());
+  return {
+    name: proto.debugName,
+    params: builder.params,
+    isVararg: proto.isVararg,
+    body: block(builder.build()),
+    ir,
+  };
+}
+
+/** Reserve module globals once; every child already shares its parent's allocator. */
+function moduleNameAllocator(module: BytecodeModule): NameAllocator {
   const globals = new Set<string>();
   for (const prototype of module.prototypes) {
     for (const insn of prototype.instructions) {
@@ -81,15 +94,7 @@ export function reconstructFunction(
       if (constant.kind === "import" && constant.path[0]) globals.add(constant.path[0]);
     }
   }
-  const allocator = parentContext?.allocator ?? new NameAllocator(globals);
-  const builder = new SourceBuilder(module, proto, ir, allocator, parentContext?.captures ?? new Map());
-  return {
-    name: proto.debugName,
-    params: builder.params,
-    isVararg: proto.isVararg,
-    body: block(builder.build()),
-    ir,
-  };
+  return new NameAllocator(globals);
 }
 
 interface Binding {

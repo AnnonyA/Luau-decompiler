@@ -10,9 +10,14 @@ export interface LocalDebugInfo {
 
 export interface LineInfo {
   lineGapLog2: number;
+  /** Serialized differences, retained unchanged for bytecode inspection. */
   deltas: Uint8Array;
   absolute: Int32Array;
 }
+
+// Module line metadata is immutable after decoding. Weak ownership avoids
+// retaining modules across decompilations; each subsequent lookup is O(1).
+const resolvedLines = new WeakMap<LineInfo, {offsets: Uint8Array; bases: Int32Array}>();
 
 export interface FeedbackSlot {
   kind: number;
@@ -56,15 +61,23 @@ export interface BytecodeModule {
 
 export function lineAt(prototype: Prototype, pc: number): number | undefined {
   const info = prototype.lineInfo;
-  if (!info || pc < 0 || pc >= prototype.code.length) {
+  if (!info || !Number.isInteger(pc) || pc < 0 || pc >= prototype.code.length) {
     return undefined;
   }
-  const interval = pc >> info.lineGapLog2;
-  const base = info.absolute[interval] ?? 0;
-  const start = interval << info.lineGapLog2;
-  let offset = 0;
-  for (let i = start; i <= pc; i++) {
-    offset += info.deltas[i] ?? 0;
+  let resolved = resolvedLines.get(info);
+  if (!resolved) {
+    const offsets = new Uint8Array(info.deltas.length), bases = new Int32Array(info.absolute.length);
+    let offset = 0, base = 0;
+    for (let i = 0; i < offsets.length; i++) {
+      offset = (offset + info.deltas[i]!) & 255;
+      offsets[i] = offset;
+    }
+    for (let i = 0; i < bases.length; i++) {
+      base = (base + info.absolute[i]!) | 0;
+      bases[i] = base;
+    }
+    resolved = {offsets, bases};
+    resolvedLines.set(info, resolved);
   }
-  return base + offset;
+  return (resolved.bases[pc >> info.lineGapLog2] ?? 0) + (resolved.offsets[pc] ?? 0);
 }

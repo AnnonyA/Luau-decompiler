@@ -1,0 +1,6703 @@
+{
+  "results": [
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "72dd1dfc6c37a66649bdf2753ad6c0eabaa2755bd93652aee7f2fc1593709d78",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.6828870000001643
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.379671000000144
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7292170000000624
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 0,
+      "style": "compact",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "72dd1dfc6c37a66649bdf2753ad6c0eabaa2755bd93652aee7f2fc1593709d78",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.6399229999999534
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.379671000000144
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.53631600000017
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 0,
+      "style": "camelCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "72dd1dfc6c37a66649bdf2753ad6c0eabaa2755bd93652aee7f2fc1593709d78",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.4996369999998933
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.379671000000144
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.742866999999933
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 0,
+      "style": "snake_case",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "72dd1dfc6c37a66649bdf2753ad6c0eabaa2755bd93652aee7f2fc1593709d78",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.342595000000074
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.379671000000144
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.023273999999901
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 0,
+      "style": "PascalCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "72dd1dfc6c37a66649bdf2753ad6c0eabaa2755bd93652aee7f2fc1593709d78",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4359850000000733
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.379671000000144
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4426049999999577
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "1bde56fb6c6b2c2e948a808271c81e8f086e9d74b9cb5ebec6bb1dba3b27fe2a",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.066280000000006
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.433035999999902
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.402896000000055
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 1,
+      "style": "compact",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "1bde56fb6c6b2c2e948a808271c81e8f086e9d74b9cb5ebec6bb1dba3b27fe2a",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3995310000000245
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.433035999999902
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9035989999999856
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 1,
+      "style": "camelCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "1bde56fb6c6b2c2e948a808271c81e8f086e9d74b9cb5ebec6bb1dba3b27fe2a",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.323315999999977
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.433035999999902
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7427470000000085
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 1,
+      "style": "snake_case",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "1bde56fb6c6b2c2e948a808271c81e8f086e9d74b9cb5ebec6bb1dba3b27fe2a",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.46679099999983
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.433035999999902
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5185200000000805
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 1,
+      "style": "PascalCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "1bde56fb6c6b2c2e948a808271c81e8f086e9d74b9cb5ebec6bb1dba3b27fe2a",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.6486050000000887
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.433035999999902
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.766311999999971
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "89aa4f905b02bbc72e6d151b1e73cffce78b194a9523717031c7dcf47c84a561",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.880435000000034
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7292660000000524
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.612239999999929
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 2,
+      "style": "compact",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "89aa4f905b02bbc72e6d151b1e73cffce78b194a9523717031c7dcf47c84a561",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.5743039999999837
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7292660000000524
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.198802999999998
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 2,
+      "style": "camelCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "89aa4f905b02bbc72e6d151b1e73cffce78b194a9523717031c7dcf47c84a561",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.4137869999999566
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7292660000000524
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.077489999999898
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 2,
+      "style": "snake_case",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "89aa4f905b02bbc72e6d151b1e73cffce78b194a9523717031c7dcf47c84a561",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3440170000001217
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7292660000000524
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9173399999999674
+        }
+      ]
+    },
+    {
+      "id": "large/inlined-call-order.luau",
+      "optimization": 2,
+      "style": "PascalCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "87e62e6de55ec7539388fc4e1efbda8b6bbd44cf9614ad4a02046a0488d7a79c",
+      "bytecodeSha256": "89aa4f905b02bbc72e6d151b1e73cffce78b194a9523717031c7dcf47c84a561",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.6600620000001527
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7292660000000524
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTE1Oi0xMjo3LDQ6LTg6NSwxNzowOjgsNTo5Oi0yLDE4Oi00OjUsLTU6LTE0OjUsLTE1OjU6MywxNTo3OjkJODMKMjotMTg6LTQsMDotMTE6LTQsLTI6LTc6MiwxNDotMTA6MiwtMjoxNzo3LDM6MTY6LTIsMTY6NDotMywxNTotMTM6NQkxMjEKLTE5OjIwOi00LC0xNjoxMjoxLDM6LTg6OCwtMTg6MTk6MSwtMzowOjAsMjoyMDoxLC0xOTotMTg6NCw3OjE5OjcJOTUKLTU6LTE0OjUsLTE1OjU6MywxNTo3OjksLTE6MTM6NCwtNzotMzo1LC0xNzoxMzo5LC0xMDo4OjksLTE3Oi01OjgJNjgK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.472251000000142
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "d151fb3dc2c55a7b8351ecd404a38c362ee1553113193f42b26058c3539c6c63",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2972129999998288
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2036639999996623
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.53559899999982
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.233237000000372
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4495800000004238
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.304314000000886
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3873380000004545
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 0,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "d151fb3dc2c55a7b8351ecd404a38c362ee1553113193f42b26058c3539c6c63",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.6590439999999944
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2036639999996623
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.53559899999982
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.233237000000372
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.484542999999576
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.489770999999564
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.290092000000186
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 0,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "d151fb3dc2c55a7b8351ecd404a38c362ee1553113193f42b26058c3539c6c63",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.414088000000447
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2036639999996623
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.53559899999982
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.233237000000372
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.694886999999653
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.967504999999619
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5396959999998217
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 0,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "d151fb3dc2c55a7b8351ecd404a38c362ee1553113193f42b26058c3539c6c63",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.099787999999535
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2036639999996623
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.53559899999982
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.233237000000372
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3880079999998998
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2156009999998787
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2402479999991556
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 0,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "d151fb3dc2c55a7b8351ecd404a38c362ee1553113193f42b26058c3539c6c63",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1275290000003224
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2036639999996623
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.53559899999982
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.233237000000372
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2110649999995076
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.221309000000474
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.527146999999786
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "900202f4b93b14438b4795a34ed1b65a749e3fb5b6844c08baddea4840f169cd",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4164209999999002
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3218000000006214
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.423851999999897
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3982740000001286
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7215670000005048
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2454060000000027
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.236753000000135
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 1,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "900202f4b93b14438b4795a34ed1b65a749e3fb5b6844c08baddea4840f169cd",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2618099999999686
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3218000000006214
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.423851999999897
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3982740000001286
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.284733999999844
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3442230000000563
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.278986000000259
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 1,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "900202f4b93b14438b4795a34ed1b65a749e3fb5b6844c08baddea4840f169cd",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2462470000000394
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3218000000006214
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.423851999999897
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3982740000001286
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5991540000004534
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8629879999998593
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2579450000002907
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 1,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "900202f4b93b14438b4795a34ed1b65a749e3fb5b6844c08baddea4840f169cd",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2931170000001657
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3218000000006214
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.423851999999897
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3982740000001286
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3619999999991705
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3605380000008154
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.184183999999732
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 1,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "900202f4b93b14438b4795a34ed1b65a749e3fb5b6844c08baddea4840f169cd",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1177349999998114
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3218000000006214
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.423851999999897
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3982740000001286
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.838681999999608
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2701020000004064
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3429610000002867
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "4ed8feca09b0e509e2bbc707517166b1ec0fe624f3c6836c0f42f831b16ae1db",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1919260000004215
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3566119999995863
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3369119999997565
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4299920000003112
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4082989999997153
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8710510000000795
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3263059999999314
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 2,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "4ed8feca09b0e509e2bbc707517166b1ec0fe624f3c6836c0f42f831b16ae1db",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.0999579999997877
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3566119999995863
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3369119999997565
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4299920000003112
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5715430000000197
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2324960000005376
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2743289999998524
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 2,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "4ed8feca09b0e509e2bbc707517166b1ec0fe624f3c6836c0f42f831b16ae1db",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.147729000000254
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3566119999995863
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3369119999997565
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4299920000003112
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.581728000000112
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5644419999998718
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.411013000000821
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 2,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "4ed8feca09b0e509e2bbc707517166b1ec0fe624f3c6836c0f42f831b16ae1db",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.37752300000011
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3566119999995863
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3369119999997565
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4299920000003112
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5716529999999693
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3274880000008125
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.532003999999688
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-argument-effects.luau",
+      "optimization": 2,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "-3"
+        ],
+        [
+          "8"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "a9fa7f3d4e39525dfcb51680055ef1de8046268d68e5ce6b038067539485abdd",
+      "bytecodeSha256": "4ed8feca09b0e509e2bbc707517166b1ec0fe624f3c6836c0f42f831b16ae1db",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.6922930000000633
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3566119999995863
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3369119999997565
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4299920000003112
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAkxCnB1bGwJMgo0CTcJMgo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3500119999998788
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAktMgpwdWxsCS0xCjcJNAktMQo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.635943000000225
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "cHVsbAk5CnB1bGwJMTAKODQJNgkxMAo0CjcKMTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5318439999991824
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "e2b1677c452894a331af123eda17dda26de851980139bf69e65a1ad614834b79",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4688500000002023
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.463081000000784
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.4501460000001316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.673866000000089
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.0767879999993966
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9776599999995597
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.405155000000377
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 0,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "e2b1677c452894a331af123eda17dda26de851980139bf69e65a1ad614834b79",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4116540000004534
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.463081000000784
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.4501460000001316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.673866000000089
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7804260000002614
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5809769999996206
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.799582999999984
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 0,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "e2b1677c452894a331af123eda17dda26de851980139bf69e65a1ad614834b79",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.22452500000054
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.463081000000784
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.4501460000001316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.673866000000089
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.296081999999842
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.183802999999898
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.654146999999284
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 0,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "e2b1677c452894a331af123eda17dda26de851980139bf69e65a1ad614834b79",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2084410000006756
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.463081000000784
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.4501460000001316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.673866000000089
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.28377300000011
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.8697730000003503
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.337684000000081
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 0,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "e2b1677c452894a331af123eda17dda26de851980139bf69e65a1ad614834b79",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.2830260000000635
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.463081000000784
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.4501460000001316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.673866000000089
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7604049999999916
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8165200000003097
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6052630000003774
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "5281be75e4e9b53668ec79067f185babfd6994c46837a20a78862f7cce0d6296",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2757009999995716
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7850020000005316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.077067999999599
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.8669289999998
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5852429999995366
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.613546000000497
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.0898079999997208
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 1,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "5281be75e4e9b53668ec79067f185babfd6994c46837a20a78862f7cce0d6296",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2228720000002795
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7850020000005316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.077067999999599
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.8669289999998
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6939860000002227
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.786924999999428
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.624362000000474
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 1,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "5281be75e4e9b53668ec79067f185babfd6994c46837a20a78862f7cce0d6296",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.466290000000299
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7850020000005316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.077067999999599
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.8669289999998
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.778411999999662
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.1734519999999975
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6778320000003077
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 1,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "5281be75e4e9b53668ec79067f185babfd6994c46837a20a78862f7cce0d6296",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2651150000001508
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7850020000005316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.077067999999599
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.8669289999998
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4168620000000374
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7953370000004725
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.222580999999991
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 1,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "5281be75e4e9b53668ec79067f185babfd6994c46837a20a78862f7cce0d6296",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4821389999997336
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7850020000005316
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.077067999999599
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.8669289999998
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6133359999994354
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.405595000000176
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5937969999995403
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "9fa3972a674a55666c1525ef8d7554b8e1817df7b0aef306a1cce33868a634ab",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.7923829999999725
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5168510000003153
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.580727000000479
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.489039999999477
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8377210000007835
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6348180000004504
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6028400000004694
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 2,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "9fa3972a674a55666c1525ef8d7554b8e1817df7b0aef306a1cce33868a634ab",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.5914330000005066
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5168510000003153
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.580727000000479
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.489039999999477
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.497493000000759
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.182031000000279
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.530030999999326
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 2,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "9fa3972a674a55666c1525ef8d7554b8e1817df7b0aef306a1cce33868a634ab",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.5157899999994697
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5168510000003153
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.580727000000479
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.489039999999477
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.311775000000125
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2866869999998016
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.696719999999914
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 2,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "9fa3972a674a55666c1525ef8d7554b8e1817df7b0aef306a1cce33868a634ab",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.251165000000583
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5168510000003153
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.580727000000479
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.489039999999477
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7227789999997185
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.559204000000136
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.564132000000427
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-arguments.luau",
+      "optimization": 2,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "2"
+        ],
+        [
+          "7"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "eb22ae1644764fac02da9183c90b49032370c956e8816c716ee327ff69d57ef5",
+      "bytecodeSha256": "9fa3972a674a55666c1525ef8d7554b8e1817df7b0aef306a1cce33868a634ab",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4989049999994677
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5168510000003153
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.580727000000479
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.489039999999477
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8125929999996515
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.762308000000303
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTMJLTMJLTUKLTIJLTEJLTUKLTEJLTEJLTMKMAktMwkxCjEJLTcJNwoyCS0xMwkxNQozCS0yMQkyNQo0CS0zMQkzNwo1CS00Mwk1MQo2CS01Nwk2Nwo3CS03Mwk4NQo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.213451999999961
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "6afb14177fd9cc6cd122c68d8ebd717f3f18dd3bc1d3e398f38289290b3c0a19",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.7636499999998705
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9235790000002453
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.756640000000516
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7037810000001627
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8133239999997386
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7547870000007606
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8572210000002087
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 0,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "6afb14177fd9cc6cd122c68d8ebd717f3f18dd3bc1d3e398f38289290b3c0a19",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.217063000000053
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9235790000002453
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.756640000000516
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7037810000001627
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3211980000005497
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4080190000004222
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.298424999999952
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 0,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "6afb14177fd9cc6cd122c68d8ebd717f3f18dd3bc1d3e398f38289290b3c0a19",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4107629999998608
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9235790000002453
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.756640000000516
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7037810000001627
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.559013999999479
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.846053000000211
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.316020999999637
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 0,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "6afb14177fd9cc6cd122c68d8ebd717f3f18dd3bc1d3e398f38289290b3c0a19",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4230310000002646
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9235790000002453
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.756640000000516
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7037810000001627
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5535659999995914
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7895089999992706
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.218866000000162
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 0,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "6afb14177fd9cc6cd122c68d8ebd717f3f18dd3bc1d3e398f38289290b3c0a19",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2866770000000542
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9235790000002453
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.756640000000516
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7037810000001627
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3244439999998576
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.334347999999409
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.440266999999949
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "069a5144431b68508608d5aa0440fccbb3f8758d90c4944ae92714b140d78cc3",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1160020000006625
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.22567700000036
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.0125520000001416
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.211045000000013
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.256202000000485
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4906620000001567
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.418044000000009
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 1,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "069a5144431b68508608d5aa0440fccbb3f8758d90c4944ae92714b140d78cc3",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.0244050000001153
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.22567700000036
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.0125520000001416
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.211045000000013
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.461417999999867
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5485480000006646
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4740970000002562
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 1,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "069a5144431b68508608d5aa0440fccbb3f8758d90c4944ae92714b140d78cc3",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.12580700000035
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.22567700000036
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.0125520000001416
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.211045000000013
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3741479999998774
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2750800000003437
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.715828999999758
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 1,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "069a5144431b68508608d5aa0440fccbb3f8758d90c4944ae92714b140d78cc3",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3468769999999495
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.22567700000036
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.0125520000001416
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.211045000000013
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7510010000005423
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.553936999999678
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3178539999998975
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 1,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "069a5144431b68508608d5aa0440fccbb3f8758d90c4944ae92714b140d78cc3",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.883990000000267
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.22567700000036
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.0125520000001416
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.211045000000013
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4958299999998417
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.457612999999583
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.238756000000649
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "e9ece9a990b3c4e13dc494181250a1f0bcf499cf33dcd4c8d1b813e0a271e341",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.0937089999997625
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4376520000005257
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.398363999999674
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6924339999995937
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4117239999995945
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2409090000001015
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.321458999999777
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 2,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "e9ece9a990b3c4e13dc494181250a1f0bcf499cf33dcd4c8d1b813e0a271e341",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4467959999992672
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4376520000005257
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.398363999999674
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6924339999995937
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.962307000000692
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.200047999999697
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.294068000000152
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 2,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "e9ece9a990b3c4e13dc494181250a1f0bcf499cf33dcd4c8d1b813e0a271e341",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.73869299999933
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4376520000005257
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.398363999999674
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6924339999995937
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3783039999998437
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.381228000000192
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.39830400000028
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 2,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "e9ece9a990b3c4e13dc494181250a1f0bcf499cf33dcd4c8d1b813e0a271e341",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.159346999999798
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4376520000005257
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.398363999999674
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6924339999995937
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.408758999999918
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2188960000003135
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3504229999998643
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-numeric-helper.luau",
+      "optimization": 2,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "3"
+        ],
+        [
+          "-9"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "6b1141da1f0cceb450e4e84a9711fa30c6d3817cc0f66b411851179bbb49f5da",
+      "bytecodeSha256": "e9ece9a990b3c4e13dc494181250a1f0bcf499cf33dcd4c8d1b813e0a271e341",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.375930999999582
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4376520000005257
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.398363999999674
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6924339999995937
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKNQkzOAk0NQo3CTUyCTU5CjkJNjYJNzMKMTEJODAJODcKdG90YWwJNTA3Cg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7543569999998
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "LTUJNjUJNzIKLTMJNzkJODYKLTEJOTMJMwoxCTEwCTE3CjMJMjQJMzEKdG90YWwJMjcxCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3911330000000817
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dG90YWwJMAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5475670000005266
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "308dd178cb665cba5b061c447527c8de76033b42f13c302f0876dea6ee22a0f4",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.19175499999983
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3411580000001777
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.418445000000247
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 0,
+      "style": "compact",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "308dd178cb665cba5b061c447527c8de76033b42f13c302f0876dea6ee22a0f4",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3023599999996804
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3411580000001777
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2920350000003964
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 0,
+      "style": "camelCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "308dd178cb665cba5b061c447527c8de76033b42f13c302f0876dea6ee22a0f4",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.158715999999913
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3411580000001777
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.394438000000264
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 0,
+      "style": "snake_case",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "308dd178cb665cba5b061c447527c8de76033b42f13c302f0876dea6ee22a0f4",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.9894830000002912
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3411580000001777
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4084039999997913
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 0,
+      "style": "PascalCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "308dd178cb665cba5b061c447527c8de76033b42f13c302f0876dea6ee22a0f4",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3331570000000283
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3411580000001777
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.163622999999461
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "d41b5f294dcfad38d2f208f704b485d176cf3e3b4f7f25474f736ea717afa84c",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1989669999993566
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6241719999998168
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3420900000000984
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 1,
+      "style": "compact",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "d41b5f294dcfad38d2f208f704b485d176cf3e3b4f7f25474f736ea717afa84c",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.658343000000059
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6241719999998168
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2834630000006655
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 1,
+      "style": "camelCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "d41b5f294dcfad38d2f208f704b485d176cf3e3b4f7f25474f736ea717afa84c",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2607179999995424
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6241719999998168
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.401708999999755
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 1,
+      "style": "snake_case",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "d41b5f294dcfad38d2f208f704b485d176cf3e3b4f7f25474f736ea717afa84c",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.326125999999931
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6241719999998168
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3764519999995173
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 1,
+      "style": "PascalCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "d41b5f294dcfad38d2f208f704b485d176cf3e3b4f7f25474f736ea717afa84c",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.61094200000025
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6241719999998168
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.370822999999291
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        []
+      ],
+      "options": {},
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "8fbf6986419193fa9eb22fb900f9aff92a0e523fa40a2afa847c3503303efdfc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4704120000005787
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.542214000000058
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.424152999999933
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 2,
+      "style": "compact",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "8fbf6986419193fa9eb22fb900f9aff92a0e523fa40a2afa847c3503303efdfc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4852529999998296
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.542214000000058
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5914419999999154
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 2,
+      "style": "camelCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "8fbf6986419193fa9eb22fb900f9aff92a0e523fa40a2afa847c3503303efdfc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.587126000000353
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.542214000000058
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.990810000000238
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 2,
+      "style": "snake_case",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "8fbf6986419193fa9eb22fb900f9aff92a0e523fa40a2afa847c3503303efdfc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.0404539999999542
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.542214000000058
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.5886020000007193
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-registers.luau",
+      "optimization": 2,
+      "style": "PascalCase",
+      "inputs": [
+        []
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "bc393b10e1fea9e155ea37001119b2cb698e63f407a7a6c7c38ccdf55af2d9a9",
+      "bytecodeSha256": "8fbf6986419193fa9eb22fb900f9aff92a0e523fa40a2afa847c3503303efdfc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 3.010008000000198
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.542214000000058
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "OAkxNgkyNAoxNgkyCTE4CjUJOQkxNAo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.10301199999958
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 0,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "9de8bec184e2b0dc1b76e5f978445e788f9682a6df82c928053c8edee8f80ade",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1228930000006585
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.292731999999887
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.659595000000081
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3030619999999544
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.397558000000572
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 0,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "9de8bec184e2b0dc1b76e5f978445e788f9682a6df82c928053c8edee8f80ade",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.265965999999935
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.292731999999887
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.659595000000081
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3927160000002914
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4762710000004517
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 0,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "9de8bec184e2b0dc1b76e5f978445e788f9682a6df82c928053c8edee8f80ade",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3346190000002025
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.292731999999887
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.659595000000081
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.580425999999534
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.74618399999963
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 0,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "9de8bec184e2b0dc1b76e5f978445e788f9682a6df82c928053c8edee8f80ade",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.014610000000175
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.292731999999887
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.659595000000081
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9277350000002116
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2756710000003295
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 0,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "9de8bec184e2b0dc1b76e5f978445e788f9682a6df82c928053c8edee8f80ade",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.291004000000612
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.292731999999887
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.659595000000081
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.715788999999859
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8550670000004175
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 1,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "32a58e3961e9c6a53324a5f416494ff876e0134eb17dc6f297977c0d3e437335",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.291675000000396
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.348960000000261
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5672859999995126
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6707210000004125
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3649649999997564
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 1,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "32a58e3961e9c6a53324a5f416494ff876e0134eb17dc6f297977c0d3e437335",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3495810000003985
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.348960000000261
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5672859999995126
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2234230000003663
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8772200000003068
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 1,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "32a58e3961e9c6a53324a5f416494ff876e0134eb17dc6f297977c0d3e437335",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2200880000000325
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.348960000000261
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5672859999995126
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6529239999999845
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.519995999999992
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 1,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "32a58e3961e9c6a53324a5f416494ff876e0134eb17dc6f297977c0d3e437335",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2780540000003384
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.348960000000261
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5672859999995126
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3412090000001626
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.045571000000564
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 1,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "32a58e3961e9c6a53324a5f416494ff876e0134eb17dc6f297977c0d3e437335",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1871680000003835
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.348960000000261
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5672859999995126
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4868259999993825
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.010207999999693
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 2,
+      "style": "default",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {},
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "6a5bf08ff289e5d95292bbe45e9630203eb37828a8c270a2e8eba1a425b6d382",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.851090999999542
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8303390000000945
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.785243000000264
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.565643999999338
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8589320000000953
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 2,
+      "style": "compact",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "generatedNames": "compact"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "6a5bf08ff289e5d95292bbe45e9630203eb37828a8c270a2e8eba1a425b6d382",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2348289999999906
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8303390000000945
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.785243000000264
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.433976999999686
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.994485000000168
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 2,
+      "style": "camelCase",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "nameCasing": "camelCase"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "6a5bf08ff289e5d95292bbe45e9630203eb37828a8c270a2e8eba1a425b6d382",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.7902290000001813
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8303390000000945
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.785243000000264
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.600527000000511
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3406080000004295
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 2,
+      "style": "snake_case",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "nameCasing": "snake_case"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "6a5bf08ff289e5d95292bbe45e9630203eb37828a8c270a2e8eba1a425b6d382",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3460159999995085
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8303390000000945
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.785243000000264
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2876989999995203
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3552599999993618
+        }
+      ]
+    },
+    {
+      "id": "object-optimized/inlined-repeat-continue.luau",
+      "optimization": 2,
+      "style": "PascalCase",
+      "inputs": [
+        [],
+        [
+          "skip"
+        ]
+      ],
+      "options": {
+        "nameCasing": "PascalCase"
+      },
+      "sourceSha256": "751bd34bed217d3ecd9642902b47b36fc412daafa4b0bd1c706ea84d19d3a3c0",
+      "bytecodeSha256": "6a5bf08ff289e5d95292bbe45e9630203eb37828a8c270a2e8eba1a425b6d382",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1974740000005113
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8303390000000945
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.785243000000264
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MTAKMTcKMjQKY29tcGxldGVkCWZhbHNlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3656700000001365
+        },
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Y29tcGxldGVkCXRydWUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.59909400000015
+        }
+      ]
+    }
+  ]
+}

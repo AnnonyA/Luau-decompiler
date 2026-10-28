@@ -106,6 +106,7 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     renderCode(code,lines,source);
     return code.textContent===source && !code.querySelector('img');
   })()`), true);
+  assert.equal(await evaluate('Boolean(document.getElementById("recover-inlined")?.checked)'),true);
   await evaluate(`
     window.originalPostMessage = Worker.prototype.postMessage;
     Worker.prototype.postMessage = function(message,...args) {window.lastOptions=message.options;return originalPostMessage.call(this,message,...args)};
@@ -116,13 +117,14 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     document.getElementById('if-expressions').checked=false;
     document.getElementById('early-return').checked=false;
     document.getElementById('interpolation').checked=true;
+    document.getElementById('recover-inlined').checked=false;
     document.getElementById('example').click();
   `);
 
   await waitFor('document.getElementById("cancel").hidden && document.getElementById("code").textContent');
   assert.match(await evaluate('document.getElementById("code").textContent'), /print\("Hello from Luau!"\)/);
   assert.equal(await evaluate('document.getElementById("download").disabled'), false);
-  assert.deepEqual(await evaluate('window.lastOptions'), {typeAnnotations:'off',opcodeEncoding:'official',indent:2,generatedNames:'compact',nameCasing:'snake_case',ifExpressions:false,earlyReturn:false,interpolatedStrings:true,mathConstants:false});
+  assert.deepEqual(await evaluate('window.lastOptions'), {typeAnnotations:'off',opcodeEncoding:'official',indent:2,generatedNames:'compact',nameCasing:'snake_case',ifExpressions:false,earlyReturn:false,interpolatedStrings:true,mathConstants:false,recoverInlinedFunctions:false});
   assert.equal(await evaluate('document.getElementById("line-numbers").textContent.split("\\n").length >= 1'),true);
 
   // Browser file selection exercises File.arrayBuffer and transferable bytes.

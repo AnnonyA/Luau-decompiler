@@ -1,0 +1,2851 @@
+{
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "compilerSha256": "e9e1abeb87bdaa280b585b5e6ffdbc9ce90f760214e6b9a03f611172fd3d526c",
+  "baseline": "/tmp/perf-baseline-engine/decompile.js",
+  "candidate": "/workspace/Luau-decompiler/dist/decompile.js",
+  "baselineBuildSha256": "752527a950e351e47db9507728473cdadd0fa527c13023b6476bd3e59ad282fd",
+  "candidateBuildSha256": "033e8b52083d0eb4afe3956f603b048423fb3d7103348a683abd191a9e7fb34a",
+  "samples": 5,
+  "warmup": 1,
+  "methodology": "Fresh process per profile/engine; alternating baseline/candidate order; GC outside timing. RSS is whole-worker peak including warmup. Retained heap holds the API result. Recovery disabled only for output-identical performance comparison; candidate default mode measured separately. No hard timing CI thresholds.",
+  "results": [
+    {
+      "id": "pilot/protocol-router/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/protocol-router/O0.luauc",
+      "sourceSha256": "e0f164970ea66b3ca5650f760c8b384865003c0238c888b4b12bb86bbdef3afd",
+      "bytecodeSha256": "3443d71a8c9f3d1ad099f23004871ebaf3f53e173f9fa18393af6f495da1dac1",
+      "bytecodeBytes": 44022,
+      "baseline": {
+        "samples": [
+          211.671518,
+          234.54438299999993,
+          204.78354300000012,
+          257.87872400000015,
+          214.34421499999985
+        ],
+        "medianMs": 214.34421499999985,
+        "p95Ms": 257.87872400000015,
+        "minMs": 204.78354300000012,
+        "maxMs": 257.87872400000015,
+        "peakRssKiB": 195616,
+        "retainedHeapBytes": [
+          3538936,
+          2608296,
+          3240344,
+          3125280,
+          3166192
+        ],
+        "sourceSha256": "7029a1e078bea8555990a1501519ce8aa13e9f046325c3d7f1ac0e0f5e47bca1",
+        "correctnessSha256": "3debd35102792d0f76b6c9ad0fbda21c2e062e9f172d53667f6c5fe373035302",
+        "sourceBytes": 73763,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          172.64359000000007,
+          187.36961899999994,
+          223.77506700000004,
+          172.53832999999997,
+          189.38645499999984
+        ],
+        "medianMs": 187.36961899999994,
+        "p95Ms": 223.77506700000004,
+        "minMs": 172.53832999999997,
+        "maxMs": 223.77506700000004,
+        "peakRssKiB": 183000,
+        "retainedHeapBytes": [
+          3357192,
+          2655800,
+          3343648,
+          3018720,
+          3127680
+        ],
+        "sourceSha256": "7029a1e078bea8555990a1501519ce8aa13e9f046325c3d7f1ac0e0f5e47bca1",
+        "correctnessSha256": "3debd35102792d0f76b6c9ad0fbda21c2e062e9f172d53667f6c5fe373035302",
+        "sourceBytes": 73763,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          189.56517000000002,
+          201.092088,
+          175.469519,
+          176.002478,
+          203.4715409999999
+        ],
+        "medianMs": 189.56517000000002,
+        "p95Ms": 203.4715409999999,
+        "minMs": 175.469519,
+        "maxMs": 203.4715409999999,
+        "peakRssKiB": 177376,
+        "retainedHeapBytes": [
+          3437968,
+          2667016,
+          3367544,
+          3048544,
+          3178008
+        ],
+        "sourceSha256": "7029a1e078bea8555990a1501519ce8aa13e9f046325c3d7f1ac0e0f5e47bca1",
+        "correctnessSha256": "3debd35102792d0f76b6c9ad0fbda21c2e062e9f172d53667f6c5fe373035302",
+        "sourceBytes": 73763,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.143964620005978,
+      "rssChangePercent": -6.449370194667104
+    },
+    {
+      "id": "pilot/protocol-router/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/protocol-router/O1.luauc",
+      "sourceSha256": "e0f164970ea66b3ca5650f760c8b384865003c0238c888b4b12bb86bbdef3afd",
+      "bytecodeSha256": "7201814c1f9079eafb2dd37dbcc1eed8348cf716c1e930f30421b2de2e52346b",
+      "bytecodeBytes": 41749,
+      "candidate": {
+        "samples": [
+          175.763575,
+          177.944544,
+          172.35169900000005,
+          180.7522009999999,
+          160.4706309999999
+        ],
+        "medianMs": 175.763575,
+        "p95Ms": 180.7522009999999,
+        "minMs": 160.4706309999999,
+        "maxMs": 180.7522009999999,
+        "peakRssKiB": 157672,
+        "retainedHeapBytes": [
+          3434512,
+          2481888,
+          3120472,
+          3040976,
+          3044568
+        ],
+        "sourceSha256": "90125e930cbbd5cf08ab5aa271b53b7bc1fba03751c4dc060288b6220eb958dd",
+        "correctnessSha256": "a8815ea904335c56f3742c3531b1d5f1799936c714048918fd68b1286b16d55d",
+        "sourceBytes": 73874,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          181.05022200000002,
+          175.18818399999998,
+          169.19707799999992,
+          157.62592500000005,
+          176.08575900000005
+        ],
+        "medianMs": 175.18818399999998,
+        "p95Ms": 181.05022200000002,
+        "minMs": 157.62592500000005,
+        "maxMs": 181.05022200000002,
+        "peakRssKiB": 150100,
+        "retainedHeapBytes": [
+          3401168,
+          2523072,
+          3742680,
+          1858400,
+          3037560
+        ],
+        "sourceSha256": "90125e930cbbd5cf08ab5aa271b53b7bc1fba03751c4dc060288b6220eb958dd",
+        "correctnessSha256": "a8815ea904335c56f3742c3531b1d5f1799936c714048918fd68b1286b16d55d",
+        "sourceBytes": 73874,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          153.39304500000003,
+          196.69710500000002,
+          151.86169099999995,
+          158.13371099999995,
+          173.72361399999988
+        ],
+        "medianMs": 158.13371099999995,
+        "p95Ms": 196.69710500000002,
+        "minMs": 151.86169099999995,
+        "maxMs": 196.69710500000002,
+        "peakRssKiB": 186616,
+        "retainedHeapBytes": [
+          3440136,
+          2558464,
+          3187344,
+          2979552,
+          3133376
+        ],
+        "sourceSha256": "90125e930cbbd5cf08ab5aa271b53b7bc1fba03751c4dc060288b6220eb958dd",
+        "correctnessSha256": "a8815ea904335c56f3742c3531b1d5f1799936c714048918fd68b1286b16d55d",
+        "sourceBytes": 73874,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 0.9967263353627165,
+      "rssChangePercent": 5.044636908727518
+    },
+    {
+      "id": "pilot/protocol-router/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/protocol-router/O2.luauc",
+      "sourceSha256": "e0f164970ea66b3ca5650f760c8b384865003c0238c888b4b12bb86bbdef3afd",
+      "bytecodeSha256": "3d847d6d4354d3b7efc5c39a94516bd4f6cfac6d55a25de8b8247f71d6a0c458",
+      "bytecodeBytes": 60746,
+      "baseline": {
+        "samples": [
+          242.24441499999995,
+          219.20989199999997,
+          237.21728200000007,
+          222.41222599999992,
+          208.9233630000001
+        ],
+        "medianMs": 222.41222599999992,
+        "p95Ms": 242.24441499999995,
+        "minMs": 208.9233630000001,
+        "maxMs": 242.24441499999995,
+        "peakRssKiB": 202844,
+        "retainedHeapBytes": [
+          3707680,
+          3828288,
+          2844480,
+          3603328,
+          3618624
+        ],
+        "sourceSha256": "069ccb8a40366a9ce4e091085f9e69e33a4f03c57775d662a26a820a2e50551b",
+        "correctnessSha256": "94c67651869e111ab6fd7c18fca2b03f25ada73de843ce554a2f6f417115ece0",
+        "sourceBytes": 92076,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          199.949122,
+          195.323215,
+          212.12355300000002,
+          188.4603830000001,
+          192.95198099999993
+        ],
+        "medianMs": 195.323215,
+        "p95Ms": 212.12355300000002,
+        "minMs": 188.4603830000001,
+        "maxMs": 212.12355300000002,
+        "peakRssKiB": 205500,
+        "retainedHeapBytes": [
+          3783496,
+          3692704,
+          2848424,
+          3595784,
+          3517512
+        ],
+        "sourceSha256": "069ccb8a40366a9ce4e091085f9e69e33a4f03c57775d662a26a820a2e50551b",
+        "correctnessSha256": "94c67651869e111ab6fd7c18fca2b03f25ada73de843ce554a2f6f417115ece0",
+        "sourceBytes": 92076,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          210.75882800000005,
+          221.87002099999995,
+          221.5669959999999,
+          178.98458200000005,
+          186.68332499999997
+        ],
+        "medianMs": 210.75882800000005,
+        "p95Ms": 221.87002099999995,
+        "minMs": 178.98458200000005,
+        "maxMs": 221.87002099999995,
+        "peakRssKiB": 202112,
+        "retainedHeapBytes": [
+          3825720,
+          3775080,
+          2826384,
+          3636752,
+          3553624
+        ],
+        "sourceSha256": "069ccb8a40366a9ce4e091085f9e69e33a4f03c57775d662a26a820a2e50551b",
+        "correctnessSha256": "94c67651869e111ab6fd7c18fca2b03f25ada73de843ce554a2f6f417115ece0",
+        "sourceBytes": 92076,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.1386881277783591,
+      "rssChangePercent": 1.309380607757693
+    },
+    {
+      "id": "pilot/transaction-store/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/transaction-store/O0.luauc",
+      "sourceSha256": "1919878ebb2c4a102b0e5a924ef6f7039276c5642a9f37977baaf7a0ee68fd3d",
+      "bytecodeSha256": "f9f62b95ed3a503cb449e939fbe8c8f86f2f6f127046fe4eb8e46e827943fbdb",
+      "bytecodeBytes": 46643,
+      "candidate": {
+        "samples": [
+          160.039419,
+          176.31623899999994,
+          165.815517,
+          145.650976,
+          168.74797999999987
+        ],
+        "medianMs": 165.815517,
+        "p95Ms": 176.31623899999994,
+        "minMs": 145.650976,
+        "maxMs": 176.31623899999994,
+        "peakRssKiB": 139792,
+        "retainedHeapBytes": [
+          3333576,
+          3336528,
+          2882888,
+          4061424,
+          2933152
+        ],
+        "sourceSha256": "99263dfa81803942e8979f65da86155ee809c87c5da10fd78f2e3fb0fb6db75c",
+        "correctnessSha256": "323f40bc66a46233af14b9468317d63e7965e0b2dbaa7fecfbeec21a187b86a7",
+        "sourceBytes": 65313,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          182.806269,
+          215.536655,
+          201.12861699999996,
+          217.547144,
+          206.874636
+        ],
+        "medianMs": 206.874636,
+        "p95Ms": 217.547144,
+        "minMs": 182.806269,
+        "maxMs": 217.547144,
+        "peakRssKiB": 132152,
+        "retainedHeapBytes": [
+          3367032,
+          2696872,
+          3377792,
+          3042744,
+          3337152
+        ],
+        "sourceSha256": "99263dfa81803942e8979f65da86155ee809c87c5da10fd78f2e3fb0fb6db75c",
+        "correctnessSha256": "323f40bc66a46233af14b9468317d63e7965e0b2dbaa7fecfbeec21a187b86a7",
+        "sourceBytes": 65313,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          181.68792000000002,
+          196.00091799999996,
+          178.59638300000006,
+          175.41640200000006,
+          171.6340560000001
+        ],
+        "medianMs": 178.59638300000006,
+        "p95Ms": 196.00091799999996,
+        "minMs": 171.6340560000001,
+        "maxMs": 196.00091799999996,
+        "peakRssKiB": 125672,
+        "retainedHeapBytes": [
+          3369856,
+          2775936,
+          3471688,
+          2769360,
+          3308352
+        ],
+        "sourceSha256": "99263dfa81803942e8979f65da86155ee809c87c5da10fd78f2e3fb0fb6db75c",
+        "correctnessSha256": "323f40bc66a46233af14b9468317d63e7965e0b2dbaa7fecfbeec21a187b86a7",
+        "sourceBytes": 65313,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.2476192804078765,
+      "rssChangePercent": 5.7812216235849645
+    },
+    {
+      "id": "pilot/transaction-store/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/transaction-store/O1.luauc",
+      "sourceSha256": "1919878ebb2c4a102b0e5a924ef6f7039276c5642a9f37977baaf7a0ee68fd3d",
+      "bytecodeSha256": "7ab1e6013e0dd2cbb2ca08ced2d5b242c04b5d9dcb7effc3862858b92a51b97d",
+      "bytecodeBytes": 43535,
+      "baseline": {
+        "samples": [
+          193.505407,
+          193.527604,
+          168.012741,
+          167.46458500000006,
+          175.75533700000005
+        ],
+        "medianMs": 175.75533700000005,
+        "p95Ms": 193.527604,
+        "minMs": 167.46458500000006,
+        "maxMs": 193.527604,
+        "peakRssKiB": 126964,
+        "retainedHeapBytes": [
+          3099200,
+          2561256,
+          3125360,
+          3155608,
+          2746408
+        ],
+        "sourceSha256": "a512a8aded207b86a7c37660c8b53b2f366a47be1e0227f71ee90e3e64866314",
+        "correctnessSha256": "2ef21d78c913111acd02d20d24856ab6a57b50c36d2b1746eaa6f00091703478",
+        "sourceBytes": 65326,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          135.08847699999995,
+          161.867051,
+          149.69323899999995,
+          147.46189600000002,
+          148.80293300000005
+        ],
+        "medianMs": 148.80293300000005,
+        "p95Ms": 161.867051,
+        "minMs": 135.08847699999995,
+        "maxMs": 161.867051,
+        "peakRssKiB": 133312,
+        "retainedHeapBytes": [
+          3065536,
+          2563040,
+          3186032,
+          2700920,
+          2938408
+        ],
+        "sourceSha256": "a512a8aded207b86a7c37660c8b53b2f366a47be1e0227f71ee90e3e64866314",
+        "correctnessSha256": "2ef21d78c913111acd02d20d24856ab6a57b50c36d2b1746eaa6f00091703478",
+        "sourceBytes": 65326,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          152.70408700000002,
+          163.01431600000006,
+          139.681334,
+          138.66798700000004,
+          157.60380900000007
+        ],
+        "medianMs": 152.70408700000002,
+        "p95Ms": 163.01431600000006,
+        "minMs": 138.66798700000004,
+        "maxMs": 163.01431600000006,
+        "peakRssKiB": 132672,
+        "retainedHeapBytes": [
+          3196080,
+          2591512,
+          3048632,
+          3246168,
+          2798568
+        ],
+        "sourceSha256": "a512a8aded207b86a7c37660c8b53b2f366a47be1e0227f71ee90e3e64866314",
+        "correctnessSha256": "2ef21d78c913111acd02d20d24856ab6a57b50c36d2b1746eaa6f00091703478",
+        "sourceBytes": 65326,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.181128177090434,
+      "rssChangePercent": 4.99984247503229
+    },
+    {
+      "id": "pilot/transaction-store/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/transaction-store/O2.luauc",
+      "sourceSha256": "1919878ebb2c4a102b0e5a924ef6f7039276c5642a9f37977baaf7a0ee68fd3d",
+      "bytecodeSha256": "c6b96adca3b689f242601355114b383fbbd41091d768321f72fec9327b1013e5",
+      "bytecodeBytes": 50731,
+      "candidate": {
+        "samples": [
+          165.81802,
+          176.066462,
+          138.22433,
+          160.224106,
+          149.86780900000008
+        ],
+        "medianMs": 160.224106,
+        "p95Ms": 176.066462,
+        "minMs": 138.22433,
+        "maxMs": 176.066462,
+        "peakRssKiB": 134280,
+        "retainedHeapBytes": [
+          3200928,
+          2756008,
+          3249800,
+          3285496,
+          2796360
+        ],
+        "sourceSha256": "c137e8bb55e1cac396710e21f996dfc528feb5ca9ee2d6eab6fc88ce57ee0fcb",
+        "correctnessSha256": "f8cd6067b50fd9c88d3602d40dbeb35942f3f91c009ca788f8510bce10209143",
+        "sourceBytes": 70313,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          195.619592,
+          190.51015000000007,
+          191.615413,
+          180.02808299999992,
+          177.6765210000001
+        ],
+        "medianMs": 190.51015000000007,
+        "p95Ms": 195.619592,
+        "minMs": 177.6765210000001,
+        "maxMs": 195.619592,
+        "peakRssKiB": 137476,
+        "retainedHeapBytes": [
+          3221800,
+          2669432,
+          3346864,
+          2866528,
+          3221096
+        ],
+        "sourceSha256": "c137e8bb55e1cac396710e21f996dfc528feb5ca9ee2d6eab6fc88ce57ee0fcb",
+        "correctnessSha256": "f8cd6067b50fd9c88d3602d40dbeb35942f3f91c009ca788f8510bce10209143",
+        "sourceBytes": 70313,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          162.086072,
+          180.56227200000006,
+          149.110866,
+          150.81345299999998,
+          191.6684180000001
+        ],
+        "medianMs": 162.086072,
+        "p95Ms": 191.6684180000001,
+        "minMs": 149.110866,
+        "maxMs": 191.6684180000001,
+        "peakRssKiB": 196368,
+        "retainedHeapBytes": [
+          3236392,
+          2798944,
+          3318536,
+          3324640,
+          2812480
+        ],
+        "sourceSha256": "c137e8bb55e1cac396710e21f996dfc528feb5ca9ee2d6eab6fc88ce57ee0fcb",
+        "correctnessSha256": "f8cd6067b50fd9c88d3602d40dbeb35942f3f91c009ca788f8510bce10209143",
+        "sourceBytes": 70313,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.1890230175476846,
+      "rssChangePercent": -2.324769414297767
+    },
+    {
+      "id": "pilot/workflow-scheduler/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/workflow-scheduler/O0.luauc",
+      "sourceSha256": "d17377e6ccebcbca764dfa718a804bf7e23dd49f8fd527446824cdfdeccada46",
+      "bytecodeSha256": "61d48c5800360f943e2607b857cce8057acb7423338fd46393ee0083661b8db6",
+      "bytecodeBytes": 51118,
+      "baseline": {
+        "samples": [
+          246.859892,
+          243.002931,
+          256.211447,
+          249.09336899999994,
+          234.1010879999999
+        ],
+        "medianMs": 246.859892,
+        "p95Ms": 256.211447,
+        "minMs": 234.1010879999999,
+        "maxMs": 256.211447,
+        "peakRssKiB": 195620,
+        "retainedHeapBytes": [
+          3771544,
+          3655648,
+          2857688,
+          4256232,
+          2309888
+        ],
+        "sourceSha256": "51f5809bbc1f9cb52bdb42e50888702883bb8e0e121918d5e8060865cd786b35",
+        "correctnessSha256": "5a8d3bea7dd54f4edabfbf910b80144a571935e3d938600ca864e33d32ea6499",
+        "sourceBytes": 82648,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          227.42440100000005,
+          230.975778,
+          212.81962699999997,
+          219.00284999999985,
+          231.46592899999996
+        ],
+        "medianMs": 227.42440100000005,
+        "p95Ms": 231.46592899999996,
+        "minMs": 212.81962699999997,
+        "maxMs": 231.46592899999996,
+        "peakRssKiB": 201308,
+        "retainedHeapBytes": [
+          3672656,
+          3770000,
+          2748272,
+          3689040,
+          3523136
+        ],
+        "sourceSha256": "51f5809bbc1f9cb52bdb42e50888702883bb8e0e121918d5e8060865cd786b35",
+        "correctnessSha256": "5a8d3bea7dd54f4edabfbf910b80144a571935e3d938600ca864e33d32ea6499",
+        "sourceBytes": 82648,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          286.2425549999999,
+          238.54454500000008,
+          222.90870000000007,
+          221.23430099999996,
+          241.11092200000007
+        ],
+        "medianMs": 238.54454500000008,
+        "p95Ms": 286.2425549999999,
+        "minMs": 221.23430099999996,
+        "maxMs": 286.2425549999999,
+        "peakRssKiB": 191932,
+        "retainedHeapBytes": [
+          3705016,
+          3819976,
+          2791488,
+          3715368,
+          3764488
+        ],
+        "sourceSha256": "51f5809bbc1f9cb52bdb42e50888702883bb8e0e121918d5e8060865cd786b35",
+        "correctnessSha256": "5a8d3bea7dd54f4edabfbf910b80144a571935e3d938600ca864e33d32ea6499",
+        "sourceBytes": 82648,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.085459128020304,
+      "rssChangePercent": 2.907678151518245
+    },
+    {
+      "id": "pilot/workflow-scheduler/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/workflow-scheduler/O1.luauc",
+      "sourceSha256": "d17377e6ccebcbca764dfa718a804bf7e23dd49f8fd527446824cdfdeccada46",
+      "bytecodeSha256": "c7892deb5f007857114af1a06db485efcdabe5d022bb97d515242d2a76bb6c4d",
+      "bytecodeBytes": 49208,
+      "candidate": {
+        "samples": [
+          238.66099199999996,
+          245.94301600000006,
+          221.1177570000001,
+          248.37394799999993,
+          227.29109600000015
+        ],
+        "medianMs": 238.66099199999996,
+        "p95Ms": 248.37394799999993,
+        "minMs": 221.1177570000001,
+        "maxMs": 248.37394799999993,
+        "peakRssKiB": 196276,
+        "retainedHeapBytes": [
+          3545376,
+          2950544,
+          3574224,
+          3376976,
+          3720424
+        ],
+        "sourceSha256": "12a77d67f9c9019463cff35e784c151aa637350245c1359872e172b5edf2a757",
+        "correctnessSha256": "874a89102c3700d6d2078c4de0a720bd1976a616075532259bcd7e3872c27cac",
+        "sourceBytes": 82917,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          251.42338000000007,
+          237.16497700000002,
+          227.45297499999992,
+          220.95477400000004,
+          262.85391700000014
+        ],
+        "medianMs": 237.16497700000002,
+        "p95Ms": 262.85391700000014,
+        "minMs": 220.95477400000004,
+        "maxMs": 262.85391700000014,
+        "peakRssKiB": 201672,
+        "retainedHeapBytes": [
+          3528544,
+          3217216,
+          4028928,
+          2192232,
+          3963984
+        ],
+        "sourceSha256": "12a77d67f9c9019463cff35e784c151aa637350245c1359872e172b5edf2a757",
+        "correctnessSha256": "874a89102c3700d6d2078c4de0a720bd1976a616075532259bcd7e3872c27cac",
+        "sourceBytes": 82917,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          235.89252600000003,
+          232.42566,
+          215.63050999999984,
+          223.04806500000018,
+          221.457993
+        ],
+        "medianMs": 223.04806500000018,
+        "p95Ms": 235.89252600000003,
+        "minMs": 215.63050999999984,
+        "maxMs": 235.89252600000003,
+        "peakRssKiB": 197340,
+        "retainedHeapBytes": [
+          3728168,
+          2920336,
+          3651816,
+          3355184,
+          3743424
+        ],
+        "sourceSha256": "12a77d67f9c9019463cff35e784c151aa637350245c1359872e172b5edf2a757",
+        "correctnessSha256": "874a89102c3700d6d2078c4de0a720bd1976a616075532259bcd7e3872c27cac",
+        "sourceBytes": 82917,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 0.9937316316861704,
+      "rssChangePercent": -2.6756317188305734
+    },
+    {
+      "id": "pilot/workflow-scheduler/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/workflow-scheduler/O2.luauc",
+      "sourceSha256": "d17377e6ccebcbca764dfa718a804bf7e23dd49f8fd527446824cdfdeccada46",
+      "bytecodeSha256": "9ba5493ad511f9947cd23f34795f10ae0e65208a04784531813255c7eaf67e62",
+      "bytecodeBytes": 64309,
+      "baseline": {
+        "samples": [
+          271.29690500000004,
+          273.998514,
+          268.3261540000001,
+          275.0232060000001,
+          264.89069100000006
+        ],
+        "medianMs": 271.29690500000004,
+        "p95Ms": 275.0232060000001,
+        "minMs": 264.89069100000006,
+        "maxMs": 275.0232060000001,
+        "peakRssKiB": 198708,
+        "retainedHeapBytes": [
+          3941624,
+          3855904,
+          3051264,
+          3718592,
+          3888160
+        ],
+        "sourceSha256": "1ada93a339c06fe631316a6c7a29ef05945117888093392da415cd871ec5465f",
+        "correctnessSha256": "61d63c94a978ed8fbac411bf42ff1e0ec774043fdb54aaf69f95b7a64903b397",
+        "sourceBytes": 92375,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          248.02579999999995,
+          235.227128,
+          237.7455050000001,
+          255.03526199999988,
+          241.89864799999987
+        ],
+        "medianMs": 241.89864799999987,
+        "p95Ms": 255.03526199999988,
+        "minMs": 235.227128,
+        "maxMs": 255.03526199999988,
+        "peakRssKiB": 198348,
+        "retainedHeapBytes": [
+          3896328,
+          3874752,
+          3045064,
+          3694968,
+          3742640
+        ],
+        "sourceSha256": "1ada93a339c06fe631316a6c7a29ef05945117888093392da415cd871ec5465f",
+        "correctnessSha256": "61d63c94a978ed8fbac411bf42ff1e0ec774043fdb54aaf69f95b7a64903b397",
+        "sourceBytes": 92375,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          258.293226,
+          248.01416300000005,
+          267.49602200000004,
+          227.84267,
+          246.90992299999994
+        ],
+        "medianMs": 248.01416300000005,
+        "p95Ms": 267.49602200000004,
+        "minMs": 227.84267,
+        "maxMs": 267.49602200000004,
+        "peakRssKiB": 196676,
+        "retainedHeapBytes": [
+          3799704,
+          3904768,
+          3089160,
+          3734024,
+          3845072
+        ],
+        "sourceSha256": "1ada93a339c06fe631316a6c7a29ef05945117888093392da415cd871ec5465f",
+        "correctnessSha256": "61d63c94a978ed8fbac411bf42ff1e0ec774043fdb54aaf69f95b7a64903b397",
+        "sourceBytes": 92375,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.1215312993398796,
+      "rssChangePercent": -0.18117036052901492
+    },
+    {
+      "id": "pilot/query-planner/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/query-planner/O0.luauc",
+      "sourceSha256": "ca7982feea54b381e8b8cc494acf2db84a9adba00476ec5b04f83142e713f1d1",
+      "bytecodeSha256": "06a782c14c0f4dab1bafa225896e0d3f1d5b3ecb9a0770b0c8ca6829b59a2944",
+      "bytecodeBytes": 45161,
+      "candidate": {
+        "samples": [
+          173.57064200000002,
+          152.39007400000003,
+          150.326775,
+          153.22833500000002,
+          174.34264799999994
+        ],
+        "medianMs": 153.22833500000002,
+        "p95Ms": 174.34264799999994,
+        "minMs": 150.326775,
+        "maxMs": 174.34264799999994,
+        "peakRssKiB": 193456,
+        "retainedHeapBytes": [
+          3427144,
+          3778872,
+          1909080,
+          3243648,
+          2799560
+        ],
+        "sourceSha256": "e9355c1cd0d7c2958a3f37b118b7570084d09bfe24e7ca9782358f60c81e3602",
+        "correctnessSha256": "1998bf3bb8533042013ee3123490e9b9f5468d6dcb82c033b1c308318519940e",
+        "sourceBytes": 67826,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          192.68627799999996,
+          198.76417800000002,
+          196.18476899999996,
+          187.68767200000002,
+          189.46556299999997
+        ],
+        "medianMs": 192.68627799999996,
+        "p95Ms": 198.76417800000002,
+        "minMs": 187.68767200000002,
+        "maxMs": 198.76417800000002,
+        "peakRssKiB": 189264,
+        "retainedHeapBytes": [
+          3392808,
+          2636072,
+          3478776,
+          3128176,
+          4162232
+        ],
+        "sourceSha256": "e9355c1cd0d7c2958a3f37b118b7570084d09bfe24e7ca9782358f60c81e3602",
+        "correctnessSha256": "1998bf3bb8533042013ee3123490e9b9f5468d6dcb82c033b1c308318519940e",
+        "sourceBytes": 67826,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          190.13764300000003,
+          190.96692499999995,
+          160.46678400000008,
+          175.5606079999999,
+          184.61762699999986
+        ],
+        "medianMs": 184.61762699999986,
+        "p95Ms": 190.96692499999995,
+        "minMs": 160.46678400000008,
+        "maxMs": 190.96692499999995,
+        "peakRssKiB": 189092,
+        "retainedHeapBytes": [
+          3410616,
+          2660400,
+          3976032,
+          1990232,
+          3198896
+        ],
+        "sourceSha256": "e9355c1cd0d7c2958a3f37b118b7570084d09bfe24e7ca9782358f60c81e3602",
+        "correctnessSha256": "1998bf3bb8533042013ee3123490e9b9f5468d6dcb82c033b1c308318519940e",
+        "sourceBytes": 67826,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.2575107469515996,
+      "rssChangePercent": 2.2148955955701988
+    },
+    {
+      "id": "pilot/query-planner/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/query-planner/O1.luauc",
+      "sourceSha256": "ca7982feea54b381e8b8cc494acf2db84a9adba00476ec5b04f83142e713f1d1",
+      "bytecodeSha256": "076cb77679aa0ece24d48490d1511259f19d9ac7928973a6928f3181136d08ca",
+      "bytecodeBytes": 41772,
+      "baseline": {
+        "samples": [
+          223.89361999999994,
+          188.33084700000006,
+          184.520623,
+          192.298004,
+          197.42091699999992
+        ],
+        "medianMs": 192.298004,
+        "p95Ms": 223.89361999999994,
+        "minMs": 184.520623,
+        "maxMs": 223.89361999999994,
+        "peakRssKiB": 189308,
+        "retainedHeapBytes": [
+          3132128,
+          2324352,
+          2984880,
+          2721840,
+          2914688
+        ],
+        "sourceSha256": "0fd5d07cf64e91781ee4767cc8a33b4cabc1d2a88b90a347f0dcfcd96df99847",
+        "correctnessSha256": "c314e135add0dfe3aca343f3d76416e1ae49d43614c71e5bb53d6cba62450c11",
+        "sourceBytes": 65561,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          136.83485100000001,
+          169.86906200000004,
+          163.83166299999993,
+          136.38601099999994,
+          140.65258200000005
+        ],
+        "medianMs": 140.65258200000005,
+        "p95Ms": 169.86906200000004,
+        "minMs": 136.38601099999994,
+        "maxMs": 169.86906200000004,
+        "peakRssKiB": 149636,
+        "retainedHeapBytes": [
+          3070040,
+          2752728,
+          1820360,
+          3499144,
+          1464232
+        ],
+        "sourceSha256": "0fd5d07cf64e91781ee4767cc8a33b4cabc1d2a88b90a347f0dcfcd96df99847",
+        "correctnessSha256": "c314e135add0dfe3aca343f3d76416e1ae49d43614c71e5bb53d6cba62450c11",
+        "sourceBytes": 65561,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          154.60477099999997,
+          159.93862600000006,
+          138.9727939999999,
+          147.67056100000002,
+          164.85885699999994
+        ],
+        "medianMs": 154.60477099999997,
+        "p95Ms": 164.85885699999994,
+        "minMs": 138.9727939999999,
+        "maxMs": 164.85885699999994,
+        "peakRssKiB": 158864,
+        "retainedHeapBytes": [
+          3115640,
+          2349696,
+          2936104,
+          3018624,
+          2601696
+        ],
+        "sourceSha256": "0fd5d07cf64e91781ee4767cc8a33b4cabc1d2a88b90a347f0dcfcd96df99847",
+        "correctnessSha256": "c314e135add0dfe3aca343f3d76416e1ae49d43614c71e5bb53d6cba62450c11",
+        "sourceBytes": 65561,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.3671843151802212,
+      "rssChangePercent": -20.95632514209648
+    },
+    {
+      "id": "pilot/query-planner/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/query-planner/O2.luauc",
+      "sourceSha256": "ca7982feea54b381e8b8cc494acf2db84a9adba00476ec5b04f83142e713f1d1",
+      "bytecodeSha256": "1a24beded21402c2d6ecef3375cbb805ac74ce07b7137b32e918311c6647192a",
+      "bytecodeBytes": 74163,
+      "candidate": {
+        "samples": [
+          225.607101,
+          208.0194550000001,
+          264.27019100000007,
+          199.6155920000001,
+          217.29078600000003
+        ],
+        "medianMs": 217.29078600000003,
+        "p95Ms": 264.27019100000007,
+        "minMs": 199.6155920000001,
+        "maxMs": 264.27019100000007,
+        "peakRssKiB": 199692,
+        "retainedHeapBytes": [
+          3933992,
+          3835480,
+          2975544,
+          3595848,
+          3564608
+        ],
+        "sourceSha256": "fba1cc646e76a8c157b3c79aaf318e26fba5a9289717869ff51152700a97b0ee",
+        "correctnessSha256": "d4adaeabc46124e5467937f85d447f20f9fffbcee7d84bc7326a2575b37c842f",
+        "sourceBytes": 95139,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          245.93612199999995,
+          247.58176400000002,
+          287.366136,
+          240.06055100000003,
+          258.572954
+        ],
+        "medianMs": 247.58176400000002,
+        "p95Ms": 287.366136,
+        "minMs": 240.06055100000003,
+        "maxMs": 287.366136,
+        "peakRssKiB": 198468,
+        "retainedHeapBytes": [
+          3856856,
+          3903272,
+          2913728,
+          3658224,
+          3732352
+        ],
+        "sourceSha256": "fba1cc646e76a8c157b3c79aaf318e26fba5a9289717869ff51152700a97b0ee",
+        "correctnessSha256": "d4adaeabc46124e5467937f85d447f20f9fffbcee7d84bc7326a2575b37c842f",
+        "sourceBytes": 95139,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          221.35583200000002,
+          218.87152400000002,
+          231.65777400000002,
+          204.49584099999993,
+          224.47913799999992
+        ],
+        "medianMs": 221.35583200000002,
+        "p95Ms": 231.65777400000002,
+        "minMs": 204.49584099999993,
+        "maxMs": 231.65777400000002,
+        "peakRssKiB": 200012,
+        "retainedHeapBytes": [
+          3975560,
+          3846064,
+          2978136,
+          3625184,
+          3741936
+        ],
+        "sourceSha256": "fba1cc646e76a8c157b3c79aaf318e26fba5a9289717869ff51152700a97b0ee",
+        "correctnessSha256": "d4adaeabc46124e5467937f85d447f20f9fffbcee7d84bc7326a2575b37c842f",
+        "sourceBytes": 95139,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.1394029565524237,
+      "rssChangePercent": 0.6167241066569851
+    },
+    {
+      "id": "pilot/reactive-simulation/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/reactive-simulation/O0.luauc",
+      "sourceSha256": "f4ea6ccab01801e5cd1a3d573e83c38a3abb8a98a8d5f865ac0fc2b5eaf7c35c",
+      "bytecodeSha256": "2f71242b003fe9391b1e55b5a67021ff214fcfeec297d0b140ad35960aee6c9e",
+      "bytecodeBytes": 45046,
+      "baseline": {
+        "samples": [
+          202.48364600000002,
+          183.552455,
+          179.47579100000007,
+          178.43393600000002,
+          183.85765199999992
+        ],
+        "medianMs": 183.552455,
+        "p95Ms": 202.48364600000002,
+        "minMs": 178.43393600000002,
+        "maxMs": 202.48364600000002,
+        "peakRssKiB": 192868,
+        "retainedHeapBytes": [
+          3567096,
+          3227232,
+          2860608,
+          3339992,
+          2996416
+        ],
+        "sourceSha256": "099845bdfc9d213230ab5554a48f4bfd106193930ab0f048210e410faff104a1",
+        "correctnessSha256": "d40c77a166d692740a68955a82ee9b43864f79af098395449c38f85cab0c7aea",
+        "sourceBytes": 67616,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          155.939995,
+          166.442988,
+          160.32166499999994,
+          163.61098600000003,
+          164.65150400000016
+        ],
+        "medianMs": 163.61098600000003,
+        "p95Ms": 166.442988,
+        "minMs": 155.939995,
+        "maxMs": 166.442988,
+        "peakRssKiB": 191540,
+        "retainedHeapBytes": [
+          3367360,
+          2739536,
+          3195488,
+          2770248,
+          3141792
+        ],
+        "sourceSha256": "099845bdfc9d213230ab5554a48f4bfd106193930ab0f048210e410faff104a1",
+        "correctnessSha256": "d40c77a166d692740a68955a82ee9b43864f79af098395449c38f85cab0c7aea",
+        "sourceBytes": 67616,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          170.017362,
+          182.947182,
+          169.55098999999996,
+          178.78427,
+          183.941415
+        ],
+        "medianMs": 178.78427,
+        "p95Ms": 183.941415,
+        "minMs": 169.55098999999996,
+        "maxMs": 183.941415,
+        "peakRssKiB": 143260,
+        "retainedHeapBytes": [
+          3444672,
+          2694048,
+          3197384,
+          2927920,
+          3150632
+        ],
+        "sourceSha256": "099845bdfc9d213230ab5554a48f4bfd106193930ab0f048210e410faff104a1",
+        "correctnessSha256": "d40c77a166d692740a68955a82ee9b43864f79af098395449c38f85cab0c7aea",
+        "sourceBytes": 67616,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.1218834351380291,
+      "rssChangePercent": -0.6885538295621885
+    },
+    {
+      "id": "pilot/reactive-simulation/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/reactive-simulation/O1.luauc",
+      "sourceSha256": "f4ea6ccab01801e5cd1a3d573e83c38a3abb8a98a8d5f865ac0fc2b5eaf7c35c",
+      "bytecodeSha256": "912d096e0d42a25f9ea4db6d7ff288e060826b78366b3e56a150f416b7491204",
+      "bytecodeBytes": 42194,
+      "candidate": {
+        "samples": [
+          172.13414899999998,
+          171.91840100000002,
+          154.89335399999993,
+          161.00172199999997,
+          166.864144
+        ],
+        "medianMs": 166.864144,
+        "p95Ms": 172.13414899999998,
+        "minMs": 154.89335399999993,
+        "maxMs": 172.13414899999998,
+        "peakRssKiB": 191788,
+        "retainedHeapBytes": [
+          3226360,
+          2569760,
+          3036360,
+          2805664,
+          2974536
+        ],
+        "sourceSha256": "05272f3b9bc5f8569b0964784b714dbc756d33505caa43b1bc22c8d0eebf4c63",
+        "correctnessSha256": "e37fa3925e237589078330e20ea696261c04c9e271ce3495f1186926131f5fe5",
+        "sourceBytes": 68286,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          175.39579299999997,
+          196.93243399999994,
+          172.31464400000004,
+          166.36347299999989,
+          241.0740810000002
+        ],
+        "medianMs": 175.39579299999997,
+        "p95Ms": 241.0740810000002,
+        "minMs": 166.36347299999989,
+        "maxMs": 241.0740810000002,
+        "peakRssKiB": 186772,
+        "retainedHeapBytes": [
+          3290072,
+          2645256,
+          3442128,
+          2073024,
+          2858736
+        ],
+        "sourceSha256": "05272f3b9bc5f8569b0964784b714dbc756d33505caa43b1bc22c8d0eebf4c63",
+        "correctnessSha256": "e37fa3925e237589078330e20ea696261c04c9e271ce3495f1186926131f5fe5",
+        "sourceBytes": 68286,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          192.49312999999995,
+          170.54963499999997,
+          143.22664700000007,
+          138.46255700000006,
+          170.91189399999996
+        ],
+        "medianMs": 170.54963499999997,
+        "p95Ms": 192.49312999999995,
+        "minMs": 138.46255700000006,
+        "maxMs": 192.49312999999995,
+        "peakRssKiB": 188728,
+        "retainedHeapBytes": [
+          3248936,
+          2755144,
+          2916864,
+          3114544,
+          2811192
+        ],
+        "sourceSha256": "05272f3b9bc5f8569b0964784b714dbc756d33505caa43b1bc22c8d0eebf4c63",
+        "correctnessSha256": "e37fa3925e237589078330e20ea696261c04c9e271ce3495f1186926131f5fe5",
+        "sourceBytes": 68286,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.0511293127180155,
+      "rssChangePercent": 2.6856273959694255
+    },
+    {
+      "id": "pilot/reactive-simulation/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/pilot/reactive-simulation/O2.luauc",
+      "sourceSha256": "f4ea6ccab01801e5cd1a3d573e83c38a3abb8a98a8d5f865ac0fc2b5eaf7c35c",
+      "bytecodeSha256": "0484bc5b76f8a22a2c006c62e4f4cfa108f1f4e96c3e0c838f8fc803bfbef828",
+      "bytecodeBytes": 67948,
+      "baseline": {
+        "samples": [
+          221.75867099999994,
+          210.491447,
+          231.31069000000014,
+          211.63344100000018,
+          214.56044700000007
+        ],
+        "medianMs": 214.56044700000007,
+        "p95Ms": 231.31069000000014,
+        "minMs": 210.491447,
+        "maxMs": 231.31069000000014,
+        "peakRssKiB": 198544,
+        "retainedHeapBytes": [
+          3939952,
+          3571304,
+          2742920,
+          3634344,
+          3312224
+        ],
+        "sourceSha256": "850c759dd854557cb5954b1c63676a2d098e3a87caf1b6b8f9ba3f5d4b7748fc",
+        "correctnessSha256": "17a39e24c1ba488d2cba3bb5302fe19b5596f6a9f7aa510205a7ae58aaf4e1f3",
+        "sourceBytes": 85705,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          216.90490900000003,
+          182.76396799999998,
+          199.87000899999998,
+          209.35260500000004,
+          205.45370000000003
+        ],
+        "medianMs": 205.45370000000003,
+        "p95Ms": 216.90490900000003,
+        "minMs": 182.76396799999998,
+        "maxMs": 216.90490900000003,
+        "peakRssKiB": 196764,
+        "retainedHeapBytes": [
+          3831544,
+          3584968,
+          2751024,
+          3515200,
+          3389216
+        ],
+        "sourceSha256": "850c759dd854557cb5954b1c63676a2d098e3a87caf1b6b8f9ba3f5d4b7748fc",
+        "correctnessSha256": "17a39e24c1ba488d2cba3bb5302fe19b5596f6a9f7aa510205a7ae58aaf4e1f3",
+        "sourceBytes": 85705,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          208.06393099999997,
+          186.81516800000009,
+          204.83957400000008,
+          169.868339,
+          197.4317289999999
+        ],
+        "medianMs": 197.4317289999999,
+        "p95Ms": 208.06393099999997,
+        "minMs": 169.868339,
+        "maxMs": 208.06393099999997,
+        "peakRssKiB": 208236,
+        "retainedHeapBytes": [
+          3946560,
+          3579400,
+          2717224,
+          3568248,
+          3357352
+        ],
+        "sourceSha256": "850c759dd854557cb5954b1c63676a2d098e3a87caf1b6b8f9ba3f5d4b7748fc",
+        "correctnessSha256": "17a39e24c1ba488d2cba3bb5302fe19b5596f6a9f7aa510205a7ae58aaf4e1f3",
+        "sourceBytes": 85705,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.044325057178333,
+      "rssChangePercent": -0.8965267144814271
+    },
+    {
+      "id": "cohort2/archive-filesystem/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/archive-filesystem/O0.luauc",
+      "sourceSha256": "55987296adaf47b47db98638daa7f8401d898e7a0924acd682300b7efcb46293",
+      "bytecodeSha256": "25a94948dbe391e537745712f23d87b71550c7894c63f833b0496df243ea6271",
+      "bytecodeBytes": 56183,
+      "candidate": {
+        "samples": [
+          243.683155,
+          268.2152930000001,
+          247.30184400000007,
+          246.091097,
+          234.64637300000004
+        ],
+        "medianMs": 246.091097,
+        "p95Ms": 268.2152930000001,
+        "minMs": 234.64637300000004,
+        "maxMs": 268.2152930000001,
+        "peakRssKiB": 199368,
+        "retainedHeapBytes": [
+          3951640,
+          3461320,
+          3890448,
+          3885520,
+          3997984
+        ],
+        "sourceSha256": "86ebe363d91ddf6cdc5a241f290fddc0434fb5ab928fdc7f5a57ce329ffe99f8",
+        "correctnessSha256": "0ece1ead5d087cfe3cbb47161b7250643c8b1369c1ffbbe4976090c3abbd0548",
+        "sourceBytes": 88461,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          289.63319000000007,
+          290.19535599999995,
+          282.0495279999999,
+          275.592214,
+          258.0436749999999
+        ],
+        "medianMs": 282.0495279999999,
+        "p95Ms": 290.19535599999995,
+        "minMs": 258.0436749999999,
+        "maxMs": 290.19535599999995,
+        "peakRssKiB": 212124,
+        "retainedHeapBytes": [
+          4111976,
+          3311288,
+          3849456,
+          3747872,
+          4009208
+        ],
+        "sourceSha256": "86ebe363d91ddf6cdc5a241f290fddc0434fb5ab928fdc7f5a57ce329ffe99f8",
+        "correctnessSha256": "0ece1ead5d087cfe3cbb47161b7250643c8b1369c1ffbbe4976090c3abbd0548",
+        "sourceBytes": 88461,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          255.53387700000002,
+          285.3109589999999,
+          268.34692999999993,
+          259.907146,
+          268.55937100000006
+        ],
+        "medianMs": 268.34692999999993,
+        "p95Ms": 285.3109589999999,
+        "minMs": 255.53387700000002,
+        "maxMs": 285.3109589999999,
+        "peakRssKiB": 198612,
+        "retainedHeapBytes": [
+          4021712,
+          3348600,
+          3904384,
+          3762960,
+          4022176
+        ],
+        "sourceSha256": "86ebe363d91ddf6cdc5a241f290fddc0434fb5ab928fdc7f5a57ce329ffe99f8",
+        "correctnessSha256": "0ece1ead5d087cfe3cbb47161b7250643c8b1369c1ffbbe4976090c3abbd0548",
+        "sourceBytes": 88461,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.146118374205142,
+      "rssChangePercent": -6.013463823046894
+    },
+    {
+      "id": "cohort2/archive-filesystem/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/archive-filesystem/O1.luauc",
+      "sourceSha256": "55987296adaf47b47db98638daa7f8401d898e7a0924acd682300b7efcb46293",
+      "bytecodeSha256": "01f36f23504573916777a22312584480b3d3a1dae7f83a8331e49b4916f3a0c5",
+      "bytecodeBytes": 53983,
+      "baseline": {
+        "samples": [
+          300.80575,
+          324.010952,
+          350.174982,
+          384.13370800000007,
+          284.9644930000002
+        ],
+        "medianMs": 324.010952,
+        "p95Ms": 384.13370800000007,
+        "minMs": 284.9644930000002,
+        "maxMs": 384.13370800000007,
+        "peakRssKiB": 201116,
+        "retainedHeapBytes": [
+          4188432,
+          3263928,
+          3869856,
+          3717496,
+          3894912
+        ],
+        "sourceSha256": "b804d398ffd1c1cdb35d232113f358127b49eb510ef07a293ca1de33091fcbe6",
+        "correctnessSha256": "31090ebb09445a9bd8b6aeeeaea4b39cb61524d79f72521739d21d394a3e356b",
+        "sourceBytes": 89123,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          296.956958,
+          340.84656099999995,
+          373.96094500000004,
+          283.07003800000007,
+          286.5263699999998
+        ],
+        "medianMs": 296.956958,
+        "p95Ms": 373.96094500000004,
+        "minMs": 283.07003800000007,
+        "maxMs": 373.96094500000004,
+        "peakRssKiB": 204948,
+        "retainedHeapBytes": [
+          4170256,
+          3253520,
+          3827616,
+          3495960,
+          3823248
+        ],
+        "sourceSha256": "b804d398ffd1c1cdb35d232113f358127b49eb510ef07a293ca1de33091fcbe6",
+        "correctnessSha256": "31090ebb09445a9bd8b6aeeeaea4b39cb61524d79f72521739d21d394a3e356b",
+        "sourceBytes": 89123,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          308.429654,
+          332.8797240000001,
+          327.7815499999999,
+          262.59093000000007,
+          249.2321179999999
+        ],
+        "medianMs": 308.429654,
+        "p95Ms": 332.8797240000001,
+        "minMs": 249.2321179999999,
+        "maxMs": 332.8797240000001,
+        "peakRssKiB": 202052,
+        "retainedHeapBytes": [
+          4200240,
+          3284352,
+          3711128,
+          3900688,
+          3848304
+        ],
+        "sourceSha256": "b804d398ffd1c1cdb35d232113f358127b49eb510ef07a293ca1de33091fcbe6",
+        "correctnessSha256": "31090ebb09445a9bd8b6aeeeaea4b39cb61524d79f72521739d21d394a3e356b",
+        "sourceBytes": 89123,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.0911040919270192,
+      "rssChangePercent": 1.9053680463016365
+    },
+    {
+      "id": "cohort2/archive-filesystem/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/archive-filesystem/O2.luauc",
+      "sourceSha256": "55987296adaf47b47db98638daa7f8401d898e7a0924acd682300b7efcb46293",
+      "bytecodeSha256": "08310c856ef4c530b045148854abf363e36a2cff538842c1c5eed8f7a3202697",
+      "bytecodeBytes": 79476,
+      "candidate": {
+        "samples": [
+          365.403953,
+          384.50696099999993,
+          294.5584530000001,
+          311.882161,
+          311.7261329999999
+        ],
+        "medianMs": 311.882161,
+        "p95Ms": 384.50696099999993,
+        "minMs": 294.5584530000001,
+        "maxMs": 384.50696099999993,
+        "peakRssKiB": 211964,
+        "retainedHeapBytes": [
+          4426024,
+          3525376,
+          3938368,
+          3951128,
+          4218952
+        ],
+        "sourceSha256": "36ae295b9c74d4dee73c56517a9967ef88806ecf30bda55984dcab778d44c2d3",
+        "correctnessSha256": "2d8e8da3c7a721a9f079ab2d14a1889402c0702bb4678814c0ae16db84f7be26",
+        "sourceBytes": 99563,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          347.3756179999999,
+          381.6066309999999,
+          414.1293939999998,
+          389.30245300000024,
+          376.21981700000015
+        ],
+        "medianMs": 381.6066309999999,
+        "p95Ms": 414.1293939999998,
+        "minMs": 347.3756179999999,
+        "maxMs": 414.1293939999998,
+        "peakRssKiB": 198644,
+        "retainedHeapBytes": [
+          4585616,
+          3543592,
+          4062712,
+          4061400,
+          4199032
+        ],
+        "sourceSha256": "36ae295b9c74d4dee73c56517a9967ef88806ecf30bda55984dcab778d44c2d3",
+        "correctnessSha256": "2d8e8da3c7a721a9f079ab2d14a1889402c0702bb4678814c0ae16db84f7be26",
+        "sourceBytes": 99563,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          306.997202,
+          345.41973600000006,
+          282.2789950000001,
+          300.41091400000005,
+          280.65590900000007
+        ],
+        "medianMs": 300.41091400000005,
+        "p95Ms": 345.41973600000006,
+        "minMs": 280.65590900000007,
+        "maxMs": 345.41973600000006,
+        "peakRssKiB": 204792,
+        "retainedHeapBytes": [
+          4393344,
+          3565960,
+          4090288,
+          4117288,
+          4145480
+        ],
+        "sourceSha256": "36ae295b9c74d4dee73c56517a9967ef88806ecf30bda55984dcab778d44c2d3",
+        "correctnessSha256": "2d8e8da3c7a721a9f079ab2d14a1889402c0702bb4678814c0ae16db84f7be26",
+        "sourceBytes": 99563,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.2235603016743233,
+      "rssChangePercent": 6.705463039407178
+    },
+    {
+      "id": "cohort2/document-layout/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/document-layout/O0.luauc",
+      "sourceSha256": "2c8f73b3bbaed3dfb2dc80a2287e264343b3106bec2473e91d29b052b65788b1",
+      "bytecodeSha256": "469718adf1e51d114b61d4b030e0c695213072e86e731c133cba93031bf73e75",
+      "bytecodeBytes": 92081,
+      "baseline": {
+        "samples": [
+          405.925293,
+          409.4179550000001,
+          481.87842,
+          440.31873199999995,
+          450.8844019999997
+        ],
+        "medianMs": 440.31873199999995,
+        "p95Ms": 481.87842,
+        "minMs": 405.925293,
+        "maxMs": 481.87842,
+        "peakRssKiB": 209120,
+        "retainedHeapBytes": [
+          6188208,
+          6166760,
+          5319736,
+          6088664,
+          5848016
+        ],
+        "sourceSha256": "f3202aedea8a822643b9864c622b40e10929528d1c60651921fd353e857d0ed6",
+        "correctnessSha256": "e57bf7d0821d9c1204087d6b2105df8d800eedf484fabfbb51a28609ebb73862",
+        "sourceBytes": 142749,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          359.70554400000003,
+          336.64573199999995,
+          346.844832,
+          385.88093100000015,
+          298.4048740000003
+        ],
+        "medianMs": 346.844832,
+        "p95Ms": 385.88093100000015,
+        "minMs": 298.4048740000003,
+        "maxMs": 385.88093100000015,
+        "peakRssKiB": 203584,
+        "retainedHeapBytes": [
+          6217536,
+          6145504,
+          5856040,
+          5865816,
+          5967672
+        ],
+        "sourceSha256": "f3202aedea8a822643b9864c622b40e10929528d1c60651921fd353e857d0ed6",
+        "correctnessSha256": "e57bf7d0821d9c1204087d6b2105df8d800eedf484fabfbb51a28609ebb73862",
+        "sourceBytes": 142749,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          411.43360199999995,
+          369.32851000000005,
+          337.396293,
+          359.4099560000002,
+          351.52496299999984
+        ],
+        "medianMs": 359.4099560000002,
+        "p95Ms": 411.43360199999995,
+        "minMs": 337.396293,
+        "maxMs": 411.43360199999995,
+        "peakRssKiB": 206972,
+        "retainedHeapBytes": [
+          6314608,
+          6197864,
+          5275840,
+          6162848,
+          5875328
+        ],
+        "sourceSha256": "f3202aedea8a822643b9864c622b40e10929528d1c60651921fd353e857d0ed6",
+        "correctnessSha256": "e57bf7d0821d9c1204087d6b2105df8d800eedf484fabfbb51a28609ebb73862",
+        "sourceBytes": 142749,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.2694977447436782,
+      "rssChangePercent": -2.647283856159144
+    },
+    {
+      "id": "cohort2/document-layout/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/document-layout/O1.luauc",
+      "sourceSha256": "2c8f73b3bbaed3dfb2dc80a2287e264343b3106bec2473e91d29b052b65788b1",
+      "bytecodeSha256": "0a959bc6c2d9a5c0cb4c38e11471e0b8cd132e47ce42e96173f16115e362378d",
+      "bytecodeBytes": 81640,
+      "candidate": {
+        "samples": [
+          280.912558,
+          362.18832800000007,
+          280.211362,
+          296.7434410000001,
+          307.0732019999998
+        ],
+        "medianMs": 296.7434410000001,
+        "p95Ms": 362.18832800000007,
+        "minMs": 280.211362,
+        "maxMs": 362.18832800000007,
+        "peakRssKiB": 204572,
+        "retainedHeapBytes": [
+          5548352,
+          4604600,
+          5094392,
+          5133008,
+          5182872
+        ],
+        "sourceSha256": "ea72386648521cbdabb6904c7099553ab6905e305330760ce9d6774166aa1c54",
+        "correctnessSha256": "e54c1e2926916cfe31074ff03d9d106c58abb9f84b139f4d850d384f47ec2240",
+        "sourceBytes": 122183,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          365.580374,
+          378.000891,
+          312.89747799999986,
+          325.19508099999985,
+          315.8825689999999
+        ],
+        "medianMs": 325.19508099999985,
+        "p95Ms": 378.000891,
+        "minMs": 312.89747799999986,
+        "maxMs": 378.000891,
+        "peakRssKiB": 203412,
+        "retainedHeapBytes": [
+          5446744,
+          4633392,
+          5123888,
+          5189760,
+          5190664
+        ],
+        "sourceSha256": "ea72386648521cbdabb6904c7099553ab6905e305330760ce9d6774166aa1c54",
+        "correctnessSha256": "e54c1e2926916cfe31074ff03d9d106c58abb9f84b139f4d850d384f47ec2240",
+        "sourceBytes": 122183,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          301.771133,
+          343.637826,
+          316.47534199999996,
+          319.06573000000003,
+          273.9616160000003
+        ],
+        "medianMs": 316.47534199999996,
+        "p95Ms": 343.637826,
+        "minMs": 273.9616160000003,
+        "maxMs": 343.637826,
+        "peakRssKiB": 205344,
+        "retainedHeapBytes": [
+          5460200,
+          4659024,
+          5137112,
+          5191840,
+          5198504
+        ],
+        "sourceSha256": "ea72386648521cbdabb6904c7099553ab6905e305330760ce9d6774166aa1c54",
+        "correctnessSha256": "e54c1e2926916cfe31074ff03d9d106c58abb9f84b139f4d850d384f47ec2240",
+        "sourceBytes": 122183,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.0958795918255857,
+      "rssChangePercent": 0.570271173775394
+    },
+    {
+      "id": "cohort2/document-layout/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/document-layout/O2.luauc",
+      "sourceSha256": "2c8f73b3bbaed3dfb2dc80a2287e264343b3106bec2473e91d29b052b65788b1",
+      "bytecodeSha256": "798ca7d07cdc2e8f0f29099519beb6508e01207a79c4ca29b0b4186dd97fa841",
+      "bytecodeBytes": 110692,
+      "baseline": {
+        "samples": [
+          380.09981099999993,
+          406.4697259999999,
+          390.688805,
+          377.86203399999977,
+          358.01537800000006
+        ],
+        "medianMs": 380.09981099999993,
+        "p95Ms": 406.4697259999999,
+        "minMs": 358.01537800000006,
+        "maxMs": 406.4697259999999,
+        "peakRssKiB": 205336,
+        "retainedHeapBytes": [
+          5829624,
+          4970832,
+          5507768,
+          5584080,
+          5401472
+        ],
+        "sourceSha256": "d1e5613ad3ce3c4edaf5ca084194b9511620da29292b6dab86dfabfe09a62485",
+        "correctnessSha256": "bc5a52d972660681586d754422ad9e6597785efd657ff19e3a78269dd4e93405",
+        "sourceBytes": 132264,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          330.180795,
+          308.51051200000006,
+          300.56629899999984,
+          332.0329489999999,
+          289.24323100000015
+        ],
+        "medianMs": 308.51051200000006,
+        "p95Ms": 332.0329489999999,
+        "minMs": 289.24323100000015,
+        "maxMs": 332.0329489999999,
+        "peakRssKiB": 205620,
+        "retainedHeapBytes": [
+          5820672,
+          4924200,
+          5490800,
+          5545408,
+          5356928
+        ],
+        "sourceSha256": "d1e5613ad3ce3c4edaf5ca084194b9511620da29292b6dab86dfabfe09a62485",
+        "correctnessSha256": "bc5a52d972660681586d754422ad9e6597785efd657ff19e3a78269dd4e93405",
+        "sourceBytes": 132264,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          314.37750199999994,
+          373.92576700000006,
+          317.24124299999994,
+          321.085869,
+          305.08547699999986
+        ],
+        "medianMs": 317.24124299999994,
+        "p95Ms": 373.92576700000006,
+        "minMs": 305.08547699999986,
+        "maxMs": 373.92576700000006,
+        "peakRssKiB": 201656,
+        "retainedHeapBytes": [
+          5875448,
+          5004896,
+          5505056,
+          5587520,
+          5404840
+        ],
+        "sourceSha256": "d1e5613ad3ce3c4edaf5ca084194b9511620da29292b6dab86dfabfe09a62485",
+        "correctnessSha256": "bc5a52d972660681586d754422ad9e6597785efd657ff19e3a78269dd4e93405",
+        "sourceBytes": 132264,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.2320481676164081,
+      "rssChangePercent": 0.13830989207932465
+    },
+    {
+      "id": "cohort2/symbolic-algebra/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/symbolic-algebra/O0.luauc",
+      "sourceSha256": "0771b2a64692745d524957400c1540485d3caaa0f01221e3555c76b9e205bf4b",
+      "bytecodeSha256": "921c2e2e97f545424edcf77f06a4788f75e86169674dbdb4dd29924ac5b6195e",
+      "bytecodeBytes": 61477,
+      "candidate": {
+        "samples": [
+          268.959513,
+          270.20597699999996,
+          277.69382400000006,
+          265.82994299999996,
+          262.78385000000003
+        ],
+        "medianMs": 268.959513,
+        "p95Ms": 277.69382400000006,
+        "minMs": 262.78385000000003,
+        "maxMs": 277.69382400000006,
+        "peakRssKiB": 197204,
+        "retainedHeapBytes": [
+          4884656,
+          4115624,
+          4562776,
+          4398624,
+          4790424
+        ],
+        "sourceSha256": "ab372d13d5ef6e38ac77c4aa4b7900ef8efae52fa5e108dc32eb40500a57991a",
+        "correctnessSha256": "26f98cf21920ad9772cf468cdd826c04007370f1e9d0c007330e931c9c3f7dbf",
+        "sourceBytes": 91209,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          358.49255500000004,
+          341.13627099999997,
+          375.712215,
+          372.8496829999999,
+          332.7286960000001
+        ],
+        "medianMs": 358.49255500000004,
+        "p95Ms": 375.712215,
+        "minMs": 332.7286960000001,
+        "maxMs": 375.712215,
+        "peakRssKiB": 196996,
+        "retainedHeapBytes": [
+          4915680,
+          4086304,
+          4638832,
+          4511448,
+          4745344
+        ],
+        "sourceSha256": "ab372d13d5ef6e38ac77c4aa4b7900ef8efae52fa5e108dc32eb40500a57991a",
+        "correctnessSha256": "26f98cf21920ad9772cf468cdd826c04007370f1e9d0c007330e931c9c3f7dbf",
+        "sourceBytes": 91209,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          279.61994599999997,
+          254.10413000000005,
+          278.67365499999994,
+          241.16806599999995,
+          285.08729100000005
+        ],
+        "medianMs": 278.67365499999994,
+        "p95Ms": 285.08729100000005,
+        "minMs": 241.16806599999995,
+        "maxMs": 285.08729100000005,
+        "peakRssKiB": 194128,
+        "retainedHeapBytes": [
+          4882632,
+          4851432,
+          4260432,
+          4673896,
+          4556352
+        ],
+        "sourceSha256": "ab372d13d5ef6e38ac77c4aa4b7900ef8efae52fa5e108dc32eb40500a57991a",
+        "correctnessSha256": "26f98cf21920ad9772cf468cdd826c04007370f1e9d0c007330e931c9c3f7dbf",
+        "sourceBytes": 91209,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.3328866899011675,
+      "rssChangePercent": 0.10558590022131664
+    },
+    {
+      "id": "cohort2/symbolic-algebra/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/symbolic-algebra/O1.luauc",
+      "sourceSha256": "0771b2a64692745d524957400c1540485d3caaa0f01221e3555c76b9e205bf4b",
+      "bytecodeSha256": "dbe750b70983e6dd8f73e24ab253493d15bfd8b13383c374b33d2537ea51ed09",
+      "bytecodeBytes": 57394,
+      "baseline": {
+        "samples": [
+          265.515501,
+          265.24354700000004,
+          274.92185599999993,
+          267.33970999999997,
+          299.0748530000001
+        ],
+        "medianMs": 267.33970999999997,
+        "p95Ms": 299.0748530000001,
+        "minMs": 265.24354700000004,
+        "maxMs": 299.0748530000001,
+        "peakRssKiB": 202608,
+        "retainedHeapBytes": [
+          4731576,
+          4670336,
+          4043072,
+          4617368,
+          4345440
+        ],
+        "sourceSha256": "eabbfe46483ec09fab1892676083eeeeb12624f29112f26ef37e8bf4f9e23882",
+        "correctnessSha256": "ea4359b923982ddeac842db8c4f413d5c0ab51d8d8fcafe8abb77000d9b61f3e",
+        "sourceBytes": 90920,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          235.34333999999996,
+          216.97295600000007,
+          263.67451800000015,
+          223.78626400000007,
+          242.77447699999993
+        ],
+        "medianMs": 235.34333999999996,
+        "p95Ms": 263.67451800000015,
+        "minMs": 216.97295600000007,
+        "maxMs": 263.67451800000015,
+        "peakRssKiB": 201224,
+        "retainedHeapBytes": [
+          4724688,
+          4671720,
+          4068168,
+          4533568,
+          4353816
+        ],
+        "sourceSha256": "eabbfe46483ec09fab1892676083eeeeb12624f29112f26ef37e8bf4f9e23882",
+        "correctnessSha256": "ea4359b923982ddeac842db8c4f413d5c0ab51d8d8fcafe8abb77000d9b61f3e",
+        "sourceBytes": 90920,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          224.810784,
+          227.183352,
+          263.547369,
+          213.99686500000007,
+          261.05152299999986
+        ],
+        "medianMs": 227.183352,
+        "p95Ms": 263.547369,
+        "minMs": 213.99686500000007,
+        "maxMs": 263.547369,
+        "peakRssKiB": 202780,
+        "retainedHeapBytes": [
+          4734168,
+          4711296,
+          4053544,
+          4591784,
+          4403216
+        ],
+        "sourceSha256": "eabbfe46483ec09fab1892676083eeeeb12624f29112f26ef37e8bf4f9e23882",
+        "correctnessSha256": "ea4359b923982ddeac842db8c4f413d5c0ab51d8d8fcafe8abb77000d9b61f3e",
+        "sourceBytes": 90920,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.1359561311571427,
+      "rssChangePercent": -0.6830924741372479
+    },
+    {
+      "id": "cohort2/symbolic-algebra/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/symbolic-algebra/O2.luauc",
+      "sourceSha256": "0771b2a64692745d524957400c1540485d3caaa0f01221e3555c76b9e205bf4b",
+      "bytecodeSha256": "69fe35529e5293a420f953db4098689250a6d15b895824d62d912dddfad30d2e",
+      "bytecodeBytes": 141667,
+      "candidate": {
+        "samples": [
+          707.1408380000001,
+          659.091919,
+          590.726948,
+          671.1092479999998,
+          710.4720540000003
+        ],
+        "medianMs": 671.1092479999998,
+        "p95Ms": 710.4720540000003,
+        "minMs": 590.726948,
+        "maxMs": 710.4720540000003,
+        "peakRssKiB": 222112,
+        "retainedHeapBytes": [
+          7289224,
+          7318288,
+          7321664,
+          7466800,
+          7200152
+        ],
+        "sourceSha256": "7bb2f4951aaa60e35e53221aa75e2562afd943287bf96a759144cb12f223d703",
+        "correctnessSha256": "bd6f7ff5b1de18a5af9a3711d337f082d9865ab6fab3f7bdc89241e537fbb5b2",
+        "sourceBytes": 178025,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          808.9969980000001,
+          772.1066530000003,
+          818.1890900000003,
+          840.7132919999999,
+          804.3469350000005
+        ],
+        "medianMs": 808.9969980000001,
+        "p95Ms": 840.7132919999999,
+        "minMs": 772.1066530000003,
+        "maxMs": 840.7132919999999,
+        "peakRssKiB": 228132,
+        "retainedHeapBytes": [
+          7234088,
+          7648808,
+          7189504,
+          7578408,
+          7153008
+        ],
+        "sourceSha256": "7bb2f4951aaa60e35e53221aa75e2562afd943287bf96a759144cb12f223d703",
+        "correctnessSha256": "bd6f7ff5b1de18a5af9a3711d337f082d9865ab6fab3f7bdc89241e537fbb5b2",
+        "sourceBytes": 178025,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          645.985287,
+          690.0397899999998,
+          598.3412870000002,
+          677.1648329999998,
+          709.8714999999997
+        ],
+        "medianMs": 677.1648329999998,
+        "p95Ms": 709.8714999999997,
+        "minMs": 598.3412870000002,
+        "maxMs": 709.8714999999997,
+        "peakRssKiB": 220912,
+        "retainedHeapBytes": [
+          7281960,
+          7759488,
+          7140112,
+          7565000,
+          7166384
+        ],
+        "sourceSha256": "7bb2f4951aaa60e35e53221aa75e2562afd943287bf96a759144cb12f223d703",
+        "correctnessSha256": "bd6f7ff5b1de18a5af9a3711d337f082d9865ab6fab3f7bdc89241e537fbb5b2",
+        "sourceBytes": 178025,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.2054624495354895,
+      "rssChangePercent": -2.638823137481805
+    },
+    {
+      "id": "cohort2/constraint-search/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/constraint-search/O0.luauc",
+      "sourceSha256": "7be15c3a4a35d06a6e0edd12a77452213f1f59c639faa51786f904b39254b6e0",
+      "bytecodeSha256": "2e4c3ca89b0de454d2ed12883431607caafac3775cc99dbd6615abc074e673bc",
+      "bytecodeBytes": 36319,
+      "baseline": {
+        "samples": [
+          201.77009199999998,
+          189.28751699999998,
+          189.2042879999999,
+          183.13300600000002,
+          210.26156100000003
+        ],
+        "medianMs": 189.28751699999998,
+        "p95Ms": 210.26156100000003,
+        "minMs": 183.13300600000002,
+        "maxMs": 210.26156100000003,
+        "peakRssKiB": 188168,
+        "retainedHeapBytes": [
+          3533264,
+          2134432,
+          2944584,
+          2840512,
+          2594440
+        ],
+        "sourceSha256": "b503c04c2fa11ad3aa2c7d53fcec02a9c10e7d50891b86953ae5bbe106fc336f",
+        "correctnessSha256": "a138012f745ee3424b81df20fd8b5ce5742479e802aa2c7644809ae8ae6667c2",
+        "sourceBytes": 75450,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          179.928582,
+          138.17191400000002,
+          158.30456000000004,
+          147.82969200000002,
+          221.4340239999999
+        ],
+        "medianMs": 158.30456000000004,
+        "p95Ms": 221.4340239999999,
+        "minMs": 138.17191400000002,
+        "maxMs": 221.4340239999999,
+        "peakRssKiB": 190292,
+        "retainedHeapBytes": [
+          3167448,
+          2827840,
+          2560552,
+          2884432,
+          2623224
+        ],
+        "sourceSha256": "b503c04c2fa11ad3aa2c7d53fcec02a9c10e7d50891b86953ae5bbe106fc336f",
+        "correctnessSha256": "a138012f745ee3424b81df20fd8b5ce5742479e802aa2c7644809ae8ae6667c2",
+        "sourceBytes": 75450,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          170.41574999999995,
+          176.23346499999997,
+          146.01560299999994,
+          150.79779299999996,
+          175.1024359999999
+        ],
+        "medianMs": 170.41574999999995,
+        "p95Ms": 176.23346499999997,
+        "minMs": 146.01560299999994,
+        "maxMs": 176.23346499999997,
+        "peakRssKiB": 188328,
+        "retainedHeapBytes": [
+          3154336,
+          2198424,
+          2979944,
+          2821976,
+          2582952
+        ],
+        "sourceSha256": "b503c04c2fa11ad3aa2c7d53fcec02a9c10e7d50891b86953ae5bbe106fc336f",
+        "correctnessSha256": "a138012f745ee3424b81df20fd8b5ce5742479e802aa2c7644809ae8ae6667c2",
+        "sourceBytes": 75450,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.1957174006863727,
+      "rssChangePercent": 1.1287785383274462
+    },
+    {
+      "id": "cohort2/constraint-search/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/constraint-search/O1.luauc",
+      "sourceSha256": "7be15c3a4a35d06a6e0edd12a77452213f1f59c639faa51786f904b39254b6e0",
+      "bytecodeSha256": "6e65daad6e9b27d9e64466eba624376c3240bbe41dd96e7e8023319249a6a2b7",
+      "bytecodeBytes": 33999,
+      "candidate": {
+        "samples": [
+          155.406182,
+          169.23519800000003,
+          148.68508900000006,
+          150.05374199999994,
+          184.7995679999999
+        ],
+        "medianMs": 155.406182,
+        "p95Ms": 184.7995679999999,
+        "minMs": 148.68508900000006,
+        "maxMs": 184.7995679999999,
+        "peakRssKiB": 159524,
+        "retainedHeapBytes": [
+          2970376,
+          2045976,
+          2830616,
+          2690496,
+          2481208
+        ],
+        "sourceSha256": "72560e9b19ecc9a8b1a52fd5a0d6c20eb3f0dbf80021d706505e43b2e87ea89d",
+        "correctnessSha256": "76807e60a3e488d93187a58c7dad43c8a00d236d507151617414bc89b416babf",
+        "sourceBytes": 74552,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          206.93847000000005,
+          210.858702,
+          195.66513699999996,
+          172.042509,
+          199.8077820000001
+        ],
+        "medianMs": 199.8077820000001,
+        "p95Ms": 210.858702,
+        "minMs": 172.042509,
+        "maxMs": 210.858702,
+        "peakRssKiB": 185116,
+        "retainedHeapBytes": [
+          2921040,
+          2047088,
+          2911880,
+          2598704,
+          2737200
+        ],
+        "sourceSha256": "72560e9b19ecc9a8b1a52fd5a0d6c20eb3f0dbf80021d706505e43b2e87ea89d",
+        "correctnessSha256": "76807e60a3e488d93187a58c7dad43c8a00d236d507151617414bc89b416babf",
+        "sourceBytes": 74552,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          159.535216,
+          178.045005,
+          154.74616500000002,
+          143.6874160000001,
+          174.66530999999998
+        ],
+        "medianMs": 159.535216,
+        "p95Ms": 178.045005,
+        "minMs": 143.6874160000001,
+        "maxMs": 178.045005,
+        "peakRssKiB": 193048,
+        "retainedHeapBytes": [
+          2947192,
+          2065016,
+          2875192,
+          2731448,
+          2570992
+        ],
+        "sourceSha256": "72560e9b19ecc9a8b1a52fd5a0d6c20eb3f0dbf80021d706505e43b2e87ea89d",
+        "correctnessSha256": "76807e60a3e488d93187a58c7dad43c8a00d236d507151617414bc89b416babf",
+        "sourceBytes": 74552,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.2857132157072109,
+      "rssChangePercent": -13.824844962077831
+    },
+    {
+      "id": "cohort2/constraint-search/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/constraint-search/O2.luauc",
+      "sourceSha256": "7be15c3a4a35d06a6e0edd12a77452213f1f59c639faa51786f904b39254b6e0",
+      "bytecodeSha256": "5d35b7b04530547090d27703d2877f234bf05adb72c09d9f84cd42690b3fac69",
+      "bytecodeBytes": 43354,
+      "baseline": {
+        "samples": [
+          327.19528199999996,
+          298.84693500000003,
+          276.72745800000007,
+          266.665129,
+          281.63267299999984
+        ],
+        "medianMs": 281.63267299999984,
+        "p95Ms": 327.19528199999996,
+        "minMs": 266.665129,
+        "maxMs": 327.19528199999996,
+        "peakRssKiB": 203584,
+        "retainedHeapBytes": [
+          3515640,
+          2500072,
+          3225032,
+          3445104,
+          2881808
+        ],
+        "sourceSha256": "0e497a549e54fe7c6f7aa574b84dd2a31714b2f56839375d3585b7a68561533c",
+        "correctnessSha256": "abdbf6186019236ef635e87ab880b920ea8cf7dba484583c54710ed7dee2faee",
+        "sourceBytes": 122590,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          219.52699400000006,
+          256.54953,
+          265.5866510000001,
+          246.6167300000002,
+          247.73794900000007
+        ],
+        "medianMs": 247.73794900000007,
+        "p95Ms": 265.5866510000001,
+        "minMs": 219.52699400000006,
+        "maxMs": 265.5866510000001,
+        "peakRssKiB": 194448,
+        "retainedHeapBytes": [
+          3466616,
+          2584400,
+          3233592,
+          3286504,
+          2837744
+        ],
+        "sourceSha256": "0e497a549e54fe7c6f7aa574b84dd2a31714b2f56839375d3585b7a68561533c",
+        "correctnessSha256": "abdbf6186019236ef635e87ab880b920ea8cf7dba484583c54710ed7dee2faee",
+        "sourceBytes": 122590,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          258.86659099999997,
+          265.6586709999999,
+          263.62961499999994,
+          227.11687500000016,
+          255.7505779999999
+        ],
+        "medianMs": 258.86659099999997,
+        "p95Ms": 265.6586709999999,
+        "minMs": 227.11687500000016,
+        "maxMs": 265.6586709999999,
+        "peakRssKiB": 203444,
+        "retainedHeapBytes": [
+          3492968,
+          2624472,
+          3225600,
+          3356464,
+          2911392
+        ],
+        "sourceSha256": "0e497a549e54fe7c6f7aa574b84dd2a31714b2f56839375d3585b7a68561533c",
+        "correctnessSha256": "abdbf6186019236ef635e87ab880b920ea8cf7dba484583c54710ed7dee2faee",
+        "sourceBytes": 122590,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.1368168427034155,
+      "rssChangePercent": -4.487582521219746
+    },
+    {
+      "id": "cohort2/geometry-pipeline/O0",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/geometry-pipeline/O0.luauc",
+      "sourceSha256": "44615fa268fde9d089d7c52081530e986bbd3f62cd4e21f194702d1eb50e3028",
+      "bytecodeSha256": "f6e83df4f63aa4260baa98981ef3768851f49f795f23d9571cf737e7836e0dce",
+      "bytecodeBytes": 46214,
+      "candidate": {
+        "samples": [
+          272.822026,
+          379.65675899999997,
+          317.1649990000001,
+          347.41776900000013,
+          313.9845300000002
+        ],
+        "medianMs": 317.1649990000001,
+        "p95Ms": 379.65675899999997,
+        "minMs": 272.822026,
+        "maxMs": 379.65675899999997,
+        "peakRssKiB": 211564,
+        "retainedHeapBytes": [
+          4803360,
+          3776792,
+          4719256,
+          4297296,
+          4626944
+        ],
+        "sourceSha256": "51ae9dd487f05c9c3827686711714bfb2590b4872c87020e8f76abb1e37a17f3",
+        "correctnessSha256": "886bbe2ca83816164dc90dc73be5ea16095fc0cd467ac81b31395b325f80ba45",
+        "sourceBytes": 241962,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          473.44905100000005,
+          494.644777,
+          431.9348909999999,
+          426.2336570000002,
+          463.55951000000005
+        ],
+        "medianMs": 463.55951000000005,
+        "p95Ms": 494.644777,
+        "minMs": 426.2336570000002,
+        "maxMs": 494.644777,
+        "peakRssKiB": 205076,
+        "retainedHeapBytes": [
+          4988456,
+          3919408,
+          4718216,
+          4666432,
+          4428176
+        ],
+        "sourceSha256": "51ae9dd487f05c9c3827686711714bfb2590b4872c87020e8f76abb1e37a17f3",
+        "correctnessSha256": "886bbe2ca83816164dc90dc73be5ea16095fc0cd467ac81b31395b325f80ba45",
+        "sourceBytes": 241962,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          355.881751,
+          394.86232500000006,
+          372.5163050000001,
+          370.2376979999999,
+          376.07345099999975
+        ],
+        "medianMs": 372.5163050000001,
+        "p95Ms": 394.86232500000006,
+        "minMs": 355.881751,
+        "maxMs": 394.86232500000006,
+        "peakRssKiB": 204592,
+        "retainedHeapBytes": [
+          4912904,
+          3838944,
+          4712608,
+          4651512,
+          4237552
+        ],
+        "sourceSha256": "51ae9dd487f05c9c3827686711714bfb2590b4872c87020e8f76abb1e37a17f3",
+        "correctnessSha256": "886bbe2ca83816164dc90dc73be5ea16095fc0cd467ac81b31395b325f80ba45",
+        "sourceBytes": 241962,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.4615720885393155,
+      "rssChangePercent": 3.163705162963981
+    },
+    {
+      "id": "cohort2/geometry-pipeline/O1",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/geometry-pipeline/O1.luauc",
+      "sourceSha256": "44615fa268fde9d089d7c52081530e986bbd3f62cd4e21f194702d1eb50e3028",
+      "bytecodeSha256": "13f5ce42b87cff88c50e9564769b9b49224ef9f66914c748270a49f22e56d972",
+      "bytecodeBytes": 44035,
+      "baseline": {
+        "samples": [
+          415.00840099999994,
+          449.93720899999994,
+          404.2922580000002,
+          422.5267309999999,
+          413.87794600000007
+        ],
+        "medianMs": 415.00840099999994,
+        "p95Ms": 449.93720899999994,
+        "minMs": 404.2922580000002,
+        "maxMs": 449.93720899999994,
+        "peakRssKiB": 208000,
+        "retainedHeapBytes": [
+          4876992,
+          3681160,
+          4554200,
+          4128624,
+          4519488
+        ],
+        "sourceSha256": "ef94fe1dad32a6985726dd5b18e726599a454a5255746197fa8465f3d6bb2a65",
+        "correctnessSha256": "6d01d49794071f7d5b6438c9d1e7f7d4c65558ce07c3e1f05cf9f48e9c91973e",
+        "sourceBytes": 240678,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "candidate": {
+        "samples": [
+          332.964444,
+          375.71053199999994,
+          353.6077479999999,
+          376.56877999999983,
+          329.44724300000007
+        ],
+        "medianMs": 353.6077479999999,
+        "p95Ms": 376.56877999999983,
+        "minMs": 329.44724300000007,
+        "maxMs": 376.56877999999983,
+        "peakRssKiB": 210636,
+        "retainedHeapBytes": [
+          4841912,
+          3622736,
+          4535744,
+          4156984,
+          4579488
+        ],
+        "sourceSha256": "ef94fe1dad32a6985726dd5b18e726599a454a5255746197fa8465f3d6bb2a65",
+        "correctnessSha256": "6d01d49794071f7d5b6438c9d1e7f7d4c65558ce07c3e1f05cf9f48e9c91973e",
+        "sourceBytes": 240678,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          332.07238399999994,
+          377.1250399999999,
+          324.71274600000015,
+          359.165982,
+          379.8119529999999
+        ],
+        "medianMs": 359.165982,
+        "p95Ms": 379.8119529999999,
+        "minMs": 324.71274600000015,
+        "maxMs": 379.8119529999999,
+        "peakRssKiB": 211088,
+        "retainedHeapBytes": [
+          4883064,
+          3724072,
+          4572672,
+          4552264,
+          4215408
+        ],
+        "sourceSha256": "ef94fe1dad32a6985726dd5b18e726599a454a5255746197fa8465f3d6bb2a65",
+        "correctnessSha256": "6d01d49794071f7d5b6438c9d1e7f7d4c65558ce07c3e1f05cf9f48e9c91973e",
+        "sourceBytes": 240678,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.1736405758846666,
+      "rssChangePercent": 1.2673076923076954
+    },
+    {
+      "id": "cohort2/geometry-pipeline/O2",
+      "file": "/tmp/performance-inline-isolated/bytecode/cohort2/geometry-pipeline/O2.luauc",
+      "sourceSha256": "44615fa268fde9d089d7c52081530e986bbd3f62cd4e21f194702d1eb50e3028",
+      "bytecodeSha256": "70cd131b1bdfd58670a73815e2ce40f092cb92c466cb45a513eaf8d833658159",
+      "bytecodeBytes": 78547,
+      "candidate": {
+        "samples": [
+          498.33814900000004,
+          487.459873,
+          484.10909300000003,
+          462.6762389999999,
+          501.80845999999974
+        ],
+        "medianMs": 487.459873,
+        "p95Ms": 501.80845999999974,
+        "minMs": 462.6762389999999,
+        "maxMs": 501.80845999999974,
+        "peakRssKiB": 220448,
+        "retainedHeapBytes": [
+          6404656,
+          5796416,
+          5000928,
+          5789416,
+          5686664
+        ],
+        "sourceSha256": "cb9e7d6da9d39c466d54d5e148946b71af2dfb9f9ff36f034f0b6628bf0c8621",
+        "correctnessSha256": "bfcff18fe1544f555b230337b6cc7760774a078dc9d7b291946f9265dfa107a9",
+        "sourceBytes": 324030,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "baseline": {
+        "samples": [
+          690.1194549999999,
+          616.7054639999999,
+          646.9396380000003,
+          631.878788,
+          666.9225930000002
+        ],
+        "medianMs": 646.9396380000003,
+        "p95Ms": 690.1194549999999,
+        "minMs": 616.7054639999999,
+        "maxMs": 690.1194549999999,
+        "peakRssKiB": 214760,
+        "retainedHeapBytes": [
+          6360704,
+          5858272,
+          4910552,
+          5889344,
+          5705416
+        ],
+        "sourceSha256": "cb9e7d6da9d39c466d54d5e148946b71af2dfb9f9ff36f034f0b6628bf0c8621",
+        "correctnessSha256": "bfcff18fe1544f555b230337b6cc7760774a078dc9d7b291946f9265dfa107a9",
+        "sourceBytes": 324030,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": false
+        }
+      },
+      "default": {
+        "samples": [
+          525.3781499999999,
+          497.218971,
+          501.9388250000002,
+          453.835157,
+          535.1331260000002
+        ],
+        "medianMs": 501.9388250000002,
+        "p95Ms": 535.1331260000002,
+        "minMs": 453.835157,
+        "maxMs": 535.1331260000002,
+        "peakRssKiB": 224020,
+        "retainedHeapBytes": [
+          6429168,
+          5970320,
+          4966664,
+          5964368,
+          5641824
+        ],
+        "sourceSha256": "cb9e7d6da9d39c466d54d5e148946b71af2dfb9f9ff36f034f0b6628bf0c8621",
+        "correctnessSha256": "bfcff18fe1544f555b230337b6cc7760774a078dc9d7b291946f9265dfa107a9",
+        "sourceBytes": 324030,
+        "options": {
+          "opcodeEncoding": "official",
+          "recoverInlinedFunctions": true
+        }
+      },
+      "identicalOutput": true,
+      "speedup": 1.3271649090180604,
+      "rssChangePercent": 2.6485379027751943
+    }
+  ],
+  "summary": {
+    "profiles": 30,
+    "identical": 30,
+    "baselineTotalMedianMs": 8910.826781999998,
+    "candidateTotalMedianMs": 7490.5059519999995,
+    "defaultTotalMedianMs": 7744.569435999999,
+    "speedup": 1.189616140632098,
+    "defaultSpeedup": 1.150590340190992,
+    "baselinePeakRssKiB": 228132,
+    "candidatePeakRssKiB": 222112,
+    "defaultPeakRssKiB": 224020
+  },
+  "baselineCommit": "4f059cf0b9381bf534a600c88a2e8338608fbde9",
+  "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "measurementNote": "Final isolated run. Earlier exploratory runs excluded; a review stress probe overlapped one earlier run. No other test workloads ran during this measurement."
+}

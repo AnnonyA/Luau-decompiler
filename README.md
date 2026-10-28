@@ -28,6 +28,7 @@ That means recovering things such as:
 - useful local and callback names when there is enough evidence
 - Roblox callback parameter names and types for common signals
 - tables, compound assignments, value packs, captures, and mutual recursion
+- calls to retained numeric helpers expanded by O2, with exact expression and lexical-binding checks ([scope and limitations](docs/references/inline-recovery-performance.md))
 - explicit uncertainty instead of invented source details
 
 On the three real fixtures currently used by the project, the generated output contains **0 raw `rN` registers, 0 `upN` names, 0 invented comment lines, and 0 `: nil` annotations**.
