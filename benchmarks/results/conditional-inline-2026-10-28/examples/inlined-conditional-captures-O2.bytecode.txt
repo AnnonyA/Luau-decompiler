@@ -1,0 +1,149 @@
+Function 0 (weighted):
+    6:         return if value < 0 then value * 7 + offset else value * 3 - offset
+LOADN R2 0
+JUMPIFNOTLT R0 R2 L0
+MULK R2 R0 K0 [7]
+GETUPVAL R3 U0
+ADD R1 R2 R3
+RETURN R1 1
+L0: MULK R2 R0 K1 [3]
+GETUPVAL R3 U0
+SUB R1 R2 R3
+RETURN R1 1
+
+Function 1 (change):
+   18:     bias += 2
+GETUPVAL R0 U0
+ADDK R0 R0 K0 [2]
+SETUPVAL R0 U0
+   19: end
+RETURN R0 0
+
+Function 2 (mutable):
+   21:     return if value < 0 then value * 7 + bias else value * 3 - bias
+LOADN R2 0
+JUMPIFNOTLT R0 R2 L0
+MULK R2 R0 K0 [7]
+GETUPVAL R3 U0
+ADD R1 R2 R3
+RETURN R1 1
+L0: MULK R2 R0 K1 [3]
+GETUPVAL R3 U0
+SUB R1 R2 R3
+RETURN R1 1
+
+Function 3 (??):
+    1: local first = ...
+GETVARARGS R0 1
+REMARK builtin tonumber/1
+    2: local limit = tonumber(first) or 4
+FASTCALL1 62 R0 L0
+MOVE R3 R0
+GETIMPORT R2 2 [tonumber]
+CALL R2 1 1
+L0: ORK R1 R2 K0 [4]
+REMARK allocation: table hash 0
+    3: local saved = {}
+NEWTABLE R0 0 0
+    4: for offset = -2, limit do
+LOADN R4 -2
+MOVE R2 R1
+LOADN R3 1
+FORNPREP R2 L6
+REMARK allocation: closure with 1 upvalues
+    5:     local function weighted(value)
+L1: NEWCLOSURE R5 P0
+CAPTURE VAL R4
+    8:     saved[#saved + 1] = weighted
+LENGTH R7 R0
+ADDK R6 R7 K3 [1]
+SETTABLE R5 R0 R6
+REMARK loop unroll failed: too expensive (iterations 7, cost 77, profit 1.09x)
+    9:     for index = -3, 3 do
+LOADN R8 -3
+LOADN R6 3
+LOADN R7 1
+FORNPREP R6 L5
+   10:         print("stable", offset, index, weighted(index))
+L2: GETIMPORT R9 5 [print]
+LOADK R10 K6 ['stable']
+MOVE R11 R4
+MOVE R12 R8
+REMARK inlining succeeded (cost 7, profit 1.42x, depth 0)
+    6:         return if value < 0 then value * 7 + offset else value * 3 - offset
+LOADN R14 0
+JUMPIFNOTLT R8 R14 L3
+MULK R14 R8 K7 [7]
+ADD R13 R14 R4
+JUMP L4
+L3: MULK R14 R8 K8 [3]
+SUB R13 R14 R4
+   10:         print("stable", offset, index, weighted(index))
+L4: CALL R9 4 0
+    9:     for index = -3, 3 do
+FORNLOOP R6 L2
+    4: for offset = -2, limit do
+L5: FORNLOOP R2 L1
+   13: for index, callback in saved do
+L6: MOVE R2 R0
+LOADNIL R3
+LOADNIL R4
+FORGPREP R2 L10
+   14:     print("saved", index, callback(-3), callback(2), callback == saved[index])
+L7: GETIMPORT R7 5 [print]
+LOADK R8 K9 ['saved']
+MOVE R9 R5
+MOVE R10 R6
+LOADN R11 -3
+CALL R10 1 1
+MOVE R11 R6
+LOADN R12 2
+CALL R11 1 1
+GETTABLE R13 R0 R5
+JUMPIFEQ R6 R13 L8
+LOADB R12 0 +1
+L8: LOADB R12 1
+L9: CALL R7 5 0
+   13: for index, callback in saved do
+L10: FORGLOOP R2 L7 2
+   16: local bias = 1
+LOADN R2 1
+REMARK allocation: closure with 1 upvalues
+   17: local function change()
+NEWCLOSURE R1 P1
+CAPTURE REF R2
+REMARK allocation: closure with 1 upvalues
+   20: local function mutable(value)
+NEWCLOSURE R0 P2
+CAPTURE REF R2
+REMARK loop unroll failed: too expensive (iterations 7, cost 98, profit 1.07x)
+   23: for index = -3, 3 do
+LOADN R5 -3
+LOADN R3 3
+LOADN R4 1
+FORNPREP R3 L14
+REMARK inlining succeeded (cost 1, profit 3.00x, depth 0)
+   18:     bias += 2
+L11: ADDK R2 R2 K10 [2]
+   25:     print("mutable", index, mutable(index), bias)
+GETIMPORT R6 5 [print]
+LOADK R7 K11 ['mutable']
+MOVE R8 R5
+REMARK inlining succeeded (cost 7, profit 1.42x, depth 0)
+   21:     return if value < 0 then value * 7 + bias else value * 3 - bias
+LOADN R10 0
+JUMPIFNOTLT R5 R10 L12
+MULK R10 R5 K7 [7]
+ADD R9 R10 R2
+JUMP L13
+L12: MULK R10 R5 K8 [3]
+SUB R9 R10 R2
+   25:     print("mutable", index, mutable(index), bias)
+L13: MOVE R10 R2
+CALL R6 4 0
+   23: for index = -3, 3 do
+FORNLOOP R3 L11
+   27: 
+L14: CLOSEUPVALS R2
+RETURN R0 0
+

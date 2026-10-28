@@ -1,0 +1,30 @@
+[
+  {
+    "id": "inlined-conditional-returns",
+    "optimization": 2,
+    "bytecodeSha256": "23af811644fbc76c82f8cce0164bd9c030684d738cb9cddf09bd1bb304e41220",
+    "beforeSha256": "ac1aeba9e9361d4f79874e6b086e9fc24221adf11405a0fb0968001cbc3b1d2d",
+    "afterSha256": "6828f7a9394ea8b820c10664d7de71ce6bf5cbd9ac248254571ac53cf97e06b4"
+  },
+  {
+    "id": "inlined-conditional-captures",
+    "optimization": 2,
+    "bytecodeSha256": "7a479b96a4f087e0a29c5886a6a9c9c9e3a7140e9d03d01520ee34153ff9eecf",
+    "beforeSha256": "86b466d6bef9896274e50bdfa19b01ba1dfc89c372f2f74e2515253b5e5cebcc",
+    "afterSha256": "743637708c71378765a1e40ad8d8706c78a34680de5a9bb4397498bae29d3ad8"
+  },
+  {
+    "id": "inlined-conditional-effects",
+    "optimization": 2,
+    "bytecodeSha256": "110b388905c948d216767f0c1a9d023c6d24ed9ab5cd2b538fdcb73802eb9609",
+    "beforeSha256": "b062687c512cc835898166acf2886b8e1edc4df64c8a5c7019d21ea81126e133",
+    "afterSha256": "a1dd8e584b2d46a6e65a9621207f09f08435f9cf0102e971468fc3ade0854bb0"
+  },
+  {
+    "id": "inlined-alias-shadowing",
+    "optimization": 2,
+    "bytecodeSha256": "f75aeef3ea138af1a99f3252212d81fa7c3e0a618a85d9d06990b68d0ca48cdd",
+    "beforeSha256": "3b1f06072beab5c9f6cd86d02a161f4b69a10bfbb47a1969ba5287086810b0e9",
+    "afterSha256": "8bce6838a9ef7ece91a1838e733355901e9e8f30958bcbbc38a9eb0315df8adb"
+  }
+]

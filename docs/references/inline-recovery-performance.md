@@ -1,5 +1,10 @@
 # Numeric helper recovery and measured performance
 
+This document records the initial numeric recovery and performance round (PR #64).
+The [conditional recovery follow-up](tovek-conditional-recovery.md) extends the
+proof to return trees, immutable local dependencies and stable numeric captures,
+with destination-scope and ambiguity checks.
+
 Reference: Tovek MIT revision `77edf387bf280a2f4d46d57ac85d5c4f071b763f`,
 `ast/src/expr_deinline.rs`, `ast/src/deinline/evidence.rs` and
 `ast/src/deinline_safety.rs`. These motivated exact matching, argument stability,

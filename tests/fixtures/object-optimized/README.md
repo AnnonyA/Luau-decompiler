@@ -35,3 +35,10 @@ arguments. `inlined-argument-effects` preserves effectful argument evaluation;
 `inlined-repeat-continue` prevents helper declarations skipped by continue from
 being called in until. Inputs are listed in `inputs.json`; these are authored
 development regressions, compiled at the pinned revision above.
+
+`inlined-conditional-returns`, `inlined-conditional-captures` and
+`inlined-conditional-effects` exercise conditional helpers, immutable local
+chains, per-iteration closures, mutable captured cells, metamethod ordering and
+return arity. `inlined-alias-shadowing` covers argument extraction across block,
+loop, iterator and parallel-initializer scopes. All are authored development
+regressions compiled with the same pinned Luau revision, with three inputs each.
