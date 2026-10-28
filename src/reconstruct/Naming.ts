@@ -32,6 +32,7 @@ const GENERIC_FALLBACKS = ["value", "result", "item", "entry", "state", "data", 
 
 export class NameAllocator {
   private readonly used = new Set<string>();
+  private readonly nextSuffix = new Map<string, number>();
 
   constructor(reserved: Iterable<string> = []) {
     for (const name of reserved) {
@@ -44,8 +45,7 @@ export class NameAllocator {
   }
 
   reserve(name: string): string {
-    const sanitized = sanitizeIdentifier(name);
-    return this.take(sanitized);
+    return this.take(name);
   }
 
   take(preferred: string): string {
@@ -54,11 +54,12 @@ export class NameAllocator {
       this.used.add(base);
       return base;
     }
-    let suffix = 2;
+    let suffix = this.nextSuffix.get(base) ?? 2;
     while (this.used.has(`${base}${suffix}`)) {
       suffix += 1;
     }
     const next = `${base}${suffix}`;
+    this.nextSuffix.set(base, suffix + 1);
     this.used.add(next);
     return next;
   }
@@ -81,6 +82,9 @@ export class NameAllocator {
 
   restore(snapshot: Set<string>): void {
     this.used.clear();
+    // A rollback can release earlier suffixes; a cached cursor is no longer
+    // valid. The public snapshot remains a reusable, independent set of names.
+    this.nextSuffix.clear();
     for (const name of snapshot) {
       this.used.add(name);
     }

@@ -21,7 +21,7 @@ export function buildSsa(cfg: ControlFlowGraph, dominators: DominatorTree): SsaF
   const liveness = computeLiveness(cfg);
   const values: SsaValue[] = [];
   const phis = new Map<number, PhiNode[]>();
-  const defsByRegister = new Map<number, number[]>();
+  const versions = new Map<number, number>();
 
   const addValue = (
     register: number,
@@ -31,7 +31,7 @@ export function buildSsa(cfg: ControlFlowGraph, dominators: DominatorTree): SsaF
     classification: ValueClass,
     instruction?: DecodedInstruction,
   ): SsaValue => {
-    const version = (defsByRegister.get(register) ?? []).length + 1;
+    const version = (versions.get(register) ?? 0) + 1;
     const value: SsaValue = {
       id: values.length,
       register,
@@ -45,7 +45,7 @@ export function buildSsa(cfg: ControlFlowGraph, dominators: DominatorTree): SsaF
       instruction,
     };
     values.push(value);
-    defsByRegister.set(register, [...(defsByRegister.get(register) ?? []), value.id]);
+    versions.set(register, version);
     return value;
   };
 

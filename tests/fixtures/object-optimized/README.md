@@ -28,3 +28,10 @@ equal, with three inputs. `changed-closure-environment` checks cloning after the
 parent changes its environment. `capture-free-after-call` and
 `nested-capture-free` preserve previously supported closure identities. All four
 were added during review; they are development regressions.
+
+`inlined-numeric-helper` and `inlined-numeric-arguments` cover exact recovery of
+existing numeric helpers, repeated occurrences, operand order and multiple call
+arguments. `inlined-argument-effects` preserves effectful argument evaluation;
+`inlined-repeat-continue` prevents helper declarations skipped by continue from
+being called in until. Inputs are listed in `inputs.json`; these are authored
+development regressions, compiled at the pinned revision above.

@@ -31,7 +31,11 @@ export function analyzeBindings(root: Block): { bindings: LexicalBinding[]; glob
     bindings.push(binding); scopes.at(-1)!.set(name,binding);
   };
   const reference = (node: Identifier, scope: Block, statement: Statement, write=false, declarationRoot=false) => {
-    const binding = [...scopes].reverse().map(s=>s.get(node.name)).find(Boolean);
+    let binding: LexicalBinding | undefined;
+    for (let index = scopes.length - 1; index >= 0; index--) {
+      binding = scopes[index]!.get(node.name);
+      if (binding) break;
+    }
     if (!binding) { globals.add(node.name); return; }
     (write ? binding.writes : binding.reads).push({node,scope,statement,declarationRoot});
     if(depth > binding.depth) binding.captured=true;

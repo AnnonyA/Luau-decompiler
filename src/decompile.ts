@@ -14,6 +14,7 @@ import { reconstructFunction } from "./reconstruct/Reconstructor.js";
 import { applyRuntimeContext, parseRuntimeContext, type RuntimeContext } from "./reconstruct/RuntimeContext.js";
 import { styleLocalNames, type NameStyleOptions } from "./reconstruct/NameStyle.js";
 import { recoverFunctionEvidence } from "./reconstruct/FunctionEvidence.js";
+import { inlineHelperLines, recoverInlineCalls } from "./reconstruct/InlineRecovery.js";
 
 export type TypeAnnotationMode = "off" | "functions" | "useful";
 
@@ -24,6 +25,8 @@ export interface DecompileOptions extends DecodeOptions, PrintOptions, NameStyle
   earlyReturn?: boolean;
   interpolatedStrings?: boolean;
   mathConstants?: boolean;
+  /** Recover proven numeric calls from retained helpers expanded by O2. */
+  recoverInlinedFunctions?: boolean;
   /** Live-game naming hints. Pass `false` to ignore any collected context. */
   runtimeContext?: RuntimeContext | false;
 }
@@ -100,7 +103,8 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
     const reconstructed = reconstructFunction(decoded.module, main);
     const raw = chunk(reconstructed.body.statements);
     const cleaned = cleanupAst(raw, defaultCleanupOptions(options));
-    const contextual = options.runtimeContext === false ? cleaned : applyRuntimeContext(cleaned, options.runtimeContext);
+    const recovered = options.recoverInlinedFunctions === false ? cleaned : recoverInlineCalls(cleaned, inlineHelperLines(decoded.module));
+    const contextual = options.runtimeContext === false ? recovered : applyRuntimeContext(recovered, options.runtimeContext);
     const ast = styleLocalNames(recoverFunctionEvidence(contextual, options), options);
     const validation = validateAst(ast);
     for (const failure of validation) {
@@ -158,6 +162,7 @@ export function parseQueryOptions(query: URLSearchParams): DecompileOptions {
     earlyReturn: query.get("early_return") !== "false",
     interpolatedStrings: query.get("interpolated_strings") !== "false",
     mathConstants: query.get("math_constants") !== "false",
+    recoverInlinedFunctions: query.get("recover_inlined_functions") !== "false",
     runtimeContext,
   };
 }

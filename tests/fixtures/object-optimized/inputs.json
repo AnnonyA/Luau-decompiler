@@ -1,4 +1,8 @@
 {
   "branch-closure-constant.luau": [[], ["false"], ["true"]],
-  "nan-closure-capture.luau": [[], ["3"], ["-9"]]
+  "nan-closure-capture.luau": [[], ["3"], ["-9"]],
+  "inlined-numeric-helper.luau": [[], ["3"], ["-9"]],
+  "inlined-numeric-arguments.luau": [[], ["2"], ["7"]],
+  "inlined-argument-effects.luau": [[], ["-3"], ["8"]],
+  "inlined-repeat-continue.luau": [[], ["skip"]]
 }
