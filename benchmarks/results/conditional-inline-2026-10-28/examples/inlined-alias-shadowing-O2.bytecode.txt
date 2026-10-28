@@ -1,0 +1,94 @@
+Function 0 (weighted):
+    2:     return (value + 1) * 2 + 3
+ADDK R3 R0 K2 [1]
+MULK R2 R3 K1 [2]
+ADDK R1 R2 K0 [3]
+RETURN R1 1
+
+Function 1 (??):
+    1: local function weighted(value)
+DUPCLOSURE R0 K0 ['weighted']
+    4: local first = ...
+GETVARARGS R1 1
+REMARK builtin tonumber/1
+    5: local limit = tonumber(first) or 3
+FASTCALL1 62 R1 L0
+MOVE R4 R1
+GETIMPORT R3 3 [tonumber]
+CALL R3 1 1
+L0: ORK R2 R3 K1 [3]
+    6: for index = -3, limit do
+LOADN R5 -3
+MOVE R3 R2
+LOADN R4 1
+FORNPREP R3 L4
+    8:     local shifted = offset + 1
+L1: ADDK R1 R5 K4 [1]
+   10:         local offset = index + 100
+ADDK R6 R5 K5 [100]
+   11:         print("block", shifted * 2 + 3, offset)
+GETIMPORT R7 7 [print]
+LOADK R8 K8 ['block']
+MULK R10 R1 K9 [2]
+ADDK R9 R10 K1 [3]
+MOVE R10 R6
+CALL R7 3 0
+REMARK loop unroll succeeded (iterations 2, cost 16, profit 1.12x)
+   14:         print("loop", shifted * 2 + 3, offset)
+GETIMPORT R6 7 [print]
+LOADK R7 K10 ['loop']
+MULK R9 R1 K9 [2]
+ADDK R8 R9 K1 [3]
+LOADN R9 100
+CALL R6 3 0
+GETIMPORT R6 7 [print]
+LOADK R7 K10 ['loop']
+MULK R9 R1 K9 [2]
+ADDK R8 R9 K1 [3]
+LOADN R9 101
+CALL R6 3 0
+REMARK allocation: table array 2
+   16:     for offset, marker in {11, 13} do
+NEWTABLE R6 0 2
+LOADN R9 11
+LOADN R10 13
+SETLIST R6 R9 2 [1]
+LOADNIL R7
+LOADNIL R8
+FORGPREP R6 L3
+   17:         print("iterator", shifted * 2 + 3, offset, marker)
+L2: GETIMPORT R11 7 [print]
+LOADK R12 K11 ['iterator']
+MULK R14 R1 K9 [2]
+ADDK R13 R14 K1 [3]
+MOVE R14 R9
+MOVE R15 R10
+CALL R11 4 0
+   16:     for offset, marker in {11, 13} do
+L3: FORGLOOP R6 L2 2
+   19:     local offset, score = 100, shifted * 2 + 3
+LOADN R6 100
+MULK R8 R1 K9 [2]
+ADDK R7 R8 K1 [3]
+   20:     print("initializer", score, offset, weighted(index))
+GETIMPORT R8 7 [print]
+LOADK R9 K12 ['initializer']
+MOVE R10 R7
+LOADN R11 100
+REMARK inlining succeeded (cost 3, profit 2.00x, depth 0)
+    2:     return (value + 1) * 2 + 3
+ADDK R14 R5 K4 [1]
+MULK R13 R14 K9 [2]
+ADDK R12 R13 K1 [3]
+   20:     print("initializer", score, offset, weighted(index))
+CALL R8 4 0
+    6: for index = -3, limit do
+FORNLOOP R3 L1
+   22: print("complete", limit)
+L4: GETIMPORT R3 7 [print]
+LOADK R4 K13 ['complete']
+MOVE R5 R2
+CALL R3 2 0
+   23: 
+RETURN R0 0
+

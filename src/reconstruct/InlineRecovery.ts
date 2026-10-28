@@ -57,7 +57,7 @@ const unparen = (expression: Expression): Expression => {
  * body and all substituted arguments must operate on proven primitive numbers:
  * moving an unknown value into a call could expose a different __add/debug.info
  * frame, eager evaluation, errors or multiple-return behavior. No algebraic
- * reassociation, free captures, unknown calls or guessed argument inversions. */
+ * reassociation, mutable/unknown captures, calls or guessed argument inversions. */
 export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): Chunk {
   if (!evidence.size) return ast;
   const {bindings} = analyzeBindings(ast.body);
@@ -94,12 +94,21 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     return result;
   }
   function scalar(expression: Expression, parameters: Map<LexicalBinding, number>): 'number' | 'boolean' | undefined {
+    if (--budget < 0) return;
     const e = unparen(expression);
-    if (e.kind === 'identifier') return parameters.has(owners.get(e)!) ? 'number' : undefined;
+    if (e.kind === 'identifier') return parameters.has(owners.get(e)!) || numeric(e) ? 'number' : undefined;
     if (e.kind === 'literal') return typeof e.value === 'number' ? 'number' : typeof e.value === 'boolean' ? 'boolean' : undefined;
     if (e.kind === 'unary') {
       const argument = scalar(e.argument, parameters);
       return e.op === '-' && argument === 'number' ? 'number' : e.op === 'not' && argument ? 'boolean' : undefined;
+    }
+    if (e.kind === 'if-expr') {
+      if (!scalar(e.test, parameters)) return;
+      const result = scalar(e.consequent, parameters);
+      if (!result || scalar(e.alternate, parameters) !== result) return;
+      for (const branch of e.branches)
+        if (!scalar(branch.test, parameters) || scalar(branch.value, parameters) !== result) return;
+      return result;
     }
     if (e.kind !== 'binary') return undefined;
     const left = scalar(e.left, parameters), right = scalar(e.right, parameters);
@@ -113,22 +122,79 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
   function size(expression: Expression): number {
     const e = unparen(expression), cached = sizes.get(e);
     if (cached !== undefined) return cached;
-    const result = 1 + (e.kind === 'binary' ? size(e.left) + size(e.right) : e.kind === 'unary' ? size(e.argument) : 0);
+    const result = 1 + (e.kind === 'binary' ? size(e.left) + size(e.right) : e.kind === 'unary' ? size(e.argument) :
+      e.kind === 'if-expr' ? size(e.test) + size(e.consequent) + size(e.alternate) +
+        e.branches.reduce((n,b)=>n+size(b.test)+size(b.value),0) : 0);
     sizes.set(e, result); return result;
+  }
+  /** Build a proof-only return tree; leave the emitted helper body untouched.
+   * Only primitive, immutable lets can be substituted, even if their value is
+   * unused. Every path must return one value. Loops, stores, calls, closures,
+   * fallthrough and value packs deliberately have no template rule. */
+  function returnPattern(body: Block, parameters: Map<LexicalBinding,number>): Expression | undefined {
+    let nodes = 128;
+    type Locals = Map<LexicalBinding,Expression>;
+    function value(expression: Expression, locals: Locals, depth: number): Expression | undefined {
+      if (--nodes < 0 || --budget < 0 || depth > 32) return;
+      const e = unparen(expression);
+      if (e.kind === 'identifier') return locals.get(owners.get(e)!) ?? e;
+      if (e.kind === 'literal') return e;
+      if (e.kind === 'unary') {
+        const argument=value(e.argument,locals,depth+1);
+        return argument && {...e,argument};
+      }
+      if (e.kind === 'binary') {
+        const left=value(e.left,locals,depth+1),right=value(e.right,locals,depth+1);
+        return left && right && {...e,left,right};
+      }
+      if (e.kind === 'if-expr') {
+        const test=value(e.test,locals,depth+1),consequent=value(e.consequent,locals,depth+1),alternate=value(e.alternate,locals,depth+1);
+        const branches: typeof e.branches=[];
+        for(const b of e.branches) {
+          const test=value(b.test,locals,depth+1),result=value(b.value,locals,depth+1);
+          if(!test || !result)return;
+          branches.push({test,value:result});
+        }
+        return test && consequent && alternate && {...e,test,consequent,alternate,branches};
+      }
+    }
+    function sequence(statements: Statement[], inherited: Locals, depth: number): Expression | undefined {
+      if (--nodes < 0 || --budget < 0 || depth > 16) return;
+      const locals=new Map(inherited);
+      for(let i=0;i<statements.length;i++) {
+        if (--nodes < 0 || --budget < 0) return;
+        const s=statements[i]!;
+        if(s.kind==='local' && s.names.length===1 && s.values.length===1) {
+          const binding=declarations.get(s)?.[0],init=value(s.values[0]!,locals,0);
+          if(!binding || binding.writes.length || !init || size(init)>128 || !scalar(init,parameters))return;
+          locals.set(binding,init);continue;
+        }
+        if(s.kind==='return' && s.values.length===1 && i===statements.length-1)return value(s.values[0]!,locals,0);
+        if(s.kind!=='if' || s.alternate && i!==statements.length-1)return;
+        const test=value(s.test,locals,0),consequent=sequence(s.consequent.statements,locals,depth+1);
+        const alternate=sequence(s.alternate?.statements ?? statements.slice(i+1),locals,depth+1);
+        const branches: Extract<Expression,{kind:'if-expr'}>['branches']=[];
+        for(const b of s.branches) {
+          const test=value(b.test,locals,0),result=sequence(b.body.statements,locals,depth+1);
+          if(!test || !result)return;
+          branches.push({test,value:result});
+        }
+        return test && consequent && alternate ? {kind:'if-expr',test,consequent,branches,alternate} : undefined;
+      }
+    }
+    return sequence(body.statements,new Map(),0);
   }
   function target(statement: Extract<Statement,{kind:'function-decl'}>): Target | undefined {
     if (!statement.local || !statement.line || !evidence.has(statement.line) || statement.isVararg ||
-        !statement.params.length || statement.params.length > 8 || statement.body.statements.length !== 1) return;
-    const returns = statement.body.statements[0]!;
-    if (returns.kind !== 'return' || returns.values.length !== 1) return;
+        !statement.params.length || statement.params.length > 8) return;
     const declared = declarations.get(statement) ?? [];
     const binding = declared.find(b => b.scope !== statement.body);
     if (!binding || binding.writes.length) return;
     const parameters = new Map(declared.filter(b=>b.scope === statement.body && b.declarationIndex !== undefined)
       .map(b=>[b,b.declarationIndex!]));
     if (parameters.size !== statement.params.length || [...parameters.keys()].some(b=>b.writes.length)) return;
-    const expression = returns.values[0]!;
-    if (!scalar(expression, parameters) || size(expression) < 5) return;
+    const expression = returnPattern(statement.body,parameters);
+    if (!expression || size(expression)>128 || size(expression)<5 || !scalar(expression,parameters)) return;
     return {name:statement.name,expression,parameters,count:statement.params.length};
   }
   // Bound candidate/unification work independently of attacker-controlled
@@ -146,13 +212,27 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     const p = unparen(pattern), v = unparen(value);
     if (p.kind === 'identifier') {
       const index = candidate.parameters.get(owners.get(p)!);
-      if (index === undefined || !numeric(v)) return false;
+      if (index === undefined) return v.kind==='identifier' && owners.get(p)===owners.get(v) && numeric(v);
+      if (!numeric(v)) return false;
       const prior = args.get(index);
       if (prior) return same(prior,v);
       args.set(index,v); return true;
     }
+    // A reconstructed SSA let may keep a repeated arithmetic dependency in a
+    // register. Follow only immutable primitive initializers, not textual names.
+    if(v.kind==='identifier' && numeric(v)) {
+      const binding=owners.get(v),declaration=binding?.declaration;
+      if(declaration?.kind==='local') {
+        const init=declaration.values[binding!.declarationIndex!];
+        if(init)return match(p,init,candidate,args);
+      }
+    }
     if (p.kind === 'literal' && v.kind === 'literal') return Object.is(p.value,v.value);
     if (p.kind === 'unary' && v.kind === 'unary') return p.op === v.op && match(p.argument,v.argument,candidate,args);
+    if(p.kind==='if-expr' && v.kind==='if-expr') return p.branches.length===v.branches.length &&
+      match(p.test,v.test,candidate,args) && match(p.consequent,v.consequent,candidate,args) &&
+      p.branches.every((b,i)=>match(b.test,v.branches[i]!.test,candidate,args) && match(b.value,v.branches[i]!.value,candidate,args)) &&
+      match(p.alternate,v.alternate,candidate,args);
     return p.kind === 'binary' && v.kind === 'binary' && p.op === v.op &&
       match(p.left,v.left,candidate,args) && match(p.right,v.right,candidate,args);
   }
@@ -161,20 +241,41 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     return body.statements.some(s=>s.kind==='continue' || (s.kind==='do' && continues(s.body)) ||
       (s.kind==='if' && (continues(s.consequent) || s.branches.some(b=>continues(b.body)) || !!s.alternate && continues(s.alternate))));
   }
-  function expression(e: Expression, available: Available): void {
+  type Visible = Map<string,LexicalBinding>;
+  // Initializer expansion can extract an old reference into a new scope. Its
+  // spelling is usable only if the destination still resolves it to that owner.
+  function visibleArguments(e: Expression, visible: Visible): boolean {
+    if (--budget < 0) return false;
+    e=unparen(e);
+    if(e.kind==='identifier')return !!owners.get(e) && visible.get(e.name)===owners.get(e);
+    if(e.kind==='literal')return true;
+    if(e.kind==='unary')return visibleArguments(e.argument,visible);
+    return e.kind==='binary' && visibleArguments(e.left,visible) && visibleArguments(e.right,visible);
+  }
+  function functionScope(node: Expression | Statement, visible: Visible, body: Block): Visible {
+    const scope=new Map(visible);
+    for(const binding of declarations.get(node) ?? [])
+      if(binding.scope===body)scope.set(binding.name,binding);
+    return scope;
+  }
+  function expression(e: Expression, available: Available, visible: Visible): void {
     if (budget <= 0) return;
+    let selected: Expression | undefined, ambiguous=false;
     for (const candidate of available.values()) {
       if (--budget < 0) return;
       const args = new Map<number,Expression>();
       if (match(candidate.expression,e,candidate,args) && args.size === candidate.count) {
         const ordered = Array.from({length:candidate.count},(_,i)=>args.get(i)!);
-        if (size(e) >= 2 + ordered.reduce((n,arg)=>n+size(arg),0) + 2) {
-          replacements.set(e,{kind:'call',callee:ident(candidate.name),args:ordered,open:false});
-          return;
+        if (size(e) >= 2 + ordered.reduce((n,arg)=>n+size(arg),0) + 2 && ordered.every(arg=>visibleArguments(arg,visible))) {
+          if(selected){ambiguous=true;break;}
+          selected={kind:'call',callee:ident(candidate.name),args:ordered,open:false};
         }
       }
     }
-    const visit = (value: Expression) => expression(value,available);
+    // Do not commit a first match if the remaining ambiguity scan ran out of fuel.
+    if(budget<=0)return;
+    if(selected && !ambiguous){replacements.set(e,selected);return;}
+    const visit = (value: Expression) => expression(value,available,visible);
     switch(e.kind) {
       case 'binary': visit(e.left);visit(e.right);break;
       case 'unary': visit(e.argument);break;
@@ -186,25 +287,32 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       case 'table': e.fields.forEach(f=>{if(f.key)visit(f.key);visit(f.value);});break;
       case 'if-expr': visit(e.test);visit(e.consequent);e.branches.forEach(b=>{visit(b.test);visit(b.value);});visit(e.alternate);break;
       case 'interp': e.parts.forEach(p=>{if(typeof p.value!=='string')visit(p.value);});break;
-      case 'function-expr': walk(e.body,new Map());break;
+      case 'function-expr': walk(e.body,new Map(),functionScope(e,visible,e.body));break;
     }
   }
-  function walk(body: Block, inherited: Available): Available {
-    const available = new Map(inherited);
-    const visit = (e: Expression) => expression(e,available);
-    const nested = (b: Block, names: string[] = []) => {
-      const scope = new Map(available); names.forEach(name=>scope.delete(name)); return walk(b,scope);
+  function walk(body: Block, inherited: Available, inheritedVisible: Visible): {available:Available;visible:Visible} {
+    const available = new Map(inherited),visible=new Map(inheritedVisible);
+    const visit = (e: Expression) => expression(e,available,visible);
+    const nested = (b: Block, bindings: LexicalBinding[] = []) => {
+      const scope = new Map(available),names=new Map(visible);
+      for(const binding of bindings){scope.delete(binding.name);names.set(binding.name,binding);}
+      return walk(b,scope,names);
     };
     for (const s of body.statements) {
       switch(s.kind) {
         case 'function-decl': {
-          walk(s.body,new Map());
+          for(const binding of declarations.get(s) ?? [])
+            if(binding.scope!==s.body)visible.set(binding.name,binding);
+          walk(s.body,new Map(),functionScope(s,visible,s.body));
           if (s.local) available.delete(s.name);
           const candidate = target(s);
           if (candidate) available.set(candidate.name,candidate);
           break;
         }
-        case 'local': s.values.forEach(visit);s.names.forEach(name=>available.delete(name));break;
+        case 'local':
+          s.values.forEach(visit);s.names.forEach(name=>available.delete(name));
+          for(const binding of declarations.get(s) ?? [])visible.set(binding.name,binding);
+          break;
         case 'assign': s.targets.forEach(visit);s.values.forEach(visit);break;
         case 'compound-assign': visit(s.target);visit(s.value);break;
         case 'expression-stmt': visit(s.expression);break;
@@ -215,17 +323,17 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
           const tail = nested(s.body);
           // A continue reaches until without necessarily executing declarations
           // in this body. Nested-loop continues do not skip these declarations.
-          if (continues(s.body)) for (const [name,candidate] of tail)
-            if (available.get(name)!==candidate) tail.delete(name);
-          expression(s.test,tail);break;
+          if (continues(s.body)) for (const [name,candidate] of tail.available)
+            if (available.get(name)!==candidate) tail.available.delete(name);
+          expression(s.test,tail.available,tail.visible);break;
         }
-        case 'numeric-for': visit(s.start);visit(s.stop);if(s.step)visit(s.step);nested(s.body,[s.name]);break;
-        case 'generic-for': s.iterators.forEach(visit);nested(s.body,s.names);break;
+        case 'numeric-for': visit(s.start);visit(s.stop);if(s.step)visit(s.step);nested(s.body,declarations.get(s));break;
+        case 'generic-for': s.iterators.forEach(visit);nested(s.body,declarations.get(s));break;
         case 'do': nested(s.body);break;
       }
     }
-    return available;
+    return {available,visible};
   }
-  walk(ast.body,new Map());
+  walk(ast.body,new Map(),new Map());
   return replacements.size ? replaceReferences(ast,replacements) : ast;
 }

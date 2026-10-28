@@ -95,3 +95,92 @@ it('accumulates line bases and carries byte offsets across line-info intervals',
     deltas:Uint8Array.from([250,10,251,7,3]),absolute:Int32Array.from([100,300,-200])}};
   expect([0,1,2,3,4].map(pc=>lineAt(proto,pc))).toEqual([350,104,655,406,209]);
 });
+
+const selected = (value: Expression): Expression => ({kind:'if-expr',
+  test:{kind:'binary',op:'<',left:value,right:lit(-2)},consequent:formula(value),
+  branches:[{test:{kind:'binary',op:'>',left:value,right:lit(4)},value:{kind:'unary',op:'-',argument:formula(value)}}],
+  alternate:{kind:'binary',op:'*',left:value,right:value}});
+it('recovers a conditional helper without changing elseif or operand order',()=>{
+  const conditional=helper();conditional.body=block([{kind:'return',values:[selected(ident('value'))]}]);
+  expect(recovered([conditional,loop([{kind:'local',names:['result'],values:[selected(ident('index'))]}])])).toHaveLength(1);
+});
+it('matches early-return CFG arms against a scalar selection',()=>{
+  const conditional=helper();
+  conditional.body=block([
+    {kind:'if',test:{kind:'binary',op:'<',left:ident('value'),right:lit(-2)},
+      consequent:block([{kind:'return',values:[formula(ident('value'))]}]),
+      branches:[{test:{kind:'binary',op:'>',left:ident('value'),right:lit(4)},
+        body:block([{kind:'return',values:[{kind:'unary',op:'-',argument:formula(ident('value'))}]}])}]},
+    {kind:'return',values:[{kind:'binary',op:'*',left:ident('value'),right:ident('value')}]},
+  ]);
+  expect(recovered([conditional,loop([{kind:'local',names:['result'],values:[selected(ident('index'))]}])])).toHaveLength(1);
+});
+it('resolves immutable numeric local dependencies on both sides of a match',()=>{
+  const conditional=helper();
+  conditional.body=block([{kind:'local',names:['adjusted'],values:[formula(ident('value'))]},
+    {kind:'return',values:[selected(ident('adjusted'))]}]);
+  expect(recovered([conditional,loop([{kind:'local',names:['shifted'],values:[formula(ident('index'))]},
+    {kind:'local',names:['result'],values:[selected(ident('shifted'))]}])])).toHaveLength(1);
+});
+it('preserves the lexical identity of stable numeric captures',()=>{
+  const captured=helper();captured.body=block([{kind:'return',values:[{kind:'binary',op:'+',
+    left:formula(ident('value')),right:ident('offset')}]}]);
+  const call: Statement={kind:'local',names:['result'],values:[{kind:'binary',op:'+',left:formula(ident('index')),right:ident('offset')}]};
+  const prefix: Statement[]=[{kind:'local',names:['offset'],values:[lit(11)]},captured];
+  expect(recovered([...prefix,loop([call])])).toHaveLength(1);
+  expect(recovered([...prefix,loop([{kind:'local',names:['offset'],values:[lit(12)]},call])])).toHaveLength(0);
+  expect(recovered([...prefix,loop([call]),{kind:'assign',targets:[ident('offset')],values:[lit(2)]}])).toHaveLength(0);
+});
+it('does not erase effects, partial returns or mutable locals while building a helper template',()=>{
+  const effects=helper();effects.body.statements.unshift({kind:'local',names:['unused'],values:[{kind:'call',callee:ident('tick'),args:[],open:false}]});
+  expect(recovered([effects,loop([site(ident('index'))])])).toHaveLength(0);
+  const partial=helper();partial.body=block([{kind:'if',test:ident('value'),consequent:partial.body,branches:[]}]);
+  expect(recovered([partial,loop([site(ident('index'))])])).toHaveLength(0);
+  const mutable=helper();mutable.body=block([{kind:'local',names:['v'],values:[ident('value')]},
+    {kind:'assign',targets:[ident('v')],values:[lit(0)]},{kind:'return',values:[formula(ident('v'))]}]);
+  expect(recovered([mutable,loop([site(ident('index'))])])).toHaveLength(0);
+});
+it('does not move an effectful or metamethod-capable test into a conditional helper',()=>{
+  const conditional=helper();conditional.body=block([{kind:'return',values:[selected(ident('value'))]}]);
+  expect(recovered([conditional,{kind:'local',names:['result'],values:[selected({kind:'call',callee:ident('nextValue'),args:[],open:false})]}])).toHaveLength(0);
+  expect(recovered([conditional,{kind:'local',names:['unknown'],values:[{kind:'vararg'}]},
+    {kind:'local',names:['result'],values:[selected(ident('unknown'))]}])).toHaveLength(0);
+});
+it('leaves an expression intact when two retained helpers are equally valid matches',()=>{
+  const rival=helper();rival.name='alternative';rival.line=2;
+  const input=chunk([helper(),rival,loop([site(ident('index'))])]);
+  expect(recoverInlineCalls(input,new Set([1,2]))).toEqual(input);
+});
+it('recovers real O2 branch helpers and loop captures while refusing a mutable capture',()=>{
+  const run=(name:string)=>{
+    const bytes=readFileSync(new URL(`./fixtures/object-optimized/${name}-O2.luauc`,import.meta.url));
+    const result=decompile(bytes,{opcodeEncoding:'official'});
+    expect(result.ok).toBe(true);if(!result.ok)throw Error(result.error);
+    expect(result.validation).toEqual([]);return result.source;
+  };
+  const returned=run('inlined-conditional-returns');
+  expect(returned).toMatch(/band\(index\)/);
+  expect(returned).toMatch(/shifted\(index\)/);
+  const captured=run('inlined-conditional-captures');
+  expect(captured).toMatch(/weighted\(j\)/);
+  expect(captured).not.toMatch(/mutable\(i\)/);
+});
+it('does not capture a new binding when recovering an argument from an earlier initializer',()=>{
+  const weighted=helper();
+  weighted.body=block([{kind:'return',values:[{kind:'binary',op:'+',left:{kind:'binary',op:'*',
+    left:{kind:'binary',op:'+',left:ident('value'),right:lit(1)},right:lit(2)},right:lit(3)}]}]);
+  const declaration: Statement={kind:'local',names:['shifted'],values:[{kind:'binary',op:'+',left:ident('offset'),right:lit(1)}]};
+  const site: Statement={kind:'local',names:['result'],values:[{kind:'binary',op:'+',left:{kind:'binary',op:'*',left:ident('shifted'),right:lit(2)},right:lit(3)}]};
+  const prefix: Statement[]=[weighted,{kind:'local',names:['offset'],values:[lit(1)]},declaration];
+  const shadow: Statement={kind:'local',names:['offset'],values:[lit(100)]};
+  for(const suffix of [[shadow,site],[{kind:'do',body:block([shadow,site])} as Statement],
+    [{kind:'numeric-for',name:'offset',start:lit(100),stop:lit(101),body:block([site])} as Statement],
+    [{kind:'generic-for',names:['offset'],iterators:[ident('entries')],body:block([site])} as Statement]]) {
+    const input=chunk([...prefix,...suffix]);
+    expect(recoverInlineCalls(input,new Set([1]))).toEqual(input);
+  }
+  // Local initializers still see the outer binding, before parallel declarations.
+  const input=chunk([...prefix,{kind:'local',names:['offset','result'],values:[lit(100),site.values[0]!]}]);
+  const last=recoverInlineCalls(input,new Set([1])).body.statements.at(-1)!;
+  expect(last.kind==='local' && last.values[1]).toEqual({kind:'call',callee:ident('weighted'),args:[ident('offset')],open:false});
+});

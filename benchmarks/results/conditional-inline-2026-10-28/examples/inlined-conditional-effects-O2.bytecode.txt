@@ -1,0 +1,193 @@
+Function 0 (weighted):
+    2:     return if value * 1 < 0 then value * 3 - 1 else value * 7 + 2
+MULK R2 R0 K0 [1]
+LOADN R3 0
+JUMPIFNOTLT R2 R3 L0
+MULK R2 R0 K1 [3]
+SUBK R1 R2 K0 [1]
+RETURN R1 1
+L0: MULK R2 R0 K3 [7]
+ADDK R1 R2 K2 [2]
+RETURN R1 1
+
+Function 1 (__mul):
+    8:             trace[#trace + 1] = "multiply"
+GETUPVAL R2 U0
+GETUPVAL R5 U0
+LENGTH R4 R5
+ADDK R3 R4 K0 [1]
+LOADK R4 K1 ['multiply']
+SETTABLE R4 R2 R3
+    9:             return left.value * right
+GETTABLEKS R3 R0 K2 ['value']
+MUL R2 R3 R1
+RETURN R2 1
+
+Function 2 (box):
+REMARK builtin setmetatable/2
+REMARK allocation: table template 1
+    6:     return setmetatable({value = value}, {
+DUPTABLE R2 1
+SETTABLEKS R0 R2 K0 ['value']
+REMARK allocation: table template 1
+DUPTABLE R3 3
+    7:         __mul = function(left, right)
+DUPCLOSURE R4 K4 ['__mul']
+CAPTURE UPVAL U0
+SETTABLEKS R4 R3 K2 ['__mul']
+FASTCALL2 61 R2 R3 L0
+    6:     return setmetatable({value = value}, {
+GETIMPORT R1 6 [setmetatable]
+CALL R1 2 1
+L0: RETURN R1 1
+
+Function 3 (pull):
+   17:     calls += 1
+GETUPVAL R1 U0
+ADDK R1 R1 K0 [1]
+SETUPVAL R1 U0
+   18:     trace[#trace + 1] = "pull"
+GETUPVAL R1 U1
+GETUPVAL R4 U1
+LENGTH R3 R4
+ADDK R2 R3 K0 [1]
+LOADK R3 K1 ['pull']
+SETTABLE R3 R1 R2
+REMARK inlining failed: too expensive (cost 34, profit 1.08x)
+   19:     return box(value), "tail", calls
+GETUPVAL R1 U2
+MOVE R2 R0
+CALLFB R1 1 1 [0]
+LOADK R2 K2 ['tail']
+GETUPVAL R3 U0
+RETURN R1 3
+
+Function 4 (pair):
+REMARK inlining succeeded (cost 8, profit 1.37x, depth 0)
+    2:     return if value * 1 < 0 then value * 3 - 1 else value * 7 + 2
+MULK R2 R0 K0 [1]
+LOADN R3 0
+JUMPIFNOTLT R2 R3 L0
+MULK R2 R0 K1 [3]
+SUBK R1 R2 K0 [1]
+JUMP L1
+L0: MULK R2 R0 K3 [7]
+ADDK R1 R2 K2 [2]
+   24:     return weighted(value), "tail", value + 1
+L1: LOADK R2 K4 ['tail']
+ADDK R3 R0 K0 [1]
+RETURN R1 3
+
+Function 5 (observe):
+   27:     print("arity", select("#", ...), ...)
+GETIMPORT R0 1 [print]
+LOADK R1 K2 ['arity']
+REMARK builtin select/2+
+LOADK R3 K3 ['#']
+FASTCALL1 57 R3 L0
+GETIMPORT R2 5 [select]
+GETVARARGS R4 -1
+CALL R2 -1 1
+L0: GETVARARGS R3 -1
+CALL R0 -1 0
+   28: end
+RETURN R0 0
+
+Function 6 (??):
+    1: local function weighted(value)
+DUPCLOSURE R0 K0 ['weighted']
+REMARK allocation: table hash 0
+    4: local trace = {}
+NEWTABLE R1 0 0
+    5: local function box(value)
+DUPCLOSURE R2 K1 ['box']
+CAPTURE VAL R1
+   13: local first = ...
+GETVARARGS R3 1
+REMARK builtin tonumber/1
+   14: local seed = tonumber(first) or -2
+FASTCALL1 62 R3 L0
+MOVE R6 R3
+GETIMPORT R5 4 [tonumber]
+CALL R5 1 1
+L0: ORK R4 R5 K2 [-2]
+   15: local calls = 0
+LOADN R5 0
+REMARK allocation: closure with 3 upvalues
+   16: local function pull(value)
+NEWCLOSURE R3 P2
+CAPTURE REF R5
+CAPTURE VAL R1
+CAPTURE VAL R2
+REMARK inlining succeeded (cost 8, profit 1.37x, depth 0)
+REMARK inlining succeeded (cost 8, profit 1.37x, depth 0)
+   17:     calls += 1
+ADDK R5 R5 K5 [1]
+   18:     trace[#trace + 1] = "pull"
+LENGTH R9 R1
+ADDK R8 R9 K5 [1]
+LOADK R9 K6 ['pull']
+SETTABLE R9 R1 R8
+REMARK inlining failed: too expensive (cost 34, profit 1.08x)
+   19:     return box(value), "tail", calls
+MOVE R7 R2
+MOVE R8 R4
+CALL R7 1 1
+    2:     return if value * 1 < 0 then value * 3 - 1 else value * 7 + 2
+MULK R8 R7 K5 [1]
+LOADN R9 0
+JUMPIFNOTLT R8 R9 L1
+MULK R8 R7 K7 [3]
+SUBK R6 R8 K5 [1]
+JUMP L2
+L1: MULK R8 R7 K9 [7]
+ADDK R6 R8 K8 [2]
+   22: print("boxed", result, calls, table.concat(trace, ","))
+L2: GETIMPORT R7 11 [print]
+LOADK R8 K12 ['boxed']
+MOVE R9 R6
+MOVE R10 R5
+GETIMPORT R11 15 [table.concat]
+MOVE R12 R1
+LOADK R13 K16 [',']
+CALL R11 2 -1
+CALL R7 -1 0
+   23: local function pair(value)
+DUPCLOSURE R6 K17 ['pair']
+   26: local function observe(...)
+DUPCLOSURE R3 K18 ['observe']
+REMARK inlining failed: function is variadic
+   29: observe(pair(seed))
+MOVE R7 R3
+REMARK inlining failed: can't convert fixed returns to multret
+MOVE R8 R6
+MOVE R9 R4
+CALL R8 1 -1
+CALL R7 -1 0
+REMARK loop unroll failed: too expensive (iterations 7, cost 49, profit 1.14x)
+   30: for index = -3, 3 do
+LOADN R9 -3
+LOADN R7 3
+LOADN R8 1
+FORNPREP R7 L6
+REMARK inlining failed: function is variadic
+   31:     observe(weighted(index))
+L3: MOVE R10 R3
+REMARK inlining succeeded (cost 8, profit 1.37x, depth 0)
+    2:     return if value * 1 < 0 then value * 3 - 1 else value * 7 + 2
+MULK R12 R9 K5 [1]
+LOADN R13 0
+JUMPIFNOTLT R12 R13 L4
+MULK R12 R9 K7 [3]
+SUBK R11 R12 K5 [1]
+JUMP L5
+L4: MULK R12 R9 K9 [7]
+ADDK R11 R12 K8 [2]
+   31:     observe(weighted(index))
+L5: CALL R10 1 0
+   30: for index = -3, 3 do
+FORNLOOP R7 L3
+   33: 
+L6: CLOSEUPVALS R5
+RETURN R0 0
+

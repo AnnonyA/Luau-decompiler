@@ -4,5 +4,9 @@
   "inlined-numeric-helper.luau": [[], ["3"], ["-9"]],
   "inlined-numeric-arguments.luau": [[], ["2"], ["7"]],
   "inlined-argument-effects.luau": [[], ["-3"], ["8"]],
-  "inlined-repeat-continue.luau": [[], ["skip"]]
+  "inlined-repeat-continue.luau": [[], ["skip"]],
+  "inlined-conditional-returns.luau": [[],["-3"],["13"]],
+  "inlined-conditional-captures.luau": [[],["0"],["7"]],
+  "inlined-conditional-effects.luau": [[],["3"],["-9"]],
+  "inlined-alias-shadowing.luau": [[], ["0"], ["5"]]
 }
