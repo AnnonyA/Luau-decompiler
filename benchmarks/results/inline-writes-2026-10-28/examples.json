@@ -1,0 +1,23 @@
+[
+  {
+    "id": "inlined-table-updates",
+    "optimization": 2,
+    "bytecodeSha256": "455855ceb7886af9c3710608e6bd43876fb0dd61451094974d1452c7e2fa75f1",
+    "beforeSha256": "4d8893ca2da09430c0808474e0b6085a3eb2f91ae42f940773bc1cd0d160da40",
+    "afterSha256": "a986c62456d82e751cb0a97eb3354a084bd9765319a6b688416ce6aa07b94867"
+  },
+  {
+    "id": "inlined-table-write-branches",
+    "optimization": 2,
+    "bytecodeSha256": "86c53ead230e71dad0ed243e1b65706e5219577ef0401ecd1862eba788aa67f5",
+    "beforeSha256": "d64b26464a82a45bb1da2f75e996210c1fd49d9ff6fc981374643d1a1249b86d",
+    "afterSha256": "129b6a14d00be51fb14375f70140c7e1e285ad526444c9885769dd47ec8706f6"
+  },
+  {
+    "id": "inlined-table-write-effects",
+    "optimization": 2,
+    "bytecodeSha256": "33f73aeca01b39848a6b0bd658f58699144e309c2370d6b75705fff87e426f7f",
+    "beforeSha256": "a0d58dcb78190062989477fd0ed30dbbbca2bd703f2939db2ccd71ccd6791d57",
+    "afterSha256": "a0d58dcb78190062989477fd0ed30dbbbca2bd703f2939db2ccd71ccd6791d57"
+  }
+]
