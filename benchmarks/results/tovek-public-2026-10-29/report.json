@@ -1,0 +1,2966 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-10-29T07:49:05.517Z",
+  "localEngine": "AnnonyA/Luau-decompiler",
+  "localVersion": "0.2.0",
+  "compiler": {
+    "executable": "/workspace/.cloud-setup/luau-source/luau-compile",
+    "mode": "--only-parse --null"
+  },
+  "platform": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "comparisonNote": "Pinned public bytecode, locally evaluated. Published source observations are not direct execution of the legacy bytecode or a competitor engine comparison.",
+  "fixtureCounts": {
+    "total": 47,
+    "repository": 47,
+    "lunaux": 0,
+    "successful": 47
+  },
+  "processRssBytesAtEnd": 266407936,
+  "samples": [
+    {
+      "id": "docs/assets/v26/tovek/samples/ClickToMoveController.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "de684c450be47df1e29222e671442b096972210a498de1a67f4141cb598fda27",
+      "inputBytes": 35177,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 297.665,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 91200,
+          "lines": 2293,
+          "registerPlaceholders": 24
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "docs/assets/v26/tovek/samples/ClickToMoveController.luaubc",
+        "inputSha256": "de684c450be47df1e29222e671442b096972210a498de1a67f4141cb598fda27",
+        "bytecodeSha256": "de684c450be47df1e29222e671442b096972210a498de1a67f4141cb598fda27",
+        "bytecodeVersion": 14,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/Promise.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "187dccea93dde7abccd8d9224ca34b5b4af59990aa35feebc779c2f7b32264a9",
+      "inputBytes": 34966,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 140.467,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 50353,
+          "lines": 1582,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "docs/assets/v26/tovek/samples/Promise.luaubc",
+        "inputSha256": "187dccea93dde7abccd8d9224ca34b5b4af59990aa35feebc779c2f7b32264a9",
+        "bytecodeSha256": "187dccea93dde7abccd8d9224ca34b5b4af59990aa35feebc779c2f7b32264a9",
+        "bytecodeVersion": 14,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/Signal.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "be15cf7ce8c766037756918c2b972b87e1c190a13feb2639f28557c8bf5c97c9",
+      "inputBytes": 4651,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 16.143,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 6516,
+          "lines": 233,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "docs/assets/v26/tovek/samples/Signal.luaubc",
+        "inputSha256": "be15cf7ce8c766037756918c2b972b87e1c190a13feb2639f28557c8bf5c97c9",
+        "bytecodeSha256": "be15cf7ce8c766037756918c2b972b87e1c190a13feb2639f28557c8bf5c97c9",
+        "bytecodeVersion": 14,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/SpawnShield.client.txt",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "59ab3f7693277caa8fc3cfac75317d86797d3b673fc6cd5d31667a5e92a351e1",
+      "inputBytes": 1684,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 6.378,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 2360,
+          "lines": 80,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "docs/assets/v26/tovek/samples/SpawnShield.client.txt",
+        "inputSha256": "4ce7880e67d3f99ed5f7240cdbc19c93e32e1e24b91d4ed2aa7fa530ccd68133",
+        "bytecodeSha256": "59ab3f7693277caa8fc3cfac75317d86797d3b673fc6cd5d31667a5e92a351e1",
+        "bytecodeVersion": 14,
+        "encoding": "roblox"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/SpawnShield.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "7666e7ffda921a9cc80f00de50f8d1287f83d613a0daf253691c6778ce253993",
+      "inputBytes": 1684,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 5.712,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 2360,
+          "lines": 80,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "docs/assets/v26/tovek/samples/SpawnShield.luaubc",
+        "inputSha256": "7666e7ffda921a9cc80f00de50f8d1287f83d613a0daf253691c6778ce253993",
+        "bytecodeSha256": "7666e7ffda921a9cc80f00de50f8d1287f83d613a0daf253691c6778ce253993",
+        "bytecodeVersion": 14,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/Store.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "6ac796cbf73bcf0b2d0af16cc5eff6331611bd434f7af077baab17cc8e30c426",
+      "inputBytes": 4869,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 10.419,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 6686,
+          "lines": 198,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "docs/assets/v26/tovek/samples/Store.luaubc",
+        "inputSha256": "6ac796cbf73bcf0b2d0af16cc5eff6331611bd434f7af077baab17cc8e30c426",
+        "bytecodeSha256": "6ac796cbf73bcf0b2d0af16cc5eff6331611bd434f7af077baab17cc8e30c426",
+        "bytecodeVersion": 14,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/Trove.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "461ef073279492b5d342a19dfd79957e1ce1a101a0bea740ad62b4073f94bc82",
+      "inputBytes": 6347,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 16.631,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 8939,
+          "lines": 314,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "docs/assets/v26/tovek/samples/Trove.luaubc",
+        "inputSha256": "461ef073279492b5d342a19dfd79957e1ce1a101a0bea740ad62b4073f94bc82",
+        "bytecodeSha256": "461ef073279492b5d342a19dfd79957e1ce1a101a0bea740ad62b4073f94bc82",
+        "bytecodeVersion": 14,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/arithmetic_result_fold.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "6b2244d9586876bd5cc2f41a983a66b54ea9163401e9272e52bad4159504036e",
+      "inputBytes": 708,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 3.851,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 879,
+          "lines": 27,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/arithmetic_result_fold.luaubc",
+        "inputSha256": "6b2244d9586876bd5cc2f41a983a66b54ea9163401e9272e52bad4159504036e",
+        "bytecodeSha256": "6b2244d9586876bd5cc2f41a983a66b54ea9163401e9272e52bad4159504036e",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "328ab4d4af492c182ac71675103d1c7290fea2183cdcc7e4a0347ce35b236d54",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.746696999998676
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.1168109999998705
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.1688670000003185
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/branch_constructor_initialized.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "77b6780bd90a7c1728b815b3639a849855ecfe73ccbd2348e00cdc55a0ce7a54",
+      "inputBytes": 267,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 2.159,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 322,
+          "lines": 12,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/branch_constructor_initialized.luaubc",
+        "inputSha256": "77b6780bd90a7c1728b815b3639a849855ecfe73ccbd2348e00cdc55a0ce7a54",
+        "bytecodeSha256": "77b6780bd90a7c1728b815b3639a849855ecfe73ccbd2348e00cdc55a0ce7a54",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "63fb7446e453ef38edf07b8e1471c739ebfa7d0d731569833d4db4ea14b2fdd9",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.021193000000494
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.2374610000006214
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 2.6702770000010787
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/cache_context.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "308ee9e9563fcf33fba1bb7520f73870b3fbe336a2b4a6846cf6266401ea4b4f",
+      "inputBytes": 215,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.376,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 207,
+          "lines": 12,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/cache_context.luaubc",
+        "inputSha256": "308ee9e9563fcf33fba1bb7520f73870b3fbe336a2b4a6846cf6266401ea4b4f",
+        "bytecodeSha256": "308ee9e9563fcf33fba1bb7520f73870b3fbe336a2b4a6846cf6266401ea4b4f",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "158082a8eeb1de2b20e5e3284cc5d2676fe36f04c8d9c21a0240f94925181229",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.695264000001771
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 2.7294719999990775
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.258336999999301
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/cell_swap_beside_copy.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "b4b60103cc0c54159be320779760a81dd94232c9a16769f162dd5aa5b8122b32",
+      "inputBytes": 1024,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 6.862,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1687,
+          "lines": 69,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/cell_swap_beside_copy.luaubc",
+        "inputSha256": "b4b60103cc0c54159be320779760a81dd94232c9a16769f162dd5aa5b8122b32",
+        "bytecodeSha256": "b4b60103cc0c54159be320779760a81dd94232c9a16769f162dd5aa5b8122b32",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "94a6423a71d972736131ac6ea3d279ba556dede500dce051a19365612603c022",
+        "status": "MATCH",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.134178999996948
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "MQoxCTIJMQoxCjEJMTEKMQowCTExCjEKMQk1CTUK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 7.5199720000018715
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "MQoxCTIJMQoxCjEJMTEKMQowCTExCjEKMQk1CTUK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.0619149999984074
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/closure_captured_nil_init.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "ef65c9d65cb2f49b1daa51d23b6111da480a2f33badfc5a1445ce786677ebd13",
+      "inputBytes": 510,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.691,
+        "bytecodeVersion": 11,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 763,
+          "lines": 21,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/closure_captured_nil_init.luaubc",
+        "inputSha256": "ef65c9d65cb2f49b1daa51d23b6111da480a2f33badfc5a1445ce786677ebd13",
+        "bytecodeSha256": "ef65c9d65cb2f49b1daa51d23b6111da480a2f33badfc5a1445ce786677ebd13",
+        "bytecodeVersion": 11,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/collapsed_conditional_stays_ssa.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "d6dec710cfd4df69df2f43373eb12bca3561a870a05ec2eb4e38eb6a7989a02d",
+      "inputBytes": 859,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 3.9,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1896,
+          "lines": 72,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/collapsed_conditional_stays_ssa.luaubc",
+        "inputSha256": "d6dec710cfd4df69df2f43373eb12bca3561a870a05ec2eb4e38eb6a7989a02d",
+        "bytecodeSha256": "d6dec710cfd4df69df2f43373eb12bca3561a870a05ec2eb4e38eb6a7989a02d",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "1e3a2cefa01f1bcaa51f45b608561d70846bf2c8266ac1281a372359b4f8bb78",
+        "status": "MATCH",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8456370000021707
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "bmlsCWZhbHNlCTEKMwk1CTQJMgluaWwK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 2.96592000000237
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "bmlsCWZhbHNlCTEKMwk1CTQJMgluaWwK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.74543199999971
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/dead_self_update.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "deaf38d78faa82db26690b65a5df4bea89dbe925e0ee147ed7916fb87f436276",
+      "inputBytes": 287,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.273,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 476,
+          "lines": 19,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/dead_self_update.luaubc",
+        "inputSha256": "deaf38d78faa82db26690b65a5df4bea89dbe925e0ee147ed7916fb87f436276",
+        "bytecodeSha256": "deaf38d78faa82db26690b65a5df4bea89dbe925e0ee147ed7916fb87f436276",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "a405a6e4d77229e8cea6f09bcbd56402cedf32490bad0845d81fd4d7ccf190e1",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7722460000004503
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.4623419999988982
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.17545699999755
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_budget.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "52aa080298cefb945115dd9a2c430b2c02c06324f000d6817c3cf1da3796e91a",
+      "inputBytes": 39204,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 84.643,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 50465,
+          "lines": 1448,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_budget.luaubc",
+        "inputSha256": "52aa080298cefb945115dd9a2c430b2c02c06324f000d6817c3cf1da3796e91a",
+        "bytecodeSha256": "52aa080298cefb945115dd9a2c430b2c02c06324f000d6817c3cf1da3796e91a",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "bdda1ab5880c0f07653df5e8f226567c5d94e1b6871d632f38ac5f9182bc6d6a",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.30465600000025
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.104123000000982
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.1785689999996976
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_declared_prefix.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "ceef2f909a1eac1a852cf0dbcbcb337cea4a89793cc2a04af028a175bfe966d6",
+      "inputBytes": 716,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 2.947,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1051,
+          "lines": 31,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_declared_prefix.luaubc",
+        "inputSha256": "ceef2f909a1eac1a852cf0dbcbcb337cea4a89793cc2a04af028a175bfe966d6",
+        "bytecodeSha256": "ceef2f909a1eac1a852cf0dbcbcb337cea4a89793cc2a04af028a175bfe966d6",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "a1d66179cb477acade6da4e07dc1a064fe187cc9fd3cbb716d1f8f075eb637a0",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.814580999998725
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.126326000001427
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 2.9894549999989977
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_declared_select.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "3397eb5286abee1f750376ac58a5c6bc7737bb540891f3896d8f0dc221fd3c16",
+      "inputBytes": 734,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.714,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 908,
+          "lines": 22,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_declared_select.luaubc",
+        "inputSha256": "3397eb5286abee1f750376ac58a5c6bc7737bb540891f3896d8f0dc221fd3c16",
+        "bytecodeSha256": "3397eb5286abee1f750376ac58a5c6bc7737bb540891f3896d8f0dc221fd3c16",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "63cc49edb5c534e1d657e7cda5fe0d72b134a607d39f367a0bb884dddb48d46d",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.46478500000012
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.049755999996705
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.855756000000838
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_fall_off.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "0f0b9f28fd4147b2cc4c5be4585dab774ffc3905dd185c7d3263c0372c887a52",
+      "inputBytes": 1021,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 2.635,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1621,
+          "lines": 60,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_fall_off.luaubc",
+        "inputSha256": "0f0b9f28fd4147b2cc4c5be4585dab774ffc3905dd185c7d3263c0372c887a52",
+        "bytecodeSha256": "0f0b9f28fd4147b2cc4c5be4585dab774ffc3905dd185c7d3263c0372c887a52",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "8d4b206453cd38b02ec407ba976c2fdada3da066a6148abccbc0791161865a45",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.1046800000003714
+        },
+        "originals": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX2ZhbGxfb2ZmLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnUGFyZW50JwpzdGFja3RyYWNlOgovdG1wL2lubGluZS1zdGF0ZS90b3Zlay1jb3JwdXMvbHVhdS1saWZ0ZXIvdGVzdHMvZml4dHVyZXMvZGVpbmxpbmVfZmFsbF9vZmYubHVhdToxCg==",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.296893999999156
+          }
+        ],
+        "runs": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX2ZhbGxfb2ZmX2x1YXViYy5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ1BhcmVudCcKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX2ZhbGxfb2ZmX2x1YXViYy5sdWF1OjEK",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.567168000001402
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_first_read.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "8c78f380a8bf9f8dc9ccd47dcdac2a39768f8e78b17ef96f016815eda0d2eb1e",
+      "inputBytes": 1074,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.993,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1074,
+          "lines": 38,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_first_read.luaubc",
+        "inputSha256": "8c78f380a8bf9f8dc9ccd47dcdac2a39768f8e78b17ef96f016815eda0d2eb1e",
+        "bytecodeSha256": "8c78f380a8bf9f8dc9ccd47dcdac2a39768f8e78b17ef96f016815eda0d2eb1e",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "b9384f852d396280953b6ccba6b65bcdc786d48f01a475819c92346037627ff3",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.1517410000014934
+        },
+        "originals": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX2ZpcnN0X3JlYWQubHVhdToyOiBhdHRlbXB0IHRvIGluZGV4IG5pbCB3aXRoICduZXcnCnN0YWNrdHJhY2U6Ci90bXAvaW5saW5lLXN0YXRlL3RvdmVrLWNvcnB1cy9sdWF1LWxpZnRlci90ZXN0cy9maXh0dXJlcy9kZWlubGluZV9maXJzdF9yZWFkLmx1YXU6Mgo=",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.207248999999138
+          }
+        ],
+        "runs": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX2ZpcnN0X3JlYWRfbHVhdWJjLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnbmV3JwpzdGFja3RyYWNlOgovdG1wL2lubGluZS1zdGF0ZS90b3Zlay12ZXJpZmllZC9zb3VyY2UvbHVhdS1saWZ0ZXJfdGVzdHNfZml4dHVyZXNfZGVpbmxpbmVfZmlyc3RfcmVhZF9sdWF1YmMubHVhdToxCg==",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 2.9830560000009427
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_first_read_statement.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "124b903f4438463298c75e0bccfbdb0e35e005c476d30fb2ee2a0662a4b648fa",
+      "inputBytes": 1262,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 3.156,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1342,
+          "lines": 48,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_first_read_statement.luaubc",
+        "inputSha256": "124b903f4438463298c75e0bccfbdb0e35e005c476d30fb2ee2a0662a4b648fa",
+        "bytecodeSha256": "124b903f4438463298c75e0bccfbdb0e35e005c476d30fb2ee2a0662a4b648fa",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "7ea742d1a62a6ea08714686c78abb3bce6e907f98bb95e8256feddd2f11c89ec",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6543579999997746
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.626529000001028
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.1170379999966826
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_guard_select.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "cfdc57ead6a13e41a979b94eed5f69bab5363cd8f188337009311203b9821814",
+      "inputBytes": 1356,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 5.046,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 2534,
+          "lines": 74,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_guard_select.luaubc",
+        "inputSha256": "cfdc57ead6a13e41a979b94eed5f69bab5363cd8f188337009311203b9821814",
+        "bytecodeSha256": "cfdc57ead6a13e41a979b94eed5f69bab5363cd8f188337009311203b9821814",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "26c825374a72045ca8fb99c74804523924daa28300624b08c4b328f44e653c93",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.1894279999978608
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.0465210000002116
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.2527640000007523
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_local_tuple.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "5633588189ed9fcbfe51c4cc016b22998f3f74edceae36a738575870aeb6eeae",
+      "inputBytes": 1746,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 6.872,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 3319,
+          "lines": 134,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_local_tuple.luaubc",
+        "inputSha256": "5633588189ed9fcbfe51c4cc016b22998f3f74edceae36a738575870aeb6eeae",
+        "bytecodeSha256": "5633588189ed9fcbfe51c4cc016b22998f3f74edceae36a738575870aeb6eeae",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "2250600b7da45591fe9fa0ad41938650867937c296305f64c0af3cd53a26e614",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.0120290000013483
+        },
+        "originals": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX2xvY2FsX3R1cGxlLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnR2V0U2VydmljZScKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX2xvY2FsX3R1cGxlLmx1YXU6MQo=",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.3942019999994955
+          }
+        ],
+        "runs": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX2xvY2FsX3R1cGxlX2x1YXViYy5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ0dldFNlcnZpY2UnCnN0YWNrdHJhY2U6Ci90bXAvaW5saW5lLXN0YXRlL3RvdmVrLXZlcmlmaWVkL3NvdXJjZS9sdWF1LWxpZnRlcl90ZXN0c19maXh0dXJlc19kZWlubGluZV9sb2NhbF90dXBsZV9sdWF1YmMubHVhdToxCg==",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.515906000000541
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_outer_anchor.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "5f9beb440c9c4873755c9243838bda394c817906c4c9dc26eae0d4643e7018f7",
+      "inputBytes": 756,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.473,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 759,
+          "lines": 36,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_outer_anchor.luaubc",
+        "inputSha256": "5f9beb440c9c4873755c9243838bda394c817906c4c9dc26eae0d4643e7018f7",
+        "bytecodeSha256": "5f9beb440c9c4873755c9243838bda394c817906c4c9dc26eae0d4643e7018f7",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "b04020b42eaaa1f2edda09af1014f7565cb12f299583ff265b014e393f2500ec",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 10.537640999998985
+        },
+        "originals": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX291dGVyX2FuY2hvci5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ1BhcmVudCcKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX291dGVyX2FuY2hvci5sdWF1OjEK",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 11.071659000001091
+          }
+        ],
+        "runs": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX291dGVyX2FuY2hvcl9sdWF1YmMubHVhdToxOiBhdHRlbXB0IHRvIGluZGV4IG5pbCB3aXRoICdQYXJlbnQnCnN0YWNrdHJhY2U6Ci90bXAvaW5saW5lLXN0YXRlL3RvdmVrLXZlcmlmaWVkL3NvdXJjZS9sdWF1LWxpZnRlcl90ZXN0c19maXh0dXJlc19kZWlubGluZV9vdXRlcl9hbmNob3JfbHVhdWJjLmx1YXU6MQo=",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.585454000000027
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_specialized_shorter.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "c3dfae4d7ef450585850fb7961a24597193baa78eee68e59314949d45d7b85b9",
+      "inputBytes": 657,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.934,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 604,
+          "lines": 35,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/deinline_specialized_shorter.luaubc",
+        "inputSha256": "c3dfae4d7ef450585850fb7961a24597193baa78eee68e59314949d45d7b85b9",
+        "bytecodeSha256": "c3dfae4d7ef450585850fb7961a24597193baa78eee68e59314949d45d7b85b9",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "ae98c5f7f96de2c1e96648510c3b08827f09f4e2e8ba3db48559cd59b302d5cb",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.585130000003119
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 6.362890999997035
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.6422330000023067
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/duptable_template.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "ab21951cf0ea7dab6fee84b418d1c1b79acc0c43ef5413f44879d00ec2760948",
+      "inputBytes": 108,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.545,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 50,
+          "lines": 2,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/duptable_template.luaubc",
+        "inputSha256": "ab21951cf0ea7dab6fee84b418d1c1b79acc0c43ef5413f44879d00ec2760948",
+        "bytecodeSha256": "ab21951cf0ea7dab6fee84b418d1c1b79acc0c43ef5413f44879d00ec2760948",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "8af385fc6b207e5aea79756f3066022405d4c47426441751fa932a199b096e16",
+        "status": "MATCH",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 18.713221000001795
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "MQl0cnVlCg==",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 8.964629999998579
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "MQl0cnVlCg==",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.102699999999459
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/events_shared_return.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "bed7114cb09b4f271b3f05f0631d8dd122f894835785fc8a7b141d6e4056b834",
+      "inputBytes": 12347,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 23.975,
+        "bytecodeVersion": 13,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 18010,
+          "lines": 479,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/events_shared_return.luaubc",
+        "inputSha256": "bed7114cb09b4f271b3f05f0631d8dd122f894835785fc8a7b141d6e4056b834",
+        "bytecodeSha256": "bed7114cb09b4f271b3f05f0631d8dd122f894835785fc8a7b141d6e4056b834",
+        "bytecodeVersion": 13,
+        "encoding": "roblox"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/fastcall_arguments.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "54d7d751df2012d17f457af7ebe1f5c91839b3949ddfe56bd65e7bd88373de29",
+      "inputBytes": 370,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.273,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 485,
+          "lines": 16,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/fastcall_arguments.luaubc",
+        "inputSha256": "54d7d751df2012d17f457af7ebe1f5c91839b3949ddfe56bd65e7bd88373de29",
+        "bytecodeSha256": "54d7d751df2012d17f457af7ebe1f5c91839b3949ddfe56bd65e7bd88373de29",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "08a6d0a097740fc184680e84f58f43aa04e51f12cb9ed4579fed00a73ed4397c",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.393935000000056
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.16314599999896
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.477307000001019
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/fresh_closure_o1_without_dupclosure.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "c438eff1c4992555b82f740891acf06e23f3f7cc0a4bc7e22cdfb3e22c62f511",
+      "inputBytes": 238,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.161,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 262,
+          "lines": 14,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/fresh_closure_o1_without_dupclosure.luaubc",
+        "inputSha256": "c438eff1c4992555b82f740891acf06e23f3f7cc0a4bc7e22cdfb3e22c62f511",
+        "bytecodeSha256": "c438eff1c4992555b82f740891acf06e23f3f7cc0a4bc7e22cdfb3e22c62f511",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 1,
+        "originalSourceSha256": "149e90c7d8be345cf435dca0ea12a35b8c9dfa21d59615f2313f51fd10c56c1c",
+        "status": "MISMATCH",
+        "reason": "execution error or different observable trace",
+        "failingInputs": [
+          0
+        ],
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.031294999997044
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "ZmFsc2UKYQpiCg==",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.430006000002322
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "dHJ1ZQphCmIK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 12.274579000000813
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/generic_for_local.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "42fcf7019c7f17b9afc4fcba82e2ac57bab43f507bfced6b8bf825a132d15450",
+      "inputBytes": 421,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.417,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 654,
+          "lines": 33,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/generic_for_local.luaubc",
+        "inputSha256": "42fcf7019c7f17b9afc4fcba82e2ac57bab43f507bfced6b8bf825a132d15450",
+        "bytecodeSha256": "42fcf7019c7f17b9afc4fcba82e2ac57bab43f507bfced6b8bf825a132d15450",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "e82f786b49822e9f49ef3cec2ee552e1666609404c2b32d0d89de1231a107304",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.057936999997764
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.43575200000123
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.129785000000993
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/iteration_cell.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "deb3a0d51f78017935e5fdd02b3b7296361ee10b67bd56816e4d1e331eb128c3",
+      "inputBytes": 190,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.845,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 272,
+          "lines": 12,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/iteration_cell.luaubc",
+        "inputSha256": "deb3a0d51f78017935e5fdd02b3b7296361ee10b67bd56816e4d1e331eb128c3",
+        "bytecodeSha256": "deb3a0d51f78017935e5fdd02b3b7296361ee10b67bd56816e4d1e331eb128c3",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "cdf7a62bc090e46ef233bf04c01dd4191756eb38ccfef88319458e4b1a524527",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 13.069212999998854
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 14.725269999999
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 6.492626999999629
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/library_constants.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "9d651d57fd1a05f522078653ae988d0bbdc8bc15b05a9d3c5eea671cb7cc1bb5",
+      "inputBytes": 102,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.587,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 122,
+          "lines": 5,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/library_constants.luaubc",
+        "inputSha256": "9d651d57fd1a05f522078653ae988d0bbdc8bc15b05a9d3c5eea671cb7cc1bb5",
+        "bytecodeSha256": "9d651d57fd1a05f522078653ae988d0bbdc8bc15b05a9d3c5eea671cb7cc1bb5",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "dfbcd35af5ba1271d037ac06f66b82fd9409ecd01ca2e5c2014bbd453daebea1",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8888829999996233
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.850912000001699
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 17.39271700000245
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/locals_over_limit_distinct_names.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "725875712a023b8b5bf15e323c108d6d9b1e88ee52cfb26ea8a99fc19b49e02e",
+      "inputBytes": 12273,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 78.523,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 16982,
+          "lines": 679,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/locals_over_limit_distinct_names.luaubc",
+        "inputSha256": "725875712a023b8b5bf15e323c108d6d9b1e88ee52cfb26ea8a99fc19b49e02e",
+        "bytecodeSha256": "725875712a023b8b5bf15e323c108d6d9b1e88ee52cfb26ea8a99fc19b49e02e",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 1,
+        "originalSourceSha256": "cc50b401e8cf5a7aa7e315ce9686fc70f7b8806159deed46ed74785444eaf5b5",
+        "status": "MISMATCH",
+        "reason": "execution error or different observable trace",
+        "failingInputs": [
+          0
+        ],
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.2501200000006065
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "NzIyNzAJNDQwCWYwCWcyMTkK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.000888999999006
+          }
+        ],
+        "runs": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2xvY2Fsc19vdmVyX2xpbWl0X2Rpc3RpbmN0X25hbWVzX2x1YXViYy5sdWF1OjQwNzogT3V0IG9mIGxvY2FsIHJlZ2lzdGVycyB3aGVuIHRyeWluZyB0byBhbGxvY2F0ZSBmaWVsZDE5NzogZXhjZWVkZWQgbGltaXQgMjAwCnN0YWNrdHJhY2U6Cg==",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 7.418248999998468
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/locals_over_limit_same_name.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "ebe234248b7899e96ed4b3fad611bf67c52f76811b76de0e8b35c33f828162ae",
+      "inputBytes": 10456,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 67.575,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 15603,
+          "lines": 676,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/locals_over_limit_same_name.luaubc",
+        "inputSha256": "ebe234248b7899e96ed4b3fad611bf67c52f76811b76de0e8b35c33f828162ae",
+        "bytecodeSha256": "ebe234248b7899e96ed4b3fad611bf67c52f76811b76de0e8b35c33f828162ae",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 1,
+        "originalSourceSha256": "32cf251730de83d2ef1001dae7e655816ae3b7d4ad10f42130d3942c0390ca57",
+        "status": "MISMATCH",
+        "reason": "execution error or different observable trace",
+        "failingInputs": [
+          0
+        ],
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.638100000000122
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "NDQwCWYxCTY1Nwo=",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 11.790285999999469
+          }
+        ],
+        "runs": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2xvY2Fsc19vdmVyX2xpbWl0X3NhbWVfbmFtZV9sdWF1YmMubHVhdTo0MDc6IE91dCBvZiBsb2NhbCByZWdpc3RlcnMgd2hlbiB0cnlpbmcgdG8gYWxsb2NhdGUgZmllbGQxOTc6IGV4Y2VlZGVkIGxpbWl0IDIwMApzdGFja3RyYWNlOgo=",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.4832099999985076
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/long_elseif_chain.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "b2138ed1f142f52c20a9c0c2958d6f5ac536eb60b03fc814cab2200c0ee3213b",
+      "inputBytes": 35648,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 16787.945,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 50239,
+          "lines": 2804,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/long_elseif_chain.luaubc",
+        "inputSha256": "b2138ed1f142f52c20a9c0c2958d6f5ac536eb60b03fc814cab2200c0ee3213b",
+        "bytecodeSha256": "b2138ed1f142f52c20a9c0c2958d6f5ac536eb60b03fc814cab2200c0ee3213b",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/loop_return_skips_loop_tail.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "2f2e13e717d2a4c00139c3e751e57ed517ab943b8b7ae5c9533fcfca8a82f5fc",
+      "inputBytes": 1216,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 8.051,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 2583,
+          "lines": 141,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/loop_return_skips_loop_tail.luaubc",
+        "inputSha256": "2f2e13e717d2a4c00139c3e751e57ed517ab943b8b7ae5c9533fcfca8a82f5fc",
+        "bytecodeSha256": "2f2e13e717d2a4c00139c3e751e57ed517ab943b8b7ae5c9533fcfca8a82f5fc",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "78567e93af68a728449da0fa4bdabfce66597bf661064092d02cc8c2e1820a2e",
+        "status": "MISMATCH",
+        "reason": "execution error or different observable trace",
+        "failingInputs": [
+          0
+        ],
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.501277999999729
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "MQpiaWcKMwpiaWcKMQkyCjIJMgozCTEKdGFpbAkxCnRhaWwJMgp0YWlsCTEKdGFpbAkyCnRhaWwJMwo=",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.938994000000093
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "MQpiaWcKMwpiaWcKMQkyCjIJNQozCTQKdGFpbAkxCnRhaWwJMgp0YWlsCTMK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.80145800000173
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/loop_shared_return.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "4525dc1dd3fdb0b561f2e290704b4b11088c7da9e48b80a6bf3e0639e95514a1",
+      "inputBytes": 3251,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 14.319,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 5754,
+          "lines": 199,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/loop_shared_return.luaubc",
+        "inputSha256": "4525dc1dd3fdb0b561f2e290704b4b11088c7da9e48b80a6bf3e0639e95514a1",
+        "bytecodeSha256": "4525dc1dd3fdb0b561f2e290704b4b11088c7da9e48b80a6bf3e0639e95514a1",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/module_methods.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "b27d4f27daf04825ebb7861b6bdb3a54fcf554fdcb296454b755e563ee0f28f0",
+      "inputBytes": 574,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.438,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 461,
+          "lines": 18,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/module_methods.luaubc",
+        "inputSha256": "b27d4f27daf04825ebb7861b6bdb3a54fcf554fdcb296454b755e563ee0f28f0",
+        "bytecodeSha256": "b27d4f27daf04825ebb7861b6bdb3a54fcf554fdcb296454b755e563ee0f28f0",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "9898debf1577581f651205d8e07d5e66651af64b4eec2eedd475c3dac67e2a9a",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.501726000002236
+        },
+        "originals": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL21vZHVsZV9tZXRob2RzLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnR2V0U2VydmljZScKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL21vZHVsZV9tZXRob2RzLmx1YXU6MQo=",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.156438000001799
+          }
+        ],
+        "runs": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX21vZHVsZV9tZXRob2RzX2x1YXViYy5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ0dldFNlcnZpY2UnCnN0YWNrdHJhY2U6Ci90bXAvaW5saW5lLXN0YXRlL3RvdmVrLXZlcmlmaWVkL3NvdXJjZS9sdWF1LWxpZnRlcl90ZXN0c19maXh0dXJlc19tb2R1bGVfbWV0aG9kc19sdWF1YmMubHVhdToxCg==",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.8728140000021085
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/numeric_loop_return.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "c4ecdafba7827722adb6102abdd88b659d4d97d6a0a78f616f3f78bc2d48f51f",
+      "inputBytes": 3098,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 17.546,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "FAIL",
+          "reason": "/tmp/luau-bench-QxXsAF/candidate.luau(174,9): SyntaxError: Expected 'end' (to close 'do' at line 163), got 'local'; did you forget to close 'then' at line 169?\n/tmp/luau-bench-QxXsAF/candidate.luau(186,13): SyntaxError: Expected 'end' (to close 'do' at line 175), got 'print'; did you forget to close 'then' at line 181?\n/tmp/luau-bench-QxXsAF/candidate.luau(189,5): SyntaxError: Expected <eof>, got 'end'\n"
+        },
+        "sourceMetrics": {
+          "bytes": 7016,
+          "lines": 324,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/numeric_loop_return.luaubc",
+        "inputSha256": "c4ecdafba7827722adb6102abdd88b659d4d97d6a0a78f616f3f78bc2d48f51f",
+        "bytecodeSha256": "c4ecdafba7827722adb6102abdd88b659d4d97d6a0a78f616f3f78bc2d48f51f",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "INVALID",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "263edbf3188c2c7da9d36bb03fb856ab982bf6f02039959200424edec0ebbae8",
+        "status": "INVALID",
+        "reason": "official parser rejected reconstructed source",
+        "parser": {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX251bWVyaWNfbG9vcF9yZXR1cm5fbHVhdWJjLmx1YXUoMTc0LDkpOiBTeW50YXhFcnJvcjogRXhwZWN0ZWQgJ2VuZCcgKHRvIGNsb3NlICdkbycgYXQgbGluZSAxNjMpLCBnb3QgJ2xvY2FsJzsgZGlkIHlvdSBmb3JnZXQgdG8gY2xvc2UgJ3RoZW4nIGF0IGxpbmUgMTY5PwovdG1wL2lubGluZS1zdGF0ZS90b3Zlay12ZXJpZmllZC9zb3VyY2UvbHVhdS1saWZ0ZXJfdGVzdHNfZml4dHVyZXNfbnVtZXJpY19sb29wX3JldHVybl9sdWF1YmMubHVhdSgxODYsMTMpOiBTeW50YXhFcnJvcjogRXhwZWN0ZWQgJ2VuZCcgKHRvIGNsb3NlICdkbycgYXQgbGluZSAxNzUpLCBnb3QgJ3ByaW50JzsgZGlkIHlvdSBmb3JnZXQgdG8gY2xvc2UgJ3RoZW4nIGF0IGxpbmUgMTgxPwovdG1wL2lubGluZS1zdGF0ZS90b3Zlay12ZXJpZmllZC9zb3VyY2UvbHVhdS1saWZ0ZXJfdGVzdHNfZml4dHVyZXNfbnVtZXJpY19sb29wX3JldHVybl9sdWF1YmMubHVhdSgxODksNSk6IFN5bnRheEVycm9yOiBFeHBlY3RlZCA8ZW9mPiwgZ290ICdlbmQnCg==",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.761880999998539
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "Mgk0CTEKbmlsCTAJbmlsCm1pc3NpbmcJNwpoYXMJNAoyCS0zCWVxdWFsCWdyZWF0ZXIKbWlzc2luZwkxCmhhcwkyCjEJLTEJZXF1YWwJZ3JlYXRlcgpmb3VuZCBpbgkyCTEKMQluaWwJMAoyCTEJMTQKMwkxCTE0CjEJLTEJLTEKMgkxCTEKZm91bmQgaW4JMgkyCjEJbmlsCTAKMgkyCTEwCjEJLTEJLTEKMgkyCTIK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.953176999999414
+          }
+        ],
+        "runs": []
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/register_phi_webs.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "e3f2222b894e299d4539a746c8b9b7eef7974f9d42c51a651cfa7a99e22fca4d",
+      "inputBytes": 322,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.914,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 702,
+          "lines": 30,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/register_phi_webs.luaubc",
+        "inputSha256": "e3f2222b894e299d4539a746c8b9b7eef7974f9d42c51a651cfa7a99e22fca4d",
+        "bytecodeSha256": "e3f2222b894e299d4539a746c8b9b7eef7974f9d42c51a651cfa7a99e22fca4d",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "91afbf739a8f865a6a99390e0537291fa1edc17807879f9cbf886372b688ba57",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.338303000000451
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.9187669999992067
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.690625999999611
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/return_guard.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "e72a3f694b7ce9cccd53a75f291d3523891e1ab7ebaf4fcfdd2751ebbad052ba",
+      "inputBytes": 326,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.054,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 485,
+          "lines": 22,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/return_guard.luaubc",
+        "inputSha256": "e72a3f694b7ce9cccd53a75f291d3523891e1ab7ebaf4fcfdd2751ebbad052ba",
+        "bytecodeSha256": "e72a3f694b7ce9cccd53a75f291d3523891e1ab7ebaf4fcfdd2751ebbad052ba",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "6033efb2b1cb71df317567faadf0c4073c80162136ecb94fa92a2b376c6f9b7a",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.664293000001635
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 2.9646170000014536
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 11.133757999999943
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/setlist_index_gap.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "18fda488a602c0d67d9e29b6b2615e81ec42d4793ff15130ae64937342135caf",
+      "inputBytes": 110,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.408,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 56,
+          "lines": 2,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/setlist_index_gap.luaubc",
+        "inputSha256": "18fda488a602c0d67d9e29b6b2615e81ec42d4793ff15130ae64937342135caf",
+        "bytecodeSha256": "18fda488a602c0d67d9e29b6b2615e81ec42d4793ff15130ae64937342135caf",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "d6600a6c7aae68d9fc7d5a4390d896be87ef308c2cadf923176377ee002766c1",
+        "status": "MATCH",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7548599999972794
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "YQliCg==",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.295892999998614
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "YQliCg==",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.2879069999980857
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/shared_return_tail.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "394ca659fb5a61d9b4906f92b9670c39287cbdfe45243c31602c291b91fe8275",
+      "inputBytes": 452,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.714,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 957,
+          "lines": 39,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/shared_return_tail.luaubc",
+        "inputSha256": "394ca659fb5a61d9b4906f92b9670c39287cbdfe45243c31602c291b91fe8275",
+        "bytecodeSha256": "394ca659fb5a61d9b4906f92b9670c39287cbdfe45243c31602c291b91fe8275",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "ad69dc8caeda91c4c52e80b4c14c215197f5c2dc4331990f6f8c115c5dac4ce6",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5503700000008394
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.196058000001358
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.483100000001286
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/template_repeated_key.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "95ce59f2a6ea56aa35012565ebd9e59fd54416309d65c1e27d0a294f28c233b7",
+      "inputBytes": 326,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.025,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 386,
+          "lines": 13,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/template_repeated_key.luaubc",
+        "inputSha256": "95ce59f2a6ea56aa35012565ebd9e59fd54416309d65c1e27d0a294f28c233b7",
+        "bytecodeSha256": "95ce59f2a6ea56aa35012565ebd9e59fd54416309d65c1e27d0a294f28c233b7",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "140d9fe41a64a5bdb36ca1869891f80e3e623a455305ceccb6586020acd93c17",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.079260999998951
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.567258999999467
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.984383999999409
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/traceback_helper.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "aa327ee2d8e479f08cdeef526402b61f53dfc6c5cb69d080084b357dcdc62b0a",
+      "inputBytes": 567,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.605,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 689,
+          "lines": 23,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/traceback_helper.luaubc",
+        "inputSha256": "aa327ee2d8e479f08cdeef526402b61f53dfc6c5cb69d080084b357dcdc62b0a",
+        "bytecodeSha256": "aa327ee2d8e479f08cdeef526402b61f53dfc6c5cb69d080084b357dcdc62b0a",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "8a9c0dfac3fdc0c78c052a39ad3caded03a005a1993f26dd8aae1fd141178b55",
+        "status": "MATCH",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9607709999982035
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "YQkyCmEK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.717050000002928
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "YQkyCmEK",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 3.158115000001999
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/ui_tree_branch_scope.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "0a25e33e8d2f77ea820d05092402b96bb8e5a9654b4821ec1b5f1970e32b56f0",
+      "inputBytes": 698,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 2.308,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 784,
+          "lines": 22,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/ui_tree_branch_scope.luaubc",
+        "inputSha256": "0a25e33e8d2f77ea820d05092402b96bb8e5a9654b4821ec1b5f1970e32b56f0",
+        "bytecodeSha256": "0a25e33e8d2f77ea820d05092402b96bb8e5a9654b4821ec1b5f1970e32b56f0",
+        "bytecodeVersion": 9,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "3c40eca216e3197505c03b2c1a9233f9d8acb0c38531eac1c3a0888e55db27fb",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.7392499999987194
+        },
+        "originals": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL3VpX3RyZWVfYnJhbmNoX3Njb3BlLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnUGFyZW50JwpzdGFja3RyYWNlOgovdG1wL2lubGluZS1zdGF0ZS90b3Zlay1jb3JwdXMvbHVhdS1saWZ0ZXIvdGVzdHMvZml4dHVyZXMvdWlfdHJlZV9icmFuY2hfc2NvcGUubHVhdToxCg==",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.600923999998486
+          }
+        ],
+        "runs": [
+          {
+            "ok": false,
+            "status": 1,
+            "signal": null,
+            "stdout": "",
+            "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX3VpX3RyZWVfYnJhbmNoX3Njb3BlX2x1YXViYy5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ1BhcmVudCcKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstdmVyaWZpZWQvc291cmNlL2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX3VpX3RyZWVfYnJhbmNoX3Njb3BlX2x1YXViYy5sdWF1OjEK",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.433726999999635
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/upvalue_analysis_nested.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "99cc4db1fbaa5e717a6a88d552f8d484fca8b8cc8390cc8334d516794fd3720e",
+      "inputBytes": 359,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.84,
+        "bytecodeVersion": 11,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 404,
+          "lines": 18,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/upvalue_analysis_nested.luaubc",
+        "inputSha256": "99cc4db1fbaa5e717a6a88d552f8d484fca8b8cc8390cc8334d516794fd3720e",
+        "bytecodeSha256": "99cc4db1fbaa5e717a6a88d552f8d484fca8b8cc8390cc8334d516794fd3720e",
+        "bytecodeVersion": 11,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO",
+      "sourceObservation": {
+        "basis": "published paired source with current VM; legacy bytecode not executed",
+        "optimization": 2,
+        "originalSourceSha256": "bd14b699276a451fc37ca8e072a7c12b7ec5884222bfd8515aee2d0b314a6874",
+        "status": "NO MEDIDO",
+        "reason": "original execution failed or has no trace",
+        "parser": {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.405708999998751
+        },
+        "originals": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 4.07408199999918
+          }
+        ],
+        "runs": [
+          {
+            "ok": true,
+            "status": 0,
+            "signal": null,
+            "stdout": "",
+            "stderr": "",
+            "encoding": "base64",
+            "error": null,
+            "elapsedMs": 5.9097750000000815
+          }
+        ]
+      }
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/upvalue_analysis_nested_g0.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "556c8f8f3b9cbe2c53e3c4e32d166154bd2a4bd571ffea7b6fe2e7c5a6a31afc",
+      "inputBytes": 186,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.802,
+        "bytecodeVersion": 11,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 404,
+          "lines": 17,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN",
+      "input": {
+        "path": "luau-lifter/tests/fixtures/upvalue_analysis_nested_g0.luaubc",
+        "inputSha256": "556c8f8f3b9cbe2c53e3c4e32d166154bd2a4bd571ffea7b6fe2e7c5a6a31afc",
+        "bytecodeSha256": "556c8f8f3b9cbe2c53e3c4e32d166154bd2a4bd571ffea7b6fe2e7c5a6a31afc",
+        "bytecodeVersion": 11,
+        "encoding": "official"
+      },
+      "status": "NO MEDIDO"
+    }
+  ],
+  "corpus": {
+    "repository": "Kiet1308/Tovek",
+    "revision": "77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+    "lockSha256": "75227d0002f8782a585a0bc0b39527036ba456c4f8c8e397a37dc81bef993f1a"
+  }
+}

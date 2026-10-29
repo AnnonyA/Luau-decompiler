@@ -1,0 +1,759 @@
+{
+  "schemaVersion": 1,
+  "repository": "Kiet1308/Tovek",
+  "revision": "77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+  "files": [
+    {
+      "path": "docs/assets/v26/tovek/samples/ClickToMoveController.luau",
+      "bytes": 38016,
+      "gitBlobSha1": "55d1482063f0caa617f3f27c0ffbe950f7aed0a8"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/ClickToMoveController.luaubc",
+      "bytes": 35177,
+      "gitBlobSha1": "350df6f175cb1cafd39b86a9f00e654d16ab74b9"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Promise.luau",
+      "bytes": 58562,
+      "gitBlobSha1": "dc82ad5682221814ee58daa89b31e30f31a87ebd"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Promise.luaubc",
+      "bytes": 34966,
+      "gitBlobSha1": "68e81ad5ffc871a3ed224835c8bba2383f4963da"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Signal.luau",
+      "bytes": 11336,
+      "gitBlobSha1": "78037c2a0071365a8536774e050f1b09ad2dc9a2"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Signal.luaubc",
+      "bytes": 4651,
+      "gitBlobSha1": "4c72f4b0d6e1f7ae482a526ca3a926814fd2f064"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/SpawnShield.client.txt",
+      "bytes": 2305,
+      "gitBlobSha1": "fe51475ca926f8ab75a6c0dbb66afcb47a9af224"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/SpawnShield.luau",
+      "bytes": 1672,
+      "gitBlobSha1": "ff0d40ae783b08306a2502814903c7e0696a9736"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/SpawnShield.luaubc",
+      "bytes": 1684,
+      "gitBlobSha1": "5c60eaf22de2e9fa5fcc1fbd61fbad9a425e4278"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Store.luau",
+      "bytes": 6136,
+      "gitBlobSha1": "daaf4d0922084529353e95bb42ed0f56bf35b842"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Store.luaubc",
+      "bytes": 4869,
+      "gitBlobSha1": "f2a9f7b3bd0f7007b2d44c232b464162cd050c87"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Trove.luau",
+      "bytes": 19374,
+      "gitBlobSha1": "338d5cfc42eabd0b7c95e95f85e927faf40ba481"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Trove.luaubc",
+      "bytes": 6347,
+      "gitBlobSha1": "3cfe60f7a43e6f0c1de5883d7224981d505a11fd"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/index.json",
+      "bytes": 8046,
+      "gitBlobSha1": "320f72849dd9eb81fe4a24f362ca3c8df4e79be9"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/licenses/Promise.txt",
+      "bytes": 1066,
+      "gitBlobSha1": "acf72c80fc1fa063a71c90d8e28d93e6a0826366"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/licenses/RbxUtil.txt",
+      "bytes": 1067,
+      "gitBlobSha1": "a7c79c1aeea109ffd984fa96dfec24cc97fbde4d"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/licenses/Rodux.txt",
+      "bytes": 11356,
+      "gitBlobSha1": "f49a4e16e68b128803cc2dcea614603632b04eac"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/arithmetic_result_fold.luau",
+      "bytes": 462,
+      "gitBlobSha1": "5545971a39aac7edd3e5cf6149c7f88556e86e6b"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/arithmetic_result_fold.luaubc",
+      "bytes": 708,
+      "gitBlobSha1": "9f6593e459653a5cd44006bc6a2a6ca6bd74818c"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/branch_constructor_initialized.luau",
+      "bytes": 266,
+      "gitBlobSha1": "311dd840c594c01b90263aebd148214f61da2c13"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/branch_constructor_initialized.luaubc",
+      "bytes": 267,
+      "gitBlobSha1": "333292aa8591f3361879e03221e1ed1fb0ee68e5"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/cache_context.luau",
+      "bytes": 188,
+      "gitBlobSha1": "11aaeda95bbdeb93d261af8babad94467c8198cb"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/cache_context.luaubc",
+      "bytes": 215,
+      "gitBlobSha1": "8f8cc8c40f987a7772e525d16dadec2569fb96d4"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/cell_swap_beside_copy.luau",
+      "bytes": 1254,
+      "gitBlobSha1": "2b3a08169efe916a294916f50b17e2bd43e82886"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/cell_swap_beside_copy.luaubc",
+      "bytes": 1024,
+      "gitBlobSha1": "fd385b8554c73591457cf00e3bc954a86d78c782"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/closure_captured_nil_init.luaubc",
+      "bytes": 510,
+      "gitBlobSha1": "1cde729db339b49f76d52035e69e5736946e2c27"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/collapsed_conditional_stays_ssa.luau",
+      "bytes": 1567,
+      "gitBlobSha1": "f5ed75e8d8498a7ef974238aa8d90f5dbdedac39"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/collapsed_conditional_stays_ssa.luaubc",
+      "bytes": 859,
+      "gitBlobSha1": "4d69188f6c76b35b9e1979dd8ff4053deb80b9c1"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/dead_self_update.luau",
+      "bytes": 365,
+      "gitBlobSha1": "e96cf79679d809e6bf687cc38a1df2f3d9b8756a"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/dead_self_update.luaubc",
+      "bytes": 287,
+      "gitBlobSha1": "df3cf5b5839ff2e6307bc14865b14be930455a44"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_budget.luau",
+      "bytes": 11545,
+      "gitBlobSha1": "0acab2a3119b7c887c34ef4c650283c292a10b1e"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_budget.luaubc",
+      "bytes": 39204,
+      "gitBlobSha1": "fd356db09c5aca3e1b8af06b63ca04a237dac205"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_declared_prefix.luau",
+      "bytes": 421,
+      "gitBlobSha1": "27b4f091c042ba5eedab10edd4f87bc3cb97ef1b"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_declared_prefix.luaubc",
+      "bytes": 716,
+      "gitBlobSha1": "ef9e81a292e2bb479ba567d73e9f53d8895580a0"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_declared_select.luau",
+      "bytes": 546,
+      "gitBlobSha1": "c4011cff354a56be6fb1142818db65670038f797"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_declared_select.luaubc",
+      "bytes": 734,
+      "gitBlobSha1": "ad8d452f4d12e58fc386d1bb8a39c8c7c4a29557"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_fall_off.luau",
+      "bytes": 789,
+      "gitBlobSha1": "d63a94e50c66318530d1b49ca5e54d8cd4ee5ae7"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_fall_off.luaubc",
+      "bytes": 1021,
+      "gitBlobSha1": "eed4c938b623f5388394b70425f07c71ab4dcb32"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_first_read.luau",
+      "bytes": 746,
+      "gitBlobSha1": "b086c95f1db57a16cbb8e45714edf0208b8a319c"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_first_read.luaubc",
+      "bytes": 1074,
+      "gitBlobSha1": "8f036ffd4f928e55899e24d090d3a12a512b4cd1"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_first_read_statement.luau",
+      "bytes": 813,
+      "gitBlobSha1": "6245a2a015c2e74f94e046a6ef532fddec491fef"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_first_read_statement.luaubc",
+      "bytes": 1262,
+      "gitBlobSha1": "251d967119b520bebe25e72a0fa9069fcb2687f6"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_guard_select.luau",
+      "bytes": 1218,
+      "gitBlobSha1": "a293d9acf9fd34dee2dc945900b66b593c15eb42"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_guard_select.luaubc",
+      "bytes": 1356,
+      "gitBlobSha1": "8ccfcdb00b4cc1a8fb602f12cdb0c3de2e2974b7"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_local_tuple.luau",
+      "bytes": 1689,
+      "gitBlobSha1": "24b9b50dcf13ff3a8fd2ae4686668851fdfdaf8a"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_local_tuple.luaubc",
+      "bytes": 1746,
+      "gitBlobSha1": "ba7de58ca72ddbeaae1596037f0c509925c72821"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_outer_anchor.luau",
+      "bytes": 645,
+      "gitBlobSha1": "02fbc81c335c65880c17c6670676c21ddb537bd1"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_outer_anchor.luaubc",
+      "bytes": 756,
+      "gitBlobSha1": "dc367004d6d16bcee17ef00eebbc7cac883cb1ac"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_specialized_shorter.luau",
+      "bytes": 496,
+      "gitBlobSha1": "51858c91ec244382e76374448d137fd90af630c7"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_specialized_shorter.luaubc",
+      "bytes": 657,
+      "gitBlobSha1": "50f3ef7175ba19b4bf956121be818584acb2bbd8"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/duptable_template.luau",
+      "bytes": 44,
+      "gitBlobSha1": "1ccdf8d81e737640e03f401f66f99956ce40ea3a"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/duptable_template.luaubc",
+      "bytes": 108,
+      "gitBlobSha1": "4d5ff965a502d3e39065308249b10fce2088576b"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/events_shared_return.luaubc",
+      "bytes": 12347,
+      "gitBlobSha1": "be1d5dbb4910295d48c1a733edc602db67be6882"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/fastcall_arguments.luau",
+      "bytes": 279,
+      "gitBlobSha1": "5a1e82b379cbb94d6cb7f1e4ffb414e24a88d22e"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/fastcall_arguments.luaubc",
+      "bytes": 370,
+      "gitBlobSha1": "abf5814e2c68ae1abed13c79a07a1509c75584f9"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/fresh_closure_o1_without_dupclosure.luau",
+      "bytes": 161,
+      "gitBlobSha1": "ba4dc1d9d915c77f7649884348201066862ff107"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/fresh_closure_o1_without_dupclosure.luaubc",
+      "bytes": 238,
+      "gitBlobSha1": "e5b3bd7f8b3447a5c28276ff31e8e74e17afbddf"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/generic_for_local.luau",
+      "bytes": 447,
+      "gitBlobSha1": "ca67463d7a97d6c4dda4e6d670733b545bf2814f"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/generic_for_local.luaubc",
+      "bytes": 421,
+      "gitBlobSha1": "3082c0001ced13caf5199d93279133a54f43391f"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/iteration_cell.luau",
+      "bytes": 159,
+      "gitBlobSha1": "a094632bd8a7015ada454c0df95299bd8a454367"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/iteration_cell.luaubc",
+      "bytes": 190,
+      "gitBlobSha1": "300ef1b432a66fd5cdb41eeeae02e56832e1bcf5"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/library_constants.luau",
+      "bytes": 152,
+      "gitBlobSha1": "d6f2b4454b6a28e00c6a71e0e795489b2c5b3a5d"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/library_constants.luaubc",
+      "bytes": 102,
+      "gitBlobSha1": "c5009685cf300964ca13b3e525c78eb86e99b651"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/locals_over_limit_distinct_names.luau",
+      "bytes": 12454,
+      "gitBlobSha1": "e8b4442d59ae42712085c922d5d52b9e5260599a"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/locals_over_limit_distinct_names.luaubc",
+      "bytes": 12273,
+      "gitBlobSha1": "8e3db3fac5628ec4ccb0b2bb49ba8c4d61e8e796"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/locals_over_limit_same_name.luau",
+      "bytes": 10188,
+      "gitBlobSha1": "ca94ef87d99f8fa790e975ff33808ba83b92e25b"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/locals_over_limit_same_name.luaubc",
+      "bytes": 10456,
+      "gitBlobSha1": "e452e3d3248849142c6239b1cc86aafff0a8a92f"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/long_elseif_chain.luaubc",
+      "bytes": 35648,
+      "gitBlobSha1": "8f63490097c37046f4a8d1b2a8fc76d1a0249d06"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/loop_return_skips_loop_tail.luau",
+      "bytes": 1159,
+      "gitBlobSha1": "50115b3397f6b0d1968e8dd8d7e2cb4d602b27f1"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/loop_return_skips_loop_tail.luaubc",
+      "bytes": 1216,
+      "gitBlobSha1": "d903350242ffbb7b1b6f82038836bd6f0d783307"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/loop_shared_return.luaubc",
+      "bytes": 3251,
+      "gitBlobSha1": "c647533729c0dffbf9b688b78b58d0cd7c89bea2"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/module_methods.luau",
+      "bytes": 420,
+      "gitBlobSha1": "21f725831dc1b46573d14ffe851b0671e525fb41"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/module_methods.luaubc",
+      "bytes": 574,
+      "gitBlobSha1": "3c7eb3a92c64c64a0b9bd262ba1a49a3573bbe9e"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/nested_loop_upvalue_rebind.luau",
+      "bytes": 522,
+      "gitBlobSha1": "e801bf4f32bb0052ea648bb9fbf8e8c4287944f8"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/numeric_loop_return.luau",
+      "bytes": 2676,
+      "gitBlobSha1": "499ea0c60fdec0a03539e33a78e6e33edcbbff4e"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/numeric_loop_return.luaubc",
+      "bytes": 3098,
+      "gitBlobSha1": "b88419cd05f2e0de06995c7ddf03b41525802d26"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/register_phi_webs.luau",
+      "bytes": 688,
+      "gitBlobSha1": "eaf061862167565db0e799aa190232bd4360d5e0"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/register_phi_webs.luaubc",
+      "bytes": 322,
+      "gitBlobSha1": "3d01ab151680885df842ac12aa89b9a808771b85"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/return_guard.luau",
+      "bytes": 504,
+      "gitBlobSha1": "aa1ba4a3bc84c4a9bae1e95e609243e170d7d5c3"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/return_guard.luaubc",
+      "bytes": 326,
+      "gitBlobSha1": "763a9e4a189083054d4c46e832607455cfba4ddc"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/setlist_index_gap.luau",
+      "bytes": 39,
+      "gitBlobSha1": "91e1bf1f4e41eb14610985d82553b95ffcb06ddb"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/setlist_index_gap.luaubc",
+      "bytes": 110,
+      "gitBlobSha1": "8cf4f9b7e63089a41232fe891318aa8a6799093b"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/shared_return_tail.luau",
+      "bytes": 556,
+      "gitBlobSha1": "2ffea4de2075aa76e34d55b40ec3950fd0426d8b"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/shared_return_tail.luaubc",
+      "bytes": 452,
+      "gitBlobSha1": "468739bb1fd17b51c17eb42836acc3fdfd964a9c"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/template_repeated_key.luau",
+      "bytes": 276,
+      "gitBlobSha1": "a506e0fa32ea04bb0f7d138af6ea7831e051c5e0"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/template_repeated_key.luaubc",
+      "bytes": 326,
+      "gitBlobSha1": "ba5084fd2c1ebe67a15af638face4073a8d952c6"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/traceback_helper.luau",
+      "bytes": 184,
+      "gitBlobSha1": "7bf6b8398082dd991cc0efcd92b236da5d881ce3"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/traceback_helper.luaubc",
+      "bytes": 567,
+      "gitBlobSha1": "c345d65aa84fe48280137f4c5690c3cf690c25c7"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/ui_tree_branch_scope.luau",
+      "bytes": 610,
+      "gitBlobSha1": "b50a4eb04f50fbc528d6eeec4b0208fae6280401"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/ui_tree_branch_scope.luaubc",
+      "bytes": 698,
+      "gitBlobSha1": "3a083ba13a9b4cb2e7b402cba3b40478c8b3b3ce"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/upvalue_analysis_nested.luau",
+      "bytes": 236,
+      "gitBlobSha1": "12852726d032afbdb307316437668db0f3d179c3"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/upvalue_analysis_nested.luaubc",
+      "bytes": 359,
+      "gitBlobSha1": "9d6fe4676bca5aedb6c074bf30e408c0cec4fef9"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/upvalue_analysis_nested_g0.luaubc",
+      "bytes": 186,
+      "gitBlobSha1": "89da87acde31acd631fe131c32e8d4fb97fa3f82"
+    },
+    {
+      "path": "LICENSE.txt",
+      "bytes": 1106,
+      "gitBlobSha1": "ea0693b9896506f47415d1aecdf903cffc2ca52e"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "docs/assets/v26/tovek/samples/ClickToMoveController.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "docs/assets/v26/tovek/samples/ClickToMoveController.luau"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Promise.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "docs/assets/v26/tovek/samples/Promise.luau"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Signal.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "docs/assets/v26/tovek/samples/Signal.luau"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/SpawnShield.client.txt",
+      "form": "text",
+      "encoding": "roblox",
+      "reference": "docs/assets/v26/tovek/samples/SpawnShield.luau"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/SpawnShield.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "docs/assets/v26/tovek/samples/SpawnShield.luau"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Store.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "docs/assets/v26/tovek/samples/Store.luau"
+    },
+    {
+      "path": "docs/assets/v26/tovek/samples/Trove.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "docs/assets/v26/tovek/samples/Trove.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/arithmetic_result_fold.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/arithmetic_result_fold.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/branch_constructor_initialized.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/branch_constructor_initialized.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/cache_context.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/cache_context.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/cell_swap_beside_copy.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/cell_swap_beside_copy.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/closure_captured_nil_init.luaubc",
+      "form": "raw",
+      "encoding": "official"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/collapsed_conditional_stays_ssa.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/collapsed_conditional_stays_ssa.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/dead_self_update.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/dead_self_update.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_budget.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_budget.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_declared_prefix.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_declared_prefix.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_declared_select.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_declared_select.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_fall_off.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_fall_off.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_first_read.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_first_read.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_first_read_statement.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_first_read_statement.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_guard_select.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_guard_select.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_local_tuple.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_local_tuple.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_outer_anchor.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_outer_anchor.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/deinline_specialized_shorter.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/deinline_specialized_shorter.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/duptable_template.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/duptable_template.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/events_shared_return.luaubc",
+      "form": "raw",
+      "encoding": "roblox"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/fastcall_arguments.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/fastcall_arguments.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/fresh_closure_o1_without_dupclosure.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/fresh_closure_o1_without_dupclosure.luau",
+      "sourceOptimization": 1
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/generic_for_local.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/generic_for_local.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/iteration_cell.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/iteration_cell.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/library_constants.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/library_constants.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/locals_over_limit_distinct_names.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/locals_over_limit_distinct_names.luau",
+      "sourceOptimization": 1
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/locals_over_limit_same_name.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/locals_over_limit_same_name.luau",
+      "sourceOptimization": 1
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/long_elseif_chain.luaubc",
+      "form": "raw",
+      "encoding": "official"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/loop_return_skips_loop_tail.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/loop_return_skips_loop_tail.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/loop_shared_return.luaubc",
+      "form": "raw",
+      "encoding": "official"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/module_methods.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/module_methods.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/numeric_loop_return.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/numeric_loop_return.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/register_phi_webs.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/register_phi_webs.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/return_guard.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/return_guard.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/setlist_index_gap.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/setlist_index_gap.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/shared_return_tail.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/shared_return_tail.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/template_repeated_key.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/template_repeated_key.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/traceback_helper.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/traceback_helper.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/ui_tree_branch_scope.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/ui_tree_branch_scope.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/upvalue_analysis_nested.luaubc",
+      "form": "raw",
+      "encoding": "official",
+      "reference": "luau-lifter/tests/fixtures/upvalue_analysis_nested.luau"
+    },
+    {
+      "path": "luau-lifter/tests/fixtures/upvalue_analysis_nested_g0.luaubc",
+      "form": "raw",
+      "encoding": "official"
+    }
+  ]
+}
