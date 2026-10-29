@@ -107,7 +107,8 @@ interface Binding {
   methodSelf?: number;
   /** The binding was created from a literal nil (LOADNIL). */
   nilLiteral?: boolean;
-  /** Placeholder created so a later NEWCLOSURE can reuse this name. */
+  /** A forward closure binding or live REF cell; writes must reuse its name
+   * until CLOSEUPVALS ends the cell's register lifetime. */
   forwardRef?: boolean;
 }
 
@@ -660,6 +661,16 @@ class SourceBuilder {
     return undefined;
   }
 
+  private bindPhi(register: number, name: string, preserveCell = true): void {
+    const previous = this.env.get(register);
+    // A phi merges values, not the lifetime of an open upvalue cell. Inlined
+    // code can write that cell more than once before the final SSA definition
+    // reaches the phi. Preserve its owner for those intermediate writes too.
+    // A different name or a closed/reused register cannot inherit this marker.
+    const forwardRef = preserveCell && previous?.name === name && !previous.alias && previous.forwardRef;
+    this.env.set(register, {name, expression: ident(name), pinned: true, forwardRef});
+  }
+
   private hoistLoopPhis(loop: NaturalLoop): Statement[] {
     const statements: Statement[] = [];
     const controlRegisters = new Set(this.ir.cfg.blocks[loop.latch]!.instructions
@@ -682,7 +693,7 @@ class SourceBuilder {
         this.setPhiName(key, name);
         if (this.declaredPhis.has(key) || this.isDeclaredInScope(name)) {
           this.declaredPhis.add(key);
-          this.env.set(phi.register, { name, expression: ident(name), pinned: true });
+          this.bindPhi(phi.register, name);
           continue;
         }
         this.declaredPhis.add(key);
@@ -693,7 +704,7 @@ class SourceBuilder {
           ? undefined : this.env.get(phi.register)?.expression;
         statements.push({ kind: "local", names: [name], values: incoming ? [incoming] : [] });
         this.declareInScope(name);
-        this.env.set(phi.register, { name, expression: ident(name), pinned: true });
+        this.bindPhi(phi.register, name);
       }
     }
     return statements;
@@ -1030,12 +1041,21 @@ class SourceBuilder {
     this.consumed.add(last.pc);
     const statements = this.emitStraight(basic);
     this.declareJoinPhis(join, statements);
+    // Copies made before the split keep the old value on either path. Taking
+    // separate snapshots inside each arm loses them when branchEnv is restored
+    // at the join, and those branch locals cannot be referenced afterward.
+    for (const phi of this.ir.ssa.phis.get(join) ?? []) {
+      const binding = this.env.get(phi.register);
+      if (binding?.name && binding.forwardRef)
+        statements.push(...this.snapshotRegisterAliases(phi.register, binding.name));
+    }
     const test = this.conditionFrom(last, true);
     const branchEnv = new Map(this.env);
     const branchEmitted = new Set(this.emitted);
     const branchConsumed = new Set(this.consumed);
     this.pushScope();
     const consequent = block(this.emitRange(thenId, join, new Set(visited)));
+    const consequentEnv = new Map(this.env);
     this.popScope();
     this.env.clear();
     for (const [register, binding] of branchEnv) this.env.set(register, binding);
@@ -1045,6 +1065,7 @@ class SourceBuilder {
     for (const pc of branchConsumed) this.consumed.add(pc);
     this.pushScope();
     const alternateStmts = this.emitRange(elseId, join, new Set(visited));
+    const alternateEnv = new Map(this.env);
     this.popScope();
     // Only the split's live bindings and the join's phis survive both arms.
     // Branch-local temporaries have no lexical ownership after the join.
@@ -1052,7 +1073,15 @@ class SourceBuilder {
     for (const [register, binding] of branchEnv) this.env.set(register, binding);
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
       const name = this.phiNames.get(`phi:${join}:${phi.register}`);
-      if (name && this.isDeclaredInScope(name)) this.env.set(phi.register, { name, expression: ident(name), pinned: true });
+      if (name && this.isDeclaredInScope(name)) {
+        // Restoring branchEnv also restores its pre-branch open-cell marker.
+        // A close in either arm must not be undone by that environment reset.
+        const openOnBothPaths = [consequentEnv, alternateEnv].every(env => {
+          const binding = env.get(phi.register);
+          return binding?.name === name && !binding.alias && binding.forwardRef;
+        });
+        this.bindPhi(phi.register, name, openOnBothPaths);
+      }
     }
     const ifStmt: Statement = {
       kind: "if",

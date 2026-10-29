@@ -1,0 +1,63 @@
+Function 0 (read):
+    3:     return value
+GETUPVAL R0 U0
+RETURN R0 1
+
+Function 1 (??):
+    1: local value = 0
+LOADN R0 0
+REMARK allocation: closure with 1 upvalues
+    2: local function read()
+NEWCLOSURE R1 P0
+CAPTURE REF R0
+REMARK allocation: table array 1
+    5: local readers = {read}
+NEWTABLE R2 0 1
+MOVE R3 R1
+SETLIST R2 R3 1 [1]
+    6: local first = ...
+GETVARARGS R1 1
+REMARK builtin tonumber/1
+    7: local limit = tonumber(first) or 4
+FASTCALL1 62 R1 L0
+MOVE R5 R1
+GETIMPORT R4 2 [tonumber]
+CALL R4 1 1
+L0: ORK R3 R4 K0 [4]
+    8: for index = 1, limit do
+LOADN R6 1
+MOVE R4 R3
+LOADN R5 1
+FORNPREP R4 L4
+    9:     if index % 2 == 0 then
+L1: MODK R7 R6 K3 [2]
+JUMPXEQKN R7 K4 L2 NOT [0]
+   10:         value += index
+ADD R0 R0 R6
+JUMP L3
+   12:         value -= index
+L2: SUB R0 R0 R6
+   14:     value += 2
+L3: ADDK R0 R0 K3 [2]
+   15:     value *= 3
+MULK R0 R0 K5 [3]
+   16:     print("joined", index, readers[1](), value)
+GETIMPORT R7 7 [print]
+LOADK R8 K8 ['joined']
+MOVE R9 R6
+GETTABLEN R10 R2 1
+CALL R10 0 1
+MOVE R11 R0
+CALL R7 4 0
+    8: for index = 1, limit do
+FORNLOOP R4 L1
+   18: print("final", readers[1]())
+L4: GETIMPORT R4 7 [print]
+LOADK R5 K9 ['final']
+GETTABLEN R6 R2 1
+CALL R6 0 -1
+CALL R4 -1 0
+   19: 
+CLOSEUPVALS R0
+RETURN R0 0
+
