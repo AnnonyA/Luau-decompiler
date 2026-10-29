@@ -8,5 +8,8 @@
   "inlined-conditional-returns.luau": [[],["-3"],["13"]],
   "inlined-conditional-captures.luau": [[],["0"],["7"]],
   "inlined-conditional-effects.luau": [[],["3"],["-9"]],
-  "inlined-alias-shadowing.luau": [[], ["0"], ["5"]]
+  "inlined-alias-shadowing.luau": [[], ["0"], ["5"]],
+  "inlined-table-updates.luau": [[], ["0"], ["7"]],
+  "inlined-table-write-effects.luau": [[], ["0"], ["7"]],
+  "inlined-table-write-branches.luau": [[], ["0"], ["7"]]
 }

@@ -3,6 +3,7 @@ import {ident} from '../ast/Ast.js';
 import {analyzeBindings, replaceReferences, type LexicalBinding} from '../analysis/Bindings.js';
 import {lineAt, type BytecodeModule} from '../decode/Prototype.js';
 import {Opcode} from '../decode/Opcode.js';
+import {canonicalWrites, tableStore} from './InlineWrites.js';
 
 const arithmetic = new Set(['+', '-', '*', '/', '//', '%', '^']);
 const comparisons = new Set(['<', '<=', '>', '>=', '==', '~=']);
@@ -41,23 +42,25 @@ export function inlineHelperLines(module: BytecodeModule): Set<number> {
   return result;
 }
 
-interface Target {
+interface CallTarget {
   name: string;
-  expression: Expression;
   parameters: Map<LexicalBinding, number>;
   count: number;
 }
-type Available = Map<string, Target>;
+interface Target extends CallTarget {expression: Expression}
+interface WriteTarget extends CallTarget {writes:Statement[];tableParameter:number}
+type Available = Map<string, Target | WriteTarget>;
 const unparen = (expression: Expression): Expression => {
   while (expression.kind === 'paren') expression = expression.expression;
   return expression;
 };
 
-/** Recover existing numeric helper calls from exact expression copies. The
- * body and all substituted arguments must operate on proven primitive numbers:
+/** Recover existing helpers from exact numeric expressions or private-table
+ * write regions. Scalar operations must operate on proven primitive numbers:
  * moving an unknown value into a call could expose a different __add/debug.info
  * frame, eager evaluation, errors or multiple-return behavior. No algebraic
- * reassociation, mutable/unknown captures, calls or guessed argument inversions. */
+ * reassociation, mutable/unknown captures, calls or guessed argument inversions.
+ * Writes additionally require a fresh, unescaped table and static valid keys. */
 export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): Chunk {
   if (!evidence.size) return ast;
   const {bindings} = analyzeBindings(ast.body);
@@ -70,6 +73,34 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
   const numericBindings = new Map<LexicalBinding, boolean>();
   const numericValues = new Map<Expression, boolean>();
   let budget = 100_000;
+  let tableEscapes: Set<LexicalBinding> | undefined;
+  const privateTables=new Map<LexicalBinding,boolean>();
+  function privateTable(e: Expression): boolean {
+    if(e.kind!=='identifier' || --budget<0)return false;
+    const binding=owners.get(e);
+    if(!binding || binding.writes.length || binding.captured)return false;
+    if(privateTables.has(binding))return privateTables.get(binding)!;
+    const declaration=binding.declaration;
+    if(declaration.kind!=='local' || declaration.values[binding.declarationIndex!]?.kind!=='table')return false;
+    if(!tableEscapes) {
+      tableEscapes=new Set();
+      const pending:Array<[unknown,unknown]>=[[ast,undefined]];
+      while(pending.length) {
+        if(--budget<0)return false;
+        const [node,parent]=pending.pop()!;
+        if(!node || typeof node!=='object')continue;
+        const value=node as Expression,container=parent as Expression | undefined;
+        if(value.kind==='identifier') {
+          const owner=owners.get(value);
+          if(owner && !(container?.kind==='property' && container.object===node) &&
+            !(container?.kind==='index' && container.table===node))tableEscapes.add(owner);
+        }
+        for(const child of Object.values(node))pending.push([child,node]);
+      }
+    }
+    const result=budget>0 && !tableEscapes.has(binding);
+    privateTables.set(binding,result);return result;
+  }
   function numeric(expression: Expression, seen = new Set<LexicalBinding>()): boolean {
     if (--budget < 0) return false;
     const e = unparen(expression);
@@ -184,7 +215,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     }
     return sequence(body.statements,new Map(),0);
   }
-  function target(statement: Extract<Statement,{kind:'function-decl'}>): Target | undefined {
+  function target(statement: Extract<Statement,{kind:'function-decl'}>): Target | WriteTarget | undefined {
     if (!statement.local || !statement.line || !evidence.has(statement.line) || statement.isVararg ||
         !statement.params.length || statement.params.length > 8) return;
     const declared = declarations.get(statement) ?? [];
@@ -194,8 +225,31 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       .map(b=>[b,b.declarationIndex!]));
     if (parameters.size !== statement.params.length || [...parameters.keys()].some(b=>b.writes.length)) return;
     const expression = returnPattern(statement.body,parameters);
-    if (!expression || size(expression)>128 || size(expression)<5 || !scalar(expression,parameters)) return;
-    return {name:statement.name,expression,parameters,count:statement.params.length};
+    const base={name:statement.name,parameters,count:statement.params.length};
+    if (expression && size(expression)<=128 && size(expression)>=5 && scalar(expression,parameters))return {...base,expression};
+    const writes=canonicalWrites(statement.body.statements,true,()=>--budget>=0);
+    if(!writes)return;
+    let tableParameter:number|undefined,stores=0;
+    const values:Expression[]=[];
+    function inspect(statements:Statement[]):boolean {
+      for(const s of statements) {
+        if(--budget<0)return false;
+        if(s.kind==='assign') {
+          const location=tableStore(s.targets[0]!);
+          const index=location?.object.kind==='identifier' ? parameters.get(owners.get(location.object)!) : undefined;
+          if(index===undefined || tableParameter!==undefined && index!==tableParameter)return false;
+          tableParameter=index;stores++;values.push(s.values[0]!);
+        } else if(s.kind==='if') {
+          values.push(s.test,...s.branches.map(b=>b.test));
+          if(!inspect(s.consequent.statements) || !s.branches.every(b=>inspect(b.body.statements)) || !inspect(s.alternate!.statements))return false;
+        } else return false;
+      }
+      return true;
+    }
+    if(!inspect(writes) || stores<2 || tableParameter===undefined)return;
+    const numericParameters=new Map([...parameters].filter(([,index])=>index!==tableParameter));
+    if(!values.every(e=>scalar(e,numericParameters)))return;
+    return {...base,writes,tableParameter};
   }
   // Bound candidate/unification work independently of attacker-controlled
   // names and line metadata. Exhaustion preserves all remaining expressions.
@@ -207,7 +261,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     if (a.kind === 'unary' && b.kind === 'unary') return a.op === b.op && same(a.argument,b.argument);
     return a.kind === 'binary' && b.kind === 'binary' && a.op === b.op && same(a.left,b.left) && same(a.right,b.right);
   }
-  function match(pattern: Expression, value: Expression, candidate: Target, args: Map<number,Expression>): boolean {
+  function match(pattern: Expression, value: Expression, candidate: CallTarget, args: Map<number,Expression>): boolean {
     if (--budget < 0) return false;
     const p = unparen(pattern), v = unparen(value);
     if (p.kind === 'identifier') {
@@ -262,6 +316,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     if (budget <= 0) return;
     let selected: Expression | undefined, ambiguous=false;
     for (const candidate of available.values()) {
+      if(!('expression' in candidate))continue;
       if (--budget < 0) return;
       const args = new Map<number,Expression>();
       if (match(candidate.expression,e,candidate,args) && args.size === candidate.count) {
@@ -290,6 +345,47 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       case 'function-expr': walk(e.body,new Map(),functionScope(e,visible,e.body));break;
     }
   }
+  function matchWrites(pattern:Statement[], actual:Statement[], candidate:WriteTarget,args:Map<number,Expression>):boolean {
+    if(pattern.length!==actual.length || --budget<0)return false;
+    return pattern.every((p,i)=>{
+      const v=actual[i]!;
+      if(--budget<0)return false;
+      if(p.kind==='assign' && v.kind==='assign') {
+        const left=tableStore(p.targets[0]!),right=tableStore(v.targets[0]!);
+        if(!left || !right || !Object.is(left.key,right.key) || !privateTable(right.object))return false;
+        const prior=args.get(candidate.tableParameter);
+        if(prior && !same(prior,right.object))return false;
+        args.set(candidate.tableParameter,right.object);
+        return match(p.values[0]!,v.values[0]!,candidate,args);
+      }
+      return p.kind==='if' && v.kind==='if' && p.branches.length===v.branches.length &&
+        match(p.test,v.test,candidate,args) && matchWrites(p.consequent.statements,v.consequent.statements,candidate,args) &&
+        p.branches.every((b,j)=>match(b.test,v.branches[j]!.test,candidate,args) && matchWrites(b.body.statements,v.branches[j]!.body.statements,candidate,args)) &&
+        matchWrites(p.alternate!.statements,v.alternate!.statements,candidate,args);
+    });
+  }
+  function region(statements:Statement[],start:number,available:Available,visible:Visible):{count:number;call:Statement}|undefined {
+    const targets=[...available.values()].filter((t):t is WriteTarget=>'writes' in t);
+    if(!targets.length || budget<=0)return;
+    let selected:{count:number;call:Statement}|undefined;
+    for(let count=1;count<=8 && start+count<=statements.length;count++) {
+      const pattern=canonicalWrites(statements.slice(start,start+count),false,()=>--budget>=0);
+      if(!pattern)break;
+      for(const candidate of targets) {
+        if(--budget<0)return;
+        const args=new Map<number,Expression>();
+        if(!matchWrites(candidate.writes,pattern,candidate,args) || args.size!==candidate.count)continue;
+        const ordered=Array.from({length:candidate.count},(_,i)=>args.get(i)!);
+        if(!ordered.every(arg=>visibleArguments(arg,visible)))continue;
+        if(selected)return; // Refuse ambiguous helper or region boundaries.
+        // Arguments expanded from earlier initializers have already passed the
+        // destination binding proof. Detach them from replacements scheduled at
+        // their old site: those calls can name helpers shadowed in this scope.
+        selected={count,call:{kind:'expression-stmt',expression:{kind:'call',callee:ident(candidate.name),args:structuredClone(ordered),open:false}}};
+      }
+    }
+    return budget>0 ? selected : undefined;
+  }
   function walk(body: Block, inherited: Available, inheritedVisible: Visible): {available:Available;visible:Visible} {
     const available = new Map(inherited),visible=new Map(inheritedVisible);
     const visit = (e: Expression) => expression(e,available,visible);
@@ -298,7 +394,13 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       for(const binding of bindings){scope.delete(binding.name);names.set(binding.name,binding);}
       return walk(b,scope,names);
     };
-    for (const s of body.statements) {
+    const statements:Statement[]=[];
+    let changed=false;
+    for (let i=0;i<body.statements.length;i++) {
+      const s=body.statements[i]!;
+      const recovered=region(body.statements,i,available,visible);
+      if(recovered){statements.push(recovered.call);i+=recovered.count-1;changed=true;continue;}
+      statements.push(s);
       switch(s.kind) {
         case 'function-decl': {
           for(const binding of declarations.get(s) ?? [])
@@ -332,6 +434,8 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
         case 'do': nested(s.body);break;
       }
     }
+    // Descendant expression/block rewrites are already known at this point.
+    if(changed)replacements.set(body,replaceReferences({...body,statements},replacements));
     return {available,visible};
   }
   walk(ast.body,new Map(),new Map());

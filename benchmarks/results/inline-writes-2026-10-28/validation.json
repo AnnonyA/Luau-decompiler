@@ -1,0 +1,156 @@
+{
+  "unitTests": 471,
+  "harnessTests": 46,
+  "externalApiRequests": 0,
+  "suites": {
+    "controlled200": {
+      "profiles": 200,
+      "matches": 200,
+      "reportSha256": "bfe2fc90980f14689455ac908ca6035aab073dc766b6c63652d46708bdf3ce4a"
+    },
+    "competition24": {
+      "profiles": 24,
+      "matches": 24,
+      "reportSha256": "e7a4f8314ccad7ede82ab3e3d1e4e4826f067504e961289c74fa520ffd2bda8b",
+      "inputRuns": 72,
+      "engine": {
+        "commit": "bd4dc1071ead6b07f3849b49def03d9f24734d96",
+        "dirty": true,
+        "buildSha256": "93d84468d84a526a9ca32095139d6e8bf6e8edd6381f4e662a388835e7d22b79",
+        "options": {
+          "opcodeEncoding": "official"
+        },
+        "cleanup": {
+          "typeAnnotations": "useful",
+          "ifExpressions": true,
+          "earlyReturn": true,
+          "interpolatedStrings": true,
+          "mathConstants": true
+        }
+      }
+    },
+    "regressions36": {
+      "profiles": 36,
+      "matches": 36,
+      "reportSha256": "f68c724089dcfe2309533632fda56728874f7b3ee9afac8df04c5a0b7bfe41ae",
+      "inputRuns": 108
+    },
+    "pilotDev": {
+      "profiles": 9,
+      "matches": 9,
+      "reportSha256": "3038c03dd65722f80b6eb9a7b8393f34e6060d533d5ccfba63a0d5ed2a7dc70b",
+      "inputRuns": 108,
+      "engine": {
+        "commit": "bd4dc1071ead6b07f3849b49def03d9f24734d96",
+        "dirty": true,
+        "buildSha256": "93d84468d84a526a9ca32095139d6e8bf6e8edd6381f4e662a388835e7d22b79",
+        "options": {
+          "opcodeEncoding": "official"
+        },
+        "cleanup": {
+          "typeAnnotations": "useful",
+          "ifExpressions": true,
+          "earlyReturn": true,
+          "interpolatedStrings": true,
+          "mathConstants": true
+        }
+      }
+    },
+    "pilotObserved": {
+      "profiles": 6,
+      "matches": 6,
+      "reportSha256": "b962a1e02d9bf19971dc1df095b7755dca17dc0be7d9fde80904d217124a949f",
+      "inputRuns": 72,
+      "engine": {
+        "commit": "bd4dc1071ead6b07f3849b49def03d9f24734d96",
+        "dirty": true,
+        "buildSha256": "93d84468d84a526a9ca32095139d6e8bf6e8edd6381f4e662a388835e7d22b79",
+        "options": {
+          "opcodeEncoding": "official"
+        },
+        "cleanup": {
+          "typeAnnotations": "useful",
+          "ifExpressions": true,
+          "earlyReturn": true,
+          "interpolatedStrings": true,
+          "mathConstants": true
+        }
+      }
+    },
+    "cohort2Dev": {
+      "profiles": 9,
+      "matches": 9,
+      "reportSha256": "8134ac88e4e8da37e41192dcd37da9c1d3e79b784b930cfce677c6546ba2e3b4",
+      "inputRuns": 108,
+      "engine": {
+        "commit": "bd4dc1071ead6b07f3849b49def03d9f24734d96",
+        "dirty": true,
+        "buildSha256": "93d84468d84a526a9ca32095139d6e8bf6e8edd6381f4e662a388835e7d22b79",
+        "options": {
+          "opcodeEncoding": "official"
+        },
+        "cleanup": {
+          "typeAnnotations": "useful",
+          "ifExpressions": true,
+          "earlyReturn": true,
+          "interpolatedStrings": true,
+          "mathConstants": true
+        }
+      }
+    },
+    "cohort2Observed": {
+      "profiles": 6,
+      "matches": 6,
+      "reportSha256": "de0e60a76b3c78cb952ee88263dc8be9f3cf08e60cabf8d2bd11aaafd80711c7",
+      "inputRuns": 72,
+      "engine": {
+        "commit": "bd4dc1071ead6b07f3849b49def03d9f24734d96",
+        "dirty": true,
+        "buildSha256": "93d84468d84a526a9ca32095139d6e8bf6e8edd6381f4e662a388835e7d22b79",
+        "options": {
+          "opcodeEncoding": "official"
+        },
+        "cleanup": {
+          "typeAnnotations": "useful",
+          "ifExpressions": true,
+          "earlyReturn": true,
+          "interpolatedStrings": true,
+          "mathConstants": true
+        }
+      }
+    },
+    "independent": {
+      "profiles": 9,
+      "matches": 9,
+      "reportSha256": "b1fb1dc2fab64418df14dd7793cf08e94a671ea428086d3893b2b2d369ae5c84",
+      "inputRuns": 216,
+      "engine": {
+        "commit": "bd4dc1071ead6b07f3849b49def03d9f24734d96",
+        "dirty": true,
+        "buildSha256": "93d84468d84a526a9ca32095139d6e8bf6e8edd6381f4e662a388835e7d22b79",
+        "options": {
+          "opcodeEncoding": "official"
+        },
+        "cleanup": {
+          "typeAnnotations": "useful",
+          "ifExpressions": true,
+          "earlyReturn": true,
+          "interpolatedStrings": true,
+          "mathConstants": true
+        }
+      }
+    },
+    "styles": {
+      "profiles": 810,
+      "matches": 810,
+      "reportSha256": "83ec30a23f467d6c16c376454fe13eddf17023712596dd1f50cc167e514d5453",
+      "inputRuns": 1185
+    },
+    "fuzz": {
+      "profiles": 90,
+      "matches": 90,
+      "reportSha256": "f291b0e204a34a0b56b042dee4517f57ee28a723ed349a992044809a0c8d252f",
+      "inputRuns": 270
+    }
+  }
+}
