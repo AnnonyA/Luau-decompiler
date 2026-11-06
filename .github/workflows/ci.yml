@@ -116,6 +116,25 @@ jobs:
             --output "$RUNNER_TEMP/luau-syntax-report.json"
           node scripts/bench-summary.mjs "$RUNNER_TEMP/luau-syntax-report.json" >> "$GITHUB_STEP_SUMMARY"
           node scripts/bench-assert-syntax.mjs "$RUNNER_TEMP/luau-syntax-report.json" --require-all-pass
+      - name: Fetch pinned Tovek public samples and fixtures
+        run: |
+          git init "$RUNNER_TEMP/tovek-corpus"
+          git -C "$RUNNER_TEMP/tovek-corpus" remote add origin https://github.com/Kiet1308/Tovek.git
+          git -C "$RUNNER_TEMP/tovek-corpus" fetch --depth 1 origin 77edf387bf280a2f4d46d57ac85d5c4f071b763f
+          git -C "$RUNNER_TEMP/tovek-corpus" checkout --detach FETCH_HEAD
+      - name: Check pinned Tovek bytes and paired-source observations
+        run: |
+          npm run bench:tovek -- --corpus "$RUNNER_TEMP/tovek-corpus" \
+            --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
+            --luau "$RUNNER_TEMP/luau-build/luau" --output "$RUNNER_TEMP/tovek-report"
+      - name: Upload Tovek public corpus measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-tovek-public-evidence
+          path: ${{ runner.temp }}/tovek-report
+          if-no-files-found: warn
+          retention-days: 30
       - name: Compare behavior of controlled original and decompiled Luau
         shell: bash
         run: |

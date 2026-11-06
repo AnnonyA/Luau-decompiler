@@ -1,3 +1,4 @@
+import { boundLocalLifetimes } from "./reconstruct/LocalLifetimes.js";
 import { validateAst, type ValidationFailure } from "./ast/AstValidator.js";
 import type { Chunk } from "./ast/Ast.js";
 import { chunk } from "./ast/Ast.js";
@@ -105,7 +106,7 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
     const cleaned = cleanupAst(raw, defaultCleanupOptions(options));
     const recovered = options.recoverInlinedFunctions === false ? cleaned : recoverInlineCalls(cleaned, inlineHelperLines(decoded.module));
     const contextual = options.runtimeContext === false ? recovered : applyRuntimeContext(recovered, options.runtimeContext);
-    const ast = styleLocalNames(recoverFunctionEvidence(contextual, options), options);
+    const ast = boundLocalLifetimes(styleLocalNames(recoverFunctionEvidence(contextual, options), options));
     const validation = validateAst(ast);
     for (const failure of validation) {
       diagnostics.error(failure.code, failure.message);

@@ -83,6 +83,12 @@ export function followOfLoop(
   const latch = cfg.blocks[loop.latch];
   const opcode = latch?.instructions.at(-1)?.opcode;
   if ((opcode === Opcode.FORGLOOP || opcode === Opcode.FORNLOOP) && latch?.fallthrough !== undefined) {
+    // Inlined returns can bypass the exhaustion tail. The common continuation
+    // owns both result definitions; the latch fallthrough is only one exit.
+    const common = postDominators.ipdom[loop.header];
+    if (common !== undefined && common >= 0 && common < cfg.blocks.length && !loop.blocks.includes(common)) {
+      return common;
+    }
     return latch.fallthrough;
   }
   const ipdom = postDominators.ipdom[loop.header];

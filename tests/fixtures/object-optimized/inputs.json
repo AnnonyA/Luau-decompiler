@@ -16,5 +16,9 @@
   "inlined-captured-table.luau": [[], ["0"], ["7"]],
   "inlined-captured-unknown-writer.luau": [[], ["0"], ["7"]],
   "inlined-captured-join.luau": [[], ["0"], ["7"]],
-  "captured-branch-snapshot.luau": [[], ["0"], ["7"]]
+  "captured-branch-snapshot.luau": [[], ["0"], ["7"]],
+  "inlined-loop-exits.luau": [[], ["0"], ["9"], ["17"]],
+  "inlined-loop-tails.luau": [[], ["0"], ["9"], ["17"]],
+  "fresh-captured-callee.luau": [[], ["0"], ["5"]],
+  "bounded-constructor-lifetimes.luau": [[], ["-2"], ["7"]]
 }
