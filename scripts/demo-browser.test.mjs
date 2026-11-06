@@ -142,13 +142,18 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
   await waitFor('document.getElementById("status").textContent === "Copied to clipboard."');
   assert.match(await evaluate("navigator.clipboard.readText()"), /Hello from Luau/);
   await send("Browser.setDownloadBehavior", { behavior: "allow", downloadPath: profile });
+  const expectedDownload = await evaluate('document.getElementById("code").textContent');
   await evaluate('document.getElementById("download").click()');
   let downloaded;
   for (let attempt = 0; attempt < 100; attempt++) {
-    try { downloaded = await readFile(join(profile, "example.luau"), "utf8"); break; }
-    catch { await delay(30); }
+    // Chromium may create the file before filling it. Wait for the complete
+    // content; the final assertion still rejects missing or incorrect bytes.
+    try { downloaded = await readFile(join(profile, "example.luau"), "utf8"); }
+    catch {}
+    if (downloaded === expectedDownload) break;
+    await delay(30);
   }
-  assert.equal(downloaded, await evaluate('document.getElementById("code").textContent'));
+  assert.equal(downloaded, expectedDownload);
   await evaluate('document.getElementById("tab-disassembly").click()');
   assert.match(await evaluate('document.getElementById("code").textContent'), /CALL/);
   await evaluate('document.getElementById("tab-source").click()');

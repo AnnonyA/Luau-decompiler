@@ -107,7 +107,8 @@ interface Binding {
   methodSelf?: number;
   /** The binding was created from a literal nil (LOADNIL). */
   nilLiteral?: boolean;
-  /** Placeholder created so a later NEWCLOSURE can reuse this name. */
+  /** A forward closure binding or live REF cell; writes must reuse its name
+   * until CLOSEUPVALS ends the cell's register lifetime. */
   forwardRef?: boolean;
 }
 
@@ -145,6 +146,9 @@ class SourceBuilder {
   private readonly loopFollows = new Set<number>();
   /** Loops whose AST is currently being emitted. Break/continue are only valid here. */
   private readonly emittingLoops: NaturalLoop[] = [];
+  /** An exhaustion tail skipped by a different (inlined-return) exit. */
+  private cyclicBlocks?: Set<number>;
+  private readonly loopTails = new Map<NaturalLoop, {entry: number; follow: number; flag: string}>();
   private readonly consumed = new Set<number>();
   private readonly phiNames = new Map<string, string>();
   private readonly phiInputs = new Map<number, string[]>();
@@ -449,8 +453,13 @@ class SourceBuilder {
   private emitRange(start: number, stop: number | undefined, visited: Set<number>): Statement[] {
     const statements: Statement[] = [];
     let current: number | undefined = start;
-    while (current !== undefined && current !== stop) {
+    while (current !== undefined) {
+      const exit = this.loopExit(current);
+      if (exit) { statements.push(...exit); break; }
+      if (current === stop) break;
       if (visited.has(current) || this.emitted.has(current)) {
+        const loop = this.currentLoop();
+        if (loop && this.loopTails.has(loop) && current === loop.header) statements.push({kind: "continue"});
         break;
       }
       const activeLoop = this.currentLoop();
@@ -483,6 +492,7 @@ class SourceBuilder {
       const branch = this.tryIf(block, stop, visited);
       if (branch) {
         statements.push(...branch.statements);
+        if (endsControl(branch.statements)) break;
         current = branch.follow;
         continue;
       }
@@ -507,7 +517,7 @@ class SourceBuilder {
             statements.push({ kind: "continue" });
             break;
           }
-          if (!loop.blocks.includes(successor)) {
+          if (!this.loopTails.has(loop) && !loop.blocks.includes(successor)) {
             statements.push({ kind: "break" });
             current = undefined;
             continue;
@@ -524,7 +534,7 @@ class SourceBuilder {
           this.loopFollow(loop) === stop &&
           block.instructions.every((insn) => isControlOnly(insn.opcode))
         ) {
-          statements.push({ kind: "break" });
+          statements.push(...(this.loopExit(successor) ?? [{ kind: "break" } as Statement]));
           current = undefined;
           continue;
         }
@@ -544,25 +554,95 @@ class SourceBuilder {
 
   // ------------------------------------------------------------------ loops
 
+  private loopExit(target: number): Statement[] | undefined {
+    const loop = this.currentLoop();
+    const tail = loop && this.loopTails.get(loop);
+    if (!tail || (target !== tail.entry && target !== tail.follow)) return undefined;
+    return [
+      ...(target === tail.follow ? [{kind: "assign", targets: [ident(tail.flag)], values: [lit(false)]} as Statement] : []),
+      {kind: "break"},
+    ];
+  }
+
   private emitLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
+    const follow = this.loopFollow(loop);
+    const normal = loop.kind === "numeric-for" || loop.kind === "generic-for"
+      ? this.ir.cfg.blocks[loop.latch]?.fallthrough
+      : loop.kind === "while" ? this.ir.cfg.blocks[loop.header]?.successors.find(id => !loop.blocks.includes(id)) : undefined;
+    const declarations: Statement[] = [];
+    if (normal !== undefined && follow !== undefined && normal !== follow) {
+      const flag = this.allocator.reserve("runTail");
+      this.declareInScope(flag);
+      declarations.push({kind: "local", names: [flag], values: [lit(true)]});
+      this.loopTails.set(loop, {entry: normal, follow, flag});
+      this.declareJoinPhis(follow, declarations);
+    }
     this.emittingLoops.push(loop);
     const entryEnv = new Map(this.env);
+    let statements: Statement[];
     try {
-      const statements = this.emitStructuredLoop(loop, visited);
+      statements = this.emitStructuredLoop(loop, visited);
       const written = new Set(loop.blocks.flatMap(id => this.ir.cfg.blocks[id]!.instructions.flatMap(insn => insn.defs)));
-      const follow = this.loopFollow(loop);
       const merged = new Set((follow === undefined ? [] : this.ir.ssa.phis.get(follow) ?? []).map(phi => phi.register));
-      // Terminal alternatives are not natural-loop members: their register
-      // writes cannot leak into the normal exit. Preserve the entry value
-      // of registers unchanged by every completing iteration, unless an
-      // exit phi explicitly merges a break-path definition.
+      // Terminal alternatives do not belong to the natural loop. Their writes
+      // must not leak into the normal exit, except through an explicit phi.
+      const closeLevel = [...entryEnv.values()].some(binding => binding.forwardRef)
+        ? this.completingCloseLevel(loop, normal ?? follow) : Infinity;
       for (const [register, binding] of entryEnv) {
         if (!written.has(register) && !merged.has(register)) this.env.set(register, binding);
+        // A terminal return may close a cell while the completing iteration
+        // keeps it open. Emitting that terminal path must not close the normal
+        // exit's cell. Only restore an entry cell if no completing path closes
+        // its register; a new iteration-local cell cannot inherit this lifetime.
+        if (binding.forwardRef && register < closeLevel && this.env.get(register)?.name === binding.name)
+          this.env.set(register, {...binding});
       }
-      return statements;
     } finally {
       this.emittingLoops.pop();
     }
+    const tail = this.loopTails.get(loop);
+    if (tail) {
+      this.pushScope();
+      const body = this.emitRange(tail.entry, tail.follow, new Set(visited));
+      this.popScope();
+      statements.push({kind: "if", test: ident(tail.flag), consequent: block(body), branches: []});
+      for (const phi of this.ir.ssa.phis.get(tail.follow) ?? []) {
+        const name = this.phiNames.get(`phi:${tail.follow}:${phi.register}`);
+        if (name) this.bindPhi(phi.register, name);
+      }
+    }
+    return [...declarations, ...statements];
+  }
+
+  /** Lowest cell closed on a path that can reach the continuation. Natural
+   * loops exclude both terminal returns and break-only blocks: only the former
+   * may be ignored when restoring the completing path's cell lifetime. */
+  private completingCloseLevel(loop: NaturalLoop, follow: number | undefined): number {
+    if (follow === undefined) return 0;
+    const reachable = new Set<number>();
+    const continuation = this.loopFollow(loop);
+    const pending = [loop.header];
+    while (pending.length) {
+      const id = pending.pop()!;
+      // Do not walk through the caller continuation into a later enclosing
+      // iteration: those closes belong to a different dynamic activation.
+      if (id === follow || id === continuation || reachable.has(id)) continue;
+      reachable.add(id);
+      pending.push(...this.ir.cfg.blocks[id]!.successors);
+    }
+    const completing = new Set<number>();
+    pending.push(follow);
+    let level = Infinity;
+    while (pending.length) {
+      const id = pending.pop()!;
+      if (completing.has(id) || (id !== follow && !reachable.has(id))) continue;
+      completing.add(id);
+      const basic = this.ir.cfg.blocks[id]!;
+      if (id !== follow) for (const insn of basic.instructions)
+        if (insn.opcode === Opcode.CLOSEUPVALS) level = Math.min(level, insn.a);
+      pending.push(...basic.predecessors);
+    }
+    return level;
   }
 
   private emitStructuredLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
@@ -597,7 +677,7 @@ class SourceBuilder {
         test = this.conditionFrom(last, bodyCandidate === header.fallthrough);
         const exit = header.successors.find(id => !loop.blocks.includes(id));
         const follow = this.loopFollow(loop);
-        if (exit !== undefined && follow !== undefined && exit !== follow) {
+        if (!this.loopTails.has(loop) && exit !== undefined && follow !== undefined && exit !== follow) {
           // Inlined returns may join after a normal-exit fallback assignment.
           // Execute that region only when the entry test fails, not on break.
           this.declareJoinPhis(follow, declarations, 1);
@@ -660,6 +740,16 @@ class SourceBuilder {
     return undefined;
   }
 
+  private bindPhi(register: number, name: string, preserveCell = true): void {
+    const previous = this.env.get(register);
+    // A phi merges values, not the lifetime of an open upvalue cell. Inlined
+    // code can write that cell more than once before the final SSA definition
+    // reaches the phi. Preserve its owner for those intermediate writes too.
+    // A different name or a closed/reused register cannot inherit this marker.
+    const forwardRef = preserveCell && previous?.name === name && !previous.alias && previous.forwardRef;
+    this.env.set(register, {name, expression: ident(name), pinned: true, forwardRef});
+  }
+
   private hoistLoopPhis(loop: NaturalLoop): Statement[] {
     const statements: Statement[] = [];
     const controlRegisters = new Set(this.ir.cfg.blocks[loop.latch]!.instructions
@@ -682,7 +772,7 @@ class SourceBuilder {
         this.setPhiName(key, name);
         if (this.declaredPhis.has(key) || this.isDeclaredInScope(name)) {
           this.declaredPhis.add(key);
-          this.env.set(phi.register, { name, expression: ident(name), pinned: true });
+          this.bindPhi(phi.register, name);
           continue;
         }
         this.declaredPhis.add(key);
@@ -693,7 +783,7 @@ class SourceBuilder {
           ? undefined : this.env.get(phi.register)?.expression;
         statements.push({ kind: "local", names: [name], values: incoming ? [incoming] : [] });
         this.declareInScope(name);
-        this.env.set(phi.register, { name, expression: ident(name), pinned: true });
+        this.bindPhi(phi.register, name);
       }
     }
     return statements;
@@ -933,11 +1023,12 @@ class SourceBuilder {
         this.consumed.add(last.pc);
         const statements = this.emitStraight(basic);
         const other = thenLatch ? elseId : thenId;
-        const exits = other === this.loopFollow(activeLoop);
+        const routed = this.loopExit(other);
+        const exits = routed !== undefined || other === this.loopFollow(activeLoop);
         statements.push({
           kind: "if",
           test: this.conditionFrom(last, exits ? !thenLatch : thenLatch),
-          consequent: block([{ kind: exits ? "break" : "continue" }]),
+          consequent: block(routed ?? [{ kind: exits ? "break" : "continue" }]),
           branches: [],
         });
         return { statements, follow: exits ? (thenLatch ? thenId : elseId) : other };
@@ -961,12 +1052,13 @@ class SourceBuilder {
         const outsideId = thenInside ? elseId : thenId;
         const outsideBlock = this.ir.cfg.blocks[outsideId];
         const follow = this.loopFollow(activeLoop);
-        const exitsLoop =
+        const routed = this.loopExit(outsideId);
+        const exitsLoop = routed !== undefined || (!this.loopTails.has(activeLoop) && (
           outsideId === follow ||
           (outsideBlock !== undefined &&
             outsideBlock.instructions.every((insn) => isControlOnly(insn.opcode)) &&
             outsideBlock.successors.length > 0 &&
-            outsideBlock.successors.every((id) => !activeLoop.blocks.includes(id)));
+            outsideBlock.successors.every((id) => !activeLoop.blocks.includes(id)))));
         if (exitsLoop) {
           const jumpExits = thenInside;
           this.consumed.add(last.pc);
@@ -974,7 +1066,7 @@ class SourceBuilder {
           statements.push({
             kind: "if",
             test: this.conditionFrom(last, !jumpExits),
-            consequent: block([{ kind: "break" }]),
+            consequent: block(routed ?? [{ kind: "break" }]),
             branches: [],
           });
           return { statements, follow: thenInside ? thenId : elseId };
@@ -1030,12 +1122,21 @@ class SourceBuilder {
     this.consumed.add(last.pc);
     const statements = this.emitStraight(basic);
     this.declareJoinPhis(join, statements);
+    // Copies made before the split keep the old value on either path. Taking
+    // separate snapshots inside each arm loses them when branchEnv is restored
+    // at the join, and those branch locals cannot be referenced afterward.
+    for (const phi of this.ir.ssa.phis.get(join) ?? []) {
+      const binding = this.env.get(phi.register);
+      if (binding?.name && binding.forwardRef)
+        statements.push(...this.snapshotRegisterAliases(phi.register, binding.name));
+    }
     const test = this.conditionFrom(last, true);
     const branchEnv = new Map(this.env);
     const branchEmitted = new Set(this.emitted);
     const branchConsumed = new Set(this.consumed);
     this.pushScope();
     const consequent = block(this.emitRange(thenId, join, new Set(visited)));
+    const consequentEnv = new Map(this.env);
     this.popScope();
     this.env.clear();
     for (const [register, binding] of branchEnv) this.env.set(register, binding);
@@ -1045,14 +1146,31 @@ class SourceBuilder {
     for (const pc of branchConsumed) this.consumed.add(pc);
     this.pushScope();
     const alternateStmts = this.emitRange(elseId, join, new Set(visited));
+    const alternateEnv = new Map(this.env);
     this.popScope();
     // Only the split's live bindings and the join's phis survive both arms.
     // Branch-local temporaries have no lexical ownership after the join.
     this.env.clear();
-    for (const [register, binding] of branchEnv) this.env.set(register, binding);
+    for (const [register, binding] of branchEnv) {
+      const closedOnBoth = binding.forwardRef && [consequentEnv, alternateEnv].every(env => {
+        const end = env.get(register);
+        return end && end.name === binding.name && !end.forwardRef && end.alias;
+      });
+      // CLOSEUPVALS changes cell ownership even when the register has no live
+      // SSA phi. Reusing the slot after both arms close it must make a new local.
+      this.env.set(register, closedOnBoth ? {...binding, forwardRef: false, alias: true} : binding);
+    }
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
       const name = this.phiNames.get(`phi:${join}:${phi.register}`);
-      if (name && this.isDeclaredInScope(name)) this.env.set(phi.register, { name, expression: ident(name), pinned: true });
+      if (name && this.isDeclaredInScope(name)) {
+        // Restoring branchEnv also restores its pre-branch open-cell marker.
+        // A close in either arm must not be undone by that environment reset.
+        const openOnBothPaths = [consequentEnv, alternateEnv].every(env => {
+          const binding = env.get(phi.register);
+          return binding?.name === name && !binding.alias && binding.forwardRef;
+        });
+        this.bindPhi(phi.register, name, openOnBothPaths);
+      }
     }
     const ifStmt: Statement = {
       kind: "if",
@@ -1696,8 +1814,15 @@ class SourceBuilder {
       // their reads/calls until the literal is flushed can snapshot state
       // AFTER a callback mutates it. Materialize scalar field expressions,
       // keeping the constructor open for a later SETLIST multret tail.
-      for (const pending of this.pendingStack) {
+      for (const pending of [...this.pendingStack]) {
         if (pending.flushed) continue;
+        // Hundreds of deferred fields retain hundreds of snapshot locals until
+        // one huge literal. Commit bounded batches before the next effect, but
+        // keep SETLIST constructors open: an open pack cannot become one value.
+        if (pending.fields.length >= 32 && pending !== except && !this.hasFutureSetList(pending, insn.pc)) {
+          statements.push(...this.flushPending(pending));
+          continue;
+        }
         const snapshot = (value: Expression): Expression => {
           if (value.kind === "literal" || value.kind === "identifier" || value.kind === "function-expr") return value;
           const name = this.allocator.reserve("field");
@@ -1729,6 +1854,15 @@ class SourceBuilder {
       }
     }
     return statements;
+  }
+
+  private hasFutureSetList(pending: PendingTable, fromPc: number): boolean {
+    for (const insn of this.proto.instructions) {
+      if (insn.pc < fromPc) continue;
+      if (insn.opcode === Opcode.SETLIST && insn.a === pending.register) return true;
+      if (insn.defs.includes(pending.register)) break;
+    }
+    return false;
   }
 
   private flushPending(pending: PendingTable): Statement[] {
@@ -2272,7 +2406,7 @@ class SourceBuilder {
           // The prior implementation returned only R[A] and silently lost
           // trailing open packs from GETVARARGS or CALL.
           const hasOpenTail = [...this.openPacks].some((register) =>
-            register >= insn.a && register < insn.a + 64);
+            register >= insn.a && register < this.proto.maxStackSize);
           values.push(...(hasOpenTail
             ? this.openArgs(insn.a, insn)
             : [this.readRegister(insn.a, insn)]));
@@ -2359,6 +2493,8 @@ class SourceBuilder {
     // Captured pending tables must be materialized before their names are read.
     const statements: Statement[] = [];
     const valueSnapshots = new Map<number, string>();
+    let hasFreshSnapshot = false;
+    const freshStatements: Statement[] = [];
     const mergedLocals = new Set(this.phiNames.values());
     for (const cap of captures) {
       const source = cap.capture?.source ?? -1;
@@ -2377,13 +2513,29 @@ class SourceBuilder {
         // still be assigned on the next loop iteration; VAL captures the
         // current value, not that cell. Keep the snapshot separate from the
         // register environment so REF captures retain their original owner.
-        if (binding && binding.expression.kind !== "literal" && !valueSnapshots.has(source) &&
-            (!binding.pinned || binding.forwardRef || (binding.name && mergedLocals.has(binding.name)))) {
+        // NEWCLOSURE must remain fresh when a deferred capture would otherwise
+        // disappear into a literal/global in the child. A private, separately
+        // assigned snapshot is a written local to Luau's shouldShareClosure;
+        // it prevents DUPCLOSURE without changing any other closure's captures.
+        const chunkLoop = this.proto === this.mainProto &&
+          (this.cyclicBlocks ??= findCyclicBlocks(this.ir.cfg)).has(this.ir.cfg.blockOfPc.get(insn.pc)!);
+        const repeated = this.proto !== this.mainProto || chunkLoop;
+        const freshSnapshot = !hasFreshSnapshot && repeated && insn.opcode === Opcode.NEWCLOSURE && binding &&
+          (Boolean(chunkLoop && binding.name && this.scopeStack[0]?.has(binding.name) && !binding.forwardRef && !mergedLocals.has(binding.name)) || binding.expression.kind === "literal" || !binding.pinned || !binding.name || !this.isDeclaredInScope(binding.name));
+        if (binding && !valueSnapshots.has(source) && (freshSnapshot ||
+            (binding.expression.kind !== "literal" &&
+            (!binding.pinned || binding.forwardRef || (binding.name && mergedLocals.has(binding.name)))))) {
           const name = this.allocator.reserve("captured");
-          statements.push({ kind: "local", names: [name], values: [binding.expression] });
-          this.declareInScope(name);
+          if (freshSnapshot) {
+            freshStatements.push({kind: "local", names: [name], values: []},
+              {kind: "assign", targets: [ident(name)], values: [binding.expression]});
+            hasFreshSnapshot = true;
+          } else {
+            statements.push({kind: "local", names: [name], values: [binding.expression]});
+            this.declareInScope(name);
+            if (!binding.pinned) this.env.set(source, { name, expression: ident(name), pinned: true });
+          }
           valueSnapshots.set(source, name);
-          if (!binding.pinned) this.env.set(source, { name, expression: ident(name), pinned: true });
         }
       }
     }
@@ -2391,7 +2543,7 @@ class SourceBuilder {
     const fieldName = this.nextFieldName(insn);
     const mutable = captures.some((capture) => capture.capture?.type === CaptureType.REF);
     const selfCaptured = captures.some((capture) => capture.capture?.source === insn.a);
-    const onlyField = Boolean(fieldName) && !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
+    const onlyField = !hasFreshSnapshot && Boolean(fieldName) && !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
     const existing = this.env.get(insn.a);
     const preferred =
       (existing?.forwardRef ? existing.name : undefined) ??
@@ -2474,9 +2626,16 @@ class SourceBuilder {
       return [...statements, declaration, ...this.define(insn.a, ident(shared.name), insn)];
     }
 
+    // A private capture lives only until creation; its closed upvalue survives.
+    // Keeping hundreds of these cells in the factory scope exhausts registers
+    // even though no later instruction can name them. The destination remains
+    // in its original scope, and other REF capture declarations stay outside.
+    const creation: Statement = {kind: "assign", targets: [ident(name)], values: [fn]};
+    const scopedCreation: Statement = hasFreshSnapshot
+      ? {kind: "do", body: block([...freshStatements, creation])} : creation;
     if (existing?.forwardRef && existing.name) {
       this.env.set(insn.a, { name, expression: ident(name), pinned: true, forwardRef: true });
-      return [...statements, { kind: "assign", targets: [ident(name)], values: [fn] }];
+      return [...statements, scopedCreation];
     }
     if (selfCaptured || mutable) {
       this.env.set(insn.a, { name, expression: ident(name), pinned: true });
@@ -2484,7 +2643,7 @@ class SourceBuilder {
       return [
         ...statements,
         { kind: "local", names: [name], values: [] },
-        { kind: "assign", targets: [ident(name)], values: [fn] },
+        scopedCreation,
       ];
     }
     if (fieldName) {
@@ -2497,7 +2656,10 @@ class SourceBuilder {
       return statements;
     }
     this.env.set(insn.a, { name, expression: ident(name), pinned: true });
-    return [...statements, { kind: "local", names: [name], values: [fn] }];
+    this.declareInScope(name);
+    return hasFreshSnapshot
+      ? [...statements, {kind: "local", names: [name], values: []}, scopedCreation]
+      : [...statements, { kind: "local", names: [name], values: [fn] }];
   }
 
   private upvalueExpr(index: number): Expression {
@@ -2778,7 +2940,7 @@ class SourceBuilder {
   /** Number of fixed elements before the open pack of a SETLIST MULTRET. */
   private openPackFixed(register: number): number {
     let fixed = 0;
-    while (fixed < 64) {
+    while (register + fixed < this.proto.maxStackSize) {
       if (this.openPacks.has(register + fixed)) {
         break;
       }
@@ -2797,9 +2959,9 @@ class SourceBuilder {
   private openArgs(first: number, insn: DecodedInstruction): Expression[] {
     const args: Expression[] = [];
     let register = first;
-    let guard = 0;
-    while (guard < 64) {
-      guard += 1;
+    // Static leading registers are bounded by the prototype, not an arbitrary
+    // argument limit. The final open pack itself may hold any number of values.
+    while (register < this.proto.maxStackSize) {
       const binding = this.env.get(register);
       args.push(this.readRegister(register, insn));
       // A fixed one-result CALL also has a call expression in its binding.
@@ -3005,7 +3167,8 @@ class SourceBuilder {
         !forceLocal &&
         !debug &&
         phi === undefined &&
-        !refCaptured
+        !refCaptured &&
+        insn.opcode !== Opcode.GETGLOBAL && insn.opcode !== Opcode.GETIMPORT
       ) {
         this.env.set(register, { name: preferred, expression, pinned: true, alias: true });
         return [];
@@ -3077,6 +3240,8 @@ class SourceBuilder {
       // Luau evaluates assignment targets before RHS expressions, so moving
       // table.remove into an RHS would evaluate #table against the old state.
       if (containsCall && ["call", "table-read", "metamethod"].includes(effectOf(next))) return true;
+      // Snapshot a callee lookup before independent calls that can replace it.
+      if (["global-read", "table-read"].includes(effectOf(definition)) && effectOf(next) === "call") return true;
       // An independent call can later be materialized before this deferred
       // value (e.g. an inlined constructor argument). Only a direct consumer
       // may nest it; that case returned above when checking register uses.
@@ -3893,3 +4058,13 @@ export function materializeLocals(statements: Statement[]): Statement[] {
 }
 
 export type { LuauConstant };
+
+/** All paths have already left the current structured region. */
+function endsControl(statements: Statement[]): boolean {
+  const last = statements.at(-1);
+  if (!last) return false;
+  if (last.kind === "break" || last.kind === "continue" || last.kind === "return") return true;
+  if (last.kind === "if") return Boolean(last.alternate) && endsControl(last.consequent.statements) &&
+    last.branches.every(branch => endsControl(branch.body.statements)) && endsControl(last.alternate!.statements);
+  return false;
+}

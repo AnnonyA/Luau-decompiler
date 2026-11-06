@@ -1,0 +1,117 @@
+{
+  "unitTests": 523,
+  "benchmarkTests": 50,
+  "demoTests": 6,
+  "chromiumTests": 1,
+  "nodeLocal": "24.19.0",
+  "externalRequests": 0,
+  "reports": {
+    "semantic": {
+      "artifact": "semantic.json.gz",
+      "uncompressedSha256": "9ee565a0191e1b2c00204640464b4809cc1e34b93fe78f2779529f19406c0318",
+      "total": 200,
+      "match": 200
+    },
+    "competition": {
+      "artifact": "competition.json.gz",
+      "uncompressedSha256": "139e0abc50c62e01d7e2c9a699ae07d1633efcd7c70ca160b78ee482675c1c31",
+      "profiles": 24,
+      "status": {
+        "MATCH": 24
+      }
+    },
+    "scope-regressions": {
+      "artifact": "scope-regressions.json.gz",
+      "uncompressedSha256": "42a967af0abea5ba35c3d25f7e7b33397e922eefc1bc6232383ed6a0a13cd696",
+      "profiles": 36,
+      "status": {
+        "MATCH": 36
+      }
+    },
+    "pilot-development": {
+      "artifact": "pilot-development.json.gz",
+      "uncompressedSha256": "be5a6e266e78920482706beec6333fbb337a41af254c89550adb618e9c8e5f52",
+      "profiles": 9,
+      "status": {
+        "MATCH": 9
+      }
+    },
+    "pilot-observed": {
+      "artifact": "pilot-observed.json.gz",
+      "uncompressedSha256": "ac4ff28609e4fc52246155d2ef6eaf1de69799454a643d8e4f649e54619e90fa",
+      "profiles": 6,
+      "status": {
+        "MATCH": 6
+      }
+    },
+    "cohort2-development": {
+      "artifact": "cohort2-development.json.gz",
+      "uncompressedSha256": "dda2861b9872f4e1e80026cec7bc57029628c54cb7600a613f3c4a8f4eb07d07",
+      "profiles": 9,
+      "status": {
+        "MATCH": 9
+      }
+    },
+    "cohort2-observed": {
+      "artifact": "cohort2-observed.json.gz",
+      "uncompressedSha256": "badfe11a7821710c4702502ddfb6970ccaf22cc76f002568a5757a7f30bfbde9",
+      "profiles": 6,
+      "status": {
+        "MATCH": 6
+      },
+      "engines": {
+        "annony": {
+          "MATCH": 6
+        },
+        "lunaux": {
+          "MATCH": 5,
+          "MISMATCH": 1
+        },
+        "luaexpert": {
+          "MATCH": 6
+        }
+      }
+    },
+    "independent-regressions": {
+      "artifact": "independent-regressions.json.gz",
+      "uncompressedSha256": "f7565f74e61db6285ed59a0941e4353015b60b7365c98f119a2e41d9d5264b53",
+      "profiles": 9,
+      "status": {
+        "MATCH": 9
+      }
+    },
+    "fuzz": {
+      "artifact": "fuzz.json.gz",
+      "uncompressedSha256": "68de64d455c20ed6efea003133ce6d1bd5e7d006dc23214a76698f8e4ddaf4e2",
+      "profiles": 18,
+      "status": {
+        "MATCH": 18
+      }
+    },
+    "styles": {
+      "artifact": "styles.json.gz",
+      "uncompressedSha256": "38325ad80d9a172f7f9997d46fded36fba00472547f21b926fada34ff039c88c",
+      "profiles": 1035,
+      "status": {
+        "MATCH": 1035
+      },
+      "inputComparisons": 1710
+    },
+    "tovek": {
+      "artifact": "tovek.json.gz",
+      "uncompressedSha256": "1cb6fe9dae71dc52d84b33eaa3b9922f34e1381b871f7f5ea097edb62cd087d3",
+      "inputs": 47,
+      "parser": {
+        "PASS": 47
+      },
+      "sourceObservations": {
+        "NO MEDIDO": 37,
+        "MATCH": 10
+      }
+    },
+    "syntax": {
+      "artifact": "syntax.json.gz",
+      "uncompressedSha256": "8e5f26d25f7b42d64088129726a1c49ea73c185e60ba7a3a99db38215ba04581"
+    }
+  }
+}

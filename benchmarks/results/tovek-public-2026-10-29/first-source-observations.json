@@ -1,0 +1,1370 @@
+{
+  "note": "Published paired-source observations; compiler options of legacy fixtures are not independently established.",
+  "results": [
+    {
+      "id": "luau-lifter/tests/fixtures/arithmetic_result_fold.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 4.2296130000000005
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.309654000000002
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.913463
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/branch_constructor_initialized.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.175221999999998
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.9386459999999985
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.714153000000003
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/cache_context.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3173460000000006
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6198710000000034
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8428169999999966
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/cell_swap_beside_copy.luaubc",
+      "status": "MISMATCH",
+      "reason": "execution error or different observable trace",
+      "failingInputs": [
+        0
+      ],
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.123235000000001
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MQoxCTIJMQoxCjEJMTEKMQowCTExCjEKMQk1CTUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3905969999999996
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MQoxCTIJMQoxCjEJMTEKMQowCTExCjEKNQk1CTUK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8732519999999937
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/collapsed_conditional_stays_ssa.luaubc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.4351429999999965
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "bmlsCWZhbHNlCTEKMwk1CTQJMgluaWwK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.451858999999999
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "bmlsCWZhbHNlCTEKMwk1CTQJMgluaWwK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5777479999999997
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/dead_self_update.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.2142319999999955
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5364760000000075
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.235684000000006
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_budget.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.9392119999999977
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.4943580000000054
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.930198000000004
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_declared_prefix.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.381403000000006
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5815840000000065
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2878220000000056
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_declared_select.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.243786
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.523364999999998
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2686530000000005
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_fall_off.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.9496740000000017
+      },
+      "originals": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX2ZhbGxfb2ZmLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnUGFyZW50JwpzdGFja3RyYWNlOgovdG1wL2lubGluZS1zdGF0ZS90b3Zlay1jb3JwdXMvbHVhdS1saWZ0ZXIvdGVzdHMvZml4dHVyZXMvZGVpbmxpbmVfZmFsbF9vZmYubHVhdToxCg==",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8732030000000037
+        }
+      ],
+      "runs": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX2ZhbGxfb2ZmX2x1YXViYy5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ1BhcmVudCcKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX2ZhbGxfb2ZmX2x1YXViYy5sdWF1OjEK",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.505580000000009
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_first_read.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.414901999999998
+      },
+      "originals": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX2ZpcnN0X3JlYWQubHVhdToyOiBhdHRlbXB0IHRvIGluZGV4IG5pbCB3aXRoICduZXcnCnN0YWNrdHJhY2U6Ci90bXAvaW5saW5lLXN0YXRlL3RvdmVrLWNvcnB1cy9sdWF1LWxpZnRlci90ZXN0cy9maXh0dXJlcy9kZWlubGluZV9maXJzdF9yZWFkLmx1YXU6Mgo=",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2755980000000022
+        }
+      ],
+      "runs": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX2ZpcnN0X3JlYWRfbHVhdWJjLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnbmV3JwpzdGFja3RyYWNlOgovdG1wL2lubGluZS1zdGF0ZS90b3Zlay1vdXRwdXQvbHVhdS1saWZ0ZXJfdGVzdHNfZml4dHVyZXNfZGVpbmxpbmVfZmlyc3RfcmVhZF9sdWF1YmMubHVhdToxCg==",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.4019070000000085
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_first_read_statement.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.077545999999998
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4849880000000013
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.295894000000004
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_guard_select.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.9647050000000092
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.092507000000012
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.764519000000007
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_local_tuple.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.932702000000006
+      },
+      "originals": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX2xvY2FsX3R1cGxlLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnR2V0U2VydmljZScKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX2xvY2FsX3R1cGxlLmx1YXU6MQo=",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.279939000000013
+        }
+      ],
+      "runs": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX2xvY2FsX3R1cGxlX2x1YXViYy5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ0dldFNlcnZpY2UnCnN0YWNrdHJhY2U6Ci90bXAvaW5saW5lLXN0YXRlL3RvdmVrLW91dHB1dC9sdWF1LWxpZnRlcl90ZXN0c19maXh0dXJlc19kZWlubGluZV9sb2NhbF90dXBsZV9sdWF1YmMubHVhdToxCg==",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.9324410000000114
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_outer_anchor.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.562646000000001
+      },
+      "originals": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX291dGVyX2FuY2hvci5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ1BhcmVudCcKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL2RlaW5saW5lX291dGVyX2FuY2hvci5sdWF1OjEK",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.256484999999998
+        }
+      ],
+      "runs": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2RlaW5saW5lX291dGVyX2FuY2hvcl9sdWF1YmMubHVhdToxOiBhdHRlbXB0IHRvIGluZGV4IG5pbCB3aXRoICdQYXJlbnQnCnN0YWNrdHJhY2U6Ci90bXAvaW5saW5lLXN0YXRlL3RvdmVrLW91dHB1dC9sdWF1LWxpZnRlcl90ZXN0c19maXh0dXJlc19kZWlubGluZV9vdXRlcl9hbmNob3JfbHVhdWJjLmx1YXU6MQo=",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4584689999999796
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_specialized_shorter.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.0715769999999907
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2251269999999863
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.76616199999998
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/duptable_template.luaubc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1919579999999996
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.111986000000002
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MQl0cnVlCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.7669429999999977
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/fastcall_arguments.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3557989999999904
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.6647490000000005
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.615595000000013
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/fresh_closure_o1_without_dupclosure.luaubc",
+      "status": "MISMATCH",
+      "reason": "execution error or different observable trace",
+      "failingInputs": [
+        0
+      ],
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.1261289999999917
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "ZmFsc2UKYQpiCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.8920909999999935
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "dHJ1ZQphCmIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.562258999999983
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/generic_for_local.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.341643000000005
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.555433999999991
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.926523000000003
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/iteration_cell.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.129332999999974
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.1166039999999953
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.540280999999993
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/library_constants.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.101932000000005
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.569074999999998
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.684863000000007
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/locals_over_limit_distinct_names.luaubc",
+      "status": "MISMATCH",
+      "reason": "execution error or different observable trace",
+      "failingInputs": [
+        0
+      ],
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3323489999999936
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "NzIyNzAJNDQwCWYwCWcyMTkK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.1182660000000055
+        }
+      ],
+      "runs": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2xvY2Fsc19vdmVyX2xpbWl0X2Rpc3RpbmN0X25hbWVzX2x1YXViYy5sdWF1OjQwNzogT3V0IG9mIGxvY2FsIHJlZ2lzdGVycyB3aGVuIHRyeWluZyB0byBhbGxvY2F0ZSBmaWVsZDE5NzogZXhjZWVkZWQgbGltaXQgMjAwCnN0YWNrdHJhY2U6Cg==",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 4.075251000000009
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/locals_over_limit_same_name.luaubc",
+      "status": "MISMATCH",
+      "reason": "execution error or different observable trace",
+      "failingInputs": [
+        0
+      ],
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3337410000000034
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "NDQwCWYxCTY1Nwo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.5610479999999995
+        }
+      ],
+      "runs": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX2xvY2Fsc19vdmVyX2xpbWl0X3NhbWVfbmFtZV9sdWF1YmMubHVhdTo0MDc6IE91dCBvZiBsb2NhbCByZWdpc3RlcnMgd2hlbiB0cnlpbmcgdG8gYWxsb2NhdGUgZmllbGQxOTc6IGV4Y2VlZGVkIGxpbWl0IDIwMApzdGFja3RyYWNlOgo=",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 5.693405000000013
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/loop_return_skips_loop_tail.luaubc",
+      "status": "MISMATCH",
+      "reason": "execution error or different observable trace",
+      "failingInputs": [
+        0
+      ],
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.0115860000000225
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MQpiaWcKMwpiaWcKMQkyCjIJMgozCTEKdGFpbAkxCnRhaWwJMgp0YWlsCTEKdGFpbAkyCnRhaWwJMwo=",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3248579999999777
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "MQpiaWcKMwpiaWcKMQkyCjIJNQozCTQKdGFpbAkxCnRhaWwJMgp0YWlsCTMK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.1870509999999967
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/module_methods.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.9863280000000145
+      },
+      "originals": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL21vZHVsZV9tZXRob2RzLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnR2V0U2VydmljZScKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL21vZHVsZV9tZXRob2RzLmx1YXU6MQo=",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.19652499999998
+        }
+      ],
+      "runs": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX21vZHVsZV9tZXRob2RzX2x1YXViYy5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ0dldFNlcnZpY2UnCnN0YWNrdHJhY2U6Ci90bXAvaW5saW5lLXN0YXRlL3RvdmVrLW91dHB1dC9sdWF1LWxpZnRlcl90ZXN0c19maXh0dXJlc19tb2R1bGVfbWV0aG9kc19sdWF1YmMubHVhdToxCg==",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.312849
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/numeric_loop_return.luaubc",
+      "status": "INVALID",
+      "reason": "official parser rejected reconstructed source",
+      "parser": {
+        "ok": false,
+        "status": 1,
+        "signal": null,
+        "stdout": "",
+        "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX251bWVyaWNfbG9vcF9yZXR1cm5fbHVhdWJjLmx1YXUoMTc0LDkpOiBTeW50YXhFcnJvcjogRXhwZWN0ZWQgJ2VuZCcgKHRvIGNsb3NlICdkbycgYXQgbGluZSAxNjMpLCBnb3QgJ2xvY2FsJzsgZGlkIHlvdSBmb3JnZXQgdG8gY2xvc2UgJ3RoZW4nIGF0IGxpbmUgMTY5PwovdG1wL2lubGluZS1zdGF0ZS90b3Zlay1vdXRwdXQvbHVhdS1saWZ0ZXJfdGVzdHNfZml4dHVyZXNfbnVtZXJpY19sb29wX3JldHVybl9sdWF1YmMubHVhdSgxODYsMTMpOiBTeW50YXhFcnJvcjogRXhwZWN0ZWQgJ2VuZCcgKHRvIGNsb3NlICdkbycgYXQgbGluZSAxNzUpLCBnb3QgJ3ByaW50JzsgZGlkIHlvdSBmb3JnZXQgdG8gY2xvc2UgJ3RoZW4nIGF0IGxpbmUgMTgxPwovdG1wL2lubGluZS1zdGF0ZS90b3Zlay1vdXRwdXQvbHVhdS1saWZ0ZXJfdGVzdHNfZml4dHVyZXNfbnVtZXJpY19sb29wX3JldHVybl9sdWF1YmMubHVhdSgxODksNSk6IFN5bnRheEVycm9yOiBFeHBlY3RlZCA8ZW9mPiwgZ290ICdlbmQnCg==",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.992166999999995
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "Mgk0CTEKbmlsCTAJbmlsCm1pc3NpbmcJNwpoYXMJNAoyCS0zCWVxdWFsCWdyZWF0ZXIKbWlzc2luZwkxCmhhcwkyCjEJLTEJZXF1YWwJZ3JlYXRlcgpmb3VuZCBpbgkyCTEKMQluaWwJMAoyCTEJMTQKMwkxCTE0CjEJLTEJLTEKMgkxCTEKZm91bmQgaW4JMgkyCjEJbmlsCTAKMgkyCTEwCjEJLTEJLTEKMgkyCTIK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5631159999999795
+        }
+      ],
+      "runs": []
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/register_phi_webs.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.7844450000000052
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.189784000000003
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 3.1930739999999673
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/return_guard.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 2.3825140000000147
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.823252000000025
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.021807000000024
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/setlist_index_gap.luaubc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.7843839999999886
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YQliCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.0760740000000055
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YQliCg==",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 1.9705040000000054
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/shared_return_tail.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.8742889999999761
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.0623469999999884
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.749249999999961
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/template_repeated_key.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.931996999999967
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.369714999999985
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.600221999999974
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/traceback_helper.luaubc",
+      "status": "MATCH",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.7995070000000055
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YQkyCmEK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.164855999999986
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "YQkyCmEK",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.4880119999999692
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/ui_tree_branch_scope.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.7488710000000083
+      },
+      "originals": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstY29ycHVzL2x1YXUtbGlmdGVyL3Rlc3RzL2ZpeHR1cmVzL3VpX3RyZWVfYnJhbmNoX3Njb3BlLmx1YXU6MTogYXR0ZW1wdCB0byBpbmRleCBuaWwgd2l0aCAnUGFyZW50JwpzdGFja3RyYWNlOgovdG1wL2lubGluZS1zdGF0ZS90b3Zlay1jb3JwdXMvbHVhdS1saWZ0ZXIvdGVzdHMvZml4dHVyZXMvdWlfdHJlZV9icmFuY2hfc2NvcGUubHVhdToxCg==",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3234050000000366
+        }
+      ],
+      "runs": [
+        {
+          "ok": false,
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "L3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX3VpX3RyZWVfYnJhbmNoX3Njb3BlX2x1YXViYy5sdWF1OjE6IGF0dGVtcHQgdG8gaW5kZXggbmlsIHdpdGggJ1BhcmVudCcKc3RhY2t0cmFjZToKL3RtcC9pbmxpbmUtc3RhdGUvdG92ZWstb3V0cHV0L2x1YXUtbGlmdGVyX3Rlc3RzX2ZpeHR1cmVzX3VpX3RyZWVfYnJhbmNoX3Njb3BlX2x1YXViYy5sdWF1OjEK",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.2054979999999773
+        }
+      ]
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/upvalue_analysis_nested.luaubc",
+      "status": "NO MEDIDO",
+      "reason": "original execution failed or has no trace",
+      "parser": {
+        "ok": true,
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "encoding": "base64",
+        "error": null,
+        "elapsedMs": 1.8562929999999938
+      },
+      "originals": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.5790099999999825
+        }
+      ],
+      "runs": [
+        {
+          "ok": true,
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "encoding": "base64",
+          "error": null,
+          "elapsedMs": 2.3750629999999546
+        }
+      ]
+    }
+  ]
+}

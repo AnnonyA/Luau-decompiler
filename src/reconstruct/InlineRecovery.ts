@@ -4,6 +4,7 @@ import {analyzeBindings, replaceReferences, type LexicalBinding} from '../analys
 import {lineAt, type BytecodeModule} from '../decode/Prototype.js';
 import {Opcode} from '../decode/Opcode.js';
 import {canonicalWrites, tableStore} from './InlineWrites.js';
+import {numericStateBindings} from './NumericState.js';
 
 const arithmetic = new Set(['+', '-', '*', '/', '//', '%', '^']);
 const comparisons = new Set(['<', '<=', '>', '>=', '==', '~=']);
@@ -48,7 +49,7 @@ interface CallTarget {
   count: number;
 }
 interface Target extends CallTarget {expression: Expression}
-interface WriteTarget extends CallTarget {writes:Statement[];tableParameter:number}
+interface WriteTarget extends CallTarget {writes:Statement[];tableParameter?:number}
 type Available = Map<string, Target | WriteTarget>;
 const unparen = (expression: Expression): Expression => {
   while (expression.kind === 'paren') expression = expression.expression;
@@ -59,14 +60,16 @@ const unparen = (expression: Expression): Expression => {
  * write regions. Scalar operations must operate on proven primitive numbers:
  * moving an unknown value into a call could expose a different __add/debug.info
  * frame, eager evaluation, errors or multiple-return behavior. No algebraic
- * reassociation, mutable/unknown captures, calls or guessed argument inversions.
- * Writes additionally require a fresh, unescaped table and static valid keys. */
+ * reassociation, calls or guessed argument inversions. Mutable numeric cells
+ * are admitted only in ordered write regions with a whole-binding type proof;
+ * they never become stable arguments or initializer substitutions. Table writes
+ * additionally require a fresh, unescaped table and static valid keys. */
 export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): Chunk {
   if (!evidence.size) return ast;
   const {bindings} = analyzeBindings(ast.body);
   const owners = new Map<object, LexicalBinding>(), declarations = new Map<object, LexicalBinding[]>();
   for (const binding of bindings) {
-    for (const read of binding.reads) owners.set(read.node, binding);
+    for (const ref of [...binding.reads,...binding.writes]) owners.set(ref.node, binding);
     const list = declarations.get(binding.declaration) ?? [];
     list.push(binding); declarations.set(binding.declaration, list);
   }
@@ -124,25 +127,27 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     seen.delete(binding); numericBindings.set(binding, result);
     return result;
   }
-  function scalar(expression: Expression, parameters: Map<LexicalBinding, number>): 'number' | 'boolean' | undefined {
+  let stateBindings:ReadonlySet<LexicalBinding>|undefined;
+  const numericState=()=>stateBindings ??= numericStateBindings(bindings,owners,numeric,()=>--budget>=0);
+  function scalar(expression: Expression, parameters: Map<LexicalBinding, number>, state?:ReadonlySet<LexicalBinding>): 'number' | 'boolean' | undefined {
     if (--budget < 0) return;
     const e = unparen(expression);
-    if (e.kind === 'identifier') return parameters.has(owners.get(e)!) || numeric(e) ? 'number' : undefined;
+    if (e.kind === 'identifier') return parameters.has(owners.get(e)!) || state?.has(owners.get(e)!) || numeric(e) ? 'number' : undefined;
     if (e.kind === 'literal') return typeof e.value === 'number' ? 'number' : typeof e.value === 'boolean' ? 'boolean' : undefined;
     if (e.kind === 'unary') {
-      const argument = scalar(e.argument, parameters);
+      const argument = scalar(e.argument, parameters,state);
       return e.op === '-' && argument === 'number' ? 'number' : e.op === 'not' && argument ? 'boolean' : undefined;
     }
     if (e.kind === 'if-expr') {
-      if (!scalar(e.test, parameters)) return;
-      const result = scalar(e.consequent, parameters);
-      if (!result || scalar(e.alternate, parameters) !== result) return;
+      if (!scalar(e.test, parameters,state)) return;
+      const result = scalar(e.consequent, parameters,state);
+      if (!result || scalar(e.alternate, parameters,state) !== result) return;
       for (const branch of e.branches)
-        if (!scalar(branch.test, parameters) || scalar(branch.value, parameters) !== result) return;
+        if (!scalar(branch.test, parameters,state) || scalar(branch.value, parameters,state) !== result) return;
       return result;
     }
     if (e.kind !== 'binary') return undefined;
-    const left = scalar(e.left, parameters), right = scalar(e.right, parameters);
+    const left = scalar(e.left, parameters,state), right = scalar(e.right, parameters,state);
     if (left === 'number' && right === 'number') {
       if (arithmetic.has(e.op)) return 'number';
       if (comparisons.has(e.op)) return 'boolean';
@@ -215,18 +220,19 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     }
     return sequence(body.statements,new Map(),0);
   }
-  function target(statement: Extract<Statement,{kind:'function-decl'}>): Target | WriteTarget | undefined {
-    if (!statement.local || !statement.line || !evidence.has(statement.line) || statement.isVararg ||
-        !statement.params.length || statement.params.length > 8) return;
+  function target(statement: Extract<Statement,{kind:'function-decl'}> | Extract<Expression,{kind:'function-expr'}>,
+    initialized?:LexicalBinding): Target | WriteTarget | undefined {
+    if (statement.kind==='function-decl' && !statement.local || !statement.line || !evidence.has(statement.line) || statement.isVararg ||
+        statement.params.length > 8) return;
     const declared = declarations.get(statement) ?? [];
-    const binding = declared.find(b => b.scope !== statement.body);
-    if (!binding || binding.writes.length) return;
+    const binding = initialized ?? declared.find(b => b.scope !== statement.body);
+    if (!binding || !initialized && binding.writes.length) return;
     const parameters = new Map(declared.filter(b=>b.scope === statement.body && b.declarationIndex !== undefined)
       .map(b=>[b,b.declarationIndex!]));
     if (parameters.size !== statement.params.length || [...parameters.keys()].some(b=>b.writes.length)) return;
     const expression = returnPattern(statement.body,parameters);
-    const base={name:statement.name,parameters,count:statement.params.length};
-    if (expression && size(expression)<=128 && size(expression)>=5 && scalar(expression,parameters))return {...base,expression};
+    const base={name:binding.name,parameters,count:statement.params.length};
+    if (statement.params.length && expression && size(expression)<=128 && size(expression)>=5 && scalar(expression,parameters))return {...base,expression};
     const writes=canonicalWrites(statement.body.statements,true,()=>--budget>=0);
     if(!writes)return;
     let tableParameter:number|undefined,stores=0;
@@ -235,6 +241,12 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       for(const s of statements) {
         if(--budget<0)return false;
         if(s.kind==='assign') {
+          const destination=s.targets[0]!;
+          if(destination.kind==='identifier') {
+            const owner=owners.get(destination);
+            if(!owner || parameters.has(owner) || !owner.captured || owner.depth>=binding!.depth+1 || !numericState().has(owner))return false;
+            stores++;values.push(s.values[0]!);continue;
+          }
           const location=tableStore(s.targets[0]!);
           const index=location?.object.kind==='identifier' ? parameters.get(owners.get(location.object)!) : undefined;
           if(index===undefined || tableParameter!==undefined && index!==tableParameter)return false;
@@ -246,9 +258,9 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       }
       return true;
     }
-    if(!inspect(writes) || stores<2 || tableParameter===undefined)return;
+    if(!inspect(writes) || stores<2)return;
     const numericParameters=new Map([...parameters].filter(([,index])=>index!==tableParameter));
-    if(!values.every(e=>scalar(e,numericParameters)))return;
+    if(!values.every(e=>scalar(e,numericParameters,numericState())))return;
     return {...base,writes,tableParameter};
   }
   // Bound candidate/unification work independently of attacker-controlled
@@ -266,7 +278,8 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     const p = unparen(pattern), v = unparen(value);
     if (p.kind === 'identifier') {
       const index = candidate.parameters.get(owners.get(p)!);
-      if (index === undefined) return v.kind==='identifier' && owners.get(p)===owners.get(v) && numeric(v);
+      if (index === undefined) return v.kind==='identifier' && owners.get(p)===owners.get(v) &&
+        (numeric(v) || 'writes' in candidate && numericState().has(owners.get(v)!));
       if (!numeric(v)) return false;
       const prior = args.get(index);
       if (prior) return same(prior,v);
@@ -351,8 +364,11 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       const v=actual[i]!;
       if(--budget<0)return false;
       if(p.kind==='assign' && v.kind==='assign') {
+        const pt=p.targets[0]!,vt=v.targets[0]!;
+        if(pt.kind==='identifier')return vt.kind==='identifier' && owners.get(pt)===owners.get(vt) &&
+          match(p.values[0]!,v.values[0]!,candidate,args);
         const left=tableStore(p.targets[0]!),right=tableStore(v.targets[0]!);
-        if(!left || !right || !Object.is(left.key,right.key) || !privateTable(right.object))return false;
+        if(candidate.tableParameter===undefined || !left || !right || !Object.is(left.key,right.key) || !privateTable(right.object))return false;
         const prior=args.get(candidate.tableParameter);
         if(prior && !same(prior,right.object))return false;
         args.set(candidate.tableParameter,right.object);
@@ -369,7 +385,12 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     if(!targets.length || budget<=0)return;
     let selected:{count:number;call:Statement}|undefined;
     for(let count=1;count<=8 && start+count<=statements.length;count++) {
-      const pattern=canonicalWrites(statements.slice(start,start+count),false,()=>--budget>=0);
+      const pattern=canonicalWrites(statements.slice(start,start+count),false,()=>--budget>=0,s=>{
+        if(s.kind!=='local')return false;
+        const locals=declarations.get(s) ?? [];
+        return locals.length===s.names.length && locals.every(b=>!b.reads.length && !b.writes.length && !b.captured) &&
+          s.values.every(v=>!!scalar(v,new Map(),numericState()));
+      });
       if(!pattern)break;
       for(const candidate of targets) {
         if(--budget<0)return;
@@ -415,7 +436,18 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
           s.values.forEach(visit);s.names.forEach(name=>available.delete(name));
           for(const binding of declarations.get(s) ?? [])visible.set(binding.name,binding);
           break;
-        case 'assign': s.targets.forEach(visit);s.values.forEach(visit);break;
+        case 'assign': {
+          s.targets.forEach(visit);s.values.forEach(visit);
+          if(s.targets.length!==1 || s.values.length!==1 || s.targets[0]!.kind!=='identifier' || s.values[0]!.kind!=='function-expr')break;
+          const binding=owners.get(s.targets[0]!),d=binding?.declaration;
+          // The reconstructed REF closure may have a forward local. Recover
+          // only after its sole initialization, never through a mutable callee.
+          if(!binding || d?.kind!=='local' || d.values.length || binding.writes.length!==1 || binding.writes[0]!.node!==s.targets[0])break;
+          if(visible.get(binding.name)!==binding)break;
+          const candidate=target(s.values[0]!,binding);
+          if(candidate)available.set(candidate.name,candidate);
+          break;
+        }
         case 'compound-assign': visit(s.target);visit(s.value);break;
         case 'expression-stmt': visit(s.expression);break;
         case 'return': s.values.forEach(visit);break;

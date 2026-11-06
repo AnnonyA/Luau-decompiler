@@ -1,0 +1,1121 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-10-29T07:39:07.112Z",
+  "localEngine": "AnnonyA/Luau-decompiler",
+  "localVersion": "0.2.0",
+  "compiler": {
+    "executable": "/workspace/.cloud-setup/luau-source/luau-compile",
+    "mode": "--only-parse --null"
+  },
+  "platform": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "comparisonNote": "Only our engine is executed/timed; LunaUX published source is not an independently measured engine result. Syntax is NOT_CHECKED without official luau-compile. Semantic equivalence is NOT_MEASURED.",
+  "fixtureCounts": {
+    "total": 46,
+    "repository": 46,
+    "lunaux": 0,
+    "successful": 45
+  },
+  "processRssBytesAtEnd": 249806848,
+  "samples": [
+    {
+      "id": "docs/assets/v26/tovek/samples/ClickToMoveController.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "de684c450be47df1e29222e671442b096972210a498de1a67f4141cb598fda27",
+      "inputBytes": 35177,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 261.7,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 91200,
+          "lines": 2293,
+          "registerPlaceholders": 24
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/Promise.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "187dccea93dde7abccd8d9224ca34b5b4af59990aa35feebc779c2f7b32264a9",
+      "inputBytes": 34966,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 135.78,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 50353,
+          "lines": 1582,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/Signal.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "be15cf7ce8c766037756918c2b972b87e1c190a13feb2639f28557c8bf5c97c9",
+      "inputBytes": 4651,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 11.764,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 6516,
+          "lines": 233,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/SpawnShield.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "7666e7ffda921a9cc80f00de50f8d1287f83d613a0daf253691c6778ce253993",
+      "inputBytes": 1684,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 5.887,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 2360,
+          "lines": 80,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/Store.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "6ac796cbf73bcf0b2d0af16cc5eff6331611bd434f7af077baab17cc8e30c426",
+      "inputBytes": 4869,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 12.541,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 6686,
+          "lines": 198,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "docs/assets/v26/tovek/samples/Trove.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "461ef073279492b5d342a19dfd79957e1ce1a101a0bea740ad62b4073f94bc82",
+      "inputBytes": 6347,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 19.524,
+        "bytecodeVersion": 14,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 8939,
+          "lines": 314,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/arithmetic_result_fold.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "6b2244d9586876bd5cc2f41a983a66b54ea9163401e9272e52bad4159504036e",
+      "inputBytes": 708,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 3.884,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 879,
+          "lines": 27,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/branch_constructor_initialized.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "77b6780bd90a7c1728b815b3639a849855ecfe73ccbd2348e00cdc55a0ce7a54",
+      "inputBytes": 267,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.064,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 322,
+          "lines": 12,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/cache_context.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "308ee9e9563fcf33fba1bb7520f73870b3fbe336a2b4a6846cf6266401ea4b4f",
+      "inputBytes": 215,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.471,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 207,
+          "lines": 12,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/cell_swap_beside_copy.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "b4b60103cc0c54159be320779760a81dd94232c9a16769f162dd5aa5b8122b32",
+      "inputBytes": 1024,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 3.858,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1764,
+          "lines": 74,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/closure_captured_nil_init.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "ef65c9d65cb2f49b1daa51d23b6111da480a2f33badfc5a1445ce786677ebd13",
+      "inputBytes": 510,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.304,
+        "bytecodeVersion": 11,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 763,
+          "lines": 21,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/collapsed_conditional_stays_ssa.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "d6dec710cfd4df69df2f43373eb12bca3561a870a05ec2eb4e38eb6a7989a02d",
+      "inputBytes": 859,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 4.189,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1896,
+          "lines": 72,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/dead_self_update.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "deaf38d78faa82db26690b65a5df4bea89dbe925e0ee147ed7916fb87f436276",
+      "inputBytes": 287,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.745,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 476,
+          "lines": 19,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_budget.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "52aa080298cefb945115dd9a2c430b2c02c06324f000d6817c3cf1da3796e91a",
+      "inputBytes": 39204,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 97.306,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 50465,
+          "lines": 1448,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_declared_prefix.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "ceef2f909a1eac1a852cf0dbcbcb337cea4a89793cc2a04af028a175bfe966d6",
+      "inputBytes": 716,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 4.127,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1051,
+          "lines": 31,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_declared_select.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "3397eb5286abee1f750376ac58a5c6bc7737bb540891f3896d8f0dc221fd3c16",
+      "inputBytes": 734,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.666,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 908,
+          "lines": 22,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_fall_off.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "0f0b9f28fd4147b2cc4c5be4585dab774ffc3905dd185c7d3263c0372c887a52",
+      "inputBytes": 1021,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 2.03,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1621,
+          "lines": 60,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_first_read.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "8c78f380a8bf9f8dc9ccd47dcdac2a39768f8e78b17ef96f016815eda0d2eb1e",
+      "inputBytes": 1074,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 2.158,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1074,
+          "lines": 38,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_first_read_statement.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "124b903f4438463298c75e0bccfbdb0e35e005c476d30fb2ee2a0662a4b648fa",
+      "inputBytes": 1262,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 3.359,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 1342,
+          "lines": 48,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_guard_select.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "cfdc57ead6a13e41a979b94eed5f69bab5363cd8f188337009311203b9821814",
+      "inputBytes": 1356,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 3.759,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 2534,
+          "lines": 74,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_local_tuple.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "5633588189ed9fcbfe51c4cc016b22998f3f74edceae36a738575870aeb6eeae",
+      "inputBytes": 1746,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 6.38,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 3319,
+          "lines": 134,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_outer_anchor.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "5f9beb440c9c4873755c9243838bda394c817906c4c9dc26eae0d4643e7018f7",
+      "inputBytes": 756,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.452,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 759,
+          "lines": 36,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/deinline_specialized_shorter.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "c3dfae4d7ef450585850fb7961a24597193baa78eee68e59314949d45d7b85b9",
+      "inputBytes": 657,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.337,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 604,
+          "lines": 35,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/duptable_template.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "ab21951cf0ea7dab6fee84b418d1c1b79acc0c43ef5413f44879d00ec2760948",
+      "inputBytes": 108,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.466,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 50,
+          "lines": 2,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/events_shared_return.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "bed7114cb09b4f271b3f05f0631d8dd122f894835785fc8a7b141d6e4056b834",
+      "inputBytes": 12347,
+      "ourEngine": {
+        "success": false,
+        "durationMs": 0.508,
+        "errorCode": "opcode",
+        "error": "unknown opcode 130 in prototype 0 at pc 2"
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/fastcall_arguments.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "54d7d751df2012d17f457af7ebe1f5c91839b3949ddfe56bd65e7bd88373de29",
+      "inputBytes": 370,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.001,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 485,
+          "lines": 16,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/fresh_closure_o1_without_dupclosure.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "c438eff1c4992555b82f740891acf06e23f3f7cc0a4bc7e22cdfb3e22c62f511",
+      "inputBytes": 238,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.707,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 262,
+          "lines": 14,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/generic_for_local.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "42fcf7019c7f17b9afc4fcba82e2ac57bab43f507bfced6b8bf825a132d15450",
+      "inputBytes": 421,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.282,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 654,
+          "lines": 33,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/iteration_cell.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "deb3a0d51f78017935e5fdd02b3b7296361ee10b67bd56816e4d1e331eb128c3",
+      "inputBytes": 190,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.727,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 272,
+          "lines": 12,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/library_constants.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "9d651d57fd1a05f522078653ae988d0bbdc8bc15b05a9d3c5eea671cb7cc1bb5",
+      "inputBytes": 102,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.712,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 122,
+          "lines": 5,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/locals_over_limit_distinct_names.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "725875712a023b8b5bf15e323c108d6d9b1e88ee52cfb26ea8a99fc19b49e02e",
+      "inputBytes": 12273,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 71.154,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 16982,
+          "lines": 679,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/locals_over_limit_same_name.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "ebe234248b7899e96ed4b3fad611bf67c52f76811b76de0e8b35c33f828162ae",
+      "inputBytes": 10456,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 72.227,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 15603,
+          "lines": 676,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/long_elseif_chain.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "b2138ed1f142f52c20a9c0c2958d6f5ac536eb60b03fc814cab2200c0ee3213b",
+      "inputBytes": 35648,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 15697.095,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 50239,
+          "lines": 2804,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/loop_return_skips_loop_tail.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "2f2e13e717d2a4c00139c3e751e57ed517ab943b8b7ae5c9533fcfca8a82f5fc",
+      "inputBytes": 1216,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 6.489,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 2583,
+          "lines": 141,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/loop_shared_return.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "4525dc1dd3fdb0b561f2e290704b4b11088c7da9e48b80a6bf3e0639e95514a1",
+      "inputBytes": 3251,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 12.612,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 5754,
+          "lines": 199,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/module_methods.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "b27d4f27daf04825ebb7861b6bdb3a54fcf554fdcb296454b755e563ee0f28f0",
+      "inputBytes": 574,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.426,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 461,
+          "lines": 18,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/numeric_loop_return.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "c4ecdafba7827722adb6102abdd88b659d4d97d6a0a78f616f3f78bc2d48f51f",
+      "inputBytes": 3098,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 16.459,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "FAIL",
+          "reason": "/tmp/luau-bench-pa3J4h/candidate.luau(174,9): SyntaxError: Expected 'end' (to close 'do' at line 163), got 'local'; did you forget to close 'then' at line 169?\n/tmp/luau-bench-pa3J4h/candidate.luau(186,13): SyntaxError: Expected 'end' (to close 'do' at line 175), got 'print'; did you forget to close 'then' at line 181?\n/tmp/luau-bench-pa3J4h/candidate.luau(189,5): SyntaxError: Expected <eof>, got 'end'\n"
+        },
+        "sourceMetrics": {
+          "bytes": 7016,
+          "lines": 324,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/register_phi_webs.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "e3f2222b894e299d4539a746c8b9b7eef7974f9d42c51a651cfa7a99e22fca4d",
+      "inputBytes": 322,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.856,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 702,
+          "lines": 30,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/return_guard.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "e72a3f694b7ce9cccd53a75f291d3523891e1ab7ebaf4fcfdd2751ebbad052ba",
+      "inputBytes": 326,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.027,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 485,
+          "lines": 22,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/setlist_index_gap.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "18fda488a602c0d67d9e29b6b2615e81ec42d4793ff15130ae64937342135caf",
+      "inputBytes": 110,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.414,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 56,
+          "lines": 2,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/shared_return_tail.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "394ca659fb5a61d9b4906f92b9670c39287cbdfe45243c31602c291b91fe8275",
+      "inputBytes": 452,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.555,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 957,
+          "lines": 39,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/template_repeated_key.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "95ce59f2a6ea56aa35012565ebd9e59fd54416309d65c1e27d0a294f28c233b7",
+      "inputBytes": 326,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.136,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 386,
+          "lines": 13,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/traceback_helper.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "aa327ee2d8e479f08cdeef526402b61f53dfc6c5cb69d080084b357dcdc62b0a",
+      "inputBytes": 567,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.579,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 689,
+          "lines": 23,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/ui_tree_branch_scope.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "0a25e33e8d2f77ea820d05092402b96bb8e5a9654b4821ec1b5f1970e32b56f0",
+      "inputBytes": 698,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 1.907,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 784,
+          "lines": 22,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/upvalue_analysis_nested.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "99cc4db1fbaa5e717a6a88d552f8d484fca8b8cc8390cc8334d516794fd3720e",
+      "inputBytes": 359,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.957,
+        "bytecodeVersion": 11,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 404,
+          "lines": 18,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "luau-lifter/tests/fixtures/upvalue_analysis_nested_g0.luaubc",
+      "group": "repository",
+      "provenance": "Kiet1308/Tovek@77edf387bf280a2f4d46d57ac85d5c4f071b763f",
+      "sha256": "556c8f8f3b9cbe2c53e3c4e32d166154bd2a4bd571ffea7b6fe2e7c5a6a31afc",
+      "inputBytes": 186,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 0.721,
+        "bytecodeVersion": 11,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "PASS"
+        },
+        "sourceMetrics": {
+          "bytes": 404,
+          "lines": 17,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    }
+  ]
+}

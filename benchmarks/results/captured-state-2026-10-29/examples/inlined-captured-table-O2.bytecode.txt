@@ -1,0 +1,109 @@
+Function 0 (record):
+    3:     count += 1
+GETUPVAL R2 U0
+ADDK R2 R2 K0 [1]
+SETUPVAL R2 U0
+    4:     checksum = checksum * 3 + count
+GETUPVAL R4 U1
+MULK R3 R4 K1 [3]
+GETUPVAL R4 U0
+ADD R2 R3 R4
+SETUPVAL R2 U1
+    5:     state.score = value * 7 + count
+MULK R3 R1 K2 [7]
+GETUPVAL R4 U0
+ADD R2 R3 R4
+SETTABLEKS R2 R0 K3 ['score']
+    6:     if value < 0 then
+LOADN R2 0
+JUMPIFNOTLT R1 R2 L0
+    7:         state.tag = -1
+LOADN R2 -1
+SETTABLEKS R2 R0 K4 ['tag']
+    8:         return
+RETURN R0 0
+   10:     state.tag = checksum
+L0: GETUPVAL R2 U1
+SETTABLEKS R2 R0 K4 ['tag']
+   11: end
+RETURN R0 0
+
+Function 1 (observe):
+   20:     return count, checksum
+GETUPVAL R0 U0
+GETUPVAL R1 U1
+RETURN R0 2
+
+Function 2 (??):
+    1: local count, checksum = 0, 1
+LOADN R0 0
+LOADN R1 1
+REMARK allocation: closure with 2 upvalues
+    2: local function record(state, value)
+NEWCLOSURE R2 P0
+CAPTURE REF R0
+CAPTURE REF R1
+   12: local first = ...
+GETVARARGS R3 1
+REMARK builtin tonumber/1
+   13: local limit = tonumber(first) or 4
+FASTCALL1 62 R3 L0
+MOVE R6 R3
+GETIMPORT R5 2 [tonumber]
+CALL R5 1 1
+L0: ORK R4 R5 K0 [4]
+REMARK allocation: table hash 0
+   14: local state = {}
+NEWTABLE R3 0 0
+   15: for index = -2, limit do
+LOADN R7 -2
+MOVE R5 R4
+LOADN R6 1
+FORNPREP R5 L4
+REMARK inlining succeeded (cost 10, profit 1.30x, depth 0)
+    3:     count += 1
+L1: ADDK R0 R0 K3 [1]
+    4:     checksum = checksum * 3 + count
+MULK R8 R1 K4 [3]
+ADD R1 R8 R0
+    5:     state.score = value * 7 + count
+MULK R9 R7 K5 [7]
+ADD R8 R9 R0
+SETTABLEKS R8 R3 K6 ['score']
+    6:     if value < 0 then
+LOADN R8 0
+JUMPIFNOTLT R7 R8 L2
+    7:         state.tag = -1
+LOADN R8 -1
+SETTABLEKS R8 R3 K7 ['tag']
+    8:         return
+JUMP L3
+   10:     state.tag = checksum
+L2: SETTABLEKS R1 R3 K7 ['tag']
+   17:     print("record", index, count, checksum, state.score, state.tag)
+L3: GETIMPORT R8 9 [print]
+LOADK R9 K10 ['record']
+MOVE R10 R7
+MOVE R11 R0
+MOVE R12 R1
+GETTABLEKS R13 R3 K6 ['score']
+GETTABLEKS R14 R3 K7 ['tag']
+CALL R8 6 0
+   15: for index = -2, limit do
+FORNLOOP R5 L1
+REMARK allocation: closure with 2 upvalues
+   19: local function observe()
+L4: NEWCLOSURE R4 P1
+CAPTURE REF R0
+CAPTURE REF R1
+   22: print("final", observe())
+GETIMPORT R5 9 [print]
+LOADK R6 K11 ['final']
+REMARK inlining failed: can't convert fixed returns to multret
+MOVE R7 R4
+CALL R7 0 -1
+CALL R5 -1 0
+   23: 
+CLOSEUPVALS R0
+RETURN R0 0
+

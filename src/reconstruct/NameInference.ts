@@ -1,6 +1,6 @@
 import type { Block, Chunk, Expression, Statement } from "../ast/Ast.js";
 import { NameAllocator, isValidIdentifier } from "./Naming.js";
-import { analyzeBindings, replaceReferences } from "../analysis/Bindings.js";
+import { analyzeBindings, replaceReferences, type LexicalBinding } from "../analysis/Bindings.js";
 
 const GENERATED = /^(?:value|result|config|index|key|item|entry|state|data|count|tmp|player|function_?|callback)(\d*)$/;
 const MAKE_STEM = /^(?:make|create|build|get)([A-Z][A-Za-z0-9]*)$/;
@@ -35,11 +35,17 @@ function declareName(name: string, scopes: Array<Set<string>>): void {
 }
 
 function repairStatement(statement: Statement, scopes: Array<Set<string>>): Statement {
+  const expression = (value: Expression): Expression => mapFnBodies(value,
+    (body, params) => repairBlock(body, [...scopes, new Set(params)]));
   switch (statement.kind) {
-    case "local":
+    case "local": {
+      // Initializers see the preceding scope, not the locals being declared.
+      const values = statement.values.map(expression);
       statement.names.forEach((name) => declareName(name, scopes));
-      return statement;
+      return { ...statement, values };
+    }
     case "assign": {
+      statement = { ...statement, targets: statement.targets.map(expression), values: statement.values.map(expression) };
       if (
         statement.targets.length === 1 &&
         statement.values.length === 1 &&
@@ -67,18 +73,34 @@ function repairStatement(statement: Statement, scopes: Array<Set<string>>): Stat
     case "if":
       return {
         ...statement,
+        test: expression(statement.test),
         consequent: repairBlock(statement.consequent, [...scopes, new Set()]),
-        branches: statement.branches.map((branch) => ({ ...branch, body: repairBlock(branch.body, [...scopes, new Set()]) })),
+        branches: statement.branches.map((branch) => ({ ...branch, test: expression(branch.test), body: repairBlock(branch.body, [...scopes, new Set()]) })),
         alternate: statement.alternate ? repairBlock(statement.alternate, [...scopes, new Set()]) : undefined,
       };
     case "while":
-    case "repeat":
+      return { ...statement, test: expression(statement.test), body: repairBlock(statement.body, [...scopes, new Set()]) };
+    case "repeat": {
+      const inner = [...scopes, new Set<string>()];
+      const body = repairBlock(statement.body, inner);
+      const test = mapFnBodies(statement.test, (body, params) => repairBlock(body, [...inner, new Set(params)]));
+      return { ...statement, body, test };
+    }
     case "do":
       return { ...statement, body: repairBlock(statement.body, [...scopes, new Set()]) };
     case "numeric-for":
-      return { ...statement, body: repairBlock(statement.body, [...scopes, new Set([statement.name])]) };
+      return { ...statement, start: expression(statement.start), stop: expression(statement.stop),
+        step: statement.step ? expression(statement.step) : undefined,
+        body: repairBlock(statement.body, [...scopes, new Set([statement.name])]) };
     case "generic-for":
-      return { ...statement, body: repairBlock(statement.body, [...scopes, new Set(statement.names)]) };
+      return { ...statement, iterators: statement.iterators.map(expression),
+        body: repairBlock(statement.body, [...scopes, new Set(statement.names)]) };
+    case "return":
+      return { ...statement, values: statement.values.map(expression) };
+    case "expression-stmt":
+      return { ...statement, expression: expression(statement.expression) };
+    case "compound-assign":
+      return { ...statement, target: expression(statement.target), value: expression(statement.value) };
     default:
       return statement;
   }
@@ -92,11 +114,11 @@ function foldScratchRegisters(body: Block): Block {
 /** Recurse through every expression slot that can contain a nested closure.
  * Earlier passes only looked in local/assign values and direct call/table
  * arguments, skipping returned functions and closures in conditionals. */
-function mapFnBodies(expression: Expression, rec: (body: Block) => Block): Expression {
+function mapFnBodies(expression: Expression, rec: (body: Block, params?: string[]) => Block): Expression {
   const walk = (value: Expression): Expression => mapFnBodies(value, rec);
   switch (expression.kind) {
     case "function-expr":
-      return { ...expression, body: rec(expression.body) };
+      return { ...expression, body: rec(expression.body, expression.params) };
     case "unary":
       return { ...expression, argument: walk(expression.argument) };
     case "binary":
@@ -208,14 +230,20 @@ function isPureCallee(expression: Expression): boolean {
 }
 
 function foldScratchStatements(statements: Statement[]): Statement[] {
+  const { assignedBindings } = scratchBindings(statements);
   const folded: Statement[] = [];
   for (let i = 0; i < statements.length; i++) {
     const current = statements[i]!;
     const next = statements[i + 1];
     const assigned = singleGeneratedAssign(current);
     const call = next ? singleGeneratedAssign(next) : undefined;
-    if (assigned && call && assigned.name === call.name && isPureCallee(assigned.value)) {
-      if (call.value.kind === "call" && call.value.callee.kind === "identifier" && call.value.callee.name === assigned.name) {
+    const binding = assignedBindings.get(current);
+    if (assigned && call && next && binding && !binding.captured &&
+        assignedBindings.get(next) === binding && isPureCallee(assigned.value)) {
+      // Arguments still evaluate after the first store. Folding must not turn
+      // their reads of that local into reads of an outer binding or old value.
+      const reads = binding.reads.filter((reference) => reference.statement === next);
+      if (call.value.kind === "call" && reads.length === 1 && reads[0]!.node === call.value.callee) {
         folded.push({
           kind: current.kind === "local" ? "local" : "assign",
           ...(current.kind === "local"
@@ -225,7 +253,7 @@ function foldScratchStatements(statements: Statement[]): Statement[] {
         i += 1;
         continue;
       }
-      if (call.value.kind === "method-call" && call.value.object.kind === "identifier" && call.value.object.name === assigned.name) {
+      if (call.value.kind === "method-call" && reads.length === 1 && reads[0]!.node === call.value.object) {
         folded.push({
           kind: current.kind === "local" ? "local" : "assign",
           ...(current.kind === "local"
@@ -257,35 +285,65 @@ function singleGeneratedAssign(statement: Statement): { name: string; value: Exp
   return undefined;
 }
 
+/** Block-local proof: enclosing bindings and globals are unresolved here and
+ * must be retained. Captured locals remain observable after their lexical read
+ * sites, including through callbacks and closures returned by an early exit. */
+function scratchBindings(statements: Statement[]): {
+  assignedBindings: Map<Statement, LexicalBinding>;
+  readBindings: Map<Statement, Set<LexicalBinding>>;
+} {
+  const { bindings } = analyzeBindings({ kind: "block", statements });
+  const assignedBindings = new Map<Statement, LexicalBinding>();
+  const readBindings = new Map<Statement, Set<LexicalBinding>>();
+  for (const binding of bindings) {
+    if (binding.declaration.kind === "local" && binding.declaration.names.length === 1) {
+      assignedBindings.set(binding.declaration, binding);
+    }
+    for (const { statement, node } of binding.writes) {
+      if (statement.kind === "assign" && statement.targets.length === 1 && statement.targets[0] === node) {
+        assignedBindings.set(statement, binding);
+      }
+    }
+    for (const { statement } of binding.reads) {
+      let reads = readBindings.get(statement);
+      if (!reads) readBindings.set(statement, reads = new Set());
+      reads.add(binding);
+    }
+  }
+  return { assignedBindings, readBindings };
+}
+
 function dropOverwrittenGenerated(statements: Statement[]): Statement[] {
+  const { assignedBindings, readBindings } = scratchBindings(statements);
   const out: Statement[] = [];
   const items = [...statements];
   for (let i = 0; i < items.length; i++) {
     const assigned = singleGeneratedAssign(items[i]!);
-    if (!assigned) {
+    const binding = assignedBindings.get(items[i]!);
+    if (!assigned || !binding || binding.captured || !isDiscardableInitializer(assigned.value)) {
       out.push(items[i]!);
       continue;
     }
     let overwrite = -1;
     for (let j = i + 1; j < items.length; j++) {
-      const later = singleGeneratedAssign(items[j]!);
-      if (later && later.name === assigned.name) {
-        if (!exprReadsName(later.value, assigned.name) && !nameReadInRange(items, assigned.name, i + 1, j)) {
-          overwrite = j;
-        }
+      const statement = items[j]!;
+      if (readBindings.get(statement)?.has(binding)) break;
+      if (singleGeneratedAssign(statement) && assignedBindings.get(statement) === binding) {
+        overwrite = j;
         break;
       }
-      if (statementReadsName(items[j]!, assigned.name)) {
-        break;
-      }
+      // Only cross inert straight-line stores. A branch may exit before the
+      // overwrite; calls, metamethods, and environment writes can observe cells.
+      if ((statement.kind !== "local" && statement.kind !== "assign") ||
+          !statement.values.every(isDiscardableInitializer) ||
+          (statement.kind === "assign" && !assignedBindings.has(statement))) break;
     }
-    // Dropping an overwritten temporary is only safe when evaluating the
-    // old initializer has no observable effects. Calls, property/index reads,
-    // arithmetic (metamethods), and closure creation must be preserved.
-    if (overwrite >= 0 && isDiscardableInitializer(assigned.value)) {
+    if (overwrite >= 0) {
       if (items[i]!.kind === "local" && items[overwrite]!.kind === "assign") {
         const later = singleGeneratedAssign(items[overwrite]!)!;
-        items[overwrite] = { kind: "local", names: [assigned.name], values: [later.value] };
+        const declaration: Statement = { kind: "local", names: [assigned.name], values: [later.value] };
+        assignedBindings.set(declaration, binding);
+        items[overwrite] = declaration;
       }
       continue;
     }
@@ -294,11 +352,15 @@ function dropOverwrittenGenerated(statements: Statement[]): Statement[] {
   return out;
 }
 
-/** Only literal evaluation is certainly side-effect-free. Even identifier
- * reads may invoke an environment __index metamethod, while indexing,
- * arithmetic and calls may execute arbitrary user code. */
+/** Literals and recursively inert constructors cannot observe a prior store.
+ * Computed keys must be valid literals: nil/NaN keys can throw before the
+ * overwrite. Identifier reads can invoke an environment __index metamethod. */
 function isDiscardableInitializer(expression: Expression): boolean {
-  return expression.kind === "literal";
+  if (expression.kind === "literal") return true;
+  return expression.kind === "table" && expression.fields.every(field =>
+    (!field.key || (field.key.kind === "literal" && field.key.value !== null &&
+      !(typeof field.key.value === "number" && Number.isNaN(field.key.value)))) &&
+    isDiscardableInitializer(field.value));
 }
 
 function exprReadsName(expression: Expression, name: string): boolean {
@@ -398,7 +460,24 @@ function coalesceInStatements(statements: Statement[]): Statement[] {
   if (rename.size === 0) {
     return statements;
   }
-  return dropRenamedLocals(statements, rename).map((statement) => renameIdents(statement, rename));
+  // Replace the resolved reads AND writes, including do/interpolation slots.
+  // Spelling-based walkers can silently omit a container or rename a shadow.
+  const replacements = new Map<object, object>();
+  const declarationRoots: Array<{statement: Extract<Statement, {kind: "function-decl"}>; name: string}> = [];
+  for (const [old, name] of rename) {
+    const binding = bindingOf(old)!;
+    for (const reference of [...binding.reads, ...binding.writes]) {
+      replacements.set(reference.node, {...reference.node, name});
+      if (reference.declarationRoot && reference.statement.kind === "function-decl") {
+        declarationRoots.push({statement: reference.statement,
+          name: name + reference.statement.name.slice(old.length)});
+      }
+    }
+  }
+  for (const {statement, name} of declarationRoots) {
+    replacements.set(statement, {...statement, name, body: replaceReferences(statement.body, replacements)});
+  }
+  return dropRenamedLocals(replaceReferences(statements, replacements), rename);
 }
 
 function gatherEmptyGenerated(statements: Statement[], out: string[]): void {
@@ -503,15 +582,6 @@ function dropRenamedLocals(statements: Statement[], rename: Map<string, string>)
       }
     });
   return mapped(statements);
-}
-
-function nameReadInRange(statements: Statement[], name: string, from: number, to: number): boolean {
-  for (let i = from; i < to; i++) {
-    if (statementReadsName(statements[i]!, name)) {
-      return true;
-    }
-  }
-  return false;
 }
 
 function statementReadsName(statement: Statement, name: string): boolean {
@@ -640,101 +710,6 @@ function statementReadsName(statement: Statement, name: string): boolean {
   };
   visitStmt(statement);
   return read;
-}
-
-function renameIdents(statement: Statement, rename: Map<string, string>): Statement {
-  const swap = (expression: Expression): Expression => {
-    if (expression.kind === "identifier") {
-      const next = rename.get(expression.name);
-      return next ? { ...expression, name: next } : expression;
-    }
-    if (expression.kind === "unary") {
-      return { ...expression, argument: swap(expression.argument) };
-    }
-    if (expression.kind === "binary") {
-      return { ...expression, left: swap(expression.left), right: swap(expression.right) };
-    }
-    if (expression.kind === "call") {
-      return { ...expression, callee: swap(expression.callee), args: expression.args.map(swap) };
-    }
-    if (expression.kind === "method-call") {
-      return { ...expression, object: swap(expression.object), args: expression.args.map(swap) };
-    }
-    if (expression.kind === "index") {
-      return { ...expression, table: swap(expression.table), key: swap(expression.key) };
-    }
-    if (expression.kind === "property") {
-      return { ...expression, object: swap(expression.object) };
-    }
-    if (expression.kind === "table") {
-      return {
-        ...expression,
-        fields: expression.fields.map((field) => ({
-          ...field,
-          key: field.key ? swap(field.key) : undefined,
-          value: swap(field.value),
-        })),
-      };
-    }
-    if (expression.kind === "paren") {
-      return { ...expression, expression: swap(expression.expression) };
-    }
-    if (expression.kind === "if-expr") {
-      return {
-        ...expression,
-        test: swap(expression.test),
-        consequent: swap(expression.consequent),
-        branches: expression.branches.map((branch) => ({ test: swap(branch.test), value: swap(branch.value) })),
-        alternate: swap(expression.alternate),
-      };
-    }
-    return expression;
-  };
-  switch (statement.kind) {
-    case "local":
-      return { ...statement, values: statement.values.map(swap) };
-    case "assign":
-      return { ...statement, targets: statement.targets.map(swap), values: statement.values.map(swap) };
-    case "compound-assign":
-      return { ...statement, target: swap(statement.target), value: swap(statement.value) };
-    case "expression-stmt":
-      return { ...statement, expression: swap(statement.expression) };
-    case "return":
-      return { ...statement, values: statement.values.map(swap) };
-    case "if":
-      return {
-        ...statement,
-        test: swap(statement.test),
-        consequent: { kind: "block", statements: statement.consequent.statements.map((item) => renameIdents(item, rename)) },
-        branches: statement.branches.map((branch) => ({
-          test: swap(branch.test),
-          body: { kind: "block", statements: branch.body.statements.map((item) => renameIdents(item, rename)) },
-        })),
-        alternate: statement.alternate
-          ? { kind: "block", statements: statement.alternate.statements.map((item) => renameIdents(item, rename)) }
-          : undefined,
-      };
-    case "while":
-      return { ...statement, test: swap(statement.test), body: { kind: "block", statements: statement.body.statements.map((item) => renameIdents(item, rename)) } };
-    case "repeat":
-      return { ...statement, body: { kind: "block", statements: statement.body.statements.map((item) => renameIdents(item, rename)) }, test: swap(statement.test) };
-    case "numeric-for":
-      return {
-        ...statement,
-        start: swap(statement.start),
-        stop: swap(statement.stop),
-        step: statement.step ? swap(statement.step) : undefined,
-        body: { kind: "block", statements: statement.body.statements.map((item) => renameIdents(item, rename)) },
-      };
-    case "generic-for":
-      return {
-        ...statement,
-        iterators: statement.iterators.map(swap),
-        body: { kind: "block", statements: statement.body.statements.map((item) => renameIdents(item, rename)) },
-      };
-    default:
-      return statement;
-  }
 }
 
 function inlineOwnedTables(body: Block): Block {
