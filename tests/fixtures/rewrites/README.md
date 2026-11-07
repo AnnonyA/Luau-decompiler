@@ -1,6 +1,6 @@
 # Rewrite development regressions
 
-These three originals were authored for this project. They are development
+These originals were authored for this project. They are development
 regressions, not a blind competitive evaluation. `inputs.json` supplies three
 inputs per source. The neighboring bytecode was compiled using official Luau
 `9d7748a4f324213a18cb8283fa2a77c330225fa0`, `--binary -g1 -O0/-O1/-O2`.
@@ -16,3 +16,18 @@ inputs per source. The neighboring bytecode was compiled using official Luau
 all 17 option configurations and preserves source/bytecode hashes and VM traces.
 No external API is used. Unit tests also exercise these checked-in bytes, so
 structure assertions do not silently move with a newly installed compiler.
+
+The guarded-loop/FASTCALL round adds four independent originals:
+
+- `guarded-polling`: a coroutine repeatedly yields before visibility/readiness
+  guards and nested generic iteration. False guards must skip work, not stop it.
+- `fastcall-observations`: variadic builtins consume effectful arguments exactly
+  once; nested min operations must not be emitted as both discarded and used.
+- `loop-input-observations`: metatable observations prove that generic iterator
+  expressions and numeric bounds/step are each evaluated exactly once.
+- `fastcall-fallback-environment`: native and replacement environments exercise
+  builtin fallback calls, open argument packs and fixed multiple return counts.
+
+Each has three deterministic inputs and pinned O0/O1/O2 bytes. These reductions
+were authored independently of the supplied Roblox script; no uploaded user
+source or bytecode is included in this corpus.

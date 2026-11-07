@@ -160,7 +160,6 @@ class SourceBuilder {
   private readonly deadLoopPhis = new Set<string>();
   private readonly scopeStack: Array<Set<string>> = [new Set()];
   private readonly openPacks = new Set<number>();
-  private readonly fallbackCalls = new Set<number>();
   private pendingStack: PendingTable[] = [];
   /** Closure locals that are assigned to a table field: used for method lifting. */
   private readonly closureFields = new Map<
@@ -254,7 +253,6 @@ class SourceBuilder {
       this.declareInScope(name);
       this.env.set(i, { name, expression: ident(name), pinned: true });
     }
-    this.fallbackCalls = this.collectFallbackCalls();
     this.indexSharedClosureConstants();
   }
 
@@ -395,29 +393,6 @@ class SourceBuilder {
       }
     }
     return low;
-  }
-
-  /** CALL/CALLFB instructions that are the slow-path fallbacks of a preceding
-   * FASTCALL* jump. Their uses must not count as real uses (double counting). */
-  private collectFallbackCalls(): Set<number> {
-    const fallbacks = new Set<number>();
-    const instructions = this.proto.instructions;
-    for (const insn of instructions) {
-      if (!isFastCallLike(insn.opcode) || insn.jumpTarget === undefined) {
-        continue;
-      }
-      const target = insn.jumpTarget;
-      for (let i = this.firstInstructionAfter(insn.pc); i < instructions.length; i++) {
-        const other = instructions[i]!;
-        if (other.pc >= target) {
-          break;
-        }
-        if (other.opcode === Opcode.CALL || other.opcode === Opcode.CALLFB) {
-          fallbacks.add(other.pc);
-        }
-      }
-    }
-    return fallbacks;
   }
 
   build(): Statement[] {
@@ -680,7 +655,8 @@ class SourceBuilder {
       let bodyStart = loop.header;
       const headerSetup: Statement[] = [];
       const exitSetup: Statement[] = [];
-      if (loop.kind !== "infinite" && last && isCompare(last.opcode) && header.successors.length === 2) {
+      if (loop.kind !== "infinite" && last && isCompare(last.opcode) && header.successors.length === 2 &&
+          header.successors.some(successor => !loop.blocks.includes(successor))) {
         // while: the header test jumps to the exit when true, so the loop test is its negation
         this.consumed.add(last.pc);
         const bodyCandidate = header.successors.find((id) => loop.blocks.includes(id) && id !== loop.header);
@@ -3236,7 +3212,7 @@ class SourceBuilder {
       return false;
     }
     for (const next of this.ir.cfg.blocks[home]!.instructions) {
-      if (next.pc <= definition.pc || this.fallbackCalls.has(next.pc) || isFastCall(next.opcode)) {
+      if (next.pc <= definition.pc || isFastCall(next.opcode)) {
         continue;
       }
       if (next.uses.includes(register) ||
@@ -3278,7 +3254,7 @@ class SourceBuilder {
       if (next.pc <= insn.pc) {
         continue;
       }
-      if (next.uses.includes(register) && !isFakeUse(next.opcode) && !this.fallbackCalls.has(next.pc)) {
+      if (next.uses.includes(register) && !isFakeUse(next.opcode)) {
         if (this.ir.cfg.blockOfPc.get(next.pc) !== home) {
           return true;
         }
@@ -3297,7 +3273,7 @@ class SourceBuilder {
       if (insn.pc < fromPc || (toPc !== undefined && insn.pc >= toPc)) {
         continue;
       }
-      if (insn.uses.includes(register) && !isFakeUse(insn.opcode) && !this.fallbackCalls.has(insn.pc)) {
+      if (insn.uses.includes(register) && !isFakeUse(insn.opcode)) {
         count += 1;
       }
     }
@@ -3311,7 +3287,6 @@ class SourceBuilder {
         continue;
       }
       if (
-        !this.fallbackCalls.has(insn.pc) &&
         (
           (insn.uses.includes(register) && !isFakeUse(insn.opcode)) ||
           // Open CALL argument lists use the live registers above A, even
@@ -3685,18 +3660,16 @@ function isControlOnly(opcode: Opcode): boolean {
   }
 }
 
-function isFastCallLike(opcode: Opcode): boolean {
-  return isFastCall(opcode);
-}
-
-/** Uses that are part of the loop protocol, not real reads of the value. */
+/** Source reconstruction emits the fallback CALL once for either runtime
+ * path. Count its callee/arguments, not FASTCALL's duplicate VM-only operands.
+ * Generic FASTCALL has no explicit argument uses at all; ignoring the fallback
+ * makes real arguments appear dead and can evaluate their expressions twice.
+ * Iteration backedges are protocol reads; preparation instructions consume
+ * the source bounds/iterators once and therefore remain real uses. */
 function isFakeUse(opcode: Opcode): boolean {
+  if (isFastCall(opcode)) return true;
   switch (opcode) {
-    case Opcode.FORNPREP:
     case Opcode.FORNLOOP:
-    case Opcode.FORGPREP:
-    case Opcode.FORGPREP_INEXT:
-    case Opcode.FORGPREP_NEXT:
     case Opcode.FORGLOOP:
     case Opcode.JUMP:
     case Opcode.JUMPBACK:
