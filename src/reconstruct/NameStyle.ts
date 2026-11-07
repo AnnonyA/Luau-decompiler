@@ -24,7 +24,7 @@ export function styleLocalNames(ast: Chunk, options: NameStyleOptions = {}): Chu
   bindings.forEach((binding, index) => {
     // Method receivers are implicit syntax. Types are opaque strings in this
     // AST, so preserve their identifiers until type expressions are modeled.
-    if (binding.name === 'self' || typeNames.has(binding.name)) return;
+    if (binding.name === 'self' || typeNames.has(binding.name) || namesFunction(binding)) return;
     let preferred = binding.name;
     if (compact) {
       do { preferred = `v${++serial}`; } while (allocator.isUsed(preferred));
@@ -43,6 +43,16 @@ export function styleLocalNames(ast: Chunk, options: NameStyleOptions = {}): Chu
     }
   });
   return result;
+}
+
+/** Luau records declaration names in function prototypes. Styling these names
+ * changes debug.info(fn, "n"), even when all lexical references still resolve. */
+function namesFunction(binding: LexicalBinding): boolean {
+  const declaration = binding.declaration;
+  if (declaration.kind === 'function-decl' && declaration.local && binding.scope !== declaration.body) return true;
+  if (declaration.kind === 'local' && declaration.values[binding.declarationIndex!]?.kind === 'function-expr') return true;
+  return binding.writes.some(reference => reference.declarationRoot &&
+    reference.statement.kind === 'function-decl' && !/[.:]/.test(reference.statement.name));
 }
 
 function declarationSetter(binding: LexicalBinding): (name: string) => void {

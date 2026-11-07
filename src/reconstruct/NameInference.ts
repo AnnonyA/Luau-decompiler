@@ -823,6 +823,9 @@ interface Binding {
   compoundSubs: number;
   assignedNot: boolean;
   returned: boolean;
+  emptyTable?: boolean;
+  resultHint?: string;
+  functionName?: boolean;
   captured: boolean;
   whileCountdown: boolean;
   repeatCount: boolean;
@@ -838,7 +841,11 @@ function renameChunk(ast: Chunk): Chunk {
   applyHints(ast.body.statements, bindings);
   const names = allocate(bindings);
   const globals = analyzeBindings(ast.body).globals;
-  const state: ApplyState = { next: 0, globals, allocators: [new NameAllocator()] };
+  // Inferred names must not force later explicit bindings (especially function
+  // names observable through debug.info) to acquire allocator suffixes.
+  const reservedNames = new Set(bindings.filter(binding =>
+    !isGeneratedName(binding.name) || binding.functionName).map(binding => binding.name));
+  const state: ApplyState = { next: 0, globals, reservedNames, allocators: [new NameAllocator()] };
   return { kind: "chunk", body: applyBlock(ast.body, names, [new Map()], state) };
 }
 
@@ -848,6 +855,7 @@ function collect(
   scopes: Array<Map<string, Binding>>,
   depth: number,
   forNest: number,
+  functionResultHint?: string,
 ): void {
   const declare = (name: string, kind: Binding["kind"], extra: Partial<Binding> = {}): Binding => {
     const binding: Binding = {
@@ -977,7 +985,9 @@ function collect(
         statement.values.forEach(visitExpr);
         statement.names.forEach((name, index) => {
           const init = statement.values[index] ?? (statement.values.length === 1 ? statement.values[0] : undefined);
-          declare(name, "local", { hint: hintFromInit(init) });
+          declare(name, "local", { hint: hintFromInit(init),
+            functionName: init?.kind === "function-expr",
+            emptyTable: index < statement.values.length && init?.kind === "table" && init.fields.length === 0 });
         });
         break;
       case "assign":
@@ -986,6 +996,7 @@ function collect(
           if (target.kind === "identifier") {
             const binding = resolve(target.name);
             const value = statement.values[index] ?? statement.values[0];
+            if (binding && value?.kind === "function-expr") binding.functionName = true;
             if (binding && !binding.hint) {
               binding.hint = hintFromInit(value);
             }
@@ -1028,41 +1039,42 @@ function collect(
         break;
       case "function-decl": {
         if (statement.local) {
-          declare(statement.name, "local");
+          declare(statement.name, "local", { functionName: true });
         } else {
           const owner = resolve(statement.name.split(/[.:]/)[0] ?? "");
           if (owner) {
             owner.classTable = true;
+            if (!/[.:]/.test(statement.name)) owner.functionName = true;
           }
         }
         if (declarationTail(statement.name) === "rgb" && statement.params.length === 3) {
           scopes.push(new Map());
           ["r", "g", "b"].forEach((hint, index) => declare(statement.params[index]!, "param", { hint }));
-          collect(statement.body.statements, bindings, scopes, depth + 1, 0);
+          collect(statement.body.statements, bindings, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)));
           scopes.pop();
           break;
         }
         scopes.push(new Map());
         const paramHints = paramHintsFor(statement.name, statement.params);
         statement.params.forEach((param, index) => declare(param, "param", paramHints[index] ? { hint: paramHints[index] } : {}));
-        collect(statement.body.statements, bindings, scopes, depth + 1, 0);
+        collect(statement.body.statements, bindings, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)));
         scopes.pop();
         break;
       }
       case "if":
         visitExpr(statement.test);
         scopes.push(new Map());
-        collect(statement.consequent.statements, bindings, scopes, depth, forNest);
+        collect(statement.consequent.statements, bindings, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         for (const branch of statement.branches) {
           visitExpr(branch.test);
           scopes.push(new Map());
-          collect(branch.body.statements, bindings, scopes, depth, forNest);
+          collect(branch.body.statements, bindings, scopes, depth, forNest, functionResultHint);
           scopes.pop();
         }
         if (statement.alternate) {
           scopes.push(new Map());
-          collect(statement.alternate.statements, bindings, scopes, depth, forNest);
+          collect(statement.alternate.statements, bindings, scopes, depth, forNest, functionResultHint);
           scopes.pop();
         }
         break;
@@ -1075,12 +1087,12 @@ function collect(
           }
         }
         scopes.push(new Map());
-        collect(statement.body.statements, bindings, scopes, depth, forNest);
+        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         break;
       case "repeat":
         scopes.push(new Map());
-        collect(statement.body.statements, bindings, scopes, depth, forNest);
+        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
         if (statement.test.kind === "binary" && statement.test.left.kind === "identifier") {
           const binding = resolve(statement.test.left.name);
           if (binding) {
@@ -1107,7 +1119,7 @@ function collect(
           hint: /\d$/.test(statement.name) ? (["i", "j", "k"][forNest] ?? "index") : undefined,
           forNest,
         });
-        collect(statement.body.statements, bindings, scopes, depth, forNest + 1);
+        collect(statement.body.statements, bindings, scopes, depth, forNest + 1, functionResultHint);
         scopes.pop();
         break;
       case "generic-for": {
@@ -1118,7 +1130,7 @@ function collect(
           const hint = ipairs ? (index === 0 ? "index" : "value") : undefined;
           declare(name, "loop", { hint, ipairs, forNest });
         });
-        collect(statement.body.statements, bindings, scopes, depth, forNest);
+        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         break;
       }
@@ -1129,6 +1141,13 @@ function collect(
             const binding = resolve(value.name);
             if (binding) {
               binding.returned = true;
+              // Use the named function's result role only for a table created
+              // in this function and returned in one explicit position. Nested
+              // closure returns must not rename an outer function's bindings.
+              if (statement.values.length === 1 && binding.kind === "local" &&
+                  binding.depth === depth && binding.emptyTable && functionResultHint) {
+                binding.resultHint = functionResultHint;
+              }
             }
           }
         });
@@ -1138,7 +1157,7 @@ function collect(
         break;
       case "do":
         scopes.push(new Map());
-        collect(statement.body.statements, bindings, scopes, depth, forNest);
+        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         break;
       default:
@@ -1264,6 +1283,7 @@ function pickHint(binding: Binding): string | undefined {
   if (binding.exportField && isValidIdentifier(binding.exportField)) {
     return binding.exportField === "Config" ? "CONFIG" : binding.exportField;
   }
+  if (binding.resultHint) return binding.resultHint;
   if (binding.whileCountdown && binding.compoundSubs > 0) {
     return "descending";
   }
@@ -1365,15 +1385,17 @@ function paramLooksLikeSelf(fn: { body: Block }, name: string): boolean {
 interface ApplyState {
   next: number;
   globals: Set<string>;
+  reservedNames: Set<string>;
   allocators: NameAllocator[];
 }
 
 // An unchanged binding already has the correct lexical identity. Renaming it
 // must not capture a free identifier, including a numbered allocator fallback.
 function takeSafeName(preferred: string, old: string, state: ApplyState): string {
-  let name = currentAllocator(state).take(preferred);
-  while (name !== old && state.globals.has(name)) name = currentAllocator(state).take(preferred);
-  return name;
+  // Reject a suggestion without consuming it: an explicit declaration later
+  // in this scope must still be able to claim its original name.
+  return currentAllocator(state).take(preferred, name => name === old ||
+    (!state.globals.has(name) && !state.reservedNames.has(name)));
 }
 
 function currentAllocator(state: ApplyState): NameAllocator {

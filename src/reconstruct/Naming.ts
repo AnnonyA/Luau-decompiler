@@ -48,14 +48,14 @@ export class NameAllocator {
     return this.take(name);
   }
 
-  take(preferred: string): string {
+  take(preferred: string, accept: (name: string) => boolean = () => true): string {
     const base = sanitizeIdentifier(preferred);
-    if (!this.used.has(base)) {
+    if (!this.used.has(base) && accept(base)) {
       this.used.add(base);
       return base;
     }
     let suffix = this.nextSuffix.get(base) ?? 2;
-    while (this.used.has(`${base}${suffix}`)) {
+    while (this.used.has(`${base}${suffix}`) || !accept(`${base}${suffix}`)) {
       suffix += 1;
     }
     const next = `${base}${suffix}`;

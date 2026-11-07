@@ -11,5 +11,8 @@
   "anonymous-function-name.luau": [["-2"], ["0"], ["7"]],
   "layout-evaluation-order.luau": [["-2"], ["0"], ["7"]],
   "layout-scopes-tables.luau": [["-2"], ["0"], ["7"]],
-  "layout-repeat-scopes.luau": [["-2"], ["0"], ["7"]]
+  "layout-repeat-scopes.luau": [["-2"], ["0"], ["7"]],
+  "return-selection.luau": [["-2"], ["0"], ["7"]],
+  "getter-result-scopes.luau": [["-2"], ["0"], ["7"]],
+  "getter-debug-names.luau": [["-2"], ["0"], ["7"]]
 }

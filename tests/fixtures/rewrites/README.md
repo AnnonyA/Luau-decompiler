@@ -51,3 +51,11 @@ The source-structure round adds three independent development regressions:
   receiver/table cells declared inside the repeat body.
 
 All have three deterministic inputs and pinned O0/O1/O2 bytes.
+
+The return-structure round adds `return-selection` (scalar versus open returns,
+nil/false, sorting and branch call traces) and `getter-result-scopes` (owned table
+results, nested readers, globals, parameter collisions and multiple returns).
+`getter-debug-names` checks that inferred names and optional naming styles do not
+alter the prototype names of later functions, including suffix collisions.
+All three are independent development regressions with three inputs and pinned
+O0/O1/O2 bytes; no existing fixture was changed.
