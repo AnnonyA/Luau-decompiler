@@ -37,6 +37,8 @@ describe("HTTP request limits", () => {
       expect(accepted.status).toBe(200);
       const result = await accepted.json();
       expect(result).toMatchObject({ ok: true });
+      expect(result.source).toMatch(/^-- \[\[ annonya\.github\.io \]\]/);
+      expect(result.source).toContain(`-- Luau bytecode version: ${result.profile.version} | Luau type version: ${result.profile.typesVersion}\n\n`);
     } finally {
       server.closeAllConnections();
       await new Promise<void>((resolve, reject) => {

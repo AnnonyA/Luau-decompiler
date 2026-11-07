@@ -90,28 +90,27 @@ class Printer {
         break;
       }
       case "assign":
+        // Named function assignment writes the same existing cell. Keep the
+        // forward local: converting this into `local function` can replace a
+        // REF cell already captured by another closure.
+        if (statement.targets.length === 1 && statement.values.length === 1 &&
+            statement.targets[0]!.kind === "identifier" && statement.values[0]!.kind === "function-expr" &&
+            statement.values[0]!.debugName === statement.targets[0]!.name) {
+          this.namedFunction(statement.values[0]!, statement.targets[0]!.name, false);
+          break;
+        }
         this.write(
           `${statement.targets.map((target) => this.expr(target)).join(", ")} = ${statement.values
             .map((value) => this.expr(value))
             .join(", ")}`,
         );
+        if (statement.values.some(value => value.kind === "function-expr")) this.pendingBlank = true;
         break;
       case "compound-assign":
         this.write(`${this.expr(statement.target)} ${statement.op}= ${this.expr(statement.value)}`);
         break;
       case "function-decl": {
-        const header = `${statement.local ? "local function " : "function "}${statement.name}(${formatParams(
-          statement.params,
-          statement.isVararg,
-          statement.paramTypes,
-        )})${statement.returnType ? `: ${statement.returnType}` : ""}`;
-        this.write(header);
-        this.indentLevel += 1;
-        this.functionComments(statement);
-        this.printBlock(statement.body, false);
-        this.indentLevel -= 1;
-        this.write("end");
-        this.pendingBlank = true;
+        this.namedFunction(statement, statement.name, statement.local);
         break;
       }
       case "if": {
@@ -296,6 +295,17 @@ class Printer {
       return `{\n${inner}\n${this.unit.repeat(this.indentLevel + this.exprDepth)}}`;
     }
     return `{ ${parts.join(", ")} }`;
+  }
+
+  private namedFunction(fn: PrintedFunction, name: string, local: boolean): void {
+    this.write(`${local ? "local function " : "function "}${name}(${formatParams(fn.params, fn.isVararg, fn.paramTypes)})${
+      fn.returnType ? `: ${fn.returnType}` : ""}`);
+    this.indentLevel += 1;
+    this.functionComments(fn);
+    this.printBlock(fn.body, false);
+    this.indentLevel -= 1;
+    this.write("end");
+    this.pendingBlank = true;
   }
 
   private functionComments(fn: PrintedFunction): void {

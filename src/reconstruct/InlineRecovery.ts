@@ -47,6 +47,7 @@ export function inlineHelperLines(module: BytecodeModule): Set<number> {
 
 interface CallTarget {
   name: string;
+  binding: LexicalBinding;
   parameters: Map<LexicalBinding, number>;
   count: number;
 }
@@ -236,7 +237,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       .map(b=>[b,b.declarationIndex!]));
     if (parameters.size !== statement.params.length || [...parameters.keys()].some(b=>b.writes.length)) return;
     const expression = returnPattern(statement.body,parameters);
-    const base={name:binding.name,parameters,count:statement.params.length};
+    const base={name:binding.name,binding,parameters,count:statement.params.length};
     if (statement.params.length && expression && size(expression)<=128 && size(expression)>=5 && scalar(expression,parameters))return {...base,expression};
     // A retained fixed tuple is a separate candidate: never substitute it into
     // a scalar slot and accidentally expand or discard additional results.
@@ -324,6 +325,27 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       (s.kind==='if' && (continues(s.consequent) || s.branches.some(b=>continues(b.body)) || !!s.alternate && continues(s.alternate))));
   }
   type Visible = Map<string,LexicalBinding>;
+  interface CaptureContext {depth:number}
+  // Preserve the existing closure capture set. Adding a helper upvalue can
+  // exceed Luau's limit; removing/replacing another cell can change closure
+  // sharing and REF lifetime even when its current value happens to be equal.
+  function freeBindings(root: unknown, depth: number): Set<LexicalBinding> | undefined {
+    const result=new Set<LexicalBinding>(),pending:unknown[]=[root];
+    if(!depth)return result;
+    while(pending.length) {
+      if(--budget<0)return;
+      const node=pending.pop();
+      if(!node || typeof node!=='object')continue;
+      const owner=owners.get(node);
+      if(owner && owner.depth<depth)result.add(owner);
+      for(const value of Object.values(node))pending.push(value);
+    }
+    return result;
+  }
+  function preservesCaptures(before: unknown, args: Expression[], context: CaptureContext): boolean {
+    const old=freeBindings(before,context.depth),next=freeBindings(args,context.depth);
+    return !!old && !!next && old.size===next.size && [...old].every(binding=>next.has(binding));
+  }
   // Initializer expansion can extract an old reference into a new scope. Its
   // spelling is usable only if the destination still resolves it to that owner.
   function visibleArguments(e: Expression, visible: Visible): boolean {
@@ -340,7 +362,15 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       if(binding.scope===body)scope.set(binding.name,binding);
     return scope;
   }
-  function expression(e: Expression, available: Available, visible: Visible): void {
+  function functionBody(node: Expression | Statement, body: Block, available: Available, visible: Visible, parent: CaptureContext): void {
+    const depth=parent.depth+1,bindings=freeBindings(body,depth);
+    if(!bindings)return;
+    const scope=functionScope(node,visible,body);
+    const inherited=new Map([...available].filter(([name,candidate])=>
+      scope.get(name)===candidate.binding && bindings.has(candidate.binding)));
+    walk(body,inherited,scope,{depth});
+  }
+  function expression(e: Expression, available: Available, visible: Visible, context: CaptureContext): void {
     if (budget <= 0) return;
     let selected: Expression | undefined, ambiguous=false;
     for (const candidate of available.values()) {
@@ -349,16 +379,17 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       const args = new Map<number,Expression>();
       if (match(candidate.expression,e,candidate,args) && args.size === candidate.count) {
         const ordered = Array.from({length:candidate.count},(_,i)=>args.get(i)!);
-        if (size(e) >= 2 + ordered.reduce((n,arg)=>n+size(arg),0) + 2 && ordered.every(arg=>visibleArguments(arg,visible))) {
+        if (size(e) >= 2 + ordered.reduce((n,arg)=>n+size(arg),0) + 2 && ordered.every(arg=>visibleArguments(arg,visible)) &&
+            preservesCaptures(e,ordered,context)) {
           if(selected){ambiguous=true;break;}
-          selected={kind:'call',callee:ident(candidate.name),args:ordered,open:false};
+          selected={kind:'call',callee:ident(candidate.name),args:structuredClone(ordered),open:false};
         }
       }
     }
     // Do not commit a first match if the remaining ambiguity scan ran out of fuel.
     if(budget<=0)return;
     if(selected && !ambiguous){replacements.set(e,selected);return;}
-    const visit = (value: Expression) => expression(value,available,visible);
+    const visit = (value: Expression) => expression(value,available,visible,context);
     switch(e.kind) {
       case 'binary': visit(e.left);visit(e.right);break;
       case 'unary': visit(e.argument);break;
@@ -370,7 +401,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       case 'table': e.fields.forEach(f=>{if(f.key)visit(f.key);visit(f.value);});break;
       case 'if-expr': visit(e.test);visit(e.consequent);e.branches.forEach(b=>{visit(b.test);visit(b.value);});visit(e.alternate);break;
       case 'interp': e.parts.forEach(p=>{if(typeof p.value!=='string')visit(p.value);});break;
-      case 'function-expr': walk(e.body,new Map(),functionScope(e,visible,e.body));break;
+      case 'function-expr': functionBody(e,e.body,available,visible,context);break;
     }
   }
   function matchWrites(pattern:Statement[], actual:Statement[], candidate:WriteTarget,args:Map<number,Expression>):boolean {
@@ -395,7 +426,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
         matchWrites(p.alternate!.statements,v.alternate!.statements,candidate,args);
     });
   }
-  function region(statements:Statement[],start:number,available:Available,visible:Visible):{count:number;call:Statement}|undefined {
+  function region(statements:Statement[],start:number,available:Available,visible:Visible,context:CaptureContext):{count:number;call:Statement}|undefined {
     const targets=[...available.values()].filter((t):t is WriteTarget=>'writes' in t);
     if(!targets.length || budget<=0)return;
     let selected:{count:number;call:Statement}|undefined;
@@ -412,7 +443,8 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
         const args=new Map<number,Expression>();
         if(!matchWrites(candidate.writes,pattern,candidate,args) || args.size!==candidate.count)continue;
         const ordered=Array.from({length:candidate.count},(_,i)=>args.get(i)!);
-        if(!ordered.every(arg=>visibleArguments(arg,visible)))continue;
+        if(!ordered.every(arg=>visibleArguments(arg,visible)) ||
+            !preservesCaptures(statements.slice(start,start+count),ordered,context))continue;
         if(selected)return; // Refuse ambiguous helper or region boundaries.
         // Arguments expanded from earlier initializers have already passed the
         // destination binding proof. Detach them from replacements scheduled at
@@ -422,7 +454,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     }
     return budget>0 ? selected : undefined;
   }
-  function tupleRegion(statements:Statement[], start:number, available:Available, visible:Visible):
+  function tupleRegion(statements:Statement[], start:number, available:Available, visible:Visible, context:CaptureContext):
     {count:number;statements:Statement[];locals:LexicalBinding[]} | undefined {
     let selected:{count:number;candidate:TupleTarget;args:Expression[];slots:Array<{name:string;local?:LexicalBinding;type?:string}>}|undefined;
     for(const candidate of available.values()) {
@@ -454,7 +486,8 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       const args=new Map<number,Expression>();
       if(!candidate.returns.every((pattern,index)=>match(pattern,actual[index]!,candidate,args)) || args.size!==candidate.count)continue;
       const ordered=Array.from({length:candidate.count},(_,i)=>args.get(i)!);
-      if(!ordered.every(arg=>visibleArguments(arg,visible)))continue;
+      if(!ordered.every(arg=>visibleArguments(arg,visible)) ||
+          !preservesCaptures(statements.slice(start,start+count),ordered,context))continue;
       if(selected)return; // No guessed winner between equally plausible helpers.
       selected={count,candidate,args:structuredClone(ordered),slots};
     }
@@ -478,32 +511,32 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     });
     return {count:selected.count,statements:output,locals:selected.slots.flatMap(slot=>slot.local?[slot.local]:[])};
   }
-  function walk(body: Block, inherited: Available, inheritedVisible: Visible): {available:Available;visible:Visible} {
+  function walk(body: Block, inherited: Available, inheritedVisible: Visible, context: CaptureContext): {available:Available;visible:Visible} {
     const available = new Map(inherited),visible=new Map(inheritedVisible);
-    const visit = (e: Expression) => expression(e,available,visible);
+    const visit = (e: Expression) => expression(e,available,visible,context);
     const nested = (b: Block, bindings: LexicalBinding[] = []) => {
       const scope = new Map(available),names=new Map(visible);
       for(const binding of bindings){scope.delete(binding.name);names.set(binding.name,binding);}
-      return walk(b,scope,names);
+      return walk(b,scope,names,context);
     };
     const statements:Statement[]=[];
     let changed=false;
     for (let i=0;i<body.statements.length;i++) {
       const s=body.statements[i]!;
-      const tuple=tupleRegion(body.statements,i,available,visible);
+      const tuple=tupleRegion(body.statements,i,available,visible,context);
       if(tuple) {
         statements.push(...tuple.statements);i+=tuple.count-1;changed=true;
         for(const binding of tuple.locals){available.delete(binding.name);visible.set(binding.name,binding);}
         continue;
       }
-      const recovered=region(body.statements,i,available,visible);
+      const recovered=region(body.statements,i,available,visible,context);
       if(recovered){statements.push(recovered.call);i+=recovered.count-1;changed=true;continue;}
       statements.push(s);
       switch(s.kind) {
         case 'function-decl': {
           for(const binding of declarations.get(s) ?? [])
             if(binding.scope!==s.body)visible.set(binding.name,binding);
-          walk(s.body,new Map(),functionScope(s,visible,s.body));
+          functionBody(s,s.body,available,visible,context);
           if (s.local) available.delete(s.name);
           const candidate = target(s);
           if (candidate) available.set(candidate.name,candidate);
@@ -536,7 +569,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
           // in this body. Nested-loop continues do not skip these declarations.
           if (continues(s.body)) for (const [name,candidate] of tail.available)
             if (available.get(name)!==candidate) tail.available.delete(name);
-          expression(s.test,tail.available,tail.visible);break;
+          expression(s.test,tail.available,tail.visible,context);break;
         }
         case 'numeric-for': visit(s.start);visit(s.stop);if(s.step)visit(s.step);nested(s.body,declarations.get(s));break;
         case 'generic-for': s.iterators.forEach(visit);nested(s.body,declarations.get(s));break;
@@ -547,6 +580,6 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     if(changed)replacements.set(body,replaceReferences({...body,statements},replacements));
     return {available,visible};
   }
-  walk(ast.body,new Map(),new Map());
+  walk(ast.body,new Map(),new Map(),{depth:0});
   return replacements.size ? replaceReferences(ast,replacements) : ast;
 }

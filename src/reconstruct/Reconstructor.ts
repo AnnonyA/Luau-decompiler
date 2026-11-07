@@ -168,7 +168,7 @@ class SourceBuilder {
   >();
   private readonly mainProto: Prototype | undefined;
   /** Repeated constant loads with proven capture identity and a dominating first load. */
-  private readonly sharedClosureConstants = new Map<number, {pc: number; name: string; hoisted: boolean}>();
+  private readonly sharedClosureConstants = new Map<number, {pc: number; name: string; hoisted: boolean; factory?:string}>();
 
   constructor(
     private readonly module: BytecodeModule,
@@ -274,6 +274,7 @@ class SourceBuilder {
     const environmentNeutral = new Set([...inert, Opcode.NEWTABLE, Opcode.DUPTABLE, Opcode.NEWCLOSURE,
       Opcode.DUPCLOSURE, Opcode.GETVARARGS, Opcode.PREPVARARGS, Opcode.NOT, Opcode.AND, Opcode.OR,
       Opcode.ANDK, Opcode.ORK, Opcode.JUMPXEQKNIL, Opcode.JUMPXEQKB, Opcode.JUMPXEQKN, Opcode.JUMPXEQKS]);
+    let factoryLocals=0;
     for (const [constant, sites] of loads) {
       if (sites.length < 2) continue;
       const first = sites[0]!;
@@ -282,6 +283,7 @@ class SourceBuilder {
       const hoisted = sites.some(s => this.ir.cfg.blockOfPc.get(s.pc) !== home);
       const signature = this.constantCaptureSignature(first);
       if (signature === undefined || sites.some(s => this.constantCaptureSignature(s) !== signature)) continue;
+      let needsFactory=false;
       // Keep the existing capture-free, same-block rule. Extending sharing to
       // captures or other blocks requires stronger lifetime/environment proof.
       // A constant caches its initial environment and first capture values.
@@ -291,14 +293,23 @@ class SourceBuilder {
       // execution; arbitrary calls and metamethod-capable instructions fail closed.
       if (hoisted || signature) {
         if (this.proto !== this.mainProto || sites.some(s => cyclic.has(this.ir.cfg.blockOfPc.get(s.pc)!))) continue;
-        if (!this.everyInstructionBefore(first, i => environmentNeutral.has(i.opcode))) continue;
+        if (!this.everyInstructionBefore(first, i => environmentNeutral.has(i.opcode))) {
+          // One source literal behind a factory retains DUPCLOSURE's own
+          // environment/cache check at each load. Aliasing its first result
+          // would incorrectly share the fresh clones made after setfenv.
+          // Limit this form to stable top-level captures in the same block.
+          if (hoisted || this.proto.maxStackSize + this.sharedClosureConstants.size + factoryLocals + sites.length + 1 > 180) continue;
+          needsFactory=true;
+        }
       }
       // PC order is not execution order. Follow predecessor edges back to the
       // dominating load, including acyclic detours outside the lexical interval.
       if (sites.slice(1).some(site => !this.everyInstructionBefore(site,
         i => inert.has(i.opcode) || (i.opcode === Opcode.DUPCLOSURE && loads.has(i.d)), first))) continue;
-      const name = this.allocator.reserve("sharedFunction");
-      this.sharedClosureConstants.set(constant, {pc: first.pc, name, hoisted});
+      const factory=needsFactory ? this.allocator.reserve("closureFactory") : undefined;
+      if (factory) factoryLocals+=sites.length+1;
+      const name = this.allocator.reserve(factory ? "closureValue" : "sharedFunction");
+      this.sharedClosureConstants.set(constant, {pc: first.pc, name, hoisted, factory});
       if (hoisted) this.declareInScope(name);
     }
   }
@@ -2480,7 +2491,15 @@ class SourceBuilder {
       return [];
     }
     const shared = insn.opcode === Opcode.DUPCLOSURE ? this.sharedClosureConstants.get(insn.d) : undefined;
-    if (shared && shared.pc !== insn.pc) return this.define(insn.a, ident(shared.name), insn);
+    if (shared && shared.pc !== insn.pc) {
+      if (!shared.factory) return this.define(insn.a, ident(shared.name), insn);
+      const name=this.allocator.reserve("closureValue");
+      this.declareInScope(name);
+      // Materialize at the original load, before any subsequent environment
+      // change or effect. Only the resulting value may be deferred.
+      return [{kind:"local",names:[name],values:[{kind:"call",callee:ident(shared.factory),args:[],open:false}]},
+        ...this.define(insn.a,ident(name),insn)];
+    }
     const captures = this.capturesAfter(insn.pc);
     // Captured pending tables must be materialized before their names are read.
     const statements: Statement[] = [];
@@ -2605,6 +2624,7 @@ class SourceBuilder {
     const reconstructed = reconstructFunction(this.module, child, { allocator: this.allocator, captures: captureMap });
     const fn: Expression = {
       kind: "function-expr",
+      debugName: child.debugName,
       params: reconstructed.params,
       isVararg: child.isVararg,
       body: reconstructed.body,
@@ -2612,6 +2632,15 @@ class SourceBuilder {
     };
 
     if (shared) {
+      if (shared.factory) {
+        this.declareInScope(shared.factory);
+        this.declareInScope(shared.name);
+        return [...statements,
+          {kind:"function-decl",local:true,name:shared.factory,params:[],isVararg:false,
+            body:block([{kind:"return",values:[fn]}])},
+          {kind:"local",names:[shared.name],values:[{kind:"call",callee:ident(shared.factory),args:[],open:false}]},
+          ...this.define(insn.a,ident(shared.name),insn)];
+      }
       const declaration: Statement = shared.hoisted
         ? {kind: "assign", targets: [ident(shared.name)], values: [fn]}
         : {kind: "local", names: [shared.name], values: [fn]};
@@ -2627,6 +2656,10 @@ class SourceBuilder {
     const scopedCreation: Statement = hasFreshSnapshot
       ? {kind: "do", body: block([...freshStatements, creation])} : creation;
     if (existing?.forwardRef && existing.name) {
+      // MOVE keeps the old function value, while REF captures keep this cell.
+      // Closure creation bypasses define(), so preserve deferred register
+      // aliases here before overwriting the forward binding as well.
+      statements.push(...this.snapshotRegisterAliases(insn.a, existing.name));
       this.env.set(insn.a, { name, expression: ident(name), pinned: true, forwardRef: true });
       return [...statements, scopedCreation];
     }

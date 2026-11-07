@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { decompile, parseQueryOptions } from "./decompile.js";
 import { DEFAULT_SAFETY_LIMITS } from "./safety/Limits.js";
+import { formatDecompiledSource } from "./print/SourcePresentation.js";
 
 function loadPage(): string {
   const here = dirname(fileURLToPath(import.meta.url));
@@ -49,16 +50,17 @@ async function handle(request: IncomingMessage, response: ServerResponse): Promi
         return;
       }
       const wantsText = (request.headers.accept ?? "").includes("text/plain") && url.searchParams.get("format") === "source";
+      const source = formatDecompiledSource(result);
       if (wantsText) {
         response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
-        response.end(result.source);
+        response.end(source);
         return;
       }
       response.writeHead(200, { "Content-Type": "application/json" });
       response.end(
         JSON.stringify({
           ok: true,
-          source: result.source,
+          source,
           disassembly: result.disassembly,
           diagnostics: result.diagnostics,
           profile: result.profile,

@@ -5,6 +5,7 @@ import { decodeBytecode } from "./decode/Decoder.js";
 import { disassembleModule } from "./disasm/Disassembler.js";
 import { parseRuntimeContext } from "./reconstruct/RuntimeContext.js";
 import { startServer } from "./server.js";
+import { formatDecompiledSource } from "./print/SourcePresentation.js";
 
 function usage(): never {
   process.stderr.write("usage: luau-decompile <decompile|disassemble|info|serve> [file|port]\n");
@@ -57,7 +58,7 @@ if (command === "serve") {
     process.stderr.write(`${result.error}\n`);
     process.exit(1);
   }
-  process.stdout.write(result.source);
+  process.stdout.write(formatDecompiledSource(result));
   if (result.diagnostics.some((item) => item.severity === "error")) {
     process.exit(1);
   }

@@ -212,6 +212,8 @@ export interface TableExpression {
 
 export interface FunctionExpression {
   kind: "function-expr";
+  /** Actual prototype debug name, never an inferred binding name. */
+  debugName?: string;
   params: string[];
   paramTypes?: Array<string | undefined>;
   returnType?: string;
