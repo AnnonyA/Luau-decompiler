@@ -1,0 +1,115 @@
+{
+  "baselineCommit": "fc68f4c99d6e2e8dac0a3becac04b32e33993db2",
+  "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "externalRequests": 0,
+  "unitTests": 581,
+  "harnessTests": 50,
+  "demoTests": 6,
+  "chromiumTests": 1,
+  "reports": {
+    "semantic": {
+      "sha256": "19c40c7c6bc20f8ae78156567bc3df1b6629b12c3bcb768279c58afbd74f080c",
+      "profiles": 200,
+      "match": 200
+    },
+    "options": {
+      "sha256": "9a0e0727899c54aeaa5c14f4376551c70248023494652ff1cc06df9f29aa7885",
+      "profiles": 3876,
+      "statuses": {
+        "MATCH": 3876
+      },
+      "inputComparisons": 6885
+    },
+    "styles": {
+      "sha256": "5efde4efed877b9c57775d25366cf834caa716e6b6d1ff98172657e5a4c708bc",
+      "profiles": 1140,
+      "statuses": {
+        "MATCH": 1140
+      },
+      "inputComparisons": 2025
+    },
+    "competition": {
+      "sha256": "d1790c33dda933d10ce3a85a79aa94bb80e34901e393ad194dfc0d006b9bcb0f",
+      "profiles": 24,
+      "statuses": {
+        "MATCH": 24
+      },
+      "inputComparisons": 72
+    },
+    "regressions": {
+      "sha256": "8c553b0b1fa2e539910870f04bea66f5e1f41a70922fc4042e77ae60ed5e28fc",
+      "profiles": 36,
+      "statuses": {
+        "MATCH": 36
+      },
+      "inputComparisons": 108
+    },
+    "pilot-dev": {
+      "sha256": "8cc2d189bdf61f3c0e8a3a3f8c506d0c9f3395b12d118157e3fb71f486eccfb1",
+      "profiles": 9,
+      "statuses": {
+        "MATCH": 9
+      },
+      "inputComparisons": 108
+    },
+    "pilot-observed": {
+      "sha256": "5da30234be74eccf71548e79ba6d2add704ddf783361bb82fe447a3979b1692f",
+      "profiles": 6,
+      "statuses": {
+        "MATCH": 6
+      },
+      "inputComparisons": 72
+    },
+    "cohort2-dev": {
+      "sha256": "571a0af8dfc2c01562f8822d82c37343b3ae6fddf5e71829bb1ac84d2e62ef8e",
+      "profiles": 9,
+      "statuses": {
+        "MATCH": 9
+      },
+      "inputComparisons": 108
+    },
+    "cohort2-observed": {
+      "sha256": "f714ef0c0736840340f7072e7d6df884374d8943eedbd588318fb05f1e75448c",
+      "profiles": 6,
+      "statuses": {
+        "MATCH": 6
+      },
+      "inputComparisons": 72
+    },
+    "independent": {
+      "sha256": "f1b89c00b31ba390275d182d0bfd2e10453ec715f8bac56cbcc48d1b100dc4ee",
+      "profiles": 9,
+      "statuses": {
+        "MATCH": 9
+      },
+      "inputComparisons": 216
+    },
+    "fuzz": {
+      "sha256": "b69a6e0d1c4cae74b2f0a3a68ac7bc62a41e965b6ba5dee86aa2855822fa4a60",
+      "profiles": 18,
+      "statuses": {
+        "MATCH": 18
+      },
+      "inputComparisons": 54
+    },
+    "tovek": {
+      "sha256": "f6f3e505ce294959fec90bc190062e00766d8811c86a825439bee806d9ec1a0e",
+      "profiles": 47,
+      "parserPass": 47,
+      "sourceObservations": {
+        "NO MEDIDO": 37,
+        "MATCH": 10
+      }
+    },
+    "focused-before-after": {
+      "sha256": "d5df2b2e2e4a3f9b58bbc2a38b5517e0ab89930990b1f322053c7759aaf498c4",
+      "baseline": {
+        "MATCH": 6,
+        "MISMATCH": 6
+      },
+      "current": {
+        "MATCH": 12
+      }
+    }
+  }
+}

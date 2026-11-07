@@ -132,7 +132,7 @@ function isGenericEntry(cfg: ControlFlowGraph, predecessor: number, latch: numbe
     last.jumpTarget === cfg.blocks[latch]?.startPc;
 }
 
-function classifyLoop(cfg: ControlFlowGraph, header: number, latch: number, _body: number[]): NaturalLoop["kind"] {
+function classifyLoop(cfg: ControlFlowGraph, header: number, latch: number, body: number[]): NaturalLoop["kind"] {
   const headerInsn = cfg.blocks[header]?.instructions[0];
   const latchLast = cfg.blocks[latch]?.instructions.at(-1);
   if (headerInsn?.opcode === Opcode.FORNLOOP || latchLast?.opcode === Opcode.FORNLOOP) {
@@ -194,12 +194,16 @@ function classifyLoop(cfg: ControlFlowGraph, header: number, latch: number, _bod
     }
   }
   const headerLast = cfg.blocks[header]?.instructions.at(-1);
-  if (headerLast && isConditionalJump(headerLast.opcode) && headerLast.jumpTarget !== undefined) {
+  if (headerLast && isConditionalJump(headerLast.opcode) && headerLast.jumpTarget !== undefined &&
+      cfg.blocks[header]!.successors.some(successor => !body.includes(successor))) {
     return "while";
   }
   if (latchLast && isConditionalJump(latchLast.opcode)) {
     return "repeat";
   }
+  // A conditional header can guard only the work within an iteration. When
+  // both edges remain inside the loop, it is not a while exit test.
+  if (latchLast?.opcode === Opcode.JUMPBACK || latchLast?.opcode === Opcode.JUMP) return "infinite";
   return "unknown";
 }
 

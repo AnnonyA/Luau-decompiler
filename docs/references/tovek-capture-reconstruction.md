@@ -141,3 +141,29 @@ loops, a 254-argument call, and nested 126/127-argument calls. A conservative sh
 register budget includes lexical bindings, hidden loop controls and simultaneously
 live nested expression packs. Optional local-adding rewrites decline when the
 budget cannot justify headroom; they leave the original statements intact.
+
+## Guarded infinite loops and FASTCALL consumers (2026-11-06)
+
+References remain pinned to Tovek `77edf387` and official Luau `9d7748a4`.
+Tovek's `luau-lifter/src/builtins.rs` explains that the trailing CALL names the
+builtin used when the standard environment fast path cannot execute. Official
+`VM/src/lvmexecute.cpp`, `LOP_FASTCALL`, obtains argument/result counts from that
+CALL, including open argument packs. `Compiler/src/Compiler.cpp` `compileStatWhile`
+patches condition exits separately from iteration backedges.
+
+Our source lowering already emits the fallback CALL to represent both runtime
+paths. Its value-use analysis now counts that CALL and ignores the duplicate
+FASTCALL operands. Previously it excluded the CALL while emitting it, treating
+generic FASTCALL arguments and callee imports as dead. Discard statements could
+then duplicate the same calls later embedded in expressions. Real call boundaries
+also participate in preserving evaluation order.
+
+Natural loop classification and header extraction now require an edge outside
+the loop before consuming a header condition as a while exit test. A guard whose
+false edge reaches the backedge remains inside `while true`, preventing an
+invented break. Four independently authored reductions exercise repeated
+visibility guards, variadic builtins, observable argument calls, replacement
+environments and metatable-backed loop inputs. Preparation instructions consume
+source bounds/iterators once; only iteration reads remain protocol-only. Counting
+FORNPREP/FORGPREP inputs prevents discarded property reads from being evaluated
+again in loop headers. No uploaded source or competitor implementation was copied.
