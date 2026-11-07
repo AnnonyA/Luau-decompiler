@@ -18,6 +18,7 @@ export { buildSsa } from "./ssa/SsaBuilder.js";
 export { computeLiveness } from "./dataflow/Liveness.js";
 export { reconstructFunction, analyzePrototype } from "./reconstruct/Reconstructor.js";
 export { printLuau } from "./print/LuauPrinter.js";
+export { formatDecompiledSource, DECOMPILER_VERSION } from "./print/SourcePresentation.js";
 export { disassembleModule } from "./disasm/Disassembler.js";
 export { validateAst } from "./ast/AstValidator.js";
 export { DEFAULT_SAFETY_LIMITS } from "./safety/Limits.js";

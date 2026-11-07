@@ -53,6 +53,19 @@ it.each<WrittenConstant>([
 it('keeps separately cloned constants after the parent environment changes',()=>{
  const code = source('changed-closure-environment');
  expect(code).not.toContain('sharedFunction');
+ expect(code.match(/closureFactory\(\)/g)).toHaveLength(3); // keep the VM cache check at both loads
+});
+
+it('budgets every factory result local even when one bytecode register is reused',()=>{
+ const instructions=[abc(Opcode.NEWTABLE,0),0,abc(Opcode.GETGLOBAL,2),1,abc(Opcode.CALL,2,1,1)];
+ for(let n=0;n<190;n++)instructions.push(ad(Opcode.DUPCLOSURE,1,0),abc(Opcode.CAPTURE,CaptureType.VAL,0));
+ instructions.push(abc(Opcode.RETURN,1,2));
+ const result=decompile(compile(proto({maxStackSize:3,instructions,
+  constants:[{kind:'closure',protoId:0},{kind:'string',value:'tick'}],
+  children:[proto({numUpvalues:1,instructions:[abc(Opcode.GETUPVAL,0,0),abc(Opcode.RETURN,0,2)]})]})));
+ expect(result.ok).toBe(true);if(!result.ok)throw Error(result.error);
+ expect(result.validation).toEqual([]);
+ expect(result.source).not.toContain('closureFactory');
 });
 
 it.each(['capture-free-after-call', 'nested-capture-free'])('preserves existing same-block sharing: %s', name => {

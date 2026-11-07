@@ -167,3 +167,40 @@ environments and metatable-backed loop inputs. Preparation instructions consume
 source bounds/iterators once; only iteration reads remain protocol-only. Counting
 FORNPREP/FORGPREP inputs prevents discarded property reads from being evaluated
 again in loop headers. No uploaded source or competitor implementation was copied.
+
+## Lexical helpers and function presentation (2026-11-07)
+
+Consulted Tovek `77edf387` `ast/src/expr_deinline.rs` for exact matches and stable
+arguments, `ast/src/deinline_safety.rs` for capture/frame observations, and
+`ast/src/closure_identity.rs` for shared closure constants. Official Luau
+`9d7748a4` `tryCompileInlinedCall`, `compileInlineReturn`, `shouldShareClosure`,
+and VM `LOP_DUPCLOSURE` establish argument/result binding and capture identity.
+The implementations here are independent.
+
+The recoverer previously cleared every helper at function boundaries. It now
+inherits only a dominating stable helper that the child already captures,
+including transitive captures. Parameter/self-name shadows are excluded.
+Rewrites must preserve the replaced region's free bindings in their arguments;
+initializer expansion cannot substitute a different captured cell. Existing
+primitive-value, arity, ambiguity and work-budget restrictions remain. Helpers
+calling unknown modules or metamethods are still outside this proof.
+
+Single function assignments can use `function name(...)` only when the genuine
+prototype debug name matches the destination. Anonymous or renamed expressions
+keep their syntax: inventing a name changes `debug.info(..., "n")`. Forward
+locals remain in place, and indexed/parallel assignments are not converted.
+The demo/CLI/HTTP boundary adds export metadata while core source stays
+deterministic. Closure creation also snapshots old register aliases before
+overwriting a forward REF cell, matching the existing ordinary-assignment rule.
+
+For identical captured closure constants loaded in one noncyclic main-chunk
+block, a preceding unknown call prevents proving that the environment still
+matches the bytecode loader's environment. Instead of aliasing the first result,
+the new bounded fallback puts one closure literal behind a zero-argument factory
+and materializes a factory call at each original load. `lvmload.cpp` initializes
+nested constants with the load environment; the factory inherits the environment
+at its declaration, and the child's DUPCLOSURE repeats the VM cache comparison.
+Thus stable captures share in an unchanged environment and remain distinct after
+an environment change. Captures must match the existing raw-reflexive SSA proof,
+intervening instructions must be inert, and every added factory/result local
+counts toward a conservative register budget. No environment API is injected.

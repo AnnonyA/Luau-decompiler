@@ -103,6 +103,12 @@ const result = decompile(bytes);
 if (result.ok) console.log(result.source);
 ```
 
+The demo, CLI and HTTP exports prepend an AnnonyA header with the package
+version, an ISO 8601 UTC timestamp, and the decoded bytecode/type versions.
+Library `result.source` stays deterministic; use `formatDecompiledSource(result)`
+to add the same export header. The header is included when copying or downloading
+the demo result.
+
 Luau string constants preserve arbitrary bytes, including a leading UTF-8 BOM.
 Valid UTF-8 remains ordinary JavaScript text. Invalid UTF-8 bytes are represented
 internally by unpaired surrogate escapes (`U+DC80`–`U+DCFF`) and printed as Luau

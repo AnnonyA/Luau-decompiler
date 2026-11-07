@@ -1,4 +1,5 @@
 import { decompile } from "./engine/decompile.js";
+import { formatDecompiledSource } from "./engine/print/SourcePresentation.js";
 import { validateSize } from "./assets/input.js";
 
 self.onmessage = ({ data }) => {
@@ -14,7 +15,7 @@ self.onmessage = ({ data }) => {
     // Send only the cloneable fields used by the interface.
     const { version, typesVersion, status } = result.profile;
     self.postMessage({
-      ok: true, source: result.source, disassembly: result.disassembly,
+      ok: true, source: formatDecompiledSource(result), disassembly: result.disassembly,
       diagnostics: result.diagnostics, profile: { version, typesVersion, status },
     });
   } catch (error) {

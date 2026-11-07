@@ -5,5 +5,8 @@
   "guarded-polling.luau": [["-2"], ["0"], ["5"]],
   "fastcall-observations.luau": [["-2"], ["0"], ["5"]],
   "fastcall-fallback-environment.luau": [["-3"], ["0"], ["7"]],
-  "loop-input-observations.luau": [["-3"], ["0"], ["7"]]
+  "loop-input-observations.luau": [["-3"], ["0"], ["7"]],
+  "inlined-lexical-helpers.luau": [["-2"], ["0"], ["7"]],
+  "named-function-cells.luau": [["-2"], ["0"], ["7"]],
+  "anonymous-function-name.luau": [["-2"], ["0"], ["7"]]
 }

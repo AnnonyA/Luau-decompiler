@@ -36,6 +36,8 @@ test("the published example decompiles in the isolated demo worker", async () =>
   const result = await decompileInWorker(bytes);
   assert.equal(result.ok, true);
   assert.match(result.source, /print\("Hello from Luau!"\)/);
+  assert.match(result.source, /^-- \[\[ annonya\.github\.io \]\] v\d+\.\d+\.\d+ \| decompiled at \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z\n/);
+  assert.ok(result.source.includes(`-- Luau bytecode version: ${result.profile.version} | Luau type version: ${result.profile.typesVersion}\n\n`));
   assert.match(result.disassembly, /CALL/);
   assert.equal(result.profile.version, 6);
 });

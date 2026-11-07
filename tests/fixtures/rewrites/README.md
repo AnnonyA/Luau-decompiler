@@ -31,3 +31,12 @@ The guarded-loop/FASTCALL round adds four independent originals:
 Each has three deterministic inputs and pinned O0/O1/O2 bytes. These reductions
 were authored independently of the supplied Roblox script; no uploaded user
 source or bytecode is included in this corpus.
+
+The lexical-helper/presentation round adds `inlined-lexical-helpers` (scalar and
+fixed-tuple helpers already captured by named, anonymous and nested consumers),
+`named-function-cells` (forward cells, recursion, old-value aliases and mutable
+counters), and `anonymous-function-name` (`debug.info` must retain an anonymous
+closure's empty name). Each has three inputs and pinned O0/O1/O2 compilations.
+They are development regressions. The first draft of `named-function-cells`
+accidentally printed a process-dependent function address; the checked-in source
+observes identity through equality instead. No sealed benchmark was changed.
