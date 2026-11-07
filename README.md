@@ -200,6 +200,42 @@ npm run bench:large:regressions -- --name-styles \
   --luau-compile /path/to/luau-compile --luau /path/to/luau --output /tmp/naming-results
 ```
 
+## Rewrite controls
+
+The browser exposes all 14 controls below. JavaScript accepts the camelCase
+option; HTTP and `LUAU_DECOMPILE_OPTS` use its snake_case spelling.
+
+| Control / JavaScript option | Default | Supported transformation |
+| --- | --- | --- |
+| Interpolated strings / `interpolatedStrings` | On (browser: off) | Proven string concatenation/format patterns, with byte-preserving escapes |
+| Math constants / `mathConstants` | Off | Repeated exact constants get private numeric locals; no global `math` lookup |
+| If-expressions / `ifExpressions` | On | Eligible branch values become Luau if-expressions |
+| Early continue / `earlyContinue` | On | Eligible loop guards become early continues |
+| Early return / `earlyReturn` | On | Eligible terminal guards become early returns |
+| Uninline local functions / `recoverInlinedFunctions` | On | Proven calls to retained helpers, including fixed tuples of 2–4 primitive results |
+| Reroll unrolled loops / `rerollUnrolledLoops` | Off | At least three proven numeric updates with an integer unit stride |
+| Fold single-use temps / `foldSingleUseTemps` | On | Safe temporary/argument folding; minimum register-pressure compaction remains mandatory |
+| Unfold module tables / `unfoldModuleTables` | On | Exported helpers and inert named module fields, preserving initializer captures |
+| Keep dead functions / `keepDeadFunctions` | On | Turning off removes only proven unreferenced private functions |
+| Prefer const / `preferConst` | Off | Immutable initialized bindings use recent Luau `const` syntax |
+| Unicode strings / `unicodeStrings` | On | Turning off emits exact UTF-8 byte escapes, including interpolation |
+| Upvalue comments / `upvalueComments` | Off | Lists actual lexical captures, including forwarded captures |
+| Function line comments / `functionLineComments` | Off | Emits known bytecode definition lines |
+
+Controls preserve required control flow and effects. They cannot restore functions,
+loops, names or comments erased without usable evidence by the compiler. Inlining
+recovery rejects unknown effects, ambiguous helpers, clipped tuples and insufficient
+local-register headroom. Rerolling does not infer arbitrary loop bodies. `const`
+requires a Luau parser that supports this recent syntax; it is opt-in.
+
+Run the original-source semantic matrix at O0/O1/O2 with defaults, each individual
+inverse and both all-on/all-off combinations (17 configurations; not exhaustive):
+
+```bash
+npm run bench:large:regressions -- --rewrite-options \
+  --luau-compile /path/to/luau-compile --luau /path/to/luau --output /tmp/rewrite-results
+```
+
 ## Optional runtime context
 
 Static bytecode cannot always preserve source-level names. If you have runtime context from a live environment, it can be supplied separately to improve names without changing the core decompiler into a dynamic executor.

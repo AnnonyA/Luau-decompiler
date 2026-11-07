@@ -110,9 +110,20 @@ async function run(example = false) {
     nameCasing: $("name-casing").value,
     opcodeEncoding: $("encoding").value,
     indent: $("indent").value === "tab" ? "tab" : Number($("indent").value),
-    ifExpressions: $("if-expressions").checked, earlyReturn: $("early-return").checked,
-    interpolatedStrings: $("interpolation").checked, mathConstants: false,
+    interpolatedStrings: $("interpolation").checked,
+    mathConstants: $("math-constants").checked,
+    ifExpressions: $("if-expressions").checked,
+    earlyContinue: $("early-continue").checked,
+    earlyReturn: $("early-return").checked,
     recoverInlinedFunctions: $("recover-inlined").checked,
+    rerollUnrolledLoops: $("reroll-unrolled-loops").checked,
+    foldSingleUseTemps: $("fold-single-use-temps").checked,
+    unfoldModuleTables: $("unfold-module-tables").checked,
+    keepDeadFunctions: $("keep-dead-functions").checked,
+    preferConst: $("prefer-const").checked,
+    unicodeStrings: $("unicode-strings").checked,
+    upvalueComments: $("upvalue-comments").checked,
+    functionLineComments: $("function-line-comments").checked,
   };
   const started = performance.now();
   timer = setTimeout(() => {

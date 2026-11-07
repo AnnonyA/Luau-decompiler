@@ -1,6 +1,7 @@
 import type { Block, Chunk, Expression, Literal, Statement, TableField } from "../ast/Ast.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
 import { escapedByte } from "../decode/BytecodeString.js";
+import { analyzePrinterBindings, type PrintedFunction, type PrinterBindings } from "./PrinterBindings.js";
 
 const PREC: Record<string, number> = {
   or: 1,
@@ -24,10 +25,15 @@ const PREC: Record<string, number> = {
 
 export interface PrintOptions {
   indent?: "tab" | 2 | 4;
+  unicodeStrings?: boolean;
+  upvalueComments?: boolean;
+  functionLineComments?: boolean;
+  preferConst?: boolean;
 }
 
 export function printLuau(ast: Chunk, options: PrintOptions = {}): string {
-  const printer = new Printer(options.indent ?? 4);
+  const bindings = analyzePrinterBindings(ast.body, options.preferConst ?? false, options.upvalueComments ?? false);
+  const printer = new Printer(options, bindings);
   printer.printBlock(ast.body, false);
   return printer.finish();
 }
@@ -39,7 +45,8 @@ class Printer {
   private pendingBlank = false;
   private readonly unit: string;
 
-  constructor(indent: "tab" | 2 | 4 = 4) {
+  constructor(private readonly options: PrintOptions, private readonly bindings: PrinterBindings) {
+    const indent = options.indent ?? 4;
     this.unit = indent === "tab" ? "\t" : " ".repeat(indent);
   }
 
@@ -74,10 +81,11 @@ class Printer {
     switch (statement.kind) {
       case "local": {
         const names = formatTypedNames(statement.names, statement.types);
+        const keyword = this.bindings.constants.has(statement) ? "const" : "local";
         if (statement.values.length === 0) {
-          this.write(`local ${names}`);
+          this.write(`${keyword} ${names}`);
         } else {
-          this.write(`local ${names} = ${statement.values.map((value) => this.expr(value)).join(", ")}`);
+          this.write(`${keyword} ${names} = ${statement.values.map((value) => this.expr(value)).join(", ")}`);
         }
         break;
       }
@@ -98,7 +106,10 @@ class Printer {
           statement.paramTypes,
         )})${statement.returnType ? `: ${statement.returnType}` : ""}`;
         this.write(header);
-        this.printBlock(statement.body, true);
+        this.indentLevel += 1;
+        this.functionComments(statement);
+        this.printBlock(statement.body, false);
+        this.indentLevel -= 1;
         this.write("end");
         this.pendingBlank = true;
         break;
@@ -164,7 +175,7 @@ class Printer {
       case "identifier":
         return expression.name;
       case "literal": {
-        const text = literalToSource(expression.value);
+        const text = literalToSource(expression.value, this.options.unicodeStrings ?? true);
         // Negative numeric literals parse as unary minus, below exponentiation.
         // Preserve the base in (-2)^n and (-0)^n, including integer literals.
         return text.startsWith("-") && parent > (PREC.unary ?? 7) ? `(${text})` : text;
@@ -201,13 +212,13 @@ class Printer {
       case "property":
         return isValidIdentifier(expression.name)
           ? `${this.memberObject(expression.object)}.${expression.name}`
-          : `${this.memberObject(expression.object)}[${quote(expression.name)}]`;
+          : `${this.memberObject(expression.object)}[${quote(expression.name, this.options.unicodeStrings ?? true)}]`;
       case "table":
         return this.table(expression.fields);
       case "function-expr": {
         const text = `function(${formatParams(expression.params, expression.isVararg, expression.paramTypes)})${
           expression.returnType ? `: ${expression.returnType}` : ""
-        }\n${this.nested(expression.body)}end`;
+        }\n${this.nested(expression)}end`;
         return parent > 0 ? `(${text})` : text;
       }
       case "if-expr": {
@@ -259,7 +270,7 @@ class Printer {
 
   private interpPart(part: { kind: "text" | "expr"; value: string | Expression }): string {
     if (part.kind === "text") {
-      return escapeInterp(String(part.value));
+      return escapeInterp(String(part.value), this.options.unicodeStrings ?? true);
     }
     return `{${this.expr(part.value as Expression)}}`;
   }
@@ -271,7 +282,7 @@ class Printer {
     this.exprDepth += 1;
     const parts = fields.map((field) => {
       if (field.name) {
-        const key = isValidIdentifier(field.name) ? field.name : `[${quote(field.name)}]`;
+        const key = isValidIdentifier(field.name) ? field.name : `[${quote(field.name, this.options.unicodeStrings ?? true)}]`;
         return `${key} = ${this.expr(field.value)}`;
       }
       if (field.key) {
@@ -287,10 +298,22 @@ class Printer {
     return `{ ${parts.join(", ")} }`;
   }
 
-  private nested(body: Block): string {
-    const nested = new Printer(this.unit === "\t" ? "tab" : (this.unit.length as 2 | 4));
+  private functionComments(fn: PrintedFunction): void {
+    if (this.options.functionLineComments && Number.isSafeInteger(fn.line) && fn.line! > 0) {
+      this.write(`-- Line: ${fn.line}`);
+    }
+    const captures = this.bindings.captures.get(fn);
+    if (this.options.upvalueComments && captures?.size) {
+      const names = [...captures].map(name => name.replace(/[\x00-\x1f\x7f-\x9f\u2028\u2029]/g, " "));
+      this.write(`-- Upvalues: ${names.join(", ")}`);
+    }
+  }
+
+  private nested(fn: PrintedFunction): string {
+    const nested = new Printer(this.options, this.bindings);
     nested.indentLevel = this.indentLevel + 1;
-    nested.printBlock(body, false);
+    nested.functionComments(fn);
+    nested.printBlock(fn.body, false);
     return nested.lines.length === 0 ? "" : `${nested.lines.join("\n")}\n${this.unit.repeat(this.indentLevel)}`;
   }
 }
@@ -315,8 +338,8 @@ function formatParams(params: string[], isVararg: boolean, types?: Array<string 
   return list.join(", ");
 }
 
-function escapeInterp(value: string): string {
-  return value.replace(/[\\`{\x00-\x1f\udc80-\udcff]/gu, (char) => {
+function escapeInterp(value: string, unicodeStrings: boolean): string {
+  const escaped = value.replace(/[\\`{\x00-\x1f\udc80-\udcff]/gu, (char) => {
     switch (char) {
       case "\n": return "\\n";
       case "\r": return "\\r";
@@ -328,9 +351,10 @@ function escapeInterp(value: string): string {
       default: return `\\${(escapedByte(char) ?? char.charCodeAt(0)).toString().padStart(3, "0")}`;
     }
   });
+  return unicodeStrings ? escaped : escapeUnicode(escaped);
 }
 
-function literalToSource(value: Literal["value"]): string {
+function literalToSource(value: Literal["value"], unicodeStrings: boolean): string {
   if (value === null) {
     return "nil";
   }
@@ -352,10 +376,10 @@ function literalToSource(value: Literal["value"]): string {
   if (typeof value === "bigint") {
     return value.toString();
   }
-  return quote(value);
+  return quote(value, unicodeStrings);
 }
 
-function quote(value: string): string {
+function quote(value: string, unicodeStrings: boolean): string {
   let out = '"';
   for (const char of value) {
     switch (char) {
@@ -384,13 +408,19 @@ function quote(value: string): string {
       }
     }
   }
-  return `${out}"`;
+  return `${unicodeStrings ? out : escapeUnicode(out)}"`;
+}
+
+function escapeUnicode(value: string): string {
+  const encoder = new TextEncoder();
+  return value.replace(/[^\x00-\x7f]/gu, character =>
+    [...encoder.encode(character)].map(byte => `\\${byte.toString().padStart(3, "0")}`).join(""));
 }
 
 export function hasArtificialComments(source: string): boolean {
   // Ignore '--' inside emitted quoted and interpolated string literals.
-  // The printer never intentionally emits comments, so a bare '--' outside
-  // literals is the only pattern that should trigger this diagnostic.
+  // Run this diagnostic on output with optional annotations disabled: a bare
+  // '--' outside literals is the pattern that should trigger it.
   let quote: string | undefined;
   let escaped = false;
   for (let i = 0; i < source.length; i++) {

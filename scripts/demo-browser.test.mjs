@@ -106,7 +106,14 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     renderCode(code,lines,source);
     return code.textContent===source && !code.querySelector('img');
   })()`), true);
-  assert.equal(await evaluate('Boolean(document.getElementById("recover-inlined")?.checked)'),true);
+  const rewriteDefaults = {'interpolation':false,'math-constants':false,'if-expressions':true,
+    'early-continue':true,'early-return':true,'recover-inlined':true,'reroll-unrolled-loops':false,
+    'fold-single-use-temps':true,'unfold-module-tables':true,'keep-dead-functions':true,
+    'prefer-const':false,'unicode-strings':true,'upvalue-comments':false,'function-line-comments':false};
+  for (const [id, checked] of Object.entries(rewriteDefaults)) {
+    assert.equal(await evaluate(`document.getElementById(${JSON.stringify(id)})?.checked`), checked, id);
+    await evaluate(`document.getElementById(${JSON.stringify(id)}).checked=${!checked}`);
+  }
   await evaluate(`
     window.originalPostMessage = Worker.prototype.postMessage;
     Worker.prototype.postMessage = function(message,...args) {window.lastOptions=message.options;return originalPostMessage.call(this,message,...args)};
@@ -124,7 +131,7 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
   await waitFor('document.getElementById("cancel").hidden && document.getElementById("code").textContent');
   assert.match(await evaluate('document.getElementById("code").textContent'), /print\("Hello from Luau!"\)/);
   assert.equal(await evaluate('document.getElementById("download").disabled'), false);
-  assert.deepEqual(await evaluate('window.lastOptions'), {typeAnnotations:'off',opcodeEncoding:'official',indent:2,generatedNames:'compact',nameCasing:'snake_case',ifExpressions:false,earlyReturn:false,interpolatedStrings:true,mathConstants:false,recoverInlinedFunctions:false});
+  assert.deepEqual(await evaluate('window.lastOptions'), {typeAnnotations:'off',opcodeEncoding:'official',indent:2,generatedNames:'compact',nameCasing:'snake_case',ifExpressions:false,earlyReturn:false,interpolatedStrings:true,mathConstants:true,recoverInlinedFunctions:false,earlyContinue:false,rerollUnrolledLoops:true,foldSingleUseTemps:false,unfoldModuleTables:false,keepDeadFunctions:false,preferConst:true,unicodeStrings:false,upvalueComments:true,functionLineComments:true});
   assert.equal(await evaluate('document.getElementById("line-numbers").textContent.split("\\n").length >= 1'),true);
 
   // Browser file selection exercises File.arrayBuffer and transferable bytes.

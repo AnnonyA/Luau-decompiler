@@ -139,6 +139,7 @@ interface ValuePath {
 class SourceBuilder {
   readonly params: string[] = [];
   private readonly env = new Map<number, Binding>();
+  private readonly refCells = new Set<string>();
   private readonly emitted = new Set<number>();
   private readonly loopsByHeader = new Map<number, NaturalLoop[]>();
   private readonly loopVisitKeys = new Map<NaturalLoop, number>();
@@ -422,7 +423,22 @@ class SourceBuilder {
   build(): Statement[] {
     const declarations: Statement[] = [...this.sharedClosureConstants.values()].filter(s => s.hoisted)
       .map(s => ({kind: "local", names: [s.name], values: []}));
-    return [...declarations, ...this.emitRange(0, undefined, new Set())];
+    const body = block([...declarations, ...this.emitRange(0, undefined, new Set())]);
+    if (this.refCells.size) {
+      // REF is evidence of a mutable cell even when earlier stores disappeared
+      // from bytecode. Preserve a written local if no actual writes survived;
+      // otherwise Luau can fold a literal capture and share fresh closures.
+      for (const binding of analyzeBindings(body).bindings) {
+        const declaration = binding.declaration;
+        if (!this.refCells.has(binding.name) || !binding.captured || binding.writes.length ||
+            declaration.kind !== "local" || declaration.names.length !== 1 || declaration.values.length !== 1) continue;
+        const index = binding.scope.statements.indexOf(declaration);
+        if (index < 0) continue;
+        binding.scope.statements.splice(index, 1, {...declaration, values: []},
+          {kind: "assign", targets: [ident(binding.name)], values: declaration.values});
+      }
+    }
+    return body.statements;
   }
 
   // ------------------------------------------------------------------ scopes
@@ -2598,6 +2614,7 @@ class SourceBuilder {
           this.env.set(source, { name: refName, expression: ident(refName), pinned: true, forwardRef: true });
           this.declareInScope(refName);
         }
+        this.refCells.add(refName);
         captureMap.set(index, { name: refName, expression: ident(refName), mutable: true });
       } else if (binding?.name && binding.pinned) {
         captureMap.set(index, { name: binding.name, expression: ident(binding.name), mutable: false });

@@ -5,12 +5,13 @@ import { analyzeBindings, replaceReferences, type LexicalBinding } from "../anal
 const GENERATED = /^(?:value|result|config|index|key|item|entry|state|data|count|tmp|player|function_?|callback)(\d*)$/;
 const MAKE_STEM = /^(?:make|create|build|get)([A-Z][A-Za-z0-9]*)$/;
 
-export function inferHumanNames(ast: Chunk): Chunk {
-  const folded = { kind: "chunk" as const, body: foldScratchRegisters(ast.body) };
+export function inferHumanNames(ast: Chunk, options: {foldSingleUseTemps?: boolean} = {}): Chunk {
+  const fold = options.foldSingleUseTemps !== false;
+  const folded = { kind: "chunk" as const, body: fold ? foldScratchRegisters(ast.body) : ast.body };
   const coalesced = { kind: "chunk" as const, body: coalesceAccumulators(folded.body) };
-  const inlined = { kind: "chunk" as const, body: inlineOwnedTables(coalesced.body) };
+  const inlined = { kind: "chunk" as const, body: fold ? inlineOwnedTables(coalesced.body) : coalesced.body };
   // Tables that blocked a drop may have been inlined; sweep again.
-  const swept = { kind: "chunk" as const, body: foldScratchRegisters(inlined.body) };
+  const swept = { kind: "chunk" as const, body: fold ? foldScratchRegisters(inlined.body) : inlined.body };
   return renameChunk(swept);
 }
 

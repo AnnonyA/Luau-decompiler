@@ -1,3 +1,4 @@
+import { applyOptionalRewrites } from "./reconstruct/OptionalRewrites.js";
 import { boundLocalLifetimes } from "./reconstruct/LocalLifetimes.js";
 import { validateAst, type ValidationFailure } from "./ast/AstValidator.js";
 import type { Chunk } from "./ast/Ast.js";
@@ -24,6 +25,11 @@ export interface DecompileOptions extends DecodeOptions, PrintOptions, NameStyle
   typeAnnotations?: TypeAnnotationMode;
   ifExpressions?: boolean;
   earlyReturn?: boolean;
+  earlyContinue?: boolean;
+  foldSingleUseTemps?: boolean;
+  unfoldModuleTables?: boolean;
+  keepDeadFunctions?: boolean;
+  rerollUnrolledLoops?: boolean;
   interpolatedStrings?: boolean;
   mathConstants?: boolean;
   /** Recover proven numeric calls from retained helpers expanded by O2. */
@@ -57,8 +63,11 @@ export function defaultCleanupOptions(options: DecompileOptions = {}): CleanupOp
     typeAnnotations: options.typeAnnotations ?? "useful",
     ifExpressions: options.ifExpressions ?? true,
     earlyReturn: options.earlyReturn ?? true,
+    earlyContinue: options.earlyContinue ?? true,
+    foldSingleUseTemps: options.foldSingleUseTemps ?? true,
+    unfoldModuleTables: options.unfoldModuleTables ?? true,
     interpolatedStrings: options.interpolatedStrings ?? true,
-    mathConstants: options.mathConstants ?? true,
+    mathConstants: options.mathConstants ?? false,
   };
 }
 
@@ -105,15 +114,28 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
     const raw = chunk(reconstructed.body.statements);
     const cleaned = cleanupAst(raw, defaultCleanupOptions(options));
     const recovered = options.recoverInlinedFunctions === false ? cleaned : recoverInlineCalls(cleaned, inlineHelperLines(decoded.module));
-    const contextual = options.runtimeContext === false ? recovered : applyRuntimeContext(recovered, options.runtimeContext);
-    const ast = boundLocalLifetimes(styleLocalNames(recoverFunctionEvidence(contextual, options), options));
+    const rewritten = options.mathConstants || options.rerollUnrolledLoops || options.keepDeadFunctions === false || options.unfoldModuleTables !== false
+      ? applyOptionalRewrites(recovered, {
+      mathConstants: options.mathConstants ?? false,
+      rerollUnrolledLoops: options.rerollUnrolledLoops ?? false,
+      keepDeadFunctions: options.keepDeadFunctions ?? true,
+      unfoldModuleTables: options.unfoldModuleTables ?? true,
+    }) : recovered;
+    const contextual = options.runtimeContext === false ? rewritten : applyRuntimeContext(rewritten, options.runtimeContext);
+    const ast = boundLocalLifetimes(styleLocalNames(recoverFunctionEvidence(contextual, options), options), options);
     const validation = validateAst(ast);
     for (const failure of validation) {
       diagnostics.error(failure.code, failure.message);
     }
 
-    const source = printLuau(ast, { indent: options.indent ?? 4 });
-    if (hasArtificialComments(source)) {
+    const printOptions: PrintOptions = {indent: options.indent ?? 4, unicodeStrings: options.unicodeStrings,
+      upvalueComments: options.upvalueComments, functionLineComments: options.functionLineComments, preferConst: options.preferConst};
+    const source = printLuau(ast, printOptions);
+    // Opt-in metadata comments are deliberate. Still verify the same AST with
+    // annotations disabled so comments cannot conceal an accidental token.
+    const bareSource = options.upvalueComments || options.functionLineComments
+      ? printLuau(ast, {...printOptions, upvalueComments: false, functionLineComments: false}) : source;
+    if (hasArtificialComments(bareSource)) {
       diagnostics.error("comments", "printer emitted a comment");
     }
 
@@ -162,7 +184,16 @@ export function parseQueryOptions(query: URLSearchParams): DecompileOptions {
     ifExpressions: query.get("if_expressions") !== "false",
     earlyReturn: query.get("early_return") !== "false",
     interpolatedStrings: query.get("interpolated_strings") !== "false",
-    mathConstants: query.get("math_constants") !== "false",
+    mathConstants: query.get("math_constants") === "true",
+    earlyContinue: query.get("early_continue") !== "false",
+    foldSingleUseTemps: query.get("fold_single_use_temps") !== "false",
+    unfoldModuleTables: query.get("unfold_module_tables") !== "false",
+    keepDeadFunctions: query.get("keep_dead_functions") !== "false",
+    rerollUnrolledLoops: query.get("reroll_unrolled_loops") === "true",
+    preferConst: query.get("prefer_const") === "true",
+    unicodeStrings: query.get("unicode_strings") !== "false",
+    upvalueComments: query.get("upvalue_comments") === "true",
+    functionLineComments: query.get("function_line_comments") === "true",
     recoverInlinedFunctions: query.get("recover_inlined_functions") !== "false",
     runtimeContext,
   };

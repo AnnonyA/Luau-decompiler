@@ -6,23 +6,28 @@ import {analyzeBindings, replaceReferences, type LexicalBinding} from '../analys
  * pass fuses proven ordered argument temporaries, then encloses dependency-
  * closed intervals in do. Captures and writes count as uses; repeat conditions
  * retain body visibility. */
-export function boundLocalLifetimes(ast: Chunk): Chunk {
+export function boundLocalLifetimes(ast: Chunk, options: {foldSingleUseTemps?: boolean} = {}): Chunk {
   const result = structuredClone(ast);
   const visit = (node: unknown, repeatBody = false): void => {
     if (!node || typeof node !== 'object') return;
     if (Array.isArray(node)) {node.forEach(value => visit(value)); return;}
     const record = node as Record<string, unknown>;
     for (const [key, child] of Object.entries(record)) visit(child, record.kind === 'repeat' && key === 'body');
-    if (record.kind === 'block' && !repeatBody) closeLifetimes(node as Block);
+    if (record.kind === 'block' && !repeatBody) closeLifetimes(node as Block, options.foldSingleUseTemps !== false);
   };
   visit(result);
   return result;
 }
 
-function closeLifetimes(body: Block): void {
-  inlineArgumentLiterals(body);
-  foldOrderedArguments(body);
-  foldAdjacentCallees(body);
+function closeLifetimes(body: Block, fold: boolean): void {
+  // Binding/arity safety is mandatory when the uncollapsed form would exceed
+  // Luau's local register budget, even with optional folding switched off.
+  const pressure = body.statements.reduce((n, s) => n + (s.kind === 'local' ? s.names.length : s.kind === 'function-decl' && s.local ? 1 : 0), 0);
+  if (fold || pressure >= 128) {
+    inlineArgumentLiterals(body);
+    foldOrderedArguments(body);
+    foldAdjacentCallees(body);
+  }
   const count = body.statements.reduce((n, s) => n + (s.kind === 'local' ? s.names.length : s.kind === 'function-decl' && s.local ? 1 : 0), 0);
   if (count < 128) return;
   // Map every nested reference's owning statement back to this block. A closure

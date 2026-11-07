@@ -1,0 +1,5 @@
+{
+  "inlined-fixed-tuple.luau": [["-3"], ["0"], ["6"]],
+  "options-effects.luau": [["-2"], ["0"], ["6"]],
+  "numeric-rewrites.luau": [["-7"], ["0"], ["11"]]
+}
