@@ -106,7 +106,7 @@ describe("decompilation", () => {
       }),
     );
     // The diamond is recovered as a value-if expression.
-    expect(source).toMatch(/local result = if flag then 1 else 2/);
+    expect(source).toBe("return if flag then 1 else 2");
     expect(source).not.toMatch(/end/);
   });
 

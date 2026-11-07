@@ -53,6 +53,6 @@ describe("temporary assignment side effects", () => {
   it("still eliminates a genuinely unused literal initializer", () => {
     const source = withOverwrittenInitializer(lit(42));
     expect(source).not.toMatch(/\b42\b/);
-    expect(source).toContain("= 9");
+    expect(source).toBe("return 9\n");
   });
 });

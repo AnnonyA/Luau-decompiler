@@ -197,8 +197,17 @@ function mapNestedFunctionBlocks(statement: Statement, rec: (body: Block) => Blo
       };
     case "while":
       return { ...statement, test: walk(statement.test), body: rec(statement.body) };
-    case "repeat":
-      return { ...statement, body: rec(statement.body), test: walk(statement.test) };
+    case "repeat": {
+      // The until expression shares the body's scope, including captures by
+      // closures in the condition. Include it in every binding/use analysis
+      // and carry any resolved renaming back into the actual loop condition.
+      // This internal observation statement is never printed or validated.
+      const combined=rec({...statement.body,statements:[...statement.body.statements,
+        {kind:"expression-stmt",expression:walk(statement.test)}]});
+      const tail=combined.statements.at(-1);
+      if(tail?.kind!=="expression-stmt")return statement;
+      return {...statement,body:{...statement.body,statements:combined.statements.slice(0,-1)},test:tail.expression};
+    }
     case "do":
       return { ...statement, body: rec(statement.body) };
     case "numeric-for":
@@ -239,6 +248,27 @@ function foldScratchStatements(statements: Statement[]): Statement[] {
     const assigned = singleGeneratedAssign(current);
     const call = next ? singleGeneratedAssign(next) : undefined;
     const binding = assignedBindings.get(current);
+    if (current.kind === "local" && current.names.length === 1 && current.values.length === 1 &&
+        (current.values[0]!.kind === "call" || current.values[0]!.kind === "method-call") &&
+        next?.kind === "local" && next.values.length === 1 && next.values[0]!.kind === "method-call" &&
+        binding && !binding.captured && !binding.writes.length && binding.reads.length === 1 &&
+        binding.reads[0]!.node === next.values[0]!.object) {
+      // Both statements are adjacent and the sole read is the receiver, which
+      // Luau evaluates before arguments and the subsequent method lookup. No effect crosses
+      // another expression, and receiver context still selects one result.
+      folded.push({...next,values:[{...next.values[0]!,object:current.values[0]!}]});
+      i++;continue;
+    }
+    if (current.kind === "local" && assigned && next?.kind === "return" && next.values.length === 1 &&
+        binding && !binding.captured && !binding.writes.length && binding.reads.length === 1 &&
+        binding.reads[0]!.node === next.values[0] && assigned.value.kind !== "function-expr") {
+      // A local initializer clips a call/vararg pack to one result. Keep that
+      // adjustment when removing the temporary at its adjacent return.
+      const value=assigned.value;
+      folded.push({...next,values:[value.kind === "call" || value.kind === "method-call" || value.kind === "vararg"
+        ? {kind:"paren",expression:value} : value]});
+      i++;continue;
+    }
     if (assigned && call && next && binding && !binding.captured &&
         assignedBindings.get(next) === binding && isPureCallee(assigned.value)) {
       // Arguments still evaluate after the first store. Folding must not turn
@@ -723,21 +753,57 @@ function mapNestedInline(statement: Statement): Statement {
 
 function inlineStatements(statements: Statement[]): Statement[] {
   let body: Block = {kind: "block", statements};
-  // Move only dependency-free constructors. Even a single read of a captured
-  // table may run repeatedly, and fields read from locals are snapshots.
-  const constantTable = (value: Expression): boolean => value.kind === "literal" ||
-    (value.kind === "table" && value.fields.every(f =>
-      (!f.key || (f.key.kind === "literal" && f.key.value !== null &&
-        !(typeof f.key.value === "number" && Number.isNaN(f.key.value)))) && constantTable(f.value)));
+  let budget=100_000;
   for (;;) {
-    const candidate = analyzeBindings(body).bindings.find(binding => {
+    const {bindings}=analyzeBindings(body);
+    const owners=new Map(bindings.flatMap(binding=>binding.reads.map(ref=>[ref.node,binding] as const)));
+    const positions=new Map(body.statements.map((statement,index)=>[statement,index]));
+    const shadows=new Map<string,number[]>();
+    for(const binding of bindings) {
+      const position=positions.get(binding.declaration as Statement);
+      if(binding.scope!==body || position===undefined)continue;
+      const list=shadows.get(binding.name) ?? [];
+      list.push(position);shadows.set(binding.name,list);
+    }
+    // Field reads and calls stay at their original evaluation point. A local
+    // identifier is safe only when its cell never changes and is not shadowed
+    // between the constructor and its destination.
+    const stableTable = (value: Expression, from:number, to:number): boolean => {
+      if(--budget<0)return false;
+      if(value.kind === "literal")return true;
+      if(value.kind === "identifier") {
+        const owner=owners.get(value);
+        return !!owner && owner.declaration.kind === "local" && !owner.writes.length &&
+          !(shadows.get(owner.name) ?? []).some(position=>position>from && position<to);
+      }
+      return value.kind === "table" && value.fields.every(f =>
+        (!f.key || (f.key.kind === "literal" && f.key.value !== null &&
+          !(typeof f.key.value === "number" && Number.isNaN(f.key.value)))) && stableTable(f.value,from,to));
+    };
+    const constructorField = (value:Expression,node:Expression):boolean => value.kind === "table" &&
+      value.fields.some(field=>field.value===node || constructorField(field.value,node));
+    const contains = (tree:unknown,node:Expression):boolean => tree===node || !!tree && typeof tree==='object' &&
+      Object.values(tree).some(value=>contains(value,node));
+    const tablePrefix = (tree:unknown,node:Expression):boolean => {
+      if(!tree || typeof tree!=='object')return false;
+      const value=tree as Expression | Statement;
+      if(value.kind==='assign' && value.targets.some(target=>contains(target,node)))return true;
+      if(value.kind==='compound-assign' && contains(value.target,node))return true;
+      if(value.kind==='call' && contains(value.callee,node))return true;
+      if(value.kind==='method-call' && contains(value.object,node))return true;
+      return Object.values(tree).some(child=>tablePrefix(child,node));
+    };
+    const candidate = bindings.find(binding => {
       const s = binding.declaration;
       const use = binding.reads[0];
+      const from=positions.get(s as Statement),to=use && positions.get(use.statement);
       return binding.scope === body && s.kind === "local" && s.names.length === 1 &&
-        isGeneratedName(binding.name) && s.values.length === 1 && s.values[0]?.kind === "table" &&
-        constantTable(s.values[0]) && binding.reads.length === 1 && binding.writes.length === 0 &&
+        (isGeneratedName(binding.name) || use?.statement.kind === "local" &&
+          use.statement.values.some(value=>constructorField(value,use.node))) &&
+        s.values.length === 1 && s.values[0]?.kind === "table" && from!==undefined && to!==undefined && to>from &&
+        stableTable(s.values[0],from,to) && binding.reads.length === 1 && binding.writes.length === 0 &&
         !binding.captured && use?.scope === body && use.statement.kind !== "while" &&
-        use.statement.kind !== "repeat" && use.statement.kind !== "function-decl";
+        use.statement.kind !== "repeat" && use.statement.kind !== "function-decl" && !tablePrefix(use.statement,use.node);
     });
     if (!candidate || candidate.declaration.kind !== "local") return body.statements;
     const declaration = candidate.declaration;

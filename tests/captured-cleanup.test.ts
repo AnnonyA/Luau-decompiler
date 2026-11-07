@@ -97,7 +97,7 @@ describe("cleanup respects lexical cells and observation points", () => {
       store(call("value", [lit(5)])),
       { kind: "return", values: [ident("value")] },
     ]);
-    expect(output).toMatch(/local \w+ = callable\(5\)/);
+    expect(output).toBe("return (callable(5))\n");
   });
 
   it("keeps distinct lexical declarations and observable global writes", () => {
@@ -108,7 +108,7 @@ describe("cleanup respects lexical cells and observation points", () => {
       { kind: "local", names: ["value"], values: [lit(19)] },
       { kind: "return", values: [ident("value")] },
     ]);
-    for (const value of [11, 13, 17, 19]) expect(output).toContain(`= ${value}`);
+    expect(output).toBe("value = 11\nvalue = 13\nlocal value = 17\nreturn 19\n");
   });
 
   it.each<Statement>([

@@ -606,7 +606,7 @@ describe("semantic reconstruction", () => {
       ]),
       { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
     );
-    expect(printLuau(ast)).toMatch(/result19 = math\.abs\(id\)/);
+    expect(printLuau(ast)).toBe("makePayload = function(id)\n    return (math.abs(id))\nend\n");
     expect(printLuau(ast)).not.toMatch(/result19 = math\.abs\n/);
   });
 
@@ -621,7 +621,7 @@ describe("semantic reconstruction", () => {
       { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
     );
     const source = printLuau(ast);
-    expect(source).toMatch(/local value117 = seed/);
+    expect(source).toMatch(/return seed\n$/);
     expect(source).not.toMatch(/value117 = 4/);
     expect(source).toMatch(/config47/);
   });
