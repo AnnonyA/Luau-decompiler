@@ -25,16 +25,19 @@ export interface CleanupOptions {
   typeAnnotations: "off" | "functions" | "useful";
   ifExpressions: boolean;
   earlyReturn: boolean;
+  earlyContinue?: boolean;
+  foldSingleUseTemps?: boolean;
+  unfoldModuleTables?: boolean;
   /** Recover interpolation only when concatenation operands are known strings. */
   interpolatedStrings: boolean;
-  /** Compatibility option; numeric literals are retained without builtin binding proof. */
+  /** Handled by OptionalRewrites after helper recovery; no builtin lookup is introduced. */
   mathConstants: boolean;
 }
 
 export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
   const repaired = repairUndeclaredAutoLocals(ast);
   const body = transformBlock(repaired.body, options);
-  return inferHumanNames({ kind: "chunk", body });
+  return inferHumanNames({ kind: "chunk", body }, {foldSingleUseTemps: options.foldSingleUseTemps});
 }
 
 function transformBlock(body: Block, options: CleanupOptions): Block {
@@ -48,7 +51,7 @@ function transformBlock(body: Block, options: CleanupOptions): Block {
   const withReturns = options.earlyReturn ? recoverEarlyReturns(withReturnIf) : withReturnIf;
   const withoutDead = removeUnusedLocals(withReturns);
   const withLocalFunctions = liftLocalFunctions(withoutDead);
-  const withExports = liftExportedFunctions(withLocalFunctions);
+  const withExports = options.unfoldModuleTables === false ? withLocalFunctions : liftExportedFunctions(withLocalFunctions);
   const withNames = renameGenericClosures(withExports);
   const withCallbackParams = bindNamedCallbacks(withNames, options);
   return { kind: "block", statements: withCallbackParams };
@@ -130,7 +133,8 @@ function invertContinueIfs(statements: Statement[]): Statement[] {
 }
 
 /** Phoenix/Cifuentes post-pass: turn loop CFGs into continue/break guards. */
-function structureLoopBody(body: Block): Block {
+function structureLoopBody(body: Block, enabled = true): Block {
+  if (!enabled) return body;
   // Inversion is valid only for the entire loop body: a nested block can
   // have an enclosing continuation that its `continue` must still skip.
   let statements = invertContinueIfs(body.statements);
@@ -1351,22 +1355,22 @@ function transformStatement(statement: Statement, options: CleanupOptions): Stat
         alternate: statement.alternate ? transformBlock(statement.alternate, options) : undefined,
       };
     case "while":
-      return { ...statement, test: transformExpr(statement.test, options), body: structureLoopBody(transformBlock(statement.body, options)) };
+      return { ...statement, test: transformExpr(statement.test, options), body: structureLoopBody(transformBlock(statement.body, options), options.earlyContinue !== false) };
     case "repeat":
-      return { ...statement, test: transformExpr(statement.test, options), body: structureLoopBody(transformBlock(statement.body, options)) };
+      return { ...statement, test: transformExpr(statement.test, options), body: structureLoopBody(transformBlock(statement.body, options), options.earlyContinue !== false) };
     case "numeric-for":
       return {
         ...statement,
         start: transformExpr(statement.start, options),
         stop: transformExpr(statement.stop, options),
         step: statement.step ? transformExpr(statement.step, options) : undefined,
-        body: structureLoopBody(transformBlock(statement.body, options)),
+        body: structureLoopBody(transformBlock(statement.body, options), options.earlyContinue !== false),
       };
     case "generic-for":
       return {
         ...statement,
         iterators: statement.iterators.map((iterator) => transformExpr(iterator, options)),
-        body: structureLoopBody(transformBlock(statement.body, options)),
+        body: structureLoopBody(transformBlock(statement.body, options), options.earlyContinue !== false),
       };
     case "return":
       return { ...statement, values: statement.values.map((value) => transformExpr(value, options)) };

@@ -32,7 +32,22 @@
         </div>
         <div class="options extra-options"><label for="indent">Indent<select id="indent"><option value="4">4 spaces</option><option value="2">2 spaces</option><option value="tab">Tabs</option></select></label></div>
         <div class="divider"></div><p class="eyebrow">REWRITES</p>
-        <div class="checks"><label><input id="if-expressions" type="checkbox" checked> If-expressions</label><label><input id="early-return" type="checkbox" checked> Early return</label><label><input id="interpolation" type="checkbox"> Interpolated strings</label><label><input id="recover-inlined" type="checkbox" checked> Recover inlined numeric helpers</label></div>
+        <div class="checks">
+          <label><input id="interpolation" type="checkbox"> Interpolated strings</label>
+          <label title="Name repeated exact mathematical constants with private locals; no new global math lookups"><input id="math-constants" type="checkbox"> Math constants</label>
+          <label><input id="if-expressions" type="checkbox" checked> If-expressions</label>
+          <label><input id="early-continue" type="checkbox" checked> Early continue</label>
+          <label><input id="early-return" type="checkbox" checked> Early return</label>
+          <label title="Recover local functions only for bounded, proven numeric helper patterns"><input id="recover-inlined" type="checkbox" checked> Uninline local functions</label>
+          <label title="Recover loops from repeated primitive updates only"><input id="reroll-unrolled-loops" type="checkbox"> Reroll unrolled loops</label>
+          <label><input id="fold-single-use-temps" type="checkbox" checked> Fold single-use temps</label>
+          <label><input id="unfold-module-tables" type="checkbox" checked> Unfold module tables</label>
+          <label><input id="keep-dead-functions" type="checkbox" checked> Keep dead functions</label>
+          <label title="Use const for immutable bindings; requires recent Luau"><input id="prefer-const" type="checkbox"> Prefer const</label>
+          <label><input id="unicode-strings" type="checkbox" checked> Unicode strings</label>
+          <label><input id="upvalue-comments" type="checkbox"> Upvalue comments</label>
+          <label><input id="function-line-comments" type="checkbox"> Function line comments</label>
+        </div>
         <div class="privacy"><span class="dot"></span> Local processing · no API key needed</div>
         <div class="run-row"><button id="run" class="primary">Decompile <span aria-hidden="true">→</span></button><button id="cancel" hidden>Cancel</button></div>
         <p id="status" role="status" aria-live="polite">Ready when you are.</p>

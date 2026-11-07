@@ -10,21 +10,32 @@ import {decompile} from '../dist/decompile.js';
 import {launch,classify} from './competition/evaluate.mjs';
 import {digest} from './competition/external.mjs';
 const args=process.argv.slice(2),options={};
-let nameStyles=false;
+let nameStyles=false, rewriteOptions=false;
 for(let i=0;i<args.length;i++){
  if(args[i]==='--name-styles'){nameStyles=true;continue;}
+ if(args[i]==='--rewrite-options'){rewriteOptions=true;continue;}
  if(!['--luau','--luau-compile','--output'].includes(args[i])||!args[i+1])throw Error('invalid arguments');
  options[args[i]]=resolve(args[i+1]);
  i++;
 }
 const compiler=options['--luau-compile'],vm=options['--luau'],output=options['--output'];
 if(!compiler||!vm||!output)throw Error('--luau-compile, --luau and --output are required');
-const styles = nameStyles ? [
+// Default plus each individual inverse and both extremes cover option wiring
+// and interactions without pretending to enumerate the 2^14 combinations.
+const rewriteDefaults = {interpolatedStrings:true,mathConstants:false,ifExpressions:true,
+ earlyContinue:true,earlyReturn:true,recoverInlinedFunctions:true,rerollUnrolledLoops:false,
+ foldSingleUseTemps:true,unfoldModuleTables:true,keepDeadFunctions:true,preferConst:false,
+ unicodeStrings:true,upvalueComments:false,functionLineComments:false};
+const styles = rewriteOptions ? [
+ ['default',{}],
+ ...[true,false].map(enabled=>[enabled?'all-on':'all-off',Object.fromEntries(Object.keys(rewriteDefaults).map(key=>[key,enabled]))]),
+ ...Object.entries(rewriteDefaults).map(([key,value])=>[key,{[key]:!value}]),
+] : nameStyles ? [
  ['default',{}], ['compact',{generatedNames:'compact'}],
  ...['camelCase','snake_case','PascalCase'].map(nameCasing=>[nameCasing,{nameCasing}]),
 ] : [['default',{}]];
 const results=[], fixtures=[];
-for(const family of ['large','object-optimized']) {
+for(const family of ['large','object-optimized','rewrites']) {
  const root=fileURLToPath(new URL(`../tests/fixtures/${family}/`,import.meta.url));
  let inputMatrix = {};
  try { inputMatrix = JSON.parse(await readFile(join(root,'inputs.json'),'utf8')); }

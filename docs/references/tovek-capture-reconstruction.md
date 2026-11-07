@@ -105,3 +105,39 @@ and inside a nested function, with two permanent runtime fixtures. Its general
 environment-sensitive and cross-activation cache emulation remains a preexisting
 limitation; these stronger proofs govern the newly supported regions. The new
 NaN and environment fixtures are development regressions, not blind evaluations.
+
+## Fixed tuples and optional rewrites (2026-11-06)
+
+This round consulted the same pinned Tovek revision `77edf387`:
+`ast/src/expr_deinline.rs` (fixed arity and variadic rejection) and
+`ast/src/deinline_safety.rs` (whole-binding writer checks). Official Luau
+`9d7748a4` `Compiler/src/Compiler.cpp` `compileInlineReturn` / `compileExprListTemp`
+explains how each call's requested result count controls inlined assignments;
+`compileUnrolledFor` motivates the deliberately bounded integer-stride reroll.
+`Ast/src/Parser.cpp` verifies const initializer arity. The implementations here
+are independent; no competitor source was copied.
+
+Tuple recovery matches every slot, in order, against the same proven primitive
+arguments. It preserves existing lexical destinations, rejects open or clipped
+packs, and refuses ambiguous matches. Existing-cell tuples use parallel assignment;
+mixed tuples reserve conservative local-register headroom, including inside repeat
+scopes that cannot be shortened without changing the until condition's scope.
+Optional math rewrites introduce private literal bindings rather than assuming the
+global math library is unchanged. Module unfolding rejects initializer references
+to the newly introduced local name and any effectful or open field initializers.
+
+The new constant-capture regression exposed a REF-specific freshness failure at
+O1: dead prior stores disappeared during reconstruction, leaving an immutable
+literal initializer that official `shouldShareClosure` could fold away. The
+builder now records resolved REF cells and restores declaration-plus-assignment
+only when the completed lexical analysis finds no surviving writes. Existing
+mutations and their scopes remain intact. Tovek `closure_identity.rs` distinguishes
+shared prototype constants from fresh allocations; official `shouldShareClosure`
+checks the captured local's written flag. This fix does not emulate arbitrary
+closure caches.
+
+Review also exercised 105 recovered tuples inside repeat, deeply nested numeric
+loops, a 254-argument call, and nested 126/127-argument calls. A conservative shared
+register budget includes lexical bindings, hidden loop controls and simultaneously
+live nested expression packs. Optional local-adding rewrites decline when the
+budget cannot justify headroom; they leave the original statements intact.

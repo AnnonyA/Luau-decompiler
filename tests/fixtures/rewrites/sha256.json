@@ -1,0 +1,14 @@
+{
+  "inlined-fixed-tuple-O0.luauc": "5fb90e2d2a54282edec0842ea729f858ca5204227a940581523292d22800630a",
+  "inlined-fixed-tuple-O1.luauc": "a335edcd9dd57a91c5cc9c98811a7fd644daf9ce22817776dc9ecad85d1dcf1d",
+  "inlined-fixed-tuple-O2.luauc": "c80df427cb78dbf0bd2c0b0e064d02553a0c7caa7ad4109dc44e1262fe26eed5",
+  "inlined-fixed-tuple.luau": "6ef9c24e4d83dadf11ad665999845619af0bf26a008a0e0906d4793b785baf13",
+  "numeric-rewrites-O0.luauc": "f3e4fb4e76da4ca3e2f5a03779ace1ec84627ed1610bf71ca270bbe56de452ab",
+  "numeric-rewrites-O1.luauc": "5c328d4d5def6d7b0a8f1b151cf52c7177f7673e17d308373918f0aa46ae40a7",
+  "numeric-rewrites-O2.luauc": "a4e8c84f5090dff18a12efad7fc3148a9400834124df78a65bfef9f5bbaf19bf",
+  "numeric-rewrites.luau": "e749d6b589320bddc5e74f14ad932a872ca35347683d9a08379de28e641c47ee",
+  "options-effects-O0.luauc": "815dfc4421501c0dc2f0fd46844cff3d67f3279b9471b541a7904df2cd75fcab",
+  "options-effects-O1.luauc": "df4a4c92502a123a2c04ac9e7c61f35a853e8efe498ad7bfcd522203efcb50f9",
+  "options-effects-O2.luauc": "14c5790f6dd2dcf95ae867b2644f6b2953483a87d1ac810c2b68fb4eea5c66b5",
+  "options-effects.luau": "ed365c55b0ce7348b3e73b347715756d2287cb1fa9323ada55900e97a355cc0d"
+}

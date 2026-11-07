@@ -5,6 +5,8 @@ import {lineAt, type BytecodeModule} from '../decode/Prototype.js';
 import {Opcode} from '../decode/Opcode.js';
 import {canonicalWrites, tableStore} from './InlineWrites.js';
 import {numericStateBindings} from './NumericState.js';
+import {NameAllocator} from './Naming.js';
+import {rewriteRegisterCount} from './RegisterBudget.js';
 
 const arithmetic = new Set(['+', '-', '*', '/', '//', '%', '^']);
 const comparisons = new Set(['<', '<=', '>', '>=', '==', '~=']);
@@ -49,8 +51,9 @@ interface CallTarget {
   count: number;
 }
 interface Target extends CallTarget {expression: Expression}
+interface TupleTarget extends CallTarget {returns: Expression[]}
 interface WriteTarget extends CallTarget {writes:Statement[];tableParameter?:number}
-type Available = Map<string, Target | WriteTarget>;
+type Available = Map<string, Target | TupleTarget | WriteTarget>;
 const unparen = (expression: Expression): Expression => {
   while (expression.kind === 'paren') expression = expression.expression;
   return expression;
@@ -66,7 +69,8 @@ const unparen = (expression: Expression): Expression => {
  * additionally require a fresh, unescaped table and static valid keys. */
 export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): Chunk {
   if (!evidence.size) return ast;
-  const {bindings} = analyzeBindings(ast.body);
+  const {bindings,globals} = analyzeBindings(ast.body);
+  const names = new NameAllocator([...globals,...bindings.map(binding=>binding.name)]);
   const owners = new Map<object, LexicalBinding>(), declarations = new Map<object, LexicalBinding[]>();
   for (const binding of bindings) {
     for (const ref of [...binding.reads,...binding.writes]) owners.set(ref.node, binding);
@@ -76,6 +80,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
   const numericBindings = new Map<LexicalBinding, boolean>();
   const numericValues = new Map<Expression, boolean>();
   let budget = 100_000;
+  let tupleLocalCount = rewriteRegisterCount(bindings, ast.body);
   let tableEscapes: Set<LexicalBinding> | undefined;
   const privateTables=new Map<LexicalBinding,boolean>();
   function privateTable(e: Expression): boolean {
@@ -165,9 +170,9 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
   }
   /** Build a proof-only return tree; leave the emitted helper body untouched.
    * Only primitive, immutable lets can be substituted, even if their value is
-   * unused. Every path must return one value. Loops, stores, calls, closures,
+   * unused. Every path must return the same requested fixed arity. Loops, stores, calls, closures,
    * fallthrough and value packs deliberately have no template rule. */
-  function returnPattern(body: Block, parameters: Map<LexicalBinding,number>): Expression | undefined {
+  function returnPattern(body: Block, parameters: Map<LexicalBinding,number>, resultIndex=0, arity=1): Expression | undefined {
     let nodes = 128;
     type Locals = Map<LexicalBinding,Expression>;
     function value(expression: Expression, locals: Locals, depth: number): Expression | undefined {
@@ -205,7 +210,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
           if(!binding || binding.writes.length || !init || size(init)>128 || !scalar(init,parameters))return;
           locals.set(binding,init);continue;
         }
-        if(s.kind==='return' && s.values.length===1 && i===statements.length-1)return value(s.values[0]!,locals,0);
+        if(s.kind==='return' && s.values.length===arity && i===statements.length-1)return value(s.values[resultIndex]!,locals,0);
         if(s.kind!=='if' || s.alternate && i!==statements.length-1)return;
         const test=value(s.test,locals,0),consequent=sequence(s.consequent.statements,locals,depth+1);
         const alternate=sequence(s.alternate?.statements ?? statements.slice(i+1),locals,depth+1);
@@ -221,7 +226,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     return sequence(body.statements,new Map(),0);
   }
   function target(statement: Extract<Statement,{kind:'function-decl'}> | Extract<Expression,{kind:'function-expr'}>,
-    initialized?:LexicalBinding): Target | WriteTarget | undefined {
+    initialized?:LexicalBinding): Target | TupleTarget | WriteTarget | undefined {
     if (statement.kind==='function-decl' && !statement.local || !statement.line || !evidence.has(statement.line) || statement.isVararg ||
         statement.params.length > 8) return;
     const declared = declarations.get(statement) ?? [];
@@ -233,6 +238,16 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     const expression = returnPattern(statement.body,parameters);
     const base={name:binding.name,parameters,count:statement.params.length};
     if (statement.params.length && expression && size(expression)<=128 && size(expression)>=5 && scalar(expression,parameters))return {...base,expression};
+    // A retained fixed tuple is a separate candidate: never substitute it into
+    // a scalar slot and accidentally expand or discard additional results.
+    const last=statement.body.statements.at(-1);
+    if(statement.params.length && last?.kind==='return' && last.values.length>=2 && last.values.length<=4) {
+      const returns=last.values.map((_,index)=>returnPattern(statement.body,parameters,index,last.values.length));
+      if(returns.every((value):value is Expression=>!!value && !!scalar(value,parameters))) {
+        const cost=returns.reduce((sum,value)=>sum+size(value),0);
+        if(cost>=5 && cost<=128)return {...base,returns};
+      }
+    }
     const writes=canonicalWrites(statement.body.statements,true,()=>--budget>=0);
     if(!writes)return;
     let tableParameter:number|undefined,stores=0;
@@ -407,6 +422,62 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     }
     return budget>0 ? selected : undefined;
   }
+  function tupleRegion(statements:Statement[], start:number, available:Available, visible:Visible):
+    {count:number;statements:Statement[];locals:LexicalBinding[]} | undefined {
+    let selected:{count:number;candidate:TupleTarget;args:Expression[];slots:Array<{name:string;local?:LexicalBinding;type?:string}>}|undefined;
+    for(const candidate of available.values()) {
+      if(!('returns' in candidate) || --budget<0)continue;
+      const actual:Expression[]=[],slots:Array<{name:string;local?:LexicalBinding;type?:string}>=[];
+      let count=0;
+      while(actual.length<candidate.returns.length) {
+        if(--budget<0)return;
+        const statement=statements[start+count];
+        if(!statement || (statement.kind!=='local' && statement.kind!=='assign'))break;
+        const targets=statement.kind==='local' ? statement.names : statement.targets.map(target=>target.kind==='identifier'?target.name:undefined);
+        if(targets.length!==statement.values.length || !targets.length || targets.some(name=>!name))break;
+        const locals=declarations.get(statement) ?? [];
+        let valid=true;
+        for(let index=0;index<targets.length;index++) {
+          if(statement.kind==='assign' && !owners.has(statement.targets[index]!)){valid=false;break;}
+          slots.push({name:targets[index]!,local:statement.kind==='local'?locals.find(binding=>binding.declarationIndex===index):undefined,
+            type:statement.kind==='local'?statement.types?.[index]:undefined});
+          actual.push(statement.values[index]!);
+        }
+        if(!valid)break;
+        count++;
+      }
+      if(actual.length!==candidate.returns.length || slots.length!==actual.length ||
+          new Set(slots.map(slot=>slot.name)).size!==slots.length)continue;
+      // Reject partially accumulated invalid assignments and any consumed slot
+      // whose declaration ownership could not be resolved.
+      if(count===0 || statements.slice(start,start+count).reduce((n,s)=>n+(s.kind==='local'?s.names.length:s.kind==='assign'?s.targets.length:0),0)!==actual.length)continue;
+      const args=new Map<number,Expression>();
+      if(!candidate.returns.every((pattern,index)=>match(pattern,actual[index]!,candidate,args)) || args.size!==candidate.count)continue;
+      const ordered=Array.from({length:candidate.count},(_,i)=>args.get(i)!);
+      if(!ordered.every(arg=>visibleArguments(arg,visible)))continue;
+      if(selected)return; // No guessed winner between equally plausible helpers.
+      selected={count,candidate,args:structuredClone(ordered),slots};
+    }
+    if(!selected || budget<=0)return;
+    const call:Expression={kind:'call',callee:ident(selected.candidate.name),args:selected.args,open:false};
+    // Fixed primitive results have no intervening effects. Existing lexical
+    // cells can be assigned together without creating new registers per call.
+    if(selected.slots.every(slot=>!slot.local))return {count:selected.count,locals:[],statements:[{
+      kind:'assign',targets:selected.slots.map(slot=>ident(slot.name)),values:[call],
+    }]};
+    const addedLocals=selected.slots.filter(slot=>!slot.local).length;
+    // Repeat conditions share their body's scope, so lifetime cleanup cannot
+    // always enclose these temps in a do block. Leave room for Luau's hidden
+    // control registers; count the whole AST conservatively across scopes.
+    if(addedLocals && tupleLocalCount+addedLocals>180)return;
+    tupleLocalCount+=addedLocals;
+    const resultNames=selected.slots.map(slot=>slot.local?slot.name:names.reserve('inlineResult'));
+    const output:Statement[]=[{kind:'local',names:resultNames,values:[call],types:selected.slots.map(slot=>slot.type)}];
+    selected.slots.forEach((slot,index)=>{
+      if(!slot.local)output.push({kind:'assign',targets:[ident(slot.name)],values:[ident(resultNames[index]!)]});
+    });
+    return {count:selected.count,statements:output,locals:selected.slots.flatMap(slot=>slot.local?[slot.local]:[])};
+  }
   function walk(body: Block, inherited: Available, inheritedVisible: Visible): {available:Available;visible:Visible} {
     const available = new Map(inherited),visible=new Map(inheritedVisible);
     const visit = (e: Expression) => expression(e,available,visible);
@@ -419,6 +490,12 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
     let changed=false;
     for (let i=0;i<body.statements.length;i++) {
       const s=body.statements[i]!;
+      const tuple=tupleRegion(body.statements,i,available,visible);
+      if(tuple) {
+        statements.push(...tuple.statements);i+=tuple.count-1;changed=true;
+        for(const binding of tuple.locals){available.delete(binding.name);visible.set(binding.name,binding);}
+        continue;
+      }
       const recovered=region(body.statements,i,available,visible);
       if(recovered){statements.push(recovered.call);i+=recovered.count-1;changed=true;continue;}
       statements.push(s);
