@@ -204,3 +204,32 @@ Thus stable captures share in an unchanged environment and remain distinct after
 an environment change. Captures must match the existing raw-reflexive SSA proof,
 intervening instructions must be inert, and every added factory/result local
 counts toward a conservative register budget. No environment API is injected.
+
+## Source structure and Tovek V2.7 (2026-11-07)
+
+Consulted the newer Tovek revision
+`a70720174f61028af9e38e8f6761d18c422c0bc7` (README identifies V2.7;
+`LICENSE.txt` remains MIT). Relevant files: `ast/src/inline_temps.rs`, especially
+`forwards_table_into_prefix`, and `ast/src/rebuild_table_literals.rs`, including
+private-constructor, captured-binding, field-order and table-layout restrictions.
+The benchmark corpus remains pinned to `77edf387`; fetching the reference did
+not replace its samples or reference bytes. No implementation code was copied.
+
+Our owned-table pass can now embed named child records in a parent constructor,
+provided there is one noncaptured use and every local-valued field has an
+immutable, still-visible lexical binding. Properties, calls, mutable snapshots,
+invalid computed keys and receiver/assignment-target uses are retained. This is
+a bounded structural recovery, not Tovek's entire allocation reconstruction.
+
+Official Luau `9d7748a4` `Compiler.cpp` `compileStatIf` / `compileStatRepeat`
+motivates the function-tail scope restriction on early-return flattening. The
+compiler's method-call lowering evaluates receiver, arguments and then NAMECALL;
+adjacent single-use receiver folding preserves those evaluation points. A local
+returned immediately can be removed with explicit scalar parentheses for calls
+and varargs. Repeat-body analyses now include the until expression in the same
+scope, including closure captures and any rewritten binding references.
+
+The printer adds whitespace without sorting statements and expands nested
+records without reordering keys. Existing exact-output tests were updated to
+assert the intended folded returns/blank lines, retaining effect, scope, const
+and arity checks. New official-runtime fixtures exercise the changes together.

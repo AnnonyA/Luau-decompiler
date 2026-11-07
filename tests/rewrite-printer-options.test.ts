@@ -11,7 +11,7 @@ describe("printer rewrite options", () => {
   it("keeps default Unicode and omits optional annotations and const", () => {
     const ast = chunk([{ kind: "local", names: ["label"], values: [lit("é🙂")] },
       { ...fn("read", [{ kind: "return", values: [ident("label")] }]), line: 14 }]);
-    expect(printLuau(ast)).toBe('local label = "é🙂"\nlocal function read()\n    return label\nend\n');
+    expect(printLuau(ast)).toBe('local label = "é🙂"\n\nlocal function read()\n    return label\nend\n');
   });
 
   it("escapes Unicode as exact UTF-8 bytes while preserving invalid bytes and decimal suffixes", () => {
@@ -73,7 +73,7 @@ describe("printer rewrite options", () => {
         { kind: "return", values: [ident("fixed")] }]),
     ]);
     const output = printLuau(ast, { preferConst: true });
-    expect(output).toContain("const fixed: number = 1\nlocal mutable = 2\nlocal function change()");
+    expect(output).toContain("const fixed: number = 1\nlocal mutable = 2\n\nlocal function change()");
   });
 
   it("resolves same-named locals independently and propagates options to function expressions", () => {

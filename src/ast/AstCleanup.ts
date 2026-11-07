@@ -36,11 +36,11 @@ export interface CleanupOptions {
 
 export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
   const repaired = repairUndeclaredAutoLocals(ast);
-  const body = transformBlock(repaired.body, options);
+  const body = transformBlock(repaired.body, options, true);
   return inferHumanNames({ kind: "chunk", body }, {foldSingleUseTemps: options.foldSingleUseTemps});
 }
 
-function transformBlock(body: Block, options: CleanupOptions): Block {
+function transformBlock(body: Block, options: CleanupOptions, functionBody = false): Block {
   // Transform children first so nested `else if` is already flattened, then
   // absorb those into elseif branches at this level.
   let statements = body.statements.map((statement) => transformStatement(statement, options));
@@ -48,7 +48,7 @@ function transformBlock(body: Block, options: CleanupOptions): Block {
   statements = foldCompoundAssigns(statements);
   const withIfExpr = options.ifExpressions ? recoverIfExpressions(statements) : statements;
   const withReturnIf = options.ifExpressions ? recoverReturnIfExpressions(withIfExpr) : withIfExpr;
-  const withReturns = options.earlyReturn ? recoverEarlyReturns(withReturnIf) : withReturnIf;
+  const withReturns = options.earlyReturn ? recoverEarlyReturns(withReturnIf, functionBody) : withReturnIf;
   const withoutDead = removeUnusedLocals(withReturns);
   const withLocalFunctions = liftLocalFunctions(withoutDead);
   const withExports = options.unfoldModuleTables === false ? withLocalFunctions : liftExportedFunctions(withLocalFunctions);
@@ -1339,7 +1339,7 @@ function transformStatement(statement: Statement, options: CleanupOptions): Stat
     case "function-decl":
       return {
         ...statement,
-        body: transformBlock(statement.body, options),
+        body: transformBlock(statement.body, options, true),
         paramTypes: options.typeAnnotations === "off" ? undefined : statement.paramTypes,
         returnType: options.typeAnnotations === "off" ? undefined : statement.returnType,
       };
@@ -1442,7 +1442,7 @@ function transformExpr(expression: Expression, options: CleanupOptions): Express
         })),
       };
     case "function-expr":
-      return { ...expression, body: transformBlock(expression.body, options) };
+      return { ...expression, body: transformBlock(expression.body, options, true) };
     case "paren":
       return { ...expression, expression: transformExpr(expression.expression, options) };
     case "if-expr":
@@ -1628,7 +1628,7 @@ function sameTarget(left: Expression | undefined, right: Expression | undefined)
   return false;
 }
 
-function recoverEarlyReturns(statements: Statement[]): Statement[] {
+function recoverEarlyReturns(statements: Statement[], functionBody = false): Statement[] {
   const out: Statement[] = [];
   for (const statement of statements) {
     // `if cond then return x else <body> end` → guard + body at this level.
@@ -1641,12 +1641,14 @@ function recoverEarlyReturns(statements: Statement[]): Statement[] {
       // Flattening the else arm into the parent scope would extend the
       // lifetime of locals and local function declarations past the 'end'.
       // Preserve the conditional when this changes lexical visibility.
-      !statement.alternate.statements.some((item) =>
+      ((functionBody && statement === statements.at(-1)) || !statement.alternate.statements.some((item) =>
         item.kind === "local" || (item.kind === "function-decl" && item.local),
-      )
+      ))
     ) {
       out.push({ ...statement, alternate: undefined });
-      out.push(...statement.alternate.statements);
+      // At the function tail there is no subsequent statement/loop condition
+      // whose name resolution or capture lifetime these declarations can alter.
+      out.push(...recoverEarlyReturns(statement.alternate.statements, functionBody && statement === statements.at(-1)));
       continue;
     }
     out.push(statement);

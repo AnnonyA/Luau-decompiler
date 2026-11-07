@@ -40,3 +40,14 @@ closure's empty name). Each has three inputs and pinned O0/O1/O2 compilations.
 They are development regressions. The first draft of `named-function-cells`
 accidentally printed a process-dependent function address; the checked-in source
 observes identity through equality instead. No sealed benchmark was changed.
+
+The source-structure round adds three independent development regressions:
+
+- `layout-evaluation-order`: chained method receivers, observable lookup/argument
+  order, fixed one-result returns and empty/nil-containing vararg packs.
+- `layout-scopes-tables`: terminal guards with captured locals, nonterminal local
+  shadows, nested table identities and reassigned/shadowed constructor inputs.
+- `layout-repeat-scopes`: direct and closure reads in `until` must retain the
+  receiver/table cells declared inside the repeat body.
+
+All have three deterministic inputs and pinned O0/O1/O2 bytes.

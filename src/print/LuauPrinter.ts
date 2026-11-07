@@ -61,8 +61,11 @@ class Printer {
     if (wrap) {
       this.indentLevel += 1;
     }
+    let previous:Statement|undefined;
     for (const statement of body.statements) {
+      if (this.indentLevel === 0 && previous && topLevelBoundary(previous,statement)) this.pendingBlank = true;
       this.printStatement(statement);
+      previous=statement;
     }
     if (wrap) {
       this.indentLevel -= 1;
@@ -290,7 +293,8 @@ class Printer {
       return this.expr(field.value);
     });
     this.exprDepth -= 1;
-    if (parts.join(", ").length > 80) {
+    const nestedRecord = this.exprDepth > 0 && fields.length >= 3 && fields.every(field=>field.name || field.key);
+    if (nestedRecord || parts.some(part=>part.includes("\n")) || parts.join(", ").length > 80) {
       const inner = parts.map((part) => `${this.unit.repeat(this.indentLevel + this.exprDepth + 1)}${part},`).join("\n");
       return `{\n${inner}\n${this.unit.repeat(this.indentLevel + this.exprDepth)}}`;
     }
@@ -326,6 +330,24 @@ class Printer {
     nested.printBlock(fn.body, false);
     return nested.lines.length === 0 ? "" : `${nested.lines.join("\n")}\n${this.unit.repeat(this.indentLevel)}`;
   }
+}
+
+/** Whitespace groups existing statements; it never sorts declarations or moves
+ * initialization. Keep a forward local next to its function assignment. */
+function topLevelBoundary(previous:Statement,current:Statement):boolean {
+  const section=(statement:Statement):string|undefined=>{
+    if(statement.kind!=='local' || statement.values.length!==1)return;
+    const value=statement.values[0]!;
+    if(value.kind==='call' && value.callee.kind==='identifier' && value.callee.name==='require')return 'imports';
+    if(value.kind==='method-call' && value.name==='GetService')return 'services';
+    if(value.kind==='table' && value.fields.some(field=>field.value.kind==='table'))return 'records';
+  };
+  const before=section(previous),after=section(current);
+  if(before!==after && (before || after))return true;
+  const fn=current.kind==='function-decl' ? current.name : current.kind==='assign' &&
+    current.targets.length===1 && current.targets[0]!.kind==='identifier' &&
+    current.values.length===1 && current.values[0]!.kind==='function-expr' ? current.targets[0]!.name : undefined;
+  return !!fn && !(previous.kind==='local' && previous.values.every(value=>value.kind==='literal' && value.value===null) && previous.names.includes(fn));
 }
 
 function formatTypedNames(names: string[], types?: Array<string | undefined>): string {
