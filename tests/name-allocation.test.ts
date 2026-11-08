@@ -26,3 +26,17 @@ it('keeps deterministic names through a long collision sequence', () => {
   expect(names.take('value')).toBe('value');
   for (let suffix = 2; suffix <= 4000; suffix++) expect(names.take('value')).toBe(`value${suffix}`);
 });
+it('keeps preferred function names available until their owner claims them',()=>{
+  const names=new NameAllocator([],new Set(['result','result2']));
+  expect(names.reserve('result')).toBe('result3');
+  expect(names.claim('result')).toBe('result');
+  expect(names.claim('result2')).toBe('result2');
+});
+it('retains preferred-name protection across speculative rollback',()=>{
+  const names=new NameAllocator([],new Set(['result']));
+  const snapshot=names.snapshot();
+  expect(names.claim('result')).toBe('result');
+  names.restore(snapshot);
+  expect(names.reserve('result')).toBe('result2');
+  expect(names.claim('result')).toBe('result');
+});

@@ -24,10 +24,10 @@ it('keeps shadowed closure bindings distinct and avoids free globals', () => {
   const renamed = styleLocalNames(ast, {generatedNames:'compact'});
   const {bindings, globals} = analyzeBindings(renamed.body);
   expect([...globals].sort()).toEqual(['playerCount','v1']);
-  expect(bindings.map(b=>b.name)).toEqual(['v2','v3','v4']);
+  expect(bindings.map(b=>b.name)).toEqual(['v2','v3','callback']);
   expect(bindings.map(b=>b.reads.length)).toEqual([1,1,1]);
   expect(printLuau(renamed)).toContain('return v3, v1');
-  expect(printLuau(renamed)).toContain('return v2, v4');
+  expect(printLuau(renamed)).toContain('return v2, callback');
 });
 
 it('renames a declaration root without changing its public path or implicit self', () => {
@@ -48,7 +48,9 @@ it('renames a declaration root without changing its public path or implicit self
 it('keeps the recursive function name separate from a parameter with the same spelling', () => {
   const ast=chunk([{kind:'function-decl',local:true,name:'MyFunction',params:['MyFunction'],isVararg:false,
     body:block([{kind:'return',values:[ident('MyFunction')]}])}, {kind:'return',values:[ident('MyFunction')]}]);
-  expect(printLuau(styleLocalNames(ast,{generatedNames:'compact'}))).toContain('local function v1(v2)\n    return v2');
+  const source = printLuau(styleLocalNames(ast,{generatedNames:'compact'}));
+  expect(source).toContain('local function MyFunction(v1)\n    return v1');
+  expect(source).toContain('\nreturn MyFunction\n');
 });
 
 it('preserves names mentioned by opaque type annotations', () => {
@@ -84,4 +86,18 @@ it('renames duplicate declarations by position, preserving the last binding',()=
   const ast=chunk([{kind:'local',names:['ItemCount','ItemCount'],values:[lit(1),lit(2)]},
     {kind:'return',values:[ident('ItemCount')]}]);
   expect(printLuau(styleLocalNames(ast,{generatedNames:'compact'}))).toContain('local v1, v2 = 1, 2\nreturn v2');
+});
+it.each([{generatedNames:'compact'},{nameCasing:'PascalCase'}] as const)('preserves observable function names with %j',options=>{
+  const ast=chunk([
+    {kind:'local',names:['first'],values:[{kind:'function-expr',params:['Input'],isVararg:false,body:block([])}]},
+    {kind:'local',names:['second'],values:[]},
+    {kind:'function-decl',local:false,name:'second',params:[],isVararg:false,body:block([])},
+    {kind:'function-decl',local:true,name:'third',params:[],isVararg:false,body:block([])},
+    {kind:'return',values:[ident('first'),ident('second'),ident('third')]},
+  ]);
+  const source=printLuau(styleLocalNames(ast,options));
+  expect(source).toContain('local first = function(');
+  expect(source).toContain('function second()');
+  expect(source).toContain('local function third()');
+  expect(source).toContain('return first, second, third');
 });

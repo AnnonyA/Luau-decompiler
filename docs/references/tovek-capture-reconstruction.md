@@ -233,3 +233,56 @@ The printer adds whitespace without sorting statements and expands nested
 records without reordering keys. Existing exact-output tests were updated to
 assert the intended folded returns/blank lines, retaining effect, scope, const
 and arity checks. New official-runtime fixtures exercise the changes together.
+
+## Return structure and getter result names (2026-11-07)
+
+Consulted Tovek V2.7 `a70720174f61028af9e38e8f6761d18c422c0bc7`
+`ast/src/refine_names.rs`, including its `FunctionRoles`/`ReturnRole` distinction
+between resolved bindings and explicit result positions. Our independent,
+bounded rule uses an enclosing named getter/factory's stem only for a generated
+local table returned as a single explicit value in that function. It does not
+rename outer captured tables, parameters, multiple result positions or genuine
+source names. Existing lexical allocation still prevents global/capture clashes.
+This is a naming hint, not a claim of recovering the original spelling or Tovek's
+full interprocedural inference.
+
+Official Luau `9d7748a4` `compileExprIfElse` selects one scalar expression whereas
+`compileStatReturn` may forward a complete result pack. The final structural
+pass therefore reuses the existing scalar-only return rule after scratch cleanup
+has exposed return arms. Calls adjusted by locals keep their parentheses;
+unadjusted calls and varargs retain statement returns. Only return structure is
+revisited, with no second naming pass or movement of initialization/effects.
+
+Review and official execution exposed two function-name hazards: inferred table
+names could displace a later function declaration, and compact/PascalCase styling
+changed prototype debug names. Inference now reserves explicit and function
+bindings before allocation, rejecting suggestions without consuming them.
+Styling preserves local and forward function declaration names and function
+expression initializer names, while still styling parameters and other locals.
+Qualified method names keep their public tail as before. `getter-debug-names`
+records the observable `debug.info(fn, "n")` contract across all naming styles.
+
+## Field roles through literal fallbacks (2026-11-08)
+
+Consulted Tovek V2.7 `a70720174f61028af9e38e8f6761d18c422c0bc7`
+`ast/src/refine_names.rs` (`field_role` and bounded fallback-role evidence), plus
+official Luau `9d7748a4` `compileExprAndOr`. Our independent naming rule recognizes
+`record.Field or <literal>` and `record and record.Field or <literal>`. The latter
+requires the same identifier for the guard and receiver; competing field/default
+expressions do not provide a single inferred role. Only generated binding names
+change, using the existing global/explicit-name protections. No lookup, fallback,
+short-circuit test or effect is moved or removed. The new official VM fixture
+observes metamethod reads, false/nil defaults, captures and function debug names.
+Function bindings keep their own declaration name even when later assignments
+suggest another role; reserving names against other bindings alone is insufficient.
+The reassignment regression observes a saved function alias before/after its
+original local receives a field fallback, including `debug.info` and call results.
+
+Official O0 execution of that regression exposed an earlier-stage collision:
+a generated `tonumber` result had already consumed a later prototype's debug
+name. The module allocator now holds genuine valid prototype names aside for
+their owners. Generic temporaries cannot consume them; closure creation and
+forward REF cells may claim their matching future prototype name. Actual globals
+remain reserved, other prototypes' suffixes remain protected, and speculative
+rollback retains the inventory. This does not claim to recover absent debug names
+or resolve every collision between multiple genuine same-named prototypes.

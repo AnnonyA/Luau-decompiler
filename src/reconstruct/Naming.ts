@@ -33,8 +33,10 @@ const GENERIC_FALLBACKS = ["value", "result", "item", "entry", "state", "data", 
 export class NameAllocator {
   private readonly used = new Set<string>();
   private readonly nextSuffix = new Map<string, number>();
+  private readonly preferredNames: Set<string>;
 
-  constructor(reserved: Iterable<string> = []) {
+  constructor(reserved: Iterable<string> = [], preferredNames: Iterable<string> = []) {
+    this.preferredNames = new Set(preferredNames);
     for (const name of reserved) {
       this.used.add(name);
     }
@@ -48,14 +50,20 @@ export class NameAllocator {
     return this.take(name);
   }
 
-  take(preferred: string): string {
+  /** Claim a prototype's own name, keeping other prototypes' names available. */
+  claim(preferred: string): string {
     const base = sanitizeIdentifier(preferred);
-    if (!this.used.has(base)) {
+    return this.take(preferred, name => name === base || !this.preferredNames.has(name));
+  }
+
+  take(preferred: string, accept: (name: string) => boolean = name => !this.preferredNames.has(name)): string {
+    const base = sanitizeIdentifier(preferred);
+    if (!this.used.has(base) && accept(base)) {
       this.used.add(base);
       return base;
     }
     let suffix = this.nextSuffix.get(base) ?? 2;
-    while (this.used.has(`${base}${suffix}`)) {
+    while (this.used.has(`${base}${suffix}`) || !accept(`${base}${suffix}`)) {
       suffix += 1;
     }
     const next = `${base}${suffix}`;

@@ -37,7 +37,21 @@ export interface CleanupOptions {
 export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
   const repaired = repairUndeclaredAutoLocals(ast);
   const body = transformBlock(repaired.body, options, true);
-  return inferHumanNames({ kind: "chunk", body }, {foldSingleUseTemps: options.foldSingleUseTemps});
+  const named = inferHumanNames({ kind: "chunk", body }, {foldSingleUseTemps: options.foldSingleUseTemps});
+  // Scratch folding can expose scalar return arms after the first structural
+  // pass. Revisit only return structure, not naming, effects or declarations.
+  return options.ifExpressions ? finalizeReturnExpressions(named) : named;
+}
+
+function finalizeReturnExpressions<T>(node: T): T {
+  if (!node || typeof node !== "object") return node;
+  if (Array.isArray(node)) return node.map(finalizeReturnExpressions) as T;
+  const mapped = Object.fromEntries(Object.entries(node).map(([key, value]) =>
+    [key, finalizeReturnExpressions(value)]));
+  if (mapped.kind === "block") {
+    mapped.statements = recoverReturnIfExpressions(mapped.statements as Statement[]);
+  }
+  return mapped as T;
 }
 
 function transformBlock(body: Block, options: CleanupOptions, functionBody = false): Block {
