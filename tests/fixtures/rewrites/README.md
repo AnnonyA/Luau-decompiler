@@ -59,3 +59,12 @@ results, nested readers, globals, parameter collisions and multiple returns).
 alter the prototype names of later functions, including suffix collisions.
 All three are independent development regressions with three inputs and pinned
 O0/O1/O2 bytes; no existing fixture was changed.
+
+`fallback-property-names` adds field-role naming through literal defaults, with
+observable metamethod reads, nil/false values, nested captures, sorted results
+and an explicit function name that competes with an inferred field name. It has
+three inputs and pinned O0/O1/O2 bytes.
+
+`reassigned-function-name` preserves a function's observable prototype name when
+its local is later overwritten by a field fallback. A saved alias still calls
+the original function. It also has three inputs and pinned O0/O1/O2 bytes.

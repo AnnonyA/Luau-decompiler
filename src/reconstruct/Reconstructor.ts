@@ -80,10 +80,13 @@ export function reconstructFunction(
   };
 }
 
-/** Reserve module globals once; every child already shares its parent's allocator. */
+/** Reserve globals and keep genuine prototype names available for their owners;
+ * every child already shares its parent's allocator. */
 function moduleNameAllocator(module: BytecodeModule): NameAllocator {
   const globals = new Set<string>();
+  const functionNames = new Set<string>();
   for (const prototype of module.prototypes) {
+    if (prototype.debugName && isValidIdentifier(prototype.debugName)) functionNames.add(prototype.debugName);
     for (const insn of prototype.instructions) {
       if (insn.opcode === Opcode.GETGLOBAL || insn.opcode === Opcode.SETGLOBAL) {
         const constant = prototype.constants[insn.aux ?? 0];
@@ -94,7 +97,7 @@ function moduleNameAllocator(module: BytecodeModule): NameAllocator {
       if (constant.kind === "import" && constant.path[0]) globals.add(constant.path[0]);
     }
   }
-  return new NameAllocator(globals);
+  return new NameAllocator(globals, functionNames);
 }
 
 interface Binding {
@@ -2568,7 +2571,7 @@ class SourceBuilder {
         ? existing.name
         : onlyField
           ? preferred
-          : this.allocator.reserve(preferred));
+          : child.debugName === preferred ? this.allocator.claim(preferred) : this.allocator.reserve(preferred));
 
     // Build the capture bindings for the child.
     const captureMap = new Map<number, CaptureBinding>();
@@ -2605,7 +2608,8 @@ class SourceBuilder {
         }
         if (!refName) {
           const hint = this.futureClosureHint(source, insn.pc) ?? child.upvalueNames[index] ?? "callback";
-          refName = this.allocator.reserve(hint);
+          refName = this.futureClosureHint(source, insn.pc, true) === hint
+            ? this.allocator.claim(hint) : this.allocator.reserve(hint);
           this.env.set(source, { name: refName, expression: ident(refName), pinned: true, forwardRef: true });
           this.declareInScope(refName);
         }
@@ -2721,7 +2725,8 @@ class SourceBuilder {
       return [{ kind: "local", names: [name], values: [existing.expression] }];
     }
     const hint = this.futureDefineHint(register, fromPc) ?? "value";
-    const name = this.allocator.reserve(hint);
+    const name = this.futureClosureHint(register, fromPc, true) === hint
+      ? this.allocator.claim(hint) : this.allocator.reserve(hint);
     this.declareInScope(name);
     this.env.set(register, { name, expression: ident(name), pinned: true, forwardRef: true });
     return [{ kind: "local", names: [name], values: [] }];
@@ -2843,7 +2848,7 @@ class SourceBuilder {
   }
 
   /** Look ahead for the NEWCLOSURE that will define `register` and steal its name. */
-  private futureClosureHint(register: number, fromPc: number): string | undefined {
+  private futureClosureHint(register: number, fromPc: number, debugOnly = false): string | undefined {
     for (const other of this.proto.instructions) {
       if (other.pc <= fromPc) {
         continue;
@@ -2853,6 +2858,7 @@ class SourceBuilder {
       }
       if ((other.opcode === Opcode.NEWCLOSURE || other.opcode === Opcode.DUPCLOSURE) && other.a === register) {
         const future = this.childOf(other);
+        if (debugOnly) return future?.debugName;
         return (
           future?.debugName ??
           this.nextFieldName(other) ??
@@ -3210,7 +3216,8 @@ class SourceBuilder {
         this.env.set(register, { name: existing, expression: ident(existing), pinned: true, nilLiteral });
         return [...aliases, { kind: "assign", targets: [ident(existing)], values: [expression] }];
       }
-      const name = this.allocator.reserve(preferred);
+      const name = nilLiteral && refCaptured && this.futureClosureHint(register, insn.pc, true) === preferred
+        ? this.allocator.claim(preferred) : this.allocator.reserve(preferred);
       this.declareInScope(name);
       this.env.set(register, { name, expression: ident(name), pinned: true, nilLiteral });
       return [{ kind: "local", names: [name], values: [expression] }];

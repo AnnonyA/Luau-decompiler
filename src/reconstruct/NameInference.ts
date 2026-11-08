@@ -1206,6 +1206,21 @@ function hintFromInit(init: Expression | undefined): string | undefined {
   if (!init) {
     return undefined;
   }
+  // A literal fallback retains the role of the property being read. For a
+  // nullable receiver, require the guard and lookup to name the same binding;
+  // competing fields/default expressions provide no single role to prefer.
+  if (init.kind === "binary" && init.op === "or" && init.right.kind === "literal") {
+    let value = init.left;
+    if (value.kind === "binary" && value.op === "and" &&
+        value.left.kind === "identifier" && value.right.kind === "property" &&
+        value.right.object.kind === "identifier" && value.left.name === value.right.object.name) {
+      value = value.right;
+    }
+    if (value.kind === "property" && isValidIdentifier(value.name)) {
+      const name = lowerFirst(value.name);
+      if (isValidIdentifier(name)) return name;
+    }
+  }
   if (init.kind === "property" && isValidIdentifier(init.name)) {
     if (init.name === "LocalPlayer") {
       return "LocalPlayer";
@@ -1263,7 +1278,7 @@ function declarationTail(name: string): string {
 function allocate(bindings: Binding[]): Map<number, string> {
   const names = new Map<number, string>();
   for (const binding of bindings) {
-    if (!isGeneratedName(binding.name)) {
+    if (!isGeneratedName(binding.name) || binding.functionName) {
       names.set(binding.id, binding.name);
       continue;
     }
