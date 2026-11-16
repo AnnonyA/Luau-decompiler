@@ -36,12 +36,19 @@ export class NameAllocator {
   private readonly preferredNames: Set<string>;
   /** Generated names of bindings whose register use proves a declared local. */
   readonly declaredLocals = new Set<string>();
+  /** Suffixed name -> the name that was asked for. */
+  readonly stems = new Map<string, string>();
 
   constructor(reserved: Iterable<string> = [], preferredNames: Iterable<string> = []) {
     this.preferredNames = new Set(preferredNames);
     for (const name of reserved) {
       this.used.add(name);
     }
+  }
+
+  /** Every name handed out so far, including the reserved globals. */
+  get allocated(): ReadonlySet<string> {
+    return this.used;
   }
 
   isUsed(name: string): boolean {
@@ -71,6 +78,7 @@ export class NameAllocator {
     const next = `${base}${suffix}`;
     this.nextSuffix.set(base, suffix + 1);
     this.used.add(next);
+    this.stems.set(next, base);
     return next;
   }
 

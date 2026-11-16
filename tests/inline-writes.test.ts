@@ -82,9 +82,9 @@ it('recovers official O2 table helpers while retaining unsafe writes in the call
   expect(result.ok).toBe(true);if(!result.ok)throw Error(result.error);
   expect(result.validation).toEqual([]);return result.source;
  };
- expect(run('inlined-table-updates')).toMatch(/record\(config, i\)/);
- expect(run('inlined-table-write-branches')).toMatch(/classify\(j, config\)/);
- expect(run('inlined-table-updates',false)).not.toMatch(/record\(config, i\)/);
+ expect(run('inlined-table-updates')).toMatch(/record\(data, i\)/);
+ expect(run('inlined-table-write-branches')).toMatch(/classify\(j, tbl\)/);
+ expect(run('inlined-table-updates',false)).not.toMatch(/record\(\w+, i\)/);
  // Metatable callbacks, frozen writes and observable alias identity must not
  // acquire a new helper frame. Exclude the retained helper declaration itself.
  expect(run('inlined-table-write-effects').replace(/local function record\([^\n]*/,''))

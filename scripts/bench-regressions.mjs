@@ -42,4 +42,4 @@ for(const folder of ['benchmarks/regressions/pr58','benchmarks/regressions/reada
   }
 }
 await writeFile(join(output,'report.json'),JSON.stringify({compilerSha256:hash(await readFile(compiler)),runtimeSha256:hash(await readFile(vm)),results},null,2)+'\n');
-if(results.length!==42||results.some(r=>r.status!=='MATCH'))process.exitCode=1;
+if(results.length!==46||results.some(r=>r.status!=='MATCH'))process.exitCode=1;

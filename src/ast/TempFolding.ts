@@ -79,7 +79,7 @@ export function foldTemporaries(ast: Chunk, options: TempFoldingOptions = {}): C
     if (options.argumentsOf ? !helperArguments.has(binding.reads[0]!.node) : sourceNames.has(binding.name)) {
       return undefined;
     }
-    if (value.kind === "function-expr" || isDependencyHandle(value)) return undefined;
+    if (value.kind === "function-expr") return undefined;
     return { binding, value };
   };
 
@@ -431,11 +431,6 @@ function isLibraryMember(expression: Expression, isGlobal: (node: Expression) =>
   return depth > 0 && depth <= 2 && node.kind === "identifier" && LIBRARIES.has(node.name) && isGlobal(node);
 }
 
-/** Service and module handles are the dependency surface of a script. */
-function isDependencyHandle(expression: Expression): boolean {
-  if (expression.kind === "method-call") return expression.name === "GetService";
-  return expression.kind === "call" && expression.callee.kind === "identifier" && expression.callee.name === "require";
-}
 
 function weight(expression: Expression): number {
   let total = 1;

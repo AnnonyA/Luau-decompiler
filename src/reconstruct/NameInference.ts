@@ -1,6 +1,10 @@
 import type { Block, Chunk, Expression, Statement } from "../ast/Ast.js";
 import { NameAllocator, isValidIdentifier } from "./Naming.js";
 import { analyzeBindings, replaceReferences, type LexicalBinding } from "../analysis/Bindings.js";
+import {
+  INSTANCE_METHODS, STRING_METHODS, argumentSlot, emptyUseSummary, lowerCamel, nameFromFieldKey,
+  nameFromInitializer, nameFromUses, plural, singular, type UseSummary,
+} from "./NameEvidence.js";
 
 const GENERATED = /^(?:value|result|config|index|key|item|entry|state|data|count|tmp|player|function_?|callback)(\d*)$/;
 const MAKE_STEM = /^(?:make|create|build|get)([A-Z][A-Za-z0-9]*)$/;
@@ -8,9 +12,28 @@ const MAKE_STEM = /^(?:make|create|build|get)([A-Z][A-Za-z0-9]*)$/;
 /** Bindings the source declared (debug info or register evidence): scratch
  * folding keeps them. Set for the duration of one synchronous inference. */
 let declaredNames: ReadonlySet<string> = new Set();
+/** Names written by the author (debug info): never replaced by an inference. */
+let debugNames: ReadonlySet<string> = new Set();
+/** Allocator-suffixed name -> the name it was asked for. The suffix only kept
+ * the module-wide working name unique; each function numbers its own. */
+let nameStems: ReadonlyMap<string, string> = new Map();
+/** Names the reconstructor chose itself. A name from anywhere else (a caller's
+ * tree, debug info) is the author's and is only ever given a hint it lacks. */
+let workingNames: ReadonlySet<string> = new Set();
 
-export function inferHumanNames(ast: Chunk, options: {foldSingleUseTemps?: boolean; sourceNames?: ReadonlySet<string>} = {}): Chunk {
+export interface NameInferenceOptions {
+  foldSingleUseTemps?: boolean;
+  sourceNames?: ReadonlySet<string>;
+  debugNames?: ReadonlySet<string>;
+  nameStems?: ReadonlyMap<string, string>;
+  workingNames?: ReadonlySet<string>;
+}
+
+export function inferHumanNames(ast: Chunk, options: NameInferenceOptions = {}): Chunk {
   declaredNames = options.sourceNames ?? new Set();
+  debugNames = options.debugNames ?? new Set();
+  nameStems = options.nameStems ?? new Map();
+  workingNames = options.workingNames ?? new Set();
   const fold = options.foldSingleUseTemps !== false;
   const folded = { kind: "chunk" as const, body: fold ? foldScratchRegisters(ast.body) : ast.body };
   const coalesced = { kind: "chunk" as const, body: coalesceAccumulators(folded.body) };
@@ -838,6 +861,21 @@ interface Binding {
   classTable: boolean;
   forNest: number;
   ipairs: boolean;
+  /** A convention used only when nothing is known about the binding. */
+  weakHint?: string;
+  /** Strongest role seen at a use: an API argument slot or a field it fills. */
+  evidence?: { name: string; score: number };
+  uses: UseSummary;
+  /** Shape of a table initializer. */
+  tableKind?: "empty" | "list" | "record";
+  /** Assigned through a non-literal key: `t[k] = v`. */
+  keyedWrites: number;
+  booleanInit: boolean;
+}
+
+function note(binding: Binding | undefined, name: string | undefined, score: number): void {
+  if (!binding || !name || !isValidIdentifier(name)) return;
+  if (!binding.evidence || score > binding.evidence.score) binding.evidence = { name, score };
 }
 
 function renameChunk(ast: Chunk): Chunk {
@@ -849,7 +887,8 @@ function renameChunk(ast: Chunk): Chunk {
   // Inferred names must not force later explicit bindings (especially function
   // names observable through debug.info) to acquire allocator suffixes.
   const reservedNames = new Set(bindings.filter(binding =>
-    !isGeneratedName(binding.name) || binding.functionName).map(binding => binding.name));
+    binding.functionName || debugNames.has(binding.name) ||
+    (!isGeneratedName(binding.name) && !workingNames.has(binding.name))).map(binding => binding.name));
   const state: ApplyState = { next: 0, globals, reservedNames, allocators: [new NameAllocator()] };
   return { kind: "chunk", body: applyBlock(ast.body, names, [new Map()], state) };
 }
@@ -861,7 +900,24 @@ function collect(
   depth: number,
   forNest: number,
   functionResultHint?: string,
+  inMethod = false,
 ): void {
+  const initializerContext = {
+    atRoot: depth === 0,
+    inMethod,
+    nameOf: (identifier: string): string | undefined => {
+      const binding = lookup(identifier);
+      if (!binding) return undefined;
+      return binding.hint ?? (isGeneratedName(binding.name) || isPlaceholderParam(binding.name) ? undefined : stemOf(binding.name));
+    },
+  };
+  const lookup = (name: string): Binding | undefined => {
+    for (let i = scopes.length - 1; i >= 0; i--) {
+      const found = scopes[i]!.get(name);
+      if (found) return found;
+    }
+    return undefined;
+  };
   const declare = (name: string, kind: Binding["kind"], extra: Partial<Binding> = {}): Binding => {
     const binding: Binding = {
       id: bindings.length,
@@ -878,6 +934,9 @@ function collect(
       classTable: false,
       forNest,
       ipairs: false,
+      uses: emptyUseSummary(),
+      keyedWrites: 0,
+      booleanInit: false,
       ...extra,
       incrementOnes: extra.incrementOnes ?? 0,
     };
@@ -904,14 +963,34 @@ function collect(
         break;
       case "unary":
         visitExpr(expression.argument);
+        if (expression.op === "#" && expression.argument.kind === "identifier") {
+          const measured = resolve(expression.argument.name);
+          if (measured) measured.uses.measured = true;
+        }
         break;
       case "binary":
         visitExpr(expression.left);
         visitExpr(expression.right);
+        if (expression.op === "or" && expression.left.kind === "identifier" &&
+            expression.right.kind === "table" && expression.right.fields.length === 0) {
+          const defaulted = resolve(expression.left.name);
+          if (defaulted) defaulted.uses.defaultsToTable = true;
+        }
         break;
       case "call": {
         visitExpr(expression.callee);
         expression.args.forEach(visitExpr);
+        if (expression.callee.kind === "identifier") {
+          const called = resolve(expression.callee.name);
+          if (called) called.uses.called = true;
+          if ((expression.callee.name === "pairs" || expression.callee.name === "next") && expression.args[0]?.kind === "identifier") {
+            const iterated = resolve(expression.args[0].name);
+            if (iterated) iterated.uses.iterated = true;
+          }
+        }
+        expression.args.forEach((arg, index) => {
+          if (arg.kind === "identifier") note(resolve(arg.name), argumentSlot(expression, index), 43);
+        });
         const first = expression.args[0];
         if (first?.kind === "identifier") {
           const binding = resolve(first.name);
@@ -919,14 +998,7 @@ function collect(
             if (expression.callee.kind === "identifier" && /^(makePayload|makeAccumulator|loopStress)$/.test(expression.callee.name)) {
               binding.hint = "seed";
             }
-            if (
-              expression.callee.kind === "property" &&
-              expression.callee.object.kind === "identifier" &&
-              expression.callee.object.name === "math" &&
-              expression.callee.name === "clamp"
-            ) {
-              binding.hint = "seed";
-            }
+
           }
         }
         break;
@@ -934,13 +1006,37 @@ function collect(
       case "method-call":
         visitExpr(expression.object);
         expression.args.forEach(visitExpr);
+        if (expression.object.kind === "identifier") {
+          const receiver = resolve(expression.object.name);
+          if (receiver) {
+            if (expression.name === "Disconnect") receiver.uses.disconnects = true;
+            else if (INSTANCE_METHODS.has(expression.name)) receiver.uses.instanceMethod = true;
+            else if (STRING_METHODS.has(expression.name)) receiver.uses.stringMethod = true;
+            else receiver.uses.otherMethod = true;
+          }
+        }
+        expression.args.forEach((arg, index) => {
+          if (arg.kind !== "identifier") return;
+          note(resolve(arg.name), argumentSlot(expression, index), 43);
+          const key = expression.args[0];
+          if (expression.name === "SetAttribute" && index === 1 && key?.kind === "literal" && typeof key.value === "string") {
+            note(resolve(arg.name), nameFromFieldKey(key.value), 47);
+          }
+        });
         break;
       case "index":
         visitExpr(expression.table);
         visitExpr(expression.key);
+        if (expression.table.kind === "identifier") {
+          const indexed = resolve(expression.table.name);
+          const key = expression.key;
+          if (indexed && ((key.kind === "literal" && typeof key.value === "number") ||
+              (key.kind === "identifier" && lookup(key.name)?.kind === "loop"))) indexed.uses.indexedByNumber = true;
+        }
         break;
       case "property":
         visitExpr(expression.object);
+        if (expression.object.kind === "identifier") resolve(expression.object.name)?.uses.fields.add(expression.name);
         break;
       case "table":
         expression.fields.forEach((field) => {
@@ -950,6 +1046,7 @@ function collect(
           visitExpr(field.value);
           if (field.name && field.value.kind === "identifier" && !field.name.startsWith("_")) {
             const exported = resolve(field.value.name);
+            note(exported, nameFromFieldKey(field.name), 48);
             if (exported && !exported.exportField) {
               exported.exportField = field.name;
             }
@@ -958,12 +1055,9 @@ function collect(
         break;
       case "function-expr": {
         scopes.push(new Map());
-        const hints = [...paramHintsFor("", expression.params)];
-        if (expression.params[0] && paramLooksLikeSelf(expression, expression.params[0]) && (!hints[0] || hints[0] === "seed")) {
-          hints[0] = "self";
-        }
-        expression.params.forEach((param, index) => declare(param, "param", hints[index] ? { hint: hints[index] } : {}));
-        collect(expression.body.statements, bindings, scopes, depth + 1, 0);
+        const hints = paramHintsFor("", expression.params);
+        expression.params.forEach((param, index) => declare(param, "param", hints[index] ?? {}));
+        collect(expression.body.statements, bindings, scopes, depth + 1, 0, undefined, inMethod);
         scopes.pop();
         break;
       }
@@ -990,8 +1084,17 @@ function collect(
         statement.values.forEach(visitExpr);
         statement.names.forEach((name, index) => {
           const init = statement.values[index] ?? (statement.values.length === 1 ? statement.values[0] : undefined);
-          declare(name, "local", { hint: hintFromInit(init),
+          const own = index < statement.values.length ? init : undefined;
+          const protectedCall = statement.values.length === 1 && init?.kind === "call" &&
+            init.callee.kind === "identifier" && (init.callee.name === "pcall" || init.callee.name === "xpcall");
+          const tuple = statement.names.length > 1 && statement.values.length === 1;
+          const hint = protectedCall && tuple ? (index === 0 ? "success" : index === 1 ? "result" : undefined)
+            : hintFromInit(init) ?? (tuple && index > 0 ? undefined : nameFromInitializer(init, initializerContext));
+          declare(name, "local", { hint,
             functionName: init?.kind === "function-expr",
+            tableKind: own?.kind !== "table" ? undefined : own.fields.length === 0 ? "empty"
+              : own.fields.every((field) => !field.name && (!field.key || field.list)) ? "list" : "record",
+            booleanInit: own?.kind === "literal" && typeof own.value === "boolean",
             emptyTable: index < statement.values.length && init?.kind === "table" && init.fields.length === 0 });
         });
         break;
@@ -1003,7 +1106,13 @@ function collect(
             const value = statement.values[index] ?? statement.values[0];
             if (binding && value?.kind === "function-expr") binding.functionName = true;
             if (binding && !binding.hint) {
-              binding.hint = hintFromInit(value);
+              // One call filling several targets: only its first result has the call's role.
+              const tuple = statement.targets.length > 1 && statement.values.length === 1;
+              const protectedCall = tuple && value?.kind === "call" && value.callee.kind === "identifier" &&
+                (value.callee.name === "pcall" || value.callee.name === "xpcall");
+              binding.hint = protectedCall ? (index === 0 ? "success" : index === 1 ? "result" : undefined)
+                : tuple && index > 0 ? undefined
+                : hintFromInit(value) ?? (binding.kind === "local" ? nameFromInitializer(value, initializerContext) : undefined);
             }
             if (binding && value?.kind === "unary" && value.op === "not") {
               binding.assignedNot = true;
@@ -1017,8 +1126,18 @@ function collect(
             if (exported && !target.name.startsWith("_")) {
               exported.exportField = target.name;
             }
-            visitExpr(target);
+            note(exported, nameFromFieldKey(target.name), 48);
+            const owner = resolve(target.object.name);
+            if (owner) owner.uses.fieldWrites += 1;
           } else {
+            if (target.kind === "property" && target.object.kind === "identifier") {
+              const owner = resolve(target.object.name);
+              if (owner) owner.uses.fieldWrites += 1;
+            }
+            if (target.kind === "index" && target.table.kind === "identifier" && target.key.kind !== "literal") {
+              const owner = resolve(target.table.name);
+              if (owner) owner.keyedWrites += 1;
+            }
             visitExpr(target);
           }
         });
@@ -1061,8 +1180,9 @@ function collect(
         }
         scopes.push(new Map());
         const paramHints = paramHintsFor(statement.name, statement.params);
-        statement.params.forEach((param, index) => declare(param, "param", paramHints[index] ? { hint: paramHints[index] } : {}));
-        collect(statement.body.statements, bindings, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)));
+        statement.params.forEach((param, index) => declare(param, "param", paramHints[index] ?? {}));
+        collect(statement.body.statements, bindings, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)),
+          inMethod || statement.name.includes(":"));
         scopes.pop();
         break;
       }
@@ -1130,10 +1250,21 @@ function collect(
       case "generic-for": {
         statement.iterators.forEach(visitExpr);
         const ipairs = statement.iterators[0]?.kind === "identifier" && statement.iterators[0].name === "ipairs";
+        const source = statement.iterators[0];
+        // `for _, v in pairs(xs)` / `ipairs(xs)` / `xs`: the collection names its elements.
+        const collection = source?.kind === "call" && source.callee.kind === "identifier" &&
+          (source.callee.name === "pairs" || source.callee.name === "ipairs") ? source.args[0] : source;
+        if (collection?.kind === "identifier") {
+          const iterated = resolve(collection.name);
+          if (iterated) iterated.uses.iterated = true;
+        }
+        const collectionName = nameFromInitializer(collection, initializerContext);
+        const element = collectionName ? singular(collectionName) : undefined;
         scopes.push(new Map());
         statement.names.forEach((name, index) => {
           const hint = ipairs ? (index === 0 ? "index" : "value") : undefined;
-          declare(name, "loop", { hint, ipairs, forNest });
+          const weakHint = index === 1 && element && element !== collectionName ? element : undefined;
+          declare(name, "loop", { hint: index === 1 && weakHint && isGeneratedName(name) ? weakHint : hint, ipairs, forNest });
         });
         collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
         scopes.pop();
@@ -1226,35 +1357,8 @@ function hintFromInit(init: Expression | undefined): string | undefined {
       if (isValidIdentifier(name)) return name;
     }
   }
-  if (init.kind === "property" && isValidIdentifier(init.name)) {
-    if (init.name === "LocalPlayer") {
-      return "LocalPlayer";
-    }
-    if (init.name[0] && init.name[0] === init.name[0].toUpperCase()) {
-      return init.name;
-    }
-  }
-  if (init.kind === "method-call") {
-    if ((init.name === "GetService" || init.name === "WaitForChild") && init.args[0]?.kind === "literal" && typeof init.args[0].value === "string") {
-      return isValidIdentifier(init.args[0].value) ? init.args[0].value : undefined;
-    }
-    if (init.name === "new" && init.object.kind === "identifier") {
-      return lowerFirst(init.object.name);
-    }
-    if (init.name === "Connect" || init.name === "Once") {
-      return "connection";
-    }
-    if (init.name === "Create") {
-      return "tween";
-    }
-  }
-  if (init.kind === "call") {
-    if (init.callee.kind === "identifier") {
-      return calleeStem(init.callee.name);
-    }
-    if (init.callee.kind === "property" && init.callee.name === "new" && init.callee.object.kind === "identifier") {
-      return lowerFirst(init.callee.object.name);
-    }
+  if (init.kind === "call" && init.callee.kind === "identifier") {
+    return calleeStem(init.callee.name);
   }
   if (
     init.kind === "if-expr" &&
@@ -1283,14 +1387,50 @@ function declarationTail(name: string): string {
 function allocate(bindings: Binding[]): Map<number, string> {
   const names = new Map<number, string>();
   for (const binding of bindings) {
-    if (!isGeneratedName(binding.name) || binding.functionName) {
+    const stem = stemOf(binding.name);
+    if (binding.functionName || binding.name === "_" || binding.name === "self") {
       names.set(binding.id, binding.name);
       continue;
     }
+    if (debugNames.has(binding.name) || debugNames.has(stem)) {
+      names.set(binding.id, stem);
+      continue;
+    }
+    const working = workingNames.has(binding.name);
+    if (!isGeneratedName(binding.name) && !(binding.kind === "param" && isPlaceholderParam(binding.name))) {
+      if (!working) {
+        names.set(binding.id, binding.name);
+        continue;
+      }
+      // An inferred working name: number it within its own function. Only
+      // chunk-level handles keep the capitals of the instance they name.
+      const inferred = binding.kind === "local" && binding.hint !== "self" ? binding.hint : undefined;
+      names.set(binding.id, inferred && isValidIdentifier(inferred) ? inferred
+        : binding.depth > 0 && binding.kind === "local" ? lowerCamel(stem) : stem);
+      continue;
+    }
     const hint = pickHint(binding);
-    names.set(binding.id, hint && isValidIdentifier(hint) ? hint : binding.name);
+    // `self` is reserved for the receiver a method declaration binds implicitly.
+    const role = hint === "self" && binding.kind !== "param" ? "object" : hint;
+    names.set(binding.id, role && isValidIdentifier(role) ? role : working ? neutralName(binding) : binding.name);
   }
   return names;
+}
+
+function stemOf(name: string): string {
+  return nameStems.get(name) ?? name;
+}
+
+/** The name of a binding nothing is known about. */
+function neutralName(binding: Binding): string {
+  if (binding.kind === "param") return "p";
+  const stem = /^[A-Za-z_]+?(?=\d*$)/.exec(binding.name)?.[0] ?? binding.name;
+  if (binding.kind === "loop") return stem;
+  // The reconstructor calls every table `config`; its shape says more.
+  if (stem === "config" && binding.tableKind === "list") return "list";
+  if (stem === "config" && binding.tableKind === "record") return "data";
+  if (stem === "config") return "tbl";
+  return stem;
 }
 
 function pickHint(binding: Binding): string | undefined {
@@ -1300,7 +1440,9 @@ function pickHint(binding: Binding): string | undefined {
     }
     return binding.hint;
   }
-  if (binding.exportField && isValidIdentifier(binding.exportField)) {
+  // A chunk-level table or function stored under a field is that export.
+  if (binding.exportField && isValidIdentifier(binding.exportField) && binding.kind === "local" && binding.depth === 0 &&
+      (binding.tableKind !== undefined || binding.classTable)) {
     return binding.exportField === "Config" ? "CONFIG" : binding.exportField;
   }
   if (binding.resultHint) return binding.resultHint;
@@ -1325,41 +1467,55 @@ function pickHint(binding: Binding): string | undefined {
   if (binding.kind === "param" && binding.captured && binding.compoundAdds > 0) {
     return binding.incrementOnes === binding.compoundAdds ? "calls" : "total";
   }
-  return undefined;
+  if (binding.evidence) return binding.evidence.name;
+  const role = nameFromUses(binding.uses);
+  // Field reads describe a parameter's shape; a local already has an initializer to speak for it.
+  const shape = role === "data" || role === "state" || role === "object" || role === "options";
+  if (role && !(shape && binding.kind !== "param")) return role;
+  if (binding.tableKind === "empty" && binding.keyedWrites > 0) return "map";
+  if (binding.kind === "local" && binding.compoundAdds > 0) {
+    return binding.incrementOnes === binding.compoundAdds ? "count" : "total";
+  }
+  if (binding.kind === "local" && binding.booleanInit) return "flag";
+  return binding.weakHint;
 }
 
 /** Best-effort formals for ordinary functions (not Roblox callbacks). */
-function paramHintsFor(name: string, params: string[]): Array<string | undefined> {
+function paramHintsFor(name: string, params: string[]): Array<Partial<Binding> | undefined> {
+  const strong = (...hints: Array<string | undefined>): Array<Partial<Binding> | undefined> =>
+    hints.map((hint) => (hint ? { hint } : undefined));
   const tail = declarationTail(name);
   if (tail === "new" && params.length === 1) {
-    return ["initial"];
+    return strong("initial");
   }
   if ((tail === "add" || tail === "multiply") && params.length >= 1) {
-    return params.map((_, index) => (index === 0 ? "amount" : undefined));
+    return strong(...params.map((_, index) => (index === 0 ? "amount" : undefined)));
   }
   if (tail === "factorial" && params.length === 1) {
-    return ["n"];
+    return strong("n");
   }
   if (tail === "classify" && params.length === 1) {
-    return ["score"];
+    return strong("score");
   }
   if (tail === "sideEffect" && params.length === 1) {
-    return ["tag"];
+    return strong("tag");
   }
   if (tail === "makeCallable" && params.length === 1) {
-    return ["callback"];
+    return strong("callback");
   }
   if (tail === "makeAccumulator" && params.length === 1) {
-    return ["start"];
-  }
-  if (params.length === 3 && params.every((param) => isPlaceholderParam(param))) {
-    return ["a", "b", "c"];
-  }
-  if (params.length === 1 && isPlaceholderParam(params[0]!)) {
-    return ["seed"];
+    return strong("start");
   }
   if (params.length === 2 && params.every((param) => isPlaceholderParam(param)) && /string|format/i.test(tail)) {
-    return ["name", "id"];
+    return strong("name", "id");
+  }
+  // Conventions, used only when no use of the parameter says more.
+  const setter = /^[sS]et([A-Z]\w*)$/.exec(tail);
+  if (setter && params.length === 1 && isPlaceholderParam(params[0]!)) {
+    return [{ weakHint: lowerCamel(setter[1]!) }];
+  }
+  if (params.length === 3 && params.every((param) => isPlaceholderParam(param))) {
+    return [{ weakHint: "a" }, { weakHint: "b" }, { weakHint: "c" }];
   }
   return [];
 }

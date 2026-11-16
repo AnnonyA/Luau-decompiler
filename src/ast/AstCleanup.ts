@@ -35,8 +35,14 @@ export interface CleanupOptions {
   interpolatedStrings: boolean;
   /** Handled by OptionalRewrites after helper recovery; no builtin lookup is introduced. */
   mathConstants: boolean;
-  /** Local names present in debug info; such bindings are never folded away. */
+  /** Bindings the source declared (debug info or register evidence); never folded away. */
   sourceNames?: ReadonlySet<string>;
+  /** Local names present in debug info; never replaced by an inferred name. */
+  debugNames?: ReadonlySet<string>;
+  /** Allocator-suffixed working name -> the name that was asked for. */
+  nameStems?: ReadonlyMap<string, string>;
+  /** Names the reconstructor chose itself; only these may be re-derived. */
+  workingNames?: ReadonlySet<string>;
 }
 
 export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
@@ -50,7 +56,8 @@ export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
   const returns = (chunk: Chunk): Chunk => options.ifExpressions ? finalizeReturnExpressions(chunk) : chunk;
   const refined = refineStructure(returns(fold(structured)), { ifExpressions: options.ifExpressions, guards: options.earlyReturn });
   const folded = annotateFoldedLocals(fold(refined), options);
-  const named = inferHumanNames(folded, {foldSingleUseTemps: options.foldSingleUseTemps, sourceNames: options.sourceNames});
+const named = inferHumanNames(folded, {foldSingleUseTemps: options.foldSingleUseTemps, sourceNames: options.sourceNames,
+    debugNames: options.debugNames, nameStems: options.nameStems, workingNames: options.workingNames});
   // Scratch folding can expose scalar return arms after the first structural
   // pass. Revisit only return structure, not naming, effects or declarations.
   return options.ifExpressions ? finalizeReturnExpressions(named) : named;

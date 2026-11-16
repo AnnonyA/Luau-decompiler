@@ -71,9 +71,20 @@ class Refiner {
       case "numeric-for":
       case "generic-for":
         return this.withBody(withExpressions, this.block(withExpressions.body, { tail: "loop", root: true }));
-      case "repeat":
-        return this.withBody(withExpressions,
+      case "repeat": {
+        const refined = this.withBody(withExpressions,
           this.block(withExpressions.body, { tail: "loop", root: true, until: withExpressions.test }));
+        // A trailing `if c then break end` runs right before the test: `until c or test`.
+        // A `continue` jumps straight to the test and would start evaluating `c`.
+        let { body, test } = refined;
+        while (!continues(body)) {
+          const last = body.statements.at(-1);
+          if (!isGuard(last) || last.consequent.statements.length !== 1 || last.consequent.statements[0]!.kind !== "break") break;
+          body = { ...body, statements: body.statements.slice(0, -1) };
+          test = disjunction(last.test, test);
+        }
+        return body === refined.body ? refined : { ...refined, body, test };
+      }
       case "do":
         return this.withBody(withExpressions, this.block(withExpressions.body, { tail, root: false }));
       case "if": {
@@ -289,6 +300,20 @@ function mergeEqualArms(statement: IfStatement): IfStatement {
 
 function isGuard(statement: Statement | undefined): statement is IfStatement {
   return statement?.kind === "if" && statement.branches.length === 0 && !statement.alternate;
+}
+
+/** Whether a `continue` of the enclosing loop occurs in this block. */
+function continues(body: Block): boolean {
+  return body.statements.some((statement) => {
+    switch (statement.kind) {
+      case "continue": return true;
+      case "do": return continues(statement.body);
+      case "if":
+        return continues(statement.consequent) || statement.branches.some((branch) => continues(branch.body)) ||
+          (statement.alternate !== undefined && continues(statement.alternate));
+      default: return false;
+    }
+  });
 }
 
 function endsInBareReturn(body: Block): boolean {

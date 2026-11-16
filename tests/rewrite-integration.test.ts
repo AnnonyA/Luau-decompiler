@@ -16,7 +16,7 @@ it('recovers the complete O2 tuple while keeping a three-result helper and outer
  expect(enabled.ok && disabled.ok).toBe(true);if(!enabled.ok || !disabled.ok)throw Error('decode failed');
  expect(enabled.source).toMatch(/local \w+, \w+, \w+ = measure\(index\)/);
  expect(disabled.source).not.toMatch(/= measure\(index\)/);
- expect(enabled.source).toMatch(/return \w+, seed \* seed - 5, \w+ > 10/);
+ expect(enabled.source).toMatch(/return \w+, (\w+) \* \1 - 5, \w+ > 10/);
  expect(enabled.validation).toEqual([]);
 });
 it.each([0,1,2])('threads printable options through the complete O%i pipeline',level=>{

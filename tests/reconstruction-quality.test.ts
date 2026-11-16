@@ -107,6 +107,59 @@ describe("temporaries", () => {
   });
 });
 
+describe("names from evidence", () => {
+  const source = decompileFixture("naming");
+
+  it("names a parameter after the field it is stored under", () => {
+    expect(source).toContain("createLoopedSound(name, soundId, volume)");
+    expect(source).toMatch(/sound\.SoundId = soundId\n\s+sound\.Volume = volume/);
+  });
+
+  it("names a local after the class or child its initializer names", () => {
+    expect(source).toContain('local sound: Sound = Instance.new("Sound")');
+    expect(source).toContain('local frame: Frame = Instance.new("Frame")');
+    expect(source).toContain('local props: Instance = workspace:WaitForChild("Props")');
+    expect(source).toContain("local success, result = pcall(function()");
+  });
+
+  it("names a parameter after the API slot it fills or the way it is used", () => {
+    expect(source).toContain("fadeOut(instance, tweenInfo)");
+    expect(source).toContain("apply(callback, list, text)");
+    expect(source).toMatch(/for _, player in Players:GetPlayers\(\) do/);
+    expect(source).toMatch(/for i = 1, count do\n\s+callback\(list\[i\], text:upper\(\)\)/);
+  });
+
+  it("falls back to neutral names numbered within the function", () => {
+    expect(source).toContain("measure(p, p2)");
+    expect(source).toMatch(/local value = p - p2\n\s+return value \* 2, value/);
+    expect(source).not.toMatch(/\b(?:seed|value\d|index\d|config\d*|instance\d)\b/);
+  });
+});
+
+describe("values that outlive a loop body", () => {
+  const source = decompileFixture("loop-exit-values");
+
+  it("declares a body value read after the loop before the loop", () => {
+    // Before: `local success, result = pcall(...)` inside the body and raw `r2` after it.
+    expect(source).toMatch(/local success, result\n\s+repeat\n[\s\S]+?success, result = pcall\(/);
+    expect(source).toMatch(/until success or \w+ >= 3\n\s+if not success then/);
+    expect(source).not.toMatch(/\br\d+\b/);
+  });
+
+  it("joins a trailing break into the until test only without a continue in the body", () => {
+    expect(source).toMatch(/until \w+ == nil or #\w+ >= 3/);
+    expect(source).not.toMatch(/then\n\s+break\n\s+end\n\s+until/);
+  });
+});
+
+describe("locals beside a method receiver", () => {
+  it.each([1, 2])("never names a local `self` inside a method at O%s", (level) => {
+    const source = decompileFixture(`method-receiver-locals-O${level}`);
+    expect(source).not.toMatch(/local self\b/);
+    expect(source).toMatch(/local (\w+) = setmetatable\(\{ value = \w+\.value \}, \w+\)\n\s+\1\.tag = self\.tag\n\s+\1\.owner = self/);
+  });
+});
+
 describe("generic-for loop variables", () => {
   it("does not merge a body temporary with a later loop's variables", () => {
     const source = decompileFixture("generic-loop-scratch");
