@@ -388,5 +388,18 @@ export function decodeCodeStream(words: Uint32Array, constantCount: number): Dec
     instructions.push(insn);
     pc += insn.width;
   }
+  // FORGPREP always transfers to its FORGLOOP, which assigns the loop
+  // variables before the body runs. Recording that on the preparation makes
+  // whatever those registers held earlier dead at loop entry; otherwise the
+  // stale value looks live into the body and is merged with unrelated code.
+  const byPc = new Map<number, DecodedInstruction>();
+  for (const insn of instructions) {
+    if (insn.opcode === Opcode.FORGLOOP) byPc.set(insn.pc, insn);
+  }
+  for (const insn of instructions) {
+    if (insn.opcode !== Opcode.FORGPREP && insn.opcode !== Opcode.FORGPREP_INEXT && insn.opcode !== Opcode.FORGPREP_NEXT) continue;
+    const loop = insn.jumpTarget === undefined ? undefined : byPc.get(insn.jumpTarget);
+    if (loop && loop.a === insn.a) insn.defs = loop.defs.filter((register) => register >= loop.a + 3);
+  }
   return instructions;
 }

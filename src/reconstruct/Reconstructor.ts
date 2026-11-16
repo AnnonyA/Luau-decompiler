@@ -2539,12 +2539,16 @@ class SourceBuilder {
         const chunkLoop = this.proto === this.mainProto &&
           (this.cyclicBlocks ??= findCyclicBlocks(this.ir.cfg)).has(this.ir.cfg.blockOfPc.get(insn.pc)!);
         const repeated = this.proto !== this.mainProto || chunkLoop;
-        const freshSnapshot = !hasFreshSnapshot && repeated && insn.opcode === Opcode.NEWCLOSURE && binding &&
+        // Luau shares a closure only when its upvalues fold to constants or
+        // are unwritten top-level locals. A snapshot of a value that cannot
+        // be a compile-time constant is an ordinary local of this activation.
+        const runtimeValue = binding !== undefined && !binding.pinned && this.isRuntimeValue(binding.expression);
+        const freshSnapshot = !runtimeValue && !hasFreshSnapshot && repeated && insn.opcode === Opcode.NEWCLOSURE && binding &&
           (Boolean(chunkLoop && binding.name && this.scopeStack[0]?.has(binding.name) && !binding.forwardRef && !mergedLocals.has(binding.name)) || binding.expression.kind === "literal" || !binding.pinned || !binding.name || !this.isDeclaredInScope(binding.name));
         if (binding && !valueSnapshots.has(source) && (freshSnapshot ||
             (binding.expression.kind !== "literal" &&
             (!binding.pinned || binding.forwardRef || (binding.name && mergedLocals.has(binding.name)))))) {
-          const name = this.allocator.reserve("captured");
+          const name = this.allocator.reserve((runtimeValue ? nameHint(binding.expression) : undefined) ?? "captured");
           if (freshSnapshot) {
             freshStatements.push({kind: "local", names: [name], values: []},
               {kind: "assign", targets: [ident(name)], values: [binding.expression]});
@@ -2695,6 +2699,20 @@ class SourceBuilder {
     return hasFreshSnapshot
       ? [...statements, {kind: "local", names: [name], values: []}, scopedCreation]
       : [...statements, { kind: "local", names: [name], values: [fn] }];
+  }
+
+  /** A method call, or a field read rooted in a lexical binding, is evaluated
+   * when it runs. Literals, globals and library members may fold. */
+  private isRuntimeValue(expression: Expression): boolean {
+    if (expression.kind === "method-call") return true;
+    let root: Expression = expression;
+    let depth = 0;
+    while (root.kind === "property" || root.kind === "index") {
+      if (root.kind === "index" && root.key.kind !== "literal" && root.key.kind !== "identifier") return false;
+      root = root.kind === "property" ? root.object : root.table;
+      depth += 1;
+    }
+    return depth > 0 && root.kind === "identifier" && this.isDeclaredInScope(root.name);
   }
 
   private upvalueExpr(index: number): Expression {
