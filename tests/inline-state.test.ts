@@ -58,7 +58,7 @@ it('recovers a no-argument state helper without consuming the following caller r
  expect(result.body.statements.slice(-2)).toEqual([call('advance',[]),{kind:'return',values:[ident('total')]}]);
 });
 it('recovers real O2 state helpers with unused reconstruction snapshots',()=>{
- for(const [name,expected] of [['inlined-captured-counter',/advance\(index\)/],['inlined-captured-table',/record\(config, i\)/]] as const){
+ for(const [name,expected] of [['inlined-captured-counter',/advance\(index\)/],['inlined-captured-table',/record\(tbl, i\)/]] as const){
   const bytes=readFileSync(new URL(`./fixtures/object-optimized/${name}-O2.luauc`,import.meta.url));
   const result=decompile(bytes,{opcodeEncoding:'official'});
   expect(result.ok).toBe(true);if(!result.ok)throw Error(result.error);

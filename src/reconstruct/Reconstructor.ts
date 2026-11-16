@@ -49,6 +49,10 @@ export interface ReconstructedFunction {
   ir: FunctionIr;
   /** Generated names of bindings whose register use proves a declared local. */
   declaredLocals: ReadonlySet<string>;
+  /** Allocator-suffixed working name -> the name that was asked for. */
+  nameStems: ReadonlyMap<string, string>;
+  /** Every binding name this reconstruction chose itself. */
+  workingNames: ReadonlySet<string>;
 }
 
 export interface CaptureBinding {
@@ -80,6 +84,8 @@ export function reconstructFunction(
     body: block(builder.build()),
     ir,
     declaredLocals: allocator.declaredLocals,
+    nameStems: allocator.stems,
+    workingNames: allocator.allocated,
   };
 }
 

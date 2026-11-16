@@ -22,7 +22,7 @@ it('keeps a nested constructor identity when its register is reused',async()=>{
  const source=sourceOf(proto({constants:[{kind:'string',value:'items'}],instructions:[
   abc(Opcode.NEWTABLE,0,1,0),0,abc(Opcode.NEWTABLE,1,0,0),0,
   abc(Opcode.SETTABLEKS,1,0,0),0,abc(Opcode.LOADB,1,0,0),abc(Opcode.RETURN,0,2,0)]}));
- expect(source).not.toMatch(/config\d* = false/);
+ expect(source).not.toMatch(/(?:config|tbl|data|list)\d* = false/);
  expect(source).toMatch(/items = \{\}/);
 });
 it('does not overwrite constructor locals when assigning unrelated register values',async()=>{

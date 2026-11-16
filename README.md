@@ -167,7 +167,7 @@ and loop regions with real `break` / `continue` instead of flattened jumps.
 - Event handlers named from their signal, including `onRenderStepped`, `onStopped`, and `onActivated`
 - Mutual recursion recovery (`isEven` / `isOdd`) without ghost locals
 - Conservative type recovery — never emitting a type just because a slot happened to contain `nil`
-- Human-oriented local naming such as `LocalPlayer`, `sharedCounter`, `CONFIG`, `payload`, `seed`, `limit`, `total`, and `calls`
+- Local and parameter names from evidence: the class or child an initializer names (`sound`, `screenGui`, `humanoid`), the field or API slot a value fills (`name`, `soundId`, `tweenInfo`, `callback`), and how a parameter is used (`instance`, `player`, `list`); neutral `p` / `value` names numbered per function when nothing is known
 - REF capture recovery for nested closures instead of unresolved callback placeholders
 
 ## Roblox API names and types
