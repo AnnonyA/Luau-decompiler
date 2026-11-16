@@ -19,6 +19,7 @@ import type { DecodedInstruction } from "../decode/DecodedInstruction.js";
 import { CaptureType, Opcode, isFastCall } from "../decode/Opcode.js";
 import type { BytecodeModule, Prototype } from "../decode/Prototype.js";
 import { buildSsa, type SsaFunction } from "../ssa/SsaBuilder.js";
+import { computeLiveness, type Liveness } from "../dataflow/Liveness.js";
 import { NameAllocator, debugNameAt, isValidIdentifier, parameterNames } from "./Naming.js";
 import { eventCallbackName, nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
 
@@ -660,6 +661,67 @@ class SourceBuilder {
   }
 
   private emitStructuredLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
+    const statements = this.emitLoopStatements(loop, visited);
+    const hoists = this.loopHoists.get(loop);
+    this.loopHoists.delete(loop);
+    return hoists?.length ? this.hoistLoopLocals(statements, hoists) : statements;
+  }
+
+  /** A value defined in a loop body and read after the loop needs a binding
+   * that outlives the body. A `repeat` or `while true` body dominates its
+   * exit, so no phi exists to carry it: declare the local before the loop and
+   * assign it inside. A local captured inside the body stays fresh for each
+   * iteration and is copied to an outer binding instead. */
+  private hoistLoopLocals(statements: Statement[], hoists: Array<{ register: number; binding: Binding }>): Statement[] {
+    const wanted = new Set(hoists.map(hoist => hoist.binding.name!));
+    const captured = new Set(analyzeBindings(block(statements)).bindings
+      .filter(binding => binding.captured && wanted.has(binding.name) && binding.declaration.kind === "local")
+      .map(binding => binding.name));
+    const outerNames = new Map<string, string>();
+    for (const name of captured) outerNames.set(name, this.allocator.reserve(name));
+    const declared: string[] = [...outerNames.values()];
+    const rewrite = (body: Block): Block => ({ ...body, statements: body.statements.flatMap((statement): Statement[] => {
+      if (statement.kind === "local" && statement.names.some(name => wanted.has(name))) {
+        const copies: Statement[] = statement.names.filter(name => captured.has(name))
+          .map(name => ({ kind: "assign", targets: [ident(outerNames.get(name)!)], values: [ident(name)] }));
+        if (statement.names.some(name => captured.has(name))) return [statement, ...copies];
+        declared.push(...statement.names);
+        return statement.values.length === 0 ? []
+          : [{ kind: "assign", targets: statement.names.map(name => ident(name)), values: statement.values }];
+      }
+      switch (statement.kind) {
+        case "while": case "repeat": case "numeric-for": case "generic-for": case "do":
+          return [{ ...statement, body: rewrite(statement.body) }];
+        case "if":
+          return [{ ...statement, consequent: rewrite(statement.consequent),
+            branches: statement.branches.map(branch => ({ ...branch, body: rewrite(branch.body) })),
+            alternate: statement.alternate ? rewrite(statement.alternate) : undefined }];
+        default:
+          return [statement];
+      }
+    }) });
+    const rewritten = rewrite(block(statements)).statements;
+    for (const name of declared) this.declareInScope(name);
+    for (const { register, binding } of hoists) {
+      const name = outerNames.get(binding.name!) ?? binding.name!;
+      this.env.set(register, { name, expression: ident(name), pinned: true });
+    }
+    return declared.length ? [{ kind: "local", names: declared, values: [] }, ...rewritten] : rewritten;
+  }
+
+  private readonly loopHoists = new Map<NaturalLoop, Array<{ register: number; binding: Binding }>>();
+  private liveness?: Liveness;
+
+  private liveAfterLoop(loop: NaturalLoop, register: number): boolean {
+    const follow = this.loopFollow(loop);
+    if (follow === undefined) return false;
+    // A phi at the exit already owns the register on every path.
+    if (this.ir.ssa.phis.get(follow)?.some(phi => phi.register === register)) return false;
+    this.liveness ??= computeLiveness(this.ir.cfg);
+    return this.liveness.liveIn[follow]?.has(register) ?? false;
+  }
+
+  private emitLoopStatements(loop: NaturalLoop, visited: Set<number>): Statement[] {
     const header = this.ir.cfg.blocks[loop.header]!;
     const declarations = this.hoistLoopPhis(loop);
     this.pushScope();
@@ -720,10 +782,17 @@ class SourceBuilder {
       // Deferred register expressions cannot refer to locals whose loop
       // scope has ended. Keep only bindings owned by an enclosing scope.
       const leaving = this.scopeStack.at(-1)!;
+      const hoists: Array<{ register: number; binding: Binding }> = [];
       for (const [register, binding] of this.env) {
         const free = analyzeBindings(block([{ kind: "expression-stmt", expression: binding.expression }])).globals;
-        if ([...free].some(name => leaving.has(name))) this.env.delete(register);
+        if (![...free].some(name => leaving.has(name))) continue;
+        if (binding.pinned && binding.name && binding.name !== "_" && binding.expression.kind === "identifier" &&
+            binding.expression.name === binding.name && this.liveAfterLoop(loop, register)) {
+          hoists.push({ register, binding });
+        }
+        this.env.delete(register);
       }
+      this.loopHoists.set(loop, hoists);
       this.popScope();
     }
   }

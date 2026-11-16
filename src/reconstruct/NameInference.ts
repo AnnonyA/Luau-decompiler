@@ -1106,7 +1106,13 @@ function collect(
             const value = statement.values[index] ?? statement.values[0];
             if (binding && value?.kind === "function-expr") binding.functionName = true;
             if (binding && !binding.hint) {
-              binding.hint = hintFromInit(value) ?? (binding.kind === "local" ? nameFromInitializer(value, initializerContext) : undefined);
+              // One call filling several targets: only its first result has the call's role.
+              const tuple = statement.targets.length > 1 && statement.values.length === 1;
+              const protectedCall = tuple && value?.kind === "call" && value.callee.kind === "identifier" &&
+                (value.callee.name === "pcall" || value.callee.name === "xpcall");
+              binding.hint = protectedCall ? (index === 0 ? "success" : index === 1 ? "result" : undefined)
+                : tuple && index > 0 ? undefined
+                : hintFromInit(value) ?? (binding.kind === "local" ? nameFromInitializer(value, initializerContext) : undefined);
             }
             if (binding && value?.kind === "unary" && value.op === "not") {
               binding.assignedNot = true;
@@ -1398,13 +1404,15 @@ function allocate(bindings: Binding[]): Map<number, string> {
       }
       // An inferred working name: number it within its own function. Only
       // chunk-level handles keep the capitals of the instance they name.
-      const inferred = binding.kind === "local" ? binding.hint : undefined;
+      const inferred = binding.kind === "local" && binding.hint !== "self" ? binding.hint : undefined;
       names.set(binding.id, inferred && isValidIdentifier(inferred) ? inferred
         : binding.depth > 0 && binding.kind === "local" ? lowerCamel(stem) : stem);
       continue;
     }
     const hint = pickHint(binding);
-    names.set(binding.id, hint && isValidIdentifier(hint) ? hint : working ? neutralName(binding) : binding.name);
+    // `self` is reserved for the receiver a method declaration binds implicitly.
+    const role = hint === "self" && binding.kind !== "param" ? "object" : hint;
+    names.set(binding.id, role && isValidIdentifier(role) ? role : working ? neutralName(binding) : binding.name);
   }
   return names;
 }

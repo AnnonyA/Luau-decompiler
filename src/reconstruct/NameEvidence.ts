@@ -194,7 +194,9 @@ function nameFromCall(
       case "typeof": case "type": return "typeName";
       case "tick": case "time": return "now";
       case "getmetatable": return "metatable";
-      case "setmetatable": return context.atRoot ? undefined : context.inMethod ? "object" : "self";
+      // Never `self`: a later pass may lift the enclosing function to a
+      // method, whose implicit `self` this local would then shadow.
+      case "setmetatable": return context.atRoot ? undefined : "object";
       case "select": return args[0]?.kind === "literal" && args[0].value === "#" ? "count" : undefined;
       case "pcall": case "xpcall": return "success";
       default: return nounFromFunctionName(callee.name);

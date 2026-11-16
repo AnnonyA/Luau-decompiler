@@ -136,6 +136,30 @@ describe("names from evidence", () => {
   });
 });
 
+describe("values that outlive a loop body", () => {
+  const source = decompileFixture("loop-exit-values");
+
+  it("declares a body value read after the loop before the loop", () => {
+    // Before: `local success, result = pcall(...)` inside the body and raw `r2` after it.
+    expect(source).toMatch(/local success, result\n\s+repeat\n[\s\S]+?success, result = pcall\(/);
+    expect(source).toMatch(/until success or \w+ >= 3\n\s+if not success then/);
+    expect(source).not.toMatch(/\br\d+\b/);
+  });
+
+  it("joins a trailing break into the until test only without a continue in the body", () => {
+    expect(source).toMatch(/until \w+ == nil or #\w+ >= 3/);
+    expect(source).not.toMatch(/then\n\s+break\n\s+end\n\s+until/);
+  });
+});
+
+describe("locals beside a method receiver", () => {
+  it.each([1, 2])("never names a local `self` inside a method at O%s", (level) => {
+    const source = decompileFixture(`method-receiver-locals-O${level}`);
+    expect(source).not.toMatch(/local self\b/);
+    expect(source).toMatch(/local (\w+) = setmetatable\(\{ value = \w+\.value \}, \w+\)\n\s+\1\.tag = self\.tag\n\s+\1\.owner = self/);
+  });
+});
+
 describe("generic-for loop variables", () => {
   it("does not merge a body temporary with a later loop's variables", () => {
     const source = decompileFixture("generic-loop-scratch");
