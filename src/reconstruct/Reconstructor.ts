@@ -1798,8 +1798,13 @@ class SourceBuilder {
 
   // ------------------------------------------------------------ table flush
 
+  /** A nested constructor stays on the stack after its parent materializes it.
+   * Offering that closed literal to a later store would swallow the store. */
   private topPending(): PendingTable | undefined {
-    return this.pendingStack[this.pendingStack.length - 1];
+    for (let i = this.pendingStack.length - 1; i >= 0; i--) {
+      if (!this.pendingStack[i]!.flushed) return this.pendingStack[i];
+    }
+    return undefined;
   }
 
   private pendingOf(register: number): PendingTable | undefined {
