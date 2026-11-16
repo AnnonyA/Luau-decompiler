@@ -37,10 +37,13 @@ function clean(...statements: Statement[]): string {
 
 describe("early return cleanup respects else lexical scopes", () => {
   it("does not hoist an else-local into the outer block", () => {
+    // Each local is read twice: a single-use literal local is folded into its reader.
     const source = clean(
       { kind: "local", names: ["value"], values: [lit(0)] },
+      call("value"),
       condition([
         { kind: "local", names: ["value"], values: [lit(2)] },
+        call("value"),
         call("value"),
       ]),
       { kind: "return", values: [ident("value")] },
@@ -73,7 +76,7 @@ describe("early return cleanup respects else lexical scopes", () => {
   it("may flatten a nested do-block because its locals retain their own scope", () => {
     const source = clean(condition([{
       kind: "do",
-      body: block([{ kind: "local", names: ["inside"], values: [lit(4)] }, call("inside")]),
+      body: block([{ kind: "local", names: ["inside"], values: [lit(4)] }, call("inside"), call("inside")]),
     }]), call("outside"));
     expect(source).not.toContain("else");
     expect(source).toContain("do");

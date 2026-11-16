@@ -34,6 +34,8 @@ export class NameAllocator {
   private readonly used = new Set<string>();
   private readonly nextSuffix = new Map<string, number>();
   private readonly preferredNames: Set<string>;
+  /** Generated names of bindings whose register use proves a declared local. */
+  readonly declaredLocals = new Set<string>();
 
   constructor(reserved: Iterable<string> = [], preferredNames: Iterable<string> = []) {
     this.preferredNames = new Set(preferredNames);

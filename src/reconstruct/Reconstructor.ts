@@ -47,6 +47,8 @@ export interface ReconstructedFunction {
   isVararg: boolean;
   body: Block;
   ir: FunctionIr;
+  /** Generated names of bindings whose register use proves a declared local. */
+  declaredLocals: ReadonlySet<string>;
 }
 
 export interface CaptureBinding {
@@ -77,6 +79,7 @@ export function reconstructFunction(
     isVararg: proto.isVararg,
     body: block(builder.build()),
     ir,
+    declaredLocals: allocator.declaredLocals,
   };
 }
 
@@ -3204,10 +3207,15 @@ class SourceBuilder {
       (expression.kind !== "identifier" ||
         insn.opcode === Opcode.GETGLOBAL ||
         insn.opcode === Opcode.GETIMPORT);
+    // A bare global or literal in a register of its own says nothing: the
+    // compiler folds such a local away, and its consumer reads it either way.
+    const declared = expression.kind !== "identifier" && expression.kind !== "literal" &&
+      this.readAsDeclaredLocal(register, insn);
     const pin =
       forceLocal ||
       Boolean(debug) ||
       refCaptured ||
+      declared ||
       (uses > 0 && (canHaveEffects || expression.kind === "identifier") &&
         this.crossesStatementBeforeUse(register, insn, expression)) ||
       (!nilLiteral && (uses > 1 || liveAcrossBlocks)) ||
@@ -3255,6 +3263,22 @@ class SourceBuilder {
       return [{ kind: "local", names: ["_"], values: [expression] }];
     }
     return [];
+  }
+
+  /** Whether the next reader of this definition takes it as an operand from
+   * below its own destination. A temporary is evaluated in the destination
+   * or above it; a value read from below has a register the source declared. */
+  private readAsDeclaredLocal(register: number, definition: DecodedInstruction): boolean {
+    const home = this.ir.cfg.blockOfPc.get(definition.pc);
+    if (home === undefined) return false;
+    for (const next of this.ir.cfg.blocks[home]!.instructions) {
+      if (next.pc <= definition.pc || isFastCall(next.opcode)) continue;
+      if (next.uses.includes(register) && !isFakeUse(next.opcode)) {
+        return isOperandInstruction(next.opcode) && next.defs.length > 0 && next.defs.every(target => register < target);
+      }
+      if (next.defs.includes(register)) return false;
+    }
+    return false;
   }
 
   /** Keep evaluation before statements that cannot become part of its consumer. */
@@ -3436,6 +3460,13 @@ class SourceBuilder {
   private readRegister(register: number, insn?: DecodedInstruction): Expression {
     const binding = this.env.get(register);
     if (binding) {
+      // The compiler evaluates a temporary in its consumer's destination or
+      // above it. An operand below the destination already had a register of
+      // its own: it is a local the source declared, however often it is read.
+      if (binding.pinned && binding.name && insn && insn.defs.length > 0 && isOperandInstruction(insn.opcode) &&
+          insn.defs.every(target => register < target)) {
+        this.allocator.declaredLocals.add(binding.name);
+      }
       return cloneExpr(binding.expression);
     }
     const debug = insn ? debugNameAt(this.proto, register, insn.pc) : undefined;
@@ -3742,6 +3773,28 @@ function isFakeUse(opcode: Opcode): boolean {
     case Opcode.PREPVARARGS:
     case Opcode.COVERAGE:
     case Opcode.NOP:
+      return true;
+    default:
+      return false;
+  }
+}
+
+/** Instructions that compute their destination from register operands.
+ * Loop machinery and calls address fixed register windows instead. */
+function isOperandInstruction(opcode: Opcode): boolean {
+  switch (opcode) {
+    case Opcode.MOVE:
+    case Opcode.GETTABLE:
+    case Opcode.GETTABLEKS:
+    case Opcode.GETUDATAKS:
+    case Opcode.GETTABLEN:
+    case Opcode.NAMECALL:
+    case Opcode.NAMECALLUDATA:
+    case Opcode.ADD: case Opcode.SUB: case Opcode.MUL: case Opcode.DIV: case Opcode.MOD: case Opcode.POW: case Opcode.IDIV:
+    case Opcode.ADDK: case Opcode.SUBK: case Opcode.MULK: case Opcode.DIVK: case Opcode.MODK: case Opcode.POWK: case Opcode.IDIVK:
+    case Opcode.SUBRK: case Opcode.DIVRK:
+    case Opcode.AND: case Opcode.OR: case Opcode.ANDK: case Opcode.ORK:
+    case Opcode.NOT: case Opcode.MINUS: case Opcode.LENGTH:
       return true;
     default:
       return false;
