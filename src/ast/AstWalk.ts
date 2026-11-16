@@ -1,8 +1,20 @@
 import type { Block, Expression, Statement } from "./Ast.js";
 
 /** Rebuild an expression from its direct children. Function bodies are blocks,
- * not child expressions: they are reached through `mapFunctionBodies`. */
+ * not child expressions: `rewriteBlocks` reaches them. A node whose children
+ * all map to themselves is returned as is, so analyses keyed by node identity
+ * stay valid for every subtree a rewrite does not touch. */
 export function mapChildExpressions(expression: Expression, map: (child: Expression) => Expression): Expression {
+  let changed = false;
+  const rebuilt = rebuildExpression(expression, (child) => {
+    const next = map(child);
+    if (next !== child) changed = true;
+    return next;
+  });
+  return changed ? rebuilt : expression;
+}
+
+function rebuildExpression(expression: Expression, map: (child: Expression) => Expression): Expression {
   switch (expression.kind) {
     case "unary":
       return { ...expression, argument: map(expression.argument) };
@@ -62,6 +74,16 @@ export function forEachChildExpression(expression: Expression, visit: (child: Ex
 /** Rebuild a statement from the expressions it evaluates itself. Nested
  * blocks (branches, loop bodies, function bodies) are left untouched. */
 export function mapStatementExpressions(statement: Statement, map: (expression: Expression) => Expression): Statement {
+  let changed = false;
+  const rebuilt = rebuildStatementExpressions(statement, (child) => {
+    const next = map(child);
+    if (next !== child) changed = true;
+    return next;
+  });
+  return changed ? rebuilt : statement;
+}
+
+function rebuildStatementExpressions(statement: Statement, map: (expression: Expression) => Expression): Statement {
   switch (statement.kind) {
     case "local":
       return { ...statement, values: statement.values.map(map) };
@@ -99,6 +121,16 @@ export function mapStatementExpressions(statement: Statement, map: (expression: 
 
 /** Rebuild a statement from its directly nested blocks. */
 export function mapStatementBlocks(statement: Statement, map: (body: Block) => Block): Statement {
+  let changed = false;
+  const rebuilt = rebuildStatementBlocks(statement, (body) => {
+    const next = map(body);
+    if (next !== body) changed = true;
+    return next;
+  });
+  return changed ? rebuilt : statement;
+}
+
+function rebuildStatementBlocks(statement: Statement, map: (body: Block) => Block): Statement {
   switch (statement.kind) {
     case "function-decl":
     case "while":
@@ -124,13 +156,16 @@ export function mapStatementBlocks(statement: Statement, map: (body: Block) => B
 export function rewriteBlocks(body: Block, map: (body: Block, isFunctionBody: boolean) => Block, isFunctionBody = true): Block {
   const intoExpression = (expression: Expression): Expression => {
     const mapped = mapChildExpressions(expression, intoExpression);
-    return mapped.kind === "function-expr" ? { ...mapped, body: rewriteBlocks(mapped.body, map, true) } : mapped;
+    if (mapped.kind !== "function-expr") return mapped;
+    const inner = rewriteBlocks(mapped.body, map, true);
+    return inner === mapped.body ? mapped : { ...mapped, body: inner };
   };
   const statements = body.statements.map((statement) => {
     const withExpressions = mapStatementExpressions(statement, intoExpression);
     return mapStatementBlocks(withExpressions, (inner) => rewriteBlocks(inner, map, statement.kind === "function-decl"));
   });
-  return map({ ...body, statements }, isFunctionBody);
+  const unchanged = statements.every((statement, index) => statement === body.statements[index]);
+  return map(unchanged ? body : { ...body, statements }, isFunctionBody);
 }
 
 /** Visit every identifier node below `node`, including nested functions.

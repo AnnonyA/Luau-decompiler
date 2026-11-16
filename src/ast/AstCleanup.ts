@@ -17,6 +17,9 @@ import {
 } from "../reconstruct/RobloxSemantics.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
 import { inferHumanNames, repairUndeclaredAutoLocals } from "../reconstruct/NameInference.js";
+import { rewriteBlocks } from "./AstWalk.js";
+import { refineStructure } from "./StructureRefinement.js";
+import { foldTemporaries } from "./TempFolding.js";
 
 const COMPOUND_OPS = new Set<BinaryOperator>(["+", "-", "*", "/", "%", ".."]);
 const GENERIC_CLOSURE = /^function_?\d*$/;
@@ -32,15 +35,38 @@ export interface CleanupOptions {
   interpolatedStrings: boolean;
   /** Handled by OptionalRewrites after helper recovery; no builtin lookup is introduced. */
   mathConstants: boolean;
+  /** Local names present in debug info; such bindings are never folded away. */
+  sourceNames?: ReadonlySet<string>;
 }
 
 export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
   const repaired = repairUndeclaredAutoLocals(ast);
-  const body = transformBlock(repaired.body, options, true);
-  const named = inferHumanNames({ kind: "chunk", body }, {foldSingleUseTemps: options.foldSingleUseTemps});
+  const structured: Chunk = { kind: "chunk", body: transformBlock(repaired.body, options, true) };
+  const fold = (chunk: Chunk): Chunk => options.foldSingleUseTemps === false
+    ? chunk : foldTemporaries(chunk, { sourceNames: options.sourceNames });
+  // Folding exposes values split across tests; recovering those exposes
+  // further single-use temporaries.
+  // A conditional return is recognised before its arms become guard clauses.
+  const returns = (chunk: Chunk): Chunk => options.ifExpressions ? finalizeReturnExpressions(chunk) : chunk;
+  const refined = refineStructure(returns(fold(structured)), { ifExpressions: options.ifExpressions, guards: options.earlyReturn });
+  const folded = annotateFoldedLocals(fold(refined), options);
+  const named = inferHumanNames(folded, {foldSingleUseTemps: options.foldSingleUseTemps, sourceNames: options.sourceNames});
   // Scratch folding can expose scalar return arms after the first structural
   // pass. Revisit only return structure, not naming, effects or declarations.
   return options.ifExpressions ? finalizeReturnExpressions(named) : named;
+}
+
+/** Folding changes initializers; derive each local's annotation from the
+ * expression it now holds. */
+function annotateFoldedLocals(ast: Chunk, options: CleanupOptions): Chunk {
+  return {
+    ...ast,
+    body: rewriteBlocks(ast.body, (body) => ({
+      ...body,
+      statements: foldCompoundAssigns(body.statements).map((statement) =>
+        statement.kind === "local" ? { ...statement, types: annotateLocals(statement, options) } : statement),
+    })),
+  };
 }
 
 function finalizeReturnExpressions<T>(node: T): T {
@@ -1547,6 +1573,27 @@ function recoverReturnIfExpressions(statements: Statement[]): Statement[] {
     const elseReturn = singleReturn(statement.alternate.statements);
     if (!elseReturn || elseReturn.values.length !== thenReturn.values.length || thenReturn.values.length !== 1) {
       return statement;
+    }
+    // One conditional value per line: a nested or long ladder of them reads
+    // better as the statements it came from.
+    const nested = [thenReturn.values[0]!, ...branchReturns.map((branch) => branch.value)];
+    const tail = elseReturn.values[0]!;
+    const arms = nested.length + 1 + (tail.kind === "if-expr" ? tail.branches.length + 1 : 0);
+    if (arms > 3 || nested.some((value) => value.kind === "if-expr") ||
+        (tail.kind === "if-expr" && (branchReturns.length > 0 || tail.alternate.kind === "if-expr" ||
+          tail.consequent.kind === "if-expr"))) {
+      if (tail.kind !== "if-expr") return statement;
+      // The `else` already holds a conditional value: continue the ladder of
+      // statements with its arms instead of nesting a second expression.
+      const arm = (value: Expression): Block =>
+        block([{ kind: "return", values: [value.kind === "call" || value.kind === "method-call" || value.kind === "vararg"
+          ? { kind: "paren", expression: value } : value] }]);
+      return {
+        ...statement,
+        branches: [...statement.branches, { test: tail.test, body: arm(tail.consequent) },
+          ...tail.branches.map((branch) => ({ test: branch.test, body: arm(branch.value) }))],
+        alternate: arm(tail.alternate),
+      };
     }
     let expr: Expression = {
       kind: "if-expr",

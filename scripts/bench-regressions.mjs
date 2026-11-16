@@ -19,7 +19,7 @@ if(!compiler||!vm||!output)throw Error('--luau-compile, --luau and --output are 
 const hash=data=>createHash('sha256').update(data).digest('hex');
 const results=[];
 const inputs=[['-7'],['1'],['8']];
-for(const folder of ['benchmarks/regressions/pr58','benchmarks/originals']){
+for(const folder of ['benchmarks/regressions/pr58','benchmarks/regressions/readable','benchmarks/originals']){
   for(const name of (await readdir(join(root,folder))).filter(n=>n.endsWith('.luau')).sort()){
     const original=join(root,folder,name),source=await readFile(original);
     for(const optimization of [0,1]){
@@ -42,4 +42,4 @@ for(const folder of ['benchmarks/regressions/pr58','benchmarks/originals']){
   }
 }
 await writeFile(join(output,'report.json'),JSON.stringify({compilerSha256:hash(await readFile(compiler)),runtimeSha256:hash(await readFile(vm)),results},null,2)+'\n');
-if(results.length!==36||results.some(r=>r.status!=='MATCH'))process.exitCode=1;
+if(results.length!==42||results.some(r=>r.status!=='MATCH'))process.exitCode=1;

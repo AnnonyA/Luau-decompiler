@@ -68,7 +68,7 @@ const unparen = (expression: Expression): Expression => {
  * are admitted only in ordered write regions with a whole-binding type proof;
  * they never become stable arguments or initializer substitutions. Table writes
  * additionally require a fresh, unescaped table and static valid keys. */
-export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): Chunk {
+export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>, recoveredHelpers?: Set<string>): Chunk {
   if (!evidence.size) return ast;
   const {bindings,globals} = analyzeBindings(ast.body);
   const names = new NameAllocator([...globals,...bindings.map(binding=>binding.name)]);
@@ -382,7 +382,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
         if (size(e) >= 2 + ordered.reduce((n,arg)=>n+size(arg),0) + 2 && ordered.every(arg=>visibleArguments(arg,visible)) &&
             preservesCaptures(e,ordered,context)) {
           if(selected){ambiguous=true;break;}
-          selected={kind:'call',callee:ident(candidate.name),args:structuredClone(ordered),open:false};
+          recoveredHelpers?.add(candidate.name);selected={kind:'call',callee:ident(candidate.name),args:structuredClone(ordered),open:false};
         }
       }
     }
@@ -449,7 +449,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
         // Arguments expanded from earlier initializers have already passed the
         // destination binding proof. Detach them from replacements scheduled at
         // their old site: those calls can name helpers shadowed in this scope.
-        selected={count,call:{kind:'expression-stmt',expression:{kind:'call',callee:ident(candidate.name),args:structuredClone(ordered),open:false}}};
+        recoveredHelpers?.add(candidate.name);selected={count,call:{kind:'expression-stmt',expression:{kind:'call',callee:ident(candidate.name),args:structuredClone(ordered),open:false}}};
       }
     }
     return budget>0 ? selected : undefined;
@@ -492,7 +492,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>): C
       selected={count,candidate,args:structuredClone(ordered),slots};
     }
     if(!selected || budget<=0)return;
-    const call:Expression={kind:'call',callee:ident(selected.candidate.name),args:selected.args,open:false};
+    recoveredHelpers?.add(selected.candidate.name);const call:Expression={kind:'call',callee:ident(selected.candidate.name),args:selected.args,open:false};
     // Fixed primitive results have no intervening effects. Existing lexical
     // cells can be assigned together without creating new registers per call.
     if(selected.slots.every(slot=>!slot.local))return {count:selected.count,locals:[],statements:[{

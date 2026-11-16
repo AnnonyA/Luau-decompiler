@@ -5,7 +5,12 @@ import { analyzeBindings, replaceReferences, type LexicalBinding } from "../anal
 const GENERATED = /^(?:value|result|config|index|key|item|entry|state|data|count|tmp|player|function_?|callback)(\d*)$/;
 const MAKE_STEM = /^(?:make|create|build|get)([A-Z][A-Za-z0-9]*)$/;
 
-export function inferHumanNames(ast: Chunk, options: {foldSingleUseTemps?: boolean} = {}): Chunk {
+/** Bindings the source declared (debug info or register evidence): scratch
+ * folding keeps them. Set for the duration of one synchronous inference. */
+let declaredNames: ReadonlySet<string> = new Set();
+
+export function inferHumanNames(ast: Chunk, options: {foldSingleUseTemps?: boolean; sourceNames?: ReadonlySet<string>} = {}): Chunk {
+  declaredNames = options.sourceNames ?? new Set();
   const fold = options.foldSingleUseTemps !== false;
   const folded = { kind: "chunk" as const, body: fold ? foldScratchRegisters(ast.body) : ast.body };
   const coalesced = { kind: "chunk" as const, body: coalesceAccumulators(folded.body) };
@@ -252,7 +257,7 @@ function foldScratchStatements(statements: Statement[]): Statement[] {
         (current.values[0]!.kind === "call" || current.values[0]!.kind === "method-call") &&
         next?.kind === "local" && next.values.length === 1 && next.values[0]!.kind === "method-call" &&
         binding && !binding.captured && !binding.writes.length && binding.reads.length === 1 &&
-        binding.reads[0]!.node === next.values[0]!.object) {
+        !declaredNames.has(binding.name) && binding.reads[0]!.node === next.values[0]!.object) {
       // Both statements are adjacent and the sole read is the receiver, which
       // Luau evaluates before arguments and the subsequent method lookup. No effect crosses
       // another expression, and receiver context still selects one result.
@@ -261,7 +266,7 @@ function foldScratchStatements(statements: Statement[]): Statement[] {
     }
     if (current.kind === "local" && assigned && next?.kind === "return" && next.values.length === 1 &&
         binding && !binding.captured && !binding.writes.length && binding.reads.length === 1 &&
-        binding.reads[0]!.node === next.values[0] && assigned.value.kind !== "function-expr") {
+        !declaredNames.has(binding.name) && binding.reads[0]!.node === next.values[0] && assigned.value.kind !== "function-expr") {
       // A local initializer clips a call/vararg pack to one result. Keep that
       // adjustment when removing the temporary at its adjacent return.
       const value=assigned.value;
