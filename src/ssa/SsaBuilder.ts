@@ -339,6 +339,9 @@ function lowerInstruction(insn: DecodedInstruction, read: (register: number) => 
     case Opcode.FORNPREP:
       return { uses, defs: insn.defs.map(() => ({ kind: "for-index" })) };
     case Opcode.FORGLOOP:
+    case Opcode.FORGPREP:
+    case Opcode.FORGPREP_INEXT:
+    case Opcode.FORGPREP_NEXT:
       return { uses, defs: insn.defs.map(() => ({ kind: "for-index" })) };
     default:
       return { uses, defs: insn.defs.map(() => ({ kind: "unknown", opcode: insn.opcode })) };

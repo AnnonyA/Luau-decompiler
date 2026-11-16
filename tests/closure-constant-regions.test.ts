@@ -31,7 +31,9 @@ function returnedBindings(bytes: Uint8Array) {
  expect(last.kind).toBe('return');
  if (last.kind !== 'return') throw Error('expected return');
  const bindings = analyzeBindings(result.ast.body).bindings;
- const owners = last.values.map(node => bindings.find(b => b.reads.some(r => r.node === node)));
+ // A function literal written in place is a closure of its own; only a
+ // shared closure is read through one binding from both result positions.
+ const owners = last.values.map(node => node.kind === 'function-expr' ? node : bindings.find(b => b.reads.some(r => r.node === node)));
  expect(owners).toHaveLength(2);
  expect(owners.every(Boolean)).toBe(true);
  return owners;

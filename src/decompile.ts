@@ -4,6 +4,7 @@ import { validateAst, type ValidationFailure } from "./ast/AstValidator.js";
 import type { Chunk } from "./ast/Ast.js";
 import { chunk } from "./ast/Ast.js";
 import { cleanupAst, type CleanupOptions } from "./ast/AstCleanup.js";
+import { presentClosures } from "./ast/ClosurePresentation.js";
 import { decodeBytecode, type DecodeOptions, type DecodeResult } from "./decode/Decoder.js";
 import { BytecodeError } from "./decode/BytecodeError.js";
 import type { BytecodeModule } from "./decode/Prototype.js";
@@ -111,7 +112,7 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
 
   try {
     const reconstructed = reconstructFunction(decoded.module, main);
-    const raw = chunk(reconstructed.body.statements);
+    const raw = presentClosures(chunk(reconstructed.body.statements));
     const cleaned = cleanupAst(raw, defaultCleanupOptions(options));
     const recovered = options.recoverInlinedFunctions === false ? cleaned : recoverInlineCalls(cleaned, inlineHelperLines(decoded.module));
     const rewritten = options.mathConstants || options.rerollUnrolledLoops || options.keepDeadFunctions === false || options.unfoldModuleTables !== false
