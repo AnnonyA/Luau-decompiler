@@ -111,21 +111,33 @@ export class NameAllocator {
   }
 
   snapshot() {
-    return { symbols: this.symbols && {used: new Set(this.symbols.used), stems: new Map(this.symbols.stems)}, used: new Set(this.used), stems: new Map(this.stems), declaredLocals: new Set(this.declaredLocals) };
+    return {
+      used: new Set(this.used),
+      stems: new Map(this.stems),
+      nextSuffix: new Map(this.nextSuffix),
+      declaredLocals: new Set(this.declaredLocals),
+      symbols: this.symbols && {
+        used: new Set(this.symbols.used),
+        stems: new Map(this.symbols.stems),
+        nextSuffix: new Map(this.symbols.nextSuffix),
+      },
+    };
   }
 
   restore(snapshot: ReturnType<NameAllocator["snapshot"]>): void {
     if (this.symbols && snapshot.symbols) {
       this.symbols.used.clear();
       this.symbols.stems.clear();
+      this.symbols.nextSuffix.clear();
       for (const name of snapshot.symbols.used) this.symbols.used.add(name);
       for (const [name, stem] of snapshot.symbols.stems) this.symbols.stems.set(name, stem);
-      this.symbols.nextSuffix.clear();
+      for (const [name, suffix] of snapshot.symbols.nextSuffix) this.symbols.nextSuffix.set(name, suffix);
     }
     this.used.clear();
     // A rollback can release earlier suffixes; a cached cursor is no longer
     // valid. Capture reservations and module names outlive every speculation.
     this.nextSuffix.clear();
+    for (const [name, suffix] of snapshot.nextSuffix) this.nextSuffix.set(name, suffix);
     for (const name of snapshot.used) this.used.add(name);
     this.stems.clear();
     for (const [name, stem] of snapshot.stems) this.stems.set(name, stem);

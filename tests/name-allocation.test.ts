@@ -53,3 +53,16 @@ it('restores shared scratch symbols after an alternate speculative path', () => 
   expect(child.reserve('value')).toBe('value2');
   expect(child.reserve('item')).toBe('item');
 });
+
+it('replays suffixes skipped by a capture in a different function', () => {
+  const root = new NameAllocator([], [], new NameAllocator());
+  root.reserve('value');
+  const first = new NameAllocator(root);
+  first.protectCapture('value2');
+  expect(first.reserve('value')).toBe('value3');
+  const second = new NameAllocator(root);
+  const checkpoint = second.snapshot();
+  const next = second.reserve('value');
+  second.restore(checkpoint);
+  expect(second.reserve('value')).toBe(next);
+});
