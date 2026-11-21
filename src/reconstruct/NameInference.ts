@@ -880,28 +880,35 @@ function note(binding: Binding | undefined, name: string | undefined, score: num
 
 function renameChunk(ast: Chunk): Chunk {
   const bindings: Binding[] = [];
-  collect(ast.body.statements, bindings, [new Map()], 0, 0);
-  applyHints(ast.body.statements, bindings);
+  const captures = new Map<Block, Set<string>>();
+  const { globals } = analyzeBindings(ast.body, captures);
+  const methodCaptures = new Set<Binding>();
+  collect(ast.body.statements, { bindings, captures, methodCaptures }, [new Map()], 0, 0);
   const names = allocate(bindings);
-  const globals = analyzeBindings(ast.body).globals;
+  // A colon declaration introduces a fixed receiver even if its body never
+  // reads it. An outer binding forwarded through that declaration cannot be self.
+  for (const binding of methodCaptures) {
+    if (names.get(binding.id) === "self") names.set(binding.id, binding.name);
+  }
   // Inferred names must not force later explicit bindings (especially function
   // names observable through debug.info) to acquire allocator suffixes.
   const reservedNames = new Set(bindings.filter(binding =>
     binding.functionName || debugNames.has(binding.name) ||
     (!isGeneratedName(binding.name) && !workingNames.has(binding.name))).map(binding => binding.name));
-  const state: ApplyState = { next: 0, globals, reservedNames, allocators: [new NameAllocator()] };
+  const state: ApplyState = { next: 0, globals, reservedNames, captures, allocators: [new NameAllocator()] };
   return { kind: "chunk", body: applyBlock(ast.body, names, [new Map()], state) };
 }
 
 function collect(
   statements: Statement[],
-  bindings: Binding[],
+  context: { bindings: Binding[]; captures: Map<Block, Set<string>>; methodCaptures: Set<Binding> },
   scopes: Array<Map<string, Binding>>,
   depth: number,
   forNest: number,
   functionResultHint?: string,
   inMethod = false,
 ): void {
+  const { bindings } = context;
   const initializerContext = {
     atRoot: depth === 0,
     inMethod,
@@ -1057,10 +1064,15 @@ function collect(
         scopes.push(new Map());
         const hints = paramHintsFor("", expression.params);
         expression.params.forEach((param, index) => declare(param, "param", hints[index] ?? {}));
-        collect(expression.body.statements, bindings, scopes, depth + 1, 0, undefined, inMethod);
+        collect(expression.body.statements, context, scopes, depth + 1, 0, undefined, inMethod);
         scopes.pop();
         break;
       }
+      case "interp":
+        for (const part of expression.parts) {
+          if (part.kind === "expr" && typeof part.value !== "string") visitExpr(part.value);
+        }
+        break;
       case "paren":
         visitExpr(expression.expression);
         break;
@@ -1090,7 +1102,9 @@ function collect(
           const tuple = statement.names.length > 1 && statement.values.length === 1;
           const hint = protectedCall && tuple ? (index === 0 ? "success" : index === 1 ? "result" : undefined)
             : hintFromInit(init) ?? (tuple && index > 0 ? undefined : nameFromInitializer(init, initializerContext));
-          declare(name, "local", { hint,
+          const stats = tuple && index === 1 && isGeneratedName(name) && init?.kind === "call" &&
+            init.callee.kind === "identifier" && init.callee.name === "makeAccumulator";
+          declare(name, "local", { hint: stats ? "stats" : hint,
             functionName: init?.kind === "function-expr",
             tableKind: own?.kind !== "table" ? undefined : own.fields.length === 0 ? "empty"
               : own.fields.every((field) => !field.name && (!field.key || field.list)) ? "list" : "record",
@@ -1171,17 +1185,23 @@ function collect(
             if (!/[.:]/.test(statement.name)) owner.functionName = true;
           }
         }
+        if (statement.name.includes(":")) {
+          for (const capture of context.captures.get(statement.body) ?? []) {
+            const binding = lookup(capture);
+            if (binding) context.methodCaptures.add(binding);
+          }
+        }
         if (declarationTail(statement.name) === "rgb" && statement.params.length === 3) {
           scopes.push(new Map());
           ["r", "g", "b"].forEach((hint, index) => declare(statement.params[index]!, "param", { hint }));
-          collect(statement.body.statements, bindings, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)));
+          collect(statement.body.statements, context, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)));
           scopes.pop();
           break;
         }
         scopes.push(new Map());
         const paramHints = paramHintsFor(statement.name, statement.params);
         statement.params.forEach((param, index) => declare(param, "param", paramHints[index] ?? {}));
-        collect(statement.body.statements, bindings, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)),
+        collect(statement.body.statements, context, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)),
           inMethod || statement.name.includes(":"));
         scopes.pop();
         break;
@@ -1189,17 +1209,17 @@ function collect(
       case "if":
         visitExpr(statement.test);
         scopes.push(new Map());
-        collect(statement.consequent.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.consequent.statements, context, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         for (const branch of statement.branches) {
           visitExpr(branch.test);
           scopes.push(new Map());
-          collect(branch.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+          collect(branch.body.statements, context, scopes, depth, forNest, functionResultHint);
           scopes.pop();
         }
         if (statement.alternate) {
           scopes.push(new Map());
-          collect(statement.alternate.statements, bindings, scopes, depth, forNest, functionResultHint);
+          collect(statement.alternate.statements, context, scopes, depth, forNest, functionResultHint);
           scopes.pop();
         }
         break;
@@ -1212,12 +1232,12 @@ function collect(
           }
         }
         scopes.push(new Map());
-        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         break;
       case "repeat":
         scopes.push(new Map());
-        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest, functionResultHint);
         if (statement.test.kind === "binary" && statement.test.left.kind === "identifier") {
           const binding = resolve(statement.test.left.name);
           if (binding) {
@@ -1244,7 +1264,7 @@ function collect(
           hint: /\d$/.test(statement.name) ? (["i", "j", "k"][forNest] ?? "index") : undefined,
           forNest,
         });
-        collect(statement.body.statements, bindings, scopes, depth, forNest + 1, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest + 1, functionResultHint);
         scopes.pop();
         break;
       case "generic-for": {
@@ -1266,7 +1286,7 @@ function collect(
           const weakHint = index === 1 && element && element !== collectionName ? element : undefined;
           declare(name, "loop", { hint: index === 1 && weakHint && isGeneratedName(name) ? weakHint : hint, ipairs, forNest });
         });
-        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         break;
       }
@@ -1293,47 +1313,11 @@ function collect(
         break;
       case "do":
         scopes.push(new Map());
-        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         break;
       default:
         break;
-    }
-  }
-}
-
-function applyHints(statements: Statement[], bindings: Binding[]): void {
-  const byName = new Map<string, Binding[]>();
-  for (const binding of bindings) {
-    const list = byName.get(binding.name) ?? [];
-    list.push(binding);
-    byName.set(binding.name, list);
-  }
-  for (const statement of statements) {
-    if (
-      statement.kind === "local" &&
-      statement.values.length === 1 &&
-      statement.values[0]?.kind === "call" &&
-      statement.values[0].callee.kind === "identifier"
-    ) {
-      const stem = calleeStem(statement.values[0].callee.name);
-      if (stem && statement.names[0]) {
-        const candidates = byName.get(statement.names[0]) ?? [];
-        const binding = candidates.find((item) => !item.hint && isGeneratedName(item.name));
-        if (binding) {
-          binding.hint = stem;
-        }
-      }
-      if (statement.names[1] && statement.values[0].callee.name === "makeAccumulator") {
-        const candidates = byName.get(statement.names[1]) ?? [];
-        const binding = candidates.find((item) => isGeneratedName(item.name));
-        if (binding) {
-          binding.hint = "stats";
-        }
-      }
-    }
-    if (statement.kind === "function-decl") {
-      applyHints(statement.body.statements, bindings);
     }
   }
 }
@@ -1562,6 +1546,7 @@ interface ApplyState {
   next: number;
   globals: Set<string>;
   reservedNames: Set<string>;
+  captures: Map<Block, Set<string>>;
   allocators: NameAllocator[];
 }
 
@@ -1578,17 +1563,27 @@ function currentAllocator(state: ApplyState): NameAllocator {
   return state.allocators[state.allocators.length - 1]!;
 }
 
-function pushFunctionAllocator(names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): void {
-  const allocator = new NameAllocator();
-  for (const scope of scopes) {
-    for (const id of scope.values()) {
-      const taken = names.get(id);
-      if (taken) {
-        allocator.take(taken);
-      }
-    }
+function resolveName(name: string, names: Map<number, string>, scopes: Array<Map<string, number>>): string {
+  for (let i = scopes.length - 1; i >= 0; i--) {
+    const id = scopes[i]!.get(name);
+    if (id !== undefined) return names.get(id) ?? name;
   }
-  state.allocators.push(allocator);
+  return name;
+}
+
+function enterFunction(body: Block, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState, method = false): void {
+  const reserved = new Set<string>();
+  for (const capture of state.captures.get(body) ?? []) {
+    reserved.add(resolveName(capture, names, scopes));
+  }
+  const scope = new Map<string, number>();
+  if (method) {
+    reserved.add("self");
+    // A method introduces its own fixed receiver without an explicit parameter.
+    scope.set("self", -1);
+  }
+  scopes.push(scope);
+  state.allocators.push(new NameAllocator(reserved));
 }
 
 function applyBlock(body: Block, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Block {
@@ -1596,15 +1591,7 @@ function applyBlock(body: Block, names: Map<number, string>, scopes: Array<Map<s
 }
 
 function applyStmt(statement: Statement, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Statement {
-  const resolve = (name: string): string => {
-    for (let i = scopes.length - 1; i >= 0; i--) {
-      const id = scopes[i]!.get(name);
-      if (id !== undefined) {
-        return names.get(id) ?? name;
-      }
-    }
-    return name;
-  };
+  const resolve = (name: string): string => resolveName(name, names, scopes);
   const bind = (old: string): string => {
     const id = state.next++;
     scopes[scopes.length - 1]!.set(old, id);
@@ -1621,11 +1608,10 @@ function applyStmt(statement: Statement, names: Map<number, string>, scopes: Arr
     case "assign":
       return { ...statement, values: statement.values.map(expr), targets: statement.targets.map(expr) };
     case "compound-assign":
-      return { ...statement, target: expr(statement.target), value: expr(statement.value) };
+      return { ...statement, value: expr(statement.value), target: expr(statement.target) };
     case "function-decl": {
       const name = statement.local ? bind(statement.name) : renameDecl(statement.name, resolve);
-      scopes.push(new Map());
-      pushFunctionAllocator(names, scopes, state);
+      enterFunction(statement.body, names, scopes, state, statement.name.includes(":"));
       const params = statement.params.map(bind);
       const body = applyBlock(statement.body, names, scopes, state);
       state.allocators.pop();
@@ -1691,18 +1677,9 @@ function renameDecl(name: string, resolve: (name: string) => string): string {
 }
 
 function applyExpr(expression: Expression, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Expression {
-  const resolve = (name: string): string => {
-    for (let i = scopes.length - 1; i >= 0; i--) {
-      const id = scopes[i]!.get(name);
-      if (id !== undefined) {
-        return names.get(id) ?? name;
-      }
-    }
-    return name;
-  };
   switch (expression.kind) {
     case "identifier":
-      return { ...expression, name: resolve(expression.name) };
+      return { ...expression, name: resolveName(expression.name, names, scopes) };
     case "unary":
       return { ...expression, argument: applyExpr(expression.argument, names, scopes, state) };
     case "binary":
@@ -1741,8 +1718,7 @@ function applyExpr(expression: Expression, names: Map<number, string>, scopes: A
         })),
       };
     case "function-expr": {
-      scopes.push(new Map());
-      pushFunctionAllocator(names, scopes, state);
+      enterFunction(expression.body, names, scopes, state);
       const params = expression.params.map((param) => {
         const id = state.next++;
         scopes[scopes.length - 1]!.set(param, id);

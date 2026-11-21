@@ -51,8 +51,12 @@ function namesFunction(binding: LexicalBinding): boolean {
   const declaration = binding.declaration;
   if (declaration.kind === 'function-decl' && declaration.local && binding.scope !== declaration.body) return true;
   if (declaration.kind === 'local' && declaration.values[binding.declarationIndex!]?.kind === 'function-expr') return true;
-  return binding.writes.some(reference => reference.declarationRoot &&
-    reference.statement.kind === 'function-decl' && !/[.:]/.test(reference.statement.name));
+  return binding.writes.some(({statement, declarationRoot}) => {
+    if (statement.kind === 'function-decl') return declarationRoot && !/[.:]/.test(statement.name);
+    // The printer emits named function syntax for this write to an existing cell.
+    return statement.kind === 'assign' && statement.targets.length === 1 && statement.values.length === 1 &&
+      statement.values[0]?.kind === 'function-expr' && statement.values[0].debugName === binding.name;
+  });
 }
 
 function declarationSetter(binding: LexicalBinding): (name: string) => void {

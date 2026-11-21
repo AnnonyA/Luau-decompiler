@@ -22,12 +22,12 @@ export interface LexicalBinding {
 
 /** Resolve identifier nodes, not spellings. Local initializers see the preceding
  * scope; repeat tests see body locals; loop bounds do not see loop variables. */
-export function analyzeBindings(root: Block): { bindings: LexicalBinding[]; globals: Set<string> } {
+export function analyzeBindings(root: Block, captures?: Map<Block, Set<string>>): { bindings: LexicalBinding[]; globals: Set<string> } {
   const bindings: LexicalBinding[] = [], globals = new Set<string>();
   const scopes: Map<string, LexicalBinding>[] = [new Map()];
-  let depth = 0;
+  const functions = [root];
   const declare = (name: string, declaration: Statement | Expression, scope: Block, declarationIndex?: number) => {
-    const binding: LexicalBinding = {name,declaration,declarationIndex,scope,depth,reads:[],writes:[],captured:false};
+    const binding: LexicalBinding = {name,declaration,declarationIndex,scope,depth:functions.length-1,reads:[],writes:[],captured:false};
     bindings.push(binding); scopes.at(-1)!.set(name,binding);
   };
   const reference = (node: Identifier, scope: Block, statement: Statement, write=false, declarationRoot=false) => {
@@ -38,7 +38,18 @@ export function analyzeBindings(root: Block): { bindings: LexicalBinding[]; glob
     }
     if (!binding) { globals.add(node.name); return; }
     (write ? binding.writes : binding.reads).push({node,scope,statement,declarationRoot});
-    if(depth > binding.depth) binding.captured=true;
+    if (functions.length - 1 > binding.depth) {
+      binding.captured = true;
+      // Forward a grandchild's free binding through each enclosing closure.
+      // At each boundary this spelling identifies one visible outer binding.
+      if (captures) for (let i = functions.length - 1; i > binding.depth; i--) {
+        const body = functions[i]!;
+        let names = captures.get(body);
+        if (!names) captures.set(body, names = new Set());
+        if (names.has(binding.name)) break;
+        names.add(binding.name);
+      }
+    }
   };
   const nested = (body: Block, setup?:()=>void, tail?:()=>void) => {
     scopes.push(new Map()); setup?.(); walk(body); tail?.(); scopes.pop();
@@ -58,7 +69,7 @@ export function analyzeBindings(root: Block): { bindings: LexicalBinding[]; glob
       case 'if-expr':visit(value.test);visit(value.consequent);value.branches.forEach(b=>{visit(b.test);visit(b.value);});visit(value.alternate);break;
       case 'interp':value.parts.forEach(p=>{if(p.kind==='expr' && typeof p.value !== 'string')visit(p.value);});break;
       case 'function-expr':
-        depth++;nested(value.body,()=>value.params.forEach((p,i)=>declare(p,value,value.body,i)));depth--;break;
+        functions.push(value.body);nested(value.body,()=>value.params.forEach((p,i)=>declare(p,value,value.body,i)));functions.pop();break;
     }
   };
   const walk = (body: Block): void => {
@@ -74,10 +85,10 @@ export function analyzeBindings(root: Block): { bindings: LexicalBinding[]; glob
         case 'function-decl':
           if(s.local)declare(s.name,s,body);
           else reference({kind:'identifier',name:s.name.split(/[.:]/)[0]!},body,s,!/[.:]/.test(s.name),true);
-          depth++;nested(s.body,()=>{
+          functions.push(s.body);nested(s.body,()=>{
             if(s.name.includes(':'))declare('self',s,s.body);
             s.params.forEach((n,i)=>declare(n,s,s.body,i));
-          });depth--;break;
+          });functions.pop();break;
         case 'if':visit(s.test);nested(s.consequent);s.branches.forEach(b=>{visit(b.test);nested(b.body);});if(s.alternate)nested(s.alternate);break;
         case 'while':visit(s.test);nested(s.body);break;
         case 'repeat':nested(s.body,undefined,()=>expr(s.test,s.body,s));break;

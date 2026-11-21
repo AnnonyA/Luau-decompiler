@@ -75,23 +75,74 @@ export function reconstructFunction(
   proto: Prototype,
   parentContext?: ChildContext,
 ): ReconstructedFunction {
+  const allocator = parentContext ? new NameAllocator(parentContext.allocator) : moduleNameAllocator(module);
+  const names = new ReconstructionNames();
+  const result = buildFunction(module, proto, allocator, parentContext?.captures ?? new Map(), names);
+  names.finish();
+  return result;
+}
+
+/** Cleanup still consumes chunk-wide spelling hints. Keep a suffix hint only
+ * when every function that produced that spelling agrees on its origin. */
+class ReconstructionNames {
+  readonly declaredLocals = new Set<string>();
+  readonly nameStems = new Map<string, string>();
+  readonly workingNames = new Set<string>();
+
+  // A speculative guard may reconstruct a child and then discard its entire
+  // path. Merge only the functions that survive the final parent rollback.
+  readonly functions: NameAllocator[] = [];
+
+  finish(): void {
+    for (const allocator of this.functions) this.record(allocator);
+  }
+
+  private record(allocator: NameAllocator): void {
+    for (const name of allocator.declaredLocals) this.declaredLocals.add(name);
+    for (const name of allocator.allocated) {
+      const stem = allocator.stems.get(name);
+      if (!this.workingNames.has(name)) {
+        this.workingNames.add(name);
+        if (stem) this.nameStems.set(name, stem);
+      } else if (this.nameStems.get(name) !== stem) {
+        this.nameStems.delete(name);
+      }
+    }
+  }
+}
+
+function buildFunction(
+  module: BytecodeModule, proto: Prototype, allocator: NameAllocator,
+  captures: Map<number, CaptureBinding>, names: ReconstructionNames,
+): ReconstructedFunction {
+  const expressions: Expression[] = [];
+  for (let index = 0; index < proto.numUpvalues; index++) {
+    const capture = captures.get(index);
+    if (capture?.name) allocator.protectCapture(capture.name);
+    if (capture?.expression) expressions.push(capture.expression);
+    if (!capture?.name && !capture?.expression) allocator.protectCapture(proto.upvalueNames[index] ?? `up${index}`);
+  }
+  if (expressions.length) {
+    const free = analyzeBindings(block([{kind: "return", values: expressions}])).globals;
+    for (const name of free) allocator.protectCapture(name);
+  }
   const ir = analyzePrototype(proto);
-  const allocator = parentContext?.allocator ?? moduleNameAllocator(module);
-  const builder = new SourceBuilder(module, proto, ir, allocator, parentContext?.captures ?? new Map());
+  const builder = new SourceBuilder(module, proto, ir, allocator, captures, names);
+  const body = block(builder.build());
+  names.functions.push(allocator);
   return {
     name: proto.debugName,
     params: builder.params,
     isVararg: proto.isVararg,
-    body: block(builder.build()),
+    body,
     ir,
-    declaredLocals: allocator.declaredLocals,
-    nameStems: allocator.stems,
-    workingNames: allocator.allocated,
+    declaredLocals: names.declaredLocals,
+    nameStems: names.nameStems,
+    workingNames: names.workingNames,
   };
 }
 
-/** Reserve globals and keep genuine prototype names available for their owners;
- * every child already shares its parent's allocator. */
+/** Collect the immutable global and prototype-name inventory once per reconstruction. */
 function moduleNameAllocator(module: BytecodeModule): NameAllocator {
   const globals = new Set<string>();
   const functionNames = new Set<string>();
@@ -107,7 +158,7 @@ function moduleNameAllocator(module: BytecodeModule): NameAllocator {
       if (constant.kind === "import" && constant.path[0]) globals.add(constant.path[0]);
     }
   }
-  return new NameAllocator(globals, functionNames);
+  return new NameAllocator(globals, functionNames, new NameAllocator());
 }
 
 interface Binding {
@@ -188,7 +239,8 @@ class SourceBuilder {
     private readonly proto: Prototype,
     private readonly ir: FunctionIr,
     private readonly allocator: NameAllocator,
-    private readonly captures: Map<number, CaptureBinding> = new Map(),
+    private readonly captures: Map<number, CaptureBinding>,
+    private readonly reconstructionNames: ReconstructionNames,
   ) {
     for (const [index, loop] of ir.loops.entries()) {
       const siblings = this.loopsByHeader.get(loop.header) ?? [];
@@ -429,7 +481,7 @@ class SourceBuilder {
       // otherwise Luau can fold a literal capture and share fresh closures.
       for (const binding of analyzeBindings(body).bindings) {
         const declaration = binding.declaration;
-        if (!this.refCells.has(binding.name) || !binding.captured || binding.writes.length ||
+        if (binding.depth !== 0 || !this.refCells.has(binding.name) || !binding.captured || binding.writes.length ||
             declaration.kind !== "local" || declaration.names.length !== 1 || declaration.values.length !== 1) continue;
         const index = binding.scope.statements.indexOf(declaration);
         if (index < 0) continue;
@@ -675,7 +727,7 @@ class SourceBuilder {
   private hoistLoopLocals(statements: Statement[], hoists: Array<{ register: number; binding: Binding }>): Statement[] {
     const wanted = new Set(hoists.map(hoist => hoist.binding.name!));
     const captured = new Set(analyzeBindings(block(statements)).bindings
-      .filter(binding => binding.captured && wanted.has(binding.name) && binding.declaration.kind === "local")
+      .filter(binding => binding.depth === 0 && binding.captured && wanted.has(binding.name) && binding.declaration.kind === "local")
       .map(binding => binding.name));
     const outerNames = new Map<string, string>();
     for (const name of captured) outerNames.set(name, this.allocator.reserve(name));
@@ -1366,7 +1418,7 @@ class SourceBuilder {
       return reused;
     }
     const debug = debugNameAt(this.proto, register, pc);
-    const name = this.allocator.reserve(debug ?? "result");
+    const name = debug ? this.allocator.take(debug) : this.allocator.reserve("result");
     this.setPhiName(key, name);
     return name;
   }
@@ -1409,7 +1461,7 @@ class SourceBuilder {
     const savedConsumed = new Set(this.consumed);
     const savedPending = [...this.pendingStack];
     const savedPendingState = this.snapshotPendings();
-    const savedNames = this.allocator.snapshot();
+    const savedNames = { allocator: this.allocator.snapshot(), functionCount: this.reconstructionNames.functions.length };
     const savedScopes = this.scopeStack.map(scope => new Set(scope));
     const savedPhiNames = new Map(this.phiNames);
     const savedDeclaredPhis = new Set(this.declaredPhis);
@@ -1454,7 +1506,7 @@ class SourceBuilder {
     const savedConsumed = new Set(this.consumed);
     const savedPending = [...this.pendingStack];
     const savedPendingState = this.snapshotPendings();
-    const savedNames = this.allocator.snapshot();
+    const savedNames = { allocator: this.allocator.snapshot(), functionCount: this.reconstructionNames.functions.length };
     const savedScopes = this.scopeStack.map((scope) => new Set(scope));
     // Failed speculative paths must roll back cached phi bindings together
     // with the name allocator; otherwise a subsequent value may reuse a name.
@@ -1852,7 +1904,7 @@ class SourceBuilder {
     savedConsumed: Set<number>,
     savedPending: PendingTable[],
     savedPendingState: PendingSnapshot[],
-    savedNames: Set<string>,
+    savedNames: { allocator: ReturnType<NameAllocator["snapshot"]>; functionCount: number },
     savedScopes: Array<Set<string>>,
     savedPhiNames: Map<string, string>,
     savedDeclaredPhis: Set<string>,
@@ -1867,7 +1919,8 @@ class SourceBuilder {
     }
     this.restore(savedEnv, savedOpen, savedConsumed, savedPending);
     this.restorePendings(savedPendingState);
-    this.allocator.restore(savedNames);
+    this.allocator.restore(savedNames.allocator);
+    this.reconstructionNames.functions.length = savedNames.functionCount;
     this.scopeStack.length = 0;
     for (const scope of savedScopes) {
       this.scopeStack.push(new Set(scope));
@@ -2658,7 +2711,8 @@ class SourceBuilder {
         ? existing.name
         : onlyField
           ? preferred
-          : child.debugName === preferred ? this.allocator.claim(preferred) : this.allocator.reserve(preferred));
+          : child.debugName === preferred ? this.allocator.claim(preferred)
+          : debug === preferred ? this.allocator.take(preferred) : this.allocator.reserve(preferred));
 
     // Build the capture bindings for the child.
     const captureMap = new Map<number, CaptureBinding>();
@@ -2683,7 +2737,7 @@ class SourceBuilder {
           });
           return;
         }
-        const fallback = child.upvalueNames[index] ?? `up${index}`;
+        const fallback = this.upvalueName(source);
         captureMap.set(index, { name: fallback, expression: ident(fallback), mutable: false });
         return;
       }
@@ -2712,7 +2766,7 @@ class SourceBuilder {
       }
     });
 
-    const reconstructed = reconstructFunction(this.module, child, { allocator: this.allocator, captures: captureMap });
+    const reconstructed = buildFunction(this.module, child, new NameAllocator(this.allocator), captureMap, this.reconstructionNames);
     const fn: Expression = {
       kind: "function-expr",
       debugName: child.debugName,
@@ -3323,7 +3377,8 @@ class SourceBuilder {
         return [...aliases, { kind: "assign", targets: [ident(existing)], values: [expression] }];
       }
       const name = nilLiteral && refCaptured && this.futureClosureHint(register, insn.pc, true) === preferred
-        ? this.allocator.claim(preferred) : this.allocator.reserve(preferred);
+        ? this.allocator.claim(preferred)
+        : debug ? this.allocator.take(debug) : this.allocator.reserve(preferred);
       this.declareInScope(name);
       this.env.set(register, { name, expression: ident(name), pinned: true, nilLiteral });
       return [{ kind: "local", names: [name], values: [expression] }];
@@ -3526,7 +3581,7 @@ class SourceBuilder {
 
   private bindLocal(register: number, pc: number, role: string): string {
     const debug = debugNameAt(this.proto, register, pc);
-    const name = this.allocator.reserve(debug ?? role);
+    const name = debug ? this.allocator.take(debug) : this.allocator.reserve(role);
     this.declareInScope(name);
     this.env.set(register, { name, expression: ident(name), pinned: true });
     return name;
