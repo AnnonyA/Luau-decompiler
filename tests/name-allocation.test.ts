@@ -40,3 +40,16 @@ it('retains preferred-name protection across speculative rollback',()=>{
   expect(names.reserve('result')).toBe('result2');
   expect(names.claim('result')).toBe('result');
 });
+
+it('restores shared scratch symbols after an alternate speculative path', () => {
+  const parent = new NameAllocator([], [], new NameAllocator());
+  const child = new NameAllocator(parent);
+  const initial = parent.snapshot();
+  expect(parent.reserve('value')).toBe('value');
+  const keepValue = parent.snapshot();
+  parent.restore(initial);
+  expect(parent.reserve('item')).toBe('item');
+  parent.restore(keepValue);
+  expect(child.reserve('value')).toBe('value2');
+  expect(child.reserve('item')).toBe('item');
+});

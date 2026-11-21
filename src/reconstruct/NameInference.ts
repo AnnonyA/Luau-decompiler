@@ -881,15 +881,15 @@ function note(binding: Binding | undefined, name: string | undefined, score: num
 function renameChunk(ast: Chunk): Chunk {
   const bindings: Binding[] = [];
   collect(ast.body.statements, bindings, [new Map()], 0, 0);
-  applyHints(ast.body.statements, bindings);
   const names = allocate(bindings);
-  const globals = analyzeBindings(ast.body).globals;
+  const captures = new Map<Block, Set<string>>();
+  const { globals } = analyzeBindings(ast.body, captures);
   // Inferred names must not force later explicit bindings (especially function
   // names observable through debug.info) to acquire allocator suffixes.
   const reservedNames = new Set(bindings.filter(binding =>
     binding.functionName || debugNames.has(binding.name) ||
     (!isGeneratedName(binding.name) && !workingNames.has(binding.name))).map(binding => binding.name));
-  const state: ApplyState = { next: 0, globals, reservedNames, allocators: [new NameAllocator()] };
+  const state: ApplyState = { next: 0, globals, reservedNames, captures, allocators: [new NameAllocator()] };
   return { kind: "chunk", body: applyBlock(ast.body, names, [new Map()], state) };
 }
 
@@ -1061,6 +1061,11 @@ function collect(
         scopes.pop();
         break;
       }
+      case "interp":
+        for (const part of expression.parts) {
+          if (part.kind === "expr" && typeof part.value !== "string") visitExpr(part.value);
+        }
+        break;
       case "paren":
         visitExpr(expression.expression);
         break;
@@ -1090,7 +1095,9 @@ function collect(
           const tuple = statement.names.length > 1 && statement.values.length === 1;
           const hint = protectedCall && tuple ? (index === 0 ? "success" : index === 1 ? "result" : undefined)
             : hintFromInit(init) ?? (tuple && index > 0 ? undefined : nameFromInitializer(init, initializerContext));
-          declare(name, "local", { hint,
+          const stats = tuple && index === 1 && isGeneratedName(name) && init?.kind === "call" &&
+            init.callee.kind === "identifier" && init.callee.name === "makeAccumulator";
+          declare(name, "local", { hint: stats ? "stats" : hint,
             functionName: init?.kind === "function-expr",
             tableKind: own?.kind !== "table" ? undefined : own.fields.length === 0 ? "empty"
               : own.fields.every((field) => !field.name && (!field.key || field.list)) ? "list" : "record",
@@ -1298,42 +1305,6 @@ function collect(
         break;
       default:
         break;
-    }
-  }
-}
-
-function applyHints(statements: Statement[], bindings: Binding[]): void {
-  const byName = new Map<string, Binding[]>();
-  for (const binding of bindings) {
-    const list = byName.get(binding.name) ?? [];
-    list.push(binding);
-    byName.set(binding.name, list);
-  }
-  for (const statement of statements) {
-    if (
-      statement.kind === "local" &&
-      statement.values.length === 1 &&
-      statement.values[0]?.kind === "call" &&
-      statement.values[0].callee.kind === "identifier"
-    ) {
-      const stem = calleeStem(statement.values[0].callee.name);
-      if (stem && statement.names[0]) {
-        const candidates = byName.get(statement.names[0]) ?? [];
-        const binding = candidates.find((item) => !item.hint && isGeneratedName(item.name));
-        if (binding) {
-          binding.hint = stem;
-        }
-      }
-      if (statement.names[1] && statement.values[0].callee.name === "makeAccumulator") {
-        const candidates = byName.get(statement.names[1]) ?? [];
-        const binding = candidates.find((item) => isGeneratedName(item.name));
-        if (binding) {
-          binding.hint = "stats";
-        }
-      }
-    }
-    if (statement.kind === "function-decl") {
-      applyHints(statement.body.statements, bindings);
     }
   }
 }
@@ -1562,6 +1533,7 @@ interface ApplyState {
   next: number;
   globals: Set<string>;
   reservedNames: Set<string>;
+  captures: Map<Block, Set<string>>;
   allocators: NameAllocator[];
 }
 
@@ -1578,17 +1550,27 @@ function currentAllocator(state: ApplyState): NameAllocator {
   return state.allocators[state.allocators.length - 1]!;
 }
 
-function pushFunctionAllocator(names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): void {
-  const allocator = new NameAllocator();
-  for (const scope of scopes) {
-    for (const id of scope.values()) {
-      const taken = names.get(id);
-      if (taken) {
-        allocator.take(taken);
-      }
-    }
+function resolveName(name: string, names: Map<number, string>, scopes: Array<Map<string, number>>): string {
+  for (let i = scopes.length - 1; i >= 0; i--) {
+    const id = scopes[i]!.get(name);
+    if (id !== undefined) return names.get(id) ?? name;
   }
-  state.allocators.push(allocator);
+  return name;
+}
+
+function enterFunction(body: Block, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState, method = false): void {
+  const reserved = new Set<string>();
+  for (const capture of state.captures.get(body) ?? []) {
+    reserved.add(resolveName(capture, names, scopes));
+  }
+  const scope = new Map<string, number>();
+  if (method) {
+    reserved.add("self");
+    // A method introduces its own fixed receiver without an explicit parameter.
+    scope.set("self", -1);
+  }
+  scopes.push(scope);
+  state.allocators.push(new NameAllocator(reserved));
 }
 
 function applyBlock(body: Block, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Block {
@@ -1596,15 +1578,7 @@ function applyBlock(body: Block, names: Map<number, string>, scopes: Array<Map<s
 }
 
 function applyStmt(statement: Statement, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Statement {
-  const resolve = (name: string): string => {
-    for (let i = scopes.length - 1; i >= 0; i--) {
-      const id = scopes[i]!.get(name);
-      if (id !== undefined) {
-        return names.get(id) ?? name;
-      }
-    }
-    return name;
-  };
+  const resolve = (name: string): string => resolveName(name, names, scopes);
   const bind = (old: string): string => {
     const id = state.next++;
     scopes[scopes.length - 1]!.set(old, id);
@@ -1621,11 +1595,10 @@ function applyStmt(statement: Statement, names: Map<number, string>, scopes: Arr
     case "assign":
       return { ...statement, values: statement.values.map(expr), targets: statement.targets.map(expr) };
     case "compound-assign":
-      return { ...statement, target: expr(statement.target), value: expr(statement.value) };
+      return { ...statement, value: expr(statement.value), target: expr(statement.target) };
     case "function-decl": {
       const name = statement.local ? bind(statement.name) : renameDecl(statement.name, resolve);
-      scopes.push(new Map());
-      pushFunctionAllocator(names, scopes, state);
+      enterFunction(statement.body, names, scopes, state, statement.name.includes(":"));
       const params = statement.params.map(bind);
       const body = applyBlock(statement.body, names, scopes, state);
       state.allocators.pop();
@@ -1691,18 +1664,9 @@ function renameDecl(name: string, resolve: (name: string) => string): string {
 }
 
 function applyExpr(expression: Expression, names: Map<number, string>, scopes: Array<Map<string, number>>, state: ApplyState): Expression {
-  const resolve = (name: string): string => {
-    for (let i = scopes.length - 1; i >= 0; i--) {
-      const id = scopes[i]!.get(name);
-      if (id !== undefined) {
-        return names.get(id) ?? name;
-      }
-    }
-    return name;
-  };
   switch (expression.kind) {
     case "identifier":
-      return { ...expression, name: resolve(expression.name) };
+      return { ...expression, name: resolveName(expression.name, names, scopes) };
     case "unary":
       return { ...expression, argument: applyExpr(expression.argument, names, scopes, state) };
     case "binary":
@@ -1741,8 +1705,7 @@ function applyExpr(expression: Expression, names: Map<number, string>, scopes: A
         })),
       };
     case "function-expr": {
-      scopes.push(new Map());
-      pushFunctionAllocator(names, scopes, state);
+      enterFunction(expression.body, names, scopes, state);
       const params = expression.params.map((param) => {
         const id = state.next++;
         scopes[scopes.length - 1]!.set(param, id);

@@ -32,31 +32,47 @@ const GENERIC_FALLBACKS = ["value", "result", "item", "entry", "state", "data", 
 
 export class NameAllocator {
   private readonly used = new Set<string>();
+  private readonly reserved: ReadonlySet<string>;
+  private readonly symbols?: NameAllocator;
+  private readonly captures = new Set<string>();
   private readonly nextSuffix = new Map<string, number>();
-  private readonly preferredNames: Set<string>;
+  private readonly preferredNames: ReadonlySet<string>;
   /** Generated names of bindings whose register use proves a declared local. */
   readonly declaredLocals = new Set<string>();
   /** Suffixed name -> the name that was asked for. */
   readonly stems = new Map<string, string>();
 
-  constructor(reserved: Iterable<string> = [], preferredNames: Iterable<string> = []) {
-    this.preferredNames = new Set(preferredNames);
-    for (const name of reserved) {
-      this.used.add(name);
-    }
+  /** Children share the immutable module inventory, but start with fresh
+   * bindings, capture reservations and suffix cursors. */
+  constructor(reserved: Iterable<string> | NameAllocator = [], preferredNames: Iterable<string> = [], symbols?: NameAllocator) {
+    this.symbols = reserved instanceof NameAllocator ? reserved.symbols : symbols;
+    this.reserved = reserved instanceof NameAllocator ? reserved.reserved : new Set(reserved);
+    this.preferredNames = reserved instanceof NameAllocator ? reserved.preferredNames : new Set(preferredNames);
   }
 
-  /** Every name handed out so far, including the reserved globals. */
+  /** Only names actually handed out in this function. */
   get allocated(): ReadonlySet<string> {
     return this.used;
   }
 
   isUsed(name: string): boolean {
-    return this.used.has(name);
+    return this.used.has(name) || this.reserved.has(name) || this.captures.has(name);
+  }
+
+  protectCapture(name: string): void {
+    this.captures.add(name);
   }
 
   reserve(name: string): string {
-    return this.take(name);
+    // Cleanup keys scratch provenance by spelling until lexical name inference.
+    // Keep these internal symbols unique while allowing true declaration names
+    // to be claimed independently in each function.
+    if (!this.symbols) return this.take(name);
+    const symbol = this.symbols.take(name, candidate => !this.isUsed(candidate) && !this.preferredNames.has(candidate));
+    this.used.add(symbol);
+    const stem = this.symbols.stems.get(symbol);
+    if (stem) this.stems.set(symbol, stem);
+    return symbol;
   }
 
   /** Claim a prototype's own name, keeping other prototypes' names available. */
@@ -67,12 +83,12 @@ export class NameAllocator {
 
   take(preferred: string, accept: (name: string) => boolean = name => !this.preferredNames.has(name)): string {
     const base = sanitizeIdentifier(preferred);
-    if (!this.used.has(base) && accept(base)) {
+    if (!this.isUsed(base) && accept(base)) {
       this.used.add(base);
       return base;
     }
     let suffix = this.nextSuffix.get(base) ?? 2;
-    while (this.used.has(`${base}${suffix}`) || !accept(`${base}${suffix}`)) {
+    while (this.isUsed(`${base}${suffix}`) || !accept(`${base}${suffix}`)) {
       suffix += 1;
     }
     const next = `${base}${suffix}`;
@@ -87,25 +103,34 @@ export class NameAllocator {
       return this.take(role);
     }
     for (const candidate of GENERIC_FALLBACKS) {
-      if (!this.used.has(candidate)) {
+      if (!this.isUsed(candidate)) {
         return this.take(candidate);
       }
     }
     return this.take("tmp");
   }
 
-  snapshot(): Set<string> {
-    return new Set(this.used);
+  snapshot() {
+    return { symbols: this.symbols && {used: new Set(this.symbols.used), stems: new Map(this.symbols.stems)}, used: new Set(this.used), stems: new Map(this.stems), declaredLocals: new Set(this.declaredLocals) };
   }
 
-  restore(snapshot: Set<string>): void {
+  restore(snapshot: ReturnType<NameAllocator["snapshot"]>): void {
+    if (this.symbols && snapshot.symbols) {
+      this.symbols.used.clear();
+      this.symbols.stems.clear();
+      for (const name of snapshot.symbols.used) this.symbols.used.add(name);
+      for (const [name, stem] of snapshot.symbols.stems) this.symbols.stems.set(name, stem);
+      this.symbols.nextSuffix.clear();
+    }
     this.used.clear();
     // A rollback can release earlier suffixes; a cached cursor is no longer
-    // valid. The public snapshot remains a reusable, independent set of names.
+    // valid. Capture reservations and module names outlive every speculation.
     this.nextSuffix.clear();
-    for (const name of snapshot) {
-      this.used.add(name);
-    }
+    for (const name of snapshot.used) this.used.add(name);
+    this.stems.clear();
+    for (const [name, stem] of snapshot.stems) this.stems.set(name, stem);
+    this.declaredLocals.clear();
+    for (const name of snapshot.declaredLocals) this.declaredLocals.add(name);
   }
 }
 
@@ -144,7 +169,7 @@ export function parameterNames(
   const names: string[] = [];
   for (let i = 0; i < prototype.numParams; i++) {
     const debug = debugNameAt(prototype, i, 0);
-    names.push(allocator.reserve(debug ?? fallback(i, prototype.numParams)));
+    names.push(debug ? allocator.take(debug) : allocator.reserve(fallback(i, prototype.numParams)));
   }
   return names;
 }
