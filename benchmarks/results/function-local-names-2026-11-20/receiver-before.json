@@ -1,0 +1,65 @@
+[
+  {
+    "level": 0,
+    "bytecodeSha256": "5680db4beb2081ec7420e86739f294f9ebae7a2dfb9f7fb4ec29a011f28c3a68",
+    "observations": [
+      {
+        "input": "-2",
+        "original": "number\ttrue\t72",
+        "actual": "table\tfalse\t72"
+      },
+      {
+        "input": "0",
+        "original": "number\ttrue\t72",
+        "actual": "table\tfalse\t72"
+      },
+      {
+        "input": "7",
+        "original": "number\ttrue\t72",
+        "actual": "table\tfalse\t72"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "bytecodeSha256": "2058e1d5c77e3f3910d57e93ed545fba95ecad8d89ab5636cfb885bc6c95f52c",
+    "observations": [
+      {
+        "input": "-2",
+        "original": "number\ttrue\t72",
+        "actual": "table\tfalse\t72"
+      },
+      {
+        "input": "0",
+        "original": "number\ttrue\t72",
+        "actual": "table\tfalse\t72"
+      },
+      {
+        "input": "7",
+        "original": "number\ttrue\t72",
+        "actual": "table\tfalse\t72"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "bytecodeSha256": "3d5e7db91a360335d6fdb13dc6db4f02ab1f485e6f94b0bbb86082f4ffec9b7d",
+    "observations": [
+      {
+        "input": "-2",
+        "original": "number\ttrue\t72",
+        "actual": "number\ttrue\t72"
+      },
+      {
+        "input": "0",
+        "original": "number\ttrue\t72",
+        "actual": "number\ttrue\t72"
+      },
+      {
+        "input": "7",
+        "original": "number\ttrue\t72",
+        "actual": "number\ttrue\t72"
+      }
+    ]
+  }
+]

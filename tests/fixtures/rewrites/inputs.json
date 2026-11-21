@@ -17,5 +17,6 @@
   "getter-debug-names.luau": [["-2"], ["0"], ["7"]],
   "fallback-property-names.luau": [["-2"], ["0"], ["7"]],
   "reassigned-function-name.luau": [["-2"], ["0"], ["7"]],
+  "captured-method-receiver.luau": [["-2"], ["0"], ["7"]],
   "sibling-function-names.luau": [["-2"], ["0"], ["7"]]
 }

@@ -13,6 +13,24 @@ const named = (name: string, statements: Statement[]): Statement => ({
 });
 const returns = (...values: Expression[]): Statement => ({kind: 'return', values});
 
+it.each([false, true])('keeps an outer parameter distinct from a method receiver (transitive=%s)', transitive => {
+  const reads = returns(ident('arg'), ident('self'));
+  const method: Statement = {kind: 'function-decl', local: false, name: 'T:read', params: [], isVararg: false,
+    body: block(transitive ? [named('reader', [reads]), returns(ident('reader'))] : [reads])};
+  const output = inferHumanNames(chunk([{kind: 'function-decl', local: true, name: 'setSelf', params: ['arg'],
+    isVararg: false, body: block([method])}]), {workingNames: new Set(['arg']), foldSingleUseTemps: false});
+  const {bindings, globals} = analyzeBindings(output.body);
+  const parameter = bindings.find(binding => binding.declarationIndex === 0)!;
+  const receiver = bindings.find(binding => binding.declaration.kind === 'function-decl' &&
+    binding.declaration.name === 'T:read' && binding.name === 'self')!;
+  expect(parameter.captured).toBe(true);
+  expect(parameter.reads).toHaveLength(1);
+  expect(receiver.reads).toHaveLength(1);
+  const statement = parameter.reads[0]!.statement;
+  expect(statement.kind === 'return' && statement.values).toEqual([parameter.reads[0]!.node, receiver.reads[0]!.node]);
+  expect(globals).toEqual(new Set(['T']));
+});
+
 it.each(['declaration', 'expression'] as const)('keeps an uncaptured ancestor name available inside a function %s', form => {
   const body = block([named('decode', [returns(lit(2))]), returns(ident('decode'))]);
   const factory: Statement = form === 'declaration'

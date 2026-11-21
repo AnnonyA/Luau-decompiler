@@ -880,10 +880,16 @@ function note(binding: Binding | undefined, name: string | undefined, score: num
 
 function renameChunk(ast: Chunk): Chunk {
   const bindings: Binding[] = [];
-  collect(ast.body.statements, bindings, [new Map()], 0, 0);
-  const names = allocate(bindings);
   const captures = new Map<Block, Set<string>>();
   const { globals } = analyzeBindings(ast.body, captures);
+  const methodCaptures = new Set<Binding>();
+  collect(ast.body.statements, { bindings, captures, methodCaptures }, [new Map()], 0, 0);
+  const names = allocate(bindings);
+  // A colon declaration introduces a fixed receiver even if its body never
+  // reads it. An outer binding forwarded through that declaration cannot be self.
+  for (const binding of methodCaptures) {
+    if (names.get(binding.id) === "self") names.set(binding.id, binding.name);
+  }
   // Inferred names must not force later explicit bindings (especially function
   // names observable through debug.info) to acquire allocator suffixes.
   const reservedNames = new Set(bindings.filter(binding =>
@@ -895,13 +901,14 @@ function renameChunk(ast: Chunk): Chunk {
 
 function collect(
   statements: Statement[],
-  bindings: Binding[],
+  context: { bindings: Binding[]; captures: Map<Block, Set<string>>; methodCaptures: Set<Binding> },
   scopes: Array<Map<string, Binding>>,
   depth: number,
   forNest: number,
   functionResultHint?: string,
   inMethod = false,
 ): void {
+  const { bindings } = context;
   const initializerContext = {
     atRoot: depth === 0,
     inMethod,
@@ -1057,7 +1064,7 @@ function collect(
         scopes.push(new Map());
         const hints = paramHintsFor("", expression.params);
         expression.params.forEach((param, index) => declare(param, "param", hints[index] ?? {}));
-        collect(expression.body.statements, bindings, scopes, depth + 1, 0, undefined, inMethod);
+        collect(expression.body.statements, context, scopes, depth + 1, 0, undefined, inMethod);
         scopes.pop();
         break;
       }
@@ -1178,17 +1185,23 @@ function collect(
             if (!/[.:]/.test(statement.name)) owner.functionName = true;
           }
         }
+        if (statement.name.includes(":")) {
+          for (const capture of context.captures.get(statement.body) ?? []) {
+            const binding = lookup(capture);
+            if (binding) context.methodCaptures.add(binding);
+          }
+        }
         if (declarationTail(statement.name) === "rgb" && statement.params.length === 3) {
           scopes.push(new Map());
           ["r", "g", "b"].forEach((hint, index) => declare(statement.params[index]!, "param", { hint }));
-          collect(statement.body.statements, bindings, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)));
+          collect(statement.body.statements, context, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)));
           scopes.pop();
           break;
         }
         scopes.push(new Map());
         const paramHints = paramHintsFor(statement.name, statement.params);
         statement.params.forEach((param, index) => declare(param, "param", paramHints[index] ?? {}));
-        collect(statement.body.statements, bindings, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)),
+        collect(statement.body.statements, context, scopes, depth + 1, 0, calleeStem(declarationTail(statement.name)),
           inMethod || statement.name.includes(":"));
         scopes.pop();
         break;
@@ -1196,17 +1209,17 @@ function collect(
       case "if":
         visitExpr(statement.test);
         scopes.push(new Map());
-        collect(statement.consequent.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.consequent.statements, context, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         for (const branch of statement.branches) {
           visitExpr(branch.test);
           scopes.push(new Map());
-          collect(branch.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+          collect(branch.body.statements, context, scopes, depth, forNest, functionResultHint);
           scopes.pop();
         }
         if (statement.alternate) {
           scopes.push(new Map());
-          collect(statement.alternate.statements, bindings, scopes, depth, forNest, functionResultHint);
+          collect(statement.alternate.statements, context, scopes, depth, forNest, functionResultHint);
           scopes.pop();
         }
         break;
@@ -1219,12 +1232,12 @@ function collect(
           }
         }
         scopes.push(new Map());
-        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         break;
       case "repeat":
         scopes.push(new Map());
-        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest, functionResultHint);
         if (statement.test.kind === "binary" && statement.test.left.kind === "identifier") {
           const binding = resolve(statement.test.left.name);
           if (binding) {
@@ -1251,7 +1264,7 @@ function collect(
           hint: /\d$/.test(statement.name) ? (["i", "j", "k"][forNest] ?? "index") : undefined,
           forNest,
         });
-        collect(statement.body.statements, bindings, scopes, depth, forNest + 1, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest + 1, functionResultHint);
         scopes.pop();
         break;
       case "generic-for": {
@@ -1273,7 +1286,7 @@ function collect(
           const weakHint = index === 1 && element && element !== collectionName ? element : undefined;
           declare(name, "loop", { hint: index === 1 && weakHint && isGeneratedName(name) ? weakHint : hint, ipairs, forNest });
         });
-        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         break;
       }
@@ -1300,7 +1313,7 @@ function collect(
         break;
       case "do":
         scopes.push(new Map());
-        collect(statement.body.statements, bindings, scopes, depth, forNest, functionResultHint);
+        collect(statement.body.statements, context, scopes, depth, forNest, functionResultHint);
         scopes.pop();
         break;
       default:

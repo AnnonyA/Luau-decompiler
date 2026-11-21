@@ -77,7 +77,9 @@ export function reconstructFunction(
 ): ReconstructedFunction {
   const allocator = parentContext ? new NameAllocator(parentContext.allocator) : moduleNameAllocator(module);
   const names = new ReconstructionNames();
-  return buildFunction(module, proto, allocator, parentContext?.captures ?? new Map(), names);
+  const result = buildFunction(module, proto, allocator, parentContext?.captures ?? new Map(), names);
+  names.finish();
+  return result;
 }
 
 /** Cleanup still consumes chunk-wide spelling hints. Keep a suffix hint only
@@ -87,7 +89,15 @@ class ReconstructionNames {
   readonly nameStems = new Map<string, string>();
   readonly workingNames = new Set<string>();
 
-  record(allocator: NameAllocator): void {
+  // A speculative guard may reconstruct a child and then discard its entire
+  // path. Merge only the functions that survive the final parent rollback.
+  readonly functions: NameAllocator[] = [];
+
+  finish(): void {
+    for (const allocator of this.functions) this.record(allocator);
+  }
+
+  private record(allocator: NameAllocator): void {
     for (const name of allocator.declaredLocals) this.declaredLocals.add(name);
     for (const name of allocator.allocated) {
       const stem = allocator.stems.get(name);
@@ -119,7 +129,7 @@ function buildFunction(
   const ir = analyzePrototype(proto);
   const builder = new SourceBuilder(module, proto, ir, allocator, captures, names);
   const body = block(builder.build());
-  names.record(allocator);
+  names.functions.push(allocator);
   return {
     name: proto.debugName,
     params: builder.params,
@@ -1451,7 +1461,7 @@ class SourceBuilder {
     const savedConsumed = new Set(this.consumed);
     const savedPending = [...this.pendingStack];
     const savedPendingState = this.snapshotPendings();
-    const savedNames = this.allocator.snapshot();
+    const savedNames = { allocator: this.allocator.snapshot(), functionCount: this.reconstructionNames.functions.length };
     const savedScopes = this.scopeStack.map(scope => new Set(scope));
     const savedPhiNames = new Map(this.phiNames);
     const savedDeclaredPhis = new Set(this.declaredPhis);
@@ -1496,7 +1506,7 @@ class SourceBuilder {
     const savedConsumed = new Set(this.consumed);
     const savedPending = [...this.pendingStack];
     const savedPendingState = this.snapshotPendings();
-    const savedNames = this.allocator.snapshot();
+    const savedNames = { allocator: this.allocator.snapshot(), functionCount: this.reconstructionNames.functions.length };
     const savedScopes = this.scopeStack.map((scope) => new Set(scope));
     // Failed speculative paths must roll back cached phi bindings together
     // with the name allocator; otherwise a subsequent value may reuse a name.
@@ -1894,7 +1904,7 @@ class SourceBuilder {
     savedConsumed: Set<number>,
     savedPending: PendingTable[],
     savedPendingState: PendingSnapshot[],
-    savedNames: ReturnType<NameAllocator["snapshot"]>,
+    savedNames: { allocator: ReturnType<NameAllocator["snapshot"]>; functionCount: number },
     savedScopes: Array<Set<string>>,
     savedPhiNames: Map<string, string>,
     savedDeclaredPhis: Set<string>,
@@ -1909,7 +1919,8 @@ class SourceBuilder {
     }
     this.restore(savedEnv, savedOpen, savedConsumed, savedPending);
     this.restorePendings(savedPendingState);
-    this.allocator.restore(savedNames);
+    this.allocator.restore(savedNames.allocator);
+    this.reconstructionNames.functions.length = savedNames.functionCount;
     this.scopeStack.length = 0;
     for (const scope of savedScopes) {
       this.scopeStack.push(new Set(scope));
