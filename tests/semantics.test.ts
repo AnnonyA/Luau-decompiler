@@ -125,6 +125,10 @@ describe("semantic reconstruction", () => {
   it("types InputBegan callbacks as InputObject + boolean", () => {
     const ast = cleanupAst(
       chunk([
+        { kind: "local", names: ["UserInputService"], values: [{
+          kind: "method-call", object: ident("game"), name: "GetService",
+          args: [lit("UserInputService")], open: false,
+        }] },
         {
           kind: "expression-stmt",
           expression: {
@@ -170,7 +174,7 @@ describe("semantic reconstruction", () => {
         mathConstants: false,
       },
     );
-    const source = printLuau(ast);
+    const source = printLuau(recoverFunctionEvidence(ast));
     expect(source).toMatch(/function\(input: InputObject, gameProcessedEvent: boolean\)/);
     expect(source).toMatch(/if gameProcessedEvent then/);
     expect(source).toMatch(/print\(input\)/);
@@ -234,6 +238,16 @@ describe("semantic reconstruction", () => {
       body: block([{ kind: "return", values: [ident("value")] }]) };
     const recover = (stmts: Statement[]) => printLuau(recoverFunctionEvidence(cleanupAst(chunk(stmts), options), options));
 
+    it("distinguishes InputBegan on a GUI object, the input service, and a custom signal", () => {
+      const frame: Expression = { kind: "call", callee: { kind: "property", object: ident("Instance"), name: "new" },
+        args: [lit("Frame")], open: false };
+      const inputService: Expression = { ...players, args: [lit("UserInputService")] };
+      const callback = { ...fn, params: ["value", "index"] };
+      expect(recover([connect(frame, "InputBegan", callback)])).toContain("function(input: InputObject, gameProcessedEvent)");
+      expect(recover([connect(inputService, "InputBegan", callback)])).toContain("function(input: InputObject, gameProcessedEvent: boolean)");
+      expect(recover([connect(ident("custom"), "InputBegan", callback)])).toContain("function(input, gameProcessedEvent)");
+    });
+
     it.each([false, true])("leaves conflicting named registrations unannotated (reversed=%s)", reversed => {
       const signals = [connect(players, "PlayerAdded", ident("handler")), connect(ident("part"), "Touched", ident("handler"))];
       const output = recover([{ kind: "local", names: ["handler"], values: [fn] }, ...(reversed ? signals.reverse() : signals)]);
@@ -251,6 +265,10 @@ describe("semantic reconstruction", () => {
       const callWithHandler = (name: string): Statement => ({ kind: "expression-stmt", expression: {
         kind: "call", callee: ident(name), args: [ident("handler")], open: false } });
       const inner = { ...fn, params: [], body: block([
+        { kind: "local", names: ["part"], values: [{
+          kind: "call", callee: { kind: "property", object: ident("Instance"), name: "new" },
+          args: [lit("Part")], open: false,
+        }] },
         { kind: "local", names: ["handler"], values: [fn] },
         connect(ident("part"), "Touched", ident("handler")),
       ]) };

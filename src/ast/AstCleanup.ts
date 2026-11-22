@@ -932,7 +932,7 @@ function bindNamedCallbacks(statements: Statement[], options: CleanupOptions): S
     const previous = paramsFor.get(key);
     if (previous === undefined) {
       paramsFor.set(key, hint);
-    } else if (previous && (previous.requiresReceiverEvidence !== hint.requiresReceiverEvidence ||
+    } else if (previous && (previous.firstParameterType !== hint.firstParameterType ||
         previous.names.length !== hint.names.length || previous.names.some((name, i) => name !== hint.names[i]))) {
       paramsFor.set(key, null);
     }

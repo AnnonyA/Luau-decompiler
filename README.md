@@ -26,7 +26,7 @@ That means recovering things such as:
 - structured `if` / `elseif`, value-`if`, loops, `break`, and `continue`
 - methods and closures instead of flat anonymous register operations
 - useful local and callback names when there is enough evidence
-- Roblox callback parameter names and types for common signals
+- Roblox callback and helper types from the bundled Creator Hub API catalog
 - tables, compound assignments, value packs, captures, and mutual recursion
 - calls to retained numeric helpers expanded by O2, with exact expression and lexical-binding checks ([scope and limitations](docs/references/inline-recovery-performance.md))
 - explicit uncertainty instead of invented source details
@@ -172,20 +172,28 @@ and loop regions with real `break` / `continue` instead of flattened jumps.
 
 ## Roblox API names and types
 
-`Connect`, `Once`, and `Observe` callbacks can pick up official argument names and types for common APIs. Examples include:
-
-- `InputBegan` → `input: InputObject, gameProcessedEvent: boolean`
-- `Players.PlayerAdded` → `player: Player` when the receiver comes from `game:GetService("Players")`
-- `Heartbeat` → `deltaTime: number`
-- `Touched` → `hit: BasePart`
-- `CameraShaker` callbacks → `cframe: CFrame`
+The browser and CLI use an offline catalog generated from a pinned Roblox
+Creator Hub snapshot. Both resolve inherited members using the type of the
+receiver. For example, `UserInputService.InputBegan` provides an `InputObject`
+and a `boolean`. The `InputBegan` inherited by a `TextButton` provides only
+the `InputObject`. A custom table can use the same event name without acquiring
+either signature.
 
 For example, if a `PlayerAdded` callback passes its argument to a local
 `formatName` helper that returns `p.DisplayName`, the CLI and browser can
 recover `function formatName(p: Player): string`. The helper's calls must
 agree on the type. If the helper escapes or optimization removes the call,
-its parameter stays unannotated. The supported Roblox signatures ship with
-the decompiler and work offline. [API facts and sources](docs/references/roblox-callback-types.md)
+its parameter stays unannotated. The same analysis uses known arguments from
+`Connect`, `Once`, `ConnectParallel`, and engine callback assignments.
+A remote event's fixed `Player` argument can be typed even when the rest of
+its payload is unknown. [API facts and sources](docs/references/roblox-callback-types.md)
+
+On the [cross-service fixture](tests/fixtures/rewrites/roblox-service-signatures.luau)
+compiled at O0, O1 and O2, the previous revision (`feccabf`) recovered 9 of
+38 justified parameter and return annotations and annotated 12 of 25 unknown
+slots. The generated catalog and receiver analysis recover all 38 and leave
+all 25 unknown slots unannotated. The original and all nine reconstructions
+produced the same trace under the official Luau VM with simulated services.
 
 ## Local naming options
 
