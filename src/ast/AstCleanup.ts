@@ -10,14 +10,15 @@ import type {
   Statement,
 } from "./Ast.js";
 import {
-  callbackParamType,
+  type CallbackHint,
+  callbackParamTypes,
   callbackParamsFor,
   eventCallbackName,
   typeFromExpression,
 } from "../reconstruct/RobloxSemantics.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
 import { inferHumanNames, repairUndeclaredAutoLocals } from "../reconstruct/NameInference.js";
-import { rewriteBlocks } from "./AstWalk.js";
+import { forEachChildExpression, mapStatementBlocks, mapStatementExpressions, rewriteBlocks } from "./AstWalk.js";
 import { refineStructure } from "./StructureRefinement.js";
 import { foldTemporaries } from "./TempFolding.js";
 
@@ -889,93 +890,38 @@ function roleFromCallee(callee: Expression, args: Expression[], name: string): s
 
 /** Rename params of `local function X` when X is passed to Connect/Once/etc. */
 function bindNamedCallbacks(statements: Statement[], options: CleanupOptions): Statement[] {
-  const paramsFor = new Map<string, string[]>();
+  const paramsFor = new Map<string, CallbackHint | null>();
   const collectFromExpr = (expression: Expression): void => {
     if (expression.kind === "method-call" || expression.kind === "call") {
       const last = expression.args.at(-1);
       if (last?.kind === "identifier") {
-        const names = callbackParamsFor(expression.kind === "method-call" ? expression : expression.callee);
-        if (names && names.length > 0 && names[0] !== "...") {
-          paramsFor.set(last.name, names);
+        const hint = callbackParamsFor(expression.kind === "method-call" ? expression : expression.callee);
+        if (hint && hint.names.length > 0 && hint.names[0] !== "...") {
+          const previous = paramsFor.get(last.name);
+          if (previous === undefined) {
+            paramsFor.set(last.name, hint);
+          } else if (previous && (previous.requiresReceiverEvidence !== hint.requiresReceiverEvidence ||
+              previous.names.length !== hint.names.length || previous.names.some((name, i) => name !== hint.names[i]))) {
+            paramsFor.set(last.name, null);
+          }
         }
       }
-      if (expression.kind === "method-call") {
-        collectFromExpr(expression.object);
-      } else {
-        collectFromExpr(expression.callee);
-      }
-      expression.args.forEach(collectFromExpr);
-      return;
     }
-    if (expression.kind === "unary") {
-      collectFromExpr(expression.argument);
-    } else if (expression.kind === "binary") {
-      collectFromExpr(expression.left);
-      collectFromExpr(expression.right);
-    } else if (expression.kind === "property") {
-      collectFromExpr(expression.object);
-    } else if (expression.kind === "index") {
-      collectFromExpr(expression.table);
-      collectFromExpr(expression.key);
-    } else if (expression.kind === "table") {
-      expression.fields.forEach((field) => {
-        if (field.key) {
-          collectFromExpr(field.key);
-        }
-        collectFromExpr(field.value);
-      });
-    } else if (expression.kind === "if-expr") {
-      collectFromExpr(expression.test);
-      collectFromExpr(expression.consequent);
-      expression.branches.forEach((branch) => {
-        collectFromExpr(branch.test);
-        collectFromExpr(branch.value);
-      });
-      collectFromExpr(expression.alternate);
+    if (expression.kind === "function-expr") {
+      expression.body.statements.forEach(collectFromStmt);
+    } else {
+      forEachChildExpression(expression, collectFromExpr);
     }
   };
   const collectFromStmt = (statement: Statement): void => {
-    switch (statement.kind) {
-      case "local":
-        statement.values.forEach(collectFromExpr);
-        break;
-      case "assign":
-        statement.targets.forEach(collectFromExpr);
-        statement.values.forEach(collectFromExpr);
-        break;
-      case "compound-assign":
-        collectFromExpr(statement.target);
-        collectFromExpr(statement.value);
-        break;
-      case "expression-stmt":
-        collectFromExpr(statement.expression);
-        break;
-      case "return":
-        statement.values.forEach(collectFromExpr);
-        break;
-      case "if":
-        collectFromExpr(statement.test);
-        statement.consequent.statements.forEach(collectFromStmt);
-        statement.branches.forEach((branch) => {
-          collectFromExpr(branch.test);
-          branch.body.statements.forEach(collectFromStmt);
-        });
-        statement.alternate?.statements.forEach(collectFromStmt);
-        break;
-      case "while":
-        collectFromExpr(statement.test);
-        statement.body.statements.forEach(collectFromStmt);
-        break;
-      case "repeat":
-        statement.body.statements.forEach(collectFromStmt);
-        collectFromExpr(statement.test);
-        break;
-      case "function-decl":
-        statement.body.statements.forEach(collectFromStmt);
-        break;
-      default:
-        break;
-    }
+    mapStatementExpressions(statement, expression => {
+      collectFromExpr(expression);
+      return expression;
+    });
+    mapStatementBlocks(statement, body => {
+      body.statements.forEach(collectFromStmt);
+      return body;
+    });
   };
   statements.forEach(collectFromStmt);
   if (paramsFor.size === 0) {
@@ -983,17 +929,17 @@ function bindNamedCallbacks(statements: Statement[], options: CleanupOptions): S
   }
   return statements.map((statement) => {
     if (statement.kind === "function-decl" && statement.local) {
-      const names = paramsFor.get(statement.name);
-      if (names) {
-        const remapped = remapCallbackParams(statement.params, statement.body, names, options);
+      const hint = paramsFor.get(statement.name);
+      if (hint) {
+        const remapped = remapCallbackParams(statement, hint, options);
         return { ...statement, params: remapped.params, paramTypes: remapped.paramTypes, body: remapped.body };
       }
     }
     if (statement.kind === "local" && statement.names.length === 1 && statement.values[0]?.kind === "function-expr") {
-      const names = paramsFor.get(statement.names[0]!);
-      if (names) {
+      const hint = paramsFor.get(statement.names[0]!);
+      if (hint) {
         const fn = statement.values[0];
-        const remapped = remapCallbackParams(fn.params, fn.body, names, options);
+        const remapped = remapCallbackParams(fn, hint, options);
         return { ...statement, values: [{ ...fn, params: remapped.params, paramTypes: remapped.paramTypes, body: remapped.body }] };
       }
     }
@@ -1002,10 +948,10 @@ function bindNamedCallbacks(statements: Statement[], options: CleanupOptions): S
       statement.targets[0]?.kind === "identifier" &&
       statement.values[0]?.kind === "function-expr"
     ) {
-      const names = paramsFor.get(statement.targets[0].name);
-      if (names) {
+      const hint = paramsFor.get(statement.targets[0].name);
+      if (hint) {
         const fn = statement.values[0];
-        const remapped = remapCallbackParams(fn.params, fn.body, names, options);
+        const remapped = remapCallbackParams(fn, hint, options);
         return { ...statement, values: [{ ...fn, params: remapped.params, paramTypes: remapped.paramTypes, body: remapped.body }] };
       }
     }
@@ -1014,13 +960,12 @@ function bindNamedCallbacks(statements: Statement[], options: CleanupOptions): S
 }
 
 function remapCallbackParams(
-  params: string[],
-  body: Block,
-  names: string[],
+  { params, body, paramTypes: existing }: Pick<FunctionExpression, "params" | "body" | "paramTypes">,
+  hint: CallbackHint,
   options: CleanupOptions,
 ): { params: string[]; paramTypes?: Array<string | undefined>; body: Block } {
   const mapped = params.map((param, index) => {
-    const suggested = names[index];
+    const suggested = hint.names[index];
     if (!suggested || suggested === "..." || !isValidIdentifier(suggested)) {
       return param;
     }
@@ -1036,8 +981,7 @@ function remapCallbackParams(
       rename.set(old, next);
     }
   });
-  const types = options.typeAnnotations === "off" ? undefined : mapped.map((name) => callbackParamType(name));
-  const paramTypes = types?.some((type) => type) ? types : undefined;
+  const paramTypes = options.typeAnnotations === "off" ? undefined : callbackParamTypes(hint, mapped, existing);
   return { params: mapped, paramTypes, body: rename.size > 0 ? renameIdentifiers(body, rename) : body };
 }
 
@@ -1758,36 +1702,13 @@ function bindCallback(expression: Expression, options: CleanupOptions): Expressi
   if (!last || last.kind !== "function-expr") {
     return expression;
   }
-  const names = callbackParamsFor(expression.kind === "method-call" ? expression : expression.callee);
-  if (!names) {
+  const hint = callbackParamsFor(expression.kind === "method-call" ? expression : expression.callee);
+  if (!hint) {
     return expression;
   }
-  const fn = renameFunctionParams(last, names, options);
+  const remapped = remapCallbackParams(last, hint, options);
+  const fn = { ...last, ...remapped, body: transformBlock(remapped.body, options) };
   return { ...expression, args: [...expression.args.slice(0, -1), fn] };
-}
-
-function renameFunctionParams(fn: FunctionExpression, names: string[], options: CleanupOptions): FunctionExpression {
-  const mapped = fn.params.map((param, index) => {
-    const suggested = names[index];
-    if (!suggested || suggested === "..." || !isValidIdentifier(suggested)) {
-      return param;
-    }
-    if (isGenericCallbackParam(param) || param === "self") {
-      return suggested;
-    }
-    return param;
-  });
-  const rename = new Map<string, string>();
-  fn.params.forEach((old, index) => {
-    const next = mapped[index];
-    if (next && next !== old) {
-      rename.set(old, next);
-    }
-  });
-  const body = renameIdentifiers(fn.body, rename);
-  const types = options.typeAnnotations === "off" ? undefined : mapped.map((name) => callbackParamType(name));
-  const paramTypes = types?.some((type) => type) ? types : undefined;
-  return { ...fn, params: mapped, paramTypes, body: transformBlock(body, options) };
 }
 
 function renameIdentifiers(body: Block, rename: Map<string, string>): Block {

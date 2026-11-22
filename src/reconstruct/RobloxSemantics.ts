@@ -312,24 +312,33 @@ const CALLBACK_PARAM_TYPES: Record<string, string> = {
   new: "Enum.HumanoidStateType",
 };
 
-export function callbackParamType(name: string): string | undefined {
-  return CALLBACK_PARAM_TYPES[name];
+export interface CallbackHint {
+  names: string[];
+  requiresReceiverEvidence?: boolean;
 }
 
-export function callbackParamsFor(expression: Expression): string[] | undefined {
+export function callbackParamTypes(hint: CallbackHint, mapped: string[], existing?: Array<string | undefined>): Array<string | undefined> | undefined {
+  // FunctionEvidence resolves PlayerAdded's receiver and callback binding together.
+  if (hint.requiresReceiverEvidence) return existing;
+  const types = mapped.map((name, index) => existing?.[index] ?? CALLBACK_PARAM_TYPES[name]);
+  return types.some(Boolean) ? types : undefined;
+}
+
+export function callbackParamsFor(expression: Expression): CallbackHint | undefined {
   if (expression.kind === "method-call" && CALLBACK_METHODS.has(expression.name)) {
     return callbackParamsFor(expression.object);
   }
   if (expression.kind === "property") {
-    return EVENT_PARAMS[expression.name];
+    const names = EVENT_PARAMS[expression.name];
+    return names ? { names, requiresReceiverEvidence: expression.name === "PlayerAdded" } : undefined;
   }
   if (expression.kind === "call") {
     const callee = expression.callee;
     if (callee.kind === "property" && callee.name === "GetPropertyChangedSignal") {
-      return ["property"];
+      return { names: ["property"] };
     }
     if (callee.kind === "property" && callee.name === "new" && callee.object.kind === "identifier" && /Shake/i.test(callee.object.name)) {
-      return ["cframe"];
+      return { names: ["cframe"] };
     }
   }
   return undefined;

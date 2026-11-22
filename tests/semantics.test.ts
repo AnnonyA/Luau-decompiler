@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { recoverFunctionEvidence } from "../src/reconstruct/FunctionEvidence.ts";
 import { cleanupAst } from "../src/ast/AstCleanup.ts";
-import { chunk, ident, lit } from "../src/ast/Ast.ts";
+import { block, chunk, ident, lit, type Expression, type FunctionExpression, type Statement } from "../src/ast/Ast.ts";
 import { printLuau } from "../src/print/LuauPrinter.ts";
 import { abc, ad, Opcode, proto, sourceOf, strings, importConst, ret } from "./helpers.ts";
 import { decompile } from "../src/decompile.ts";
@@ -179,6 +180,17 @@ describe("semantic reconstruction", () => {
     const ast = cleanupAst(
       chunk([
         {
+          kind: "local",
+          names: ["Players"],
+          values: [{
+            kind: "method-call",
+            object: ident("game"),
+            name: "GetService",
+            args: [lit("Players")],
+            open: false,
+          }],
+        },
+        {
           kind: "expression-stmt",
           expression: {
             kind: "method-call",
@@ -204,9 +216,36 @@ describe("semantic reconstruction", () => {
         mathConstants: false,
       },
     );
-    const source = printLuau(ast);
+    const source = printLuau(recoverFunctionEvidence(ast, { typeAnnotations: "useful" }));
     expect(source).toMatch(/function\(player: Player\)/);
     expect(source).toMatch(/return player/);
+  });
+
+  describe("callback signatures across cleanup and type recovery", () => {
+    const options = { typeAnnotations: "functions", ifExpressions: false, earlyReturn: false,
+      interpolatedStrings: false, mathConstants: false } as const;
+    const players: Expression = { kind: "method-call", object: ident("game"), name: "GetService",
+      args: [lit("Players")], open: false };
+    function connect(receiver: Expression, event: string, callback: Expression): Statement {
+      return { kind: "expression-stmt", expression: { kind: "method-call", name: "Connect",
+        object: { kind: "property", object: receiver, name: event }, args: [callback], open: false } };
+    }
+    const fn: FunctionExpression = { kind: "function-expr", params: ["value"], isVararg: false,
+      body: block([{ kind: "return", values: [ident("value")] }]) };
+    const recover = (stmts: Statement[]) => printLuau(recoverFunctionEvidence(cleanupAst(chunk(stmts), options), options));
+
+    it.each([false, true])("leaves conflicting named registrations unannotated (reversed=%s)", reversed => {
+      const signals = [connect(players, "PlayerAdded", ident("handler")), connect(ident("part"), "Touched", ident("handler"))];
+      const output = recover([{ kind: "local", names: ["handler"], values: [fn] }, ...(reversed ? signals.reverse() : signals)]);
+      expect(output).toContain("function handler(value)");
+    });
+
+    it.each([false, true])("preserves supplied callback parameter annotations (named=%s)", named => {
+      const annotated = { ...fn, paramTypes: ["string"] };
+      const definitions: Statement[] = named ? [{ kind: "local", names: ["handler"], values: [annotated] }] : [];
+      const output = recover([...definitions, connect(ident("custom"), "PlayerAdded", named ? ident("handler") : annotated)]);
+      expect(output).toMatch(/function(?: handler)?\(player: string\)/);
+    });
   });
 
   it("drops a dead local function after lifting function module.X", () => {
