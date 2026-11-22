@@ -1,5 +1,5 @@
 import { block } from "./Ast.js";
-import { analyzeBindings, renameFreeBindings } from "../analysis/Bindings.js";
+import { analyzeBindings, renameFreeBindings, type LexicalBinding } from "../analysis/Bindings.js";
 import type {
   BinaryOperator,
   Block,
@@ -890,20 +890,14 @@ function roleFromCallee(callee: Expression, args: Expression[], name: string): s
 
 /** Rename params of `local function X` when X is passed to Connect/Once/etc. */
 function bindNamedCallbacks(statements: Statement[], options: CleanupOptions): Statement[] {
-  const paramsFor = new Map<string, CallbackHint | null>();
+  const registrations = new Map<Extract<Expression, { kind: "identifier" }>, CallbackHint>();
   const collectFromExpr = (expression: Expression): void => {
     if (expression.kind === "method-call" || expression.kind === "call") {
       const last = expression.args.at(-1);
       if (last?.kind === "identifier") {
         const hint = callbackParamsFor(expression.kind === "method-call" ? expression : expression.callee);
         if (hint && hint.names.length > 0 && hint.names[0] !== "...") {
-          const previous = paramsFor.get(last.name);
-          if (previous === undefined) {
-            paramsFor.set(last.name, hint);
-          } else if (previous && (previous.requiresReceiverEvidence !== hint.requiresReceiverEvidence ||
-              previous.names.length !== hint.names.length || previous.names.some((name, i) => name !== hint.names[i]))) {
-            paramsFor.set(last.name, null);
-          }
+          registrations.set(last, hint);
         }
       }
     }
@@ -924,19 +918,35 @@ function bindNamedCallbacks(statements: Statement[], options: CleanupOptions): S
     });
   };
   statements.forEach(collectFromStmt);
-  if (paramsFor.size === 0) {
-    return statements;
+  if (!registrations.size) return statements;
+  // References under nested scopes can use the same spelling for a different callback.
+  const root = block(statements);
+  const owners = new Map<Statement | Expression, LexicalBinding>();
+  for (const binding of analyzeBindings(root).bindings) {
+    if (binding.scope === root) owners.set(binding.declaration, binding);
+    for (const {node} of [...binding.reads, ...binding.writes]) owners.set(node, binding);
+  }
+  const paramsFor = new Map<LexicalBinding | string, CallbackHint | null>();
+  for (const [argument, hint] of registrations) {
+    const key = owners.get(argument) ?? argument.name;
+    const previous = paramsFor.get(key);
+    if (previous === undefined) {
+      paramsFor.set(key, hint);
+    } else if (previous && (previous.requiresReceiverEvidence !== hint.requiresReceiverEvidence ||
+        previous.names.length !== hint.names.length || previous.names.some((name, i) => name !== hint.names[i]))) {
+      paramsFor.set(key, null);
+    }
   }
   return statements.map((statement) => {
     if (statement.kind === "function-decl" && statement.local) {
-      const hint = paramsFor.get(statement.name);
+      const hint = paramsFor.get(owners.get(statement) ?? statement.name);
       if (hint) {
         const remapped = remapCallbackParams(statement, hint, options);
         return { ...statement, params: remapped.params, paramTypes: remapped.paramTypes, body: remapped.body };
       }
     }
     if (statement.kind === "local" && statement.names.length === 1 && statement.values[0]?.kind === "function-expr") {
-      const hint = paramsFor.get(statement.names[0]!);
+      const hint = paramsFor.get(owners.get(statement) ?? statement.names[0]!);
       if (hint) {
         const fn = statement.values[0];
         const remapped = remapCallbackParams(fn, hint, options);
@@ -948,7 +958,7 @@ function bindNamedCallbacks(statements: Statement[], options: CleanupOptions): S
       statement.targets[0]?.kind === "identifier" &&
       statement.values[0]?.kind === "function-expr"
     ) {
-      const hint = paramsFor.get(statement.targets[0].name);
+      const hint = paramsFor.get(owners.get(statement.targets[0]) ?? statement.targets[0].name);
       if (hint) {
         const fn = statement.values[0];
         const remapped = remapCallbackParams(fn, hint, options);

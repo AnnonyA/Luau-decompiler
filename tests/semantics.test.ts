@@ -246,6 +246,22 @@ describe("semantic reconstruction", () => {
       const output = recover([...definitions, connect(ident("custom"), "PlayerAdded", named ? ident("handler") : annotated)]);
       expect(output).toMatch(/function(?: handler)?\(player: string\)/);
     });
+
+    it("keeps a captured callback distinct from a same-named callback in a nested function", () => {
+      const callWithHandler = (name: string): Statement => ({ kind: "expression-stmt", expression: {
+        kind: "call", callee: ident(name), args: [ident("handler")], open: false } });
+      const inner = { ...fn, params: [], body: block([
+        { kind: "local", names: ["handler"], values: [fn] },
+        connect(ident("part"), "Touched", ident("handler")),
+      ]) };
+      const output = recover([
+        { kind: "local", names: ["handler"], values: [fn] },
+        callWithHandler("retain"),
+        { kind: "return", values: [inner] },
+      ]);
+      expect(output).toContain("local function handler(value)");
+      expect(output).toContain("local function handler(hit: BasePart)");
+    });
   });
 
   it("drops a dead local function after lifting function module.X", () => {
