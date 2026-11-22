@@ -98,7 +98,7 @@ describe("temporaries", () => {
   it("keeps a local the source declared, even when it is read once", () => {
     // Each of these values sat in a register of its own below its reader.
     expect(source).toMatch(/local Remotes: Instance = ReplicatedStorage:WaitForChild\("Remotes"\)\nlocal \w+: Instance = Remotes:WaitForChild\("Damage"\)/);
-    expect(source).toMatch(/local (\w+) = \{ WalkSpeed = \w+ and Config\.SprintSpeed or Config\.WalkSpeed \}\n\s+local (\w+) = TweenService:Create\(\w+, TweenInfo\.new\(0\.25, [^\n]+, \1\)\n\s+\2:Play\(\)/);
+    expect(source).toMatch(/local (\w+) = \{ WalkSpeed = \w+ and Config\.SprintSpeed or Config\.WalkSpeed \}\n\s+local (\w+): Tween = TweenService:Create\(\w+, TweenInfo\.new\(0\.25, [^\n]+, \1\)\n\s+\2:Play\(\)/);
   });
 
   it("keeps a value evaluated before an earlier read of its consumer", () => {

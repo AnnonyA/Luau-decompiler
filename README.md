@@ -188,6 +188,13 @@ its parameter stays unannotated. The same analysis uses known arguments from
 A remote event's fixed `Player` argument can be typed even when the rest of
 its payload is unknown. [API facts and sources](docs/references/roblox-callback-types.md)
 
+On the [cross-service fixture](tests/fixtures/rewrites/roblox-service-signatures.luau)
+compiled at O0, O1 and O2, the previous revision (`feccabf`) recovered 9 of
+38 justified parameter and return annotations and annotated 12 of 25 unknown
+slots. The generated catalog and receiver analysis recover all 38 and leave
+all 25 unknown slots unannotated. The original and all nine reconstructions
+produced the same trace under the official Luau VM with simulated services.
+
 ## Local naming options
 
 The web decompiler supports readable or compact local names and optional

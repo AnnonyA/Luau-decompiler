@@ -94,6 +94,17 @@ function eventSignature(member) {
   }
   return slots;
 }
+// These members document nil in their descriptions while their structured
+// return/property type (or implicit constructor result) omits it.
+const nullableMembers = new Set([
+  'DateTime.fromIsoDate',
+  'FloatCurveKey.LeftTangent', 'FloatCurveKey.RightTangent',
+  'RotationCurveKey.LeftTangent', 'RotationCurveKey.RightTangent',
+  'ContextActionService:GetCurrentLocalToolIcon', 'PhysicsService:GetCollisionGroupId',
+]);
+function applyDocumentedNullability(member, result) {
+  return result && nullableMembers.has(member.name) && !result.endsWith('?') ? result + '?' : result;
+}
 function describe(doc, kind) {
   const entry = {};
   if (doc.inherits?.length > 1) throw Error('Multiple bases on ' + doc.name);
@@ -112,14 +123,16 @@ function describe(doc, kind) {
       }
       if (group === 'properties' || group === 'constants') {
         const property = group === 'constants' || constants.has(member.name) ? 'staticProperties' : 'properties';
-        add(entry,property,name,normalize(member.type,kind === 'classes'));
+        add(entry,property,name,applyDocumentedNullability(member,normalize(member.type,kind === 'classes')));
       } else if (group === 'events' || group === 'callbacks') {
         add(entry,group,name,eventSignature(member));
       } else {
         const callable = group === 'constructors' || group === 'functions' ? 'staticMethods' : 'methods';
+        // The Creator Hub explicitly guarantees a freshly created Tween on success.
+        const nullableClass = kind === 'classes' && member.name !== 'TweenService:Create';
         const result = group === 'constructors' ? doc.name :
-          member.returns?.length === 1 ? normalize(member.returns[0].type,kind === 'classes') : null;
-        append(entry,callable,name,methodSignature(member.parameters ?? [], result));
+          member.returns?.length === 1 ? normalize(member.returns[0].type,nullableClass) : null;
+        append(entry,callable,name,methodSignature(member.parameters ?? [], applyDocumentedNullability(member,result)));
       }
     }
   }
