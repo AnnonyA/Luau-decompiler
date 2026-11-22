@@ -89,6 +89,7 @@ function eventSignature(member) {
     if (variable(p.type) || p.name === '...') break;
     const nullable = member.name === 'Instance.AncestryChanged' && p.name === 'parent' ||
       member.name === 'Humanoid.Seated' && p.name === 'currentSeatPart' ||
+      member.name === 'GuiBase2d.SelectionChanged' && ['previousSelection','newSelection'].includes(p.name) ||
       member.name === 'ObjectValue.Changed' || member.name === 'ObjectValue.changed';
     slots.push(normalize(p.type,nullable));
   }
@@ -100,6 +101,7 @@ const nullableMembers = new Set([
   'DateTime.fromIsoDate',
   'FloatCurveKey.LeftTangent', 'FloatCurveKey.RightTangent',
   'RotationCurveKey.LeftTangent', 'RotationCurveKey.RightTangent',
+  'ValueCurveKey.LeftTangent', 'ValueCurveKey.RightTangent',
   'ContextActionService:GetCurrentLocalToolIcon', 'PhysicsService:GetCollisionGroupId',
 ]);
 function applyDocumentedNullability(member, result) {
