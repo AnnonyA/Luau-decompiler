@@ -1,13 +1,20 @@
 import type {Block, Chunk, Expression, Statement} from '../ast/Ast.js';
 import {analyzeBindings, replaceReferences, type LexicalBinding} from '../analysis/Bindings.js';
 import {NameAllocator} from './Naming.js';
+import {lookupRobloxService, lookupRobloxProperty, lookupRobloxMethodResult, lookupRobloxEventParameters} from './roblox-api-facts.js';
 
 type FunctionNode = Extract<Expression | Statement, {kind:'function-expr' | 'function-decl'}>;
 type Call = Extract<Expression, {kind:'call'}>;
-interface FunctionInfo { node: FunctionNode; binding: LexicalBinding; calls: Call[]; closed: boolean; returns?: string[] }
+type MethodCall = Extract<Expression, {kind:'method-call'}>;
+interface FunctionInfo { node: FunctionNode; calls: Call[]; events: (readonly string[])[]; closed: boolean; returns?: string[] }
 const automatic = /^(?:arg|param|value|result|tmp|item|data)\d*$/;
-const union = (types: Array<string | undefined>): string | undefined =>
-  types.length && types.every(t => t !== undefined) ? [...new Set(types.flatMap(t => t!.split(' | ')))].sort().join(' | ') : undefined;
+function union(types: Array<string | undefined>): string | undefined {
+  if (!types.length || !types.every(t => t !== undefined)) return undefined;
+  const distinct = [...new Set(types.flatMap(t => t.split(' | ')))];
+  // Preserve primitive unions. A mixed call set cannot justify a Roblox class.
+  if (distinct.length > 1 && distinct.some(type => !['number','string','boolean','nil'].includes(type))) return undefined;
+  return distinct.sort().join(' | ');
+}
 
 /** Evidence from lexical identities and complete direct-call sets. This pass
  * changes names/types only: it never moves effects or substitutes expressions.
@@ -16,12 +23,27 @@ export function recoverFunctionEvidence(ast: Chunk, options: {typeAnnotations?: 
   const result = replaceReferences(ast, new Map());
   const {bindings, globals} = analyzeBindings(result.body);
   const owners = new Map<object, LexicalBinding>();
-  for (const b of bindings) for (const r of [...b.reads, ...b.writes]) owners.set(r.node, b);
+  const localRoots = new Set<Statement>();
+  for (const b of bindings) for (const r of [...b.reads, ...b.writes]) {
+    owners.set(r.node, b);
+    if (r.declarationRoot) localRoots.add(r.statement);
+  }
   const parents = new Map<object, Record<string, unknown>>();
   const typeNames = new Set<string>();
+  const connects: MethodCall[] = [];
+  let cleanEnvironment = !['getfenv','setfenv','_G'].some(name => globals.has(name));
+  const globalGame = (e: Expression) => e.kind === 'identifier' && e.name === 'game' && !owners.has(e);
   function visit(node: unknown, parent?: Record<string, unknown>): void {
     if (!node || typeof node !== 'object') return;
     if (parent) parents.set(node, parent);
+    const astNode = node as Expression | Statement;
+    if (astNode.kind === 'method-call' && (astNode.name === 'Connect' || astNode.name === 'Once') &&
+        astNode.args.length === 1 && !astNode.open)
+      connects.push(astNode);
+    if ((astNode.kind === 'assign' && astNode.targets.some(globalGame)) ||
+        (astNode.kind === 'compound-assign' && globalGame(astNode.target)) ||
+        (astNode.kind === 'function-decl' && !astNode.local && astNode.name === 'game' && !localRoots.has(astNode)))
+      cleanEnvironment = false;
     for (const [key,value] of Object.entries(node)) {
       if (['types','paramTypes','returnType'].includes(key)) {
         for (const type of Array.isArray(value) ? value : [value])
@@ -31,7 +53,47 @@ export function recoverFunctionEvidence(ast: Chunk, options: {typeAnnotations?: 
     }
   }
   visit(result);
-  const functions = new Map<LexicalBinding, FunctionInfo>();
+
+  // Resolve only immutable lexical aliases. An initializer in a later slot of
+  // an open result pack has no corresponding expression and stays unknown.
+  function source(e: Expression): Expression | undefined {
+    const seen = new Set<LexicalBinding>();
+    let current: Expression | undefined = e;
+    while (current) {
+      if (current.kind === 'paren') { current = current.expression; continue; }
+      if (current.kind !== 'identifier') return current;
+      const binding = owners.get(current);
+      if (!binding) return current;
+      if (binding.writes.length || binding.declaration.kind !== 'local' || seen.has(binding)) return undefined;
+      seen.add(binding);
+      current = binding.declaration.values[binding.declarationIndex!];
+    }
+    return undefined;
+  }
+  function service(e: Expression): string | undefined {
+    const call = source(e);
+    if (!cleanEnvironment || call?.kind !== 'method-call' || call.name !== 'GetService' ||
+        call.open || call.args.length !== 1) return undefined;
+    const root = source(call.object);
+    const name = call.args[0]!;
+    return root && globalGame(root) && name.kind === 'literal' && typeof name.value === 'string'
+      ? lookupRobloxService(name.value) : undefined;
+  }
+  const registrations = new Map<Expression, readonly string[]>();
+  const functions: FunctionInfo[] = [];
+  if (options.typeAnnotations !== 'off') for (const connect of connects) {
+    const signal = source(connect.object);
+    if (signal?.kind !== 'property') continue;
+    const receiver = service(signal.object);
+    const signature = receiver && lookupRobloxEventParameters(receiver,signal.name);
+    if (!signature) continue;
+    const callback = connect.args[0]!;
+    registrations.set(callback,signature);
+    if (callback.kind === 'function-expr') {
+      functions.push({node:callback,calls:[],events:[signature],closed:true});
+    }
+  }
+  const localFunctions = new Map<LexicalBinding, FunctionInfo>();
   for (const binding of bindings) {
     const d = binding.declaration;
     const value = d.kind === 'local' ? d.values[binding.declarationIndex!] : undefined;
@@ -39,19 +101,31 @@ export function recoverFunctionEvidence(ast: Chunk, options: {typeAnnotations?: 
       value?.kind === 'function-expr' ? value : undefined;
     if (!node || binding.writes.length) continue;
     const calls: Call[] = [];
+    const events: (readonly string[])[] = [];
     let closed = binding.reads.length > 0;
     for (const reference of binding.reads) {
       const parent = parents.get(reference.node);
+      const signature = registrations.get(reference.node);
       if (parent?.kind === 'call' && parent.callee === reference.node) calls.push(parent as unknown as Call);
+      else if (signature) events.push(signature);
       else closed = false;
     }
     // A last unparenthesized call/vararg may supply more than one argument.
-    closed &&= calls.every(c => c.args.length === node.params.length &&
+    closed &&= calls.every(c => !c.open && c.args.length === node.params.length &&
       !['call','method-call','vararg'].includes(c.args.at(-1)?.kind ?? ''));
-    functions.set(binding,{node,binding,calls,closed});
+    const fn = {node,calls,events,closed};
+    localFunctions.set(binding,fn);
+    functions.push(fn);
   }
   const facts = new Map<LexicalBinding,string>();
-  const parameters = (fn: FunctionNode) => bindings.filter(b => b.declaration === fn && b.declarationIndex !== undefined);
+  const parameterBindings = new Map<FunctionNode, LexicalBinding[]>();
+  for (const binding of bindings) {
+    const fn = binding.declaration;
+    if (binding.declarationIndex === undefined || (fn.kind !== 'function-decl' && fn.kind !== 'function-expr')) continue;
+    const group = parameterBindings.get(fn);
+    if (group) group.push(binding);
+    else parameterBindings.set(fn,[binding]);
+  }
   function infer(e: Expression, seen = new Set<LexicalBinding>()): string | undefined {
     switch (e.kind) {
       case 'literal': return e.value === null ? 'nil' : ['number','string','boolean'].includes(typeof e.value) ? typeof e.value : undefined;
@@ -67,11 +141,21 @@ export function recoverFunctionEvidence(ast: Chunk, options: {typeAnnotations?: 
       case 'if-expr': return union([infer(e.consequent,seen),...e.branches.map(b=>infer(b.value,seen)),infer(e.alternate,seen)]);
       case 'call': {
         const b = owners.get(e.callee);
-        return b ? functions.get(b)?.returns?.[0] : undefined;
+        return b ? localFunctions.get(b)?.returns?.[0] : undefined;
       }
+      case 'property': {
+        const receiver = infer(e.object,seen);
+        return receiver && lookupRobloxProperty(receiver,e.name);
+      }
+      case 'method-call': return service(e) ?? singleMethodResult(e,seen);
       // Operators may invoke overloaded metamethods: do not guess primitive types.
       default: return undefined;
     }
+  }
+  function singleMethodResult(e: MethodCall, seen = new Set<LexicalBinding>()): string | undefined {
+    if (e.open || e.args.length) return undefined;
+    const receiver = infer(e.object,seen);
+    return receiver && lookupRobloxMethodResult(receiver,e.name);
   }
   const returnStatements = (body: Block): Array<Extract<Statement,{kind:'return'}>> => {
     const found: Array<Extract<Statement,{kind:'return'}>> = [];
@@ -91,17 +175,23 @@ export function recoverFunctionEvidence(ast: Chunk, options: {typeAnnotations?: 
   }
   // A bounded fixed point propagates facts through direct local call chains.
   // Unknown cycles stay unknown rather than borrowing an arbitrary first input.
-  for (let round=0; round<Math.min(functions.size+1,16); round++) {
+  for (let round=0; round<Math.min(functions.length+1,16); round++) {
     let changed=false;
-    for (const fn of functions.values()) {
-      if (fn.closed && !fn.node.isVararg) for (const b of parameters(fn.node)) {
+    for (const fn of functions) {
+      if (fn.closed && !fn.node.isVararg) for (const b of parameterBindings.get(fn.node) ?? []) {
         if (b.writes.length) continue;
-        const type = union(fn.calls.map(c=>infer(c.args[b.declarationIndex!]!)));
+        const index = b.declarationIndex!;
+        const type = union([...fn.events.map(signature => signature[index]), ...fn.calls.map(c=>infer(c.args[index]!))]);
+        const annotation = fn.node.paramTypes?.[index];
+        if (annotation && annotation !== type && annotation !== 'any' && annotation !== 'unknown') continue;
         if (type && facts.get(b)!==type) { facts.set(b,type); changed=true; }
       }
       const returns=returnStatements(fn.node.body);
-      if (!terminal(fn.node.body) || !returns.length || returns.some(r=>r.values.length!==returns[0]!.values.length ||
-        ['call','method-call','vararg'].includes(r.values.at(-1)?.kind ?? ''))) continue;
+      if (!terminal(fn.node.body) || !returns.length || returns.some(r=>{
+        const last = r.values.at(-1);
+        return r.values.length !== returns[0]!.values.length || last?.kind === 'call' || last?.kind === 'vararg' ||
+          (last?.kind === 'method-call' && !singleMethodResult(last));
+      })) continue;
       const types=returns[0]!.values.map((_,i)=>union(returns.map(r=>infer(r.values[i]!))));
       if (types.every(t=>t!==undefined) && JSON.stringify(types)!==JSON.stringify(fn.returns)) {
         fn.returns=types as string[]; changed=true;
@@ -110,16 +200,17 @@ export function recoverFunctionEvidence(ast: Chunk, options: {typeAnnotations?: 
     if (!changed) break;
   }
   const allocator = new NameAllocator([...globals,...typeNames,...bindings.map(b=>b.name)]);
-  for (const fn of functions.values()) {
-    for (const binding of parameters(fn.node)) {
+  for (const fn of functions) {
+    for (const binding of parameterBindings.get(fn.node) ?? []) {
       const index=binding.declarationIndex!;
       if (options.typeAnnotations !== 'off' && facts.has(binding) && !fn.node.paramTypes?.[index]) {
         fn.node.paramTypes ??= [];
         fn.node.paramTypes[index]=facts.get(binding);
       }
-      if (!automatic.test(binding.name) || typeNames.has(binding.name)) continue;
+      if ((fn.node.kind === 'function-expr' && registrations.has(fn.node)) ||
+          !automatic.test(binding.name) || typeNames.has(binding.name)) continue;
       const hints = new Set<string>();
-      if (fn.closed) {
+      if (fn.closed && !fn.events.length) {
         const args=fn.calls.map(c=>c.args[index]);
         if (args.every(a=>a?.kind==='identifier' && !automatic.test(a.name)) && new Set(args.map(a=>(a as {name:string}).name)).size===1)
           hints.add((args[0] as {name:string}).name);

@@ -178,6 +178,18 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     await writeFile(process.env.DEMO_SCREENSHOT, Buffer.from(shot.data, "base64"));
   }
 
+  const playerFixture = new URL("../tests/fixtures/rewrites/player-callback-helper-O1.luauc", import.meta.url);
+  const playerBytes = (await readFile(playerFixture)).toString("base64");
+  await evaluate(`
+    document.getElementById("types").value = "functions";
+    document.getElementById("base64").value = ${JSON.stringify(playerBytes)};
+    document.getElementById("run").click();
+  `);
+  await waitFor('document.getElementById("cancel").hidden && !document.getElementById("download").disabled');
+  const playerSource = await evaluate('document.getElementById("code").textContent');
+  assert.match(playerSource, /function \w+\(\w+: Player\): string/);
+  assert.match(playerSource, /:Connect\(function\(\w+: Player\)/);
+
   await evaluate('document.getElementById("base64").value="@@@"; document.getElementById("run").click()');
   await waitFor('document.getElementById("status").classList.contains("error")');
   assert.match(await evaluate('document.getElementById("code").textContent'), /valid Base64/);

@@ -175,10 +175,17 @@ and loop regions with real `break` / `continue` instead of flattened jumps.
 `Connect`, `Once`, and `Observe` callbacks can pick up official argument names and types for common APIs. Examples include:
 
 - `InputBegan` → `input: InputObject, gameProcessedEvent: boolean`
-- `PlayerAdded` → `player: Player`
+- `Players.PlayerAdded` → `player: Player` when the receiver comes from `game:GetService("Players")`
 - `Heartbeat` → `deltaTime: number`
 - `Touched` → `hit: BasePart`
 - `CameraShaker` callbacks → `cframe: CFrame`
+
+For example, if a `PlayerAdded` callback passes its argument to a local
+`formatName` helper that returns `p.DisplayName`, the CLI and browser can
+recover `function formatName(p: Player): string`. The helper's calls must
+agree on the type. If the helper escapes or optimization removes the call,
+its parameter stays unannotated. The supported Roblox signatures ship with
+the decompiler and work offline. [API facts and sources](docs/references/roblox-callback-types.md)
 
 ## Local naming options
 
@@ -286,7 +293,7 @@ Current gaps include:
 
 1. leftover numbered temporaries when a register is reused for unrelated values
 2. exact source spellings that are absent from bytecode (`HALF_SECOND`, `WHITE`, `UP`, etc.)
-3. parameter types on ordinary functions beyond the callback cases that can be inferred confidently
+3. parameter and return types for helpers reached through dynamic calls, generic functions, and Roblox members outside the offline catalog
 4. a few upvalue slots that can still inherit the same inferred name
 5. incomplete high-level reconstruction for bytecode versions 10–14, especially class and feedback extensions
 

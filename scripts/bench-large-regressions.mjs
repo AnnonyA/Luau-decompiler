@@ -35,6 +35,13 @@ const styles = rewriteOptions ? [
  ...['camelCase','snake_case','PascalCase'].map(nameCasing=>[nameCasing,{nameCasing}]),
 ] : [['default',{}]];
 const results=[], fixtures=[];
+// Supply Roblox stand-ins to the VM only. Compile, decompile and parse the
+// unwrapped fixture so its bytecode still refers to the real Roblox globals.
+async function runtimeFile(path, source, prelude, wrappedPath) {
+ if (prelude === undefined) return path;
+ await writeFile(wrappedPath, prelude + '\n' + source);
+ return wrappedPath;
+}
 for(const family of ['large','object-optimized','rewrites']) {
  const root=fileURLToPath(new URL(`../tests/fixtures/${family}/`,import.meta.url));
  let inputMatrix = {};
@@ -45,22 +52,27 @@ for(const family of ['large','object-optimized','rewrites']) {
  for(const file of files){
   const inputs = inputMatrix[file] ?? [[]];
   if(!Array.isArray(inputs)||!inputs.length||inputs.some(args=>!Array.isArray(args)||args.some(arg=>typeof arg!=='string')))throw Error('invalid input matrix');
-  fixtures.push({file:family+'/'+file,original:join(root,file),inputs});
+  let prelude;
+  try { prelude = await readFile(join(root,'preludes',file),'utf8'); }
+  catch(error) { if(error.code !== 'ENOENT') throw error; }
+  fixtures.push({file:family+'/'+file,original:join(root,file),inputs,prelude});
  }
 }
-for(const {file,original,inputs} of fixtures)for(const optimization of [0,1,2]){
+for(const {file,original,inputs,prelude} of fixtures)for(const optimization of [0,1,2]){
  const source=await readFile(original),dir=join(output,file.slice(0,-5),`O${optimization}`);
  await mkdir(dir,{recursive:true});
  const compiled=spawnSync(compiler,['--binary',`-O${optimization}`,'-g1',original],{timeout:15000,maxBuffer:4*1024*1024});
  if(compiled.status!==0||compiled.error)throw Error(`compile failed: ${file}`);
  await writeFile(join(dir,'bytecode.luauc'),compiled.stdout);
- const originals=inputs.map(args=>launch(vm,[`-O${optimization}`,original,'-a',...args],dir));
+ const originalRun = await runtimeFile(original,source,prelude,join(dir,'original-runtime.luau'));
+ const originals=inputs.map(args=>launch(vm,[`-O${optimization}`,originalRun,'-a',...args],dir));
  for(const [style,naming] of styles){
   const result=decompile(compiled.stdout,{opcodeEncoding:'official',...naming});
   const target=join(dir,style==='default'?'annony.luau':`annony-${style}.luau`);
   await writeFile(target,result.ok?result.source:'');
   const parser=result.ok?launch(compiler,['--only-parse',target],dir):undefined;
-  const runs=parser?.ok?inputs.map(args=>launch(vm,[`-O${optimization}`,target,'-a',...args],dir)):[];
+  const targetRun = await runtimeFile(target,result.ok?result.source:'',prelude,join(dir,`runtime-${style}.luau`));
+  const runs=parser?.ok?inputs.map(args=>launch(vm,[`-O${optimization}`,targetRun,'-a',...args],dir)):[];
   const comparison=classify({parser,originals,runs});
   results.push({id:file,optimization,style,inputs,options:naming,sourceSha256:digest(source),bytecodeSha256:digest(compiled.stdout),...comparison,parser,originals,runs});
   console.log(`${file}/O${optimization}/${style}: ${comparison.status}`);
