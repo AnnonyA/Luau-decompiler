@@ -1,55 +1,6 @@
 import type { Expression } from "../ast/Ast.js";
 import { isValidIdentifier } from "./Naming.js";
 
-export const SERVICE_TYPES = new Set([
-  "Players",
-  "Workspace",
-  "ReplicatedStorage",
-  "ServerStorage",
-  "ServerScriptService",
-  "StarterGui",
-  "StarterPack",
-  "StarterPlayer",
-  "Lighting",
-  "TweenService",
-  "RunService",
-  "UserInputService",
-  "ContextActionService",
-  "HttpService",
-  "MarketplaceService",
-  "TeleportService",
-  "DataStoreService",
-  "MessagingService",
-  "CollectionService",
-  "PhysicsService",
-  "PathfindingService",
-  "ProximityPromptService",
-  "SoundService",
-  "Chat",
-  "Teams",
-  "TestService",
-  "TextChatService",
-  "VoiceChatService",
-  "SocialService",
-  "PolicyService",
-  "LocalizationService",
-  "GuiService",
-  "Debris",
-  "InsertService",
-  "AssetService",
-  "AvatarEditorService",
-  "BadgeService",
-  "FriendService",
-  "GroupService",
-  "MemoryStoreService",
-  "NotificationService",
-  "ReplicatedFirst",
-  "ScriptContext",
-  "Stats",
-  "LogService",
-  "ContentProvider",
-]);
-
 const EVENT_PARAMS: Record<string, string[]> = {
   PlayerAdded: ["player"],
   PlayerRemoving: ["player"],
@@ -73,7 +24,6 @@ const EVENT_PARAMS: Record<string, string[]> = {
   TouchEnded: ["hit"],
   AncestryChanged: ["child", "parent"],
   Changed: ["property"],
-  GetPropertyChangedSignal: ["property"],
   OnClientEvent: ["..."],
   OnServerEvent: ["player"],
   Activated: ["inputObject", "clickCount"],
@@ -218,37 +168,14 @@ export function typeFromExpression(expression: Expression): string | undefined {
       return "number";
     }
   }
+  // Receiver-dependent Roblox facts are resolved on lexical bindings in FunctionEvidence.
   if (expression.kind === "call") {
-    return typeFromCall(expression.callee, expression.args);
-  }
-  if (expression.kind === "method-call") {
-    return typeFromMethod(expression.object, expression.name, expression.args);
-  }
-  if (expression.kind === "property") {
-    if (expression.name === "LocalPlayer") {
-      return "Player";
-    }
-    if (expression.name === "Character") {
-      return "Model";
-    }
+    return typeFromCall(expression.callee);
   }
   return undefined;
 }
 
-function typeFromCall(callee: Expression, args: Expression[]): string | undefined {
-  if (callee.kind === "property" && callee.object.kind === "identifier" && callee.object.name === "Instance" && callee.name === "new") {
-    const className = stringLiteral(args[0]);
-    return className;
-  }
-  if (callee.kind === "property" && callee.object.kind === "identifier" && callee.object.name === "CFrame" && callee.name === "new") {
-    return "CFrame";
-  }
-  if (callee.kind === "property" && callee.object.kind === "identifier" && callee.object.name === "Vector3" && callee.name === "new") {
-    return "Vector3";
-  }
-  if (callee.kind === "property" && callee.object.kind === "identifier" && callee.object.name === "Color3") {
-    return "Color3";
-  }
+function typeFromCall(callee: Expression): string | undefined {
   if (callee.kind === "identifier") {
     if (callee.name === "typeof" || callee.name === "type" || callee.name === "tostring") {
       return "string";
@@ -263,65 +190,14 @@ function typeFromCall(callee: Expression, args: Expression[]): string | undefine
   return undefined;
 }
 
-function typeFromMethod(_object: Expression, name: string, args: Expression[]): string | undefined {
-  if (name === "GetService") {
-    const service = stringLiteral(args[0]);
-    if (service && SERVICE_TYPES.has(service)) {
-      return service;
-    }
-    return "Instance";
-  }
-  if (name === "IsA") {
-    return "boolean";
-  }
-  if (name === "GetChildren" || name === "GetDescendants" || name === "GetPlayers") {
-    return "{Instance}";
-  }
-  if (name === "Clone" || name === "WaitForChild" || name === "FindFirstChild") {
-    const className = stringLiteral(args[0]);
-    return className && SERVICE_TYPES.has(className) ? className : "Instance";
-  }
-  if (name === "Connect" || name === "Once") {
-    return "RBXScriptConnection";
-  }
-  return undefined;
-}
-
-const CALLBACK_PARAM_TYPES: Record<string, string> = {
-  input: "InputObject",
-  inputObject: "InputObject",
-  gameProcessedEvent: "boolean",
-  gameProcessed: "boolean",
-  player: "Player",
-  character: "Model",
-  deltaTime: "number",
-  time: "number",
-  hit: "BasePart",
-  property: "string",
-  playbackState: "Enum.PlaybackState",
-  cframe: "CFrame",
-  child: "Instance",
-  parent: "Instance",
-  descendant: "Instance",
-  clickCount: "number",
-  enterPressed: "boolean",
-  health: "number",
-  speed: "number",
-  keyframe: "string",
-  old: "Enum.HumanoidStateType",
-  new: "Enum.HumanoidStateType",
-};
-
 export interface CallbackHint {
   names: string[];
-  requiresReceiverEvidence?: boolean;
+  firstParameterType?: string;
 }
 
 export function callbackParamTypes(hint: CallbackHint, mapped: string[], existing?: Array<string | undefined>): Array<string | undefined> | undefined {
-  // FunctionEvidence resolves PlayerAdded's receiver and callback binding together.
-  if (hint.requiresReceiverEvidence) return existing;
-  const types = mapped.map((name, index) => existing?.[index] ?? CALLBACK_PARAM_TYPES[name]);
-  return types.some(Boolean) ? types : undefined;
+  if (!hint.firstParameterType || mapped.length === 0) return existing;
+  return mapped.map((_, index) => existing?.[index] ?? (index === 0 ? hint.firstParameterType : undefined));
 }
 
 export function callbackParamsFor(expression: Expression): CallbackHint | undefined {
@@ -329,16 +205,13 @@ export function callbackParamsFor(expression: Expression): CallbackHint | undefi
     return callbackParamsFor(expression.object);
   }
   if (expression.kind === "property") {
-    const names = EVENT_PARAMS[expression.name];
-    return names ? { names, requiresReceiverEvidence: expression.name === "PlayerAdded" } : undefined;
+    const names = Object.hasOwn(EVENT_PARAMS, expression.name) ? EVENT_PARAMS[expression.name] : undefined;
+    return names ? { names } : undefined;
   }
   if (expression.kind === "call") {
     const callee = expression.callee;
-    if (callee.kind === "property" && callee.name === "GetPropertyChangedSignal") {
-      return { names: ["property"] };
-    }
     if (callee.kind === "property" && callee.name === "new" && callee.object.kind === "identifier" && /Shake/i.test(callee.object.name)) {
-      return { names: ["cframe"] };
+      return { names: ["cframe"], firstParameterType: "CFrame" };
     }
   }
   return undefined;
