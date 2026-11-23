@@ -1570,17 +1570,7 @@ class SourceBuilder {
     } else if (andForm) {
       expr = { kind: "binary", op: "and", left: condReg, right: thenValue };
     } else if (thenPath.guards.length > 0) {
-      const test = foldAnd([guardTest, ...thenPath.guards]);
-      const lastGuardInsn = thenPath.lastGuardBlock?.instructions.at(-1);
-      const lastGuardReg =
-        lastGuardInsn && lastGuardInsn.a === t
-          ? thenValue
-          : this.conditionRegisterOf(thenPath.lastGuardBlock);
-      if (lastGuardReg !== undefined && sameExpr(thenValue, lastGuardReg)) {
-        expr = { kind: "binary", op: "or", left: test, right: elseValue };
-      } else {
-        expr = makeIfExpr(test, thenValue, elseValue);
-      }
+      expr = guardedValue(guardTest, thenPath.guards, thenValue, elseValue, thenPath.selectsTruthyResult);
     } else {
       expr = makeIfExpr(guardTest, thenValue, elseValue);
     }
@@ -1683,23 +1673,14 @@ class SourceBuilder {
     return { statements, value };
   }
 
-  private conditionRegisterOf(block: BasicBlock | undefined): Expression | undefined {
-    if (!block) {
-      return undefined;
-    }
-    const last = block.instructions.at(-1);
-    return last && isCompare(last.opcode) ? this.readRegister(last.a, last) : undefined;
-  }
-
   private walkValuePath(
     start: number,
     join: number,
     t: number,
     outerFallback: number,
-  ): { guards: Expression[]; value?: Expression; lastGuardBlock?: BasicBlock } | undefined {
+  ): { guards: Expression[]; value?: Expression; selectsTruthyResult?: boolean } | undefined {
     const guards: Expression[] = [];
     let current = start;
-    let lastGuard: BasicBlock | undefined;
     let seen = new Set<number>();
     while (current !== undefined && current !== join) {
       if (seen.has(current)) {
@@ -1717,11 +1698,13 @@ class SourceBuilder {
             return undefined;
           }
           guards.push(this.conditionFrom(last, true));
-          lastGuard = block;
           current = block.fallthrough!;
           continue;
         }
         if (block.fallthrough === outerFallback) {
+          // This expression contributes both the truthiness test and the
+          // selected value. Only the taken edge directly to the join proves it.
+          if (last.opcode !== Opcode.JUMPIF || last.a !== t || block.branch !== join) return undefined;
           const value = this.blockValue(block, join, t);
           if (value === undefined) {
             return undefined;
@@ -1729,16 +1712,15 @@ class SourceBuilder {
           // The jump tests the value register itself: use the captured value
           // as the guard (a phi name bound during the dry run must not leak
           // into the expression).
-          guards.push(last.a === t ? value : this.conditionFrom(last, false));
-          lastGuard = block;
-          return { guards, value, lastGuardBlock: block };
+          guards.push(value);
+          return { guards, value, selectsTruthyResult: true };
         }
         return undefined;
       }
       const value = this.blockValue(block, join, t);
-      return value !== undefined ? { guards, value, lastGuardBlock: lastGuard } : undefined;
+      return value !== undefined ? { guards, value } : undefined;
     }
-    return { guards, value: undefined, lastGuardBlock: lastGuard };
+    return { guards, value: undefined };
   }
 
   private buildElseValue(start: number, join: number, t: number): Expression | undefined {
@@ -1764,11 +1746,7 @@ class SourceBuilder {
       if (elseValue === undefined) {
         return undefined;
       }
-      const test =
-        path.guards.length > 0
-          ? foldAnd([guard, ...path.guards])
-          : guard;
-      return makeIfExpr(test, path.value, elseValue);
+      return guardedValue(guard, path.guards, path.value, elseValue, path.selectsTruthyResult);
     }
     return this.blockValue(block, join, t);
   }
@@ -2699,6 +2677,11 @@ class SourceBuilder {
     const selfCaptured = captures.some((capture) => capture.capture?.source === insn.a);
     const onlyField = !hasFreshSnapshot && Boolean(fieldName) && !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
     const existing = this.env.get(insn.a);
+    const join = shared || existing?.forwardRef ? undefined : this.phiBinding(insn.a, insn);
+    // A VAL self capture must retain this particular function if a later
+    // branch or loop iteration overwrites the join. A REF self capture must
+    // observe writes to the destination cell instead.
+    const capturesSelfValue = captures.some(cap => cap.capture?.type === CaptureType.VAL && cap.capture.source === insn.a);
     const preferred =
       (existing?.forwardRef ? existing.name : undefined) ??
       debug ??
@@ -2706,7 +2689,7 @@ class SourceBuilder {
       this.pendingCallbackHint(insn.a) ??
       peekPredicateName(child) ??
       "function";
-    const name = shared?.name ?? (
+    const name = shared?.name ?? (capturesSelfValue ? undefined : join) ?? (
       existing?.forwardRef && existing.name
         ? existing.name
         : onlyField
@@ -2800,6 +2783,19 @@ class SourceBuilder {
     const creation: Statement = {kind: "assign", targets: [ident(name)], values: [fn]};
     const scopedCreation: Statement = hasFreshSnapshot
       ? {kind: "do", body: block([...freshStatements, creation])} : creation;
+    if (join) {
+      if (!this.isDeclaredInScope(name)) {
+        this.declareInScope(name);
+        statements.push({kind: "local", names: [name], values: []});
+      }
+      if (name !== join) {
+        return [...statements, scopedCreation, ...this.define(insn.a, ident(name), insn, false, join)];
+      }
+      const aliases = this.snapshotRegisterAliases(insn.a, name);
+      const selfRef = captures.some(cap => cap.capture?.type === CaptureType.REF && cap.capture.source === insn.a);
+      this.env.set(insn.a, {name, expression: ident(name), pinned: true, forwardRef: selfRef});
+      return [...statements, ...aliases, scopedCreation];
+    }
     if (existing?.forwardRef && existing.name) {
       // MOVE keeps the old function value, while REF captures keep this cell.
       // Closure creation bypasses define(), so preserve deferred register
@@ -3415,11 +3411,13 @@ class SourceBuilder {
   private crossesStatementBeforeUse(register: number, definition: DecodedInstruction, expression?: Expression): boolean {
     const dependencies = new Set<string>();
     let containsCall = Boolean(definition.call);
+    let containsTableRead = effectOf(definition) === "table-read";
     const collect = (value: unknown): void => {
       if (!value || typeof value !== "object") return;
       const node = value as {kind?: string; name?: string};
       if (node.kind === "function-expr") return;
       if (node.kind === "call" || node.kind === "method-call") containsCall = true;
+      if (node.kind === "property" || node.kind === "index") containsTableRead = true;
       if (node.kind === "identifier" && node.name) dependencies.add(node.name);
       Object.values(value).forEach(collect);
     };
@@ -3450,6 +3448,9 @@ class SourceBuilder {
       // Luau evaluates assignment targets before RHS expressions, so moving
       // table.remove into an RHS would evaluate #table against the old state.
       if (containsCall && ["call", "table-read", "metamethod"].includes(effectOf(next))) return true;
+      // Both table reads can run __index. Keep their bytecode order even if
+      // the later result needs a temporary and the earlier one has one use.
+      if (containsTableRead && effectOf(next) === "table-read") return true;
       // Snapshot a callee lookup before independent calls that can replace it.
       if (["global-read", "table-read"].includes(effectOf(definition)) && effectOf(next) === "call") return true;
       // An independent call can later be materialized before this deferred
@@ -4087,6 +4088,16 @@ function makeIfExpr(test: Expression, consequent: Expression, alternate: Express
     };
   }
   return { kind: "if-expr", test, consequent, branches: [], alternate };
+}
+
+function guardedValue(
+  guard: Expression, guards: Expression[], value: Expression, fallback: Expression, selectsTruthyResult = false,
+): Expression {
+  const test = foldAnd([guard, ...guards]);
+  // When JUMPIF carries its operand to the join, Luau's `or` returns that
+  // exact operand. Repeating it in an if-expression would run a call twice.
+  return selectsTruthyResult ? { kind: "binary", op: "or", left: test, right: fallback }
+    : makeIfExpr(test, value, fallback);
 }
 
 function foldAnd(expressions: Expression[]): Expression {
