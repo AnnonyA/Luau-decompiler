@@ -3410,14 +3410,15 @@ class SourceBuilder {
   /** Keep evaluation before statements that cannot become part of its consumer. */
   private crossesStatementBeforeUse(register: number, definition: DecodedInstruction, expression?: Expression): boolean {
     const dependencies = new Set<string>();
-    let containsCall = Boolean(definition.call);
-    let containsTableRead = effectOf(definition) === "table-read";
+    const deferredEffect = effectOf(definition);
+    let invokesUserCode = deferredEffect === "call" || deferredEffect === "table-read" || deferredEffect === "metamethod";
     const collect = (value: unknown): void => {
       if (!value || typeof value !== "object") return;
-      const node = value as {kind?: string; name?: string};
+      const node = value as {kind?: string; name?: string; op?: string};
       if (node.kind === "function-expr") return;
-      if (node.kind === "call" || node.kind === "method-call") containsCall = true;
-      if (node.kind === "property" || node.kind === "index") containsTableRead = true;
+      if (node.kind === "call" || node.kind === "method-call" || node.kind === "property" || node.kind === "index" ||
+          (node.kind === "binary" && node.op !== "and" && node.op !== "or") ||
+          (node.kind === "unary" && node.op !== "not")) invokesUserCode = true;
       if (node.kind === "identifier" && node.name) dependencies.add(node.name);
       Object.values(value).forEach(collect);
     };
@@ -3444,20 +3445,17 @@ class SourceBuilder {
         const name = this.env.get(slot)?.name;
         return name !== undefined && dependencies.has(name);
       })) return true;
-      // A call can mutate the state observed by a later read. In particular
-      // Luau evaluates assignment targets before RHS expressions, so moving
-      // table.remove into an RHS would evaluate #table against the old state.
-      if (containsCall && ["call", "table-read", "metamethod"].includes(effectOf(next))) return true;
-      // Both table reads can run __index. Keep their bytecode order even if
-      // the later result needs a temporary and the earlier one has one use.
-      if (containsTableRead && effectOf(next) === "table-read") return true;
-      // Snapshot a callee lookup before independent calls that can replace it.
-      if (["global-read", "table-read"].includes(effectOf(definition)) && effectOf(next) === "call") return true;
+      // Both __index and arithmetic metamethods can change the state observed
+      // by the next independent operation, just like an explicit function call.
+      const nextEffect = effectOf(next);
+      if (invokesUserCode && (nextEffect === "call" || nextEffect === "table-read" || nextEffect === "metamethod")) return true;
+      // Snapshot a global lookup before an independent call can replace it.
+      if (deferredEffect === "global-read" && nextEffect === "call") return true;
       // An independent call can later be materialized before this deferred
       // value (e.g. an inlined constructor argument). Only a direct consumer
       // may nest it; that case returned above when checking register uses.
       // Discarded/multiple results also force non-call reads to be captured.
-      if (effectOf(next) === "mutation" ||
+      if (nextEffect === "mutation" ||
           (next.call && (next.call.resultCount === 0 ||
             (typeof next.call.resultCount === "number" && next.call.resultCount > 1)))) {
         return true;

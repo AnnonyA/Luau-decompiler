@@ -1,0 +1,7 @@
+[
+  "rewrites/branch-selected-closure.luau",
+  "rewrites/indexed-arithmetic-order.luau",
+  "rewrites/indexed-read-order.luau",
+  "rewrites/selected-handler-factory.luau",
+  "rewrites/short-circuit-selected-call.luau"
+]

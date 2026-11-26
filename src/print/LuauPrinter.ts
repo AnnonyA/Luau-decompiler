@@ -64,7 +64,7 @@ class Printer {
     let previous:Statement|undefined;
     for (const statement of body.statements) {
       if (this.indentLevel === 0 && previous && topLevelBoundary(previous,statement)) this.pendingBlank = true;
-      this.printStatement(statement);
+      this.printStatement(statement, previous !== undefined);
       previous=statement;
     }
     if (wrap) {
@@ -72,7 +72,9 @@ class Printer {
     }
   }
 
-  private write(text: string): void {
+  private write(text: string, followsStatement = false): void {
+    // A newline before '(' can continue the preceding call or initializer.
+    if (followsStatement && text.startsWith("(")) this.lines[this.lines.length - 1] += ";";
     if (this.pendingBlank && this.lines.length > 0 && this.lines[this.lines.length - 1] !== "") {
       this.lines.push("");
     }
@@ -80,7 +82,7 @@ class Printer {
     this.lines.push(`${this.unit.repeat(this.indentLevel)}${text}`);
   }
 
-  private printStatement(statement: Statement): void {
+  private printStatement(statement: Statement, followsStatement: boolean): void {
     switch (statement.kind) {
       case "local": {
         const names = formatTypedNames(statement.names, statement.types);
@@ -106,11 +108,12 @@ class Printer {
           `${statement.targets.map((target) => this.expr(target)).join(", ")} = ${statement.values
             .map((value) => this.expr(value))
             .join(", ")}`,
+          followsStatement,
         );
         if (statement.values.some(value => value.kind === "function-expr")) this.pendingBlank = true;
         break;
       case "compound-assign":
-        this.write(`${this.expr(statement.target)} ${statement.op}= ${this.expr(statement.value)}`);
+        this.write(`${this.expr(statement.target)} ${statement.op}= ${this.expr(statement.value)}`, followsStatement);
         break;
       case "function-decl": {
         this.namedFunction(statement, statement.name, statement.local);
@@ -162,7 +165,7 @@ class Printer {
         this.write("continue");
         break;
       case "expression-stmt":
-        this.write(this.expr(statement.expression));
+        this.write(this.expr(statement.expression), followsStatement);
         break;
       case "do":
         this.write("do");
