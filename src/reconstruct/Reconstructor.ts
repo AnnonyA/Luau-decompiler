@@ -2682,6 +2682,7 @@ class SourceBuilder {
     // branch or loop iteration overwrites the join. A REF self capture must
     // observe writes to the destination cell instead.
     const capturesSelfValue = captures.some(cap => cap.capture?.type === CaptureType.VAL && cap.capture.source === insn.a);
+    const capturesSelfRef = captures.some(cap => cap.capture?.type === CaptureType.REF && cap.capture.source === insn.a);
     const preferred =
       (existing?.forwardRef ? existing.name : undefined) ??
       debug ??
@@ -2792,8 +2793,7 @@ class SourceBuilder {
         return [...statements, scopedCreation, ...this.define(insn.a, ident(name), insn, false, join)];
       }
       const aliases = this.snapshotRegisterAliases(insn.a, name);
-      const selfRef = captures.some(cap => cap.capture?.type === CaptureType.REF && cap.capture.source === insn.a);
-      this.env.set(insn.a, {name, expression: ident(name), pinned: true, forwardRef: selfRef});
+      this.env.set(insn.a, {name, expression: ident(name), pinned: true, forwardRef: capturesSelfRef});
       return [...statements, ...aliases, scopedCreation];
     }
     if (existing?.forwardRef && existing.name) {
@@ -2805,7 +2805,7 @@ class SourceBuilder {
       return [...statements, scopedCreation];
     }
     if (selfCaptured || mutable) {
-      this.env.set(insn.a, { name, expression: ident(name), pinned: true });
+      this.env.set(insn.a, { name, expression: ident(name), pinned: true, forwardRef: capturesSelfRef });
       this.declareInScope(name);
       return [
         ...statements,
@@ -3353,6 +3353,7 @@ class SourceBuilder {
         expression.kind === "identifier" &&
         expression.name === preferred &&
         !forceLocal &&
+        !(insn.opcode === Opcode.MOVE && this.env.get(insn.b)?.forwardRef) &&
         !debug &&
         phi === undefined &&
         !refCaptured &&
@@ -3409,6 +3410,7 @@ class SourceBuilder {
 
   /** Keep evaluation before statements that cannot become part of its consumer. */
   private crossesStatementBeforeUse(register: number, definition: DecodedInstruction, expression?: Expression): boolean {
+    const copiedCell = definition.opcode === Opcode.MOVE && this.env.get(definition.b)?.forwardRef;
     const dependencies = new Set<string>();
     const deferredEffect = effectOf(definition);
     let invokesUserCode = deferredEffect === "call" || deferredEffect === "table-read" || deferredEffect === "metamethod";
@@ -3434,7 +3436,8 @@ class SourceBuilder {
       if (next.uses.includes(register) ||
           (next.call?.argumentCount === "multret" && register > next.a) ||
           (next.opcode === Opcode.RETURN && next.b === 0 && register >= next.a)) {
-        return false;
+        // Another MOVE can carry the copy well beyond this first use.
+        return Boolean(copiedCell && next.opcode === Opcode.MOVE);
       }
       if (next.defs.includes(register)) {
         return false;
@@ -3448,7 +3451,9 @@ class SourceBuilder {
       // Both __index and arithmetic metamethods can change the state observed
       // by the next independent operation, just like an explicit function call.
       const nextEffect = effectOf(next);
-      if (invokesUserCode && (nextEffect === "call" || nextEffect === "table-read" || nextEffect === "metamethod")) return true;
+      // MOVE snapshots an open REF cell. A call or metamethod can mutate
+      // that cell without an explicit bytecode write to its register.
+      if ((invokesUserCode || copiedCell) && (nextEffect === "call" || nextEffect === "table-read" || nextEffect === "metamethod")) return true;
       // Snapshot a global lookup before an independent call can replace it.
       if (deferredEffect === "global-read" && nextEffect === "call") return true;
       // An independent call can later be materialized before this deferred
