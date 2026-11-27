@@ -1,8 +1,129 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Turn Luau bytecode into readable source. Open source, local processing, no API key required."><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'"><meta name="color-scheme" content="dark"><title>AnnonyA · Luau Decompiler</title><link rel="icon" href="./assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./assets/style.css"><script type="module" src="./assets/home.js"></script></head>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LUVEX turns Luau bytecode into readable source, right in your browser. Open source, local processing, and verified Rosetta benchmark results.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0912">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LUVEX — See the source. Understand the logic.">
+  <meta property="og:description" content="A Luau decompiler built for understanding. Readable source, local processing, and benchmark results you can inspect.">
+  <meta property="og:url" content="https://annonya.github.io/Luau-decompiler/">
+  <meta property="og:image" content="https://annonya.github.io/Luau-decompiler/assets/luvex-logo.webp">
+  <meta property="og:image:alt" content="LUVEX purple emblem">
+  <title>LUVEX — Luau Decompiler</title>
+  <link rel="icon" href="./assets/luvex-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="./assets/style.css">
+  <script type="module" src="./assets/home.js"></script>
+</head>
 <body class="landing-page">
-<header class="landing-header"><a class="brand" href="./"><img src="./assets/icon.svg" width="32" height="32" alt="">Annony<span>A</span></a><nav aria-label="Main navigation"><a href="#features">Features</a><a href="https://github.com/AnnonyA/Luau-decompiler#readme" target="_blank" rel="noopener noreferrer">Docs <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></nav><a class="primary pill" href="./decompiler/">Open decompiler <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></header>
-<main class="landing-main"><section class="hero"><p class="eyebrow"><span class="dot"></span> OPEN SOURCE LUAU DECOMPILER</p><h1>Bytecode in.<br><span>Understanding out.</span></h1><p class="lead">A closer look at compiled Luau. Recover readable source,<br class="desktop-break"> inspect instructions, and follow the logic.</p><div class="hero-actions"><a class="primary" href="./decompiler/">Upload bytecode <span><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></span></a><a class="secondary" href="https://github.com/AnnonyA/Luau-decompiler" target="_blank" rel="noopener noreferrer">Explore the source <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></div><p class="hero-note">Runs on your device. No account. No API key.</p></section>
-<section class="preview" aria-label="Example source comparison"><div class="preview-top"><div class="preview-tabs" role="tablist" aria-label="Example view"><button id="sample-before" role="tab" aria-selected="false" aria-controls="preview-code" tabindex="-1">Anonymous locals</button><button id="sample-after" role="tab" aria-selected="true" aria-controls="preview-code">Readable Luau</button></div><span class="sample-label">ILLUSTRATIVE EXAMPLE</span></div><div class="preview-body"><div class="preview-editor" id="preview-code" role="tabpanel" aria-labelledby="sample-after"><div class="code-view"><pre class="line-numbers" id="sample-lines" aria-hidden="true"></pre><pre><code id="sample-code"></code></pre></div></div><aside class="symbols"><p class="eyebrow">FOLLOW THE LOGIC</p><div><strong>Players</strong><span>A service with a useful name</span></div><div><strong>formatName</strong><span>A small, readable function</span></div><div><strong>player: Player</strong><span>Types where evidence allows</span></div><div><strong>Source + instructions</strong><span>Two ways to inspect a chunk</span></div><a href="./decompiler/">Try your own bytecode <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></aside></div></section>
-<section class="features" id="features"><div class="section-intro"><p class="eyebrow">A WORKBENCH FOR LUAU</p><h2>See what’s inside.</h2><p>From a compiled chunk to something you can explore.</p></div><div class="feature-grid"><article><span class="feature-icon">01 /</span><h3>Your bytecode stays yours.</h3><p>Decompilation runs locally in an isolated browser worker. Your file is never uploaded to a decompiler service.</p><code>Local input → local result</code></article><article><span class="feature-icon">02 /</span><h3>Read beyond the source.</h3><p>Switch between reconstructed Luau, disassembly, and diagnostics to investigate the same chunk.</p><code>Source · Disassembly · Diagnostics</code></article><article><span class="feature-icon">03 /</span><h3>Make the output yours.</h3><p>Choose types, indentation, and supported rewrites. Copy the result or download a Luau file.</p><code>2 spaces · 4 spaces · tabs</code></article><article><span class="feature-icon">04 /</span><h3>Open from end to end.</h3><p>Inspect the engine, reproduce the benchmarks, or run the CLI. Reconstruction can be incomplete; diagnostics keep limitations visible.</p><code>Built in public. Tested against Luau.</code></article></div></section>
-<section class="closing"><p class="eyebrow">READY TO TAKE A LOOK?</p><h2>Bring your bytecode.</h2><p>Choose a file, paste Base64, or start with the built-in example.</p><a href="./decompiler/" class="primary">Open decompiler <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></section><footer><a class="brand" href="./"><img src="./assets/icon.svg" width="24" height="24" alt="">Annony<span>A</span></a><span>Luau Decompiler · Open source</span><a href="https://github.com/AnnonyA/Luau-decompiler">GitHub <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#external"/></svg></a></footer></main></body></html>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="landing-header">
+    <a class="brand" href="./" aria-label="LUVEX home"><img src="./assets/luvex-logo.webp" width="42" height="42" alt=""><span>LUVEX</span></a>
+    <nav aria-label="Main navigation"><a href="#product">Product</a><a href="#benchmarks">Benchmarks</a><a href="https://github.com/AnnonyA/Luau-decompiler/blob/main/CHANGELOG.md">Changelog</a></nav>
+    <a class="primary header-cta" href="./decompiler/">Open decompiler</a>
+  </header>
+  <main class="landing-main" id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> LUAU BYTECODE, MADE READABLE</p>
+        <h1 id="hero-title">See the source.<br><span>Understand<br class="hero-break"> the logic.</span></h1>
+        <p class="lead">Turn compiled Luau into code you can work with. Reconstruct the source, inspect the instructions, and get back to building.</p>
+        <div class="hero-actions">
+          <a class="primary" href="./decompiler/"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#terminal"/></svg> Open decompiler</a>
+          <a class="secondary" href="https://github.com/AnnonyA/Luau-decompiler"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#github"/></svg> View on GitHub</a>
+        </div>
+        <p class="hero-note"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#shield"/></svg> On your device. No account. No API key.</p>
+      </div>
+      <div class="hero-art">
+        <div class="logo-orbit" aria-hidden="true"></div>
+        <img class="hero-logo" src="./assets/luvex-logo.webp" width="1254" height="1254" alt="LUVEX — purple crystalline L emblem" fetchpriority="high" decoding="async">
+        <div class="art-caption"><span class="art-caption-line" aria-hidden="true"></span><span>BUILT TO MAKE SENSE OF LUAU</span></div>
+      </div>
+    </section>
+    <div class="proof-strip" aria-label="Rosetta benchmark highlights">
+      <div class="proof-intro"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#check-circle"/></svg><span>Measured.<br><strong>Not just promised.</strong></span></div>
+      <div><strong>100<span>%</span></strong><span>Usable Rosetta profiles passed</span></div>
+      <div><strong>12,276<span> / 12,276</span></strong><span>Full suite · same on Hard Full</span></div>
+      <a href="#benchmarks" class="proof-link">Explore the results <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#chart"/></svg></a>
+    </div>
+    <section class="product-section section-space" id="product" aria-labelledby="product-title">
+      <div class="section-heading-wide"><div><p class="eyebrow">FROM BYTECODE TO CLARITY</p><h2 id="product-title">One chunk.<br>The whole picture.</h2></div><p>Readable Luau is the starting point. Follow the instructions underneath it, inspect diagnostics, and shape the output to fit your workflow.</p></div>
+      <div class="preview">
+        <div class="preview-top"><div class="preview-file"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#code"/></svg> player-names.luau</div><span class="sample-label">ILLUSTRATIVE EXAMPLE</span></div>
+        <div class="preview-body">
+          <div class="preview-main">
+            <div class="preview-tabs" role="tablist" aria-label="Example view"><button id="sample-before" role="tab" aria-selected="false" aria-controls="preview-code" tabindex="-1">Compact names</button><button id="sample-after" role="tab" aria-selected="true" aria-controls="preview-code">Readable Luau</button></div>
+            <div class="preview-editor" id="preview-code" role="tabpanel" aria-labelledby="sample-after" tabindex="0"><div class="code-view"><pre class="line-numbers" id="sample-lines" aria-hidden="true"></pre><pre><code id="sample-code">local Players = game:GetService("Players")</code></pre></div></div>
+          </div>
+          <aside class="preview-aside" aria-label="Workbench capabilities">
+            <p class="eyebrow">MORE WAYS TO UNDERSTAND</p>
+            <div class="capability"><span class="capability-icon"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#code"/></svg></span><div><h3>Readable source</h3><p>Recover structure, useful names, and types where the evidence allows.</p></div></div>
+            <div class="capability"><span class="capability-icon"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#layers"/></svg></span><div><h3>Instruction-level detail</h3><p>Switch to disassembly for a closer look at the same chunk.</p></div></div>
+            <div class="capability"><span class="capability-icon"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#sliders"/></svg></span><div><h3>Output on your terms</h3><p>Adjust formatting and rewrites. Copy the result or download a Luau file.</p></div></div>
+            <a class="text-link" href="./decompiler/">Try your own bytecode</a>
+          </aside>
+        </div>
+        <div class="preview-footer"><span><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#lock"/></svg> Processed in an isolated browser worker</span><span>Source · Disassembly · Diagnostics</span></div>
+      </div>
+    </section>
+    <section class="benchmarks-section section-space" id="benchmarks" aria-labelledby="benchmarks-title">
+      <div class="benchmark-intro">
+        <p class="eyebrow">THE NUMBERS, IN THE OPEN</p>
+        <h2 id="benchmarks-title">Trust the result.<br><span>Inspect the evidence.</span></h2>
+        <p>LUVEX passes every usable test profile across all four pinned Rosetta 3 suites. Behavioral correctness and source similarity are reported separately.</p>
+        <a class="text-link" href="https://github.com/AnnonyA/Luau-decompiler/tree/main/benchmarks/results/rosetta-source-similarity-2026-11-27">Read the complete benchmark report</a>
+        <div class="benchmark-meta"><span>ROSETTA 3</span><span>Measured Nov 27, 2026</span></div>
+      </div>
+      <div class="benchmark-results">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Rosetta results table">
+          <table><caption class="sr-only">Strict Rosetta results for the engine published in commit f9543bbb</caption><thead><tr><th scope="col">Suite</th><th scope="col">Passed</th><th scope="col">Source similarity</th></tr></thead><tbody>
+            <tr><th scope="row">Quick</th><td><strong>882 / 882</strong><span class="pass-label">100%</span></td><td>76.93%</td></tr>
+            <tr><th scope="row">Full</th><td><strong>12,276 / 12,276</strong><span class="pass-label">100%</span></td><td>73.91%</td></tr>
+            <tr><th scope="row">Hard Quick</th><td><strong>882 / 882</strong><span class="pass-label">100%</span></td><td>76.39%</td></tr>
+            <tr><th scope="row">Hard Full</th><td><strong>12,276 / 12,276</strong><span class="pass-label">100%</span></td><td>73.53%</td></tr>
+          </tbody></table>
+        </div>
+        <p class="benchmark-note">Full and Hard Full each have 6 additional original profiles that exceed Rosetta’s execution budget. They are not counted as passes. Quick is a subset of Full.</p>
+        <details class="methodology"><summary>What does source similarity measure?<svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#chevron"/></svg></summary><p>Rosetta compares normalized token sequences: names, numeric values, and strings are normalized; comments and whitespace are ignored. The score reflects source structure, while a pass checks behavior. A 100% pass rate does not mean identical source.</p><p>These are reproducible results for <a href="https://github.com/Scrensayol/rosetta/tree/80f3c13ce48dc3318d5d49f54958f580937ca8aa">Rosetta revision 80f3c13</a> and <a href="https://github.com/AnnonyA/Luau-decompiler/commit/f9543bbb26615f50aa599cead318beb0f9a6e7a0">engine revision f9543bb</a>, not a guarantee for every possible input.</p></details>
+      </div>
+    </section>
+    <section class="workflow-section section-space" id="setup" aria-labelledby="workflow-title">
+      <div class="section-heading-wide"><div><p class="eyebrow">FIT IT INTO YOUR WORKFLOW</p><h2 id="workflow-title">Start in a tab.<br>Go further in your terminal.</h2></div><p>The same open-source engine powers the browser workbench, CLI, and TypeScript API. Choose the way you work.</p></div>
+      <div class="workflow-grid">
+        <article class="browser-workflow">
+          <div class="workflow-icon"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#window"/></svg></div><h3>Zero setup. Full focus.</h3>
+          <p>Drop a bytecode file or paste Base64. Your input stays in your browser, and your result is ready to inspect, copy, or download.</p>
+          <ul class="check-list"><li><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#check"/></svg> No account or API key</li><li><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#check"/></svg> Binary and Base64 input</li><li><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#check"/></svg> Source, disassembly, and diagnostics</li></ul><a class="primary" href="./decompiler/">Launch the workbench</a>
+        </article>
+        <article class="terminal-workflow">
+          <div class="terminal-heading"><span><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#terminal"/></svg> Local setup</span><span>Node.js 20+</span></div>
+          <pre><code><span class="tok-comment"># Get the source</span>
+git clone https://github.com/AnnonyA/Luau-decompiler.git
+cd Luau-decompiler
+
+<span class="tok-comment"># Install and build</span>
+npm ci
+npm run build
+
+<span class="tok-comment"># Reconstruct a chunk</span>
+node dist/cli.js decompile input.luauc &gt; output.luau</code></pre>
+          <div class="terminal-footer"><span>MIT licensed. Built in the open.</span><a class="text-link" href="https://github.com/AnnonyA/Luau-decompiler#quick-start">Setup &amp; API guide</a></div>
+        </article>
+      </div>
+    </section>
+    <section class="faq-section section-space" aria-labelledby="faq-title">
+      <div><p class="eyebrow">A FEW USEFUL ANSWERS</p><h2 id="faq-title">Before you decompile.</h2><a class="text-link" href="https://github.com/AnnonyA/Luau-decompiler/blob/main/CHANGELOG.md">See the version history</a></div>
+      <div class="faq-list">
+        <details><summary>Does my bytecode leave my device?<svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#chevron"/></svg></summary><p>No. The browser downloads the static application and runs the engine in a local worker. Your bytecode is not sent to a decompilation service.</p></details>
+        <details><summary>What files can I open?<svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#chevron"/></svg></summary><p>Use Luau bytecode as a binary file or Base64 text. Official bytecode versions 3–9 are supported; versions 10–14 are experimental. The browser accepts up to 16 MiB. Encrypted or compressed wrappers need to be decoded first.</p></details>
+        <details><summary>Will I get the exact original source?<svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#chevron"/></svg></summary><p>Not always. Compilation can remove comments, original names, and source structure. LUVEX reconstructs readable code from the information that remains. Check Diagnostics for limitations and use the benchmark report to see measured fidelity.</p></details>
+      </div>
+    </section>
+    <section class="closing" aria-labelledby="closing-title"><img src="./assets/luvex-logo.webp" width="88" height="88" alt="" loading="lazy"><div><p class="eyebrow">LESS GUESSWORK. MORE UNDERSTANDING.</p><h2 id="closing-title">Make your next chunk readable.</h2></div><a class="primary" href="./decompiler/">Open LUVEX</a></section>
+  </main>
+  <footer class="landing-footer"><div><a class="brand" href="./"><span>LUVEX</span></a><p>Luau Decompiler by AnnonyA.</p></div><nav aria-label="Footer navigation"><a href="https://github.com/AnnonyA/Luau-decompiler">GitHub</a><a href="https://github.com/AnnonyA/Luau-decompiler#readme">Documentation</a><a href="https://github.com/AnnonyA/Luau-decompiler/blob/main/CHANGELOG.md">Changelog</a><a href="https://github.com/AnnonyA/Luau-decompiler/blob/main/LICENSE">MIT license</a></nav><span class="footer-note">Made for understanding.</span></footer>
+</body>
+</html>
