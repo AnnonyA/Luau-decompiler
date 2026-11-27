@@ -67,7 +67,10 @@ class Refiner {
     switch (withExpressions.kind) {
       case "function-decl":
         return this.withBody(withExpressions, this.block(withExpressions.body, { tail: "function", root: true }));
-      case "while":
+      case "while": {
+        const refined = this.withBody(withExpressions, this.block(withExpressions.body, { tail: "loop", root: true }));
+        return recoverLoopCondition(refined);
+      }
       case "numeric-for":
       case "generic-for":
         return this.withBody(withExpressions, this.block(withExpressions.body, { tail: "loop", root: true }));
@@ -316,6 +319,40 @@ function mergeEqualArms(statement: IfStatement): IfStatement {
 
 function isGuard(statement: Statement | undefined): statement is IfStatement {
   return statement?.kind === "if" && statement.branches.length === 0 && !statement.alternate;
+}
+
+function isBreakGuard(statement: Statement | undefined): statement is IfStatement {
+  return isGuard(statement) && statement.consequent.statements.length === 1 &&
+    statement.consequent.statements[0]!.kind === "break";
+}
+
+/** Rejoin the jumps of a loop test without moving an evaluation across work.
+ * A head guard is evaluated on every entry, including after `continue`.
+ * A latch guard can become `until` only when no continue of this loop can
+ * skip it. Body locals retain their scope through the repeat condition. */
+function recoverLoopCondition(statement: Extract<Statement, { kind: "while" }>): Statement {
+  let { test, body } = statement;
+  // An existing condition already explains this loop's entry. Keep explicit
+  // body exits in that case instead of enlarging a readable header.
+  if (test.kind !== "literal" || test.value !== true) return statement;
+  let start = 0;
+  while (isBreakGuard(body.statements[start])) {
+    const guard = body.statements[start]! as IfStatement;
+    const positive = negateTest(guard.test);
+    test = test.kind === "literal" && test.value === true ? positive : conjunction(test, positive);
+    start += 1;
+  }
+  if (start > 0) body = { ...body, statements: body.statements.slice(start) };
+  if (test.kind === "literal" && test.value === true && !continues(body)) {
+    let end = body.statements.length;
+    while (isBreakGuard(body.statements[end - 1])) end -= 1;
+    if (end < body.statements.length) {
+      const tests = (body.statements.slice(end) as IfStatement[]).map(guard => guard.test);
+      return { kind: "repeat", body: { ...body, statements: body.statements.slice(0, end) },
+        test: tests.reduce(disjunction) };
+    }
+  }
+  return body === statement.body ? statement : { ...statement, body, test };
 }
 
 /** Whether a `continue` of the enclosing loop occurs in this block. */

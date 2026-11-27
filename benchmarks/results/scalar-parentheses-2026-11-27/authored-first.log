@@ -1,0 +1,25 @@
+baseline: 4/12 pass | 8 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+  failures by profile: O0g1 1, O0g1+x1 1, O0g2 1, O0g2+x2 1, O1g1 1, O1g1+x2 1, O1g2 1, O1g2+x3 1
+  observations O0g1 Mismatch: printed 25 lines, want 29
+  observations O1g1 Mismatch: printed 25 lines, want 29
+  observations O0g2 Mismatch: printed 25 lines, want 29
+  observations O1g2 Mismatch: printed 25 lines, want 29
+  observations O0g1+x1 Mismatch: printed 25 lines, want 29
+  observations O1g1+x2 Mismatch: printed 25 lines, want 29
+  observations O0g2+x2 Mismatch: printed 25 lines, want 29
+  observations O1g2+x3 Mismatch: printed 25 lines, want 29
+improved: 4/12 pass | 8 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+  failures by profile: O0g1 1, O0g1+x1 1, O0g2 1, O0g2+x2 1, O1g1 1, O1g1+x2 1, O1g2 1, O1g2+x3 1
+  observations O0g1 Mismatch: printed 25 lines, want 29
+  observations O1g1 Mismatch: printed 25 lines, want 29
+  observations O0g2 Mismatch: printed 25 lines, want 29
+  observations O1g2 Mismatch: printed 25 lines, want 29
+  observations O0g1+x1 Mismatch: printed 25 lines, want 29
+  observations O1g1+x2 Mismatch: printed 25 lines, want 29
+  observations O0g2+x2 Mismatch: printed 25 lines, want 29
+  observations O1g2+x3 Mismatch: printed 25 lines, want 29
+readability on the 4 round trips every decompiler passed:
+  decompiler  similarity   size  locals  nesting  endless  names g2  cpu ms
+  baseline         83.1%  1.16x   1.11x    +0.00        0     60.5%  278.46
+  improved         83.1%  1.16x   1.11x    +0.00        0     60.5%  264.24
+24 round trips in 2.8s

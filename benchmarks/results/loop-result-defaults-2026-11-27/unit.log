@@ -1,0 +1,163 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> luau-decompiler@0.2.0 test
+> vitest run --maxWorkers=2
+
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/Luau-decompiler
+
+ ✓ tests/loop-result-defaults.test.ts (34 tests) 493ms
+ ✓ tests/rosetta-semantic-boundaries.test.ts (100 tests) 2631ms
+   ✓ call, constructor and contextual identifier boundaries > keeps all compiled regressions representable at O0g1  587ms
+   ✓ call, constructor and contextual identifier boundaries > keeps all compiled regressions representable at O0g2  366ms
+   ✓ call, constructor and contextual identifier boundaries > keeps all compiled regressions representable at O1g1  416ms
+   ✓ call, constructor and contextual identifier boundaries > keeps all compiled regressions representable at O2g2  378ms
+ ✓ tests/nested-register-pressure.test.ts (16 tests) 984ms
+ ✓ tests/source-patterns.test.ts (3 tests) 833ms
+   ✓ real bytecode source patterns > keeps the official fixture byte-exact and reconstructs numeric-for continue  315ms
+   ✓ real bytecode source patterns > normalizes Roblox opcodes and recovers the IndexUI service/module chain  399ms
+ ✓ tests/literal-member-syntax.test.ts (6 tests) 759ms
+   ✓ Luau member syntax on literal receivers > recovers valid literal format calls from the actual luac.bin fixture  333ms
+   ✓ Luau member syntax on literal receivers > recovers valid literal format calls from the actual IndexUI fixture  423ms
+ ✓ tests/shared-return-conditions.test.ts (12 tests) 642ms
+ ✓ tests/rosetta-control-boundaries.test.ts (38 tests) 710ms
+ ✓ tests/shared-return-phis.test.ts (12 tests) 522ms
+ ✓ tests/local-lifetimes.test.ts (8 tests) 418ms
+   ✓ commits large constructors before their field snapshots exhaust local registers  372ms
+ ✓ tests/function-local-names.test.ts (24 tests) 256ms
+ ✓ tests/register-pressure.test.ts (14 tests) 343ms
+ ✓ tests/loop-condition-presentation.test.ts (23 tests) 342ms
+ ✓ tests/loop-backedge-regressions.test.ts (15 tests) 381ms
+ ✓ tests/large-bindings.test.ts (17 tests) 331ms
+ ✓ tests/terminal-generic-continuations.test.ts (24 tests) 296ms
+ ✓ tests/closure-constant-regions.test.ts (13 tests) 320ms
+ ✓ tests/value-capture-lifetime.test.ts (2 tests) 370ms
+ ✓ tests/rosetta-repeat-paths.test.ts (27 tests) 373ms
+ ✓ tests/loop-exit-work-observations.test.ts (18 tests) 269ms
+ ✓ tests/roblox-service-signatures.test.ts (9 tests) 200ms
+ ✓ tests/rosetta-unused-conditionals.test.ts (18 tests) 261ms
+ ✓ tests/fresh-closures.test.ts (4 tests) 146ms
+ ✓ tests/inline-state.test.ts (15 tests) 98ms
+ ✓ tests/return-structure.test.ts (11 tests) 23ms
+ ✓ tests/closure-move-loop-lifetime.test.ts (10 tests) 158ms
+ ✓ tests/closure-inline-recovery.test.ts (10 tests) 235ms
+ ✓ tests/generic-loop-entry.test.ts (9 tests) 82ms
+ ✓ tests/rewrite-integration.test.ts (5 tests) 113ms
+ ✓ tests/split-open-table.test.ts (6 tests) 122ms
+ ✓ tests/loop-exit-values.test.ts (6 tests) 164ms
+ ✓ tests/inline-lexical-recovery.test.ts (9 tests) 76ms
+ ✓ tests/rosetta-global-provenance.test.ts (12 tests) 122ms
+ ✓ tests/rosetta-shared-continuation.test.ts (6 tests) 101ms
+ ✓ tests/object-optimized.test.ts (15 tests) 195ms
+ ✓ tests/inline-writes.test.ts (12 tests) 137ms
+ ✓ tests/terminal-loop-boundaries.test.ts (12 tests) 128ms
+ ✓ tests/inline-recovery.test.ts (20 tests) 146ms
+ ✓ tests/http-request-limits.test.ts (1 test) 85ms
+ ✓ tests/constructor-read-order.test.ts (6 tests) 152ms
+ ✓ tests/guarded-fastcall-regressions.test.ts (7 tests) 114ms
+ ✓ tests/extended-constant-operands.test.ts (25 tests) 96ms
+ ✓ tests/guard-prelude-effects.test.ts (12 tests) 91ms
+ ✓ tests/terminal-layout-return.test.ts (6 tests) 177ms
+ ✓ tests/closure-call-boundary.test.ts (11 tests) 117ms
+ ✓ tests/terminal-return-adapters.test.ts (6 tests) 97ms
+ ✓ tests/literal-value-fidelity.test.ts (20 tests) 148ms
+ ✓ tests/closure-debug-names.test.ts (9 tests) 160ms
+ ✓ tests/optional-rewrites.test.ts (22 tests) 25ms
+ ✓ tests/permuted-call-identity.test.ts (6 tests) 115ms
+ ✓ tests/loop-exits.test.ts (7 tests) 82ms
+ ✓ tests/control-flow-normalization.test.ts (22 tests) 167ms
+ ✓ tests/captured-cleanup.test.ts (24 tests) 82ms
+ ✓ tests/negative-power-literals.test.ts (4 tests) 21ms
+ ✓ tests/debug-declarations.test.ts (8 tests) 86ms
+ ✓ tests/nan-literal-fidelity.test.ts (8 tests) 44ms
+ ✓ tests/roblox-callback-type-flow.test.ts (26 tests) 154ms
+ ✓ tests/iterator-result-names.test.ts (6 tests) 76ms
+ ✓ tests/instruction-window-scans.test.ts (3 tests) 63ms
+ ✓ tests/closure-recovery-depth.test.ts (2 tests) 46ms
+ ✓ tests/numeric-loop-entry.test.ts (6 tests) 103ms
+ ✓ tests/repeated-register-operands.test.ts (7 tests) 14ms
+ ✓ tests/valuepack.test.ts (16 tests) 58ms
+ ✓ tests/open-call-fixed-arguments.test.ts (3 tests) 44ms
+ ✓ tests/semantics.test.ts (33 tests) 63ms
+ ✓ tests/shortcircuit-independent-values.test.ts (2 tests) 119ms
+ ✓ tests/decompile.test.ts (14 tests) 51ms
+ ✓ tests/table-template-key-validation.test.ts (6 tests) 39ms
+ ✓ tests/printer-literals.test.ts (12 tests) 71ms
+ ✓ tests/scalar-call-swap.test.ts (6 tests) 67ms
+ ✓ tests/constant-pool-validation.test.ts (5 tests) 21ms
+ ✓ tests/pr58-phi-ownership.test.ts (1 test) 64ms
+ ✓ tests/competition-regressions.test.ts (4 tests) 44ms
+ ✓ tests/closure-inline-adversarial.test.ts (3 tests) 43ms
+ ✓ tests/register-self-copies.test.ts (18 tests) 62ms
+ ✓ tests/source-structure.test.ts (15 tests) 31ms
+ ✓ tests/wide-open-packs.test.ts (3 tests) 21ms
+ ✓ tests/import-reference-validation.test.ts (5 tests) 36ms
+ ✓ tests/pr58-register-ownership.test.ts (1 test) 38ms
+ ✓ tests/open-pack-unreachable-predecessors.test.ts (6 tests) 61ms
+ ✓ tests/name-allocation.test.ts (7 tests) 54ms
+ ✓ tests/name-style.test.ts (13 tests) 11ms
+ ✓ tests/call-evaluation-regressions.test.ts (8 tests) 41ms
+ ✓ tests/closure-assignment-alias.test.ts (1 test) 32ms
+ ✓ tests/natural-loop-regions.test.ts (8 tests) 60ms
+ ✓ tests/while-header-setup.test.ts (3 tests) 54ms
+ ✓ tests/fallback-name-evidence.test.ts (5 tests) 18ms
+ ✓ tests/pr58-tables-terminals.test.ts (2 tests) 32ms
+ ✓ tests/closure-creation-order.test.ts (20 tests) 65ms
+ ✓ tests/unused-expression-effects.test.ts (5 tests) 72ms
+ ✓ tests/ast-expression-semantics.test.ts (10 tests) 14ms
+ ✓ tests/experimental-classes.test.ts (7 tests) 42ms
+ ✓ tests/reconstruction-quality.test.ts (22 tests) 41ms
+ ✓ tests/import-comparison-constant-kinds.test.ts (6 tests) 63ms
+ ✓ tests/closure-constant-identity.test.ts (1 test) 41ms
+ ✓ tests/roblox-catalog.test.ts (3 tests) 16ms
+ ✓ tests/table-key-recovery.test.ts (4 tests) 86ms
+ ✓ tests/early-return-scope.test.ts (4 tests) 19ms
+ ✓ tests/if-expression-scope.test.ts (5 tests) 12ms
+ ✓ tests/decoder.test.ts (13 tests) 11ms
+ ✓ tests/function-name-inference.test.ts (11 tests) 33ms
+ ✓ tests/inline-tuples.test.ts (12 tests) 58ms
+ ✓ tests/cfg-block-building.test.ts (2 tests) 14ms
+ ✓ tests/closure-runtime-argument.test.ts (1 test) 49ms
+ ✓ tests/pipeline-errors.test.ts (2 tests) 21ms
+ ✓ tests/closure-field-effects.test.ts (8 tests) 24ms
+ ✓ tests/demo-input.test.ts (10 tests) 16ms
+ ✓ tests/bytecode-modern.test.ts (9 tests) 23ms
+ ✓ tests/ast-identifier-validation.test.ts (14 tests) 5ms
+ ✓ tests/pr58-bindings.test.ts (6 tests) 12ms
+ ✓ tests/parameter-names.test.ts (7 tests) 20ms
+ ✓ tests/closure-cache-priming.test.ts (13 tests) 23ms
+ ✓ tests/loop-exit-work.test.ts (6 tests) 45ms
+ ✓ tests/closure-identity-lowering.test.ts (6 tests) 24ms
+ ✓ tests/nested-closure-expressions.test.ts (5 tests) 13ms
+ ✓ tests/cfg-ssa.test.ts (11 tests) 11ms
+ ✓ tests/liveness-reachability.test.ts (5 tests) 6ms
+ ✓ tests/ssa-phi-joins.test.ts (8 tests) 13ms
+ ✓ tests/function-evidence.test.ts (7 tests) 6ms
+ ✓ tests/nested-capture-reads.test.ts (3 tests) 8ms
+ ✓ tests/semantic-cleanup-regressions.test.ts (5 tests) 16ms
+ ✓ tests/string-rewrite-fidelity.test.ts (12 tests) 13ms
+ ✓ tests/closure-effects.test.ts (4 tests) 7ms
+ ✓ tests/roblox-api-inference.test.ts (7 tests) 7ms
+ ✓ tests/rewrite-printer-options.test.ts (11 tests) 6ms
+ ✓ tests/temporary-side-effects.test.ts (6 tests) 13ms
+ ✓ tests/multiple-backedges.test.ts (2 tests) 8ms
+ ✓ tests/byte-string-fidelity.test.ts (9 tests) 7ms
+ ✓ tests/pr58-generic-regions.test.ts (1 test) 22ms
+ ✓ tests/closure-capture-validation.test.ts (6 tests) 8ms
+ ✓ tests/nan-safe-condition-negations.test.ts (9 tests) 12ms
+ ✓ tests/rename-scope.test.ts (2 tests) 5ms
+ ✓ tests/table-constant-bounds.test.ts (4 tests) 18ms
+ ✓ tests/unary-minus-printer.test.ts (5 tests) 3ms
+ ✓ tests/bytecode-jump-boundaries.test.ts (5 tests) 18ms
+ ✓ tests/roblox-catalog-nullability.test.ts (6 tests) 2ms
+ ✓ tests/source-presentation.test.ts (5 tests) 3ms
+ ✓ tests/call-boundary-presentation.test.ts (11 tests) 11ms
+ ✓ tests/bytecode-reader-limits.test.ts (6 tests) 10ms
+ ✓ tests/zero-result-register-effects.test.ts (10 tests) 3ms
+ ✓ tests/printer-precedence.test.ts (10 tests) 3ms
+
+ Test Files  140 passed (140)
+      Tests  1431 passed (1431)
+   Start at  21:26:39
+   Duration  75.39s (transform 3.85s, setup 0ms, collect 22.66s, tests 18.43s, environment 25ms, prepare 9.02s)
+

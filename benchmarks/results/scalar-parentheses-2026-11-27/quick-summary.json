@@ -1,0 +1,18 @@
+{
+  "baseline": {
+    "profiles": 882,
+    "similarity": 76.41904021269069,
+    "tokenRatio": 1.0048728013518125
+  },
+  "final": {
+    "profiles": 882,
+    "similarity": 76.43114172952787,
+    "tokenRatio": 1.0021568012955338
+  },
+  "improvedProfiles": 339,
+  "lowerSimilarityProfiles": 281,
+  "removedTokens": 3988,
+  "baselineCommit": "f60a031",
+  "rosettaCommit": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "metric": "Unmodified quality.rs/lex.rs, exact882 cachedQuick inputs, arithmetic mean similarity and geometric mean (outputTokens+1)/(sourceTokens+1); separate behavioral check required."
+}

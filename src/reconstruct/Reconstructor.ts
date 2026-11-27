@@ -25,6 +25,7 @@ import { NameAllocator, debugNameAt, isValidIdentifier, parameterNames } from ".
 import { eventCallbackName, nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
 import { ClosureEffects } from "./ClosureEffects.js";
 import { analyzeClosureCachePriming, closureCacheKey, type CaptureIdentity } from "./ClosureCachePriming.js";
+import { groupDebugDeclarations, parallelLocalDefinitions } from "./DebugDeclarations.js";
 
 export interface FunctionIr {
   cfg: ControlFlowGraph;
@@ -53,6 +54,8 @@ export interface ReconstructedFunction {
   ir: FunctionIr;
   /** Generated names of bindings whose register use proves a declared local. */
   declaredLocals: ReadonlySet<string>;
+  /** The same evidence kept in its producing function's namespace. */
+  declaredLocalsByPrototype: ReadonlyMap<number, ReadonlySet<string>>;
   /** Allocator-suffixed working name -> the name that was asked for. */
   nameStems: ReadonlyMap<string, string>;
   /** Every binding name this reconstruction chose itself. */
@@ -102,18 +105,22 @@ class ReconstructionNames {
     this.closureIdentityDiagnostics.push({severity: "warning", code, prototypeId, pc, message});
   }
   readonly declaredLocals = new Set<string>();
+  readonly declaredLocalsByPrototype = new Map<number, Set<string>>();
   readonly nameStems = new Map<string, string>();
   readonly workingNames = new Set<string>();
 
   // A speculative guard may reconstruct a child and then discard its entire
   // path. Merge only the functions that survive the final parent rollback.
-  readonly functions: NameAllocator[] = [];
+  readonly functions: Array<{prototypeId: number; allocator: NameAllocator}> = [];
 
   finish(): void {
-    for (const allocator of this.functions) this.record(allocator);
+    for (const {prototypeId, allocator} of this.functions) this.record(prototypeId, allocator);
   }
 
-  private record(allocator: NameAllocator): void {
+  private record(prototypeId: number, allocator: NameAllocator): void {
+    const localNames = this.declaredLocalsByPrototype.get(prototypeId) ?? new Set<string>();
+    for (const name of allocator.declaredLocals) localNames.add(name);
+    this.declaredLocalsByPrototype.set(prototypeId, localNames);
     for (const name of allocator.declaredLocals) this.declaredLocals.add(name);
     for (const name of allocator.allocated) {
       const stem = allocator.stems.get(name);
@@ -144,8 +151,9 @@ function buildFunction(
   }
   const ir = analyzePrototype(proto);
   const builder = new SourceBuilder(module, proto, ir, allocator, captures, names);
-  const body = block(builder.build());
-  names.functions.push(allocator);
+  const reconstructedBody = block(builder.build());
+  const body = proto.locals.length ? groupDebugDeclarations(reconstructedBody) : reconstructedBody;
+  names.functions.push({prototypeId: proto.id, allocator});
   return {
     name: proto.debugName,
     params: builder.params,
@@ -153,6 +161,7 @@ function buildFunction(
     body,
     ir,
     declaredLocals: names.declaredLocals,
+    declaredLocalsByPrototype: names.declaredLocalsByPrototype,
     nameStems: names.nameStems,
     workingNames: names.workingNames,
     closureIdentityDiagnostics: names.closureIdentityDiagnostics,
@@ -252,6 +261,7 @@ class SourceBuilder {
   /** Repeated constant loads with proven capture identity and a dominating first load. */
   private readonly sharedClosureConstants = new Map<number, {pc: number; name: string; hoisted: boolean; factory?:string}>();
   private readonly closureEffects: ClosureEffects;
+  private readonly parallelLocals: ReturnType<typeof parallelLocalDefinitions>;
 
   constructor(
     private readonly module: BytecodeModule,
@@ -262,6 +272,7 @@ class SourceBuilder {
     private readonly reconstructionNames: ReconstructionNames,
   ) {
     this.closureEffects = new ClosureEffects(module, proto, ir.cfg, ir.ssa);
+    this.parallelLocals = parallelLocalDefinitions(proto, ir.cfg);
     for (const [index, loop] of ir.loops.entries()) {
       const siblings = this.loopsByHeader.get(loop.header) ?? [];
       siblings.push(loop);
@@ -722,7 +733,7 @@ class SourceBuilder {
     if (normal !== undefined && follow !== undefined && normal !== follow) {
       const flag = this.allocator.reserve("runTail");
       this.declareInScope(flag);
-      declarations.push({kind: "local", names: [flag], values: [lit(true)]});
+      declarations.push({kind: "local", names: [flag], values: [lit(true)], syntheticLoopTail: true});
       this.loopTails.set(loop, {entry: normal, follow, flag});
       this.declareJoinPhis(follow, declarations);
     }
@@ -1206,19 +1217,20 @@ class SourceBuilder {
     {
       const slots = [base, base + 1, base + 2];
       iterators = slots.map((register) => this.readRegister(register, prep));
-      // The compiler emits `nil, nil, <expr>` for `for ... in <expr>`; drop the
-      // trailing slots that are nil-valued so the loop reads like the source.
-      while (iterators.length > 1 && this.env.get(slots[iterators.length - 1]!)?.nilLiteral) {
-        iterators.pop();
-      }
-      // A call expression (`for ... in f() do`) fills the state/control slots
-      // with its trailing results (and a method call with its self); they can
-      // be dropped because re-evaluating `f()` yields the same slots.
       const first = iterators[0];
-      if (iterators.length > 1 && (first?.kind === "call" || first?.kind === "method-call")) {
-        while (iterators.length > 1 && this.callDefinedSlot(base, slots[iterators.length - 1]!, prep)) {
+      // Only a proven whole-triple producer can supply the state/control as
+      // trailing results. A scalar call followed by nil slots must stay scalar.
+      if ((first?.kind === "call" || first?.kind === "method-call") &&
+          this.callDefinedSlot(base, base + 1, prep) && this.callDefinedSlot(base, base + 2, prep)) {
+        iterators = [first];
+      } else {
+        // The compiler supplies nil state/control for a scalar iterator.
+        // Removing those slots exposes a new filling tail, so preserve its
+        // original one-result adjustment even when it is itself a call.
+        while (iterators.length > 1 && this.env.get(slots[iterators.length - 1]!)?.nilLiteral) {
           iterators.pop();
         }
+        iterators[iterators.length - 1] = singleValue(iterators[iterators.length - 1]!);
       }
     }
     const follow = this.loopFollow(loop);
@@ -1385,7 +1397,7 @@ class SourceBuilder {
       }
     }
 
-    const candidateJoin = this.joinOf(basic);
+    const candidateJoin = this.joinOf(basic) ?? this.returningBranchJoin(basic, stop);
     // An inner conditional can post-dominate beyond the enclosing arm's
     // boundary (for example one arm continues and another reaches a shared
     // loop tail). A reachability-based candidate can also be bypassed on a
@@ -1528,6 +1540,67 @@ class SourceBuilder {
     // Hoisting it after the branch would also return on the backedge path.
     const localJoin = loop ? this.commonJoin(basic.fallthrough, basic.branch, undefined) : undefined;
     return localJoin !== undefined && loop?.blocks.includes(localJoin) ? localJoin : undefined;
+  }
+
+  /** Acyclic guards can share a continuation even when some paths return
+   * before it. Prove that every other path actually returns, rather than
+   * treating reachability alone as a post-dominator. This bounded case has
+   * no loop escapes or cell lifetime changes on surviving paths. Incoming
+   * phis require an explicit definition on every immediate predecessor. */
+  private returningBranchJoin(basic: BasicBlock, stop: number | undefined): number | undefined {
+    if (basic.fallthrough === undefined || basic.branch === undefined ||
+        this.currentLoop() || this.innermostLoopContaining(basic.id)) return undefined;
+    const join = this.commonJoin(basic.fallthrough, basic.branch, stop);
+    if (join === undefined || join === basic.id || this.emitted.has(join) || this.loopsByHeader.has(join)) return undefined;
+    this.liveness ??= computeLiveness(this.ir.cfg);
+    const live = this.liveness.liveIn[join] ?? new Set<number>();
+    const merged = new Set((this.ir.ssa.phis.get(join) ?? []).map(phi => phi.register));
+    const before = (start: number): Set<number> | undefined => {
+      const states = new Map<number, 1 | 2>();
+      const seen = new Set<number>();
+      const pending: Array<[number, boolean]> = [[start, false]];
+      while (pending.length) {
+        const [id, complete] = pending.pop()!;
+        if (id === join) continue;
+        // A return is the only permitted way around this continuation.
+        // Reaching an enclosing region's end cannot be relabeled a return.
+        if (id === stop || id === basic.id) return undefined;
+        if (complete) { states.set(id, 2); continue; }
+        if (states.get(id) === 1) return undefined;
+        if (states.get(id) === 2) continue;
+        const block = this.ir.cfg.blocks[id];
+        if (!block || block.unreachable || this.emitted.has(id) || seen.size >= 2048) return undefined;
+        seen.add(id);
+        states.set(id, 1);
+        const returns = block.successors.length === 0 && block.instructions.at(-1)?.opcode === Opcode.RETURN;
+        if (block.instructions.some((insn, index) => insn.defs.some(register => live.has(register) && !merged.has(register)) ||
+            insn.opcode === Opcode.CAPTURE ||
+            (insn.opcode === Opcode.CLOSEUPVALS && !(returns && index === block.instructions.length - 2)) ||
+            insn.opcode === Opcode.NEWCLOSURE || insn.opcode === Opcode.DUPCLOSURE)) return undefined;
+        if (block.successors.length === 0) {
+          if (block.instructions.at(-1)?.opcode !== Opcode.RETURN) return undefined;
+          states.set(id, 2);
+          continue;
+        }
+        pending.push([id, true]);
+        for (const successor of block.successors) pending.push([successor, false]);
+      }
+      return seen;
+    };
+    const thenNodes = before(basic.fallthrough);
+    if (!thenNodes) return undefined;
+    const elseNodes = before(basic.branch);
+    if (!elseNodes || [...thenNodes].some(id => elseNodes.has(id))) return undefined;
+    // New incoming values may use the existing phi assignment machinery only
+    // when every predecessor belongs to these arms and defines every merged
+    // register there. A path retaining an older value needs a stronger proof.
+    for (const predecessor of this.ir.cfg.blocks[join]!.predecessors) {
+      const block = this.ir.cfg.blocks[predecessor]!;
+      if (block.unreachable) continue;
+      if (merged.size > 0 && (!thenNodes.has(predecessor) && !elseNodes.has(predecessor) ||
+          [...merged].some(register => !block.instructions.some(insn => insn.defs.includes(register))))) return undefined;
+    }
+    return join;
   }
 
   private commonJoin(a: number, b: number, stop: number | undefined): number | undefined {
@@ -1853,7 +1926,10 @@ class SourceBuilder {
         // an unfinished child still has the previous register binding.
         statements.push(...this.flushObserved(insn, target));
       }
-      if (insn.defs.includes(t)) {
+      // A dead definition can reuse the selection's destination register.
+      // It is still an ordinary prelude evaluation; capturing it as the
+      // selected value would discard its effects when both arms overwrite t.
+      if (insn.defs.includes(t) && this.useCount(t, insn.pc) > 0) {
         // Removing this scalar declaration would repeat its initializer in
         // both operands of a comparison. Ordinary reconstruction retains the
         // stored value and its identity before evaluating that condition.
@@ -2319,7 +2395,7 @@ class SourceBuilder {
       return undefined;
     }
     const fn = record.fn;
-    if (fn.kind !== "function-expr") {
+    if (fn.kind !== "function-expr" || fn.debugName !== fieldName) {
       return undefined;
     }
     const receiver = fn.params.length > 0 && firstParamIsReceiver(fn);
@@ -2349,7 +2425,7 @@ class SourceBuilder {
     // method declaration changes identity when another field or local holds
     // the same function. Only an unbound function expression can be lifted.
     const fn = field.value;
-    if (fn.kind !== "function-expr") {
+    if (fn.kind !== "function-expr" || fn.debugName !== field.name) {
       return undefined;
     }
     const receiver = fn.params.length > 0 && firstParamIsReceiver(fn);
@@ -2829,7 +2905,7 @@ class SourceBuilder {
           this.openPacks.add(insn.a);
           const forwarded = this.isPackForwarded(insn.a, insn.pc);
           statements.push(...this.define(insn.a, expression, insn, !forwarded));
-        } else if (this.isGenericPrepTarget(insn.a, insn.pc)) {
+        } else if (resultCount === 3 && this.isGenericPrepTarget(insn.a, insn.pc)) {
           // The generic loop consumes the whole iterator triple, including
           // implicit state/control slots. Keep its producer for the loop header.
           this.env.set(insn.a, { expression, pinned: false });
@@ -3526,7 +3602,8 @@ class SourceBuilder {
       }
       if (insn.opcode === Opcode.FORGPREP || insn.opcode === Opcode.FORGPREP_INEXT || insn.opcode === Opcode.FORGPREP_NEXT) {
         if (insn.a === register) {
-          return true;
+          return this.callDefinedSlot(register, register + 1, insn) &&
+            this.callDefinedSlot(register, register + 2, insn);
         }
         return false;
       }
@@ -3755,7 +3832,11 @@ class SourceBuilder {
       this.env.set(register, { expression, pinned: false });
       return [];
     }
-    const debug = debugNameAt(this.proto, register, insn.pc + insn.width);
+    const sourceLocal = this.parallelLocals.get(`${insn.pc}:${register}`);
+    const debug = sourceLocal?.name ?? debugNameAt(this.proto, register, insn.pc + insn.width);
+    const debugDeclaration = sourceLocal && {prototypeId: this.proto.id, startPc: sourceLocal.startPc,
+      endPc: sourceLocal.endPc, register: sourceLocal.register};
+    const definition = {prototypeId: this.proto.id, pc: insn.originalPc ?? insn.pc, register, debugName: debug};
     const uses = this.useCount(register, insn.pc);
     const liveAcrossBlocks = this.usedOutsideBlock(register, insn);
     const phi = mergedName ?? this.phiBinding(register, insn);
@@ -3812,7 +3893,8 @@ class SourceBuilder {
         if (!this.isDeclaredInScope(existing)) {
           this.declareInScope(existing);
           this.env.set(register, { name: existing, expression: ident(existing), pinned: true, nilLiteral });
-          return [{ kind: "local", names: [existing], values: [expression] }];
+          if (sourceLocal) this.allocator.declaredLocals.add(existing);
+          return [{ kind: "local", names: [existing], values: [expression], debugDeclaration, definition }];
         }
         const aliases = this.snapshotRegisterAliases(register, existing);
         this.env.set(register, { name: existing, expression: ident(existing), pinned: true, nilLiteral });
@@ -3823,7 +3905,8 @@ class SourceBuilder {
         : debug ? this.allocator.take(debug) : this.allocator.reserve(preferred);
       this.declareInScope(name);
       this.env.set(register, { name, expression: ident(name), pinned: true, nilLiteral });
-      return [{ kind: "local", names: [name], values: [expression] }];
+      if (sourceLocal) this.allocator.declaredLocals.add(name);
+      return [{ kind: "local", names: [name], values: [expression], debugDeclaration, definition }];
     }
     this.env.set(register, { name: undefined, expression, pinned: false, nilLiteral: isNilLiteral(expression) });
     // Even if no subsequent instruction reads this register, its evaluation

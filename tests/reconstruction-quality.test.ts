@@ -19,15 +19,15 @@ describe("closure presentation", () => {
     // P6 creates its callback at PC21, before table.insert GETIMPORT PC27;
     // P4 does likewise at PC9/PC17. FASTCALL does not license moving creation
     // past a global lookup under a different compilation level/environment.
-    expect(source).toMatch(/local function onInputBegan\(input: InputObject, gameProcessedEvent: boolean\)/);
-    expect(source).toMatch(/local function onPreAnimation\(\)/);
+    expect(source).toMatch(/local onInputBegan = function\(input: InputObject, gameProcessedEvent: boolean\)/);
+    expect(source).toMatch(/local onPreAnimation = function\(\)/);
     expect(source.match(/InputBegan:Connect\(onInputBegan\)/g)).toHaveLength(1);
     expect(source.match(/PreAnimation:Connect\(onPreAnimation\)/g)).toHaveLength(1);
-    expect(source.indexOf("local function onInputBegan(")).toBeLessThan(source.indexOf("InputBegan:Connect(onInputBegan)"));
-    expect(source.indexOf("local function onPreAnimation(")).toBeLessThan(source.indexOf("PreAnimation:Connect(onPreAnimation)"));
+    expect(source.indexOf("local onInputBegan = function(")).toBeLessThan(source.indexOf("InputBegan:Connect(onInputBegan)"));
+    expect(source.indexOf("local onPreAnimation = function(")).toBeLessThan(source.indexOf("PreAnimation:Connect(onPreAnimation)"));
     expect(source).toMatch(/task\.delay\(1, function\(\)/);
     expect(source).toMatch(/task\.spawn\(function\(\)/);
-    expect(source.match(/local function on[A-Z]/g)).toHaveLength(2);
+    expect(source.match(/local on[A-Z]\w* = function/g)).toHaveLength(2);
     expect(source).not.toMatch(/\b(?:spawned|delayed)\b/);
   });
 
@@ -128,9 +128,9 @@ describe("names from evidence", () => {
     expect(source).toContain('local frame: Frame = Instance.new("Frame")');
     expect(source).toContain('local props: Instance = workspace:WaitForChild("Props")');
     // P4 NEWCLOSURE PC18 precedes FASTPCALL's fallback pcall lookup PC21.
-    expect(source).toContain("local function protected()");
+    expect(source).toContain("local protected = function()");
     expect(source.match(/local success, result = pcall\(protected\)/g)).toHaveLength(1);
-    expect(source.indexOf("local function protected()")).toBeLessThan(source.indexOf("local success, result = pcall(protected)"));
+    expect(source.indexOf("local protected = function()")).toBeLessThan(source.indexOf("local success, result = pcall(protected)"));
   });
 
   it("names a parameter after the API slot it fills or the way it is used", () => {

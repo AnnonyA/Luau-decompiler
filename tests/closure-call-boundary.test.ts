@@ -30,7 +30,7 @@ describe("native closure call boundaries", () => {
     expect(call.args).toHaveLength(1);
     expect(call.args[0].open).toBe(true);
     const source = printLuau(cleaned);
-    expect(source).toMatch(/return \(if true then [\s\S]+ else nil\)\(arguments\(\)\)/);
+    expect(source).toMatch(/return \(true and [\s\S]+\)\(arguments\(\)\)/);
     expect(source.match(/arguments\(\)/g)).toHaveLength(1);
     expect(nodes(cleaned, "function-expr").concat(nodes(cleaned, "function-decl"))
       .every(fn => fn.params.length === 1 && fn.isVararg === false)).toBe(true);
@@ -41,7 +41,20 @@ describe("native closure call boundaries", () => {
       preserveBoundary: true, inlineForIdentity: true};
     expect(printLuau(chunk([{kind: "return", values: [call]}]))).toBe("return (factory(value))\n");
     expect(printLuau(chunk([{kind: "return", values: [{...call, inlineForIdentity: false}]}])))
-      .toBe("return (if true then factory else nil)(value)\n");
+      .toBe("return (factory)(value)\n");
+  });
+
+  it("groups a callee's lower-precedence alternatives inside the call fence", () => {
+    const callee: Expression = {kind: "binary", op: "or", left: ident("first"), right: ident("fallback")};
+    const invocation: Expression = {kind: "call", callee, args: [ident("value")], open: false, preserveBoundary: true};
+    expect(printLuau(chunk([{kind: "return", values: [invocation]}])))
+      .toBe("return (first or fallback)(value)\n");
+  });
+
+  it.each([false, null])("keeps a false-like callee %s without selecting a replacement", value => {
+    const invocation: Expression = {kind: "call", callee: lit(value), args: [], open: false, preserveBoundary: true};
+    expect(printLuau(chunk([{kind: "return", values: [invocation]}])))
+      .toBe(`return (${value === null ? "nil" : "false"})()\n`);
   });
 
   it("protects a global-reading literal even without a retained second owner", () => {
@@ -51,7 +64,7 @@ describe("native closure call boundaries", () => {
       instructions: [ad(Opcode.DUPCLOSURE, 0, 0), abc(Opcode.CALL, 0, 1, 2), abc(Opcode.RETURN, 0, 2)]})));
     expect(result.ok).toBe(true); if (!result.ok) throw Error(result.error);
     expect(nodes(result.ast, "call").filter(call => call.preserveBoundary)).toHaveLength(1);
-    expect(result.source).toContain("(if true then ");
+    expect(result.source).toContain("(true and ");
   });
 
   it("preserves an original call that owns fresh captured closures", () => {
@@ -63,7 +76,7 @@ describe("native closure call boundaries", () => {
       instructions: [ad(Opcode.DUPCLOSURE, 0, 0), ad(Opcode.LOADN, 1, 7), abc(Opcode.CALL, 0, 2, 2), abc(Opcode.RETURN, 0, 2)]})));
     expect(result.ok).toBe(true); if (!result.ok) throw Error(result.error);
     expect(nodes(result.ast, "call").filter(call => call.preserveBoundary)).toHaveLength(1);
-    expect(result.source).toContain("else nil)(7)");
+    expect(result.source).toMatch(/\(true and [\s\S]+\)\(7\)/);
     expect(nodes(result.ast, "function-expr").filter(fn => fn.closureIdentity?.captureCount === 1)).toHaveLength(0);
   });
 
@@ -90,7 +103,10 @@ describe("native closure call boundaries", () => {
     // keep their indirect CALLs too, even after naming/materialization.
     expect(boundaries.filter(call => /^(getfenv|setfenv)$/.test(call.callee?.name ?? ""))).toHaveLength(3);
     expect(boundaries).toHaveLength(7);
-    expect(result.source.match(/\(if true then /g)).toHaveLength(7);
+    // These values have no immutable literal initializer in the final AST.
+    // Grouping still blocks builtin recognition without exposing an inline
+    // candidate; all seven original CALL boundaries remain represented.
+    expect(result.source.match(/\((?:loadedClosure\d*|getfenv|setfenv)\)\(/g)).toHaveLength(7);
     expect(result.diagnostics.some(diagnostic => diagnostic.code === "closure-identity-unresolved")).toBe(false);
     expect(result.source).not.toContain("--!optimize");
   });

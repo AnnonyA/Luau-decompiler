@@ -1,0 +1,611 @@
+{
+  "baselineMain": "dc4d32d0c38b881006c04b8c20d72549f420aeed",
+  "baselineMeasuredEngine": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+  "metric": "Unmodified Rosetta quality.rs/lex.rs at 80f3c13ce48dc3318d5d49f54958f580937ca8aa, scored over all882 passing baselineQuick inputs. This rescoring alone is not a runtime roundtrip.",
+  "baseline": {
+    "round_trips": 882,
+    "similarity": 72.29585059948458,
+    "size": 1.1000264933334862,
+    "addedEndlessLoops": 178
+  },
+  "improved": {
+    "round_trips": 882,
+    "similarity": 73.29564361711836,
+    "size": 1.066241830317539,
+    "addedEndlessLoops": 56
+  },
+  "engineSourcesSha256": {
+    "src/reconstruct/Reconstructor.ts": "24403ae950ee58d0acf7456d8de06148f57326584dd5388c047a910984cfa157",
+    "src/ast/StructureRefinement.ts": "22f0f67683f69f7f72b099e02ac1541e49745b316f003cced471e53631ce5c5e"
+  },
+  "samples": [
+    {
+      "id": "generated/seed1154/O0g1.json",
+      "before": {
+        "cpu_ms": 465.912,
+        "depth": [
+          6,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          138,
+          112
+        ],
+        "names": null,
+        "similarity": 0.7059656381607056,
+        "tokens": [
+          2862,
+          2787
+        ]
+      },
+      "after": {
+        "depth": [
+          5,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.2300884955752212,
+        "locals": [
+          138,
+          112
+        ],
+        "names": null,
+        "similarity": 0.7165311574935913,
+        "size": 0.9860114777618364,
+        "tokens": [
+          2748,
+          2787
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1154/O0g2.json",
+      "before": {
+        "cpu_ms": 356.625,
+        "depth": [
+          6,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          138,
+          112
+        ],
+        "names": [
+          56,
+          108
+        ],
+        "similarity": 0.7078830599784851,
+        "tokens": [
+          2858,
+          2787
+        ]
+      },
+      "after": {
+        "depth": [
+          5,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.2300884955752212,
+        "locals": [
+          138,
+          112
+        ],
+        "names": [
+          56,
+          108
+        ],
+        "similarity": 0.7184957265853882,
+        "size": 0.9845767575322812,
+        "tokens": [
+          2744,
+          2787
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1154/O1g1.json",
+      "before": {
+        "cpu_ms": 309.27900000000005,
+        "depth": [
+          6,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          137,
+          112
+        ],
+        "names": null,
+        "similarity": 0.6924389004707336,
+        "tokens": [
+          2490,
+          2787
+        ]
+      },
+      "after": {
+        "depth": [
+          5,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.2212389380530972,
+        "locals": [
+          137,
+          112
+        ],
+        "names": null,
+        "similarity": 0.7034669518470764,
+        "size": 0.8525824964131994,
+        "tokens": [
+          2376,
+          2787
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1154/O1g2.json",
+      "before": {
+        "cpu_ms": 313.142,
+        "depth": [
+          6,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          138,
+          112
+        ],
+        "names": [
+          54,
+          108
+        ],
+        "similarity": 0.6934292912483215,
+        "tokens": [
+          2494,
+          2787
+        ]
+      },
+      "after": {
+        "depth": [
+          5,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.2300884955752212,
+        "locals": [
+          138,
+          112
+        ],
+        "names": [
+          54,
+          108
+        ],
+        "similarity": 0.704470694065094,
+        "size": 0.8540172166427547,
+        "tokens": [
+          2380,
+          2787
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1154/O2g1.json",
+      "before": {
+        "cpu_ms": 318.918,
+        "depth": [
+          6,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          118,
+          112
+        ],
+        "names": null,
+        "similarity": 0.6404634118080139,
+        "tokens": [
+          2047,
+          2787
+        ]
+      },
+      "after": {
+        "depth": [
+          5,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.0530973451327434,
+        "locals": [
+          118,
+          112
+        ],
+        "names": null,
+        "similarity": 0.6483050584793091,
+        "size": 0.693687230989957,
+        "tokens": [
+          1933,
+          2787
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1154/O2g2.json",
+      "before": {
+        "cpu_ms": 299.548,
+        "depth": [
+          6,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          119,
+          112
+        ],
+        "names": [
+          53,
+          108
+        ],
+        "similarity": 0.6415874361991882,
+        "tokens": [
+          2051,
+          2787
+        ]
+      },
+      "after": {
+        "depth": [
+          5,
+          6
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.0619469026548674,
+        "locals": [
+          119,
+          112
+        ],
+        "names": [
+          53,
+          108
+        ],
+        "similarity": 0.6494496464729309,
+        "size": 0.6951219512195121,
+        "tokens": [
+          1937,
+          2787
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1178/O0g1.json",
+      "before": {
+        "cpu_ms": 1096.974,
+        "depth": [
+          16,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          268,
+          240
+        ],
+        "names": null,
+        "similarity": 0.2501356601715088,
+        "tokens": [
+          18163,
+          3953
+        ]
+      },
+      "after": {
+        "depth": [
+          5,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.116182572614108,
+        "locals": [
+          268,
+          240
+        ],
+        "names": null,
+        "similarity": 0.7202302813529968,
+        "size": 0.9332321699544764,
+        "tokens": [
+          3689,
+          3953
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1178/O0g2.json",
+      "before": {
+        "cpu_ms": 1220.7969999999998,
+        "depth": [
+          16,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          267,
+          240
+        ],
+        "names": [
+          173,
+          230
+        ],
+        "similarity": 0.2512776553630829,
+        "tokens": [
+          18158,
+          3953
+        ]
+      },
+      "after": {
+        "depth": [
+          5,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.112033195020747,
+        "locals": [
+          267,
+          240
+        ],
+        "names": [
+          173,
+          230
+        ],
+        "similarity": 0.7238444685935974,
+        "size": 0.9319676277187658,
+        "tokens": [
+          3684,
+          3953
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1178/O1g1.json",
+      "before": {
+        "cpu_ms": 1024.103,
+        "depth": [
+          16,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          238,
+          240
+        ],
+        "names": null,
+        "similarity": 0.24130916595458984,
+        "tokens": [
+          17679,
+          3953
+        ]
+      },
+      "after": {
+        "depth": [
+          5,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 0.991701244813278,
+        "locals": [
+          238,
+          240
+        ],
+        "names": null,
+        "similarity": 0.7253422737121582,
+        "size": 0.8108244815376834,
+        "tokens": [
+          3205,
+          3953
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1178/O1g2.json",
+      "before": {
+        "cpu_ms": 1281.262,
+        "depth": [
+          16,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          244,
+          240
+        ],
+        "names": [
+          168,
+          230
+        ],
+        "similarity": 0.24246340990066528,
+        "tokens": [
+          17708,
+          3953
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.016597510373444,
+        "locals": [
+          244,
+          240
+        ],
+        "names": [
+          168,
+          230
+        ],
+        "similarity": 0.7268679738044739,
+        "size": 0.8181588265048053,
+        "tokens": [
+          3234,
+          3953
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1178/O2g1.json",
+      "before": {
+        "cpu_ms": 1189.3229999999999,
+        "depth": [
+          16,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          217,
+          240
+        ],
+        "names": null,
+        "similarity": 0.23135420680046082,
+        "tokens": [
+          17218,
+          3953
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 0.9045643153526971,
+        "locals": [
+          217,
+          240
+        ],
+        "names": null,
+        "similarity": 0.692548930644989,
+        "size": 0.6942336874051593,
+        "tokens": [
+          2744,
+          3953
+        ]
+      }
+    },
+    {
+      "id": "generated/seed1178/O2g2.json",
+      "before": {
+        "cpu_ms": 1075.2450000000001,
+        "depth": [
+          16,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "locals": [
+          224,
+          240
+        ],
+        "names": [
+          167,
+          230
+        ],
+        "similarity": 0.23205357789993286,
+        "tokens": [
+          17249,
+          3953
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 0.9336099585062241,
+        "locals": [
+          224,
+          240
+        ],
+        "names": [
+          167,
+          230
+        ],
+        "similarity": 0.6944113969802856,
+        "size": 0.7020738492665655,
+        "tokens": [
+          2775,
+          3953
+        ]
+      }
+    }
+  ]
+}

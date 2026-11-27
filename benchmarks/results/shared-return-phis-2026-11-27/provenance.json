@@ -1,0 +1,31 @@
+{
+  "baselineCommit": "4be192bf602963ac0b8b58e5e67dcf954db79397",
+  "baselineSourceRef": "4be192b",
+  "rosettaCommit": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luauCommit": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "sourceSha256": "e4e66288c00fda092fc8b99aa2252fab93d2e14e35911bc46374a70449feb3dd",
+  "scope": "Fully assigned incoming phis and immediate CLOSEUPVALS before terminal RETURN only; no loop-region proof relaxation or surviving close/capture/create relaxation.",
+  "unitTests": 1369,
+  "unitFiles": 137,
+  "quickSelectedSources": 147,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "behavioralResults": {
+    "improved": {
+      "pass": 1764
+    }
+  },
+  "sourceCoverageManifest": "../shared-return-conditions-2026-11-27/coverage.json"
+}

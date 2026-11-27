@@ -11,12 +11,21 @@ type Facts = Map<number, Scalar>;
 const unknown = Symbol("unknown");
 type Known = Scalar | typeof unknown;
 
+// Reconstruction may use original debug boundaries to identify a definition.
+// A removed load must never lend its name to an earlier surviving register use.
+const normalizationSources = new WeakMap<Prototype, Prototype>();
+export function normalizationSource(prototype: Prototype): Prototype {
+  return normalizationSources.get(prototype) ?? prototype;
+}
+
 /** Keep the decoder and public disassembly faithful to the supplied bytes. */
 export function normalizeControlFlow(module: BytecodeModule): BytecodeModule {
   const prototypes = module.prototypes.map(prototype => {
     const compact = normalizePrototype(prototype);
     const laidOut = layoutControlFlow(compact);
-    return laidOut === compact ? compact : normalizePrototype(laidOut);
+    const normalized = laidOut === compact ? compact : normalizePrototype(laidOut);
+    if (normalized !== prototype) normalizationSources.set(normalized, normalizationSource(prototype));
+    return normalized;
   });
   return prototypes.some((prototype, index) => prototype !== module.prototypes[index])
     ? { ...module, prototypes } : module;

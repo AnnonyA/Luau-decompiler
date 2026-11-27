@@ -29,7 +29,7 @@ describe("closure creation evaluation order", () => {
     if (!result.ok) throw Error(result.error);
     expect(result.source.indexOf("return token")).toBeGreaterThanOrEqual(0);
     expect(result.source.indexOf("return token")).toBeLessThan(result.source.indexOf('token = "changed"'));
-    expect(result.source).toMatch(/\(if true then \w+\.read else nil\)\(\)/);
+    expect(result.source).toMatch(/\(true and \w+\.read\)\(\)/);
   });
 
   it("keeps creation before an intervening environment-changing call", () => {
@@ -124,7 +124,8 @@ describe("closure creation evaluation order", () => {
         targets: [{kind: "property", object: ident("record"), name: "read"}], values: [ident("f")]},
       {kind: "return", values: [ident("record")]}]);
     const result = cleanupAst(ast, defaultCleanupOptions());
-    const declaration = result.body.statements.findIndex(statement => statement.kind === "function-decl" && statement.local);
+    const declaration = result.body.statements.findIndex(statement => statement.kind === "local" &&
+      statement.values[0]?.kind === "function-expr" && statement.values[0].creationSite?.pc === 10);
     const effect = result.body.statements.findIndex(statement => statement.kind === "expression-stmt");
     expect(declaration).toBeGreaterThanOrEqual(0);
     expect(declaration).toBeLessThan(effect);
@@ -137,7 +138,7 @@ describe("closure creation evaluation order", () => {
       {kind: "assign", targets: [{kind: "property", object: ident("record"), name: "read"}], values: [ident("f")]},
       {kind: "return", values: [ident("record")]}]);
     const result = cleanupAst(ast, defaultCleanupOptions());
-    expect(result.body.statements.some(statement => statement.kind === "function-decl" && statement.local &&
-      statement.closureIdentity?.inlineCaptureInitializer && statement.creationSite?.pc === 10)).toBe(true);
+    expect(result.body.statements.some(statement => statement.kind === "local" && statement.values[0]?.kind === "function-expr" &&
+      statement.values[0].closureIdentity?.inlineCaptureInitializer && statement.values[0].creationSite?.pc === 10)).toBe(true);
   });
 });

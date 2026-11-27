@@ -112,7 +112,7 @@ for (const typeAnnotations of ['functions', 'useful', 'off'] as const) {
     // O2 inlines the only call, so the retained helper has no typed caller.
     expect(source).toContain(typed && level < 2 ? 'function formatName(p: Player): string\n' : 'function formatName(p)\n');
     expect(printWithoutCallBoundaries(result.ast)).toContain(level < 2 ? 'print(formatName(p))' : 'print(p.DisplayName)');
-    if (level < 2) expect(source).toContain('print((if true then formatName else nil)(p))');
+    if (level < 2) expect(source).toContain('print((true and formatName)(p))');
     if (!typed) expect(source).not.toMatch(/:\s*(?:Players?|string)\b/);
   });
 }

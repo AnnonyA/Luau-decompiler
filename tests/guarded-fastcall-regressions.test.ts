@@ -24,7 +24,7 @@ it('does not discard and then repeat arguments consumed by generic FASTCALL',()=
  // Three min operations in combined plus the one variadic minimum.
  expect(result.source.match(/math\.min\(/g)).toHaveLength(4);
  expect(printWithoutCallBoundaries(result.ast).match(/\bobserve\(/g)).toHaveLength(9); // declaration and eight calls
- expect(result.source.match(/\(if true then observe else nil\)\(/g)).toHaveLength(8);
+ expect(result.source.match(/\(true and observe\)\(/g)).toHaveLength(8);
 });
 it.each([0,1,2])('evaluates each generic/numeric loop input exactly once at O%i',level=>{
  const result=decompile(bytes('loop-input-observations',level),{opcodeEncoding:'official'});

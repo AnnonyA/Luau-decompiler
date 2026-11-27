@@ -1,0 +1,179 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 4,
+      "mismatch": 8
+    },
+    "improved": {
+      "pass": 4,
+      "mismatch": 8
+    }
+  },
+  "by_profile": {
+    "baseline": {
+      "O0g1": 1,
+      "O0g1+x1": 1,
+      "O0g2": 1,
+      "O0g2+x2": 1,
+      "O1g1": 1,
+      "O1g1+x2": 1,
+      "O1g2": 1,
+      "O1g2+x3": 1
+    },
+    "improved": {
+      "O0g1": 1,
+      "O0g1+x1": 1,
+      "O0g2": 1,
+      "O0g2+x2": 1,
+      "O1g1": 1,
+      "O1g1+x2": 1,
+      "O1g2": 1,
+      "O1g2+x3": 1
+    }
+  },
+  "failures": {
+    "baseline": [
+      {
+        "case": "observations",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O0g1+x1",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O1g1+x2",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O0g2+x2",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O1g2+x3",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      }
+    ],
+    "improved": [
+      {
+        "case": "observations",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O0g1+x1",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O1g1+x2",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O0g2+x2",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      },
+      {
+        "case": "observations",
+        "profile": "O1g2+x3",
+        "kind": "mismatch",
+        "detail": "printed 25 lines, want 29"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 4,
+    "by_decompiler": {
+      "baseline": {
+        "round_trips": 4,
+        "similarity": 83.10469686985016,
+        "size": 1.163998345168536,
+        "locals": 1.1108946019392596,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 60.46511627906976,
+        "cpu_ms_median": 278.457,
+        "cpu_ms_total": 1169.914
+      },
+      "improved": {
+        "round_trips": 4,
+        "similarity": 83.06357115507126,
+        "size": 1.158748803582789,
+        "locals": 1.1108946019392596,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 60.46511627906976,
+        "cpu_ms_median": 264.243,
+        "cpu_ms_total": 1096.956
+      }
+    }
+  }
+}

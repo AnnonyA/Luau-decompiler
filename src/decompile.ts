@@ -155,8 +155,11 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
     }
     const raw = presentClosures(lowered.ast);
     const debugNames = new Set(decoded.module.prototypes.flatMap((prototype) => prototype.locals.map((local) => local.name)));
-    const sourceNames = new Set([...reconstructed.declaredLocals, ...debugNames]);
-    const cleaned = cleanupAst(raw, { ...defaultCleanupOptions(options), sourceNames, debugNames,
+    const declarationNamesByPrototype = new Map(decoded.module.prototypes.map(prototype =>
+      [prototype.id, new Set([...prototype.locals.map(local => local.name),
+        ...(reconstructed.declaredLocalsByPrototype.get(prototype.id) ?? [])])]));
+    const cleaned = cleanupAst(raw, { ...defaultCleanupOptions(options), debugNames,
+      inferredSourceNames: reconstructed.declaredLocals, declarationNamesByPrototype,
       nameStems: reconstructed.nameStems, workingNames: reconstructed.workingNames });
     const helpers = new Set<string>();
     const restored = options.recoverInlinedFunctions === false ? cleaned

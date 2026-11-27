@@ -1,11 +1,16 @@
 import { analyzeBindings, type LexicalBinding } from "../analysis/Bindings.js";
-import type { Block, Chunk, Expression, Statement, TableField } from "./Ast.js";
+import type { Block, Chunk, Expression, LocalDeclaration, Statement, TableField } from "./Ast.js";
 import { countIdentifier, mapChildExpressions, mapStatementExpressions, rewriteBlocks } from "./AstWalk.js";
 
 export interface TempFoldingOptions {
-  /** Local names recorded in debug info. Such a binding was written by the
-   * author and is kept even when it has a single reader. */
+  /** Bindings explicitly protected by the caller or reconstructor. */
   sourceNames?: ReadonlySet<string>;
+  /** Debug spelling fallback for AST nodes without producer ownership. */
+  debugNames?: ReadonlySet<string>;
+  /** Register-derived spelling fallback for AST nodes without ownership. */
+  inferredSourceNames?: ReadonlySet<string>;
+  /** Debug and register-derived declaration evidence in each function. */
+  declarationNamesByPrototype?: ReadonlyMap<number, ReadonlySet<string>>;
   /** Fold only temporaries passed straight to one of these helpers. The
    * parameters of an inlined helper occupy registers like declared locals;
    * once its call is restored they are argument expressions again. */
@@ -38,6 +43,13 @@ const MAX_FOLDED_WEIGHT = 40;
  */
 export function foldTemporaries(ast: Chunk, options: TempFoldingOptions = {}): Chunk {
   const sourceNames = options.sourceNames ?? new Set<string>();
+  const sourceDeclared = (declaration: LocalDeclaration, name: string): boolean => {
+    // Explicit caller-provided protection always wins. The scoped inventory
+    // only refines inferred spelling hints that otherwise apply module-wide.
+    if (sourceNames.has(name) || declaration.definition?.debugName !== undefined) return true;
+    const names = declaration.definition && options.declarationNamesByPrototype?.get(declaration.definition.prototypeId);
+    return names ? names.has(name) : Boolean(options.debugNames?.has(name) || options.inferredSourceNames?.has(name));
+  };
   const { bindings, globals } = analyzeBindings(ast.body);
   const byDeclaration = new Map<Statement, LexicalBinding>();
   const byRead = new Map<Expression, LexicalBinding>();
@@ -76,7 +88,7 @@ export function foldTemporaries(ast: Chunk, options: TempFoldingOptions = {}): C
     const value = statement.values[0]!;
     if (!binding || binding.captured || binding.writes.length > 0 || binding.reads.length !== 1) return undefined;
     if (binding.name === "_") return undefined;
-    if (options.argumentsOf ? !helperArguments.has(binding.reads[0]!.node) : sourceNames.has(binding.name)) {
+    if (options.argumentsOf ? !helperArguments.has(binding.reads[0]!.node) : sourceDeclared(statement, binding.name)) {
       return undefined;
     }
     if (value.kind === "function-expr") return undefined;
@@ -103,7 +115,7 @@ export function foldTemporaries(ast: Chunk, options: TempFoldingOptions = {}): C
     }
     return statements === block.statements ? block : { ...block, statements };
   });
-  return { ...ast, body: options.argumentsOf ? body : propagateLiterals(body, sourceNames) };
+  return { ...ast, body: options.argumentsOf ? body : propagateLiterals(body, sourceDeclared) };
 }
 
 function foldRun(
@@ -122,15 +134,18 @@ function foldRun(
     if (!site || !site.ordered) continue;
     const value = candidate.value;
     const pack = value.kind === "call" || value.kind === "method-call" || value.kind === "vararg";
-    // A local keeps one value; a list tail would receive the whole pack.
-    // A lone returned value keeps that adjustment with parentheses.
+    const declaration = out[index - 1]!;
     const returned = consumer.kind === "return" && consumer.values.length === 1 && consumer.values[0] === read;
-    if (pack && site.tail && !returned) continue;
+    // Unknown AST locals keep the existing declaration policy. Additional
+    // list-tail motion requires ownership from an actual bytecode producer.
+    if (pack && site.tail && !returned && (declaration.kind !== "local" || !declaration.definition)) continue;
+    // A local keeps one value. In every list tail, parentheses retain that
+    // adjustment, including a zero-result call becoming one explicit nil.
     // A table bound before it is returned is the module or record it names.
     if (value.kind === "table" && consumer.kind === "return") continue;
     if (weight(value) > 3 && site.weight - 1 + weight(value) > MAX_FOLDED_WEIGHT) continue;
     if (out === statements) out = [...statements];
-    out[index] = replaceInStatement(consumer, read, pack && returned ? { kind: "paren", expression: value } : value);
+    out[index] = replaceInStatement(consumer, read, pack && site.tail ? { kind: "paren", expression: value } : value);
     out.splice(index - 1, 1);
   }
   return out;
@@ -209,6 +224,10 @@ function locate(
         expression.fields.forEach((field, index) => {
           if (field.key) visit(field.key, false);
           visit(field.value, index === expression.fields.length - 1 && !field.key && !field.name);
+          // A private constructor cannot invoke __newindex, but storing a
+          // nil/NaN key can still throw before a later field is evaluated.
+          if (field.key && (field.key.kind !== "literal" || field.key.value === null ||
+              (typeof field.key.value === "number" && Number.isNaN(field.key.value)))) inert = false;
         });
         return;
       case "paren":
@@ -333,7 +352,7 @@ function absorbFieldStores(
 
 /** A literal held by a never-written, uncaptured local with one reader is
  * that literal wherever it is read. */
-function propagateLiterals(body: Block, sourceNames: ReadonlySet<string>): Block {
+function propagateLiterals(body: Block, sourceDeclared: (declaration: LocalDeclaration, name: string) => boolean): Block {
   const { bindings } = analyzeBindings(body);
   const replacements = new Map<Expression, Expression>();
   const removed = new Set<Statement>();
@@ -357,7 +376,7 @@ function propagateLiterals(body: Block, sourceNames: ReadonlySet<string>): Block
     const declaration = binding.declaration;
     if (declaration.kind !== "local" || declaration.names.length !== 1 || declaration.values.length !== 1) continue;
     const value = declaration.values[0]!;
-    if (sourceNames.has(binding.name) || binding.name === "_") continue;
+    if (sourceDeclared(declaration, binding.name) || binding.name === "_") continue;
     if (binding.reads.length === 0 && binding.writes.length === 0 && byRead.has(value)) {
       // A copy of another local that nothing reads has no effect at all.
       removed.add(declaration);
