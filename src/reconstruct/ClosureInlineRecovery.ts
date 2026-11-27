@@ -1,5 +1,6 @@
 import {analyzeBindings, renameFreeBindings, replaceReferences, type LexicalBinding} from '../analysis/Bindings.js';
 import {block, ident, type Block, type Chunk, type Expression, type FunctionExpression, type Statement} from '../ast/Ast.js';
+import {cloneAst} from '../ast/AstClone.js';
 import {CaptureType, Opcode} from '../decode/Opcode.js';
 import type {BytecodeModule} from '../decode/Prototype.js';
 import type {Diagnostic} from '../diagnostics.js';
@@ -33,7 +34,7 @@ interface Site { fn: FunctionExpression; captures: LexicalBinding[] }
  * 9d7748a4f324213a18cb8283fa2a77c330225fa0. Independently implemented.
  */
 export function recoverClosureFactories(input: Chunk, module: BytecodeModule): ClosureFactoryRecovery {
-  const ast = structuredClone(input);
+  const ast = cloneAst(input);
   const diagnostics: Diagnostic[] = [];
   const analysis = analyzeBindings(ast.body);
   // Direct uses of these globals disable inlining throughout the module.
