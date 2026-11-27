@@ -1,0 +1,81 @@
+## node20 — 140721285909
+https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544/job/140721285909
+Decoded log UTF-8 SHA-256: 5e3ed0902656f94a5ff99a06404fa588261e1f655a756fb8f1d0b159dcdf35d3
+
+2026-11-27T20:20:19.4074711Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +865f2715e55dbaec2f2059b7ed8d239374cbd569:refs/remotes/pull/82/merge
+2026-11-27T20:20:21.1688985Z HEAD is now at 865f271 Merge 08259cd6c312fe9c41eda0e0c5d0d03d9524cf71 into 9d4f03fde53d611aef91028a2b1f7529b2f4ffaa
+2026-11-27T20:20:21.1796357Z 865f2715e55dbaec2f2059b7ed8d239374cbd569
+2026-11-27T20:20:24.7968845Z node: v20.20.2
+2026-11-27T20:21:19.0676119Z       Tests  1322 passed (1322)
+2026-11-27T20:21:32.9587054Z # pass 69
+2026-11-27T20:21:32.9587249Z # fail 0
+
+## node22 — 140721285654
+https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544/job/140721285654
+Decoded log UTF-8 SHA-256: cb4d3cf764abaa6f941bfdbd8b60dfab12689461dc5bf8f7793444c8b39c1a0a
+
+2026-11-27T20:20:19.2061736Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +865f2715e55dbaec2f2059b7ed8d239374cbd569:refs/remotes/pull/82/merge
+2026-11-27T20:20:21.1631992Z HEAD is now at 865f271 Merge 08259cd6c312fe9c41eda0e0c5d0d03d9524cf71 into 9d4f03fde53d611aef91028a2b1f7529b2f4ffaa
+2026-11-27T20:20:21.1714693Z 865f2715e55dbaec2f2059b7ed8d239374cbd569
+2026-11-27T20:20:21.6830950Z node: v22.23.5
+2026-11-27T20:21:08.5307661Z       Tests  1322 passed (1322)
+2026-11-27T20:21:18.7406870Z # pass 69
+2026-11-27T20:21:18.7407029Z # fail 0
+
+## official — 140721825278
+https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544/job/140721825278
+Decoded log UTF-8 SHA-256: c2eb890214050eac2901988c9697f083e31ce7ecb0df066eb7350abb26b39cac
+
+2026-11-27T20:21:44.1586536Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +865f2715e55dbaec2f2059b7ed8d239374cbd569:refs/remotes/pull/82/merge
+2026-11-27T20:21:45.9752001Z HEAD is now at 865f271 Merge 08259cd6c312fe9c41eda0e0c5d0d03d9524cf71 into 9d4f03fde53d611aef91028a2b1f7529b2f4ffaa
+2026-11-27T20:21:45.9841312Z 865f2715e55dbaec2f2059b7ed8d239374cbd569
+2026-11-27T20:21:51.5830672Z git -C "$RUNNER_TEMP/luau-source" fetch --depth 1 origin 9d7748a4f324213a18cb8283fa2a77c330225fa0
+2026-11-27T20:21:52.8386427Z HEAD is now at 9d7748a Sync to upstream/release/743 (#3054)
+2026-11-27T20:25:19.7684641Z seed 6/O2: MATCH
+2026-11-27T20:25:22.9643360Z streaming-audio/O0: annony=MATCH lunaux=NO MEDIDO luaexpert=NO MEDIDO
+2026-11-27T20:25:23.2341625Z streaming-audio/O1: annony=MATCH lunaux=NO MEDIDO luaexpert=NO MEDIDO
+2026-11-27T20:25:23.5279166Z streaming-audio/O2: annony=MATCH lunaux=NO MEDIDO luaexpert=NO MEDIDO
+
+## browser — 140721285656
+https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929616/job/140721285656
+Decoded log UTF-8 SHA-256: da0c0010b6825fbea18bf2ce67e925469f47082f26a6a0374104fa205fb79dc7
+
+2026-11-27T20:20:19.9215653Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +865f2715e55dbaec2f2059b7ed8d239374cbd569:refs/remotes/pull/82/merge
+2026-11-27T20:20:22.0368286Z HEAD is now at 865f271 Merge 08259cd6c312fe9c41eda0e0c5d0d03d9524cf71 into 9d4f03fde53d611aef91028a2b1f7529b2f4ffaa
+2026-11-27T20:20:22.0454410Z 865f2715e55dbaec2f2059b7ed8d239374cbd569
+2026-11-27T20:21:15.1100916Z # tests 6
+2026-11-27T20:21:15.1101397Z # pass 6
+2026-11-27T20:21:15.1101646Z # fail 0
+2026-11-27T20:21:15.1102141Z # skipped 0
+2026-11-27T20:21:15.1809433Z   CHROME_BIN: google-chrome
+2026-11-27T20:21:18.9265078Z # Subtest: static demo works under a repository subpath in Chromium
+2026-11-27T20:21:18.9271934Z ok 1 - static demo works under a repository subpath in Chromium
+2026-11-27T20:21:18.9367266Z # tests 1
+2026-11-27T20:21:18.9368339Z # pass 1
+2026-11-27T20:21:18.9369527Z # fail 0
+2026-11-27T20:21:18.9370632Z # skipped 0
+
+## quick — 140721285433
+https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929538/job/140721285433
+Decoded log UTF-8 SHA-256: 5de96e3ee1af9550bfbb99be7ba4584ca76bb278bf840efe3e6406cf1f35db5d
+
+2026-11-27T20:20:20.0800186Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +865f2715e55dbaec2f2059b7ed8d239374cbd569:refs/remotes/pull/82/merge
+2026-11-27T20:20:22.8907087Z HEAD is now at 865f271 Merge 08259cd6c312fe9c41eda0e0c5d0d03d9524cf71 into 9d4f03fde53d611aef91028a2b1f7529b2f4ffaa
+2026-11-27T20:20:22.9010323Z 865f2715e55dbaec2f2059b7ed8d239374cbd569
+2026-11-27T20:20:28.7209720Z HEAD is now at 80f3c13 publish sunberry 0.5.7's rosetta-3 results
+2026-11-27T20:22:01.4986573Z   ROSETTA_MEASURE_ONLY: false
+2026-11-27T20:25:43.5090309Z annonyA: 882/882 (100.0%) | cases 246/246, libraries 36/36, generated 300/300, mutants 300/300 | 211.4s -> /home/runner/work/Luau-decompiler/Luau-decompiler/tmp/rosetta-results/quick/annonyA-quick.json
+2026-11-27T20:25:43.5682691Z quick: 882/882; {"pass":882,"mismatch":0,"recompile_failed":0,"decompile_failed":0,"refused":0,"unusable":0}
+
+## hard-quick — 140721285666
+https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929538/job/140721285666
+Decoded log UTF-8 SHA-256: 1d589a287ad12fe15400de67ee18fd770083648cdff4b65a4ef63705716b09b6
+
+2026-11-27T20:20:19.5279849Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +865f2715e55dbaec2f2059b7ed8d239374cbd569:refs/remotes/pull/82/merge
+2026-11-27T20:20:21.7232131Z HEAD is now at 865f271 Merge 08259cd6c312fe9c41eda0e0c5d0d03d9524cf71 into 9d4f03fde53d611aef91028a2b1f7529b2f4ffaa
+2026-11-27T20:20:21.7308479Z 865f2715e55dbaec2f2059b7ed8d239374cbd569
+2026-11-27T20:20:26.6918107Z HEAD is now at 80f3c13 publish sunberry 0.5.7's rosetta-3 results
+2026-11-27T20:21:45.9870336Z   ROSETTA_MEASURE_ONLY: false
+2026-11-27T20:25:28.6133828Z annonyA: 882/882 (100.0%) | cases 246/246, libraries 36/36, generated 300/300, mutants 300/300 | 212.9s -> /home/runner/work/Luau-decompiler/Luau-decompiler/tmp/rosetta-results/hard-quick/annonyA-hard-quick.json
+2026-11-27T20:25:28.6606962Z hard-quick: 882/882; {"pass":882,"mismatch":0,"recompile_failed":0,"decompile_failed":0,"refused":0,"unusable":0}
+

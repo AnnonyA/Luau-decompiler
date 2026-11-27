@@ -1,0 +1,47 @@
+{
+  "encoding": "SHA-256 of each exact decoded job-log string returned by the GitHub connector, encoded as UTF-8; timestamps and ANSI escapes retained.",
+  "logs": [
+    {
+      "job_id": 140721285909,
+      "label": "node20",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544/job/140721285909",
+      "decoded_log_utf8_sha256": "5e3ed0902656f94a5ff99a06404fa588261e1f655a756fb8f1d0b159dcdf35d3",
+      "decoded_log_utf8_bytes": 70867
+    },
+    {
+      "job_id": 140721285654,
+      "label": "node22",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544/job/140721285654",
+      "decoded_log_utf8_sha256": "cb4d3cf764abaa6f941bfdbd8b60dfab12689461dc5bf8f7793444c8b39c1a0a",
+      "decoded_log_utf8_bytes": 72407
+    },
+    {
+      "job_id": 140721825278,
+      "label": "official",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544/job/140721825278",
+      "decoded_log_utf8_sha256": "c2eb890214050eac2901988c9697f083e31ce7ecb0df066eb7350abb26b39cac",
+      "decoded_log_utf8_bytes": 830494
+    },
+    {
+      "job_id": 140721285656,
+      "label": "browser",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929616/job/140721285656",
+      "decoded_log_utf8_sha256": "da0c0010b6825fbea18bf2ce67e925469f47082f26a6a0374104fa205fb79dc7",
+      "decoded_log_utf8_bytes": 49599
+    },
+    {
+      "job_id": 140721285433,
+      "label": "quick",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929538/job/140721285433",
+      "decoded_log_utf8_sha256": "5de96e3ee1af9550bfbb99be7ba4584ca76bb278bf840efe3e6406cf1f35db5d",
+      "decoded_log_utf8_bytes": 65655
+    },
+    {
+      "job_id": 140721285666,
+      "label": "hard-quick",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929538/job/140721285666",
+      "decoded_log_utf8_sha256": "1d589a287ad12fe15400de67ee18fd770083648cdff4b65a4ef63705716b09b6",
+      "decoded_log_utf8_bytes": 65667
+    }
+  ]
+}

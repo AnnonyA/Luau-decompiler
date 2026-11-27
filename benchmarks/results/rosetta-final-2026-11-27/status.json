@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "complete": true,
+  "allPass": true,
+  "engine": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+  "publishedEngine": "08259cd6c312fe9c41eda0e0c5d0d03d9524cf71",
+  "tree": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+  "tiers": {
+    "quick": {
+      "status": "completed",
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "summary": {
+        "tier": "quick",
+        "hash": "e24826907050bd1d",
+        "passed": 882,
+        "total": 882,
+        "roundTrips": 882,
+        "counts": {
+          "pass": 882,
+          "mismatch": 0,
+          "recompile_failed": 0,
+          "decompile_failed": 0,
+          "refused": 0,
+          "unusable": 0
+        },
+        "sections": [
+          {
+            "id": "cases",
+            "passed": 246,
+            "total": 246
+          },
+          {
+            "id": "libraries",
+            "passed": 36,
+            "total": 36
+          },
+          {
+            "id": "generated",
+            "passed": 300,
+            "total": 300
+          },
+          {
+            "id": "mutants",
+            "passed": 300,
+            "total": 300
+          }
+        ],
+        "allPass": true
+      },
+      "report": "annonyA-quick.json",
+      "reportSha256": "70c79a0d9162db9e6473316725d433148eddf373e057086c615ea89d7de66d5d",
+      "provenance": "annonyA-quick.provenance.json",
+      "provenanceSha256": "68297afa94fae0c5247105c98e4ea173fbcc42a6a9fefec59aa8d042255425f9",
+      "measuredSource": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+      "created": "2026-11-27T20:18:26Z",
+      "runtime": "v24.22.3",
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null
+      }
+    },
+    "full": {
+      "status": "completed",
+      "score": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "summary": {
+        "tier": "full",
+        "hash": "f0eae8ffcedd440e",
+        "passed": 12276,
+        "total": 12276,
+        "roundTrips": 12282,
+        "counts": {
+          "pass": 12276,
+          "mismatch": 0,
+          "recompile_failed": 0,
+          "decompile_failed": 0,
+          "refused": 0,
+          "unusable": 6
+        },
+        "sections": [
+          {
+            "id": "cases",
+            "passed": 246,
+            "total": 246
+          },
+          {
+            "id": "libraries",
+            "passed": 36,
+            "total": 36
+          },
+          {
+            "id": "generated",
+            "passed": 5994,
+            "total": 5994
+          },
+          {
+            "id": "mutants",
+            "passed": 6000,
+            "total": 6000
+          }
+        ],
+        "allPass": true
+      },
+      "report": "annonyA-full.json",
+      "reportSha256": "05e3d698fac3b6cc02f29eb5ba38c428282ee27d143bd7d596dee50c5fc26494",
+      "provenance": "annonyA-full.provenance.json",
+      "provenanceSha256": "5cb3c8deda95f0ee94c904432cf3f448198a98673ab9c5df2689a8a186d683c2",
+      "measuredSource": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+      "created": "2026-11-27T20:29:47Z",
+      "runtime": "v24.22.3",
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null
+      }
+    },
+    "hard-quick": {
+      "status": "completed",
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "summary": {
+        "tier": "hard-quick",
+        "hash": "9bcb49d29e867a92",
+        "passed": 882,
+        "total": 882,
+        "roundTrips": 882,
+        "counts": {
+          "pass": 882,
+          "mismatch": 0,
+          "recompile_failed": 0,
+          "decompile_failed": 0,
+          "refused": 0,
+          "unusable": 0
+        },
+        "sections": [
+          {
+            "id": "cases",
+            "passed": 246,
+            "total": 246
+          },
+          {
+            "id": "libraries",
+            "passed": 36,
+            "total": 36
+          },
+          {
+            "id": "generated",
+            "passed": 300,
+            "total": 300
+          },
+          {
+            "id": "mutants",
+            "passed": 300,
+            "total": 300
+          }
+        ],
+        "allPass": true
+      },
+      "report": "annonyA-hard-quick.json",
+      "reportSha256": "27fc5e3d2de34c081bc18e8455f5b93617fc762a9813211b36d9392c85b16dff",
+      "provenance": "annonyA-hard-quick.provenance.json",
+      "provenanceSha256": "cfe41e8d73e8ce98436705f2e5b3510ed9735cb744362f054ffad7991fdf8ac0",
+      "measuredSource": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+      "created": "2026-11-27T20:18:43Z",
+      "runtime": "v24.22.3",
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null
+      }
+    },
+    "hard-full": {
+      "status": "completed",
+      "score": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "summary": {
+        "tier": "hard-full",
+        "hash": "9921d3bde4a99bfd",
+        "passed": 12276,
+        "total": 12276,
+        "roundTrips": 12282,
+        "counts": {
+          "pass": 12276,
+          "mismatch": 0,
+          "recompile_failed": 0,
+          "decompile_failed": 0,
+          "refused": 0,
+          "unusable": 6
+        },
+        "sections": [
+          {
+            "id": "cases",
+            "passed": 246,
+            "total": 246
+          },
+          {
+            "id": "libraries",
+            "passed": 36,
+            "total": 36
+          },
+          {
+            "id": "generated",
+            "passed": 5994,
+            "total": 5994
+          },
+          {
+            "id": "mutants",
+            "passed": 6000,
+            "total": 6000
+          }
+        ],
+        "allPass": true
+      },
+      "report": "annonyA-hard-full.json",
+      "reportSha256": "f91481e9da33a8041b835a583854f666709e7799e8d873946591b9b521feed41",
+      "provenance": "annonyA-hard-full.provenance.json",
+      "provenanceSha256": "b238886c0b2938bdff56568ed36fd5c55422d50e49c80b35fd727bc3e97b509e",
+      "measuredSource": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+      "created": "2026-11-27T20:30:40Z",
+      "runtime": "v24.22.3",
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null
+      }
+    }
+  },
+  "remoteCiEvidenceIncluded": true,
+  "remoteCiPassed": true,
+  "localEngineGatesPassed": true,
+  "latestHeadCiRequiredAfterDocumentationCommit": true
+}

@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-11-27T20:27:23.208673+00:00",
+  "repository": "AnnonyA/Luau-decompiler",
+  "pull_request": {
+    "number": 82,
+    "url": "https://github.com/AnnonyA/Luau-decompiler/pull/82",
+    "state": "open",
+    "draft": true,
+    "merged": false
+  },
+  "source_identity": {
+    "local_source_commit": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+    "published_head_sha": "08259cd6c312fe9c41eda0e0c5d0d03d9524cf71",
+    "published_and_local_tree_sha": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+    "base_sha": "9d4f03fde53d611aef91028a2b1f7529b2f4ffaa",
+    "tree_evidence": "Local source, published head and synthetic execution commit trees were independently read from actual Git objects. The synthetic object SHA-1 was verified. GitHub Compare confirms zero changed files between the head and its synthetic test merge."
+  },
+  "execution_identity": {
+    "synthetic_merge_sha": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+    "synthetic_tree_sha": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+    "parents": [
+      "9d4f03fde53d611aef91028a2b1f7529b2f4ffaa",
+      "08259cd6c312fe9c41eda0e0c5d0d03d9524cf71"
+    ],
+    "ref": "refs/pull/82/merge",
+    "meaning": "GitHub Actions synthetic pull-request test merge; this is not a merge of the pull request into main.",
+    "git_object_sha1_verified": true,
+    "commit_proof": "ci-08259cd6-executed-commit.json"
+  },
+  "outcome": "all_required_gates_passed",
+  "workflow_runs": [
+    {
+      "id": 46062929616,
+      "name": "Browser demo",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929616"
+    },
+    {
+      "id": 46062929544,
+      "name": "CI",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544"
+    },
+    {
+      "id": 46062929538,
+      "name": "Rosetta",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929538"
+    }
+  ],
+  "gates": [
+    {
+      "gate": "node20",
+      "job_id": 140721285909,
+      "job_name": "Test, typecheck and build (Node 20)",
+      "run_id": 46062929544,
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544/job/140721285909",
+      "status": "completed",
+      "conclusion": "success",
+      "all_steps_success": true,
+      "executed_commit": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+      "log_sha256": "5e3ed0902656f94a5ff99a06404fa588261e1f655a756fb8f1d0b159dcdf35d3",
+      "node_version": "20.20.2",
+      "unit_tests": {
+        "passed": 1322,
+        "total": 1322
+      },
+      "benchmark_harness": {
+        "passed": 69,
+        "failed": 0
+      },
+      "checks": [
+        "unit tests",
+        "typecheck",
+        "build",
+        "benchmark harness",
+        "benchmark smoke test",
+        "pinned public fixture comparison"
+      ]
+    },
+    {
+      "gate": "node22",
+      "job_id": 140721285654,
+      "job_name": "Test, typecheck and build (Node 22)",
+      "run_id": 46062929544,
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544/job/140721285654",
+      "status": "completed",
+      "conclusion": "success",
+      "all_steps_success": true,
+      "executed_commit": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+      "log_sha256": "cb4d3cf764abaa6f941bfdbd8b60dfab12689461dc5bf8f7793444c8b39c1a0a",
+      "node_version": "22.23.5",
+      "unit_tests": {
+        "passed": 1322,
+        "total": 1322
+      },
+      "benchmark_harness": {
+        "passed": 69,
+        "failed": 0
+      },
+      "checks": [
+        "unit tests",
+        "typecheck",
+        "build",
+        "benchmark harness",
+        "benchmark smoke test",
+        "pinned public fixture comparison"
+      ]
+    },
+    {
+      "gate": "official",
+      "job_id": 140721825278,
+      "job_name": "Parse source with official pinned Luau",
+      "run_id": 46062929544,
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929544/job/140721825278",
+      "status": "completed",
+      "conclusion": "success",
+      "all_steps_success": true,
+      "executed_commit": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+      "log_sha256": "c2eb890214050eac2901988c9697f083e31ce7ecb0df066eb7350abb26b39cac",
+      "official_luau_revision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "successful_semantic_steps": [
+        "Check out our decompiler",
+        "Check our output and published references with official parser",
+        "Check pinned Tovek bytes and paired-source observations",
+        "Compare behavior of controlled original and decompiled Luau",
+        "Check sealed closure identity and single-load controls",
+        "Check sealed game systems with one load and four activations",
+        "Check 12 independent originals against the official VM",
+        "Check scope, register and CFG regressions with extra inputs",
+        "Check reduced large-system regressions in the official VM",
+        "Check individual rewrite switches and both extremes in the official VM",
+        "Check sealed large development systems",
+        "Check observed large regressions without external requests",
+        "Check sealed second-cohort development systems",
+        "Check observed second-cohort regressions",
+        "Check seeded captures, effects and multiple returns",
+        "Check sealed independent systems now tracked as regressions"
+      ]
+    },
+    {
+      "gate": "browser",
+      "job_id": 140721285656,
+      "job_name": "build",
+      "run_id": 46062929616,
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929616/job/140721285656",
+      "status": "completed",
+      "conclusion": "success",
+      "all_steps_success": true,
+      "executed_commit": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+      "log_sha256": "da0c0010b6825fbea18bf2ce67e925469f47082f26a6a0374104fa205fb79dc7",
+      "browser_binary": "google-chrome",
+      "browser_test": {
+        "name": "static demo works under a repository subpath in Chromium",
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "demo_startup_tests": {
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "gate": "quick",
+      "job_id": 140721285433,
+      "job_name": "Rosetta quick (Node 22)",
+      "run_id": 46062929538,
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929538/job/140721285433",
+      "status": "completed",
+      "conclusion": "success",
+      "all_steps_success": true,
+      "executed_commit": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+      "log_sha256": "5de96e3ee1af9550bfbb99be7ba4584ca76bb278bf840efe3e6406cf1f35db5d",
+      "strict": true,
+      "measure_only": false,
+      "rosetta_revision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+      "passed": 882,
+      "total": 882,
+      "counts": {
+        "pass": 882,
+        "mismatch": 0,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 0
+      },
+      "families": {
+        "cases": {
+          "passed": 246,
+          "total": 246
+        },
+        "libraries": {
+          "passed": 36,
+          "total": 36
+        },
+        "generated": {
+          "passed": 300,
+          "total": 300
+        },
+        "mutants": {
+          "passed": 300,
+          "total": 300
+        }
+      }
+    },
+    {
+      "gate": "hard-quick",
+      "job_id": 140721285666,
+      "job_name": "Rosetta hard-quick (Node 22)",
+      "run_id": 46062929538,
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46062929538/job/140721285666",
+      "status": "completed",
+      "conclusion": "success",
+      "all_steps_success": true,
+      "executed_commit": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+      "log_sha256": "1d589a287ad12fe15400de67ee18fd770083648cdff4b65a4ef63705716b09b6",
+      "strict": true,
+      "measure_only": false,
+      "rosetta_revision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+      "passed": 882,
+      "total": 882,
+      "counts": {
+        "pass": 882,
+        "mismatch": 0,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 0
+      },
+      "families": {
+        "cases": {
+          "passed": 246,
+          "total": 246
+        },
+        "libraries": {
+          "passed": 36,
+          "total": 36
+        },
+        "generated": {
+          "passed": 300,
+          "total": 300
+        },
+        "mutants": {
+          "passed": 300,
+          "total": 300
+        }
+      }
+    }
+  ],
+  "expected_skip": {
+    "job_id": 140721723267,
+    "name": "deploy",
+    "conclusion": "skipped",
+    "reason": "Pull-request browser build; deployment is not triggered."
+  },
+  "scope": [
+    "This evidence applies exclusively to published head 08259cd6 and its synthetic CI merge; no prior-checkpoint conclusions were reused.",
+    "Full and Hard Full suite measurements are separate from the automatic Quick and Hard Quick workflow gates.",
+    "No source was modified, no local checks were repeated, and no GitHub mutation or merge was performed during this inspection."
+  ],
+  "evidence_files": {
+    "log_hashes": "ci-checkpoint-08259cd6-log-hashes.json",
+    "log_extracts": "ci-checkpoint-08259cd6-log-extracts.txt",
+    "executed_commit_proof": "ci-08259cd6-executed-commit.json"
+  }
+}

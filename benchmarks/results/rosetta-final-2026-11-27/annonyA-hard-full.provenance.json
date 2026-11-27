@@ -1,0 +1,120 @@
+{
+  "integration": {
+    "pinSha256": "0b67b06dee91960755f9e5fbeadcd0722ec77e7d1a0b54878285b77af66ee142",
+    "runnerSha256": "6c128909fea9acdbf0f6a5c7582b81204a017f73f2f75a820c9ff8a1523b63d3",
+    "validatorSha256": "888718cf60934d8795392149f2cbd5e5999ce2e431a096602a42f61d172bfc15"
+  },
+  "engine": {
+    "revision": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+    "commitTree": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+    "dirty": false,
+    "status": [],
+    "sourceTreeSha256": "5f30831cc22670b8ab20822aa5a7a8d26785d8228e7408070669e6ada5dfd965",
+    "distSha256": "4970b410c82ae8465054ca58f748848bc6e531740d393a248ddd6e30675caff4",
+    "checkout": "/workspace/scratch/eb5e4be57451/measurements/integrated-11-hard-full-engine",
+    "cli": "/workspace/scratch/eb5e4be57451/measurements/integrated-11-hard-full-engine/dist/cli.js",
+    "buildCommand": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/scratch/eb5e4be57451/measurements/integrated-11-hard-full-engine/node_modules/typescript/bin/tsc",
+      "-p",
+      "/workspace/scratch/eb5e4be57451/measurements/integrated-11-hard-full-engine/tsconfig.json"
+    ]
+  },
+  "rosetta": {
+    "revision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "commitTree": "dd5acdc6b2612b04b3fb15ef5e5d3bf07f65920a",
+    "dirty": false,
+    "checkout": "/workspace/scratch/eb5e4be57451/rosetta-research",
+    "repository": "https://github.com/Scrensayol/rosetta.git",
+    "suite": "rosetta-3",
+    "luau": "0.747",
+    "transform": "transform-2",
+    "binary": "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "binarySha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b"
+  },
+  "runtime": {
+    "node": "v24.22.3",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "executableSha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+    "platform": "linux",
+    "arch": "x64",
+    "nodeOptions": null
+  },
+  "timing": "direct CLI per bytecode; includes Node.js startup and decompilation; no HTTP client/server split",
+  "schemaVersion": 1,
+  "format": "annonyA-rosetta-provenance",
+  "tier": "hard-full",
+  "startedAt": "2026-11-27T20:14:01.142Z",
+  "status": "completed",
+  "gate": "all-pass",
+  "command": [
+    "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "bench",
+    "--tier",
+    "hard-full",
+    "--decompiler",
+    "annonyA=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/eb5e4be57451/measurements/integrated-11-hard-full-engine/dist/cli.js decompile {}",
+    "--version",
+    "annonyA=ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+    "--out",
+    "/workspace/scratch/eb5e4be57451/measurements/integrated-11",
+    "--gallery"
+  ],
+  "environment": {
+    "RAYON_NUM_THREADS": "4",
+    "forbiddenOverridesAbsent": [
+      "ROSETTA_TRANSFORM_OFF",
+      "ROSETTA_TRANSFORM_ONLY",
+      "LUAU_DECOMPILE_OPTS"
+    ]
+  },
+  "result": {
+    "path": "/workspace/scratch/eb5e4be57451/measurements/integrated-11/annonyA-hard-full.json",
+    "sha256": "f91481e9da33a8041b835a583854f666709e7799e8d873946591b9b521feed41"
+  },
+  "summary": {
+    "tier": "hard-full",
+    "hash": "9921d3bde4a99bfd",
+    "passed": 12276,
+    "total": 12276,
+    "roundTrips": 12282,
+    "counts": {
+      "pass": 12276,
+      "mismatch": 0,
+      "recompile_failed": 0,
+      "decompile_failed": 0,
+      "refused": 0,
+      "unusable": 6
+    },
+    "sections": [
+      {
+        "id": "cases",
+        "passed": 246,
+        "total": 246
+      },
+      {
+        "id": "libraries",
+        "passed": 36,
+        "total": 36
+      },
+      {
+        "id": "generated",
+        "passed": 5994,
+        "total": 5994
+      },
+      {
+        "id": "mutants",
+        "passed": 6000,
+        "total": 6000
+      }
+    ],
+    "allPass": true
+  },
+  "process": {
+    "exitCode": 0,
+    "signal": null,
+    "error": null
+  },
+  "finishedAt": "2026-11-27T20:30:40.557Z",
+  "elapsedSeconds": 999.415248899
+}

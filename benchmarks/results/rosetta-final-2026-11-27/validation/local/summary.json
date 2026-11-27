@@ -1,0 +1,116 @@
+{
+  "revision": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+  "tree": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+  "initialStatus": "",
+  "nodeVersion": "v22.23.5",
+  "dependencyLockSha256": "e160f5ca3b42025a6186604028f9f5667bcbaacbf43ede5449e62867c04afd4d",
+  "started": "2026-11-27T20:14:20.651750+00:00",
+  "gates": [
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "seconds": 7.285,
+      "log": "node22-build.log"
+    },
+    {
+      "gate": "build-demo",
+      "command": [
+        "npm",
+        "run",
+        "build:demo"
+      ],
+      "exitCode": 0,
+      "seconds": 7.669,
+      "log": "node22-build-demo.log"
+    },
+    {
+      "gate": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 7.702,
+      "log": "node22-typecheck.log"
+    },
+    {
+      "gate": "bench-test",
+      "command": [
+        "npm",
+        "run",
+        "bench:test"
+      ],
+      "exitCode": 0,
+      "seconds": 10.329,
+      "log": "node22-bench-test.log",
+      "testsPassed": 69,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    },
+    {
+      "gate": "bench-smoke",
+      "command": [
+        "npm",
+        "run",
+        "bench:compare",
+        "--",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/integrated-11-validation/node22-baseline.json"
+      ],
+      "exitCode": 0,
+      "seconds": 2.57,
+      "log": "node22-bench-smoke.log"
+    },
+    {
+      "gate": "demo-test",
+      "command": [
+        "npm",
+        "run",
+        "demo:test"
+      ],
+      "exitCode": 0,
+      "seconds": 1.658,
+      "log": "node22-demo-test.log",
+      "testsPassed": 6,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    },
+    {
+      "gate": "unit",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--maxWorkers=2"
+      ],
+      "exitCode": 0,
+      "seconds": 116.603,
+      "log": "node22-unit.log",
+      "testsPassed": 1322,
+      "testFilesPassed": 134
+    }
+  ],
+  "notRun": [
+    {
+      "gate": "demo-browser",
+      "reason": "Known unavailable local dependency: /usr/bin/chromium launcher exists but /usr/lib/chromium/chromium is missing. Prior frozen10 attempt returned npm1/browser127. Per root, did not repeat or install a browser; exact-head remote CI remains required."
+    },
+    {
+      "gate": "Node20 local rerun",
+      "reason": "Per root, Node20 is covered by required exact-head remote CI."
+    },
+    {
+      "gate": "Official pinned Luau and public-corpus CI",
+      "reason": "Delegated to exact-head remote CI; local reference pin differs and is not substituted."
+    }
+  ],
+  "finished": "2026-11-27T20:16:32.225892+00:00",
+  "finalStatus": "",
+  "allExecutedGatesPassed": true
+}

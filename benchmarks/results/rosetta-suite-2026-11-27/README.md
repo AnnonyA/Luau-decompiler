@@ -1,5 +1,7 @@
 # Rosetta 3 measurement history
 
+The later [verified four-tier report](../rosetta-final-2026-11-27/README.md) records all four strict gates passing on one engine, `ff0275e`, published as `08259cd6`. This development history preserves the earlier failures and regressions unchanged.
+
 These reports retain both improvements and regressions. Each measured engine
 revision is identified in `index.json` and its adjacent provenance file. A
 measurement-only process exit does not assert an all-pass result. All counts

@@ -1,5 +1,7 @@
 # Reproducible Rosetta measurements
 
+The [verified four-tier result](../../benchmarks/results/rosetta-final-2026-11-27/README.md) passes Quick **882/882**, Full **12,276/12,276**, Hard Quick **882/882**, and Hard Full **12,276/12,276** on one measured engine. The report includes the exact source, raw evidence, CI, and comparable published competitor results.
+
 The integration pins [Rosetta](https://github.com/Scrensayol/rosetta) to
 `80f3c13ce48dc3318d5d49f54958f580937ca8aa`: **rosetta-3**, **Luau 0.747**,
 and **transform-2**. The machine-readable pin and complete program inventories are

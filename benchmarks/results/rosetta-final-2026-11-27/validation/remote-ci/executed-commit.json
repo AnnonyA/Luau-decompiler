@@ -1,0 +1,35 @@
+{
+  "sha": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+  "tree": {
+    "sha": "ea3058b85283838ee3a765f19db2a3a7b3a0838f"
+  },
+  "parents": [
+    {
+      "sha": "9d4f03fde53d611aef91028a2b1f7529b2f4ffaa"
+    },
+    {
+      "sha": "08259cd6c312fe9c41eda0e0c5d0d03d9524cf71"
+    }
+  ],
+  "ref": "refs/pull/82/merge",
+  "synthetic_pull_request_test_merge": true,
+  "merged_into_main": false,
+  "source": {
+    "method": "Read actual Git commit object with git cat-file commit, verify canonical commit-object SHA-1, and independently read published head tree.",
+    "repository": "AnnonyA/Luau-decompiler",
+    "git_object_sha1_verified": true,
+    "raw_commit_content_sha256": "578de7dded3d1b1a3a4b50f6041534607bcc2a2ea3871bda1d3744a10d011a22",
+    "published_head_sha": "08259cd6c312fe9c41eda0e0c5d0d03d9524cf71",
+    "published_head_tree_sha": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+    "github_compare_corroboration": {
+      "base": "08259cd6c312fe9c41eda0e0c5d0d03d9524cf71",
+      "head": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+      "status": "ahead",
+      "ahead_by": 1,
+      "behind_by": 0,
+      "total_commits": 1,
+      "changed_files": 0,
+      "merge_base_commit_sha": "08259cd6c312fe9c41eda0e0c5d0d03d9524cf71"
+    }
+  }
+}
