@@ -1,0 +1,15 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "command": [
+    "rosetta",
+    "mutate",
+    "--count",
+    "1000",
+    "--seed",
+    "1",
+    "--dump"
+  ],
+  "pool": "77408523",
+  "source": "mut1-569.luau",
+  "sha256": "fea57273d44107c45554d537ea2473b8a4a13178de80041322d5e182c09ec853"
+}

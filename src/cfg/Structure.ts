@@ -1,6 +1,6 @@
 import type { ControlFlowGraph } from "./ControlFlowGraph.js";
 import type { DominatorTree, PostDominatorTree } from "./Dominators.js";
-import type { NaturalLoop } from "./NaturalLoops.js";
+import { followPureJumps, type NaturalLoop } from "./NaturalLoops.js";
 import { Opcode } from "../decode/Opcode.js";
 
 /**
@@ -82,36 +82,50 @@ export function followOfLoop(
 ): number | undefined {
   const latch = cfg.blocks[loop.latch];
   const opcode = latch?.instructions.at(-1)?.opcode;
+  const iterationLoop = opcode === Opcode.FORGLOOP || opcode === Opcode.FORNLOOP;
   // The body's first common block can still be inside the loop (for example
   // the join that materializes a predicate before an inlined early return).
   // Continue up the post-dominator tree to the first enclosing continuation.
+  // A for body that always breaks has no path back to its latch, so its
+  // internal joins may lie outside the natural-loop block set. Its follow
+  // must also post-dominate the iterator's empty/exhausted path.
   let common = postDominators.ipdom[loop.header];
   const seen = new Set<number>();
   while (common !== undefined && common >= 0 && common < cfg.blocks.length &&
-      loop.blocks.includes(common) && !seen.has(common)) {
+      (loop.blocks.includes(common) || (iterationLoop && !postDominators.postDominates(common, loop.latch))) &&
+      !seen.has(common)) {
     seen.add(common);
     common = postDominators.ipdom[common];
   }
-  if (common !== undefined && common >= 0 && common < cfg.blocks.length && !loop.blocks.includes(common)) {
-    return common;
+  if (common !== undefined && common >= 0 && common < cfg.blocks.length && !loop.blocks.includes(common) &&
+      (!iterationLoop || postDominators.postDominates(common, loop.latch))) {
+    return followPureJumps(cfg, common);
   }
-  if ((opcode === Opcode.FORGLOOP || opcode === Opcode.FORNLOOP) && latch?.fallthrough !== undefined) {
+  if (iterationLoop && latch?.fallthrough !== undefined) {
     // Inlined returns can bypass the exhaustion tail. The common continuation
     // owns both result definitions; the latch fallthrough is only one exit.
-    return latch.fallthrough;
+    return followPureJumps(cfg, latch.fallthrough);
   }
   // Without a common post-dominator, prefer the failed entry test. An earlier
   // numbered exit may instead be a return from inside the body; treating
   // that return as the follow loses both its scope and the fallback path.
   if (loop.kind === "while") {
     const exit = cfg.blocks[loop.header]?.successors.find(id => !loop.blocks.includes(id));
-    if (exit !== undefined) return exit;
+    if (exit !== undefined) return followPureJumps(cfg, exit);
+  }
+  if (loop.kind === "repeat") {
+    // The terminating until test identifies the ordinary continuation even
+    // when an earlier body arm returns from the function. Both may be RETURN
+    // blocks, so instruction order and terminal/nonterminal status cannot
+    // distinguish the source loop exit from the early return.
+    const exits = cfg.blocks[loop.testBlock ?? loop.latch]?.successors.filter(id => !loop.blocks.includes(id)) ?? [];
+    if (exits.length === 1) return followPureJumps(cfg, exits[0]!);
   }
   const outside: number[] = [];
   for (const id of loop.blocks) {
     for (const succ of cfg.blocks[id]?.successors ?? []) {
       if (!loop.blocks.includes(succ)) {
-        outside.push(succ);
+        outside.push(followPureJumps(cfg, succ));
       }
     }
   }

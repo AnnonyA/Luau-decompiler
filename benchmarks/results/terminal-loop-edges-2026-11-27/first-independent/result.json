@@ -1,0 +1,17 @@
+[
+  {
+    "name": "original",
+    "exit": 0,
+    "stdout": "75\n3\n"
+  },
+  {
+    "name": "before",
+    "exit": 0,
+    "stdout": "0\n3\n"
+  },
+  {
+    "name": "after",
+    "exit": 0,
+    "stdout": "75\n3\n"
+  }
+]

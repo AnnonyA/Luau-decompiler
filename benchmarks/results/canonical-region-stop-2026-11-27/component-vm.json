@@ -1,0 +1,22 @@
+{
+  "cases": [
+    {
+      "phase": "before",
+      "exit_code": 0,
+      "stdout": "2\t10\t100\t100\n",
+      "stderr": "",
+      "source_sha256": "ed96de89b4660be94a558bcaeaf6028c19105ed5791a02b02b5afc49d25c1830",
+      "return_count": 2
+    },
+    {
+      "phase": "after",
+      "exit_code": 0,
+      "stdout": "2\t10\t100\t100\n",
+      "stderr": "",
+      "source_sha256": "6b7b050be8f064411254dc67ddaaac0d450b353f58bb1481554e848cd4973f25",
+      "return_count": 1
+    }
+  ],
+  "expected_stdout": "2\t10\t100\t100\n",
+  "scope": "direct reconstruction component; both executions preserve behavior, but before duplicates the continuation"
+}

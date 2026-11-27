@@ -1,0 +1,5 @@
+nil	nil
+3	nil	nil	table: 0x#1
+nil	41	nil	nil	table: 0x#1
+true	stored:2|stored:1
+== Returned

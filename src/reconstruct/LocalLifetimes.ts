@@ -1,4 +1,4 @@
-import {block, type Block, type Chunk, type Statement, type Expression} from '../ast/Ast.js';
+import {block, cloneAst, type Block, type Chunk, type Statement, type Expression} from '../ast/Ast.js';
 import {analyzeBindings, replaceReferences, type LexicalBinding} from '../analysis/Bindings.js';
 
 /** Close completed lexical lifetimes in large reconstructed blocks. Luau limits
@@ -7,7 +7,7 @@ import {analyzeBindings, replaceReferences, type LexicalBinding} from '../analys
  * closed intervals in do. Captures and writes count as uses; repeat conditions
  * retain body visibility. */
 export function boundLocalLifetimes(ast: Chunk, options: {foldSingleUseTemps?: boolean} = {}): Chunk {
-  const result = structuredClone(ast);
+  const result = cloneAst(ast);
   const visit = (node: unknown, repeatBody = false): void => {
     if (!node || typeof node !== 'object') return;
     if (Array.isArray(node)) {node.forEach(value => visit(value)); return;}

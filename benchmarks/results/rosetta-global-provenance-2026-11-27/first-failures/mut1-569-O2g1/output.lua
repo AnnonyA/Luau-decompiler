@@ -1,0 +1,317 @@
+-- [[ annonya.github.io ]] v0.2.0 | decompiled at 2026-11-27T18:52:39Z
+-- Luau bytecode version: 14 | Luau type version: 3
+
+local function seen(p)
+    local value = ({ [2] = { seen = true } })[p]
+    local flag: boolean = false
+    if value ~= nil then
+        flag = value.seen ~= nil
+    end
+    return flag
+end
+
+local function pick(items)
+    local function __m737573()
+    end
+
+    for key, value in items do
+        if not value.show then
+            continue
+        end
+        local id = value.id
+        local value2 = ({ [2] = { seen = true } })[id]
+        local flag: boolean = false
+        if value2 ~= nil then
+            flag = value2.seen ~= nil
+        end
+        if flag then
+            continue
+        end
+        break
+    end
+    if index == nil then
+        return false
+    end
+    local function protected()
+        return items[index].id * 100
+    end
+
+    local success, result = pcall(protected)
+    return success, result
+end
+
+print((if true then pick else nil)({
+    { show = false, id = 1 },
+    { show = true, id = 2 },
+    { show = true, id = 3 },
+    { show = true, id = 4 },
+}))
+print((if true then pick else nil)({ { show = true, id = 2 } }))
+local tbl = {}
+
+function tbl.get()
+    return { [2] = { seen = true } }
+end
+
+local function nextShown(list, p)
+    local i = nil
+    for i2 = p + 1, #list do
+        if not list[i2].toShow then
+            continue
+        end
+        i = i2
+        break
+    end
+    return if i ~= nil then "show " + i .. " " .. list[i].id else "none"
+end
+
+local data = { toShow = false, id = "b" }
+local print2 = print
+local i = nil
+
+local list = { { toShow = true, id = "a" }, data, { toShow = true, id = "c" } }
+
+for i2 = 1, #list do
+    if not list[i2].toShow then
+        continue
+    end
+    i = i2
+    break
+end
+data = if i ~= nil then "show " + i .. " " .. list[i].id else "none"
+local i3 = nil
+for i4 = 2, #list do
+    if not list[i4].toShow then
+        continue
+    end
+    i3 = i4
+    break
+end
+i = if i3 ~= nil then "show " + i3 .. " " .. list[i3].id else "none"
+local i5 = nil
+for i6 = 4, #list do
+    if not list[i6].toShow then
+        continue
+    end
+    i5 = i6
+    break
+end
+i3 = if i5 ~= nil then "show " + i5 .. " " .. list[i5].id else "none"
+print2(data, i, i3)
+
+local function findKey(items, p)
+    local result = nil
+    for key, value in items do
+        if value ~= p then
+            continue
+        end
+        result = key
+        break
+    end
+    return if result ~= nil then "found " .. result else "none"
+end
+
+local print3 = print
+local result = nil
+for key, value in { "x", "y", "z" } do
+    if value ~= "y" then
+        continue
+    end
+    result = key
+    break
+end
+local result2 = if result ~= nil then "found " .. result else "none"
+local result3 = nil
+for key2, value2 in { "x" } do
+    if value2 ~= "q" then
+        continue
+    end
+    result3 = key2
+    break
+end
+print3(result2, if result3 ~= nil then "found " .. result3 else "none")
+
+local function conv(items)
+    local list = {}
+    for _, value in items do
+        if typeof(value) ~= "number" then
+            value = tonumber(value) or -1
+        end
+        table.insert(list, value * 2)
+    end
+    return table.concat(list, ",")
+end
+
+local function conv2(limit: number)
+    local list = {}
+    local i
+    for i2 = 1, limit do
+        i = i2
+        if i % 2 == 0 then
+            i *= 100
+        end
+        table.insert(list, i)
+    end
+    return table.concat(list, ",")
+end
+
+print((if true then conv else nil)({ 1, "2", "x", 4 }), (if true then conv2 else nil)(4))
+
+local function m(items, p)
+    local map = {}
+    for _, value in items do
+        if value.name then
+            local name = value.name
+            if p then
+                if p.skip then
+                    if p.skip[name .. "*"] then
+                        map[name] = "skip*"
+                    elseif p then
+                        if p.skip then
+                            if p.skip[name] then
+                                map[name] = "skip"
+                            else
+                                local kind = value.kind
+                                if kind == 1 then
+                                    map[name] = "one"
+                                elseif kind == 2 then
+                                    map[name] = "two"
+                                else
+                                    if kind == 3 then
+                                        map[name] = "three"
+                                    end
+                                end
+                            end
+                        else
+                            local kind2 = value.kind
+                            if kind2 == 1 then
+                                map[name] = "one"
+                            elseif kind2 == 2 then
+                                map[name] = "two"
+                            else
+                                if kind2 == 3 then
+                                    map[name] = "three"
+                                end
+                            end
+                        end
+                    else
+                        local kind3 = value.kind
+                        if kind3 == 1 then
+                            map[name] = "one"
+                        elseif kind3 == 2 then
+                            map[name] = "two"
+                        else
+                            if kind3 == 3 then
+                                map[name] = "three"
+                            end
+                        end
+                    end
+                elseif p then
+                    if p.skip then
+                        if p.skip[name] then
+                            map[name] = "skip"
+                        else
+                            local kind4 = value.kind
+                            if kind4 == 1 then
+                                map[name] = "one"
+                            elseif kind4 == 2 then
+                                map[name] = "two"
+                            else
+                                if kind4 == 3 then
+                                    map[name] = "three"
+                                end
+                            end
+                        end
+                    else
+                        local kind5 = value.kind
+                        if kind5 == 1 then
+                            map[name] = "one"
+                        elseif kind5 == 2 then
+                            map[name] = "two"
+                        else
+                            if kind5 == 3 then
+                                map[name] = "three"
+                            end
+                        end
+                    end
+                else
+                    local kind6 = value.kind
+                    if kind6 == 1 then
+                        map[name] = "one"
+                    elseif kind6 == 2 then
+                        map[name] = "two"
+                    else
+                        if kind6 == 3 then
+                            map[name] = "three"
+                        end
+                    end
+                end
+            elseif p then
+                if p.skip then
+                    if p.skip[name] then
+                        map[name] = "skip"
+                    else
+                        local kind7 = value.kind
+                        if kind7 == 1 then
+                            map[name] = "one"
+                        elseif kind7 == 2 then
+                            map[name] = "two"
+                        else
+                            if kind7 == 3 then
+                                map[name] = "three"
+                            end
+                        end
+                    end
+                else
+                    local kind8 = value.kind
+                    if kind8 == 1 then
+                        map[name] = "one"
+                    elseif kind8 == 2 then
+                        map[name] = "two"
+                    else
+                        if kind8 == 3 then
+                            map[name] = "three"
+                        end
+                    end
+                end
+            else
+                local kind9 = value.kind
+                if kind9 == 1 then
+                    map[name] = "one"
+                elseif kind9 == 2 then
+                    map[name] = "two"
+                else
+                    if kind9 == 3 then
+                        map[name] = "three"
+                    end
+                end
+            end
+        else
+            if value.kind ~= 9 then
+                map.schema = "s"
+            end
+        end
+    end
+    local list = {}
+    for key, value2 in map do
+        table.insert(list, key .. "=" .. value2)
+    end
+    table.sort(list)
+    return table.concat(list, ",")
+end
+
+local print4 = print
+
+local list2 = {
+    { name = "a", kind = 1 },
+    { name = "b", kind = 2 },
+    { name = "c", kind = 3 },
+    { name = "d", kind = 4 },
+    { kind = 9 },
+    { name = "e", kind = 1 },
+    { name = "f", kind = 1 },
+}
+
+print4((if true then m else nil)(list2, nil))
+print((if true then m else nil)(list2, { skip = { ["a*"] = true, b = true } }))
+print((if true then m else nil)(list2, {}))

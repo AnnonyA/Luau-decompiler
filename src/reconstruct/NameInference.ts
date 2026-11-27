@@ -43,8 +43,13 @@ export function inferHumanNames(ast: Chunk, options: NameInferenceOptions = {}):
   return renameChunk(swept);
 }
 
-export function repairUndeclaredAutoLocals(ast: Chunk): Chunk {
-  return { kind: "chunk", body: repairBlock(ast.body, [new Set()]) };
+export function repairUndeclaredAutoLocals(ast: Chunk, allocatedNames?: ReadonlySet<string>): Chunk {
+  // Module globals are reserved outside the reconstruction allocator. Their
+  // spelling alone (index, value, count, ...) cannot justify a local binding.
+  // Keep the legacy AST-only repair when no provenance inventory is supplied.
+  const globals = allocatedNames === undefined ? new Set<string>()
+    : new Set([...analyzeBindings(ast.body).globals].filter(name => !allocatedNames.has(name)));
+  return { kind: "chunk", body: repairBlock(ast.body, [globals]) };
 }
 
 export function isGeneratedName(name: string): boolean {

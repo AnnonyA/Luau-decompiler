@@ -1,0 +1,56 @@
+[
+  {
+    "profile": "O0g1",
+    "candidateMatches": true,
+    "want": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "got": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "stderr": "",
+    "decompileCode": 0,
+    "compileCode": 0
+  },
+  {
+    "profile": "O1g1",
+    "candidateMatches": true,
+    "want": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "got": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "stderr": "",
+    "decompileCode": 0,
+    "compileCode": 0
+  },
+  {
+    "profile": "O2g1",
+    "candidateMatches": true,
+    "want": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "got": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "stderr": "",
+    "decompileCode": 0,
+    "compileCode": 0
+  },
+  {
+    "profile": "O0g2",
+    "candidateMatches": true,
+    "want": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "got": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "stderr": "",
+    "decompileCode": 0,
+    "compileCode": 0
+  },
+  {
+    "profile": "O1g2",
+    "candidateMatches": true,
+    "want": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "got": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "stderr": "",
+    "decompileCode": 0,
+    "compileCode": 0
+  },
+  {
+    "profile": "O2g2",
+    "candidateMatches": true,
+    "want": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "got": "true\t43\t1\t40\t50\tnil\t52\t1\n",
+    "stderr": "",
+    "decompileCode": 0,
+    "compileCode": 0
+  }
+]

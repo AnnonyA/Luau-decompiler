@@ -25,10 +25,21 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
       if (cfg.blocks[succ]?.unreachable) {
         continue;
       }
+      // Once preparation has only its real edge, the iterator step dominates
+      // the body. We represent that region using the successful FORGLOOP edge
+      // below; the body's ordinary return to the step is the same iteration,
+      // not a second enclosing loop rooted at the step.
+      const target = cfg.blocks[succ]!;
+      const iterationEdge = block.instructions.at(-1)?.opcode === Opcode.FORGLOOP && succ === block.branch;
+      if (!iterationEdge && target.instructions.at(-1)?.opcode === Opcode.FORGLOOP &&
+          target.predecessors.some(predecessor => isGenericEntry(cfg, predecessor, target.id))) continue;
       if (!dominators.dominates(succ, block.id)) {
         // Generic-for loops are entered through FORGPREP which jumps directly to
         // the FORGLOOP latch, so the body start does not dominate the latch.
-        if (!(block.instructions.at(-1)?.opcode === Opcode.FORGLOOP && succ === block.branch && succ < block.id)) {
+        // The iteration target can be physically after the latch in valid
+        // permuted bytecode. Its role comes from FORGLOOP, not PC ordering.
+        if (!(block.instructions.at(-1)?.opcode === Opcode.FORGLOOP && succ === block.branch &&
+            block.predecessors.some(predecessor => isGenericEntry(cfg, predecessor, block.id)))) {
           continue;
         }
       }
@@ -115,10 +126,10 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
   return merged;
 }
 
-/** Compiler jump threading can redirect the dead step around a break-only body
- * or leave a control-only exit stub. Only those exact control edges are equal;
+/** Compiler jump threading or physical layout can introduce control-only exit
+ * stubs. Only those exact control edges are equal;
  * CLOSEUPVALS and any register work still own observable semantics. */
-function followPureJumps(cfg: ControlFlowGraph, start: number): number {
+export function followPureJumps(cfg: ControlFlowGraph, start: number): number {
   const seen = new Set<number>();
   let current = start;
   while (!seen.has(current)) {

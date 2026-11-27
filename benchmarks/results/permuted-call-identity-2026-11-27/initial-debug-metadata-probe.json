@@ -1,0 +1,50 @@
+[
+  {
+    "profile": "O0g1",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "",
+    "stderr": ""
+  },
+  {
+    "profile": "O1g1",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "",
+    "stderr": ""
+  },
+  {
+    "profile": "O2g1",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "",
+    "stderr": ""
+  },
+  {
+    "profile": "O0g2",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "false\tfalse\t4\t4\t7\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O1g2",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "false\tfalse\t4\t4\t7\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O2g2",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "false\tfalse\t4\t4\t7\n",
+    "stderr": ""
+  }
+]

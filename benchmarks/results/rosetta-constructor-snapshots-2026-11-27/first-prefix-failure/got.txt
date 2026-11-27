@@ -1,0 +1,6 @@
+tag
+later
+nil	nil	table	8	9	nil	nil
+7	nested	first,middle,tail
+true	13
+== Returned

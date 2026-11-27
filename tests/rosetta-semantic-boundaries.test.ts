@@ -10,6 +10,14 @@ const names = [
   'contextual-continue', 'conditional-method-calls', 'comparison-selected-values',
   'sequential-phi-ranges', 'captured-table-reset', 'shared-nested-phis', 'empty-constructor-key',
   'computed-loop-update', 'guard-constructor-operands', 'compound-guard-return',
+  'runtime-cube-rounding', 'power-metamethod-boundary',
+  'mixed-open-constructor', 'mixed-open-effects', 'mutable-list-values',
+  'open-pack-linear-chain',
+  'signed-nan-literals',
+  'conditional-backedge',
+  'iterator-shuffled-follow',
+  'open-pack-dead-predecessor',
+  'terminal-iterator-continuation', 'terminal-iterator-effects',
 ];
 const fixture = (name: string, profile: string) => readFileSync(new URL(
   `fixtures/rosetta-semantics/${name}-${profile}.luauc`, import.meta.url));
@@ -171,5 +179,75 @@ describe('call, constructor and contextual identifier boundaries', () => {
     expect(loops).toHaveLength(1);
     expect(loops[0].body.statements.some((statement: any) => statement.kind === 'return')).toBe(false);
     expect(nodes(loops[0], 'return').length).toBeGreaterThan(0);
+  });
+
+  it.each(['O1g1', 'O1g2', 'O2g1', 'O2g2'])('retains VM multiplication rounding for known numeric cubes at %s', profile => {
+    const result = decompile(fixture('runtime-cube-rounding', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    expect(nodes(result.ast, 'binary').some(expression => expression.op === '*' &&
+      expression.left.kind === 'binary' && expression.left.op === '*' &&
+      JSON.stringify(expression.left.left) === JSON.stringify(expression.left.right) &&
+      JSON.stringify(expression.left.right) === JSON.stringify(expression.right))).toBe(true);
+    expect(nodes(result.ast, 'binary').some(expression => expression.op === '^')).toBe(true);
+  });
+
+  it.each(profiles)('keeps power metamethods for unknown and reference-captured operands at %s', profile => {
+    const result = decompile(fixture('power-metamethod-boundary', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    expect(nodes(result.ast, 'binary').filter(expression => expression.op === '^').length).toBeGreaterThanOrEqual(2);
+  });
+
+  it.each(profiles)('keeps the prefix and named fields with an open constructor tail at %s', profile => {
+    const result = decompile(fixture('mixed-open-constructor', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const table = nodes(result.ast, 'table').find(table => table.fields.some((field: any) =>
+      field.name === 'tag' || field.key?.value === 'tag'));
+    expect(table).toBeDefined();
+    const list = table.fields.filter((field: any) => !field.name && !field.key);
+    expect(list).toHaveLength(4);
+    expect(list.at(-1).value.kind).toBe('call');
+    expect(list.at(-1).value.args.map((argument: any) => argument.value)).toEqual(['tail', 9, null, 11]);
+  });
+
+  it.each(profiles)('evaluates a completed open constructor before the next observer at %s', profile => {
+    const result = decompile(fixture('mixed-open-effects', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const body = result.ast.body.statements;
+    const constructor = body.findIndex(statement => nodes(statement, 'table').some(table =>
+      table.fields.some((field: any) => field.name === 'tag' || field.key?.value === 'tag')));
+    const observer = body.findIndex(statement => nodes(statement, 'call').some(call =>
+      call.callee.kind === 'property' && call.callee.name === 'concat'));
+    expect(constructor).toBeGreaterThanOrEqual(0);
+    expect(observer).toBeGreaterThan(constructor);
+  });
+
+  it.each(profiles)('snapshots mutable list values before reassignment at %s', profile => {
+    const result = decompile(fixture('mutable-list-values', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const table = nodes(result.ast, 'table').find(table => table.fields[0]?.value?.value === 'start');
+    expect(table).toBeDefined();
+    const snapshotNames = [table.fields[1].value.name, table.fields[3].value.name];
+    expect(snapshotNames.every((name: unknown) => typeof name === 'string')).toBe(true);
+    const writes = nodes(result.ast, 'assign').flatMap(statement => statement.targets)
+      .filter(target => target.kind === 'identifier').map(target => target.name);
+    expect(snapshotNames.every((name: string) => !writes.includes(name))).toBe(true);
+  });
+
+  it.each(profiles)('forwards every result through a shuffled straight control chain at %s', profile => {
+    const result = decompile(fixture('open-pack-linear-chain', `${profile}-shuffled`));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    expect(result.validation).toEqual([]);
+    const returned = nodes(result.ast, 'return').find(statement => statement.values[0]?.kind === 'call' &&
+      statement.values[0].callee.name === 'outer');
+    expect(returned).toBeDefined();
+    expect(returned.values[0].args).toHaveLength(1);
+    expect(returned.values[0].args[0].kind).toBe('call');
+    expect(returned.values[0].args[0].callee.name).toBe('inner');
   });
 });

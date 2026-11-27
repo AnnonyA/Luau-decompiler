@@ -1,0 +1,50 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "baselineEngine": "489ce27b97ca607b578388f052f178d78b7ec27f",
+  "entries": [
+    {
+      "profile": "O0g1",
+      "source": "shared-increment-after-guard.luau",
+      "sourceSha256": "36d2b3c768e1f49f96cc760a54a98f8ad0c00f13336939b1618e5dde93524a08",
+      "bytecode": "shared-increment-after-guard-O0g1.luauc",
+      "sha256": "e837e8ddfac65d049d23c26704d3aeb4c262f3ed84478c4317af411226151300"
+    },
+    {
+      "profile": "O0g2",
+      "source": "shared-increment-after-guard.luau",
+      "sourceSha256": "36d2b3c768e1f49f96cc760a54a98f8ad0c00f13336939b1618e5dde93524a08",
+      "bytecode": "shared-increment-after-guard-O0g2.luauc",
+      "sha256": "b526bf71c92b71269921e997f1e22faeb6fa0503d9a8224961f08690a488bec3"
+    },
+    {
+      "profile": "O1g1",
+      "source": "shared-increment-after-guard.luau",
+      "sourceSha256": "36d2b3c768e1f49f96cc760a54a98f8ad0c00f13336939b1618e5dde93524a08",
+      "bytecode": "shared-increment-after-guard-O1g1.luauc",
+      "sha256": "5565da39cc4ec0ccf42e0c29d3ec77e8c7eaa2aa9f0707f47838c03e68563b52"
+    },
+    {
+      "profile": "O1g2",
+      "source": "shared-increment-after-guard.luau",
+      "sourceSha256": "36d2b3c768e1f49f96cc760a54a98f8ad0c00f13336939b1618e5dde93524a08",
+      "bytecode": "shared-increment-after-guard-O1g2.luauc",
+      "sha256": "b24489190f48dd36e0eed6a81554706c6a1802a5f089c6ac3405debb34494217"
+    },
+    {
+      "profile": "O2g1",
+      "source": "shared-increment-after-guard.luau",
+      "sourceSha256": "36d2b3c768e1f49f96cc760a54a98f8ad0c00f13336939b1618e5dde93524a08",
+      "bytecode": "shared-increment-after-guard-O2g1.luauc",
+      "sha256": "5565da39cc4ec0ccf42e0c29d3ec77e8c7eaa2aa9f0707f47838c03e68563b52"
+    },
+    {
+      "profile": "O2g2",
+      "source": "shared-increment-after-guard.luau",
+      "sourceSha256": "36d2b3c768e1f49f96cc760a54a98f8ad0c00f13336939b1618e5dde93524a08",
+      "bytecode": "shared-increment-after-guard-O2g2.luauc",
+      "sha256": "b24489190f48dd36e0eed6a81554706c6a1802a5f089c6ac3405debb34494217"
+    }
+  ]
+}

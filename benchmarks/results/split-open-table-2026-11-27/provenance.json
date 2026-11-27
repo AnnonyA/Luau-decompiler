@@ -1,0 +1,10 @@
+{
+  "base": "bb3a2d4",
+  "before": "6/6 VM equality original vs permutation; reconstruction0/6",
+  "after": "6/6 correct aliases, forty-element prefix, nil middle and open tail, one call",
+  "reference": {
+    "Tovek": "ce2ea3325547fa3896f274b68013386338039040 MIT luau-lifter/src/lifter.rs SETLIST",
+    "Luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f VM/src/lvmexecute.cpp SETLIST"
+  },
+  "implementation": "Independent constructor lifetime through single-entry straight CFG chains"
+}

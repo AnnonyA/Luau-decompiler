@@ -1,0 +1,108 @@
+{
+  "generator": "typed-v2",
+  "cases": 2,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "ann": {
+      "pass": 2,
+      "mismatch": 10
+    }
+  },
+  "by_profile": {
+    "ann": {
+      "O0g1": 2,
+      "O0g2": 2,
+      "O1g1": 2,
+      "O1g2": 2,
+      "O2g1": 1,
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "ann": [
+      {
+        "case": "unused-conditional-effects",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `1,2,false,4,false\t5\tfalse\tno` got `4\t1\tfalse\tno`"
+      },
+      {
+        "case": "unused-conditional-effects",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `1,2,false,4,false\t5\tfalse\tno` got `4\t1\tfalse\tno`"
+      },
+      {
+        "case": "unused-conditional-effects",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `1,2,false,4,false\t5\tfalse\tno` got `4\t1\tfalse\tno`"
+      },
+      {
+        "case": "unused-conditional-effects",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `1,2,false,4,false\t5\tfalse\tno` got `4\t1\tfalse\tno`"
+      },
+      {
+        "case": "unused-conditional-metamethods",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `lt,le,eq,before-error\tfalse\tstring` got `before-error,after-error\ttrue\tnil`"
+      },
+      {
+        "case": "unused-conditional-metamethods",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `lt,le,eq,before-error\tfalse\tstring` got `before-error,after-error\ttrue\tnil`"
+      },
+      {
+        "case": "unused-conditional-metamethods",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `lt,le,eq,before-error\tfalse\tstring` got `before-error,after-error\ttrue\tnil`"
+      },
+      {
+        "case": "unused-conditional-metamethods",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `lt,le,eq,before-error\tfalse\tstring` got `before-error,after-error\ttrue\tnil`"
+      },
+      {
+        "case": "unused-conditional-metamethods",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `lt,le,eq,before-error\tfalse\tstring` got `before-error,after-error\ttrue\tnil`"
+      },
+      {
+        "case": "unused-conditional-metamethods",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `lt,le,eq,before-error\tfalse\tstring` got `before-error,after-error\ttrue\tnil`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 2,
+    "by_decompiler": {
+      "ann": {
+        "round_trips": 2,
+        "similarity": 71.39107584953308,
+        "size": 1.2662721893491125,
+        "locals": 0.7777777777777778,
+        "nesting": -1.0,
+        "endless": 0,
+        "names": 50.0,
+        "cpu_ms_median": 222.37599999999998,
+        "cpu_ms_total": 418.556
+      }
+    }
+  }
+}

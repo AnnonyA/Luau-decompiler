@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "scope": "Directed Lume library Hard profiles; this is not a complete tier score.",
+  "baselineEngine": "3253bd8",
+  "candidateEngine": "bda1ab4e9b90bc5f7b77351d8e726876fac72724",
+  "change": "9bfd97dd6d36ca536c2c89516eb03893e95ac887 (iterator result names across shuffled CFG layouts)",
+  "baseline": {
+    "pass": 4,
+    "mismatch": 2
+  },
+  "candidate": {
+    "pass": 6,
+    "mismatch": 0
+  },
+  "rosettaCommit": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "transform": "transform-2",
+  "profiles": [
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "command": [
+    "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "check",
+    "/workspace/scratch/eb5e4be57451/rosetta-research/libraries/lume",
+    "--profiles",
+    "O0g1+x1,O1g1+x2,O2g1+x3,O0g2+x2,O1g2+x3,O2g2+x1",
+    "--decompiler",
+    "ann=node /workspace/scratch/eb5e4be57451/hard-lume/dist/cli.js decompile {}",
+    "--work",
+    "/workspace/scratch/eb5e4be57451/hard-lume-after-iterator",
+    "--report",
+    "/workspace/scratch/eb5e4be57451/hard-lume-after-iterator/report.json"
+  ],
+  "sources": [
+    {
+      "path": "/workspace/scratch/eb5e4be57451/rosetta-research/libraries/lume/lume.luau",
+      "sha256": "fb2856d60eb48516c8aa04de1e8b58b355a56fb7a05fd1170cfe330f8ad69b1a"
+    },
+    {
+      "path": "/workspace/scratch/eb5e4be57451/rosetta-research/libraries/lume/spec.luau",
+      "sha256": "2f189a01161525f1076ad76dee8e3a1adf2a5b9a5ab7988e52f0aeeacc2afbb5"
+    }
+  ],
+  "note": "Both source and spec paths were verified to exist. Reports and first failed outputs are preserved unchanged; no source assertions or test inputs were changed."
+}

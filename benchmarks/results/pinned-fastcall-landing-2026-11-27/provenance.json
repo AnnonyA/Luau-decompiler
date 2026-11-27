@@ -1,0 +1,11 @@
+{
+  "base": "91fa0d7",
+  "luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "first": "seed1174 O1g2+x3: mismatch, earlier table fields lost",
+  "hard_after": "seed1174 6/6",
+  "vm": "4/4 original/normalized pairs: exit0 and stdout 3, both dispatch paths",
+  "unit": "30/30 normalization and terminal-loop tests passed",
+  "comparison": "development regressions; not a full-suite benchmark"
+}

@@ -1,7 +1,7 @@
 import type { Block, Chunk, Expression, Literal, Statement, TableField } from "../ast/Ast.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
 import { escapedByte } from "../decode/BytecodeString.js";
-import { formatInteger } from "../decode/Constant.js";
+import { formatInteger, formatNumber } from "../decode/Constant.js";
 import { analyzePrinterBindings, type PrintedFunction, type PrinterBindings } from "./PrinterBindings.js";
 
 const PREC: Record<string, number> = {
@@ -408,16 +408,7 @@ function literalToSource(value: Literal["value"], unicodeStrings: boolean): stri
     return value ? "true" : "false";
   }
   if (typeof value === "number") {
-    if (Number.isNaN(value)) {
-      return "(0/0)";
-    }
-    if (!Number.isFinite(value)) {
-      return value > 0 ? "(1/0)" : "(-1/0)";
-    }
-    if (Object.is(value, -0)) {
-      return "-0";
-    }
-    return String(value);
+    return formatNumber(value);
   }
   if (typeof value === "bigint") {
     return formatInteger(value);

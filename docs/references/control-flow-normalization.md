@@ -143,3 +143,183 @@ raw-bytecode comparisons exercise zero and three returned values, a scalar read
 after the call, and a scalar written into an existing tail; all exit successfully
 with identical output. Unit cases also cover an incoming path without a producer
 and a fixed call that resets the frame top.
+
+## Explicit transfers to returning loop arms
+
+A natural loop's block set excludes paths that return instead of reaching its
+backedge. Source emission formerly treated any explicit JUMP/JUMPX outside that
+set as `break`, including a transfer to a function return. Shuffled layout made
+that distinction observable even when the original compiler used fallthrough.
+
+The emitter now recognizes a bounded terminal case: a chain of single-successor
+blocks that reaches RETURN without entering the loop or its normal continuation.
+It leaves that chain to ordinary statement emission, preserving all intervening
+work, captures and return arity. Conditional or cyclic chains are not inferred
+by this helper. Tovek `ce2ea332` `cfg/src/ssa/structuring.rs` distinguishes loop
+exit transfers from terminal RETURN blocks and protects multret return arms;
+official Luau `c87565b8` `LOP_RETURN` returns from the call frame. These references
+informed the independent TypeScript change.
+
+A project-authored bytecode reduction executes a loop with an early result of
+75 and a normal result of 3. The first decompilation returned 0 and 3; the repaired
+source matches 75 and 3 in the official VM. Unit variants cover both JUMP
+encodings. Two additional Luau fixtures cover normal breaks, zero/open returns,
+closure captures and work before a terminal transfer across nine profiles each;
+all eighteen checks pass. The six remaining Hard pathfinding variants improved
+from twelve of twenty-four to twenty-four of twenty-four tested round trips.
+
+## Distinguishing terminal alternatives from normal loop completion
+
+A repeat loop with an empty early return and a counted normal return has two
+terminal exits. Without a common post-dominator, their physical block numbers do
+not identify the normal continuation. The repeat's recognized until test now
+provides that exit. An alternative that starts exactly at the enclosing loop
+follow emits its break before the inner region's stop boundary is applied; this
+retains `if cancelled then return end; break` in a generic-for body.
+
+Optimized inline returns can instead join after a normal-result assignment.
+Repeat loops now use the same guarded completion-tail mechanism as the existing
+while and for loops. Their exit guards remain in the body in this shape, so the
+final comparison reads the value loaded on its own continuing path. Pure
+NOP/JUMP/JUMPX adapters are resolved consistently when identifying normal exits
+and follows. CLOSEUPVALS, register writes and other work remain distinct blocks.
+This also avoids putting the shared no-match return of a shuffled generic loop
+inside the body and losing it on empty/exhausted iteration.
+
+The references remain official Luau
+`c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f` (`compileStatRepeat`,
+`compileStatForIn`, and `compileInlineReturn` in `Compiler/src/Compiler.cpp`) and
+Tovek `ce2ea3325547fa3896f274b68013386338039040`
+(`cfg/src/ssa/structuring.rs`, separate terminal RETURN arms and preserved loop
+exit adapters). The TypeScript changes are independently implemented; no code
+was copied. The committed fixture bytecode was compiled with official Luau 0.747
+through Rosetta `80f3c13ce48dc3318d5d49f54958f580937ca8aa` at the profile in each
+filename.
+
+Three project-authored sources initially failed all eighteen ordinary profile
+round trips and pass after the repair. The two corresponding Rosetta development
+mutants improve from two of twelve to twelve of twelve ordinary round trips.
+Their Hard cases plus the authored reductions, open-tail capture and terminal
+arity fixtures pass all forty-two tested Hard round trips. The first evaluations
+and final targeted reports are retained in
+`benchmarks/results/terminal-loop-follow-2026-11-27`; these are development
+regressions, not a new full-suite score.
+
+## Continuations also follow the iterator's empty path
+
+The header of a for body that always breaks can have an immediate
+post-dominator inside that body, such as the join of a boolean argument or a
+nested repeat. These blocks need not belong to the natural loop, because they
+cannot reach its latch. A candidate loop continuation now must also
+post-dominate the FORGLOOP/FORNLOOP latch. This includes the zero-iteration and
+exhaustion path before accepting a common continuation. The existing explicit
+latch exit remains the fallback, including unreachable numeric step markers.
+
+Official Luau `c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f`'s FORGLOOP execution
+and compiler `compileStatForIn` establish the distinct body/exhaustion edges.
+Tovek `ce2ea3325547fa3896f274b68013386338039040` retains the corresponding
+`GenericForNext` body edge and exit adapters in `cfg/src/ssa/structuring.rs`.
+Our post-dominator test is independently implemented.
+
+The two authored first-item fixtures improved from zero of twelve to twelve of
+twelve ordinary profiles and also pass all twelve Hard profiles. Rosetta
+development seeds 1113 and 1257 pass twelve of twelve ordinary profiles together;
+their Hard checks pass nine of twelve, leaving three seed1257 layout failures
+explicitly recorded. First and follow-up results are kept in
+`benchmarks/results/iterator-completion-2026-11-27`.
+
+## Committed guard preludes execute once per visited block
+
+Boolean/value reconstruction can emit the instructions before a comparison
+without calling the straight-block emitter. A loop backedge could consequently
+visit that header again during source construction and append a second copy of
+its increment or call prelude. A successful branch reconstruction now marks its
+basic block as emitted, regardless of the particular guard representation.
+This changes source traversal bookkeeping, not the bytecode's runtime backedge.
+It preserves the separate CLOSEUPVALS instruction and closure cell lifetimes.
+
+The authored `repeat-boolean-prelude.luau` stores a distinct mutable closure cell
+on each iteration and observes repeated writes to two saved cells. Its first
+six ordinary round trips returned a counter of five and only three closures
+instead of four and four. All six pass after the correction. Together with
+Rosetta development seeds 1247 and 1356, the ordinary targeted checks improve
+from six of eighteen to eighteen of eighteen; the first and follow-up results
+are recorded in `benchmarks/results/committed-loop-guards-2026-11-27`. The pinned
+official repeat/backedge and capture references above govern the invariant;
+this traversal fix is independently implemented.
+
+The same canonical exit identity is used by while-header setup. Comparing a raw
+JUMP adapter to its resolved follow would incorrectly emit the adapter as an
+extra exit tail, then append a second break after its existing terminal. Header
+setup now resolves that control-only adapter too and never appends a break after
+an already terminal tail. Direct CFG regressions cover JUMP and JUMPX adapters;
+the `while-exit-adapter.luau` coverage passes six Hard profiles before and after.
+
+## Trivial jumps at fixed-width fast-call landings
+
+A FASTCALL landing must retain its instruction address so the short C-field
+still identifies its matching CALL. When that landing is a JUMP/JUMPX to the
+next retained instruction, normalization now keeps a one-word NOP at that
+address. Previously it retained the jump terminator, which split a constructor
+across basic blocks between its fixed fields and open SETLIST tail.
+
+At official Luau `c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f`, the NOP, JUMP,
+JUMPX and FASTCALL1 cases in `VM/src/lvmexecute.cpp` establish the word widths,
+next-PC arithmetic and matching-CALL offset. Tovek
+`ce2ea3325547fa3896f274b68013386338039040`'s FASTCALL lifting preserves the
+fallback CALL as the source operation. This bounded normalization is independent
+and retains the landing PC instead of changing that call protocol.
+
+The seed1174 O1g2+x3 development regression lost earlier table fields before the
+change and passes afterward; all six of its Hard profiles pass. Two unit cases
+assert the retained NOP address, FASTCALL target and unified CFG block. Four
+project-authored raw-bytecode comparisons cover JUMP/JUMPX on builtin and
+getfenv-triggered fallback execution; all original and normalized executions
+exit successfully and print the same result. The inputs, outputs and statuses
+are saved in `benchmarks/results/pinned-fastcall-landing-2026-11-27`.
+
+## A structured join is not an additional loop-exit edge
+
+The alternatives of a statement-if already emit their own breaks, returns and
+iteration continuations. Advancing the source walker to that if's structural
+join must not introduce another unconditional break just because the join is
+the enclosing loop follow. The walker now distinguishes a committed statement
+join from an actual CFG transfer. A branch that starts at the follow still emits
+its required break, and guarded completion tails still terminate the region.
+
+This corrects a regression in the earlier terminal-alternative change. Rosetta
+`iterators` had stopped its Collatz loop after one iteration. The authored
+`while-exit-work.luau` independently reproduced the same premature exit in all
+six ordinary profiles while observing a side effect only on the capped path.
+It now finishes the continuing iterations and retains both early exits. The
+first result and targeted ordinary checks, including the original empty-return
+and generic-break regressions, are stored in
+`benchmarks/results/structured-loop-follow-2026-11-27`.
+
+## Canonical destinations also bound enclosing source regions
+
+A nested loop can resume after a pure JUMP adapter that is the enclosing if's
+join. The loop-follow analysis already resolves that adapter. Source traversal
+now resolves its stop through the same NOP/JUMP/JUMPX-only helper, so it does
+not skip the enclosing boundary and emit the entire continuation inside an arm.
+Instructions that close cells or perform other work remain region boundaries.
+
+This is an independent implementation in our IR. The reference review used
+Tovek `ce2ea3325547fa3896f274b68013386338039040`'s `structure_jumps` treatment of
+loop exits and official Luau `c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f`'s
+JUMP/NOP VM cases and `BytecodeBuilder::foldJumps` target traversal. No reference
+code was copied. The latter also makes clear why multiple valid bytecode
+layouts can name different adapters for one continuation.
+
+A direct CFG reduction has a counted loop inside a conditional whose join is
+a JUMP to the function return. Previously source reconstruction emitted that
+return twice; it now appears once after the conditional. All four argument
+combinations still produce 2, 10, 100 and 100 in the official VM. Separate
+authored runtime controls cover side-effect order, independent mutable capture
+cells, empty iterators and multiple returns across ordinary and Hard profiles.
+
+Rosetta development seed1042 no longer times out at O0: both ordinary O0
+profiles and their Hard counterparts pass. Its O1/O2 profiles retain a separate
+table-to-nil mismatch; this change does not claim to resolve that mismatch.
+Reports, the component's original and repaired source, and exact provenance
+are kept in `benchmarks/results/canonical-region-stop-2026-11-27`.

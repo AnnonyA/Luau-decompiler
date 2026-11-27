@@ -1,0 +1,103 @@
+{
+  "generator": "typed-v2",
+  "cases": 2,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "before": {
+      "mismatch": 12
+    }
+  },
+  "by_profile": {
+    "before": {
+      "O0g1": 2,
+      "O0g2": 2,
+      "O1g1": 2,
+      "O1g2": 2,
+      "O2g1": 2,
+      "O2g2": 2
+    }
+  },
+  "failures": {
+    "before": [
+      {
+        "case": "generic-break-after-return",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t2` got `1\t4`"
+      },
+      {
+        "case": "generic-break-after-return",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t2` got `1\t4`"
+      },
+      {
+        "case": "generic-break-after-return",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t2` got `1\t4`"
+      },
+      {
+        "case": "generic-break-after-return",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t2` got `1\t4`"
+      },
+      {
+        "case": "generic-break-after-return",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t2` got `1\t4`"
+      },
+      {
+        "case": "generic-break-after-return",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t2` got `1\t4`"
+      },
+      {
+        "case": "repeat-return-follow",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t3` got `0`"
+      },
+      {
+        "case": "repeat-return-follow",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t3` got `0`"
+      },
+      {
+        "case": "repeat-return-follow",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t3` got `0`"
+      },
+      {
+        "case": "repeat-return-follow",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t3` got `0`"
+      },
+      {
+        "case": "repeat-return-follow",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t3` got `0`"
+      },
+      {
+        "case": "repeat-return-follow",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `1\t3` got `0`"
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "luau": "0.747",
+  "revision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "files": {
+    "fixed-and-open-results.luau": "b1ee120b779b147150c60f47be284b585bd1499e8d07bf3e46cd13d2cfe19563",
+    "fixed-and-open-results-O0g1.luauc": "524d6f7097c77cb94328e0f61cd91e1c51dc03ac72da234147134f98da52cdf0",
+    "fixed-and-open-results-O0g2.luauc": "2b705aa5c227209f09bcbe9b300c4bd101a6083c5dbb5d329183204c5c724dc8",
+    "fixed-and-open-results-O1g1.luauc": "cef68b4cbc1fb665b2192609acbf0dc851ddc497b3a37777bef4f5ece5d8110a",
+    "fixed-and-open-results-O1g2.luauc": "c7bb963a0b4ec0294f0c8075ac07d38f1721cb0817e0a1068d92771dc35fa2c2",
+    "fixed-and-open-results-O2g1.luauc": "b4fe83749566328eb412150a323158d584d7114c9eaad610703a06f18f3bad1e",
+    "fixed-and-open-results-O2g2.luauc": "48815645579aef92e626f7041bab70ec47294958911ec5c1616fa922e834cde3",
+    "scalar-result-swap.luau": "0750938ca2af9dff7fbf0c76d61226c55abaefec8d88451b61a178e39469d087",
+    "scalar-result-swap-O0g1.luauc": "61e8a8ec2c070f66606a46905c7600dce116d98b16bf1d6933d09f8b18143709",
+    "scalar-result-swap-O0g2.luauc": "21cda6eaf527ccb6072a88132d8ea90802fd49fa75a397a4793bbf732a04e432",
+    "scalar-result-swap-O1g1.luauc": "ddb7fdcdab185fd5da8212f53a1c322c5db5a0287ccf0102c76094edc84e8e4a",
+    "scalar-result-swap-O1g2.luauc": "b1230d894607cc526f9caf911808cf5680d5e9463204c5131f9a79c6eefb78c3",
+    "scalar-result-swap-O2g1.luauc": "ddb7fdcdab185fd5da8212f53a1c322c5db5a0287ccf0102c76094edc84e8e4a",
+    "scalar-result-swap-O2g2.luauc": "b1230d894607cc526f9caf911808cf5680d5e9463204c5131f9a79c6eefb78c3"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "base": "50d6d96",
+  "source": "Project-authored open-pack-dead-predecessor.luau, compiled with official Luau O0/O1/O2 g1/g2; normal files and dead-entry variants sealed in tests/fixtures/rosetta-semantics.",
+  "engineChange": "Ignore CFG predecessors flagged unreachable in the existing straight-chain open-pack forwarding proof.",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "luauTag": "0.747",
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "tovekRevision": "ce2ea3325547fa3896f274b68013386338039040",
+  "references": [
+    "VM/src/lvmexecute.cpp: LOP_GETVARARGS and LOP_CALL dynamic top",
+    "luau-lifter/src/lifter.rs: take_top and open RETURN/CALL lifting"
+  ],
+  "implementation": "Independent implementation; no reference code copied.",
+  "unitTests": {
+    "passed": 112,
+    "failed": 0
+  },
+  "scope": "Directed development regression at reconstruction boundary plus full-pipeline Rosetta control; no claim of general conditional pack merging."
+}

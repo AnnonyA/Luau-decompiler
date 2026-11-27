@@ -1,0 +1,156 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "entries": [
+    {
+      "source": "field-observation-order.luau",
+      "profile": "O0g1",
+      "sha256": "2e5f1675aca3470763e6329b79093f4ad9dc10daa34a0ee6926b560722eee145"
+    },
+    {
+      "source": "field-observation-order.luau",
+      "profile": "O0g2",
+      "sha256": "01077e0f5754d76d2ff647e8a7dafd2151e3f2b0ca7d588c68b4259e746e5817"
+    },
+    {
+      "source": "field-observation-order.luau",
+      "profile": "O1g1",
+      "sha256": "9d4e2b7d7b44728b4c33b085ea8f141d2441ce9b347e45a5cc92e01a971301b5"
+    },
+    {
+      "source": "field-observation-order.luau",
+      "profile": "O1g2",
+      "sha256": "20a962863138376d6a67bb9303476a315cd462729f70afb91481e0eabeedf522"
+    },
+    {
+      "source": "field-observation-order.luau",
+      "profile": "O2g1",
+      "sha256": "9d4e2b7d7b44728b4c33b085ea8f141d2441ce9b347e45a5cc92e01a971301b5"
+    },
+    {
+      "source": "field-observation-order.luau",
+      "profile": "O2g2",
+      "sha256": "20a962863138376d6a67bb9303476a315cd462729f70afb91481e0eabeedf522"
+    },
+    {
+      "source": "guard-prelude-error-order.luau",
+      "profile": "O0g1",
+      "sha256": "95770cb5a5468256522214e067418ff75695f0f9c0c1bb65c1e23e7855fd563e"
+    },
+    {
+      "source": "guard-prelude-error-order.luau",
+      "profile": "O0g2",
+      "sha256": "1331a7a71f05deeb8fc585cfacdfd5d4faf909a3274560bfdffc5f1953d8250c"
+    },
+    {
+      "source": "guard-prelude-error-order.luau",
+      "profile": "O1g1",
+      "sha256": "e003dffe99671453d662bac795cdf8b1f4449b563fcd07e3028d871a7ff61920"
+    },
+    {
+      "source": "guard-prelude-error-order.luau",
+      "profile": "O1g2",
+      "sha256": "1791a5891a3394681e779d838a2a7f5f1f5a685eb88e22a5adf445e93a92fa83"
+    },
+    {
+      "source": "guard-prelude-error-order.luau",
+      "profile": "O2g1",
+      "sha256": "02ad7fca60e3dc644294280e86ca0a5e815fec684b2d53f93213fad39517852f"
+    },
+    {
+      "source": "guard-prelude-error-order.luau",
+      "profile": "O2g2",
+      "sha256": "6239073a73a10b151287c6576671e1476c955849805c7975105799243f5857cb"
+    },
+    {
+      "source": "selected-value-prelude-order.luau",
+      "profile": "O0g1",
+      "sha256": "a9dd73dcc47891a392c5f643fb94592eb996d0cab40a899047bcbce34d278bc8"
+    },
+    {
+      "source": "selected-value-prelude-order.luau",
+      "profile": "O0g2",
+      "sha256": "2b627b38e952406deade2100ce67cfef6256b92472f88d82845b8a7252489791"
+    },
+    {
+      "source": "selected-value-prelude-order.luau",
+      "profile": "O1g1",
+      "sha256": "554d43cfd06b23bc72a64274b650e9330711cda7b66cda8674eb0102e86f0eae"
+    },
+    {
+      "source": "selected-value-prelude-order.luau",
+      "profile": "O1g2",
+      "sha256": "ab65f4a131ef46921fa77c744a22b9695777b1af3dbc0747c64a1ceb0338496b"
+    },
+    {
+      "source": "selected-value-prelude-order.luau",
+      "profile": "O2g1",
+      "sha256": "292b566a21da57c8ee8fe5752d4adef9b3447daa6532d7be9b6212d528a8ba43"
+    },
+    {
+      "source": "selected-value-prelude-order.luau",
+      "profile": "O2g2",
+      "sha256": "9f08f74cee03f6b9b47f1c2793e3cba36a505629dd7125a0ab34a63848cafb15"
+    },
+    {
+      "source": "unused-call-before-guard.luau",
+      "profile": "O0g1",
+      "sha256": "54f84c8561bc7279d00d6fe59273af14426facee1324502d86a09bf412a45975"
+    },
+    {
+      "source": "unused-call-before-guard.luau",
+      "profile": "O0g2",
+      "sha256": "8db372fd77e3a21a638e99f25cfe09ace15e7e6105f5e0505ed1593d27047d4b"
+    },
+    {
+      "source": "unused-call-before-guard.luau",
+      "profile": "O1g1",
+      "sha256": "1c6a05967c6f39f06d5005d338f15c0809c00c0fe037ea70d67705d1f128a0d7"
+    },
+    {
+      "source": "unused-call-before-guard.luau",
+      "profile": "O1g2",
+      "sha256": "014dbc5dbb5bab41159c02faeff31a473b40549021cf84136896da5047fd30c0"
+    },
+    {
+      "source": "unused-call-before-guard.luau",
+      "profile": "O2g1",
+      "sha256": "f009c8332d94464ddef05ea4d2c2e6df111091b93f31708aacfeaefbb93c5a12"
+    },
+    {
+      "source": "unused-call-before-guard.luau",
+      "profile": "O2g2",
+      "sha256": "e31014cafd1c862cb4107305841547fd4f2d356a645fe4004753baeed547aaa6"
+    },
+    {
+      "source": "unused-loop-call-before-pack.luau",
+      "profile": "O0g1",
+      "sha256": "b2fcd1c9a33f42901ed09680da5e3c1674025a016103c1abadb3ba22b9cf0f9b"
+    },
+    {
+      "source": "unused-loop-call-before-pack.luau",
+      "profile": "O0g2",
+      "sha256": "22ded1aec0c20cb884d7b407861fe4de1c84438c753417a416b0e12a8a96f2db"
+    },
+    {
+      "source": "unused-loop-call-before-pack.luau",
+      "profile": "O1g1",
+      "sha256": "63196b2dbb0766467db8c798e5a266526469460b0ba95caac2c7e95dd6fd97f4"
+    },
+    {
+      "source": "unused-loop-call-before-pack.luau",
+      "profile": "O1g2",
+      "sha256": "e98b60835ba711be1d01fa71c28752e068eb40260ddd6adeeb41255079011364"
+    },
+    {
+      "source": "unused-loop-call-before-pack.luau",
+      "profile": "O2g1",
+      "sha256": "a634e1cccb160452eac6f7631c80591ff6a8c31627f7779e36cf7a916f7edae6"
+    },
+    {
+      "source": "unused-loop-call-before-pack.luau",
+      "profile": "O2g2",
+      "sha256": "f21c0408f5bcb36e0b1642d490c99c47fecb36a5efd2a4c03d808709b93f2ae0"
+    }
+  ]
+}

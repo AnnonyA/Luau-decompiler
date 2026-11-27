@@ -1,0 +1,3 @@
+before arithmetic
+false	pow
+== Returned

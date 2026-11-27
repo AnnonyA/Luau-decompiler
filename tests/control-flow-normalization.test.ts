@@ -4,6 +4,7 @@ import { normalizeControlFlow } from "../src/decode/NormalizeControlFlow.ts";
 import { buildControlFlowGraph } from "../src/cfg/ControlFlowGraph.ts";
 import { decompile } from "../src/decompile.ts";
 import type { NumericForStatement } from "../src/ast/Ast.ts";
+import { encodeE } from "../src/decode/Opcode.ts";
 import { abc, ad, CaptureType, decode, Opcode, proto, sourceOf } from "./helpers.ts";
 
 const normalize = (instructions: number[], options: Parameters<typeof proto>[0] extends infer T ? Partial<T> : never = {}) => {
@@ -12,6 +13,31 @@ const normalize = (instructions: number[], options: Parameters<typeof proto>[0] 
 };
 
 describe("reconstruction control-flow normalization", () => {
+  it.each([Opcode.JUMP, Opcode.JUMPX])("keeps a short-skip landing as a NOP when its jump only reaches the next instruction (%s)", opcode => {
+    const { normalized } = normalize([ad(Opcode.LOADN, 2, -3), abc(Opcode.FASTCALL1, 2, 2, 5),
+      abc(Opcode.GETGLOBAL, 0, 0, 0), 0, abc(Opcode.GETTABLEKS, 0, 0, 0), 1,
+      abc(Opcode.MOVE, 1, 2, 0), abc(Opcode.CALL, 0, 2, 2),
+      opcode === Opcode.JUMP ? ad(opcode, 0, 0) : encodeE(opcode, 0), abc(Opcode.RETURN, 0, 2, 0)],
+      { constants: [{kind: "string", value: "math"}, {kind: "string", value: "abs"}] });
+    const prototype = normalized.prototypes[normalized.mainProtoId]!;
+    const landing = prototype.instructions.find(instruction => instruction.originalPc === 8)!;
+    expect(landing.opcode).toBe(Opcode.NOP);
+    expect(prototype.instructions.find(instruction => instruction.opcode === Opcode.FASTCALL1)?.jumpTarget).toBe(landing.pc);
+    expect(buildControlFlowGraph(prototype).blocks).toHaveLength(1);
+  });
+
+  it.each([Opcode.JUMP, Opcode.JUMPX])("retains a function return reached through an external loop transfer (%s)", opcode => {
+    const child = proto({ maxStackSize: 4, numParams: 1, constants: [{kind: "number", value: 1}], instructions: [
+      ad(Opcode.LOADN, 1, 0), ad(Opcode.LOADN, 3, 3), ad(Opcode.JUMPIFNOTLT, 1, 6), 3,
+      ad(Opcode.JUMPIF, 0, 2), abc(Opcode.ADDK, 1, 1, 0), ad(Opcode.JUMPBACK, 0, -5), ad(Opcode.LOADN, 2, 75),
+      opcode === Opcode.JUMP ? ad(opcode, 0, 2) : encodeE(opcode, 2), abc(Opcode.RETURN, 1, 2, 0),
+      abc(Opcode.NOP, 0, 0, 0), abc(Opcode.RETURN, 2, 2, 0),
+    ] });
+    const source = sourceOf(proto({ children: [child], instructions: [ad(Opcode.NEWCLOSURE, 0, 0), abc(Opcode.RETURN, 0, 2, 0)] }));
+    expect(source).toContain("return 75");
+    expect(source).not.toContain("break");
+  });
+
   it("gives a boolean load with a skip only its taken successor", () => {
     const input = decode(proto({ numParams: 1, instructions: [ad(Opcode.JUMPIF, 0, 1),
       abc(Opcode.LOADB, 1, 0, 1), abc(Opcode.LOADB, 1, 1, 0), abc(Opcode.RETURN, 1, 2, 0)] })).module.prototypes[0]!;

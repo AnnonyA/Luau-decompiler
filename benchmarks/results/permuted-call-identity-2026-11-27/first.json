@@ -1,0 +1,74 @@
+[
+  {
+    "profile": "O0g1",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "false\tfalse\t4\t4\t7\n",
+    "stderr": "",
+    "decodeError": "",
+    "decompileCode": 0,
+    "compileCode": 0,
+    "runCode": 0
+  },
+  {
+    "profile": "O1g1",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "false\tfalse\t4\t4\t7\n",
+    "stderr": "",
+    "decodeError": "",
+    "decompileCode": 0,
+    "compileCode": 0,
+    "runCode": 0
+  },
+  {
+    "profile": "O2g1",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "false\tfalse\t4\t4\t7\n",
+    "stderr": "",
+    "decodeError": "",
+    "decompileCode": 0,
+    "compileCode": 0,
+    "runCode": 0
+  },
+  {
+    "profile": "O0g2",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "false\tfalse\t4\t4\t7\n",
+    "stderr": "",
+    "decodeError": "",
+    "decompileCode": 0,
+    "compileCode": 0,
+    "runCode": 0
+  },
+  {
+    "profile": "O1g2",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "false\tfalse\t4\t4\t7\n",
+    "stderr": "",
+    "decodeError": "",
+    "decompileCode": 0,
+    "compileCode": 0,
+    "runCode": 0
+  },
+  {
+    "profile": "O2g2",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "true\ttrue\t7\t7\t1\n",
+    "got": "false\tfalse\t4\t4\t7\n",
+    "stderr": "",
+    "decodeError": "",
+    "decompileCode": 0,
+    "compileCode": 0,
+    "runCode": 0
+  }
+]

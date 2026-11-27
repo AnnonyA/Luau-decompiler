@@ -1,0 +1,258 @@
+{
+  "generator": "typed-v2",
+  "cases": 13,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "candidate": {
+      "pass": 43,
+      "mismatch": 35
+    }
+  },
+  "by_profile": {
+    "candidate": {
+      "O0g1": 4,
+      "O0g2": 6,
+      "O1g1": 6,
+      "O1g2": 8,
+      "O2g1": 5,
+      "O2g2": 6
+    }
+  },
+  "failures": {
+    "candidate": [
+      {
+        "case": "seed1050",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 11: want `L9\t2\t1 true` got `L9\t2\t1 nil`"
+      },
+      {
+        "case": "seed1097",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "printed 17 lines, want 42"
+      },
+      {
+        "case": "seed1097",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "printed 17 lines, want 42"
+      },
+      {
+        "case": "seed1140",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 5: want `L5\t5\tfalse 4 false {1=-0.00001968503937007874,2=2} \"é\"` got `L5\t5\tnil 4 false {1=-0.00001968503937007874,2=2} \"é\"`"
+      },
+      {
+        "case": "seed1140",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 5: want `L5\t5\tfalse 4 false {1=-0.00001968503937007874,2=2} \"é\"` got `L5\t5\tnil 4 false {1=-0.00001968503937007874,2=2} \"é\"`"
+      },
+      {
+        "case": "seed1159",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 10: want `L10\t3\t0 4 2` got `L10\t3\t2 4 2`"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 11: want `L11\t4\t\"lo|3.14159\" \"true\" 3.141592653589793 true` got `L11\t4\t\"lo|3.14159\" \"true\" 0 true`"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "printed 10 lines, want 15"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "printed 10 lines, want 15"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 11: want `L11\t4\t\"lo|3.14159\" \"true\" 3.141592653589793 true` got `L11\t4\t\"lo|3.14159\" \"true\" 0 true`"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "printed 10 lines, want 15"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 10 lines, want 15"
+      },
+      {
+        "case": "seed1306",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 3: want `L3\t6\t3 {1=0,2=10} -3.9 nil \"nan | nan\" 0` got `L3\t6\t3 {1=0,2=10} 0 nil \"nan | nan\" 0`"
+      },
+      {
+        "case": "seed1306",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 3: want `L3\t6\t3 {1=0,2=10} -3.9 nil \"nan | nan\" 0` got `L3\t6\t3 {1=0,2=10} 0 nil \"nan | nan\" 0`"
+      },
+      {
+        "case": "seed1306",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 3: want `L3\t6\t3 {1=0,2=10} -3.9 nil \"nan | nan\" 0` got `L3\t6\t3 {1=0,2=10} 0 nil \"nan | nan\" 0`"
+      },
+      {
+        "case": "seed1334",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 9: want `L10\t6\t{1=-0,2=-inf,3=1e-07,4=800,5=1} 0 false {\"_hidden\"=1,\"two words\"=800,1.5=-5,1=10000000000} \"0\" nil` got `L10\t6\t{1=-0,2=-inf,3=1e-07,4=800,5=0} 0 false {\"_hidden\"=1,\"two words\"=800,1.5=-5,1=10000000000} \"0\" nil`"
+      },
+      {
+        "case": "seed1334",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 9: want `L10\t6\t{1=-0,2=-inf,3=1e-07,4=800,5=1} 0 false {\"_hidden\"=1,\"two words\"=800,1.5=-5,1=10000000000} \"0\" nil` got `L10\t6\t{1=-0,2=-inf,3=1e-07,4=800,5=0} 0 false {\"_hidden\"=1,\"two words\"=800,1.5=-5,1=10000000000} \"0\" nil`"
+      },
+      {
+        "case": "seed1334",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 9: want `L10\t6\t{1=-0,2=-inf,3=1e-07,4=800,5=1} 0 false {\"_hidden\"=1,\"two words\"=800,1.5=-5,1=10000000000} \"0\" nil` got `L10\t6\t{1=-0,2=-inf,3=1e-07,4=800,5=0} 0 false {\"_hidden\"=1,\"two words\"=800,1.5=-5,1=10000000000} \"0\" nil`"
+      },
+      {
+        "case": "seed1376",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 16: want `L14\t6\t{1=-1,2=-inf} {\"name\"=false,1.5=true} 1 {\"1abc\"=999.9999999999767,\"end\"=\"single\",\"y\"=4,1.5=\"0x1F\"} \"end|128\" \"single\"` got `L14\t6\t{1=-1,2=-inf} {\"name\"=false,1.5=true} 0 {\"1abc\"=999.9999999999767,\"end\"=\"single\",\"y\"=4,1.5=\"0x1F\"} \"end|128\" \"single\"`"
+      },
+      {
+        "case": "seed1376",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 16: want `L14\t6\t{1=-1,2=-inf} {\"name\"=false,1.5=true} 1 {\"1abc\"=999.9999999999767,\"end\"=\"single\",\"y\"=4,1.5=\"0x1F\"} \"end|128\" \"single\"` got `L14\t6\t{1=-1,2=-inf} {\"name\"=false,1.5=true} 0 {\"1abc\"=999.9999999999767,\"end\"=\"single\",\"y\"=4,1.5=\"0x1F\"} \"end|128\" \"single\"`"
+      },
+      {
+        "case": "seed1376",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 16: want `L14\t6\t{1=-1,2=-inf} {\"name\"=false,1.5=true} 1 {\"1abc\"=999.9999999999767,\"end\"=\"single\",\"y\"=4,1.5=\"0x1F\"} \"end|128\" \"single\"` got `L14\t6\t{1=-1,2=-inf} {\"name\"=false,1.5=true} 0 {\"1abc\"=999.9999999999767,\"end\"=\"single\",\"y\"=4,1.5=\"0x1F\"} \"end|128\" \"single\"`"
+      },
+      {
+        "case": "seed1424",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 13: want `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} false nil` got `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} nil nil`"
+      },
+      {
+        "case": "seed1424",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 13: want `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} false nil` got `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} nil nil`"
+      },
+      {
+        "case": "seed1424",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 13: want `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} false nil` got `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} nil nil`"
+      },
+      {
+        "case": "seed1424",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 13: want `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} false nil` got `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} nil nil`"
+      },
+      {
+        "case": "seed1424",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 13: want `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} false nil` got `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} nil nil`"
+      },
+      {
+        "case": "seed1424",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 13: want `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} false nil` got `L12\t6\t0.1 \"\" {\"_hidden\"=123456789.125,\"count\"=-2.5,1.5=9007199254740992} {\"_hidden\"=123456789.125,\"two words\"=\"0x1F|100\",\"x\"=inf,2=1} nil nil`"
+      },
+      {
+        "case": "seed1772",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 12: want `L10\t2\t2 {\"1abc\"=-inf,\"count\"=nan}` got `L10\t2\tnil {\"1abc\"=-inf,\"count\"=-2.5}`"
+      },
+      {
+        "case": "seed1772",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 12: want `L10\t2\t2 {\"1abc\"=-inf,\"count\"=nan}` got `L10\t2\tnil {\"1abc\"=-inf,\"count\"=-2.5}`"
+      },
+      {
+        "case": "seed1772",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 12: want `L10\t2\t2 {\"1abc\"=-inf,\"count\"=nan}` got `L10\t2\tnil {\"1abc\"=-inf,\"count\"=-2.5}`"
+      },
+      {
+        "case": "seed1861",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `L1\t4\t\"--not a commentfalse\" \"--not a commentfalse--not a commentfalse--not a commentfalse\" \"10a\" false` got `L1\t4\t\"--not a commentfalse--not a commentfalse\" \"--not a commentfalse--not a commentfalse--not a commentfalse--not a commentfalse\" \"10a\" false`"
+      },
+      {
+        "case": "seed1861",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `L1\t4\t\"--not a commentfalse\" \"--not a commentfalse--not a commentfalse--not a commentfalse\" \"10a\" false` got `L1\t4\t\"--not a commentfalse--not a commentfalse\" \"--not a commentfalse--not a commentfalse--not a commentfalse--not a commentfalse\" \"10a\" false`"
+      },
+      {
+        "case": "seed1861",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `L1\t4\t\"--not a commentfalse\" \"--not a commentfalse--not a commentfalse--not a commentfalse\" \"10a\" false` got `L1\t4\t\"--not a commentfalse--not a commentfalse\" \"--not a commentfalse--not a commentfalse--not a commentfalse--not a commentfalse\" \"10a\" false`"
+      },
+      {
+        "case": "seed1942",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 15: want `L13\t6\tnil 0 {1=4,2=-2e+300,3=1} nan 2 {1=\"v=nilv=-2.5true\"}` got `L13\t6\tnil 0 {1=4,2=-2e+300,3=2} nan 2 {1=\"v=nilv=-2.5true\"}`"
+      },
+      {
+        "case": "seed1942",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 15: want `L13\t6\tnil 0 {1=4,2=-2e+300,3=1} nan 2 {1=\"v=nilv=-2.5true\"}` got `L13\t6\tnil 0 {1=4,2=-2e+300,3=2} nan 2 {1=\"v=nilv=-2.5true\"}`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 43,
+    "by_decompiler": {
+      "candidate": {
+        "round_trips": 43,
+        "similarity": 57.703387182812364,
+        "size": 0.8482543769543239,
+        "locals": 0.9058995250915783,
+        "nesting": 0.7441860465116279,
+        "endless": 2,
+        "names": 39.03846153846154,
+        "cpu_ms_median": 312.738,
+        "cpu_ms_total": 14472.816000000004
+      }
+    }
+  }
+}

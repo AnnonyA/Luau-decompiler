@@ -1,0 +1,5 @@
+-nan|-nan	9
+4294443008	4294443008
+-nan|-nan
+false	false	false	false
+== Returned

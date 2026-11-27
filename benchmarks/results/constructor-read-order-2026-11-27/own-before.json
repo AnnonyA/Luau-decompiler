@@ -1,0 +1,70 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "ann": {
+      "pass": 2,
+      "mismatch": 4
+    }
+  },
+  "by_profile": {
+    "ann": {
+      "O0g1": 1,
+      "O0g2": 1,
+      "O1g1": 1,
+      "O1g2": 1
+    }
+  },
+  "failures": {
+    "ann": [
+      {
+        "case": "constructor-captured-read-order",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `10\t12\t12` got `10\t12\t10`"
+      },
+      {
+        "case": "constructor-captured-read-order",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `10\t12\t12` got `10\t12\t10`"
+      },
+      {
+        "case": "constructor-captured-read-order",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `10\t12\t12` got `10\t12\t10`"
+      },
+      {
+        "case": "constructor-captured-read-order",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `10\t12\t12` got `10\t12\t10`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 2,
+    "by_decompiler": {
+      "ann": {
+        "round_trips": 2,
+        "similarity": 74.85822439193726,
+        "size": 1.5406698564593302,
+        "locals": 2.2222222222222223,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 50.0,
+        "cpu_ms_median": 227.14000000000001,
+        "cpu_ms_total": 419.016
+      }
+    }
+  }
+}

@@ -5,8 +5,10 @@ describe("negative constant bases in reconstructed powers", () => {
   it.each([
     [Opcode.POW, -2, "(-2) ^ exponent"],
     [Opcode.POW, -0, "(-0) ^ exponent"],
-    [Opcode.POWK, -2, "(-2) ^ 2"],
-    [Opcode.POWK, -0, "(-0) ^ 2"],
+    // Numeric POWK squares use multiplication in the VM. The dedicated POW
+    // cases above still require parentheses around a negative power base.
+    [Opcode.POWK, -2, "-2 * -2"],
+    [Opcode.POWK, -0, "-0 * -0"],
   ] as const)("preserves the base for opcode %i and constant %s", (opcode, base, expression) => {
     const source = sourceOf(proto({
       maxStackSize: 3,

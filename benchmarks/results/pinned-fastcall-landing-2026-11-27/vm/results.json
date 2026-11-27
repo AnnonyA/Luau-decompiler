@@ -1,0 +1,42 @@
+[
+  {
+    "case": "jump-builtin.luauc",
+    "original_exit": 0,
+    "normalized_exit": 0,
+    "original_stdout": "3\n",
+    "normalized_stdout": "3\n",
+    "original_stderr": "",
+    "normalized_stderr": "",
+    "match": true
+  },
+  {
+    "case": "jump-fallback.luauc",
+    "original_exit": 0,
+    "normalized_exit": 0,
+    "original_stdout": "3\n",
+    "normalized_stdout": "3\n",
+    "original_stderr": "",
+    "normalized_stderr": "",
+    "match": true
+  },
+  {
+    "case": "jumpx-builtin.luauc",
+    "original_exit": 0,
+    "normalized_exit": 0,
+    "original_stdout": "3\n",
+    "normalized_stdout": "3\n",
+    "original_stderr": "",
+    "normalized_stderr": "",
+    "match": true
+  },
+  {
+    "case": "jumpx-fallback.luauc",
+    "original_exit": 0,
+    "normalized_exit": 0,
+    "original_stdout": "3\n",
+    "normalized_stdout": "3\n",
+    "original_stderr": "",
+    "normalized_stderr": "",
+    "match": true
+  }
+]

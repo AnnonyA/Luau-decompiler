@@ -1,0 +1,50 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "baselineEngine": "dd16d7df8d8da1b64950636a4abe5f0887607dce",
+  "entries": [
+    {
+      "profile": "O0g1",
+      "source": "constructor-captured-read-order.luau",
+      "sourceSha256": "1c01fe7f69f48654bcb130ec1b04dfe9e83f616be69dea5ede75d5dbbbb2b7dc",
+      "bytecode": "constructor-captured-read-order-O0g1.luauc",
+      "sha256": "db8347185d494ad2d0c99c452705810fa9410f0175a86e961fabdaf97603b8cc"
+    },
+    {
+      "profile": "O0g2",
+      "source": "constructor-captured-read-order.luau",
+      "sourceSha256": "1c01fe7f69f48654bcb130ec1b04dfe9e83f616be69dea5ede75d5dbbbb2b7dc",
+      "bytecode": "constructor-captured-read-order-O0g2.luauc",
+      "sha256": "473df4cbace59b70feae2f16dedeed65d8e38139c7d3629e31af6d7a6f293631"
+    },
+    {
+      "profile": "O1g1",
+      "source": "constructor-captured-read-order.luau",
+      "sourceSha256": "1c01fe7f69f48654bcb130ec1b04dfe9e83f616be69dea5ede75d5dbbbb2b7dc",
+      "bytecode": "constructor-captured-read-order-O1g1.luauc",
+      "sha256": "84f65b94e723369b888314dec30e02a5f70383987264bb41051c84fb94231586"
+    },
+    {
+      "profile": "O1g2",
+      "source": "constructor-captured-read-order.luau",
+      "sourceSha256": "1c01fe7f69f48654bcb130ec1b04dfe9e83f616be69dea5ede75d5dbbbb2b7dc",
+      "bytecode": "constructor-captured-read-order-O1g2.luauc",
+      "sha256": "a7577b532a9526a9c2c6be4625cfd09e9df3f43e822c4b7b973ea05746aee0fc"
+    },
+    {
+      "profile": "O2g1",
+      "source": "constructor-captured-read-order.luau",
+      "sourceSha256": "1c01fe7f69f48654bcb130ec1b04dfe9e83f616be69dea5ede75d5dbbbb2b7dc",
+      "bytecode": "constructor-captured-read-order-O2g1.luauc",
+      "sha256": "37be54a8cd8402775fff8127108c4ca2348d187a3d3cdec5e5949c74996e82b2"
+    },
+    {
+      "profile": "O2g2",
+      "source": "constructor-captured-read-order.luau",
+      "sourceSha256": "1c01fe7f69f48654bcb130ec1b04dfe9e83f616be69dea5ede75d5dbbbb2b7dc",
+      "bytecode": "constructor-captured-read-order-O2g2.luauc",
+      "sha256": "b829c6fb9f2834afa1155a581bc3b9ff1629208ea39137fb7ef4755b215688e2"
+    }
+  ]
+}

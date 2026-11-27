@@ -1,0 +1,108 @@
+{
+  "generator": "typed-v2",
+  "cases": 2,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "after": {
+      "pass": 2,
+      "mismatch": 10
+    }
+  },
+  "by_profile": {
+    "after": {
+      "O0g1": 2,
+      "O0g2": 2,
+      "O1g1": 2,
+      "O1g2": 2,
+      "O2g1": 1,
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "after": [
+      {
+        "case": "mut1-376",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 6: want `3\t1` got `nil\t1`"
+      },
+      {
+        "case": "mut1-376",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 6: want `3\t1` got `nil\t1`"
+      },
+      {
+        "case": "mut1-376",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "printed 5 lines, want 6"
+      },
+      {
+        "case": "mut1-376",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 6: want `3\t1` got `nil\t1`"
+      },
+      {
+        "case": "mut1-376",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 6: want `3\t1` got `nil\t1`"
+      },
+      {
+        "case": "mut1-376",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 5 lines, want 6"
+      },
+      {
+        "case": "mut1-395",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\tnone\tnone` got `4\tnone\tnone`"
+      },
+      {
+        "case": "mut1-395",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\tnone\tnone` got `4\tnone\tnone`"
+      },
+      {
+        "case": "mut1-395",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\tnone\tnone` got `4\tnone\tnone`"
+      },
+      {
+        "case": "mut1-395",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\tnone\tnone` got `4\tnone\tnone`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 2,
+    "by_decompiler": {
+      "after": {
+        "round_trips": 2,
+        "similarity": 69.02391910552979,
+        "size": 1.505939303335198,
+        "locals": 1.8295101634089186,
+        "nesting": -2.0,
+        "endless": 0,
+        "names": 65.21739130434783,
+        "cpu_ms_median": 305.147,
+        "cpu_ms_total": 591.371
+      }
+    }
+  }
+}

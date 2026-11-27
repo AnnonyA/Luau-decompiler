@@ -1,0 +1,5 @@
+before	false
+zero	nil
+before	false
+three	nil
+== Returned

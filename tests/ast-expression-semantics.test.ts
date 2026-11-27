@@ -26,6 +26,19 @@ function cleanReturn(value: Expression): string {
 }
 
 describe("recovered AST expression fidelity", () => {
+  it.each([false, true])("keeps boolean coercion when selecting boolean arms: %s", negated => {
+    const test: Expression = negated ? {kind: "unary", op: "not", argument: ident("ready")} : ident("ready");
+    expect(cleanReturn({kind: "if-expr", test, consequent: lit(!negated), branches: [], alternate: lit(negated)}))
+      .toBe("return not not ready\n");
+  });
+
+  it.each([false, true])("keeps unordered comparisons when selecting boolean arms: %s", negated => {
+    const comparison: Expression = {kind: "binary", op: "<", left: ident("left"), right: ident("right")};
+    const test: Expression = negated ? {kind: "unary", op: "not", argument: comparison} : comparison;
+    expect(cleanReturn({kind: "if-expr", test, consequent: lit(false), branches: [], alternate: lit(true)}))
+      .toBe(negated ? "return left < right\n" : "return not (left < right)\n");
+  });
+
   it("transforms nested elseif tests and values, not just the first and last branches", () => {
     const conditional: Expression = {
       kind: "if-expr",

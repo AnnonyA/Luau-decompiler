@@ -1,0 +1,63 @@
+{
+  "generator": "typed-v2",
+  "cases": 4,
+  "profiles": [
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "after": {
+      "pass": 21,
+      "mismatch": 3
+    }
+  },
+  "by_profile": {
+    "after": {
+      "O0g1+x1": 1,
+      "O2g1+x3": 1,
+      "O2g2+x1": 1
+    }
+  },
+  "failures": {
+    "after": [
+      {
+        "case": "seed1257",
+        "profile": "O0g1+x1",
+        "kind": "mismatch",
+        "detail": "line 11: want `L11\t4\t\"lo|3.14159\" \"true\" 3.141592653589793 true` got `L13\t0\t`"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O2g1+x3",
+        "kind": "mismatch",
+        "detail": "line 11: want `L11\t4\t\"lo|3.14159\" \"true\" 3.141592653589793 true` got `L13\t0\t`"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O2g2+x1",
+        "kind": "mismatch",
+        "detail": "line 11: want `L11\t4\t\"lo|3.14159\" \"true\" 3.141592653589793 true` got `L13\t0\t`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 21,
+    "by_decompiler": {
+      "after": {
+        "round_trips": 21,
+        "similarity": 73.2406443073636,
+        "size": 1.0492779345526246,
+        "locals": 1.0005792122896162,
+        "nesting": -0.5238095238095238,
+        "endless": 1,
+        "names": 15.081206496519723,
+        "cpu_ms_median": 166.937,
+        "cpu_ms_total": 4586.048
+      }
+    }
+  }
+}

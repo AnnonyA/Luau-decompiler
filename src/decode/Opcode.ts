@@ -412,6 +412,9 @@ export function isFallthrough(opcode: Opcode): boolean {
     case Opcode.JUMP:
     case Opcode.JUMPBACK:
     case Opcode.JUMPX:
+    case Opcode.FORGPREP:
+    case Opcode.FORGPREP_INEXT:
+    case Opcode.FORGPREP_NEXT:
       return false;
     default:
       return true;

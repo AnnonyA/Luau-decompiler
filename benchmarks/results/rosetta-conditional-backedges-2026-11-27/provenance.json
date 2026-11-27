@@ -1,0 +1,25 @@
+{
+  "candidateBase": "b0fee29",
+  "engineChange": "Recognize conditional JUMPBACK transfers through the same loop-header/pure-latch CFG test as JUMP/JUMPX.",
+  "source": "Project-authored conditional-backedge.luau; original bytecode/source and first failure preserved.",
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "luauTag": "0.747",
+  "tovekRevision": "ce2ea3325547fa3896f274b68013386338039040",
+  "references": [
+    "Compiler/src/Compiler.cpp: compileStatWhile",
+    "VM/src/lvmexecute.cpp: LOP_JUMPBACK",
+    "restructure/src/region.rs: seal_shared_tail_arm, build_transfer_arm_inner"
+  ],
+  "implementation": "Independent TypeScript repair; no reference implementation copied.",
+  "unitTests": {
+    "files": [
+      "tests/loop-backedge-regressions.test.ts",
+      "tests/rosetta-control-boundaries.test.ts",
+      "tests/rosetta-repeat-paths.test.ts"
+    ],
+    "passed": 80,
+    "failed": 0
+  },
+  "status": "Directed development regression, not a full benchmark claim."
+}

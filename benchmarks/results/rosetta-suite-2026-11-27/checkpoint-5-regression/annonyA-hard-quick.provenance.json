@@ -1,0 +1,120 @@
+{
+  "integration": {
+    "pinSha256": "0b67b06dee91960755f9e5fbeadcd0722ec77e7d1a0b54878285b77af66ee142",
+    "runnerSha256": "6c128909fea9acdbf0f6a5c7582b81204a017f73f2f75a820c9ff8a1523b63d3",
+    "validatorSha256": "888718cf60934d8795392149f2cbd5e5999ce2e431a096602a42f61d172bfc15"
+  },
+  "engine": {
+    "revision": "764ca6d43a94104bde47b0cb841788a159ed8dea",
+    "commitTree": "aa890cc653bcdbf4aea8e38dd69690e725f8e054",
+    "dirty": false,
+    "status": [],
+    "sourceTreeSha256": "ad913c7318adeaed5647658d34d526990084b1003a2bc0294f477f7b512e906e",
+    "distSha256": "7d79667d0626b31fc539359ee93dd147024f7380420613af5bff0a6920d993fc",
+    "checkout": "/workspace/scratch/eb5e4be57451/measurements/integrated-5-hard-quick-engine",
+    "cli": "/workspace/scratch/eb5e4be57451/measurements/integrated-5-hard-quick-engine/dist/cli.js",
+    "buildCommand": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/scratch/eb5e4be57451/measurements/integrated-5-hard-quick-engine/node_modules/typescript/bin/tsc",
+      "-p",
+      "/workspace/scratch/eb5e4be57451/measurements/integrated-5-hard-quick-engine/tsconfig.json"
+    ]
+  },
+  "rosetta": {
+    "revision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "commitTree": "dd5acdc6b2612b04b3fb15ef5e5d3bf07f65920a",
+    "dirty": false,
+    "checkout": "/workspace/scratch/eb5e4be57451/rosetta-research",
+    "repository": "https://github.com/Scrensayol/rosetta.git",
+    "suite": "rosetta-3",
+    "luau": "0.747",
+    "transform": "transform-2",
+    "binary": "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "binarySha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b"
+  },
+  "runtime": {
+    "node": "v24.22.3",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "executableSha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+    "platform": "linux",
+    "arch": "x64",
+    "nodeOptions": null
+  },
+  "timing": "direct CLI per bytecode; includes Node.js startup and decompilation; no HTTP client/server split",
+  "schemaVersion": 1,
+  "format": "annonyA-rosetta-provenance",
+  "tier": "hard-quick",
+  "startedAt": "2026-11-27T19:09:16.570Z",
+  "status": "completed",
+  "gate": "measurement-only",
+  "command": [
+    "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "bench",
+    "--tier",
+    "hard-quick",
+    "--decompiler",
+    "annonyA=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/eb5e4be57451/measurements/integrated-5-hard-quick-engine/dist/cli.js decompile {}",
+    "--version",
+    "annonyA=764ca6d43a94104bde47b0cb841788a159ed8dea",
+    "--out",
+    "/workspace/scratch/eb5e4be57451/measurements/integrated-5",
+    "--gallery"
+  ],
+  "environment": {
+    "RAYON_NUM_THREADS": "2",
+    "forbiddenOverridesAbsent": [
+      "ROSETTA_TRANSFORM_OFF",
+      "ROSETTA_TRANSFORM_ONLY",
+      "LUAU_DECOMPILE_OPTS"
+    ]
+  },
+  "result": {
+    "path": "/workspace/scratch/eb5e4be57451/measurements/integrated-5/annonyA-hard-quick.json",
+    "sha256": "95c7f0644a089a63d37e83089576bc68f5ee27ccb328178291cf55c5ebe7cb3c"
+  },
+  "summary": {
+    "tier": "hard-quick",
+    "hash": "9bcb49d29e867a92",
+    "passed": 751,
+    "total": 882,
+    "roundTrips": 882,
+    "counts": {
+      "pass": 751,
+      "mismatch": 33,
+      "recompile_failed": 96,
+      "decompile_failed": 2,
+      "refused": 0,
+      "unusable": 0
+    },
+    "sections": [
+      {
+        "id": "cases",
+        "passed": 224,
+        "total": 246
+      },
+      {
+        "id": "libraries",
+        "passed": 29,
+        "total": 36
+      },
+      {
+        "id": "generated",
+        "passed": 267,
+        "total": 300
+      },
+      {
+        "id": "mutants",
+        "passed": 231,
+        "total": 300
+      }
+    ],
+    "allPass": false
+  },
+  "process": {
+    "exitCode": 0,
+    "signal": null,
+    "error": null
+  },
+  "finishedAt": "2026-11-27T19:15:08.492Z",
+  "elapsedSeconds": 351.922243032
+}

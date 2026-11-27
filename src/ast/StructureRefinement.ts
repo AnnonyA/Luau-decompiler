@@ -180,6 +180,22 @@ function simplifyExpression(expression: Expression): Expression {
   if (expression.kind === "if-expr" && expression.branches.length === 0) {
     // `if c then (a or b) else b` selects exactly what `c and a or b` selects.
     const { consequent, alternate } = expression;
+    if (consequent.kind === "literal" && alternate.kind === "literal" &&
+        typeof consequent.value === "boolean" && typeof alternate.value === "boolean" &&
+        consequent.value !== alternate.value) {
+      const asBoolean = (value: Expression): Expression => {
+        if ((value.kind === "literal" && typeof value.value === "boolean") ||
+            (value.kind === "unary" && value.op === "not") ||
+            (value.kind === "binary" && ["==", "~=", "<", "<=", ">", ">="].includes(value.op))) return value;
+        return {kind: "unary", op: "not", argument: {kind: "unary", op: "not", argument: value}};
+      };
+      // Keep boolean coercion for arbitrary values, evaluate the test once,
+      // and never invert an ordering comparison (which would change NaNs).
+      if (consequent.value) return asBoolean(expression.test);
+      if (expression.test.kind === "unary" && expression.test.op === "not")
+        return asBoolean(expression.test.argument);
+      return {kind: "unary", op: "not", argument: expression.test};
+    }
     if (isInertLiteral(alternate) && consequent.kind === "binary" && consequent.op === "or" &&
         sameNode(consequent.right, alternate)) {
       return {

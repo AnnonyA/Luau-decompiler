@@ -317,8 +317,15 @@ function normalizePrototype(proto: Prototype): Prototype {
   }
   const live = rewritten.filter(insn => (reachable.has(insn.pc) || metadata.has(insn.pc)) &&
     (insn.opcode !== Opcode.NOP || pinned.has(insn.pc)));
-  const kept = live.filter((insn, index) =>
-    !(!pinned.has(insn.pc) && (insn.opcode === Opcode.JUMP || insn.opcode === Opcode.JUMPX) && insn.jumpTarget === live[index + 1]?.pc));
+  const kept = live.flatMap((insn, index) => {
+    if ((insn.opcode !== Opcode.JUMP && insn.opcode !== Opcode.JUMPX) || insn.jumpTarget !== live[index + 1]?.pc) return [insn];
+    if (!pinned.has(insn.pc)) return [];
+    // A short-skip landing still owns its PC, but a jump to the following
+    // instruction is semantically a NOP. Keeping it as a terminator would
+    // split the enclosing FASTCALL/constructor region during reconstruction.
+    return [{ ...insn, opcode: Opcode.NOP, rawWord: 0, width: 1, aux: undefined,
+      jumpTarget: undefined, uses: [], defs: [] }];
+  });
   // A pure jump cycle must remain a cycle, never become an empty function.
   if (kept.length === 0) return proto;
   const mapped = new Map<number, number>();

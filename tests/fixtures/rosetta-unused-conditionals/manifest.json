@@ -1,0 +1,152 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "baselineEngine": "46f33f40b78abd2f3a2455f0b70df903de4f808f",
+  "entries": [
+    {
+      "name": "unused-conditional-effects",
+      "profile": "O0g1",
+      "source": "unused-conditional-effects.luau",
+      "sourceSha256": "e27f8404f618ee6065ec6839f4a91a320e77f329bd86d842eaa195a4803f0a64",
+      "bytecode": "unused-conditional-effects-O0g1.luauc",
+      "sha256": "877a6df248ad7d93f1ee5a80770f886134e4ef895c662800310de626b177ae29"
+    },
+    {
+      "name": "unused-conditional-effects",
+      "profile": "O0g2",
+      "source": "unused-conditional-effects.luau",
+      "sourceSha256": "e27f8404f618ee6065ec6839f4a91a320e77f329bd86d842eaa195a4803f0a64",
+      "bytecode": "unused-conditional-effects-O0g2.luauc",
+      "sha256": "1deba308579796cabd7c358354c82f1c7f552ccc5a891970122b9ed29e637986"
+    },
+    {
+      "name": "unused-conditional-effects",
+      "profile": "O1g1",
+      "source": "unused-conditional-effects.luau",
+      "sourceSha256": "e27f8404f618ee6065ec6839f4a91a320e77f329bd86d842eaa195a4803f0a64",
+      "bytecode": "unused-conditional-effects-O1g1.luauc",
+      "sha256": "653a4e257c7f481b38082e9f25956e497b3476c70a35efd6bcdad0b633eec719"
+    },
+    {
+      "name": "unused-conditional-effects",
+      "profile": "O1g2",
+      "source": "unused-conditional-effects.luau",
+      "sourceSha256": "e27f8404f618ee6065ec6839f4a91a320e77f329bd86d842eaa195a4803f0a64",
+      "bytecode": "unused-conditional-effects-O1g2.luauc",
+      "sha256": "b03541514a2a542590318fca7773c1cea6225a1ba00495252e62c09ba83df443"
+    },
+    {
+      "name": "unused-conditional-effects",
+      "profile": "O2g1",
+      "source": "unused-conditional-effects.luau",
+      "sourceSha256": "e27f8404f618ee6065ec6839f4a91a320e77f329bd86d842eaa195a4803f0a64",
+      "bytecode": "unused-conditional-effects-O2g1.luauc",
+      "sha256": "94ab09e8d6b9e213b649c43da094aa5ae81272dc6c9a529b12fc9e07a7ebec0f"
+    },
+    {
+      "name": "unused-conditional-effects",
+      "profile": "O2g2",
+      "source": "unused-conditional-effects.luau",
+      "sourceSha256": "e27f8404f618ee6065ec6839f4a91a320e77f329bd86d842eaa195a4803f0a64",
+      "bytecode": "unused-conditional-effects-O2g2.luauc",
+      "sha256": "2498da8d04c342f7b85948a36e745786ca957a687a281adca9f3fa96b77dc93d"
+    },
+    {
+      "name": "unused-conditional-metamethods",
+      "profile": "O0g1",
+      "source": "unused-conditional-metamethods.luau",
+      "sourceSha256": "2be3729af7391f13ae5ed42fbf6eb86af92b7b44e523bf7b1bda7a1812516eb1",
+      "bytecode": "unused-conditional-metamethods-O0g1.luauc",
+      "sha256": "2f2b6e6c91bcc0db75e8a17bd50c25c0d8925d2cad80405e0cd7376a7f859c82"
+    },
+    {
+      "name": "unused-conditional-metamethods",
+      "profile": "O0g2",
+      "source": "unused-conditional-metamethods.luau",
+      "sourceSha256": "2be3729af7391f13ae5ed42fbf6eb86af92b7b44e523bf7b1bda7a1812516eb1",
+      "bytecode": "unused-conditional-metamethods-O0g2.luauc",
+      "sha256": "41f777356df29e81ea9737cb2270f699c7106a9803d3ef63afc75492d5c38225"
+    },
+    {
+      "name": "unused-conditional-metamethods",
+      "profile": "O1g1",
+      "source": "unused-conditional-metamethods.luau",
+      "sourceSha256": "2be3729af7391f13ae5ed42fbf6eb86af92b7b44e523bf7b1bda7a1812516eb1",
+      "bytecode": "unused-conditional-metamethods-O1g1.luauc",
+      "sha256": "42eaedc08998beb46cca4ea66ba9177bf73aaa0fc5fdf324c16931cc1ad316ba"
+    },
+    {
+      "name": "unused-conditional-metamethods",
+      "profile": "O1g2",
+      "source": "unused-conditional-metamethods.luau",
+      "sourceSha256": "2be3729af7391f13ae5ed42fbf6eb86af92b7b44e523bf7b1bda7a1812516eb1",
+      "bytecode": "unused-conditional-metamethods-O1g2.luauc",
+      "sha256": "00f6a75bb4b1c65aa35f9d9302e8dcc11988f113a855f5c974abcc89d0c9c37a"
+    },
+    {
+      "name": "unused-conditional-metamethods",
+      "profile": "O2g1",
+      "source": "unused-conditional-metamethods.luau",
+      "sourceSha256": "2be3729af7391f13ae5ed42fbf6eb86af92b7b44e523bf7b1bda7a1812516eb1",
+      "bytecode": "unused-conditional-metamethods-O2g1.luauc",
+      "sha256": "738638cba6d3d889992328bc9c58a483f4b6d52c84a04268bf360264a51f45d1"
+    },
+    {
+      "name": "unused-conditional-metamethods",
+      "profile": "O2g2",
+      "source": "unused-conditional-metamethods.luau",
+      "sourceSha256": "2be3729af7391f13ae5ed42fbf6eb86af92b7b44e523bf7b1bda7a1812516eb1",
+      "bytecode": "unused-conditional-metamethods-O2g2.luauc",
+      "sha256": "1aea8a51840873e2abb677f3984a782bb9db1a7f711256e942756ac241f2b40f"
+    },
+    {
+      "name": "unused-conditional-global-name",
+      "profile": "O0g1",
+      "source": "unused-conditional-global-name.luau",
+      "sourceSha256": "b6e58b36bfafbcec4303ab6a28dbb45a717e7da4d5b95d8cfd793acc65df32d4",
+      "bytecode": "unused-conditional-global-name-O0g1.luauc",
+      "sha256": "c466e2b685eead14301418523c4f8a4097fa3a067e262cdfeecac43fbd84effd"
+    },
+    {
+      "name": "unused-conditional-global-name",
+      "profile": "O0g2",
+      "source": "unused-conditional-global-name.luau",
+      "sourceSha256": "b6e58b36bfafbcec4303ab6a28dbb45a717e7da4d5b95d8cfd793acc65df32d4",
+      "bytecode": "unused-conditional-global-name-O0g2.luauc",
+      "sha256": "026c21f27deda3c5c5b3f91d8ae5c3000395ac46f82575d80269bfb67ea9eb84"
+    },
+    {
+      "name": "unused-conditional-global-name",
+      "profile": "O1g1",
+      "source": "unused-conditional-global-name.luau",
+      "sourceSha256": "b6e58b36bfafbcec4303ab6a28dbb45a717e7da4d5b95d8cfd793acc65df32d4",
+      "bytecode": "unused-conditional-global-name-O1g1.luauc",
+      "sha256": "2b2df7c6715790f0770851e8e96f6b17a049f4802fc795c87530742a0ba8c67e"
+    },
+    {
+      "name": "unused-conditional-global-name",
+      "profile": "O1g2",
+      "source": "unused-conditional-global-name.luau",
+      "sourceSha256": "b6e58b36bfafbcec4303ab6a28dbb45a717e7da4d5b95d8cfd793acc65df32d4",
+      "bytecode": "unused-conditional-global-name-O1g2.luauc",
+      "sha256": "1476a0d6091321e36e4e5eda6bac9763f4d7c7b9179d571b0f598a7f6049b2f2"
+    },
+    {
+      "name": "unused-conditional-global-name",
+      "profile": "O2g1",
+      "source": "unused-conditional-global-name.luau",
+      "sourceSha256": "b6e58b36bfafbcec4303ab6a28dbb45a717e7da4d5b95d8cfd793acc65df32d4",
+      "bytecode": "unused-conditional-global-name-O2g1.luauc",
+      "sha256": "e7745601eb34062c4089dd8a6e2925475d9ec04801033b33af6cb9b84b2edfa9"
+    },
+    {
+      "name": "unused-conditional-global-name",
+      "profile": "O2g2",
+      "source": "unused-conditional-global-name.luau",
+      "sourceSha256": "b6e58b36bfafbcec4303ab6a28dbb45a717e7da4d5b95d8cfd793acc65df32d4",
+      "bytecode": "unused-conditional-global-name-O2g2.luauc",
+      "sha256": "efc8e2c1667d200f7226992bd67a5eefd1c501f5fdf5dffbd22d31b2d1dc3e7a"
+    }
+  ]
+}

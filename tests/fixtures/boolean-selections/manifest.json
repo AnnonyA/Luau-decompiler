@@ -1,0 +1,13 @@
+{
+  "luau": "0.747",
+  "revision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "files": {
+    "boolean-values-and-order.luau": "0ee20b4a7f88dd47741082e5d077de3f97ec1ed6aaaea38778610bd0074fb863",
+    "boolean-values-and-order-O0g1.luauc": "0858162b861dc8ba365db6720d48217be51d1bc15bb4eb4e98d47c1684b7c1c6",
+    "boolean-values-and-order-O0g2.luauc": "1f559d14f7c5c0893464e622ef9a1f54fbc77ab356da830887d33ba3a0c06768",
+    "boolean-values-and-order-O1g1.luauc": "37cc53b318e0b3c15ecdb437c7ef956db13f80427e2a271c199ebc7485810b3f",
+    "boolean-values-and-order-O1g2.luauc": "45f79dcbb33c1fb1e834e154714120c6ade52e48b51c016a24b38f096dd3b436",
+    "boolean-values-and-order-O2g1.luauc": "545c1511b4b5213c5744ee3f488aeefa2ac9e5d5674dfd3be5f91ef3c1ab3ef7",
+    "boolean-values-and-order-O2g2.luauc": "ce1500af912bdf9988d3389f60a657b1886cf8e653b15fcf2a75359fb87c8a87"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g2+x2"
+  ],
+  "totals": {
+    "candidate": {
+      "mismatch": 1
+    }
+  },
+  "by_profile": {
+    "candidate": {
+      "O0g2+x2": 1
+    }
+  },
+  "failures": {
+    "candidate": [
+      {
+        "case": "seed1306",
+        "profile": "O0g2+x2",
+        "kind": "mismatch",
+        "detail": "line 3: want `L3\t6\t3 {1=0,2=10} -3.9 nil \"nan | nan\" 0` got `L3\t6\t3 {1=1,2=10} -3.9 nil \"nan | nan\" 0`"
+      }
+    ]
+  }
+}

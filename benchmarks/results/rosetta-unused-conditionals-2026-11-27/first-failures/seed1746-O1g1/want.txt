@@ -1,0 +1,36 @@
+L2	1	true
+L3	2	true true
+L1	2	false 1600
+L1	2	false 1600
+L1	2	false 1600
+L4	1	true
+L7	0	
+L8	9	-0.5 1.5 true false true false "table: 0x#1&s" 4.5 -1.5
+L9	2	"a]]bend|-0trueend|-0trueend|-0true" {1=31,2=1000,3=-2}
+L10	8	"k,v,a,b,b2,a2,x,y,l,r,m,p,z,c1,c2,ck,cv,s1,s2,s3" 2 1 7 2 true "abc" {"count"=1,"key"=1,"x"=2,"y"=1}
+L11	4	false "{x}send100065536{x}send100065536{x}send100065536" false "v=-2.5{x}1e+300-inf"
+L12	2	3.141592653589793 {1="long\
+string"}
+L13	4	nan 15 2 "��\r	[["
+L13	4	nan 15 2 "��\r	[["
+L14	1	5
+L15	1	2
+L16	2	"" 0
+Ls	3	"--not a commentlong\
+string" true "\"--not a comment\"| 3.14|ab  |ff"
+Lt	5	"abcabc" "LONG\
+STRING" nil 15 "{long\
+string}"
+L17	1	-4294901763.5
+L17	1	-4294901763.5
+L17	1	-4294901763.5
+L17	1	-4294901763.5
+L17	1	-4294901763.5
+L18	4	9 inf nan 0.000012250000000000001
+L19	4	0 false 0 ""
+L23	4	"" -8 0 ""
+L24	2	1 ""
+L25	8	"k,v,a,b,b2,a2,x,y,l,r,m,p,z,c1,c2,ck,cv,s1,s2,s3" 2 1 7 2 true "abc" {"count"=1,"key"=1,"x"=2,"y"=1}
+L26	4	true 1.7976931348623157e+308 nil " | falseend1000"
+L27	2	"s" -inf
+== Returned

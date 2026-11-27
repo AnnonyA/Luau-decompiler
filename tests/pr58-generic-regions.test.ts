@@ -13,5 +13,8 @@ it('keeps generic prep predecessors outside their own loop and retains the outer
  const ir=analyzePrototype(module.prototypes[module.mainProtoId]!);
  const inner=ir.loops.find(l=>ir.cfg.blocks[l.latch]!.startPc===4)!;
  expect(inner.blocks.map(id=>ir.cfg.blocks[id]!.startPc)).toEqual([2,4]);
- expect(ir.cfg.blocks[ir.structure.loopFollow.get(inner.header)!]!.startPc).toBe(6);
+ // PC6 is a NOP adapter; the semantic continuation is the outer iterator.
+ const follow=ir.cfg.blocks[ir.structure.loopFollow.get(inner.header)!]!;
+ expect(follow.startPc).toBe(7);
+ expect(follow.instructions.at(-1)?.opcode).toBe(Opcode.FORGLOOP);
 });

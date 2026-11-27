@@ -4,6 +4,7 @@ import {describe, expect, it} from 'vitest';
 import {decompile} from '../src/decompile.ts';
 import {analyzeBindings} from '../src/analysis/Bindings.ts';
 import type {Expression} from '../src/ast/Ast.ts';
+import {ident} from '../src/ast/Ast.ts';
 
 const fixture = (name: string) => readFileSync(new URL(`fixtures/rosetta-repeat-paths/${name}`, import.meta.url));
 const manifest = JSON.parse(fixture('manifest.json').toString()) as {
@@ -57,6 +58,19 @@ describe('repeat tests with a short-circuit backedge', () => {
       expect(observed).toEqual(turn === 1 ? ['ready'] : turn === 2 ? ['ready', 'finish'] : []);
     }
   });
+
+  it.each([[true, false, 'firstValue'], [false, 0, 'secondValue'], [false, false, 'fallbackValue']])(
+    'evaluates only the selected conditional-expression value (%s, %s)', (first, second, selected) => {
+      const invoke = (name: string): Expression => ({kind: 'call', callee: ident(name), args: []});
+      const expression: Expression = {
+        kind: 'if-expr', test: ident('first'), consequent: invoke('firstValue'),
+        branches: [{test: ident('second'), value: invoke('secondValue')}], alternate: invoke('fallbackValue'),
+      };
+      const observed: string[] = [];
+      expect(evaluateCondition(expression, name => name === 'first' ? first : name === 'second' ? second :
+        () => { observed.push(name); return name; })).toBe(selected);
+      expect(observed).toEqual([selected]);
+    });
 });
 
 const truthy = (value: unknown): boolean => value !== false && value !== null;
@@ -73,7 +87,7 @@ function evaluateCondition(expression: Expression, lookup: (name: string) => any
     case 'if-expr':
       if (truthy(evaluateCondition(expression.test, lookup))) return evaluateCondition(expression.consequent, lookup);
       for (const branch of expression.branches) {
-        if (truthy(evaluateCondition(branch.test, lookup))) return evaluateCondition(branch.consequent, lookup);
+        if (truthy(evaluateCondition(branch.test, lookup))) return evaluateCondition(branch.value, lookup);
       }
       return evaluateCondition(expression.alternate, lookup);
     case 'binary': {

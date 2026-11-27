@@ -1,0 +1,154 @@
+[
+  {
+    "service": "luacid",
+    "tier": "quick",
+    "decompiler": {
+      "name": "luacid"
+    },
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "score": {
+      "passed": 879,
+      "total": 882
+    },
+    "created": "2026-11-26T14:50:42Z",
+    "sha256": "f6643dcc0ff0e0e2fedf153027baee6cde024e01dfe38698d41ff03d18b04662",
+    "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-quick.json"
+  },
+  {
+    "service": "luacid",
+    "tier": "full",
+    "decompiler": {
+      "name": "luacid"
+    },
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "full",
+      "hash": "f0eae8ffcedd440e"
+    },
+    "score": {
+      "passed": 12237,
+      "total": 12276
+    },
+    "created": "2026-11-26T18:45:15Z",
+    "sha256": "d625ffa9666675ace542f238c92ffdad3fba41d42d24cc69a862e70b80fa4f05",
+    "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-full.json"
+  },
+  {
+    "service": "luacid",
+    "tier": "hard-quick",
+    "decompiler": {
+      "name": "luacid"
+    },
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-quick",
+      "hash": "9bcb49d29e867a92"
+    },
+    "score": {
+      "passed": 353,
+      "total": 882
+    },
+    "created": "2026-11-26T15:08:03Z",
+    "sha256": "d419982abdff9bbe1d3adfd9378bef0754a81c0f840ace6d3971988c159d8521",
+    "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-quick.json"
+  },
+  {
+    "service": "luacid",
+    "tier": "hard-full",
+    "decompiler": {
+      "name": "luacid"
+    },
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-full",
+      "hash": "9921d3bde4a99bfd"
+    },
+    "score": {
+      "passed": 5622,
+      "total": 12276
+    },
+    "created": "2026-11-26T22:32:51Z",
+    "sha256": "2493c9d24ccd1b77c8e428de858e8fb56f560da96979b25053bfe80d9e6943b6",
+    "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-full.json"
+  },
+  {
+    "service": "lua-expert",
+    "tier": "quick",
+    "decompiler": {
+      "name": "lua.expert"
+    },
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "created": "2026-11-26T14:41:27Z",
+    "sha256": "986203adbb2b6720cb04f75ff1f5b4a43fec6fc4d375052ee4acde8e54555640",
+    "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-quick.json"
+  },
+  {
+    "service": "lua-expert",
+    "tier": "full",
+    "decompiler": {
+      "name": "lua.expert"
+    },
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "full",
+      "hash": "f0eae8ffcedd440e"
+    },
+    "score": {
+      "passed": 12167,
+      "total": 12276
+    },
+    "created": "2026-11-26T16:06:58Z",
+    "sha256": "66242dfd1b1b48b225672a77b21d11389a98c17338b783915d2690549d8b84d7",
+    "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-full.json"
+  },
+  {
+    "service": "lua-expert",
+    "tier": "hard-quick",
+    "decompiler": {
+      "name": "lua.expert"
+    },
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-quick",
+      "hash": "9bcb49d29e867a92"
+    },
+    "score": {
+      "passed": 264,
+      "total": 882
+    },
+    "created": "2026-11-26T14:48:57Z",
+    "sha256": "c4c3d231673c6ee88c359f0103b541227fab2df76d06048e0ddb8660bee7d2ac",
+    "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-quick.json"
+  },
+  {
+    "service": "lua-expert",
+    "tier": "hard-full",
+    "decompiler": {
+      "name": "lua.expert"
+    },
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-full",
+      "hash": "9921d3bde4a99bfd"
+    },
+    "score": {
+      "passed": 3859,
+      "total": 12276
+    },
+    "created": "2026-11-26T17:22:33Z",
+    "sha256": "7d3f5893dac81679a71f68406431aa27675cfdc21d8bbef1dd94c533777cb9fe",
+    "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-full.json"
+  }
+]
