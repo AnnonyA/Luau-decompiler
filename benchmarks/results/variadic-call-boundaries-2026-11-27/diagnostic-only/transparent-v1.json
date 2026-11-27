@@ -1,0 +1,47 @@
+{
+  "format": "rosetta-quality-replay",
+  "startedAt": "2026-11-27T21:33:17.282673+00:00",
+  "finishedAt": "2026-11-27T21:33:56.956739+00:00",
+  "inputRecords": "/workspace/scratch/eb5e4be57451/quality-research/baseline/records/quick",
+  "sourceDist": "/workspace/scratch/eb5e4be57451/Luau-decompiler/dist",
+  "snapshotDist": "/workspace/scratch/eb5e4be57451/similarity-probes/transparent-v1/engine-dist",
+  "jsTreeSha256": "520799efc1b57254e7dd44d8c9f9281e786d3f70386254418ef9357249ab1fda",
+  "treeHashAlgorithm": "SHA256 of sorted(relativeJSPath + NUL + SHA256(fileBytes))",
+  "node": "v24.22.3",
+  "query": "",
+  "options": {},
+  "count": 882,
+  "decompileFailures": 0,
+  "coreMatchesBaseline": 41,
+  "behaviorVerified": false,
+  "baselineQuality": {
+    "roundTrips": 882,
+    "similarity": 72.29585059948458,
+    "size": 1.1000264933334862,
+    "locals": 1.1191486730052247,
+    "nesting": 0.20521541950113378,
+    "endless": 178,
+    "names": 59.48200175592625
+  },
+  "quality": {
+    "roundTrips": 882,
+    "similarity": 76.78464396672994,
+    "size": 0.9954898067886152,
+    "locals": 1.0975898224999865,
+    "nesting": -0.17346938775510204,
+    "endless": 38,
+    "names": 61.02136376938835
+  },
+  "processExitCodes": {
+    "node": 0,
+    "scorer": 0
+  },
+  "deltas": {
+    "similarity": 4.488793367245364,
+    "size": -0.10453668654487103,
+    "locals": -0.021558850505238203,
+    "nesting": -0.3786848072562358,
+    "endless": -140,
+    "names": 1.539362013462103
+  }
+}

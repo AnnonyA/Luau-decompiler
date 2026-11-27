@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-11-27T22:08:14.721Z",
+  "localEngine": "AnnonyA/Luau-decompiler",
+  "localVersion": "0.2.0",
+  "compiler": "NOT_CONFIGURED",
+  "platform": {
+    "node": "v22.23.5",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "comparisonNote": "Only our engine is executed/timed; LunaUX published source is not an independently measured engine result. Syntax is NOT_CHECKED without official luau-compile. Semantic equivalence is NOT_MEASURED.",
+  "fixtureCounts": {
+    "total": 3,
+    "repository": 3,
+    "lunaux": 0,
+    "successful": 3
+  },
+  "processRssBytesAtEnd": 137207808,
+  "samples": [
+    {
+      "id": "luac",
+      "group": "repository",
+      "provenance": "AnnonyA/Luau-decompiler tests/luac.bin (existing repo fixture)",
+      "sha256": "2446c05b227e607150b2dc030c56f23db253cb4e1aa79c1211041b29508fe1b7",
+      "inputBytes": 22980,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 248.103,
+        "bytecodeVersion": 13,
+        "supportStatus": "experimental",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "NOT_CHECKED"
+        },
+        "sourceMetrics": {
+          "bytes": 24611,
+          "lines": 885,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "index-ui",
+      "group": "repository",
+      "provenance": "AnnonyA/Luau-decompiler tests/IndexUI_ModuleScript_Bytecode.txt (existing repo fixture)",
+      "sha256": "73850561a1416a782faa039e992b8f59cca501b340b332bf5117ff62197294e5",
+      "inputBytes": 32531,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 204.002,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "NOT_CHECKED"
+        },
+        "sourceMetrics": {
+          "bytes": 44560,
+          "lines": 1215,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    },
+    {
+      "id": "military-controller",
+      "group": "repository",
+      "provenance": "AnnonyA/Luau-decompiler tests/MilitaryMeltdownController_ModuleScript_Bytecode.txt (existing repo fixture)",
+      "sha256": "c8bd2f1fe42022c0d7b2814f2636eb2b34d451259727701cb501829c13e11056",
+      "inputBytes": 13604,
+      "ourEngine": {
+        "success": true,
+        "durationMs": 55.635,
+        "bytecodeVersion": 9,
+        "supportStatus": "verified",
+        "astValidationIssues": 0,
+        "syntax": {
+          "status": "NOT_CHECKED"
+        },
+        "sourceMetrics": {
+          "bytes": 17683,
+          "lines": 490,
+          "registerPlaceholders": 0
+        }
+      },
+      "semanticEquivalence": "NOT_MEASURED",
+      "competitorExecution": "NOT_RUN"
+    }
+  ]
+}

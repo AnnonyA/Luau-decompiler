@@ -1,0 +1,456 @@
+{
+  "baselineMain": {
+    "roundTrips": 882,
+    "similarity": 72.29585059948458,
+    "size": 1.1000264933334862
+  },
+  "previousPhiFreeJoin": {
+    "roundTrips": 882,
+    "similarity": 73.29564361711836,
+    "size": 1.066241830317539
+  },
+  "improved": {
+    "roundTrips": 882,
+    "similarity": 73.81843988722414,
+    "size": 1.0562489527847259
+  },
+  "metric": "Unmodified Rosetta quality.rs and lex.rs at80f3; exact882 cachedQuick inputs; scoring alone does not assert behavioral equivalence.",
+  "sourceSha256": "e4e66288c00fda092fc8b99aa2252fab93d2e14e35911bc46374a70449feb3dd",
+  "libraries": [
+    {
+      "id": "libraries/libdeflate/O0g1.json",
+      "originalEngine": {
+        "cpu_ms": 5428.612,
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          12,
+          1
+        ],
+        "locals": [
+          4138,
+          822
+        ],
+        "names": null,
+        "similarity": 0.00019577985221985728,
+        "tokens": [
+          77901,
+          14039
+        ]
+      },
+      "phiFreeJoin": {
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          4,
+          1
+        ],
+        "localRatio": 4.917375455650061,
+        "locals": [
+          4046,
+          822
+        ],
+        "names": null,
+        "similarity": 0.0002032795746345073,
+        "size": 5.306980056980057,
+        "tokens": [
+          74509,
+          14039
+        ]
+      },
+      "newPhiJoin": {
+        "depth": [
+          11,
+          8
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.2357229647630619,
+        "locals": [
+          1016,
+          822
+        ],
+        "names": null,
+        "similarity": 0.7731302976608276,
+        "size": 1.3296296296296297,
+        "tokens": [
+          18667,
+          14039
+        ]
+      }
+    },
+    {
+      "id": "libraries/libdeflate/O0g2.json",
+      "originalEngine": {
+        "cpu_ms": 4893.954,
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          12,
+          1
+        ],
+        "locals": [
+          4222,
+          822
+        ],
+        "names": [
+          294,
+          391
+        ],
+        "similarity": 0.00019489800615701824,
+        "tokens": [
+          78317,
+          14039
+        ]
+      },
+      "phiFreeJoin": {
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          4,
+          1
+        ],
+        "localRatio": 5.019441069258809,
+        "locals": [
+          4130,
+          822
+        ],
+        "names": [
+          294,
+          391
+        ],
+        "similarity": 0.00020236088312231004,
+        "size": 5.335612535612536,
+        "tokens": [
+          74911,
+          14039
+        ]
+      },
+      "newPhiJoin": {
+        "depth": [
+          11,
+          8
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.2648845686512757,
+        "locals": [
+          1040,
+          822
+        ],
+        "names": [
+          294,
+          391
+        ],
+        "similarity": 0.7747989296913147,
+        "size": 1.338034188034188,
+        "tokens": [
+          18785,
+          14039
+        ]
+      }
+    },
+    {
+      "id": "libraries/libdeflate/O1g1.json",
+      "originalEngine": {
+        "cpu_ms": 4987.157,
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          8,
+          1
+        ],
+        "locals": [
+          4106,
+          822
+        ],
+        "names": null,
+        "similarity": 0.0001529887376818806,
+        "tokens": [
+          77471,
+          14039
+        ]
+      },
+      "phiFreeJoin": {
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          4,
+          1
+        ],
+        "localRatio": 4.878493317132443,
+        "locals": [
+          4014,
+          822
+        ],
+        "names": null,
+        "similarity": 0.0001588418090250343,
+        "size": 5.277777777777778,
+        "tokens": [
+          74099,
+          14039
+        ]
+      },
+      "newPhiJoin": {
+        "depth": [
+          11,
+          8
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.2223572296476306,
+        "locals": [
+          1005,
+          822
+        ],
+        "names": null,
+        "similarity": 0.77363121509552,
+        "size": 1.320940170940171,
+        "tokens": [
+          18545,
+          14039
+        ]
+      }
+    },
+    {
+      "id": "libraries/libdeflate/O1g2.json",
+      "originalEngine": {
+        "cpu_ms": 5084.566,
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          8,
+          1
+        ],
+        "locals": [
+          4192,
+          822
+        ],
+        "names": [
+          292,
+          391
+        ],
+        "similarity": 0.00019574153702706099,
+        "tokens": [
+          77919,
+          14039
+        ]
+      },
+      "phiFreeJoin": {
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          4,
+          1
+        ],
+        "localRatio": 4.9829890643985415,
+        "locals": [
+          4100,
+          822
+        ],
+        "names": [
+          292,
+          391
+        ],
+        "similarity": 0.00020322449563536793,
+        "size": 5.308689458689459,
+        "tokens": [
+          74533,
+          14039
+        ]
+      },
+      "newPhiJoin": {
+        "depth": [
+          11,
+          8
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.2539489671931956,
+        "locals": [
+          1031,
+          822
+        ],
+        "names": [
+          292,
+          391
+        ],
+        "similarity": 0.7759168744087219,
+        "size": 1.3306267806267806,
+        "tokens": [
+          18681,
+          14039
+        ]
+      }
+    },
+    {
+      "id": "libraries/libdeflate/O2g1.json",
+      "originalEngine": {
+        "cpu_ms": 5547.836,
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          8,
+          1
+        ],
+        "locals": [
+          4330,
+          822
+        ],
+        "names": null,
+        "similarity": 0.00014892032777424902,
+        "tokens": [
+          79971,
+          14039
+        ]
+      },
+      "phiFreeJoin": {
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          4,
+          1
+        ],
+        "localRatio": 5.087484811664641,
+        "locals": [
+          4186,
+          822
+        ],
+        "names": null,
+        "similarity": 0.00015546918439213187,
+        "size": 5.413960113960114,
+        "tokens": [
+          76011,
+          14039
+        ]
+      },
+      "newPhiJoin": {
+        "depth": [
+          11,
+          8
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.2746051032806804,
+        "locals": [
+          1048,
+          822
+        ],
+        "names": null,
+        "similarity": 0.7562760710716248,
+        "size": 1.354985754985755,
+        "tokens": [
+          19023,
+          14039
+        ]
+      }
+    },
+    {
+      "id": "libraries/libdeflate/O2g2.json",
+      "originalEngine": {
+        "cpu_ms": 4683.645,
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          8,
+          1
+        ],
+        "locals": [
+          4420,
+          822
+        ],
+        "names": [
+          292,
+          391
+        ],
+        "similarity": 0.0001905124809127301,
+        "tokens": [
+          80443,
+          14039
+        ]
+      },
+      "phiFreeJoin": {
+        "depth": [
+          14,
+          8
+        ],
+        "endless": [
+          4,
+          1
+        ],
+        "localRatio": 5.1968408262454435,
+        "locals": [
+          4276,
+          822
+        ],
+        "names": [
+          292,
+          391
+        ],
+        "similarity": 0.00019884230277966708,
+        "size": 5.447720797720797,
+        "tokens": [
+          76485,
+          14039
+        ]
+      },
+      "newPhiJoin": {
+        "depth": [
+          11,
+          8
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.307411907654921,
+        "locals": [
+          1075,
+          822
+        ],
+        "names": [
+          292,
+          391
+        ],
+        "similarity": 0.7584317326545715,
+        "size": 1.3653846153846154,
+        "tokens": [
+          19169,
+          14039
+        ]
+      }
+    }
+  ]
+}

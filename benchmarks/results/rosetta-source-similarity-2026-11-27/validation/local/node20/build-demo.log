@@ -1,0 +1,12 @@
+{"revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84", "node": "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node", "command": ["npm", "run", "build:demo"], "startedAt": "2026-11-27T22:08:17.540427+00:00"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> luau-decompiler@0.2.0 build:demo
+> npm run build && node scripts/build-demo.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> luau-decompiler@0.2.0 build
+> tsc -p tsconfig.json
+
+Static demo built in _site/ (no server or API required).

@@ -1,0 +1,24 @@
+["git", "-C", "/workspace/scratch/eb5e4be57451/Luau-decompiler", "worktree", "add", "--detach", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-quick-engine", "326d85ed21c0a7bef6dcd07a26e38b49f0148a84"]
+Preparing worktree (detached HEAD 326d85e)
+HEAD is now at 326d85e Recover private logical return values with retained parameter inputs
+["cp", "-al", "/workspace/scratch/eb5e4be57451/similarity-local-scopes/node_modules", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-quick-engine/node_modules"]
+["git", "-C", "/workspace/scratch/eb5e4be57451/Luau-decompiler", "worktree", "add", "--detach", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-full-engine", "326d85ed21c0a7bef6dcd07a26e38b49f0148a84"]
+Preparing worktree (detached HEAD 326d85e)
+HEAD is now at 326d85e Recover private logical return values with retained parameter inputs
+["cp", "-al", "/workspace/scratch/eb5e4be57451/similarity-local-scopes/node_modules", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-full-engine/node_modules"]
+["git", "-C", "/workspace/scratch/eb5e4be57451/Luau-decompiler", "worktree", "add", "--detach", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-quick-engine", "326d85ed21c0a7bef6dcd07a26e38b49f0148a84"]
+Preparing worktree (detached HEAD 326d85e)
+HEAD is now at 326d85e Recover private logical return values with retained parameter inputs
+["cp", "-al", "/workspace/scratch/eb5e4be57451/similarity-local-scopes/node_modules", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-quick-engine/node_modules"]
+["git", "-C", "/workspace/scratch/eb5e4be57451/Luau-decompiler", "worktree", "add", "--detach", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-full-engine", "326d85ed21c0a7bef6dcd07a26e38b49f0148a84"]
+Preparing worktree (detached HEAD 326d85e)
+HEAD is now at 326d85e Recover private logical return values with retained parameter inputs
+["cp", "-al", "/workspace/scratch/eb5e4be57451/similarity-local-scopes/node_modules", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-full-engine/node_modules"]
+["git", "-C", "/workspace/scratch/eb5e4be57451/Luau-decompiler", "worktree", "add", "--detach", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-node20-engine", "326d85ed21c0a7bef6dcd07a26e38b49f0148a84"]
+Preparing worktree (detached HEAD 326d85e)
+HEAD is now at 326d85e Recover private logical return values with retained parameter inputs
+["cp", "-al", "/workspace/scratch/eb5e4be57451/similarity-local-scopes/node_modules", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-node20-engine/node_modules"]
+["git", "-C", "/workspace/scratch/eb5e4be57451/Luau-decompiler", "worktree", "add", "--detach", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-node22-engine", "326d85ed21c0a7bef6dcd07a26e38b49f0148a84"]
+Preparing worktree (detached HEAD 326d85e)
+HEAD is now at 326d85e Recover private logical return values with retained parameter inputs
+["cp", "-al", "/workspace/scratch/eb5e4be57451/similarity-local-scopes/node_modules", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-node22-engine/node_modules"]

@@ -1,0 +1,61 @@
+{
+  "baseRevision": "dc4d32d0c38b881006c04b8c20d72549f420aeed",
+  "engineSnapshot": "candidate-v3/dist, copied after TypeScript build and unchanged throughout both tiers",
+  "sourceFilesMatchedSnapshot": 62,
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "compiler": "luau0-src0.24.0+luau747",
+  "defaultEngineOptions": true,
+  "forbiddenOverrides": [],
+  "profiles": {
+    "quick": [
+      "O0g1",
+      "O1g1",
+      "O2g1",
+      "O0g2",
+      "O1g2",
+      "O2g2"
+    ],
+    "hard-quick": [
+      "O0g1+x1",
+      "O1g1+x2",
+      "O2g1+x3",
+      "O0g2+x2",
+      "O1g2+x3",
+      "O2g2+x1"
+    ]
+  },
+  "checks": {
+    "unitFiles": 135,
+    "unitPassed": 1330,
+    "unitFailed": 0,
+    "authoredSources": 4,
+    "authoredProfilesEach": 12,
+    "authoredBeforePassed": 48,
+    "authoredAfterPassed": 48
+  },
+  "quality": {
+    "quick": {
+      "round_trips": 882,
+      "similarity": 72.34928020667942,
+      "size": 1.1005605792605317,
+      "locals": 1.1211887363775512,
+      "nesting": 0.20521541950113378,
+      "endless": 178,
+      "names": 60.83699151302312,
+      "cpu_ms_median": 294.89300000000003,
+      "cpu_ms_total": 336998.5789999999
+    },
+    "hard-quick": {
+      "round_trips": 882,
+      "similarity": 71.84626804522347,
+      "size": 1.1079835785560854,
+      "locals": 1.117143542431954,
+      "nesting": 0.20294784580498867,
+      "endless": 178,
+      "names": 29.96780801872988,
+      "cpu_ms_median": 344.373,
+      "cpu_ms_total": 373861.856
+    }
+  },
+  "scope": "Development checkpoint for declaration recovery; final combined engine still requires all four tiers and CI."
+}

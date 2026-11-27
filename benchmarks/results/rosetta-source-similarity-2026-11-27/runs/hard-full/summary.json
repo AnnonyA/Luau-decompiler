@@ -1,0 +1,74 @@
+{
+  "tier": "hard-full",
+  "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+  "startedAt": "2026-11-27T21:52:39.388040+00:00",
+  "gate": "all-pass",
+  "issues": [],
+  "process": {
+    "command": [
+      "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-full-engine/scripts/bench-rosetta.mjs",
+      "--rosetta-dir",
+      "/workspace/scratch/eb5e4be57451/rosetta-research",
+      "--tier",
+      "hard-full",
+      "--out",
+      "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-full",
+      "--threads",
+      "4",
+      "--gallery"
+    ],
+    "exitCode": 0,
+    "seconds": 857.59,
+    "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-full/run.log"
+  },
+  "strictValidation": {
+    "command": [
+      "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-full-engine/scripts/rosetta/validate.mjs",
+      "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-full/annonyA-hard-full.json",
+      "--tier",
+      "hard-full",
+      "--expected-version",
+      "326d85ed21c0a7bef6dcd07a26e38b49f0148a84"
+    ],
+    "exitCode": 0,
+    "seconds": 0.042,
+    "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-full/strict-validation.log"
+  },
+  "score": {
+    "passed": 12276,
+    "total": 12276
+  },
+  "quality": {
+    "round_trips": 12276,
+    "similarity": 73.5312923103202,
+    "size": 0.8771820934845871,
+    "locals": 1.0205919152960723,
+    "nesting": -0.6722059302704464,
+    "endless": 703,
+    "names": 25.077681660415774,
+    "cpu_ms_median": 257.16,
+    "cpu_ms_total": 3411124.0429999917
+  },
+  "recount": {
+    "p": 12276,
+    "u": 6
+  },
+  "firstFailures": [],
+  "finishedAt": "2026-11-27T22:06:57.043438+00:00",
+  "compiled": {
+    "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+    "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+  },
+  "passed": true,
+  "filesSha256": {
+    "annonyA-hard-full.gallery.json": "23e57b7b0ec489f8e372883e326a12c2fda9989c48ee7de975bdf5ce2d8790ba",
+    "annonyA-hard-full.json": "3b77ce6eb3243405199ee371cfe8fd6513fd0cc5a580da81e47813c0dc14da1b",
+    "annonyA-hard-full.provenance.json": "9ab172209d66eced126703a7fd111df1588aef3fb1e609f228f2f7877e8655cc",
+    "run.log": "f5a8816a7888afecb6ad193320c604dda33b88fa5b74bbdedec1cf2d4501b844",
+    "source-after.json": "8fa164f364fe80b61c931a11916e093c017959230a90d2a449bdd6eb8cfa8b57",
+    "source-before.json": "8fa164f364fe80b61c931a11916e093c017959230a90d2a449bdd6eb8cfa8b57",
+    "strict-validation.log": "8512cfdd1be8de9e602a199d90930f85bfadb77554e403004be0693f8a5f5367"
+  }
+}

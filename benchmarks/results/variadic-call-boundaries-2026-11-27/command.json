@@ -1,0 +1,15 @@
+[
+  "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+  "check",
+  "/workspace/scratch/eb5e4be57451/Luau-decompiler/tests/fixtures/quality/variadic-boundary-observations.luau",
+  "--decompiler",
+  "before=node /workspace/scratch/eb5e4be57451/measurements/similarity-850211e-engine/dist/cli.js decompile {}",
+  "--decompiler",
+  "improved=node /workspace/scratch/eb5e4be57451/similarity-probes/variadic-boundaries/engine-dist/cli.js decompile {}",
+  "--profiles",
+  "O0g1,O1g1,O2g1,O0g2,O1g2,O2g2,O0g1+x1,O1g1+x2,O2g1+x3,O0g2+x2,O1g2+x3,O2g2+x1",
+  "--report",
+  "/workspace/scratch/eb5e4be57451/similarity-probes/variadic-boundaries/authored.json",
+  "--work",
+  "/workspace/scratch/eb5e4be57451/similarity-probes/variadic-boundaries/failures"
+]

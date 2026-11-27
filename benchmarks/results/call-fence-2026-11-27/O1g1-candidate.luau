@@ -1,0 +1,67 @@
+local sharedCounter: number = 0
+
+local function make(p: number)
+    sharedCounter += 1
+    local calls = p
+    return function(p, ...)
+        calls += 1
+        return calls, p, select("#", ...), ...
+    end
+end
+
+local callback = (true and make)(7)
+local value = (true and make)(17)
+
+local function __index(p, p2)
+    sharedCounter += 100
+    return if p2 == "first" then callback else value
+end
+
+local tbl = {}
+tbl.__index = __index
+local value2 = setmetatable({}, tbl)
+
+local function arguments(): (string, nil, string)
+    sharedCounter += 10
+    return "a", nil, "c"
+end
+
+local function observe(p, ...)
+    print(p, select("#", ...), ...)
+end;
+
+(true and observe)("first", (true and value2.first)((true and arguments)()));
+(true and observe)("second", (true and value2.second)((true and arguments)()));
+(true and observe)("again", callback((true and arguments)()))
+print("calls", sharedCounter, not (callback ~= value))
+
+local function pick(p)
+    sharedCounter += 1000
+    return p, value
+end;
+
+(true and observe)("one callee", (true and pick)(callback)((true and arguments)()))
+
+local function protected()
+    return (true and pick)(false)((true and arguments)())
+end
+
+local success, result = pcall(protected)
+
+local function protected2()
+    return (true and pick)(nil)((true and arguments)())
+end
+
+local success2, result2 = pcall(protected2)
+print("errors", success, result:find("boolean") ~= nil, success2, result2:find("nil") ~= nil, sharedCounter)
+local sharedCounter2: number = 0
+
+local function increment(p)
+    sharedCounter2 += p
+    return sharedCounter2, nil, sharedCounter2 + 1
+end
+
+local data = { increment = increment };
+(true and observe)("capture", (true and data.increment)(3));
+(true and observe)("capture again", (true and data.increment)(4))
+print("final", sharedCounter2, sharedCounter)

@@ -1,0 +1,386 @@
+{
+  "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+  "tree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+  "createdAt": "2026-11-27T22:08:34.576918+00:00",
+  "tiers": {
+    "quick": {
+      "passed": true,
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "quality": {
+        "round_trips": 882,
+        "similarity": 76.92827095114995,
+        "size": 0.9927495865084095,
+        "locals": 1.0963497723161764,
+        "nesting": -0.33900226757369617,
+        "endless": 38,
+        "names": 61.02136376938835,
+        "cpu_ms_median": 271.589,
+        "cpu_ms_total": 291592.278
+      },
+      "issues": [],
+      "firstFailures": [],
+      "identity": {
+        "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+        "commitTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+        "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+        "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+      },
+      "summarySha256": "a921a5255905ba94d7bbfa66c6142b23557f95f15de118b424226ab970153d58"
+    },
+    "full": {
+      "passed": true,
+      "score": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "quality": {
+        "round_trips": 12276,
+        "similarity": 73.9126053558339,
+        "size": 0.8755172980549799,
+        "locals": 1.0236131793625425,
+        "nesting": -0.6653633105246008,
+        "endless": 702,
+        "names": 54.42526758570154,
+        "cpu_ms_median": 239.489,
+        "cpu_ms_total": 3080845.7550000018
+      },
+      "issues": [],
+      "firstFailures": [],
+      "identity": {
+        "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+        "commitTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+        "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+        "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+      },
+      "summarySha256": "a7719ade6df36938c3891568de9cc3a60cc48c950bd90f8d7aa55425684dcf59"
+    },
+    "hard-quick": {
+      "passed": true,
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "quality": {
+        "round_trips": 882,
+        "similarity": 76.39291395270635,
+        "size": 0.9979334617090493,
+        "locals": 1.1011063319340824,
+        "nesting": -0.3378684807256236,
+        "endless": 36,
+        "names": 30.01463271875914,
+        "cpu_ms_median": 303.105,
+        "cpu_ms_total": 330422.27500000026
+      },
+      "issues": [],
+      "firstFailures": [],
+      "identity": {
+        "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+        "commitTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+        "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+        "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+      },
+      "summarySha256": "2abe213ec11f775a51f35f33331d65a8a2cc1849792b815e5398676be4b03097"
+    },
+    "hard-full": {
+      "passed": true,
+      "score": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "quality": {
+        "round_trips": 12276,
+        "similarity": 73.5312923103202,
+        "size": 0.8771820934845871,
+        "locals": 1.0205919152960723,
+        "nesting": -0.6722059302704464,
+        "endless": 703,
+        "names": 25.077681660415774,
+        "cpu_ms_median": 257.16,
+        "cpu_ms_total": 3411124.0429999917
+      },
+      "issues": [],
+      "firstFailures": [],
+      "identity": {
+        "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+        "commitTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+        "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+        "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+      },
+      "summarySha256": "025ac5957f1e477420dde2fa5e58a695ca9f719ccf89cf80985702106a36666c"
+    }
+  },
+  "runtimes": {
+    "node20": {
+      "allExecutedGatesPassed": true,
+      "runtime": {
+        "executable": "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "version": "v20.20.2",
+        "sha256": "6295488653f0d93b0a157841746fef7e72cc4328cfb60c4bbe0ca2668a836ffd"
+      },
+      "gates": [
+        {
+          "gate": "build",
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0,
+          "seconds": 3.367,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node20/build.log",
+          "passed": true
+        },
+        {
+          "gate": "typecheck",
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0,
+          "seconds": 2.225,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node20/typecheck.log",
+          "passed": true
+        },
+        {
+          "gate": "unit",
+          "command": [
+            "npm",
+            "test",
+            "--",
+            "--maxWorkers=2"
+          ],
+          "exitCode": 0,
+          "seconds": 43.073,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node20/unit.log",
+          "passed": true,
+          "testsPassed": 1540,
+          "testFilesPassed": 145
+        },
+        {
+          "gate": "bench-test",
+          "command": [
+            "npm",
+            "run",
+            "bench:test"
+          ],
+          "exitCode": 0,
+          "seconds": 3.357,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node20/bench-test.log",
+          "passed": true,
+          "testsPassed": 69,
+          "testsFailed": 0,
+          "testsSkipped": 0
+        },
+        {
+          "gate": "bench-smoke",
+          "command": [
+            "npm",
+            "run",
+            "bench:compare",
+            "--",
+            "--output",
+            "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node20/baseline.json"
+          ],
+          "exitCode": 0,
+          "seconds": 0.755,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node20/bench-smoke.log",
+          "passed": true,
+          "fixtureCounts": {
+            "total": 3,
+            "repository": 3,
+            "lunaux": 0,
+            "successful": 3
+          },
+          "syntaxAndSemantics": "Smoke only; official parser and runtime are separate gates."
+        },
+        {
+          "gate": "build-demo",
+          "command": [
+            "npm",
+            "run",
+            "build:demo"
+          ],
+          "exitCode": 0,
+          "seconds": 2.605,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node20/build-demo.log",
+          "passed": true
+        },
+        {
+          "gate": "demo-test",
+          "command": [
+            "npm",
+            "run",
+            "demo:test"
+          ],
+          "exitCode": 0,
+          "seconds": 0.964,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node20/demo-test.log",
+          "passed": true,
+          "testsPassed": 6,
+          "testsFailed": 0,
+          "testsSkipped": 0
+        }
+      ],
+      "notRun": [
+        {
+          "gate": "real-browser-demo",
+          "reason": "The known /usr/bin/chromium launcher has no /usr/lib/chromium/chromium binary. No browser result is claimed; exact-head remote CI remains required."
+        },
+        {
+          "gate": "official-pinned-Luau-and-public-corpora",
+          "reason": "Local reference checkouts have different revisions from CI; no substitution. Exact-head remote CI remains required."
+        }
+      ],
+      "identity": {
+        "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+        "commitTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+        "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+        "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+      },
+      "summarySha256": "d3f6470e10b031acd46f38f32f8364711ff3800545d0a7d73d1c9e9e88887d1b"
+    },
+    "node22": {
+      "allExecutedGatesPassed": true,
+      "runtime": {
+        "executable": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+        "version": "v22.23.5",
+        "sha256": "2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd"
+      },
+      "gates": [
+        {
+          "gate": "build",
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0,
+          "seconds": 3.259,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/build.log",
+          "passed": true
+        },
+        {
+          "gate": "typecheck",
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0,
+          "seconds": 2.046,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/typecheck.log",
+          "passed": true
+        },
+        {
+          "gate": "unit",
+          "command": [
+            "npm",
+            "test",
+            "--",
+            "--maxWorkers=2"
+          ],
+          "exitCode": 0,
+          "seconds": 40.468,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/unit.log",
+          "passed": true,
+          "testsPassed": 1540,
+          "testFilesPassed": 145
+        },
+        {
+          "gate": "bench-test",
+          "command": [
+            "npm",
+            "run",
+            "bench:test"
+          ],
+          "exitCode": 0,
+          "seconds": 3.129,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/bench-test.log",
+          "passed": true,
+          "testsPassed": 69,
+          "testsFailed": 0,
+          "testsSkipped": 0
+        },
+        {
+          "gate": "bench-smoke",
+          "command": [
+            "npm",
+            "run",
+            "bench:compare",
+            "--",
+            "--output",
+            "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/baseline.json"
+          ],
+          "exitCode": 0,
+          "seconds": 0.673,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/bench-smoke.log",
+          "passed": true,
+          "fixtureCounts": {
+            "total": 3,
+            "repository": 3,
+            "lunaux": 0,
+            "successful": 3
+          },
+          "syntaxAndSemantics": "Smoke only; official parser and runtime are separate gates."
+        },
+        {
+          "gate": "build-demo",
+          "command": [
+            "npm",
+            "run",
+            "build:demo"
+          ],
+          "exitCode": 0,
+          "seconds": 2.682,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/build-demo.log",
+          "passed": true
+        },
+        {
+          "gate": "demo-test",
+          "command": [
+            "npm",
+            "run",
+            "demo:test"
+          ],
+          "exitCode": 0,
+          "seconds": 0.9,
+          "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/demo-test.log",
+          "passed": true,
+          "testsPassed": 6,
+          "testsFailed": 0,
+          "testsSkipped": 0
+        }
+      ],
+      "notRun": [
+        {
+          "gate": "real-browser-demo",
+          "reason": "The known /usr/bin/chromium launcher has no /usr/lib/chromium/chromium binary. No browser result is claimed; exact-head remote CI remains required."
+        },
+        {
+          "gate": "official-pinned-Luau-and-public-corpora",
+          "reason": "Local reference checkouts have different revisions from CI; no substitution. Exact-head remote CI remains required."
+        }
+      ],
+      "identity": {
+        "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+        "commitTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+        "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+        "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+      },
+      "summarySha256": "5e77ae8c57e6a168ce35a5d7a3f1006dafd5346089e80efd5c815a214c784b6d"
+    }
+  },
+  "issues": [],
+  "identicalEngineAcrossSixSnapshots": true,
+  "allLocalGatesPassed": true,
+  "remotePublicationEquivalence": {
+    "status": "pending",
+    "expectedCommit": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+    "expectedCommitTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+    "reason": "Compare the published remote commit tree and exact-head CI separately; this local report does not publish or infer a remote result."
+  }
+}

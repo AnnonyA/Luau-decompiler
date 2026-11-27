@@ -18,7 +18,14 @@ it('recovers a conditional return after branch temporaries have been folded',()=
   expect(printLuau(clean([choose(lit(false),lit(3))]))).toBe('return if flag then false else 3\n');
 });
 it('keeps branch calls scalar when recovering the final conditional return',()=>{
-  expect(printLuau(clean([choose(call('left'),call('right'))]))).toBe('return if flag then (left()) else (right())\n');
+  const result=clean([choose(call('left'),call('right'))]);
+  expect(result.body.statements[0]).toMatchObject({kind:'return',values:[{
+    kind:'if-expr',consequent:{kind:'paren',expression:{kind:'call'}},
+    alternate:{kind:'paren',expression:{kind:'call'}},
+  }]});
+  // Luau conditional branches already request one value; the AST retains the
+  // adjustment, while the printer can omit its redundant outer parentheses.
+  expect(printLuau(result)).toBe('return if flag then left() else right()\n');
 });
 it('applies final return recovery inside callbacks and respects its switch',()=>{
   const callback:Expression={kind:'function-expr',params:[],isVararg:false,body:block([choose(lit(1),lit(2))])};

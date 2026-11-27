@@ -1,0 +1,26 @@
+locals	6	11:21:31:41:nil:nil
+assign	5	51:61:71:nil:nil
+arg-prefix	2	81:tail
+arg-tail	2	head:91
+arg-open	4	head:101:nil:103
+empty-tail	1	nil
+empty-open	0	
+method-prefix	2	true:true
+method-tail-count	1	1
+table	6	2:alpha:delta:nil:beta:gamma
+index	1	gamma
+spread	5	1:3:nil:5:nil
+returns-true	2	201:211
+returns-false	2	201:211
+conditional-true	1	221
+conditional-false	1	nil
+vararg-locals	8	231:231:nil:nil:231:tail:231:nil
+vararg-prefix	2	231:tail
+vararg-tail	2	head:231
+vararg-return	2	231:231
+vararg-locals	8	nil:nil:nil:nil:nil:tail:nil:nil
+vararg-prefix	2	nil:tail
+vararg-tail	2	head:nil
+vararg-empty	2	nil:nil
+bounds	3	12:3:word
+== Errored("prog:?: grouped iterator leaked its extra state")

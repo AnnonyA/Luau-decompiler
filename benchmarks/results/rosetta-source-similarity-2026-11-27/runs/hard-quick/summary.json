@@ -1,0 +1,73 @@
+{
+  "tier": "hard-quick",
+  "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+  "startedAt": "2026-11-27T21:51:00.179758+00:00",
+  "gate": "all-pass",
+  "issues": [],
+  "process": {
+    "command": [
+      "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-quick-engine/scripts/bench-rosetta.mjs",
+      "--rosetta-dir",
+      "/workspace/scratch/eb5e4be57451/rosetta-research",
+      "--tier",
+      "hard-quick",
+      "--out",
+      "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-quick",
+      "--threads",
+      "4",
+      "--gallery"
+    ],
+    "exitCode": 0,
+    "seconds": 89.464,
+    "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-quick/run.log"
+  },
+  "strictValidation": {
+    "command": [
+      "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-quick-engine/scripts/rosetta/validate.mjs",
+      "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-quick/annonyA-hard-quick.json",
+      "--tier",
+      "hard-quick",
+      "--expected-version",
+      "326d85ed21c0a7bef6dcd07a26e38b49f0148a84"
+    ],
+    "exitCode": 0,
+    "seconds": 0.033,
+    "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-quick/strict-validation.log"
+  },
+  "score": {
+    "passed": 882,
+    "total": 882
+  },
+  "quality": {
+    "round_trips": 882,
+    "similarity": 76.39291395270635,
+    "size": 0.9979334617090493,
+    "locals": 1.1011063319340824,
+    "nesting": -0.3378684807256236,
+    "endless": 36,
+    "names": 30.01463271875914,
+    "cpu_ms_median": 303.105,
+    "cpu_ms_total": 330422.27500000026
+  },
+  "recount": {
+    "p": 882
+  },
+  "firstFailures": [],
+  "finishedAt": "2026-11-27T21:52:29.697838+00:00",
+  "compiled": {
+    "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+    "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+  },
+  "passed": true,
+  "filesSha256": {
+    "annonyA-hard-quick.gallery.json": "9d9f42b0d32d4c7de91c32b6a046ab61fab04730b0f96f8485ba50eb2010a5ae",
+    "annonyA-hard-quick.json": "bbcc0c50c90c4090590225f74c3fc25452866bed79596a4a32a690b1814efa45",
+    "annonyA-hard-quick.provenance.json": "2a9ea5981f5bd3a36613480c2d758741424de4cfa34609ca36a7efda165bf14f",
+    "run.log": "785f04a2fccfa1768d82148600c241c8b8d55b1c02a795c4ecf70f7359da6e4d",
+    "source-after.json": "8fa164f364fe80b61c931a11916e093c017959230a90d2a449bdd6eb8cfa8b57",
+    "source-before.json": "8fa164f364fe80b61c931a11916e093c017959230a90d2a449bdd6eb8cfa8b57",
+    "strict-validation.log": "bc85c36e76f3e4748568af6fff728ed03db28e333429d554a3434aeff21326df"
+  }
+}

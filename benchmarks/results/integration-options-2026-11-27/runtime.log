@@ -1,0 +1,11 @@
+default: 72/72 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+nofold: 72/72 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+plain: 72/72 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+compact: 72/72 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+readability on the 72 round trips every decompiler passed:
+  decompiler  similarity   size  locals  nesting  endless  names g2  cpu ms
+  compact          82.1%  1.25x   1.19x    +0.00        0     23.6%  161.87
+  default          81.3%  1.28x   1.17x    +0.00        0     60.6%  157.59
+  nofold           72.2%  1.48x   1.87x    +0.00       12     61.1%  152.00
+  plain            72.7%  1.47x   1.87x    +0.00       15     61.1%  148.37
+288 round trips in 16.2s

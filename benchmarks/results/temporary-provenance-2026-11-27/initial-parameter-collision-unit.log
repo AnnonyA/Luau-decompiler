@@ -1,0 +1,97 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-locals
+
+ ❯ tests/temporary-provenance.test.ts (30 tests | 1 failed) 485ms
+   ✓ temporary producer ownership > does not treat another function's debug spelling as a declaration 3ms
+   ✓ temporary producer ownership > keeps source protection for explicit evidence 0ms
+   ✓ temporary producer ownership > keeps source protection for same-prototype evidence 0ms
+   ✓ temporary producer ownership > keeps source protection for exact-debug evidence 0ms
+   ✓ temporary producer ownership > keeps source protection for unknown-origin evidence 0ms
+   ✓ temporary producer ownership > keeps source protection for unknown-prototype evidence 0ms
+   ✓ temporary producer ownership > uses the same ownership rule when propagating a literal across a statement 1ms
+   ✓ temporary producer ownership > keeps captured cells and writes even when the debug spelling belongs elsewhere 0ms
+   ✓ temporary producer ownership > does not delay a property read past an earlier effect or into a conditional arm 1ms
+   ✓ scalar temporary adjustment in expression lists > retains one result in the return tail 0ms
+   ✓ scalar temporary adjustment in expression lists > retains one result in the argument tail 0ms
+   ✓ scalar temporary adjustment in expression lists > retains one result in the table tail 0ms
+   ✓ scalar temporary adjustment in expression lists > retains one result in the declaration tail 2ms
+   ✓ scalar temporary adjustment in expression lists > retains one result in the assignment tail 0ms
+   ✓ scalar temporary adjustment in expression lists > retains one result in the iterator tail 2ms
+   ✓ scalar temporary adjustment in expression lists > retains the scalar adjustment for a call 1ms
+   ✓ scalar temporary adjustment in expression lists > retains the scalar adjustment for a method-call 1ms
+   ✓ scalar temporary adjustment in expression lists > retains the scalar adjustment for a vararg 0ms
+   ✓ scalar temporary adjustment in expression lists > does not add a redundant adjustment to a non-tail scalar context 0ms
+   ✓ scalar temporary adjustment in expression lists > retains unknown local declarations and explicit source declarations in added list-tail positions 0ms
+   ✓ scalar temporary adjustment in expression lists > leaves an original open result pack open 0ms
+   ✓ scalar temporary adjustment in expression lists > keeps a temporary ahead of a constructor key that may fail: { kind: 'literal', value: null } 0ms
+   ✓ scalar temporary adjustment in expression lists > keeps a temporary ahead of a constructor key that may fail: { kind: 'literal', value: NaN } 0ms
+   ✓ scalar temporary adjustment in expression lists > keeps a temporary ahead of a constructor key that may fail: { kind: 'identifier', name: 'possiblyNil' } 0ms
+   × sealed temporary reconstruction fixtures > folds a bytecode temporary despite a debug parameter in an unrelated function 56ms
+     → expected 'local function unrelated(kind)\n    r…' to contain 'schema.kind == value.kind'
+   ✓ sealed temporary reconstruction fixtures > retains a dead guard-prelude field read when the selection reuses its register: O2g1 12ms
+   ✓ sealed temporary reconstruction fixtures > retains a dead guard-prelude field read when the selection reuses its register: O2g2 10ms
+   ✓ sealed temporary reconstruction fixtures > retains a dead guard-prelude field read when the selection reuses its register: O2g1+x3 11ms
+   ✓ sealed temporary reconstruction fixtures > retains a dead guard-prelude field read when the selection reuses its register: O2g2+x1 5ms
+   ✓ sealed temporary reconstruction fixtures > pins independent effect/arity sources and every normal/Hard input  373ms
+ ✓ tests/debug-declarations.test.ts (8 tests) 55ms
+ ✓ tests/source-structure.test.ts (15 tests) 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/temporary-provenance.test.ts > sealed temporary reconstruction fixtures > folds a bytecode temporary despite a debug parameter in an unrelated function
+AssertionError: expected 'local function unrelated(kind)\n    r…' to contain 'schema.kind == value.kind'
+
+- Expected
++ Received
+
+- schema.kind == value.kind
++ local function unrelated(kind)
++     return kind .. ":tag"
++ end
++
++ local list = {}
++
++ local function record(label, contents)
++     local setmetatable2 = setmetatable
++     local function __index(_, key)
++         local value = #list + 1
++         list[value] = label .. ":" .. key
++         return contents[key]
++     end
++
++     local data = { ["__index"] = __index }
++     return setmetatable2({}, data)
++ end
++
++ local function matches(schema, value)
++     local kind = schema.kind
++     if kind == value.kind then
++         return (if true then unrelated else nil)("equal")
++     end
++     return (if true then unrelated else nil)("different")
++ end
++
++ local left = (if true then record else nil)("left", { ["kind"] = "item" })
++ local right = (if true then record else nil)("right", { ["kind"] = "item" })
++ local other = (if true then record else nil)("other", { ["kind"] = "different" })
++ print((if true then matches else nil)(left, right), (if true then matches else nil)(left, other))
++ print((if true then table.concat else nil)(list, "|"))
++
+
+ ❯ tests/temporary-provenance.test.ts:126:27
+    124|     const result = decompile(readFileSync(new URL("cross-prototype-par…
+    125|     if (!result.ok) throw new Error(result.error);
+    126|     expect(result.source).toContain("schema.kind == value.kind");
+       |                           ^
+    127|     expect(result.source).not.toContain("local kind = schema.kind");
+    128|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 52 passed (53)
+   Start at  21:23:02
+   Duration  2.25s (transform 784ms, setup 0ms, collect 1.20s, tests 554ms, environment 0ms, prepare 122ms)
+

@@ -1,0 +1,63 @@
+{
+  "baseRevision": "521284fc7c074b8383d366d7d9756399f6bed762",
+  "engineSnapshot": "candidate-phase2-v3/dist, copied after TypeScript build and unchanged throughout both tiers",
+  "sourceFilesMatchedSnapshot": 61,
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "compiler": "luau0-src 0.24.0+luau747",
+  "node": "v24.22.3",
+  "defaultEngineOptions": true,
+  "forbiddenOverrides": [],
+  "profiles": {
+    "quick": [
+      "O0g1",
+      "O1g1",
+      "O2g1",
+      "O0g2",
+      "O1g2",
+      "O2g2"
+    ],
+    "hard-quick": [
+      "O0g1+x1",
+      "O1g1+x2",
+      "O2g1+x3",
+      "O0g2+x2",
+      "O1g2+x3",
+      "O2g2+x1"
+    ]
+  },
+  "checks": {
+    "unitFiles": 136,
+    "unitPassed": 1360,
+    "unitFailed": 0,
+    "authoredSources": 4,
+    "authoredProfilesEach": 12,
+    "authoredBeforePassed": 44,
+    "authoredBeforeMismatched": 4,
+    "authoredAfterPassed": 48
+  },
+  "quality": {
+    "quick": {
+      "round_trips": 882,
+      "similarity": 72.58124611254142,
+      "size": 1.0973765605214243,
+      "locals": 1.1064897783442593,
+      "nesting": 0.20521541950113378,
+      "endless": 178,
+      "names": 60.83113842551946,
+      "cpu_ms_median": 253.85000000000002,
+      "cpu_ms_total": 288874.7240000002
+    },
+    "hard-quick": {
+      "round_trips": 882,
+      "similarity": 71.91605075777282,
+      "size": 1.106727351002097,
+      "locals": 1.1109838137856827,
+      "nesting": 0.20294784580498867,
+      "endless": 178,
+      "names": 29.96488147497805,
+      "cpu_ms_median": 278.656,
+      "cpu_ms_total": 318812.6679999997
+    }
+  },
+  "scope": "Development checkpoint for temporary ownership and preserved guard effects; the combined engine still requires all four tiers and CI."
+}

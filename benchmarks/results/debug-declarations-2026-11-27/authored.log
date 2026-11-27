@@ -1,0 +1,7 @@
+before: 48/48 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+after: 48/48 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+readability on the 48 round trips every decompiler passed:
+  decompiler  similarity   size  locals  nesting  endless  names g2  cpu ms
+  after            75.4%  1.25x   0.85x    +0.12        0     51.4%  149.42
+  before           74.1%  1.24x   0.83x    +0.17        0     37.4%  149.57
+96 round trips in 26.6s

@@ -1,0 +1,269 @@
+{
+  "compiler": "Luau 0.747 via Rosetta 80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "sources": [
+    {
+      "name": "debug-collision-order",
+      "sourceSha256": "530594e0ca694aa58283248e81a8e1cb88ec7b07cdb6e74fbdc3d7bd070eb558",
+      "bytecodes": [
+        {
+          "profile": "O0g1",
+          "path": "debug-collision-order-O0g1.luauc",
+          "sha256": "dcb7fdb4ca23e51cdef61658214c2a1dcd56d65d735f67dd3f7076e35ff3da10"
+        },
+        {
+          "profile": "O1g1",
+          "path": "debug-collision-order-O1g1.luauc",
+          "sha256": "fb5cd125fb16e931dda6cddccd40e9fc8f20360ff5432fc1f2eb73f86c59e081"
+        },
+        {
+          "profile": "O2g1",
+          "path": "debug-collision-order-O2g1.luauc",
+          "sha256": "6ce4a5b54da9d3456a53c87fff5e2e240e6d387685d1d0e1c473caeaf2708361"
+        },
+        {
+          "profile": "O0g2",
+          "path": "debug-collision-order-O0g2.luauc",
+          "sha256": "00d9802645b3ddc80f711657e64e2ebc559dc2145e899519d3804a3e81021174"
+        },
+        {
+          "profile": "O1g2",
+          "path": "debug-collision-order-O1g2.luauc",
+          "sha256": "f646003c82e40d9506c57d353f8767a1d3a75c24996049e652e41fd0c9346e24"
+        },
+        {
+          "profile": "O2g2",
+          "path": "debug-collision-order-O2g2.luauc",
+          "sha256": "cf92f6fb2a12463272837ec9c38b963979da0258579086165ed00bd587a0a83b"
+        },
+        {
+          "profile": "O0g1+x1",
+          "path": "debug-collision-order-O0g1+x1.luauc",
+          "sha256": "8ab4cf85b5cbe05270b0b6dadf5f1c0983bfc863cd9c633c30c99f94f4b6e175"
+        },
+        {
+          "profile": "O1g1+x2",
+          "path": "debug-collision-order-O1g1+x2.luauc",
+          "sha256": "66e3faee8249bb1174d51d04e89782664bd03f7b68090eef951ceeebc9e9f539"
+        },
+        {
+          "profile": "O2g1+x3",
+          "path": "debug-collision-order-O2g1+x3.luauc",
+          "sha256": "0eea1f476cacc4ba4e4e960b2169bc54f8e9f78ddc12fc31b8be15ea9cd64371"
+        },
+        {
+          "profile": "O0g2+x2",
+          "path": "debug-collision-order-O0g2+x2.luauc",
+          "sha256": "a2c4b076f1ee07bf884d679c6024f665ec12339b6b423cd93c79401670afa94d"
+        },
+        {
+          "profile": "O1g2+x3",
+          "path": "debug-collision-order-O1g2+x3.luauc",
+          "sha256": "cb53901ee4d4bebef4968c8a09a8e06c0e82a050485321f76b149b8dac39402e"
+        },
+        {
+          "profile": "O2g2+x1",
+          "path": "debug-collision-order-O2g2+x1.luauc",
+          "sha256": "dc5b4096d9a5a3a857d63cca9225a15edff54723c0f2b9aec70a51651219ba46"
+        }
+      ]
+    },
+    {
+      "name": "scalar-pack-lists",
+      "sourceSha256": "99c13f5a2fd35c1a24497974985b481bb8e5c0a1f1af4960e01ee3574a752aa7",
+      "bytecodes": [
+        {
+          "profile": "O0g1",
+          "path": "scalar-pack-lists-O0g1.luauc",
+          "sha256": "49aada056454c0dcf8066ac39b5873b769e29263bfcb55e4d0d529741610420a"
+        },
+        {
+          "profile": "O1g1",
+          "path": "scalar-pack-lists-O1g1.luauc",
+          "sha256": "1295e3e2c95bbb4b4ac7aa91fc585dbc4ad3251c6ea82620e234f6f36a17238a"
+        },
+        {
+          "profile": "O2g1",
+          "path": "scalar-pack-lists-O2g1.luauc",
+          "sha256": "9491bb04df45537cd0641f1a71c8148b89f0c1da4ba9c9e80d16b0d9a3974011"
+        },
+        {
+          "profile": "O0g2",
+          "path": "scalar-pack-lists-O0g2.luauc",
+          "sha256": "55a31265c23e75054a34c02f58bf17818dee5198f3f97facfda8b8cb68070bd0"
+        },
+        {
+          "profile": "O1g2",
+          "path": "scalar-pack-lists-O1g2.luauc",
+          "sha256": "eb288db16c00adcb8f914a16f1818fda60cd9abbbff51946ce2e20cce9d53ca6"
+        },
+        {
+          "profile": "O2g2",
+          "path": "scalar-pack-lists-O2g2.luauc",
+          "sha256": "f5c5455e26a35070773f9d02c7652829664b3cc3f6ec4bfdc4101fcd6c864b61"
+        },
+        {
+          "profile": "O0g1+x1",
+          "path": "scalar-pack-lists-O0g1+x1.luauc",
+          "sha256": "761f349f87bcfcbde7a6b6132c5da0fccc91dd8c16ec85dc431a27eb5a35a55d"
+        },
+        {
+          "profile": "O1g1+x2",
+          "path": "scalar-pack-lists-O1g1+x2.luauc",
+          "sha256": "8f52244311820c83b088bc239cdc186dce61a0fcfcb8acf6a176fd8a40264e5b"
+        },
+        {
+          "profile": "O2g1+x3",
+          "path": "scalar-pack-lists-O2g1+x3.luauc",
+          "sha256": "81b20756c276ee4323d5c87d73000632d4ebbd28f2c07de36faee1c7d4132951"
+        },
+        {
+          "profile": "O0g2+x2",
+          "path": "scalar-pack-lists-O0g2+x2.luauc",
+          "sha256": "407acc2a9dc010685ca274efe3dd74d57ea2a1edb075d4f4db307d432f78bf3f"
+        },
+        {
+          "profile": "O1g2+x3",
+          "path": "scalar-pack-lists-O1g2+x3.luauc",
+          "sha256": "32f2f1f2e51d3a4f5d368208caea71c6880461d513a0e4058ac963d54a02004e"
+        },
+        {
+          "profile": "O2g2+x1",
+          "path": "scalar-pack-lists-O2g2+x1.luauc",
+          "sha256": "069fcec2a3b212f41261a2ccc3401564f48245be6f4e92099557f0cfddd24828"
+        }
+      ]
+    },
+    {
+      "name": "temporary-effect-boundaries",
+      "sourceSha256": "61c1c08db6861b3df62facbfb2689b3dcedde54b1b8567b73ee1e0f1d98f9a48",
+      "bytecodes": [
+        {
+          "profile": "O0g1",
+          "path": "temporary-effect-boundaries-O0g1.luauc",
+          "sha256": "120c71553b73ef528773ff1ecd64e052a80bc1fdae168ded5683c28b56783f7e"
+        },
+        {
+          "profile": "O1g1",
+          "path": "temporary-effect-boundaries-O1g1.luauc",
+          "sha256": "13f9ae68abea73f3dbb8978af5b64f0812bcc536abfa4b3036b13ce2e4c9e425"
+        },
+        {
+          "profile": "O2g1",
+          "path": "temporary-effect-boundaries-O2g1.luauc",
+          "sha256": "fc77f828a8040ffaff3b4d594ec89a240be2e12fef59c4b8cc16293e82aac266"
+        },
+        {
+          "profile": "O0g2",
+          "path": "temporary-effect-boundaries-O0g2.luauc",
+          "sha256": "2c1666d46b3ce840d6511c06f12c66c5f3538bc15dbd1dd2cce85d8f38f3498a"
+        },
+        {
+          "profile": "O1g2",
+          "path": "temporary-effect-boundaries-O1g2.luauc",
+          "sha256": "f1ef496d700ac96323e1b82973e1370d44ee67e837fa2b63df94d5098484e58d"
+        },
+        {
+          "profile": "O2g2",
+          "path": "temporary-effect-boundaries-O2g2.luauc",
+          "sha256": "99b11b7e41e5fa9fc5e088e587d6953d89ad075757d18b3062ed58d16ff4eb80"
+        },
+        {
+          "profile": "O0g1+x1",
+          "path": "temporary-effect-boundaries-O0g1+x1.luauc",
+          "sha256": "8df41c59411bf4dad6499ad4dd68d2c9daa8ba8459572b6c4539f1133c4fc507"
+        },
+        {
+          "profile": "O1g1+x2",
+          "path": "temporary-effect-boundaries-O1g1+x2.luauc",
+          "sha256": "da5de0f3252e1762822381a395cc2fa6df2c07dd1b2a68b48877ca9622b42bde"
+        },
+        {
+          "profile": "O2g1+x3",
+          "path": "temporary-effect-boundaries-O2g1+x3.luauc",
+          "sha256": "2ba71435ac63ac2853bfbee162666106f05943443e383b715003c87c6d1392f8"
+        },
+        {
+          "profile": "O0g2+x2",
+          "path": "temporary-effect-boundaries-O0g2+x2.luauc",
+          "sha256": "85358066466ef19df65fbba3e606fb3ffd6e2505310cf303117aeae2eed305b1"
+        },
+        {
+          "profile": "O1g2+x3",
+          "path": "temporary-effect-boundaries-O1g2+x3.luauc",
+          "sha256": "09cb61dce64160864204473eb398da361182d17d22aa9945a1afd8bf00e3f372"
+        },
+        {
+          "profile": "O2g2+x1",
+          "path": "temporary-effect-boundaries-O2g2+x1.luauc",
+          "sha256": "e3e9e80851a8627d931ed35c3de9515c64460288d437802e863eb581c4f33156"
+        }
+      ]
+    },
+    {
+      "name": "cross-prototype-parameter",
+      "sourceSha256": "0c05ad2a06daddcc210c7738b51b6d40f62b96c352ab61f6c87751547cf76ec0",
+      "bytecodes": [
+        {
+          "profile": "O0g1",
+          "path": "cross-prototype-parameter-O0g1.luauc",
+          "sha256": "ad3d3b93465e361667032b419181a042bef8e08ee4c8bc22859dc0bb9a77f5c1"
+        },
+        {
+          "profile": "O1g1",
+          "path": "cross-prototype-parameter-O1g1.luauc",
+          "sha256": "a71b1b5fb95a140b064dba1e4b8dbfd823c9f1c7fd82791124430be5e3af2957"
+        },
+        {
+          "profile": "O2g1",
+          "path": "cross-prototype-parameter-O2g1.luauc",
+          "sha256": "c08f64dac4ab394f8f7afa4d507f5132188e7fcbcc4c2fe5da8d008bd3d4ed06"
+        },
+        {
+          "profile": "O0g2",
+          "path": "cross-prototype-parameter-O0g2.luauc",
+          "sha256": "ff41f855e640ef303434e97fa3bea41b554b228db0057fa3a201817a7891b67a"
+        },
+        {
+          "profile": "O1g2",
+          "path": "cross-prototype-parameter-O1g2.luauc",
+          "sha256": "f4019606365004a6d06d0169bca1de742129d3cb99015c1fe8f05c38e592d1bb"
+        },
+        {
+          "profile": "O2g2",
+          "path": "cross-prototype-parameter-O2g2.luauc",
+          "sha256": "5e141d685b7b684b520237836129745b3c430df24074a6d46d4e371460cbb18b"
+        },
+        {
+          "profile": "O0g1+x1",
+          "path": "cross-prototype-parameter-O0g1+x1.luauc",
+          "sha256": "4001292033f9cbba5d23282e6e9b79b0b2d6aeed1e28b37a4725216877e5243b"
+        },
+        {
+          "profile": "O1g1+x2",
+          "path": "cross-prototype-parameter-O1g1+x2.luauc",
+          "sha256": "58d17927ecbb97bac99b6eb9ce1286e78d82b6317483bb70a06cf247b816e695"
+        },
+        {
+          "profile": "O2g1+x3",
+          "path": "cross-prototype-parameter-O2g1+x3.luauc",
+          "sha256": "f02adadd9c60586167e4065e634cfd946bd5b94471fc25d9f0dc4f8a8fc753d3"
+        },
+        {
+          "profile": "O0g2+x2",
+          "path": "cross-prototype-parameter-O0g2+x2.luauc",
+          "sha256": "754ba9f96cfdd7076fb489390d0c72c85c4dc89a95dc8a1ca0df93b2c82082c8"
+        },
+        {
+          "profile": "O1g2+x3",
+          "path": "cross-prototype-parameter-O1g2+x3.luauc",
+          "sha256": "526c0d7a1561ce6acd26de2a6eeaec2dcd01a211f1583a01d17b7f18aae0d76d"
+        },
+        {
+          "profile": "O2g2+x1",
+          "path": "cross-prototype-parameter-O2g2+x1.luauc",
+          "sha256": "7120becf1a43aef6df941efb315bff10654548581d781c537c9e6b3b979af23d"
+        }
+      ]
+    }
+  ]
+}

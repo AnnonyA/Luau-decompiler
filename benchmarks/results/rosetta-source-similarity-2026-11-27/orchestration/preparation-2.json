@@ -1,0 +1,13 @@
+{
+  "state": "prepared-awaiting-parent-final-commit",
+  "createdAt": "2026-11-27T21:47:52.401849+00:00",
+  "finalRevision": null,
+  "tierRunsStarted": false,
+  "files": {
+    "orchestrate.py": "e33771d1941bacdba2abc20673c0ae0dff223db9fded62011f643901821ddc69",
+    "README.md": "481e777d0803d23d4f04d45cb0fe084d35bb9a88587121c3b2d66b0ff14659d6"
+  },
+  "previousPreparationSha256": "3f1f7f9fa17123673d9ca53f0bae907a3d8b2333c783038ea4199044b69aa240",
+  "digestAlgorithmVerifiedAgainst": "integrated-11-quick-engine",
+  "auditIntegratedAs": "d02c457"
+}

@@ -1,0 +1,458 @@
+{"revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84", "node": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node", "command": ["npm", "run", "bench:test"], "startedAt": "2026-11-27T22:08:10.945825+00:00"}
+(node:3040) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> luau-decompiler@0.2.0 bench:test
+> node --test scripts/bench-compare.test.mjs scripts/bench-summary.test.mjs scripts/bench-assert-syntax.test.mjs scripts/bench-semantic.test.mjs scripts/bench-performance.test.mjs scripts/bench-tovek.test.mjs scripts/competition/benchmark.test.mjs scripts/large/benchmark.test.mjs scripts/fuzz/generator.test.mjs scripts/fuzz/observe.test.mjs scripts/fuzz/reducer.test.mjs scripts/rosetta/validate.test.mjs
+
+(node:3053) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:3060) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: accepts genuine successful parser results from both published and own source
+ok 1 - accepts genuine successful parser results from both published and own source
+  ---
+  duration_ms: 0.884887
+  type: 'test'
+  ...
+# Subtest: records actual syntax failure as a measured result rather than inventing PASS
+ok 2 - records actual syntax failure as a measured result rather than inventing PASS
+  ---
+  duration_ms: 0.127953
+  type: 'test'
+  ...
+# Subtest: requireAllPass makes syntax failures a blocking, diagnosed regression
+ok 3 - requireAllPass makes syntax failures a blocking, diagnosed regression
+  ---
+  duration_ms: 0.294465
+  type: 'test'
+  ...
+# Subtest: rejects missing, skipped, or errored official compiler invocation
+ok 4 - rejects missing, skipped, or errored official compiler invocation
+  ---
+  duration_ms: 0.143156
+  type: 'test'
+  ...
+# Subtest: rejects failed decompilation and empty corpus instead of recording false success
+ok 5 - rejects failed decompilation and empty corpus instead of recording false success
+  ---
+  duration_ms: 0.153372
+  type: 'test'
+  ...
+# (node:3061) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: manifest includes the three existing real bytecode fixtures
+ok 6 - manifest includes the three existing real bytecode fixtures
+  ---
+  duration_ms: 13.653527
+  type: 'test'
+  ...
+# Subtest: an opt-in source directory contains the reconstructed fixtures for diagnosis
+ok 7 - an opt-in source directory contains the reconstructed fixtures for diagnosis
+  ---
+  duration_ms: 495.057333
+  type: 'test'
+  ...
+# Subtest: source metrics are deterministic and identify explicit register placeholders
+ok 8 - source metrics are deterministic and identify explicit register placeholders
+  ---
+  duration_ms: 0.183237
+  type: 'test'
+  ...
+# Subtest: a syntax check is not claimed when official compiler is unavailable
+ok 9 - a syntax check is not claimed when official compiler is unavailable
+  ---
+  duration_ms: 4.44243
+  type: 'test'
+  ...
+# Subtest: own benchmark records hashes, versions, evidence limits and result counts
+ok 10 - own benchmark records hashes, versions, evidence limits and result counts
+  ---
+  duration_ms: 280.587623
+  type: 'test'
+  ...
+# Subtest: pinned LunaUX clone is measured without claiming competitor execution
+ok 11 - pinned LunaUX clone is measured without claiming competitor execution
+  ---
+  duration_ms: 2023.859287
+  type: 'test'
+  ...
+# Subtest: pinned corpus verification rejects modified binary content
+ok 12 - pinned corpus verification rejects modified binary content
+  ---
+  duration_ms: 23.542308
+  type: 'test'
+  ...
+# Subtest: pinned corpus verification rejects modified competitor source
+ok 13 - pinned corpus verification rejects modified competitor source
+  ---
+  duration_ms: 12.504647
+  type: 'test'
+  ...
+# Subtest: pinned corpus verification rejects missing or extra samples
+ok 14 - pinned corpus verification rejects missing or extra samples
+  ---
+  duration_ms: 20.654085
+  type: 'test'
+  ...
+# (node:3062) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: summarizes measured samples without dropping slower observations
+ok 15 - summarizes measured samples without dropping slower observations
+  ---
+  duration_ms: 0.783843
+  type: 'test'
+  ...
+# Subtest: rejects missing and invalid measurements
+ok 16 - rejects missing and invalid measurements
+  ---
+  duration_ms: 0.598024
+  type: 'test'
+  ...
+# (node:3064) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: all 100 standalone source programs are distinct and included in the allowlist
+ok 17 - all 100 standalone source programs are distinct and included in the allowlist
+  ---
+  duration_ms: 38.657678
+  type: 'test'
+  ...
+# Subtest: semantic corpus is a fixed allowlist of owned Luau sources
+ok 18 - semantic corpus is a fixed allowlist of owned Luau sources
+  ---
+  duration_ms: 0.253944
+  type: 'test'
+  ...
+# Subtest: CI gates all 200 behavior profiles verified by the pinned official VM
+ok 19 - CI gates all 200 behavior profiles verified by the pinned official VM
+  ---
+  duration_ms: 0.420135
+  type: 'test'
+  ...
+# Subtest: optimization matrix gates all 200 confirmed pairs
+ok 20 - optimization matrix gates all 200 confirmed pairs
+  ---
+  duration_ms: 0.149876
+  type: 'test'
+  ...
+# Subtest: matches equal nonempty deterministic traces
+ok 21 - matches equal nonempty deterministic traces
+  ---
+  duration_ms: 0.148745
+  type: 'test'
+  ...
+# Subtest: detects changed evaluation results and output ordering
+ok 22 - detects changed evaluation results and output ordering
+  ---
+  duration_ms: 0.109536
+  type: 'test'
+  ...
+# Subtest: does not count two empty outputs as a successful semantic comparison
+ok 23 - does not count two empty outputs as a successful semantic comparison
+  ---
+  duration_ms: 0.106351
+  type: 'test'
+  ...
+# Subtest: rejects either execution failure even when their output matches
+ok 24 - rejects either execution failure even when their output matches
+  ---
+  duration_ms: 0.209096
+  type: 'test'
+  ...
+# Subtest: saved-bytecode oracle keeps O0 bytes even after the original source changes
+ok 25 - saved-bytecode oracle keeps O0 bytes even after the original source changes
+  ---
+  duration_ms: 212.553667
+  type: 'test'
+  ...
+# Subtest: source interpreter alone is rejected instead of silently replacing the bytecode oracle
+ok 26 - source interpreter alone is rejected instead of silently replacing the bytecode oracle
+  ---
+  duration_ms: 1.087332
+  type: 'test'
+  ...
+# (node:3069) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: benchmark summary distinguishes measured decode from unmeasured semantics
+ok 27 - benchmark summary distinguishes measured decode from unmeasured semantics
+  ---
+  duration_ms: 1.136227
+  type: 'test'
+  ...
+# Subtest: summary does not silently accept malformed reports
+ok 28 - summary does not silently accept malformed reports
+  ---
+  duration_ms: 0.396008
+  type: 'test'
+  ...
+# Subtest: escapes dynamic fields in Markdown tables
+ok 29 - escapes dynamic fields in Markdown tables
+  ---
+  duration_ms: 0.163066
+  type: 'test'
+  ...
+# (node:3070) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: verifies pinned bytes and returns the exact input without recompiling
+ok 30 - verifies pinned bytes and returns the exact input without recompiling
+  ---
+  duration_ms: 6.958519
+  type: 'test'
+  ...
+# Subtest: rejects tampering before any engine evaluation
+ok 31 - rejects tampering before any engine evaluation
+  ---
+  duration_ms: 2.772207
+  type: 'test'
+  ...
+# Subtest: rejects unlocked bytecode files and traversal paths
+ok 32 - rejects unlocked bytecode files and traversal paths
+  ---
+  duration_ms: 2.458875
+  type: 'test'
+  ...
+# Subtest: decodes the locked text transport without changing Roblox opcode bytes
+ok 33 - decodes the locked text transport without changing Roblox opcode bytes
+  ---
+  duration_ms: 4.492706
+  type: 'test'
+  ...
+# (node:3073) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: both request schemas preserve precisely the same bytes
+ok 34 - both request schemas preserve precisely the same bytes
+  ---
+  duration_ms: 0.976836
+  type: 'test'
+  ...
+# Subtest: transport/auth errors and undocumented responses are not semantic failures
+ok 35 - transport/auth errors and undocumented responses are not semantic failures
+  ---
+  duration_ms: 0.342537
+  type: 'test'
+  ...
+# Subtest: HTTP cache avoids duplicate requests, retains exact bodies, and bounds traffic
+ok 36 - HTTP cache avoids duplicate requests, retains exact bodies, and bounds traffic
+  ---
+  duration_ms: 42.807716
+  type: 'test'
+  ...
+# Subtest: classification prioritizes syntax and observed behavior over source resemblance
+ok 37 - classification prioritizes syntax and observed behavior over source resemblance
+  ---
+  duration_ms: 0.365161
+  type: 'test'
+  ...
+# Subtest: lexical metrics ignore comments and strings and disclose their limits
+ok 38 - lexical metrics ignore comments and strings and disclose their limits
+  ---
+  duration_ms: 4.252062
+  type: 'test'
+  ...
+# Subtest: rate limiting opens the circuit and is cached without retries
+ok 39 - rate limiting opens the circuit and is cached without retries
+  ---
+  duration_ms: 21.587937
+  type: 'test'
+  ...
+# Subtest: a hanging API request times out and cannot become a semantic verdict
+ok 40 - a hanging API request times out and cannot become a semantic verdict
+  ---
+  duration_ms: 117.897269
+  type: 'test'
+  ...
+# Subtest: 12 originals are distinct from all 100 previous sources and each has multiple inputs
+ok 41 - 12 originals are distinct from all 100 previous sources and each has multiple inputs
+  ---
+  duration_ms: 39.046896
+  type: 'test'
+  ...
+# Subtest: parser infrastructure failure is not mislabeled as invalid source
+ok 42 - parser infrastructure failure is not mislabeled as invalid source
+  ---
+  duration_ms: 0.378401
+  type: 'test'
+  ...
+# (node:3082) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a seed reproduces source and inputs after unrelated generations
+ok 43 - a seed reproduces source and inputs after unrelated generations
+  ---
+  duration_ms: 3.307406
+  type: 'test'
+  ...
+# Subtest: generator rejects seeds and sizes that cannot be reproduced or bounded
+ok 44 - generator rejects seeds and sizes that cannot be reproduced or bounded
+  ---
+  duration_ms: 0.519976
+  type: 'test'
+  ...
+# (node:3123) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: trace differences, runtime errors, syntax errors and timeouts remain distinct
+ok 45 - trace differences, runtime errors, syntax errors and timeouts remain distinct
+  ---
+  duration_ms: 0.718325
+  type: 'test'
+  ...
+# (node:3124) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: reducer preserves an executed trace mismatch while removing unrelated statements
+ok 46 - reducer preserves an executed trace mismatch while removing unrelated statements
+  ---
+  duration_ms: 5.878599
+  type: 'test'
+  ...
+# Subtest: reducer does not turn invalid originals, timeouts, or other failure kinds into a reproducer
+ok 47 - reducer does not turn invalid originals, timeouts, or other failure kinds into a reproducer
+  ---
+  duration_ms: 1.441678
+  type: 'test'
+  ...
+# (node:3137) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: large reports describe measured profiles and input counts, not the old fixed corpus
+ok 48 - large reports describe measured profiles and input counts, not the old fixed corpus
+  ---
+  duration_ms: 0.785186
+  type: 'test'
+  ...
+# Subtest: significant lines exclude formatting, comments and control delimiters
+ok 49 - significant lines exclude formatting, comments and control delimiters
+  ---
+  duration_ms: 0.274555
+  type: 'test'
+  ...
+# Subtest: sealed manifests reject modified sources and keep holdout separate
+ok 50 - sealed manifests reject modified sources and keep holdout separate
+  ---
+  duration_ms: 16.343845
+  type: 'test'
+  ...
+# Subtest: isolated decoding records bounded worker resources and unsupported inputs honestly
+ok 51 - isolated decoding records bounded worker resources and unsupported inputs honestly
+  ---
+  duration_ms: 100.932596
+  type: 'test'
+  ...
+# Subtest: comparative summaries count only measured matches and retain holdout provenance
+ok 52 - comparative summaries count only measured matches and retain holdout provenance
+  ---
+  duration_ms: 1.198951
+  type: 'test'
+  ...
+# (node:3164) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the committed pin records all four published suite fingerprints and full corpus inventories
+ok 53 - the committed pin records all four published suite fingerprints and full corpus inventories
+  ---
+  duration_ms: 1.29092
+  type: 'test'
+  ...
+# Subtest: quick: reconstructs the complete all-pass result, preserving only pinned unusable originals
+ok 54 - quick: reconstructs the complete all-pass result, preserving only pinned unusable originals
+  ---
+  duration_ms: 3.325373
+  type: 'test'
+  ...
+# Subtest: full: reconstructs the complete all-pass result, preserving only pinned unusable originals
+ok 55 - full: reconstructs the complete all-pass result, preserving only pinned unusable originals
+  ---
+  duration_ms: 7.294838
+  type: 'test'
+  ...
+# Subtest: hard-quick: reconstructs the complete all-pass result, preserving only pinned unusable originals
+ok 56 - hard-quick: reconstructs the complete all-pass result, preserving only pinned unusable originals
+  ---
+  duration_ms: 0.45036
+  type: 'test'
+  ...
+# Subtest: hard-full: reconstructs the complete all-pass result, preserving only pinned unusable originals
+ok 57 - hard-full: reconstructs the complete all-pass result, preserving only pinned unusable originals
+  ---
+  duration_ms: 7.205653
+  type: 'test'
+  ...
+# Subtest: rejects malformed JSON and unsupported metadata, versions, profile order and verdict mapping
+ok 58 - rejects malformed JSON and unsupported metadata, versions, profile order and verdict mapping
+  ---
+  duration_ms: 1.387666
+  type: 'test'
+  ...
+# Subtest: a self-consistent smaller corpus, duplicate or substituted case cannot pass
+ok 59 - a self-consistent smaller corpus, duplicate or substituted case cannot pass
+  ---
+  duration_ms: 2.486535
+  type: 'test'
+  ...
+# Subtest: rejects inflated or understated scores and totals, even when a process reported success
+ok 60 - rejects inflated or understated scores and totals, even when a process reported success
+  ---
+  duration_ms: 3.988665
+  type: 'test'
+  ...
+# Subtest: refusals, recompilation failures, crashes and mismatches all fail the default gate
+ok 61 - refusals, recompilation failures, crashes and mismatches all fail the default gate
+  ---
+  duration_ms: 11.272216
+  type: 'test'
+  ...
+# Subtest: a changed unusable-original exclusion cannot hide a failure or reduce the denominator
+ok 62 - a changed unusable-original exclusion cannot hide a failure or reduce the denominator
+  ---
+  duration_ms: 1.578234
+  type: 'test'
+  ...
+# Subtest: validates every profile letter and its corresponding failure detail
+ok 63 - validates every profile letter and its corresponding failure detail
+  ---
+  duration_ms: 3.070137
+  type: 'test'
+  ...
+# Subtest: comparable measurement rejects semantic overrides, including explicitly empty variables
+ok 64 - comparable measurement rejects semantic overrides, including explicitly empty variables
+  ---
+  duration_ms: 0.228405
+  type: 'test'
+  ...
+# Subtest: the direct CLI command never relies on shell quoting and the runner rejects unknown switches
+ok 65 - the direct CLI command never relies on shell quoting and the runner rejects unknown switches
+  ---
+  duration_ms: 0.584724
+  type: 'test'
+  ...
+# Subtest: a real subprocess exiting zero with a failing result fails the gate and preserves evidence
+ok 66 - a real subprocess exiting zero with a failing result fails the gate and preserves evidence
+  ---
+  duration_ms: 35.351664
+  type: 'test'
+  ...
+# Subtest: measurement-only preserves failures, but still rejects inconsistent JSON
+ok 67 - measurement-only preserves failures, but still rejects inconsistent JSON
+  ---
+  duration_ms: 45.481274
+  type: 'test'
+  ...
+# Subtest: a nonzero process exit cannot pass, even when it left a complete all-pass JSON
+ok 68 - a nonzero process exit cannot pass, even when it left a complete all-pass JSON
+  ---
+  duration_ms: 16.606201
+  type: 'test'
+  ...
+# Subtest: engine changes during measurement invalidate otherwise passing results
+ok 69 - engine changes during measurement invalidate otherwise passing results
+  ---
+  duration_ms: 15.938393
+  type: 'test'
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 69
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3003.796982

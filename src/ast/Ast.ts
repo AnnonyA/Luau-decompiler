@@ -40,6 +40,12 @@ export interface LocalDeclaration {
   names: string[];
   values: Expression[];
   types?: Array<string | undefined>;
+  /** Exact debug scope of a source parallel declaration, before name styling. */
+  debugDeclaration?: { prototypeId: number; startPc: number; endPc: number; register: number };
+  /** Private control flag inserted for a loop's distinct normal-exit tail. */
+  syntheticLoopTail?: true;
+  /** Producer ownership used to resolve debug names in their actual function. */
+  definition?: { prototypeId: number; pc: number; register: number; debugName?: string };
 }
 
 export interface Assignment {

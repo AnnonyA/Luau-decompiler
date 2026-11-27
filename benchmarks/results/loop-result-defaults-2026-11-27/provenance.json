@@ -1,0 +1,17 @@
+{
+  "baseCommit": "f60a031",
+  "officialLuau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "sourceFiles": {
+    "src/ast/LoopResultDefaults.ts": "4f4485f02f0c613a65c71c17fe88d1a46532b5b0c82e3a0fe25b48335d2ab108",
+    "src/ast/Ast.ts": "42e2e699635748022ece73a634c6085315a97e74064f648e920fd63565db641d",
+    "src/ast/AstCleanup.ts": "476845b6590bcabc2a5dd30c9ab3c8220d50828b42c2c47786995fca71fa4863",
+    "src/reconstruct/Reconstructor.ts": "7e003a491c1410725d91745391da17bdd9cc1bcbbd80532befaa61431cec07ef"
+  },
+  "unit": {
+    "passed": 1431,
+    "files": 140
+  },
+  "authoredProfiles": 12,
+  "scope": "Independent control became a development regression; no global quality claim."
+}

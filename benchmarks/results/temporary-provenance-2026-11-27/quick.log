@@ -1,0 +1,2 @@
+suite rosetta-3 quick (e24826907050bd1d): 147 programs at 6 profiles, ready in 3.8s
+candidate: 882/882 (100.0%) | cases 246/246, libraries 36/36, generated 300/300, mutants 300/300 | 84.0s -> ../similarity-locals-probes/bench-quick-phase2-v3/candidate-quick.json

@@ -1,0 +1,1960 @@
+{
+  "engineDist": "/workspace/scratch/eb5e4be57451/quality-research/variants/combined-f60a031/engine-dist",
+  "records": "/workspace/scratch/eb5e4be57451/quality-research/baseline/records/quick",
+  "profiles": 294,
+  "decompileErrors": 0,
+  "potentialHelpers": 91,
+  "existingLineEvidence": 2,
+  "bodyWithStringOrNil": 54,
+  "zeroArguments": 63,
+  "opportunities": [
+    {
+      "section": "cases",
+      "name": "builtins",
+      "profile": "O2g1",
+      "functionName": "tbl.floor",
+      "line": null,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/builtins/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "builtins",
+      "profile": "O2g1",
+      "functionName": "tbl.floor",
+      "line": null,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/builtins/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "builtins",
+      "profile": "O2g2",
+      "functionName": "tbl.floor",
+      "line": null,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/builtins/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "builtins",
+      "profile": "O2g2",
+      "functionName": "tbl.floor",
+      "line": null,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/builtins/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "control_flow",
+      "profile": "O2g1",
+      "functionName": "classify",
+      "line": 2,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 15,
+      "freeBindings": [],
+      "hasExistingLineEvidence": true,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/control_flow/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "control_flow",
+      "profile": "O2g2",
+      "functionName": "classify",
+      "line": 2,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 15,
+      "freeBindings": [],
+      "hasExistingLineEvidence": true,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/control_flow/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "loop_closures",
+      "profile": "O2g1",
+      "functionName": "function_",
+      "line": 5,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [
+        "index"
+      ],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/loop_closures/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "loop_closures",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 59,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [
+        "value5"
+      ],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/loop_closures/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "loop_closures",
+      "profile": "O2g2",
+      "functionName": "function_",
+      "line": 5,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [
+        "index"
+      ],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/loop_closures/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "loop_closures",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 59,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [
+        "sq"
+      ],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/loop_closures/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "loops",
+      "profile": "O2g1",
+      "functionName": "callback",
+      "line": 118,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 3,
+      "freeBindings": [
+        "i2",
+        "value7"
+      ],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/loops/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "loops",
+      "profile": "O2g2",
+      "functionName": "callback",
+      "line": 118,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 3,
+      "freeBindings": [
+        "i2",
+        "j"
+      ],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/loops/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "multiple_assignment",
+      "profile": "O2g1",
+      "functionName": "three",
+      "line": 3,
+      "parameters": 0,
+      "arity": 3,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 3,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/multiple_assignment/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "multiple_assignment",
+      "profile": "O2g2",
+      "functionName": "three",
+      "line": 3,
+      "parameters": 0,
+      "arity": 3,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 3,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/multiple_assignment/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "strings",
+      "profile": "O2g1",
+      "functionName": "pair",
+      "line": 10,
+      "parameters": 0,
+      "arity": 2,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 2,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/strings/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "strings",
+      "profile": "O2g2",
+      "functionName": "pair",
+      "line": 10,
+      "parameters": 0,
+      "arity": 2,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 2,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/strings/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "table_constructors",
+      "profile": "O2g1",
+      "functionName": "two",
+      "line": 3,
+      "parameters": 0,
+      "arity": 2,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 2,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/table_constructors/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "table_constructors",
+      "profile": "O2g2",
+      "functionName": "two",
+      "line": 3,
+      "parameters": 0,
+      "arity": 2,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 2,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/table_constructors/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "type_syntax",
+      "profile": "O2g1",
+      "functionName": "many",
+      "line": 56,
+      "parameters": 0,
+      "arity": 3,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 3,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/type_syntax/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "cases",
+      "name": "type_syntax",
+      "profile": "O2g2",
+      "functionName": "many",
+      "line": 56,
+      "parameters": 0,
+      "arity": 3,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 3,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/cases/type_syntax/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1080",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 257,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1080/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1080",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 257,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1080/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1086",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 10,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1086/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1086",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 10,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1086/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1121",
+      "profile": "O2g1",
+      "functionName": "f80",
+      "line": 96,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "boolean"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1121/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1121",
+      "profile": "O2g2",
+      "functionName": "f80",
+      "line": 96,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "boolean"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1121/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1152",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 108,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1152/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1152",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 108,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1152/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1154",
+      "profile": "O2g1",
+      "functionName": "classify35",
+      "line": 45,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 53,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1154/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1154",
+      "profile": "O2g2",
+      "functionName": "classify35",
+      "line": 45,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 53,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1154/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1178",
+      "profile": "O2g1",
+      "functionName": "classify26",
+      "line": 149,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 115,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1178/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1178",
+      "profile": "O2g1",
+      "functionName": "function_2",
+      "line": 303,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1178/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1178",
+      "profile": "O2g2",
+      "functionName": "classify26",
+      "line": 149,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 115,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1178/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1178",
+      "profile": "O2g2",
+      "functionName": "type",
+      "line": 303,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1178/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1202",
+      "profile": "O2g1",
+      "functionName": "f33",
+      "line": 29,
+      "parameters": 2,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1202/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1202",
+      "profile": "O2g2",
+      "functionName": "f33",
+      "line": 29,
+      "parameters": 2,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1202/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1229",
+      "profile": "O2g1",
+      "functionName": "function_3",
+      "line": 158,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1229/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1229",
+      "profile": "O2g2",
+      "functionName": "type",
+      "line": 158,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1229/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1319",
+      "profile": "O2g1",
+      "functionName": "f29",
+      "line": 26,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "boolean"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1319/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1319",
+      "profile": "O2g2",
+      "functionName": "f29",
+      "line": 26,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "boolean"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1319/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1322",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 82,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1322/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1322",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 82,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1322/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1338",
+      "profile": "O2g1",
+      "functionName": "function_4",
+      "line": 287,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1338/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1338",
+      "profile": "O2g2",
+      "functionName": "type",
+      "line": 287,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1338/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1342",
+      "profile": "O2g1",
+      "functionName": "function_2",
+      "line": 96,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1342/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1342",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 168,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1342/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1342",
+      "profile": "O2g2",
+      "functionName": "type",
+      "line": 96,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1342/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1342",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 168,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1342/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1429",
+      "profile": "O2g1",
+      "functionName": "function_",
+      "line": 49,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1429/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1429",
+      "profile": "O2g2",
+      "functionName": "type",
+      "line": 49,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1429/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1460",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 41,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1460/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1460",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 41,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1460/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1487",
+      "profile": "O2g1",
+      "functionName": "classify1",
+      "line": 2,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 38,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1487/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1487",
+      "profile": "O2g2",
+      "functionName": "classify1",
+      "line": 2,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 38,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1487/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1573",
+      "profile": "O2g1",
+      "functionName": "classify168",
+      "line": 273,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 34,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1573/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1573",
+      "profile": "O2g2",
+      "functionName": "classify168",
+      "line": 273,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 34,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1573/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1627",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 246,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1627/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1627",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 246,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1627/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1633",
+      "profile": "O2g1",
+      "functionName": "f109",
+      "line": 104,
+      "parameters": 1,
+      "arity": 2,
+      "resultKinds": [
+        "number",
+        "string"
+      ],
+      "nodes": 2,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1633/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1633",
+      "profile": "O2g1",
+      "functionName": "function_7",
+      "line": 134,
+      "parameters": 0,
+      "arity": 3,
+      "resultKinds": [
+        "number",
+        "string"
+      ],
+      "nodes": 3,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1633/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1633",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 206,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1633/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1633",
+      "profile": "O2g2",
+      "functionName": "f109",
+      "line": 104,
+      "parameters": 1,
+      "arity": 2,
+      "resultKinds": [
+        "number",
+        "string"
+      ],
+      "nodes": 2,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1633/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1633",
+      "profile": "O2g2",
+      "functionName": "f128",
+      "line": 134,
+      "parameters": 0,
+      "arity": 3,
+      "resultKinds": [
+        "number",
+        "string"
+      ],
+      "nodes": 3,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1633/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1633",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 206,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1633/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1685",
+      "profile": "O2g1",
+      "functionName": "classify16",
+      "line": 66,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 74,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1685/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1685",
+      "profile": "O2g2",
+      "functionName": "classify16",
+      "line": 66,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 74,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1685/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1741",
+      "profile": "O2g1",
+      "functionName": "classify25",
+      "line": 33,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 78,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1741/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1741",
+      "profile": "O2g2",
+      "functionName": "classify25",
+      "line": 33,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 78,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1741/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1830",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 50,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1830/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1830",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 50,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1830/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1837",
+      "profile": "O2g1",
+      "functionName": "classify27",
+      "line": 39,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 80,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1837/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1837",
+      "profile": "O2g2",
+      "functionName": "classify27",
+      "line": 39,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 80,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1837/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1863",
+      "profile": "O2g1",
+      "functionName": "f58",
+      "line": 73,
+      "parameters": 3,
+      "arity": 1,
+      "resultKinds": [
+        "boolean",
+        "nil"
+      ],
+      "nodes": 6,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "nil"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1863/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1863",
+      "profile": "O2g1",
+      "functionName": "function_",
+      "line": 281,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1863/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1863",
+      "profile": "O2g2",
+      "functionName": "f58",
+      "line": 73,
+      "parameters": 3,
+      "arity": 1,
+      "resultKinds": [
+        "boolean",
+        "nil"
+      ],
+      "nodes": 6,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "nil"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1863/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1863",
+      "profile": "O2g2",
+      "functionName": "type",
+      "line": 281,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1863/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1898",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 250,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1898/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1898",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 250,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "number"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1898/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1899",
+      "profile": "O2g1",
+      "functionName": "classify1",
+      "line": 2,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 38,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1899/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1899",
+      "profile": "O2g2",
+      "functionName": "classify1",
+      "line": 2,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 38,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1899/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1932",
+      "profile": "O2g1",
+      "functionName": "classify42",
+      "line": 83,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 79,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1932/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "generated",
+      "name": "seed1932",
+      "profile": "O2g2",
+      "functionName": "classify42",
+      "line": 83,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 79,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/generated/seed1932/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 47,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/libraries/inspect/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 48,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/libraries/inspect/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 47,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/libraries/inspect/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O2g2",
+      "functionName": "<closure>",
+      "line": 48,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": true,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/libraries/inspect/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "libraries",
+      "name": "json",
+      "profile": "O2g1",
+      "functionName": "encode_nil",
+      "line": 54,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/libraries/json/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "libraries",
+      "name": "json",
+      "profile": "O2g2",
+      "functionName": "encode_nil",
+      "line": 54,
+      "parameters": 1,
+      "arity": 1,
+      "resultKinds": [
+        "string"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [
+        "string"
+      ],
+      "zeroArguments": false,
+      "category": "primitive-return-types",
+      "baselineRecord": "quality-research/baseline/records/quick/libraries/json/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "mutants",
+      "name": "mut1-697",
+      "profile": "O2g1",
+      "functionName": "<closure>",
+      "line": 59,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "boolean"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/mutants/mut1-697/O2g1.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "mutants",
+      "name": "mut1-697",
+      "profile": "O2g2",
+      "functionName": "supported2",
+      "line": 59,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "boolean"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/mutants/mut1-697/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    },
+    {
+      "section": "mutants",
+      "name": "mut1-697",
+      "profile": "O2g2",
+      "functionName": "supported3",
+      "line": 59,
+      "parameters": 0,
+      "arity": 1,
+      "resultKinds": [
+        "boolean"
+      ],
+      "nodes": 1,
+      "freeBindings": [],
+      "hasExistingLineEvidence": false,
+      "newResultKinds": [],
+      "zeroArguments": true,
+      "category": "zero-argument-primitive",
+      "baselineRecord": "quality-research/baseline/records/quick/mutants/mut1-697/O2g2.json",
+      "scope": "Potential helper body only. Call-site matching, visibility, capture preservation, operand type proof, cost and ambiguity checks have not been discharged."
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { isValidIdentifier } from "../reconstruct/Naming.js";
 import { escapedByte } from "../decode/BytecodeString.js";
 import { formatInteger, formatNumber } from "../decode/Constant.js";
 import { analyzePrinterBindings, type PrintedFunction, type PrinterBindings } from "./PrinterBindings.js";
+import { analyzeCallBoundaries, type CallBoundaryPresentation } from "./CallBoundaries.js";
 
 const PREC: Record<string, number> = {
   or: 1,
@@ -34,7 +35,7 @@ export interface PrintOptions {
 
 export function printLuau(ast: Chunk, options: PrintOptions = {}): string {
   const bindings = analyzePrinterBindings(ast.body, options.preferConst ?? false, options.upvalueComments ?? false);
-  const printer = new Printer(options, bindings);
+  const printer = new Printer(options, bindings, analyzeCallBoundaries(ast.body));
   printer.printBlock(ast.body, false);
   return printer.finish();
 }
@@ -46,7 +47,8 @@ class Printer {
   private pendingBlank = false;
   private readonly unit: string;
 
-  constructor(private readonly options: PrintOptions, private readonly bindings: PrinterBindings) {
+  constructor(private readonly options: PrintOptions, private readonly bindings: PrinterBindings,
+    private readonly callBoundaries: CallBoundaryPresentation) {
     const indent = options.indent ?? 4;
     this.unit = indent === "tab" ? "\t" : " ".repeat(indent);
   }
@@ -91,7 +93,7 @@ class Printer {
         if (statement.values.length === 0) {
           this.write(`${keyword} ${names}`);
         } else {
-          this.write(`${keyword} ${names} = ${statement.values.map((value) => this.expr(value)).join(", ")}`);
+          this.write(`${keyword} ${names} = ${this.expressionList(statement.values, statement.names.length === statement.values.length)}`);
         }
         break;
       }
@@ -106,25 +108,24 @@ class Printer {
           break;
         }
         this.write(
-          `${statement.targets.map((target) => this.expr(target)).join(", ")} = ${statement.values
-            .map((value) => this.expr(value))
-            .join(", ")}`,
+          `${statement.targets.map((target) => this.expr(target)).join(", ")} = ${this.expressionList(
+            statement.values, statement.targets.length === statement.values.length)}`,
           followsStatement,
         );
         if (statement.values.some(value => value.kind === "function-expr")) this.pendingBlank = true;
         break;
       case "compound-assign":
-        this.write(`${this.expr(statement.target)} ${statement.op}= ${this.expr(statement.value)}`, followsStatement);
+        this.write(`${this.expr(statement.target)} ${statement.op}= ${this.scalarExpression(statement.value)}`, followsStatement);
         break;
       case "function-decl": {
         this.namedFunction(statement, statement.name, statement.local);
         break;
       }
       case "if": {
-        this.write(`if ${this.expr(statement.test)} then`);
+        this.write(`if ${this.scalarExpression(statement.test)} then`);
         this.printBlock(statement.consequent, true);
         for (const branch of statement.branches) {
-          this.write(`elseif ${this.expr(branch.test)} then`);
+          this.write(`elseif ${this.scalarExpression(branch.test)} then`);
           this.printBlock(branch.body, true);
         }
         if (statement.alternate) {
@@ -135,29 +136,29 @@ class Printer {
         break;
       }
       case "while":
-        this.write(`while ${this.expr(statement.test)} do`);
+        this.write(`while ${this.scalarExpression(statement.test)} do`);
         this.printBlock(statement.body, true);
         this.write("end");
         break;
       case "repeat":
         this.write("repeat");
         this.printBlock(statement.body, true);
-        this.write(`until ${this.expr(statement.test)}`);
+        this.write(`until ${this.scalarExpression(statement.test)}`);
         break;
       case "numeric-for": {
-        const step = statement.step ? `, ${this.expr(statement.step)}` : "";
-        this.write(`for ${statement.name} = ${this.expr(statement.start)}, ${this.expr(statement.stop)}${step} do`);
+        const step = statement.step ? `, ${this.scalarExpression(statement.step)}` : "";
+        this.write(`for ${statement.name} = ${this.scalarExpression(statement.start)}, ${this.scalarExpression(statement.stop)}${step} do`);
         this.printBlock(statement.body, true);
         this.write("end");
         break;
       }
       case "generic-for":
-        this.write(`for ${statement.names.join(", ")} in ${statement.iterators.map((it) => this.expr(it)).join(", ")} do`);
+        this.write(`for ${statement.names.join(", ")} in ${this.expressionList(statement.iterators)} do`);
         this.printBlock(statement.body, true);
         this.write("end");
         break;
       case "return":
-        this.write(statement.values.length === 0 ? "return" : `return ${statement.values.map((value) => this.expr(value)).join(", ")}`);
+        this.write(statement.values.length === 0 ? "return" : `return ${this.expressionList(statement.values)}`);
         break;
       case "break":
         this.write("break");
@@ -176,6 +177,22 @@ class Printer {
     }
   }
 
+  /** An enclosing single-value context already adjusts calls and varargs.
+   * Keep the AST's adjustment and every callee group intact; omit only the
+   * redundant outer spelling. Other parentheses may encode precedence or
+   * function naming and are never removed here. */
+  private scalarExpression(expression: Expression, parent = 0, right = false): string {
+    let inner = expression;
+    while (inner.kind === "paren") inner = inner.expression;
+    return this.expr(inner.kind === "call" || inner.kind === "method-call" || inner.kind === "vararg"
+      ? inner : expression, parent, right);
+  }
+
+  private expressionList(values: readonly Expression[], scalarTail = false): string {
+    return values.map((value, index) => scalarTail || index + 1 < values.length
+      ? this.scalarExpression(value) : this.expr(value)).join(", ");
+  }
+
   private expr(expression: Expression, parent = 0, right = false): string {
     switch (expression.kind) {
       case "identifier":
@@ -190,7 +207,7 @@ class Printer {
         return "...";
       case "unary": {
         const prec = PREC.unary ?? 7;
-        const arg = this.expr(expression.argument, prec);
+        const arg = this.scalarExpression(expression.argument, prec);
         // Two adjacent minus signs form a Luau line comment, not two unary
         // negations. This also applies to negative numeric literals (-(-4)).
         const safeArg = expression.op === "-" && arg.startsWith("-") ? `(${arg})` : arg;
@@ -201,8 +218,8 @@ class Printer {
       case "binary": {
         const prec = PREC[expression.op] ?? 0;
         const assocRight = expression.op === "^" || expression.op === "..";
-        const left = this.expr(expression.left, prec, false);
-        const rightText = this.expr(expression.right, prec, true);
+        const left = this.scalarExpression(expression.left, prec, false);
+        const rightText = this.scalarExpression(expression.right, prec, true);
         const text = `${left} ${expression.op} ${rightText}`;
         if (prec < parent || (prec === parent && right !== assocRight)) {
           return `(${text})`;
@@ -210,21 +227,24 @@ class Printer {
         return text;
       }
       case "call": {
-        // Official Luau 9d7748a4 Compiler.cpp getFunctionExpr (353-378)
-        // does not unwrap IfElse. The constant branch preserves a CALL without
-        // allocating a table, changing the function binding/captures/arity, or
-        // evaluating the callee more than once. It is a required semantic fence
-        // even when optional if-expression presentation is disabled.
-        const callee = expression.preserveBoundary && !expression.inlineForIdentity
-          ? `(if true then ${this.expr(expression.callee)} else nil)`
+        // Official Luau 9d7748a4 / c87565b8 Compiler.cpp getFunctionExpr
+        // and Builtins.cpp getBuiltin do not follow binary expressions. The
+        // true left operand keeps the original CALL boundary while evaluating
+        // the callee exactly once, before its arguments, and adjusting it to
+        // one value. Unlike a truthiness test of the callee, this also keeps
+        // false/nil callees and their error behavior unchanged.
+        const callee = expression.preserveBoundary && !expression.inlineForIdentity && !this.callBoundaries.direct.has(expression)
+          ? this.callBoundaries.grouped.has(expression)
+            ? expression.callee.kind === "paren" ? this.expr(expression.callee) : `(${this.expr(expression.callee)})`
+            : `(true and ${this.expr(expression.callee, PREC.and, true)})`
           : this.callCallee(expression.callee);
-        const call = `${callee}(${expression.args.map((arg) => this.expr(arg)).join(", ")})`;
+        const call = `${callee}(${this.expressionList(expression.args)})`;
         return expression.inlineForIdentity ? `(${call})` : call;
       }
       case "method-call":
-        return `${this.memberObject(expression.object)}:${expression.name}(${expression.args.map((arg) => this.expr(arg)).join(", ")})`;
+        return `${this.memberObject(expression.object)}:${expression.name}(${this.expressionList(expression.args)})`;
       case "index":
-        return `${this.memberObject(expression.table)}[${this.expr(expression.key)}]`;
+        return `${this.memberObject(expression.table)}[${this.scalarExpression(expression.key)}]`;
       case "property":
         return isValidIdentifier(expression.name)
           ? `${this.memberObject(expression.object)}.${expression.name}`
@@ -239,9 +259,9 @@ class Printer {
       }
       case "if-expr": {
         const branches = expression.branches
-          .map((branch) => ` elseif ${this.expr(branch.test)} then ${this.expr(branch.value)}`)
+          .map((branch) => ` elseif ${this.scalarExpression(branch.test)} then ${this.scalarExpression(branch.value)}`)
           .join("");
-        const text = `if ${this.expr(expression.test)} then ${this.expr(expression.consequent)}${branches} else ${this.expr(expression.alternate)}`;
+        const text = `if ${this.scalarExpression(expression.test)} then ${this.scalarExpression(expression.consequent)}${branches} else ${this.scalarExpression(expression.alternate)}`;
         // A conditional expression has lower precedence than operators. It
         // must be grouped when the recovered AST uses it as an operand.
         return parent > 0 ? `(${text})` : text;
@@ -288,7 +308,7 @@ class Printer {
     if (part.kind === "text") {
       return escapeInterp(String(part.value), this.options.unicodeStrings ?? true);
     }
-    return `{${this.expr(part.value as Expression)}}`;
+    return `{${this.scalarExpression(part.value as Expression)}}`;
   }
 
   private table(fields: TableField[]): string {
@@ -296,15 +316,25 @@ class Printer {
       return "{}";
     }
     this.exprDepth += 1;
-    const parts = fields.map((field) => {
+    const parts = fields.map((field, index) => {
       if (field.name) {
-        const key = isValidIdentifier(field.name) ? field.name : `[${quote(field.name, this.options.unicodeStrings ?? true)}]`;
-        return `${key} = ${this.expr(field.value)}`;
+        const keepsFunctionName = field.value.kind !== "function-expr" || field.value.debugName === field.name;
+        const key = isValidIdentifier(field.name) && keepsFunctionName
+          ? field.name : `[${quote(field.name, this.options.unicodeStrings ?? true)}]`;
+        return `${key} = ${this.scalarExpression(field.value)}`;
       }
       if (field.key) {
-        return `[${this.expr(field.key)}] = ${this.expr(field.value)}`;
+        // The record spelling keeps the same constant string key. A direct
+        // function literal is special: the parser assigns it the field name,
+        // which is observable through debug.info, so retain its proven name.
+        if (field.key.kind === "literal" && typeof field.key.value === "string" &&
+            isValidIdentifier(field.key.value) &&
+            (field.value.kind !== "function-expr" || field.value.debugName === field.key.value)) {
+          return `${field.key.value} = ${this.scalarExpression(field.value)}`;
+        }
+        return `[${this.scalarExpression(field.key)}] = ${this.scalarExpression(field.value)}`;
       }
-      return this.expr(field.value);
+      return index + 1 < fields.length ? this.scalarExpression(field.value) : this.expr(field.value);
     });
     this.exprDepth -= 1;
     const nestedRecord = this.exprDepth > 0 && fields.length >= 3 && fields.every(field=>field.name || field.key);
@@ -338,7 +368,7 @@ class Printer {
   }
 
   private nested(fn: PrintedFunction): string {
-    const nested = new Printer(this.options, this.bindings);
+    const nested = new Printer(this.options, this.bindings, this.callBoundaries);
     nested.indentLevel = this.indentLevel + 1;
     nested.functionComments(fn);
     nested.printBlock(fn.body, false);

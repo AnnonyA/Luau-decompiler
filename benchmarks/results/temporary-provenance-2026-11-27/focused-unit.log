@@ -1,0 +1,14 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-locals
+
+ ✓ tests/temporary-provenance.test.ts (30 tests) 496ms
+   ✓ sealed temporary reconstruction fixtures > pins independent effect/arity sources and every normal/Hard input  391ms
+ ✓ tests/debug-declarations.test.ts (8 tests) 54ms
+ ✓ tests/source-structure.test.ts (15 tests) 18ms
+
+ Test Files  3 passed (3)
+      Tests  53 passed (53)
+   Start at  21:24:09
+   Duration  2.33s (transform 888ms, setup 0ms, collect 1.28s, tests 568ms, environment 0ms, prepare 132ms)
+

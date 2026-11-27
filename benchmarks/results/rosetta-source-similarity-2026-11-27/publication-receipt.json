@@ -1,0 +1,156 @@
+{
+  "repository": "AnnonyA/Luau-decompiler",
+  "branch": "improve/source-similarity",
+  "pr": 83,
+  "url": "https://github.com/AnnonyA/Luau-decompiler/pull/83",
+  "draft": true,
+  "state": "open",
+  "merged": false,
+  "sourceCommit": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+  "sourceTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+  "remoteCommit": "f9543bbb26615f50aa599cead318beb0f9a6e7a0",
+  "parentRemoteCommit": "eca5d23168f56c2c96dce10817ffe2165e55959c",
+  "author": "AnnonyA",
+  "committer": "AnnonyA",
+  "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+  "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921",
+  "treeVerified": true,
+  "expectedHeadLease": "eca5d23168f56c2c96dce10817ffe2165e55959c",
+  "force": false,
+  "changedPaths": 156,
+  "uploadedBlobs": 120,
+  "inputMethod": "git ls-tree and git cat-file blob from immutable commits; no worktree content or local authors used",
+  "publishedAt": "2026-11-27T21:53:53Z",
+  "localValidation": {
+    "unitTests": 1540,
+    "unitFiles": 145,
+    "build": "passed",
+    "source": "Parent verified local combined run on this exact local commit."
+  },
+  "completedStrictTiers": {
+    "quick": {
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "resultSha256": "9964a73573df91501e187f35fde5ea645e6279fa6daa0981ff4c576e11005fbd",
+      "summary": {
+        "tier": "quick",
+        "hash": "e24826907050bd1d",
+        "passed": 882,
+        "total": 882,
+        "roundTrips": 882,
+        "counts": {
+          "pass": 882,
+          "mismatch": 0,
+          "recompile_failed": 0,
+          "decompile_failed": 0,
+          "refused": 0,
+          "unusable": 0
+        },
+        "sections": [
+          {
+            "id": "cases",
+            "passed": 246,
+            "total": 246
+          },
+          {
+            "id": "libraries",
+            "passed": 36,
+            "total": 36
+          },
+          {
+            "id": "generated",
+            "passed": 300,
+            "total": 300
+          },
+          {
+            "id": "mutants",
+            "passed": 300,
+            "total": 300
+          }
+        ],
+        "allPass": true
+      }
+    },
+    "hard-quick": {
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "resultSha256": "bbcc0c50c90c4090590225f74c3fc25452866bed79596a4a32a690b1814efa45",
+      "summary": {
+        "tier": "hard-quick",
+        "hash": "9bcb49d29e867a92",
+        "passed": 882,
+        "total": 882,
+        "roundTrips": 882,
+        "counts": {
+          "pass": 882,
+          "mismatch": 0,
+          "recompile_failed": 0,
+          "decompile_failed": 0,
+          "refused": 0,
+          "unusable": 0
+        },
+        "sections": [
+          {
+            "id": "cases",
+            "passed": 246,
+            "total": 246
+          },
+          {
+            "id": "libraries",
+            "passed": 36,
+            "total": 36
+          },
+          {
+            "id": "generated",
+            "passed": 300,
+            "total": 300
+          },
+          {
+            "id": "mutants",
+            "passed": 300,
+            "total": 300
+          }
+        ],
+        "allPass": true
+      }
+    }
+  },
+  "pendingStrictTiers": [
+    "full",
+    "hard-full"
+  ],
+  "workflowRuns": [
+    {
+      "id": 46073238022,
+      "name": "CI",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46073238022",
+      "head": "f9543bbb26615f50aa599cead318beb0f9a6e7a0",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 46073237986,
+      "name": "Rosetta",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46073237986",
+      "head": "f9543bbb26615f50aa599cead318beb0f9a6e7a0",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 46073237988,
+      "name": "Browser demo",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46073237988",
+      "head": "f9543bbb26615f50aa599cead318beb0f9a6e7a0",
+      "status": "in_progress",
+      "conclusion": null
+    }
+  ],
+  "latestHeadCiRequired": true,
+  "latestHeadCiStatus": "in_progress",
+  "laterDocumentationHeadRequiresNewCi": true
+}
+

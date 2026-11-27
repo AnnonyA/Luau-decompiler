@@ -1,0 +1,8 @@
+constant_fold-a.luau	4	return 0 + 0
+constant_fold-b.luau	2	return 0
+dead_branch-a.luau	10	if false then n ( s ) end return 0
+dead_branch-b.luau	2	return 0
+type_assertion-a.luau	6	return ( 0 :: n )
+type_assertion-b.luau	2	return 0
+inline_call-a.luau	16	local function n ( n ) return n + 0 end return n ( 0 )
+inline_call-b.luau	13	local function n ( n ) return n + 0 end return 0

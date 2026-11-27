@@ -1,0 +1,5 @@
+improved: 1764/1764 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+readability on the 1764 round trips every decompiler passed:
+  decompiler  similarity   size  locals  nesting  endless  names g2  cpu ms
+  improved         76.3%  1.00x   1.11x    -0.34       74     45.5%  261.49
+1764 round trips in 121.2s

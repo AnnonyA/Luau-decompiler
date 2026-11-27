@@ -13,7 +13,7 @@ describe("independent short-circuit values", () => {
     const structure = printWithoutCallBoundaries(result.ast);
     expect(structure.match(/\bcheck\(3\)/g)).toHaveLength(1);
     expect(structure).toMatch(/\band check\(3\)\)? or check\(4\)/);
-    expect(result.source.match(/\(if true then check else nil\)\(3\)/g)).toHaveLength(1);
+    expect(result.source.match(/\(true and check\)\(3\)/g)).toHaveLength(1);
   });
 
   it("does not alias values across sequential short-circuit joins", () => {

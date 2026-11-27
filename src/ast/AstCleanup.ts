@@ -19,8 +19,9 @@ import {
 import { isValidIdentifier } from "../reconstruct/Naming.js";
 import { inferHumanNames, repairUndeclaredAutoLocals } from "../reconstruct/NameInference.js";
 import { forEachChildExpression, mapStatementBlocks, mapStatementExpressions, rewriteBlocks } from "./AstWalk.js";
-import { refineStructure } from "./StructureRefinement.js";
+import { refineStructure, recoverPrivateLogicalReturns } from "./StructureRefinement.js";
 import { foldTemporaries } from "./TempFolding.js";
+import { recoverLoopResultDefaults } from "./LoopResultDefaults.js";
 
 const COMPOUND_OPS = new Set<BinaryOperator>(["+", "-", "*", "/", "%", ".."]);
 const GENERIC_CLOSURE = /^function_?\d*$/;
@@ -40,6 +41,10 @@ export interface CleanupOptions {
   sourceNames?: ReadonlySet<string>;
   /** Local names present in debug info; never replaced by an inferred name. */
   debugNames?: ReadonlySet<string>;
+  /** Register-derived names, separate from explicit caller protection. */
+  inferredSourceNames?: ReadonlySet<string>;
+  /** Declaration evidence in each function; another function's spelling is not proof. */
+  declarationNamesByPrototype?: ReadonlyMap<number, ReadonlySet<string>>;
   /** Allocator-suffixed working name -> the name that was asked for. */
   nameStems?: ReadonlyMap<string, string>;
   /** Names the reconstructor chose itself; only these may be re-derived. */
@@ -47,21 +52,23 @@ export interface CleanupOptions {
 }
 
 export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
-  const repaired = repairUndeclaredAutoLocals(ast, options.workingNames);
+  const repaired = recoverLoopResultDefaults(repairUndeclaredAutoLocals(ast, options.workingNames));
   const structured: Chunk = { kind: "chunk", body: transformBlock(repaired.body, options, true) };
   const fold = (chunk: Chunk): Chunk => options.foldSingleUseTemps === false
-    ? chunk : foldTemporaries(chunk, { sourceNames: options.sourceNames });
+    ? chunk : foldTemporaries(chunk, { sourceNames: options.sourceNames, debugNames: options.debugNames,
+      inferredSourceNames: options.inferredSourceNames, declarationNamesByPrototype: options.declarationNamesByPrototype });
   // Folding exposes values split across tests; recovering those exposes
   // further single-use temporaries.
   // A conditional return is recognised before its arms become guard clauses.
   const returns = (chunk: Chunk): Chunk => options.ifExpressions ? finalizeReturnExpressions(chunk) : chunk;
   const refined = refineStructure(returns(fold(structured)), { ifExpressions: options.ifExpressions, guards: options.earlyReturn });
   const folded = annotateFoldedLocals(fold(refined), options);
-const named = inferHumanNames(folded, {foldSingleUseTemps: options.foldSingleUseTemps, sourceNames: options.sourceNames,
+const named = inferHumanNames(folded, {foldSingleUseTemps: options.foldSingleUseTemps,
+    sourceNames: new Set([...(options.sourceNames ?? []), ...(options.inferredSourceNames ?? []), ...(options.debugNames ?? [])]),
     debugNames: options.debugNames, nameStems: options.nameStems, workingNames: options.workingNames});
   // Scratch folding can expose scalar return arms after the first structural
   // pass. Revisit only return structure, not naming, effects or declarations.
-  return options.ifExpressions ? finalizeReturnExpressions(named) : named;
+  return options.ifExpressions ? recoverPrivateLogicalReturns(finalizeReturnExpressions(named)) : named;
 }
 
 /** Folding changes initializers; derive each local's annotation from the
@@ -134,7 +141,9 @@ function liftLocalFunctions(statements: Statement[]): Statement[] {
       return statement;
     }
     const value = statement.values[0];
-    if (!value || value.kind !== "function-expr") {
+    // A recorded anonymous prototype must remain anonymous: the declaration
+    // spelling would invent a name observable through debug.info(fn, "n").
+    if (!value || value.kind !== "function-expr" || (value.creationSite && value.debugName === undefined)) {
       return statement;
     }
     return {

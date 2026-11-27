@@ -1,0 +1,14 @@
+{
+  "baselineMain": "dc4d32d0c38b881006c04b8c20d72549f420aeed",
+  "baselineMeasuredEngine": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "unitTests": 1345,
+  "unitFiles": 135,
+  "fixtureManifest": "tests/fixtures/loop-condition-presentation/manifest.json",
+  "method": "Unchanged pinned Rosetta check, six normal and six hard profiles; both original and recovered output executed by its official Luau VM, all failures blocking. Readability compared on identical passing inputs.",
+  "engineSourceSha256": {
+    "src/ast/StructureRefinement.ts": "22f0f67683f69f7f72b099e02ac1541e49745b316f003cced471e53631ce5c5e"
+  }
+}

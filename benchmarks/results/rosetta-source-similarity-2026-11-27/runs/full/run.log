@@ -1,0 +1,10 @@
+{"revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84", "node": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node", "command": ["/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-full-engine/scripts/bench-rosetta.mjs", "--rosetta-dir", "/workspace/scratch/eb5e4be57451/rosetta-research", "--tier", "full", "--out", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/full", "--threads", "4", "--gallery"], "startedAt": "2026-11-27T21:52:39.154690+00:00"}
+(node:29) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Rebuilding the decompiler with the measured Node.js runtime...
+Running pinned Rosetta full (all-pass gate)...
+suite rosetta-3 full (f0eae8ffcedd440e): 2047 programs at 6 profiles, ready in 2.1s
+  gallery: 0 failures -> /workspace/scratch/eb5e4be57451/measurements/similarity-final-01/full/annonyA-full.gallery.json
+annonyA: 12276/12276 (100.0%) | cases 246/246, libraries 36/36, generated 5994/5994, mutants 6000/6000 | 833.3s -> /workspace/scratch/eb5e4be57451/measurements/similarity-final-01/full/annonyA-full.json
+full: 12276/12276; {"pass":12276,"mismatch":0,"recompile_failed":0,"decompile_failed":0,"refused":0,"unusable":6}
+Provenance: /workspace/scratch/eb5e4be57451/measurements/similarity-final-01/full/annonyA-full.provenance.json

@@ -1,0 +1,8 @@
+{
+  "decision": "Do not integrate the general pure-body analysis: duplicates existing ClosureEffects.neutral for only 0.0327673291 percentage points. Keep only the small proven non-inlineable-vararg case.",
+  "baseline": "850211e",
+  "baselineSimilarity": 76.7518766376437,
+  "generalSimilarity": 76.78464396672994,
+  "generalAndVarargSimilarity": 76.8086157249215,
+  "behaviorVerified": false
+}

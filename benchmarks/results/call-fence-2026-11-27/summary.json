@@ -1,0 +1,200 @@
+{
+  "officialLuau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "sourceSha256": "cf25c04bb76057f40a06a75bafa9cddcba5cdbd7e776b45b94ac4a737c84123b",
+  "baselineRevision": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+  "records": [
+    {
+      "id": "O0g1",
+      "bytecodePath": "/workspace/scratch/eb5e4be57451/similarity-probes/call-fence-observations/O0g1.luauc",
+      "optimization": 0,
+      "debug": 1,
+      "original": {
+        "exitCode": 0,
+        "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+        "stderr": ""
+      },
+      "inputSha256": "336009471c52df709e58027d6c3c740a041574c9b28e558bdcb4b087b14495ad",
+      "baseline": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "986d85b9bcd7d8b5e351ea80d81f62a1f128b23a33d0ef32c86360d6486c6569",
+        "bytecodeSha256": "ccf3b945b48966e3ef705385adcab4a34358d8a6ec981e089aabddf798e02c7a",
+        "match": true
+      },
+      "candidate": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "10b5c830cc1eac670cf356a3a7ca66d17f51e16f13b212bed84c225b39885589",
+        "bytecodeSha256": "8defbf5094829c86432693ccc0fc27e3feaea8ca54b08223a50947da8b132be8",
+        "match": true
+      }
+    },
+    {
+      "id": "O0g2",
+      "bytecodePath": "/workspace/scratch/eb5e4be57451/similarity-probes/call-fence-observations/O0g2.luauc",
+      "optimization": 0,
+      "debug": 2,
+      "original": {
+        "exitCode": 0,
+        "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+        "stderr": ""
+      },
+      "inputSha256": "c2027a09c52364b13abcbb506e6ff7e9b71f2ac6ec32aa4d62809fbc5902406f",
+      "baseline": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "5f16fcb182a1648f113544889c4debe0125bb3d56e277082fa14ab547ac14de4",
+        "bytecodeSha256": "7cdbbcfee7da10a4ab613407fdcbf5eecc513c1dbcc7f0441ec251de5e5850a4",
+        "match": true
+      },
+      "candidate": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "9a1ef52b8f7534e81d9bde0a2ba898cb9df984020f61d268908618fdbb814948",
+        "bytecodeSha256": "3a74af75e5a18631ae354bd3cfda95c4158e99b140dd906537f90834477fb8fc",
+        "match": true
+      }
+    },
+    {
+      "id": "O1g1",
+      "bytecodePath": "/workspace/scratch/eb5e4be57451/similarity-probes/call-fence-observations/O1g1.luauc",
+      "optimization": 1,
+      "debug": 1,
+      "original": {
+        "exitCode": 0,
+        "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+        "stderr": ""
+      },
+      "inputSha256": "e311945fb297bc94457275ce34b5c0dfa63b088fbaf5a8a8740749e82bb746fb",
+      "baseline": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "001da1326e52b995935a208e72d87baa05fdf0fd4df4f3de1a542b99a94a99ff",
+        "bytecodeSha256": "4e41c34105f41d92baadd3b57c42fe7da5254a7162b396bc3d229bcd9951c2fd",
+        "match": true
+      },
+      "candidate": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "9457db69656deb182c13a88f19339fc99f1646d115454a7d528586d4876b4375",
+        "bytecodeSha256": "4e41c34105f41d92baadd3b57c42fe7da5254a7162b396bc3d229bcd9951c2fd",
+        "match": true
+      }
+    },
+    {
+      "id": "O1g2",
+      "bytecodePath": "/workspace/scratch/eb5e4be57451/similarity-probes/call-fence-observations/O1g2.luauc",
+      "optimization": 1,
+      "debug": 2,
+      "original": {
+        "exitCode": 0,
+        "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+        "stderr": ""
+      },
+      "inputSha256": "947fc54965f6922636f453c3284c081e85ee8ee6a0f9828b2503253f938dd6cc",
+      "baseline": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "399040953a226ac10c0db12ec1896c28f4aed9550bf3ab30cdf4ab02bdfadb9d",
+        "bytecodeSha256": "1739e0df704e1400de58b96309c2fb1571a762d853878d94dc09d6e8291431a7",
+        "match": true
+      },
+      "candidate": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "3e7161a71fc2fb1f99cb7b1f43a2cbcfa5d96011488a6e9cb90f44b150fbff41",
+        "bytecodeSha256": "1739e0df704e1400de58b96309c2fb1571a762d853878d94dc09d6e8291431a7",
+        "match": true
+      }
+    },
+    {
+      "id": "O2g1",
+      "bytecodePath": "/workspace/scratch/eb5e4be57451/similarity-probes/call-fence-observations/O2g1.luauc",
+      "optimization": 2,
+      "debug": 1,
+      "original": {
+        "exitCode": 0,
+        "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+        "stderr": ""
+      },
+      "inputSha256": "5dfc812efe79dd9a247e44a9ebef38fb24acea7e59160df89bcd4cd8c836ab0d",
+      "baseline": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "269b451b11b919213c53bd99cde7b26dc3d329b96bf3a13af85bf0e9134a9e69",
+        "bytecodeSha256": "3ecb7786d41691106e2942cd24d5a173acac6fa0900222bd57edd861ed026a9e",
+        "match": true
+      },
+      "candidate": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "da6c0076d105e561bbb6ada3654f400d7fd5c4f97acbeb2353f57d75947fde31",
+        "bytecodeSha256": "3ecb7786d41691106e2942cd24d5a173acac6fa0900222bd57edd861ed026a9e",
+        "match": true
+      }
+    },
+    {
+      "id": "O2g2",
+      "bytecodePath": "/workspace/scratch/eb5e4be57451/similarity-probes/call-fence-observations/O2g2.luauc",
+      "optimization": 2,
+      "debug": 2,
+      "original": {
+        "exitCode": 0,
+        "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+        "stderr": ""
+      },
+      "inputSha256": "c2edcaf278548becdb96db6c3deee41c68e4a6c203f608c6e834cf73076a4f9e",
+      "baseline": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "2260b46f2793c1f008fed4dc289b453dc3e186778f79464fdf13f1950b18af75",
+        "bytecodeSha256": "d546390ab626f3834951c513903b4a402d82eed072800dea6457f48922f2b929",
+        "match": true
+      },
+      "candidate": {
+        "trace": {
+          "exitCode": 0,
+          "stdout": "first\t5\t8\ta\t2\tnil\tc\nsecond\t5\t18\ta\t2\tnil\tc\nagain\t5\t9\ta\t2\tnil\tc\ncalls\t232\tfalse\none callee\t5\t10\ta\t2\tnil\tc\nerrors\tfalse\ttrue\tfalse\ttrue\t3262\ncapture\t3\t3\tnil\t4\ncapture again\t3\t7\tnil\t8\nfinal\t7\t3262\n",
+          "stderr": ""
+        },
+        "sourceSha256": "b969faa44e8968b1821570e00e480504eb1e16d972121cfc91d5a05bef1d0ce9",
+        "bytecodeSha256": "d546390ab626f3834951c513903b4a402d82eed072800dea6457f48922f2b929",
+        "match": true
+      }
+    }
+  ],
+  "allPass": true
+}

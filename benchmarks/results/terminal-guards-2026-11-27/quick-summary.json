@@ -1,0 +1,49 @@
+{
+  "baseline": {
+    "profiles": 882,
+    "similarity": 76.43114172952787,
+    "tokenRatio": 1.0021568012955338
+  },
+  "improved": {
+    "profiles": 882,
+    "similarity": 76.5058954691941,
+    "tokenRatio": 1.000299965966013
+  },
+  "baselineCommit": "12a6561",
+  "improvedProfiles": 340,
+  "lowerSimilarityProfiles": 298,
+  "removedTokens": 3470,
+  "metric": "Unmodified Rosetta80f3 quality.rs and lex.rs; exact882cachedQuickinputs. Behavior checked separately.",
+  "classifiers": {
+    "seed1487": {
+      "profiles": 6,
+      "baseline": 63.63466878732046,
+      "improved": 63.98786207040151
+    },
+    "seed1837": {
+      "profiles": 6,
+      "baseline": 63.19274504979452,
+      "improved": 64.41668272018433
+    },
+    "seed1714": {
+      "profiles": 6,
+      "baseline": 67.25151141484578,
+      "improved": 68.3812032143275
+    },
+    "seed1932": {
+      "profiles": 6,
+      "baseline": 68.13639601071675,
+      "improved": 69.10806894302368
+    },
+    "seed1178": {
+      "profiles": 6,
+      "baseline": 72.72106607755025,
+      "improved": 73.85989427566528
+    },
+    "seed1460": {
+      "profiles": 6,
+      "baseline": 70.32001614570618,
+      "improved": 71.7141071955363
+    }
+  }
+}

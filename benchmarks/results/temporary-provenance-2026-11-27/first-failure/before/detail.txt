@@ -1,0 +1,1 @@
+Mismatch: line 4: want `first:kind|second:kind|first:kind|third:kind|first:kind|first:kind|second:kind|third:kind` got `first:kind|second:kind|first:kind|third:kind|first:kind|second:kind|third:kind`

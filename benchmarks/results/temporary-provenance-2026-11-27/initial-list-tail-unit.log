@@ -1,0 +1,84 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-locals
+
+ ✓ tests/closure-call-boundary.test.ts (8 tests) 82ms
+ ✓ tests/debug-declarations.test.ts (8 tests) 69ms
+ ✓ tests/inline-tuples.test.ts (12 tests) 38ms
+ ✓ tests/reconstruction-quality.test.ts (22 tests) 36ms
+ ❯ tests/source-structure.test.ts (15 tests | 2 failed) 27ms
+   × flattens a terminal function guard whose else declares locals 14ms
+     → expected 'local function refresh()\n    if stop…' to contain '    local item = fetch()'
+   × does not extend else locals into a following statement or a repeat condition 2ms
+     → expected 'if stop then\n    return\nend\nobserv…' to contain 'else'
+   ✓ folds an adjacent single-use comparison into its return 1ms
+   ✓ keeps the fixed one-result adjustment when returning a call or varargs 0ms
+   ✓ retains captured return cells and does not erase an assigned function debug name 1ms
+   ✓ assembles a named private child table with stable local dependencies into its parent 1ms
+   ✓ does not move a table dependency across reassignment, shadowing or a closure write 1ms
+   ✓ prints nested records as readable multiline fields 0ms
+   ✓ keeps a table binding when it is an assignment target or a call receiver 1ms
+   ✓ combines adjacent private method receivers without moving argument evaluation 4ms
+   ✓ separates top-level services, imports and function definitions without reordering them 0ms
+   ✓ retains a method receiver read by a repeat condition (closure: false) 0ms
+   ✓ retains a method receiver read by a repeat condition (closure: true) 0ms
+   ✓ retains a table read by a repeat condition (closure: false) 0ms
+   ✓ retains a table read by a repeat condition (closure: true) 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/source-structure.test.ts > flattens a terminal function guard whose else declares locals
+AssertionError: expected 'local function refresh()\n    if stop…' to contain '    local item = fetch()'
+
+- Expected
++ Received
+
+-     local item = fetch()
++ local function refresh()
++     if stop then
++         return
++     end
++     observe((fetch()))
++ end
++
+
+ ❯ tests/source-structure.test.ts:20:29
+     18|   expect(printLuau(result)).toContain('if stop then\n        return\n …
+     19|   expect(printLuau(result)).not.toContain('else');
+     20|   expect(printLuau(result)).toContain('    local item = fetch()');
+       |                             ^
+     21| });
+     22| it('does not extend else locals into a following statement or a repeat…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/source-structure.test.ts > does not extend else locals into a following statement or a repeat condition
+AssertionError: expected 'if stop then\n    return\nend\nobserv…' to contain 'else'
+
+- Expected
++ Received
+
+- else
++ if stop then
++     return
++ end
++ observe((fetch()))
++ observe(item)
++
+
+ ❯ tests/source-structure.test.ts:24:49
+     22| it('does not extend else locals into a following statement or a repeat…
+     23|   const value=guard();
+     24|   expect(printLuau(clean([value,use('item')]))).toContain('else');
+       |                                                 ^
+     25|   expect(printLuau(clean([{kind:'repeat',body:block([guard()]),test:id…
+     26| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  2 failed | 63 passed (65)
+   Start at  21:17:50
+   Duration  3.93s (transform 1.44s, setup 0ms, collect 2.42s, tests 252ms, environment 1ms, prepare 320ms)
+

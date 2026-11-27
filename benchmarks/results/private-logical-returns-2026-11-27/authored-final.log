@@ -1,0 +1,7 @@
+baseline: 12/12 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+improved: 12/12 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+readability on the 12 round trips every decompiler passed:
+  decompiler  similarity   size  locals  nesting  endless  names g2  cpu ms
+  baseline         79.8%  1.25x   1.16x    -0.08        0     64.9%  239.21
+  improved         80.2%  1.25x   1.15x    -0.08        0     64.9%  235.53
+24 round trips in 1.6s
