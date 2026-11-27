@@ -427,3 +427,36 @@ after reconstruction, compared with two before. All 46 focused unit tests pass.
 The original failure, expanded first results, the intermediate count-only
 candidate's remaining comparison failures, final reports and exact VM statuses
 are retained in `benchmarks/results/repeated-register-operands-2026-11-27`.
+
+## Preserve work before a shared loop exit
+
+A natural loop excludes an arm that never reaches the backedge. A jump adapter
+at the start of that arm can precede assignments or effects before the shared
+follow. Previously the immediate-break shortcut recognized a separate RETURN
+arm but rejected a chain reaching the follow, so it could omit a result copy
+that feeds the exit phi. Both remaining Hard Full mismatches had this shape:
+the selected loop index stayed nil because its MOVE was never emitted.
+
+The exit-work proof now tracks non-control instructions on a linear, acyclic
+chain. Reaching the follow proves work only when that chain contains such an
+instruction; pure NOP/jump adapters keep the existing immediate-break path.
+A separate RETURN remains a terminal arm. The ordinary emitter executes the
+proved arm up to its existing follow boundary, preserving assignments, effects
+and cell closes. Branching, cycles and reentry to the natural loop remain
+outside this bounded proof. No CFG, phi or normalizer rules were changed.
+
+The reference review used Tovek `ce2ea3325547fa3896f274b68013386338039040`'s
+`structure_jumps` treatment of shared loop-exit transfers and official Luau
+`c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f`'s MOVE and numeric-loop VM handlers.
+The implementation is independent and copies no reference code.
+
+Both observed mutants pass all twelve ordinary/Hard profiles after the change
+(24/24). Six new structural tests cover JUMP and JUMPX, conditional and ordinary
+transfer paths, and pure adapters; all 101 focused unit tests pass. A separate
+authored source observes the exported value, a captured snapshot, iteration
+effects and a four-value return ending in nil. Its twelve ordinary/Hard profiles
+pass. Reordering its exit arm preserves official VM behavior in all six normal
+profiles; those six reconstructed permutations improve from 0/6 to 6/6. The
+first mutant failure and focused results are preserved in
+`benchmarks/results/loop-exit-work-2026-11-27`; the authored control's sealed
+source, bytecode pairs and VM evidence accompany the separate fixture commit.

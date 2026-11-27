@@ -238,5 +238,80 @@
       "mismatch": 4
     },
     "seconds": 584.37
+  },
+  {
+    "checkpoint": "checkpoint-10",
+    "tier": "quick",
+    "revision": "155d58129799231c26094a36e4a23d771969a1b6",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "totals": {
+      "pass": 882
+    },
+    "seconds": 255.54
+  },
+  {
+    "checkpoint": "checkpoint-10",
+    "tier": "full",
+    "revision": "155d58129799231c26094a36e4a23d771969a1b6",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "full",
+      "hash": "f0eae8ffcedd440e"
+    },
+    "score": {
+      "passed": 12276,
+      "total": 12276
+    },
+    "totals": {
+      "pass": 12276,
+      "unusable": 6
+    },
+    "seconds": 953.83
+  },
+  {
+    "checkpoint": "checkpoint-10",
+    "tier": "hard-quick",
+    "revision": "155d58129799231c26094a36e4a23d771969a1b6",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-quick",
+      "hash": "9bcb49d29e867a92"
+    },
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "totals": {
+      "pass": 882
+    },
+    "seconds": 269.52
+  },
+  {
+    "checkpoint": "checkpoint-10",
+    "tier": "hard-full",
+    "revision": "155d58129799231c26094a36e4a23d771969a1b6",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-full",
+      "hash": "9921d3bde4a99bfd"
+    },
+    "score": {
+      "passed": 12274,
+      "total": 12276
+    },
+    "totals": {
+      "pass": 12274,
+      "unusable": 6,
+      "mismatch": 2
+    },
+    "seconds": 989.61
   }
 ]

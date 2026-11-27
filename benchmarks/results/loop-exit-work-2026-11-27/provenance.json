@@ -1,0 +1,65 @@
+{
+  "base_commit": "155d58129799231c26094a36e4a23d771969a1b6",
+  "base_tree": "d9207b84ee4650e0eb24b711fc863e835f0afeea",
+  "luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "references": [
+    "Tovek cfg/src/ssa/structuring.rs::structure_jumps shared loop-exit transfer handling",
+    "Luau VM/src/lvmexecute.cpp MOVE, FORNPREP and FORNLOOP handlers"
+  ],
+  "change": "Prove that a linear acyclic external exit arm has work before the shared follow or ends with RETURN, then let ordinary reconstruction emit that arm. Pure adapters retain the immediate-break fast path.",
+  "first_result": {
+    "case": "mut1-316",
+    "profile": "O0g2+x2",
+    "expected_line": "4\tnil",
+    "actual_line": "nil\tnil",
+    "verdict": "mismatch"
+  },
+  "after_mutants": {
+    "cases": [
+      "mut1-316",
+      "mut1-478"
+    ],
+    "normal_and_hard_profiles": 12,
+    "pass": 24,
+    "failed": 0
+  },
+  "focused_units": {
+    "files": 7,
+    "pass": 101,
+    "failed": 0,
+    "new_tests": 6
+  },
+  "independent_control_validation": {
+    "owner": "semantic_engine",
+    "unmodified_normal_and_hard_round_trips": {
+      "pass": 12,
+      "total": 12
+    },
+    "permuted_round_trips_before": {
+      "pass": 0,
+      "total": 6
+    },
+    "permuted_round_trips_after": {
+      "pass": 6,
+      "total": 6
+    },
+    "original_and_permuted_official_vm_equivalence": {
+      "pass": 6,
+      "total": 6
+    },
+    "observations": [
+      "exported result",
+      "captured snapshot",
+      "iteration trace",
+      "four results including trailing nil"
+    ],
+    "note": "Authored source, bytecode pairs, manifest and first observations are sealed in the separate fixture/evidence commit."
+  },
+  "limits": [
+    "Only linear acyclic paths are proved; branched paths and loop reentry remain outside this proof.",
+    "These are focused development checks. The complete frozen four-tier inventory is measured separately."
+  ],
+  "implementation": "Independent TypeScript implementation; no reference code copied."
+}

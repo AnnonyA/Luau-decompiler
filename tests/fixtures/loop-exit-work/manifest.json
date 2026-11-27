@@ -1,0 +1,96 @@
+{
+  "source": "break-tail-observations.luau",
+  "sourceSha256": "8965a60b659702d27a3baaef23c916c161322ae6814dc114c0378fd6b9a87030",
+  "entries": [
+    {
+      "profile": "O0g1",
+      "bytecode": "break-tail-observations-O0g1.luauc",
+      "sha256": "f96fafa3d9c0c186587d2f1f65537654618d4203ced75212ddcabded525264af"
+    },
+    {
+      "profile": "O0g1-permuted",
+      "bytecode": "break-tail-observations-O0g1-permuted.luauc",
+      "sha256": "c8131ccbbab766343a350bd1e8dc291c83fe36230df763d245c0c376dac8ac91"
+    },
+    {
+      "profile": "O1g1",
+      "bytecode": "break-tail-observations-O1g1.luauc",
+      "sha256": "6cef1075027246a378a4da7025956ab1d5d69e7f9ab9b22f061e4f38962f17b9"
+    },
+    {
+      "profile": "O1g1-permuted",
+      "bytecode": "break-tail-observations-O1g1-permuted.luauc",
+      "sha256": "5c583dac5e51a44cb10489961d4636c8513b3556b27a9acd204bbdb088885661"
+    },
+    {
+      "profile": "O2g1",
+      "bytecode": "break-tail-observations-O2g1.luauc",
+      "sha256": "8289125c2debab869234d6e0b019a343f63f361f988e44a9204a534297a523f9"
+    },
+    {
+      "profile": "O2g1-permuted",
+      "bytecode": "break-tail-observations-O2g1-permuted.luauc",
+      "sha256": "ce9bec52cb3e85d8cd71d9b9a715be305f3ecffe07e0ed4e81e32e6b8fc681f2"
+    },
+    {
+      "profile": "O0g2",
+      "bytecode": "break-tail-observations-O0g2.luauc",
+      "sha256": "715657201293b53356c3f0cc33ebd15ccf60e4ed2722e323a08e4e2bc43e0790"
+    },
+    {
+      "profile": "O0g2-permuted",
+      "bytecode": "break-tail-observations-O0g2-permuted.luauc",
+      "sha256": "abe336caff17fd66d0b34411cd60439e39029dfd11bc021dba0fa929ba02c136"
+    },
+    {
+      "profile": "O1g2",
+      "bytecode": "break-tail-observations-O1g2.luauc",
+      "sha256": "f2a1523d923670c14778ae8d150565914540fd103d8273aaa5e2d418c4df5b0d"
+    },
+    {
+      "profile": "O1g2-permuted",
+      "bytecode": "break-tail-observations-O1g2-permuted.luauc",
+      "sha256": "483ebcb177cd097865f8d785c6515867fd01a33849a500111964b95c3c3c9872"
+    },
+    {
+      "profile": "O2g2",
+      "bytecode": "break-tail-observations-O2g2.luauc",
+      "sha256": "dae3bfc010ac70c07969d1cb40ce19454b179135324bb78e06462f1e9f0e8621"
+    },
+    {
+      "profile": "O2g2-permuted",
+      "bytecode": "break-tail-observations-O2g2-permuted.luauc",
+      "sha256": "e7e3e5c96de8bdfff45ad55321e897d6c98b9a9b5fc5b806288dc68168aa35ad"
+    },
+    {
+      "profile": "O0g1+x1",
+      "bytecode": "break-tail-observations-O0g1+x1.luauc",
+      "sha256": "a4e47cf131680b70ca8e0d591a10d118a1599b1f1ed414388c35b5f397796133"
+    },
+    {
+      "profile": "O1g1+x2",
+      "bytecode": "break-tail-observations-O1g1+x2.luauc",
+      "sha256": "f7cfc27c9f185a0297f84ff8f03e2072448d9cd9dcecc7a85f6d6fabedd11fa0"
+    },
+    {
+      "profile": "O2g1+x3",
+      "bytecode": "break-tail-observations-O2g1+x3.luauc",
+      "sha256": "3745957b34e089942e7e5b8671e220f3e6e5935b27114d17491f5e39abc5c913"
+    },
+    {
+      "profile": "O0g2+x2",
+      "bytecode": "break-tail-observations-O0g2+x2.luauc",
+      "sha256": "3faf2054c981c6ebd96a66195fbcba8d6fb89fd308b196c9ac8417dbe8fec1b8"
+    },
+    {
+      "profile": "O1g2+x3",
+      "bytecode": "break-tail-observations-O1g2+x3.luauc",
+      "sha256": "7a0fdaeb37a849a54c20ccfe744ee8fa83a8a7151d62eeb7431f833809ff19cc"
+    },
+    {
+      "profile": "O2g2+x1",
+      "bytecode": "break-tail-observations-O2g2+x1.luauc",
+      "sha256": "abce4b47340741d34edc3fd32eb8a2b8d1b605285caef8c8bf0fb17cb5b0aa87"
+    }
+  ]
+}

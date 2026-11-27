@@ -15,6 +15,15 @@ Luau 0.747 and transform-2 with the standard six profiles for each tier.
 | Intermediate `50d6d96` | 872/882 | Not measured | Not measured | Not measured |
 | Checkpoint `387a3c1` | 882/882 | 12,272/12,276 | Not measured | Not measured |
 | Checkpoint `84a7e16` | Not measured | Not measured | 882/882 | Not measured |
+| Checkpoint `155d581` | 882/882 | 12,276/12,276 | 882/882 | 12,274/12,276 |
+
+The complete [checkpoint-10](checkpoint-10/README.md) measures all four tiers
+on the same clean engine `155d581`, published as `492773f6` with an identical
+Git tree. Quick, Full and Hard Quick passed their strict gates. Hard Full
+failed its strict gate with two mismatches: `mut1-316` and `mut1-478`, both
+at `O0g2+x2`. There were no decompilation/recompilation failures or refusals
+in this checkpoint. The raw reports preserve these failures; this is not
+an all-four-tier passing result.
 
 The separate `targeted-development` directory records checks against sources
 that failed an earlier suite. Its checkpoint-6 report has 1,350/1,440 passing
@@ -32,8 +41,8 @@ official parser/runtime, demo and strict Rosetta Quick CI checks passed. Later
 engine fixes require their own integrated measurements; this historical table
 does not combine tier scores into a claim that one final build passes all tiers.
 Full and Hard Full each exclude the suite's six original seed1541 profiles
-which cannot produce usable reference executions; no candidate failures are
-excluded.
+which exhaust the execution step budget before producing usable reference
+executions; no candidate failures are excluded.
 
 `published-comparison.json` records the exact Rosetta-published luacid.dev and
 lua.expert snapshots, their creation dates, source URLs, report hashes and suite

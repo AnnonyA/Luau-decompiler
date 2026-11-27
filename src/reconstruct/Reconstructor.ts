@@ -645,7 +645,7 @@ class SourceBuilder {
             statements.push({ kind: "continue" });
             break;
           }
-          if (!this.loopTails.has(loop) && !loop.blocks.includes(successor) && !this.externalReturnPath(successor, loop)) {
+          if (!this.loopTails.has(loop) && !loop.blocks.includes(successor) && !this.hasExternalExitWork(successor, loop)) {
             statements.push({ kind: "break" });
             current = undefined;
             continue;
@@ -677,19 +677,23 @@ class SourceBuilder {
 
   // ------------------------------------------------------------------ loops
 
-  /** A natural loop excludes returning arms because they have no backedge.
-   * An explicit transfer to such an arm still returns from this function;
-   * it is not a break to the loop's normal continuation. Only prove a linear
-   * terminal chain here, leaving every instruction for the ordinary emitter. */
-  private externalReturnPath(start: number, loop: NaturalLoop): boolean {
+  /** A natural loop excludes arms that never reach its backedge. They can
+   * return, or perform writes and effects before the shared follow. Preserve
+   * that work when a linear, acyclic exit path proves it. Pure adapters to
+   * the follow keep the immediate-break fast path; branches and reentry
+   * remain outside this bounded proof. */
+  private hasExternalExitWork(start: number, loop: NaturalLoop): boolean {
     const follow = this.loopFollow(loop), seen = new Set<number>();
     let current = start;
+    let hasWork = false;
     while (!seen.has(current)) {
-      if (current === follow || loop.blocks.includes(current)) return false;
+      if (current === follow) return hasWork;
+      if (loop.blocks.includes(current)) return false;
       seen.add(current);
       const basic = this.ir.cfg.blocks[current];
       if (!basic || basic.unreachable) return false;
       if (basic.instructions.at(-1)?.opcode === Opcode.RETURN) return true;
+      hasWork ||= basic.instructions.some(insn => insn.opcode !== Opcode.NOP && !isControlOnly(insn.opcode));
       if (basic.successors.length !== 1) return false;
       current = basic.successors[0]!;
     }
@@ -1363,9 +1367,9 @@ class SourceBuilder {
             outsideBlock.instructions.every((insn) => isControlOnly(insn.opcode)) &&
             outsideBlock.successors.length > 0 &&
             outsideBlock.successors.every((id) => !activeLoop.blocks.includes(id)) &&
-            // A jump-only adapter may lead to a terminal return arm that the
-            // natural loop excludes. Keep its effects and return values.
-            !this.externalReturnPath(outsideId, activeLoop))));
+            // An adapter can lead to work before the shared follow or a
+            // terminal return. Neither belongs to an immediate break.
+            !this.hasExternalExitWork(outsideId, activeLoop))));
         if (exitsLoop) {
           const jumpExits = thenInside;
           this.consumed.add(last.pc);

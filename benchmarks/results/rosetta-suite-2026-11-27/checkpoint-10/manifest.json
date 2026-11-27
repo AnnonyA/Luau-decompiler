@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "checkpoint-10",
+  "localSourceCommit": "155d58129799231c26094a36e4a23d771969a1b6",
+  "publishedEngineCommit": "492773f6dfabe4b41d9853b627a3a260e15c8f34",
+  "identicalEngineTree": "d9207b84ee4650e0eb24b711fc863e835f0afeea",
+  "sourceTreeSha256": "1ce957abe76edc4c5093a2b754bb16d4ebde80f6ab67580631883d39e385b35a",
+  "distSha256": "389d7586c0dfd9e7a8de27764e7565a8d8a333ef00a3248984a966a1a1db87b5",
+  "allFourTiersPassed": false,
+  "scope": "One frozen engine, four complete suite measurements. The strict Hard Full all-pass gate failed with two mismatches.",
+  "files": [
+    {
+      "path": "annonyA-quick.json",
+      "bytes": 21006,
+      "sha256": "e4a508b38c3e826b2068466400daaaf149215ec0803db617a04a597b2d8463f3"
+    },
+    {
+      "path": "annonyA-quick.provenance.json",
+      "bytes": 4017,
+      "sha256": "c8be47f5d75a51ae78b2c509c88da8a306c631523d604552f1ac20b2b950adbf"
+    },
+    {
+      "path": "annonyA-full.json",
+      "bytes": 192580,
+      "sha256": "8bca9d32da94e96a7bec2f6fe04b20cfc798332b5acf26e2bf72601f446bdda7"
+    },
+    {
+      "path": "annonyA-full.provenance.json",
+      "bytes": 4015,
+      "sha256": "62b03098a09649415089f02cce76639a09be1283b04dfcbd32855783a1358d58"
+    },
+    {
+      "path": "annonyA-hard-quick.json",
+      "bytes": 21039,
+      "sha256": "5faa9386b6fc05ebb7cd3a7e3c3ca16fc4c442087bcd766c774e4cfd705d6976"
+    },
+    {
+      "path": "annonyA-hard-quick.provenance.json",
+      "bytes": 4057,
+      "sha256": "3f7c5b3c4658869a2770abad95f49fb0d016707f9d07cc77fb1d465ba9bfc4fc"
+    },
+    {
+      "path": "annonyA-hard-full.json",
+      "bytes": 192747,
+      "sha256": "45d00c64fb8c61d3868f9614dc16fd1122f4eaada8fdf57798f40b82942a80ff"
+    },
+    {
+      "path": "annonyA-hard-full.provenance.json",
+      "bytes": 4124,
+      "sha256": "7fdf17bb269237ae389fe0a499471fd5e50f5ccbf83774d02bdb22aedb27baf3"
+    }
+  ],
+  "tiers": {
+    "quick": {
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "counts": {
+        "pass": 882,
+        "mismatch": 0,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 0
+      },
+      "allPass": true,
+      "provenanceStatus": "completed",
+      "sections": [
+        {
+          "id": "cases",
+          "passed": 246,
+          "total": 246
+        },
+        {
+          "id": "libraries",
+          "passed": 36,
+          "total": 36
+        },
+        {
+          "id": "generated",
+          "passed": 300,
+          "total": 300
+        },
+        {
+          "id": "mutants",
+          "passed": 300,
+          "total": 300
+        }
+      ],
+      "failures": []
+    },
+    "full": {
+      "score": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "counts": {
+        "pass": 12276,
+        "mismatch": 0,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 6
+      },
+      "allPass": true,
+      "provenanceStatus": "completed",
+      "sections": [
+        {
+          "id": "cases",
+          "passed": 246,
+          "total": 246
+        },
+        {
+          "id": "libraries",
+          "passed": 36,
+          "total": 36
+        },
+        {
+          "id": "generated",
+          "passed": 5994,
+          "total": 5994
+        },
+        {
+          "id": "mutants",
+          "passed": 6000,
+          "total": 6000
+        }
+      ],
+      "failures": []
+    },
+    "hard-quick": {
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "counts": {
+        "pass": 882,
+        "mismatch": 0,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 0
+      },
+      "allPass": true,
+      "provenanceStatus": "completed",
+      "sections": [
+        {
+          "id": "cases",
+          "passed": 246,
+          "total": 246
+        },
+        {
+          "id": "libraries",
+          "passed": 36,
+          "total": 36
+        },
+        {
+          "id": "generated",
+          "passed": 300,
+          "total": 300
+        },
+        {
+          "id": "mutants",
+          "passed": 300,
+          "total": 300
+        }
+      ],
+      "failures": []
+    },
+    "hard-full": {
+      "score": {
+        "passed": 12274,
+        "total": 12276
+      },
+      "counts": {
+        "pass": 12274,
+        "mismatch": 2,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 6
+      },
+      "allPass": false,
+      "provenanceStatus": "failed",
+      "sections": [
+        {
+          "id": "cases",
+          "passed": 246,
+          "total": 246
+        },
+        {
+          "id": "libraries",
+          "passed": 36,
+          "total": 36
+        },
+        {
+          "id": "generated",
+          "passed": 5994,
+          "total": 5994
+        },
+        {
+          "id": "mutants",
+          "passed": 5998,
+          "total": 6000
+        }
+      ],
+      "failures": [
+        {
+          "section": "mutants",
+          "name": "mut1-316",
+          "about": "mut1-316 of loops: wrap if, duplicate, print, flip, wrap for, wrap repeat, early return, early return, flip",
+          "results": "pppwpp",
+          "details": {
+            "O0g2+x2": "line 3: want `4\tnil` got `nil\tnil`"
+          }
+        },
+        {
+          "section": "mutants",
+          "name": "mut1-478",
+          "about": "mut1-478 of loops: negate, delete, duplicate, wrap do, early return, wrap closure, wrap repeat, wrap closure",
+          "results": "pppwpp",
+          "details": {
+            "O0g2+x2": "line 2: want `4\tnil` got `nil\tnil`"
+          }
+        }
+      ]
+    }
+  }
+}

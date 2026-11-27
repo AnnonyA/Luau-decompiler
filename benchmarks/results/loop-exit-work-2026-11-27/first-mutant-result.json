@@ -1,0 +1,27 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g2+x2"
+  ],
+  "totals": {
+    "before": {
+      "mismatch": 1
+    }
+  },
+  "by_profile": {
+    "before": {
+      "O0g2+x2": 1
+    }
+  },
+  "failures": {
+    "before": [
+      {
+        "case": "mut1-316",
+        "profile": "O0g2+x2",
+        "kind": "mismatch",
+        "detail": "line 3: want `4\tnil` got `nil\tnil`"
+      }
+    ]
+  }
+}

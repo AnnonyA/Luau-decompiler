@@ -1,0 +1,38 @@
+[
+  {
+    "profile": "O0g1",
+    "matches": true,
+    "compilerStatus": 0,
+    "executionStatus": 0
+  },
+  {
+    "profile": "O0g2",
+    "matches": true,
+    "compilerStatus": 0,
+    "executionStatus": 0
+  },
+  {
+    "profile": "O1g1",
+    "matches": true,
+    "compilerStatus": 0,
+    "executionStatus": 0
+  },
+  {
+    "profile": "O1g2",
+    "matches": true,
+    "compilerStatus": 0,
+    "executionStatus": 0
+  },
+  {
+    "profile": "O2g1",
+    "matches": true,
+    "compilerStatus": 0,
+    "executionStatus": 0
+  },
+  {
+    "profile": "O2g2",
+    "matches": true,
+    "compilerStatus": 0,
+    "executionStatus": 0
+  }
+]
