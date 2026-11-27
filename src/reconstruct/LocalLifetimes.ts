@@ -23,6 +23,7 @@ function closeLifetimes(body: Block, fold: boolean): void {
   // Binding/arity safety is mandatory when the uncollapsed form would exceed
   // Luau's local register budget, even with optional folding switched off.
   const pressure = body.statements.reduce((n, s) => n + (s.kind === 'local' ? s.names.length : s.kind === 'function-decl' && s.local ? 1 : 0), 0);
+  if (pressure >= 128) coalesceAdjacentResultAliases(body);
   if (fold || pressure >= 128) {
     inlineArgumentLiterals(body);
     foldOrderedArguments(body);
@@ -69,6 +70,37 @@ function closeLifetimes(body: Block, fold: boolean): void {
     result.push(body.statements[i]!);
   }
   body.statements = result;
+}
+
+/** A fixed call tuple can acquire debug-name copies after reconstruction. If a
+ * slot is read only by the immediately following local copy, let that slot
+ * declare the destination directly. The destination's reads, writes and captures
+ * keep their own cell; the unobserved source cell disappears. No initializer
+ * moves, and the tuple keeps every result slot, including nil holes and its tail.
+ * Restricting this to adjacency avoids extending a name over intervening code. */
+function coalesceAdjacentResultAliases(body: Block): void {
+  const sourceByRead = new Map<Expression, LexicalBinding>();
+  for (const binding of analyzeBindings(body).bindings) {
+    for (const reference of binding.reads) sourceByRead.set(reference.node, binding);
+  }
+  for (let index = 1; index < body.statements.length; index++) {
+    const sourceDeclaration = body.statements[index - 1]!, alias = body.statements[index]!;
+    if (sourceDeclaration.kind !== 'local' || sourceDeclaration.names.length < 2 || sourceDeclaration.values.length !== 1 ||
+        !['call', 'method-call'].includes(sourceDeclaration.values[0]!.kind) ||
+        alias.kind !== 'local' || alias.names.length !== 1 || alias.values.length !== 1 || alias.values[0]!.kind !== 'identifier') continue;
+    const source = sourceByRead.get(alias.values[0]!);
+    const slot = source?.declarationIndex;
+    if (!source || source.scope !== body || source.declaration !== sourceDeclaration ||
+        source.captured || source.writes.length || source.reads.length !== 1 || slot === undefined ||
+        sourceDeclaration.names[slot] !== source.name || sourceDeclaration.names.includes(alias.names[0]!)) continue;
+    sourceDeclaration.names[slot] = alias.names[0]!;
+    if (alias.types?.[0] !== undefined) {
+      sourceDeclaration.types ??= [];
+      sourceDeclaration.types[slot] = alias.types[0];
+    }
+    body.statements.splice(index, 1);
+    index--;
+  }
 }
 
 /** A call's argument slots are already ordered. Fuse only a consecutive chain

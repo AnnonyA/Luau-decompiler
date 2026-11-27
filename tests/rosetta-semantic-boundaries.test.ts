@@ -1,10 +1,15 @@
 import {readFileSync} from 'node:fs';
 import {describe, expect, it} from 'vitest';
+import {analyzeBindings} from '../src/analysis/Bindings.ts';
 import {decompile} from '../src/decompile.ts';
 import {isValidIdentifier} from '../src/reconstruct/Naming.ts';
 
 const profiles = [0, 1, 2].flatMap(opt => [1, 2].map(debug => `O${opt}g${debug}`));
-const names = ['method-result-call', 'materialized-list-writes', 'constructor-before-return', 'contextual-continue', 'conditional-method-calls'];
+const names = [
+  'method-result-call', 'materialized-list-writes', 'constructor-before-return',
+  'contextual-continue', 'conditional-method-calls', 'comparison-selected-values',
+  'sequential-phi-ranges', 'captured-table-reset', 'shared-nested-phis', 'empty-constructor-key',
+];
 const fixture = (name: string, profile: string) => readFileSync(new URL(
   `fixtures/rosetta-semantics/${name}-${profile}.luauc`, import.meta.url));
 
@@ -78,5 +83,57 @@ describe('call, constructor and contextual identifier boundaries', () => {
     expect(methods.filter(call => call.name === 'read').every(call => call.args.length === 1)).toBe(true);
     expect(methods.filter(call => call.name === 'format').every(call => call.args.length === 1)).toBe(true);
     expect(nodes(result.ast, 'call').filter(call => call.callee.kind === 'method-call')).toEqual([]);
+  });
+
+  it.each(profiles)('retains comparisons when one selected value is the tested register at %s', profile => {
+    const result = decompile(fixture('comparison-selected-values', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const loop = nodes(result.ast, 'numeric-for')[0];
+    expect(loop).toBeDefined();
+    for (const bound of [loop.start, loop.stop]) {
+      expect(nodes(bound, 'binary').some(expression => expression.op === '<')).toBe(true);
+    }
+  });
+
+  it.each(profiles)('keeps an earlier selected value across a second join in the same register at %s', profile => {
+    const result = decompile(fixture('sequential-phi-ranges', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const returned = nodes(result.ast, 'return').find(statement => statement.values.length === 2);
+    expect(returned).toBeDefined();
+    expect(returned.values[0]).not.toEqual(returned.values[1]);
+  });
+
+  it.each(['O0g1', 'O0g2', 'O1g1', 'O1g2'])('updates the captured table before its observer runs at %s', profile => {
+    const result = decompile(fixture('captured-table-reset', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const statements = result.ast.body.statements;
+    const resets = statements.flatMap((statement, index) => statement.kind === 'assign' &&
+      statement.values[0]?.kind === 'table' ? [{statement, index}] : []);
+    expect(resets).toHaveLength(2);
+    expect(resets[0]!.statement.targets).toEqual(resets[1]!.statement.targets);
+    const observations = statements.flatMap((statement, index) => statement.kind === 'local' &&
+      nodes(statement, 'call').some(call => nodes(call.callee, 'identifier').some(id => id.name === 'observe')) ? [index] : []);
+    expect(observations).toHaveLength(2);
+    expect(resets[0]!.index).toBeLessThan(observations[0]!);
+    expect(observations[0]!).toBeLessThan(resets[1]!.index);
+    expect(resets[1]!.index).toBeLessThan(observations[1]!);
+  });
+
+  it.each(profiles)('declares nested join variables in each emitted alternative at %s', profile => {
+    const result = decompile(fixture('shared-nested-phis', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    expect([...analyzeBindings(result.ast.body).globals].sort()).toEqual(['print']);
+  });
+
+  it.each(profiles)('retains an empty string field in its pending constructor at %s', profile => {
+    const result = decompile(fixture('empty-constructor-key', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const fields = nodes(result.ast, 'table').flatMap(table => table.fields);
+    expect(fields.filter(field => field.key?.kind === 'literal' && field.key.value === '')).toHaveLength(1);
   });
 });

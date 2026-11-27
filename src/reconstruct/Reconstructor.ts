@@ -965,7 +965,7 @@ class SourceBuilder {
         namesByRegister.set(phi.register, name);
         this.loopPhiNames.set(`${blockId}:${phi.register}`, name);
         this.setPhiName(key, name);
-        if (this.declaredPhis.has(key) || this.isDeclaredInScope(name)) {
+        if (this.isDeclaredInScope(name)) {
           this.declaredPhis.add(key);
           this.bindPhi(phi.register, name);
           continue;
@@ -1331,7 +1331,8 @@ class SourceBuilder {
     // at the join, and those branch locals cannot be referenced afterward.
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
       const binding = this.env.get(phi.register);
-      if (binding?.name && binding.forwardRef)
+      const name = this.phiNames.get(`phi:${join}:${phi.register}`);
+      if (binding?.name && (binding.forwardRef || name === binding.name))
         statements.push(...this.snapshotRegisterAliases(phi.register, binding.name));
     }
     const test = this.conditionFrom(last, true);
@@ -1467,7 +1468,10 @@ class SourceBuilder {
         continue;
       }
       const name = this.phiNameFor(key, phi.register, this.ir.cfg.blocks[join]!.startPc);
-      if (!this.declaredPhis.has(key) && !this.isDeclaredInScope(name)) {
+      // A shared CFG region may be emitted in more than one alternative.
+      // Its phi cache survives that walk, but a sibling's declaration does
+      // not belong to the current lexical scope.
+      if (!this.isDeclaredInScope(name)) {
         this.declaredPhis.add(key);
         statements.push({ kind: "local", names: [name], values: [] });
         this.scopeStack[this.scopeStack.length - 1 - outerScopes]!.add(name);
@@ -1595,9 +1599,6 @@ class SourceBuilder {
     // with the name allocator; otherwise a subsequent value may reuse a name.
     const savedPhiNames = new Map(this.phiNames);
     const savedDeclaredPhis = new Set(this.declaredPhis);
-    // The value the guard tests before any define inside the block runs.
-    const condReg = this.readRegister(last.a, last);
-
     // Walk the guard block itself: it may hold the value (e.g. `t = x or y`)
     // while its other statements are ordinary prelude statements.
     const basicWalk = this.walkGuardBlock(basic, t);
@@ -1606,6 +1607,9 @@ class SourceBuilder {
       return undefined;
     }
     const basicValue = basicWalk.value;
+    // The branch reads the register after its prelude. Earlier contents may
+    // belong to a different value that reused the same physical register.
+    const condReg = this.readRegister(last.a, last);
     // The value `t` carries when the jump is taken: the guard block's define,
     // or the pre-existing binding when the block only tests the register.
     const guardValue = basicValue ?? condReg;
@@ -1638,20 +1642,24 @@ class SourceBuilder {
     }
 
     const thenValue = thenPath.value ?? basicValue!;
-    const orForm =
-      thenPath.guards.length === 0 &&
-      (sameExpr(thenValue, condReg) || (basicValue !== undefined && last.a === t && sameExpr(thenValue, basicValue)));
-    const andForm =
-      !orForm && thenPath.guards.length === 0 && thenPath.value !== undefined && sameExpr(elseValue, condReg);
+    // Only truthiness branches permit replacing a selected value by and/or.
+    // A comparison such as `x < 1 and 1 or x` also carries x on one arm, but
+    // testing x itself would drop the comparison (all numbers are truthy).
+    const truthiness = last.opcode === Opcode.JUMPIF || last.opcode === Opcode.JUMPIFNOT;
+    const truthyValue = last.opcode === Opcode.JUMPIFNOT ? thenValue : elseValue;
+    const falsyValue = last.opcode === Opcode.JUMPIFNOT ? elseValue : thenValue;
+    const orForm = truthiness && thenPath.guards.length === 0 && sameExpr(truthyValue, condReg);
+    const andForm = truthiness && !orForm && thenPath.guards.length === 0 &&
+      thenPath.value !== undefined && sameExpr(falsyValue, condReg);
     let expr: Expression;
     if (elseId === join && thenPath.guards.length === 0 && thenPath.value !== undefined) {
       // `JUMPIF t -> join`: the taken branch reuses the guard's value, so the
       // result is `t or <fallback>` (short-circuit).
       expr = { kind: "binary", op: last.opcode === Opcode.JUMPIFNOT ? "and" : "or", left: guardValue, right: thenValue };
     } else if (orForm) {
-      expr = { kind: "binary", op: "or", left: thenValue, right: elseValue };
+      expr = { kind: "binary", op: "or", left: condReg, right: falsyValue };
     } else if (andForm) {
-      expr = { kind: "binary", op: "and", left: condReg, right: thenValue };
+      expr = { kind: "binary", op: "and", left: condReg, right: truthyValue };
     } else if (thenPath.guards.length > 0) {
       expr = guardedValue(guardTest, thenPath.guards, thenValue, elseValue, thenPath.selectsTruthyResult);
     } else {
@@ -2393,7 +2401,7 @@ class SourceBuilder {
         const name = this.stringConstant(insn.constantIndex ?? 0);
         const object = this.readRegister(insn.b, insn);
         const validFieldName = name !== undefined && isValidIdentifier(name);
-        if (pendingTable && pendingTable.register === insn.b && name) {
+        if (pendingTable && pendingTable.register === insn.b && name !== undefined) {
           // Bytecode keys are arbitrary strings. Only valid Luau identifiers
           // may be written as dotted properties or bare table fields.
           const fieldKey = validFieldName ? { name } : { key: lit(name) };
@@ -2455,9 +2463,15 @@ class SourceBuilder {
         });
         break;
       case Opcode.NEWTABLE:
-        return { statements, pendingTable: { register: insn.a, fields: [], nested: [], startPc: insn.pc, role: this.tableRole(insn), flushed: false } };
       case Opcode.DUPTABLE: {
-        const fields = this.dupTableFields(insn.d);
+        const fields = insn.opcode === Opcode.DUPTABLE ? this.dupTableFields(insn.d) : [];
+        if (this.env.get(insn.a)?.forwardRef) {
+          // A constructor assigned directly to a live REF cell is observable
+          // immediately by existing closures. Use the normal cell assignment
+          // path, including aliases, instead of deferring it as a fresh local.
+          statements.push(...this.define(insn.a, {kind: "table", fields}, insn));
+          return {statements};
+        }
         return { statements, pendingTable: { register: insn.a, fields, nested: [], startPc: insn.pc, role: this.tableRole(insn), flushed: false } };
       }
       case Opcode.SETLIST: {

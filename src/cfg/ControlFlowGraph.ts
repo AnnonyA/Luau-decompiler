@@ -74,7 +74,7 @@ export function buildControlFlowGraph(prototype: Prototype): ControlFlowGraph {
       continue;
     }
     const nextPc = last.pc + last.width;
-    if (isFallthrough(last.opcode) && nextPc < prototype.code.length) {
+    if (isFallthrough(last.opcode) && !(last.opcode === Opcode.LOADB && last.c !== 0) && nextPc < prototype.code.length) {
       const nextBlock = blockOfPc.get(nextPc);
       if (nextBlock !== undefined) {
         block.fallthrough = nextBlock;

@@ -1,0 +1,70 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 4,
+      "mismatch": 2
+    },
+    "candidate": {
+      "pass": 6
+    }
+  },
+  "by_profile": {
+    "baseline": {
+      "O2g1": 1,
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "baseline": [
+      {
+        "case": "predicate-loop-result",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `7` got `nil`"
+      },
+      {
+        "case": "predicate-loop-result",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `7` got `nil`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 4,
+    "by_decompiler": {
+      "baseline": {
+        "round_trips": 4,
+        "similarity": 72.09302186965942,
+        "size": 1.3835616438356164,
+        "locals": 1.5714285714285714,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 100.0,
+        "cpu_ms_median": 127.963,
+        "cpu_ms_total": 507.697
+      },
+      "candidate": {
+        "round_trips": 4,
+        "similarity": 72.09302186965942,
+        "size": 1.3835616438356164,
+        "locals": 1.5714285714285714,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 100.0,
+        "cpu_ms_median": 132.252,
+        "cpu_ms_total": 504.59499999999997
+      }
+    }
+  }
+}

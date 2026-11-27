@@ -151,6 +151,66 @@
       "source": "shared-iteration-tail.luau",
       "profile": "O2g2",
       "sha256": "8e925d3681954b90a01d0b11945bd92ede310d34bdbcb345b962251e38015af9"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O0g1",
+      "sha256": "843d0b8ec7a3610363e537b85f84681f8a7903296032aa72771895396a0f433a"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O0g2",
+      "sha256": "af497ab05a1c668efbe19011f06eccecf3e2b6c1897f664160449c24c69686d4"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O1g1",
+      "sha256": "3a239b07a0a69c579002e5799fb6abc20a170270a73893f034c8ad657d7e7612"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O1g2",
+      "sha256": "37f352470c2133b456e358e00801b77fb0198a01fa3288c9c356f2256be7b117"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O2g1",
+      "sha256": "8baab4619e8924095dbeb63655a79ed5f528808cc48459b0505bcd55fa8ffb96"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O2g2",
+      "sha256": "8b455ae4ec1d22916c071469c95550b48ae455dd8d95b2f2b2b63dec45e0199d"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O0g1",
+      "sha256": "15a80b15dd6081af2aab4ba01191a8b1a8a04d4bd30288492526abbb4429beda"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O0g2",
+      "sha256": "16cbd024aa7140dc375d2941d7563a69fd00fd579c1d4beda49a180af495d865"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O1g1",
+      "sha256": "5ffd0cc1e8fc7b31a5ce6da85e2eb187e4526a25d71e3e1cebf5fc39fcd38017"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O1g2",
+      "sha256": "d086f45f32e9a4f1917dee556b5dcefb8a4dc52c32838a29010795a504ab16b8"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O2g1",
+      "sha256": "3e9d8d03da64aff5b42d06d715b4010244b1dc259fb7cb73c59edbb01740140e"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O2g2",
+      "sha256": "004596122b1b9619e1fa23f1020028cf609179901d78d486872fcd4f0413b751"
     }
   ]
 }

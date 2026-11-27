@@ -47,6 +47,31 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
       });
     }
   }
+  // An always-breaking/returning numeric for has no reachable backedge.
+  // Its explicit prep/step pair still owns a zero-or-one-iteration region;
+  // treating FORNPREP as an ordinary two-way block would lose the body.
+  for (const preparation of cfg.blocks) {
+    if (preparation.unreachable) continue;
+    const prep = preparation.instructions.at(-1);
+    if (prep?.opcode !== Opcode.FORNPREP || preparation.fallthrough === undefined || preparation.branch === undefined) continue;
+    const header = preparation.fallthrough;
+    const latch = cfg.blocks.find(candidate => candidate.unreachable &&
+      candidate.fallthrough !== undefined && candidate.branch !== undefined &&
+      followPureJumps(cfg, candidate.fallthrough) === followPureJumps(cfg, preparation.branch!) &&
+      followPureJumps(cfg, candidate.branch) === followPureJumps(cfg, header) &&
+      candidate.instructions.at(-1)?.opcode === Opcode.FORNLOOP &&
+      candidate.instructions.at(-1)?.a === prep.a);
+    if (!latch || loops.some(loop => loop.latch === latch.id)) continue;
+    const owned = new Set<number>([latch.id]);
+    const pending = [header];
+    while (pending.length) {
+      const current = pending.pop()!;
+      if (current === preparation.branch || owned.has(current) || !dominators.dominates(header, current)) continue;
+      owned.add(current);
+      pending.push(...cfg.blocks[current]!.successors);
+    }
+    loops.push({header, latch: latch.id, backEdges: [], blocks: [...owned].sort((a, b) => a - b), kind: "numeric-for"});
+  }
   // Several continue paths may branch back to the same loop header. They
   // describe ONE natural loop, not separate nested loops with identical
   // headers. Merge their bodies and retain all backedges for downstream SSA.
@@ -88,6 +113,22 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
     }
   }
   return merged;
+}
+
+/** Compiler jump threading can redirect the dead step around a break-only body
+ * or leave a control-only exit stub. Only those exact control edges are equal;
+ * CLOSEUPVALS and any register work still own observable semantics. */
+function followPureJumps(cfg: ControlFlowGraph, start: number): number {
+  const seen = new Set<number>();
+  let current = start;
+  while (!seen.has(current)) {
+    seen.add(current);
+    const block = cfg.blocks[current];
+    if (!block || block.successors.length !== 1 || !block.instructions.every(insn =>
+      insn.opcode === Opcode.NOP || insn.opcode === Opcode.JUMP)) return current;
+    current = block.successors[0]!;
+  }
+  return current;
 }
 
 function isPreferredLatch(cfg: ControlFlowGraph, candidate: number, current: number): boolean {

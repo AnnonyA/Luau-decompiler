@@ -467,24 +467,45 @@ export function hasArtificialComments(source: string): boolean {
   // Ignore '--' inside emitted quoted and interpolated string literals.
   // Run this diagnostic on output with optional annotations disabled: a bare
   // '--' outside literals is the pattern that should trigger it.
-  let quote: string | undefined;
-  let escaped = false;
+  type Frame = { kind: "code"; braces: number } | { kind: "quoted"; quote: string } | { kind: "interpolated" };
+  const frames: Frame[] = [{ kind: "code", braces: 0 }];
   for (let i = 0; i < source.length; i++) {
     const char = source[i]!;
-    if (quote !== undefined) {
-      if (escaped) {
-        escaped = false;
-      } else if (char === "\\") {
-        escaped = true;
-      } else if (char === quote) {
-        quote = undefined;
-      }
+    const frame = frames.at(-1)!;
+    if (frame.kind === "quoted") {
+      if (char === "\\") i++;
+      else if (char === frame.quote) frames.pop();
       continue;
     }
-    if (char === '"' || char === "'" || char === "\x60") {
-      quote = char;
+    if (frame.kind === "interpolated") {
+      if (char === "\\") {
+        // A Unicode escape's braces are literal text, not an interpolation.
+        if (source[i + 1] === "u" && source[i + 2] === "{") {
+          const end = source.indexOf("}", i + 3);
+          i = end < 0 ? source.length : end;
+        } else i++;
+      } else if (char === "`") frames.pop();
+      else if (char === "{") frames.push({ kind: "code", braces: 1 });
+      continue;
+    }
+    if (char === '"' || char === "'") {
+      frames.push({ kind: "quoted", quote: char });
+    } else if (char === "`") {
+      frames.push({ kind: "interpolated" });
     } else if (char === "-" && source[i + 1] === "-") {
       return true;
+    } else if (char === "{") {
+      frame.braces++;
+    } else if (char === "}" && frame.braces > 0) {
+      frame.braces--;
+      if (frame.braces === 0 && frames.length > 1) frames.pop();
+    } else if (char === "[") {
+      const opening = /^\[(=*)\[/.exec(source.slice(i));
+      if (opening) {
+        const closing = `]${opening[1]}]`;
+        const end = source.indexOf(closing, i + opening[0].length);
+        i = end < 0 ? source.length : end + closing.length - 1;
+      }
     }
   }
   return false;

@@ -1,0 +1,63 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 5,
+      "mismatch": 1
+    },
+    "candidate": {
+      "pass": 6
+    }
+  },
+  "by_profile": {
+    "baseline": {
+      "O2g1": 1
+    }
+  },
+  "failures": {
+    "baseline": [
+      {
+        "case": "sequential-phi-ranges",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t3` got `3\t3`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 5,
+    "by_decompiler": {
+      "baseline": {
+        "round_trips": 5,
+        "similarity": 80.24415373802185,
+        "size": 1.3492070528600801,
+        "locals": 1.0844717711976986,
+        "nesting": 0.2,
+        "endless": 0,
+        "names": 100.0,
+        "cpu_ms_median": 133.44,
+        "cpu_ms_total": 664.218
+      },
+      "candidate": {
+        "round_trips": 5,
+        "similarity": 80.24415373802185,
+        "size": 1.3492070528600801,
+        "locals": 1.0844717711976986,
+        "nesting": 0.2,
+        "endless": 0,
+        "names": 100.0,
+        "cpu_ms_median": 135.16400000000002,
+        "cpu_ms_total": 679.041
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ import {Opcode} from '../src/decode/Opcode.ts';
 
 const profiles = [0, 1, 2].flatMap(opt => [1, 2].map(debug => `O${opt}g${debug}`));
 const names = ['conditional-binding-loop', 'shared-iteration-tail', 'iterator-state',
-  'repeat-condition-setup', 'loop-accumulator'];
+  'repeat-condition-setup', 'loop-accumulator', 'terminal-numeric-for', 'predicate-loop-result'];
 const fixture = (name: string, profile: string) => readFileSync(new URL(
   `fixtures/rosetta-control/${name}-${profile}.luauc`, import.meta.url));
 function nodes(value: unknown, kind: string): Record<string, any>[] {
@@ -60,6 +60,33 @@ describe('loop state and nested region boundaries', () => {
     expect(repeats.length).toBeGreaterThan(0);
     for (const repeat of repeats) {
       expect(nodes(repeat.test, 'unary').some(node => node.op === '#')).toBe(true);
+    }
+  });
+
+  it.each(profiles)('retains numeric prep/step ownership without a reachable backedge at %s', profile => {
+    const result = decompile(fixture('terminal-numeric-for', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const main = result.module.prototypes[result.module.mainProtoId]!;
+    const ir = analyzePrototype(main);
+    // O2 unrolls the three tiny constant ranges. The large nested range and
+    // the parameterized returning loop retain their explicit iteration pair.
+    const mainLoopCount = profile.startsWith('O2') ? 1 : 4;
+    expect(ir.loops.filter(loop => loop.kind === 'numeric-for' && loop.backEdges.length === 0)).toHaveLength(mainLoopCount);
+    expect(nodes(result.ast, 'numeric-for')).toHaveLength(mainLoopCount + 1);
+  });
+
+  it.each(['O2g1', 'O2g2'])('joins predicate-return values beyond the loop at %s', profile => {
+    const result = decompile(fixture('predicate-loop-result', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const main = result.module.prototypes[result.module.mainProtoId]!;
+    const ir = analyzePrototype(main);
+    expect(ir.loops).toHaveLength(2);
+    for (const loop of ir.loops) {
+      const follow = ir.structure.loopFollowByLoop.get(loop)!;
+      expect(follow).not.toBe(ir.cfg.blocks[loop.latch]!.fallthrough);
+      expect(ir.ssa.phis.get(follow)?.length).toBeGreaterThan(0);
     }
   });
 });

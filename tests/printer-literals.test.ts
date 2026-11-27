@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import { chunk, lit } from "../src/ast/Ast.ts";
+import { decompile } from "../src/decompile.ts";
 import { hasArtificialComments, printLuau } from "../src/print/LuauPrinter.ts";
 
 function printLiteral(value: string): string {
@@ -32,4 +34,28 @@ describe("printer literal fidelity", () => {
     expect(hasArtificialComments("-- leading comment\nreturn 1")).toBe(true);
     expect(hasArtificialComments("return 1\n-- trailing comment")).toBe(true);
   });
+
+  it("tracks nested interpolation expressions and literal brace escapes", () => {
+    expect(hasArtificialComments('return `outer {`inner -- text`} end`')).toBe(false);
+    expect(hasArtificialComments('return `outer {({["}"] = `--`})["}"]}`')).toBe(false);
+    expect(hasArtificialComments('return `outer {`inner -- text`} end` -- actual')).toBe(true);
+    expect(hasArtificialComments('return `\\u{7b} -- text`')).toBe(false);
+    expect(hasArtificialComments('return `outer {value -- actual\n}`')).toBe(true);
+    expect(hasArtificialComments('return `outer {`inner {value -- actual\n}`} end`')).toBe(true);
+  });
+
+  it("ignores long string contents while detecting comments after them", () => {
+    expect(hasArtificialComments('return [==[-- text ` { " } ]==]')).toBe(false);
+    expect(hasArtificialComments('return [==[-- text ]==] -- actual')).toBe(true);
+    expect(hasArtificialComments('return `outer {[=[-- text]=]}`')).toBe(false);
+  });
+
+  it.each([0, 1, 2].flatMap(opt => [1, 2].map(debug => `O${opt}g${debug}`)))(
+    'accepts valid nested byte-string interpolation at %s', profile => {
+      const input = readFileSync(new URL(`fixtures/rosetta-printer/nested-interpolation-${profile}.luauc`, import.meta.url));
+      const result = decompile(input);
+      expect(result.ok).toBe(true);
+      expect(result.diagnostics.filter(item => item.severity === 'error')).toEqual([]);
+    },
+  );
 });

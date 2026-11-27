@@ -30,6 +30,18 @@ to this project's existing CFG, SSA definitions and lexical binding ownership.
 5. Intermediate read/modify/write instructions update a loop-carried lexical
    accumulator even when only the final write directly feeds the backedge phi.
    A debug range beginning between those writes cannot create a shadow cell.
+6. A numeric loop whose body always breaks or returns has no reachable backedge.
+   The matching FORNPREP/FORNLOOP pair still owns its zero-or-one-iteration body.
+   Compiler jump threading can bypass a break-only body or leave an exit stub;
+   pairing follows only NOP/JUMP control edges, never CLOSEUPVALS or register work.
+   This additionally consults Tovek `find_numeric_loops` in `region.rs` and Luau
+   `compileStatFor` in `Compiler.cpp`, at the exact revisions above.
+7. A loop header's immediate post-dominator can be an internal predicate join.
+   Its actual continuation is the first post-dominator outside the loop, not
+   necessarily the exhaustion path. Inlined returns assign their result before
+   jumping past the fallback, so their definitions must meet at that continuation.
+   This additionally consults Tovek's `loop_continuation` and transfer-arm ownership
+   and Luau's inline frame result targets and `compileInlineReturn`.
 
 Five project-authored programs in `tests/fixtures/rosetta-control` are compiled
 at O0/O1/O2 and g1/g2. Their hashes are recorded in the adjacent manifest.
@@ -38,3 +50,13 @@ comparison: base `9d4f03f` passed 12/30, the control-flow repair passed 30/30.
 These are development regressions, not an independent holdout or a claim of
 general CFG equivalence. Rosetta's first failures and reference inputs remain
 unchanged in that evidence directory.
+
+`terminal-numeric-for.luau` adds empty-range, break-only, nested and returning
+numeric loop bodies. The first preserved official execution comparison in
+`benchmarks/results/rosetta-terminal-numeric-2026-11-27` is base 0/6 and repaired
+6/6. These checks include all three optimization and both debug levels.
+
+`predicate-loop-result.luau` exercises an inlined predicate and value return
+through a generic loop. Its preserved first comparison against the integrated
+`05cb993` checkpoint passed 4/6 before and 6/6 after following the full
+post-dominator chain; see `rosetta-loop-follow-2026-11-27` in benchmark results.

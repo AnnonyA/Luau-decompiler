@@ -1,0 +1,49 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "ann": {
+      "pass": 5,
+      "recompile_failed": 1
+    }
+  },
+  "by_profile": {
+    "ann": {
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "ann": [
+      {
+        "case": "wide-call-results",
+        "profile": "O2g2",
+        "kind": "recompile_failed",
+        "detail": "syntax error: 45: Out of local registers when trying to allocate value125: exceeded limit 200"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 5,
+    "by_decompiler": {
+      "ann": {
+        "round_trips": 5,
+        "similarity": 92.58104681968689,
+        "size": 1.1375539238693504,
+        "locals": 1.0466985420191424,
+        "nesting": 1.0,
+        "endless": 0,
+        "names": 98.9795918367347,
+        "cpu_ms_median": 195.406,
+        "cpu_ms_total": 1000.4590000000001
+      }
+    }
+  }
+}

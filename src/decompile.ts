@@ -1,3 +1,4 @@
+import { normalizeControlFlow } from "./decode/NormalizeControlFlow.js";
 import { applyOptionalRewrites } from "./reconstruct/OptionalRewrites.js";
 import { boundLocalLifetimes } from "./reconstruct/LocalLifetimes.js";
 import { validateAst, type ValidationFailure } from "./ast/AstValidator.js";
@@ -129,22 +130,28 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
   }
 
   try {
-    const reconstructed = reconstructFunction(decoded.module, main);
-    const factories = recoverClosureFactories(chunk(reconstructed.body.statements), decoded.module);
-    const lowered = lowerClosureIdentity(factories.ast, decoded.module);
+    const reconstructionModule = normalizeControlFlow(decoded.module);
+    const reconstructed = reconstructFunction(reconstructionModule, reconstructionModule.prototypes[main.id]!);
+    const factories = recoverClosureFactories(chunk(reconstructed.body.statements), reconstructionModule);
+    const lowered = lowerClosureIdentity(factories.ast, reconstructionModule);
     const resolvedKeys = new Set(lowered.resolvedKeys);
+    const originalDiagnostic = (diagnostic: Diagnostic): Diagnostic => {
+      if (diagnostic.prototypeId === undefined || diagnostic.pc === undefined) return diagnostic;
+      const instruction = reconstructionModule.prototypes[diagnostic.prototypeId]?.instructions.find(insn => insn.pc === diagnostic.pc);
+      return instruction?.originalPc === undefined ? diagnostic : { ...diagnostic, pc: instruction.originalPc };
+    };
     for (const diagnostic of factories.diagnostics) {
-      diagnostics.push(diagnostic);
+      diagnostics.push(originalDiagnostic(diagnostic));
       if (diagnostic.code !== "closure-identity-native-inline" || diagnostic.prototypeId === undefined) continue;
-      const instruction = decoded.module.prototypes[diagnostic.prototypeId]?.instructions.find(instruction => instruction.pc === diagnostic.pc);
+      const instruction = reconstructionModule.prototypes[diagnostic.prototypeId]?.instructions.find(instruction => instruction.pc === diagnostic.pc);
       if (instruction?.opcode === Opcode.DUPCLOSURE) resolvedKeys.add(`${diagnostic.prototypeId}:${instruction.d}`);
     }
     for (const diagnostic of reconstructed.closureIdentityDiagnostics) {
       const instruction = diagnostic.prototypeId !== undefined && diagnostic.pc !== undefined
-        ? decoded.module.prototypes[diagnostic.prototypeId]?.instructions.find(instruction => instruction.pc === diagnostic.pc) : undefined;
+        ? reconstructionModule.prototypes[diagnostic.prototypeId]?.instructions.find(instruction => instruction.pc === diagnostic.pc) : undefined;
       if (diagnostic.code === "closure-identity-unresolved" && instruction?.opcode === Opcode.DUPCLOSURE &&
           resolvedKeys.has(`${diagnostic.prototypeId}:${instruction.d}`)) continue;
-      diagnostics.push(diagnostic);
+      diagnostics.push(originalDiagnostic(diagnostic));
     }
     const raw = presentClosures(lowered.ast);
     const debugNames = new Set(decoded.module.prototypes.flatMap((prototype) => prototype.locals.map((local) => local.name)));
@@ -153,7 +160,7 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
       nameStems: reconstructed.nameStems, workingNames: reconstructed.workingNames });
     const helpers = new Set<string>();
     const restored = options.recoverInlinedFunctions === false ? cleaned
-      : recoverInlineCalls(cleaned, inlineHelperLines(decoded.module), helpers);
+      : recoverInlineCalls(cleaned, inlineHelperLines(reconstructionModule), helpers);
     const recovered = helpers.size === 0 || options.foldSingleUseTemps === false
       ? restored : foldTemporaries(restored, { argumentsOf: helpers });
     const rewritten = options.mathConstants || options.rerollUnrolledLoops || options.keepDeadFunctions === false || options.unfoldModuleTables !== false

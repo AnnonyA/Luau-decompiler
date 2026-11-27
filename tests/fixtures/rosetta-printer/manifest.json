@@ -1,0 +1,36 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "entries": [
+    {
+      "source": "nested-interpolation.luau",
+      "profile": "O0g1",
+      "sha256": "fab42aa4ba8073f745bfb4527502556634b6778b39e0b696a949affb5731775e"
+    },
+    {
+      "source": "nested-interpolation.luau",
+      "profile": "O0g2",
+      "sha256": "e847a1988821ea525dc6ad092a7b5368c60d28ccfb595d03b1b614a1ba9d75c6"
+    },
+    {
+      "source": "nested-interpolation.luau",
+      "profile": "O1g1",
+      "sha256": "af98d0a95d641d986983a163b2566dbffe5d07abf5e3044d550079695f2a8dd9"
+    },
+    {
+      "source": "nested-interpolation.luau",
+      "profile": "O1g2",
+      "sha256": "23f40971bc026cb9e2fbee8aac1fbb920fd62a7a53dd41ce3855b36ca0cd0ad3"
+    },
+    {
+      "source": "nested-interpolation.luau",
+      "profile": "O2g1",
+      "sha256": "113b8fc3ec1967fa9b061d1250fd9a1f655ba01d3d332e12080ddcc803dde8a6"
+    },
+    {
+      "source": "nested-interpolation.luau",
+      "profile": "O2g2",
+      "sha256": "3f842f9496e3e2bc98c1d692738dea2b89d224db0043656f98523f5cb2f17171"
+    }
+  ]
+}

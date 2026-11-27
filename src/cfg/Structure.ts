@@ -82,18 +82,23 @@ export function followOfLoop(
 ): number | undefined {
   const latch = cfg.blocks[loop.latch];
   const opcode = latch?.instructions.at(-1)?.opcode;
+  // The body's first common block can still be inside the loop (for example
+  // the join that materializes a predicate before an inlined early return).
+  // Continue up the post-dominator tree to the first enclosing continuation.
+  let common = postDominators.ipdom[loop.header];
+  const seen = new Set<number>();
+  while (common !== undefined && common >= 0 && common < cfg.blocks.length &&
+      loop.blocks.includes(common) && !seen.has(common)) {
+    seen.add(common);
+    common = postDominators.ipdom[common];
+  }
+  if (common !== undefined && common >= 0 && common < cfg.blocks.length && !loop.blocks.includes(common)) {
+    return common;
+  }
   if ((opcode === Opcode.FORGLOOP || opcode === Opcode.FORNLOOP) && latch?.fallthrough !== undefined) {
     // Inlined returns can bypass the exhaustion tail. The common continuation
     // owns both result definitions; the latch fallthrough is only one exit.
-    const common = postDominators.ipdom[loop.header];
-    if (common !== undefined && common >= 0 && common < cfg.blocks.length && !loop.blocks.includes(common)) {
-      return common;
-    }
     return latch.fallthrough;
-  }
-  const ipdom = postDominators.ipdom[loop.header];
-  if (ipdom !== undefined && ipdom >= 0 && ipdom < cfg.blocks.length && !loop.blocks.includes(ipdom) && ipdom !== loop.header) {
-    return ipdom;
   }
   // Without a common post-dominator, prefer the failed entry test. An earlier
   // numbered exit may instead be a return from inside the body; treating
