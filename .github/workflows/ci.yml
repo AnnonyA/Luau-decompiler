@@ -150,6 +150,20 @@ jobs:
           path: ${{ runner.temp }}/luau-semantic-report.json
           if-no-files-found: warn
           retention-days: 30
+      - name: Check sealed closure identity and single-load controls
+        run: |
+          npm run bench:closure-identity -- \
+            --luau-source "$RUNNER_TEMP/luau-source" \
+            --luau-build "$RUNNER_TEMP/luau-build" \
+            --output "$RUNNER_TEMP/closure-identity"
+      - name: Upload closure identity traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-closure-identity
+          path: ${{ runner.temp }}/closure-identity
+          if-no-files-found: warn
+          retention-days: 30
       - name: Check 12 independent originals against the official VM
         run: |
           npm run bench:competition -- \

@@ -27,7 +27,9 @@
     "bench:large:regressions": "node scripts/bench-large-regressions.mjs",
     "bench:fuzz": "node scripts/bench-fuzz.mjs",
     "bench:performance": "node scripts/bench-performance.mjs",
-    "bench:independent": "node scripts/bench-independent.mjs"
+    "bench:independent": "node scripts/bench-independent.mjs",
+    "bench:closure-identity": "node scripts/bench-closure-identity.mjs",
+    "bench:closure-identity:adversarial": "node scripts/bench-closure-identity.mjs --manifest benchmarks/closure-identity/holdouts/manifest.json"
   },
   "engines": {
     "node": ">=20"

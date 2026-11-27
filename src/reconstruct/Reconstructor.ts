@@ -18,10 +18,13 @@ import type { LuauConstant } from "../decode/Constant.js";
 import type { DecodedInstruction } from "../decode/DecodedInstruction.js";
 import { CaptureType, Opcode, isFastCall } from "../decode/Opcode.js";
 import type { BytecodeModule, Prototype } from "../decode/Prototype.js";
+import type { Diagnostic } from "../diagnostics.js";
 import { buildSsa, type SsaFunction } from "../ssa/SsaBuilder.js";
 import { computeLiveness, type Liveness } from "../dataflow/Liveness.js";
 import { NameAllocator, debugNameAt, isValidIdentifier, parameterNames } from "./Naming.js";
 import { eventCallbackName, nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
+import { ClosureEffects } from "./ClosureEffects.js";
+import { analyzeClosureCachePriming, closureCacheKey, type CaptureIdentity } from "./ClosureCachePriming.js";
 
 export interface FunctionIr {
   cfg: ControlFlowGraph;
@@ -54,6 +57,8 @@ export interface ReconstructedFunction {
   nameStems: ReadonlyMap<string, string>;
   /** Every binding name this reconstruction chose itself. */
   workingNames: ReadonlySet<string>;
+  /** Identity proof limits are observable to API callers, not hidden in source. */
+  closureIdentityDiagnostics: readonly Diagnostic[];
 }
 
 export interface CaptureBinding {
@@ -76,7 +81,7 @@ export function reconstructFunction(
   parentContext?: ChildContext,
 ): ReconstructedFunction {
   const allocator = parentContext ? new NameAllocator(parentContext.allocator) : moduleNameAllocator(module);
-  const names = new ReconstructionNames();
+  const names = new ReconstructionNames(analyzeClosureCachePriming(module));
   const result = buildFunction(module, proto, allocator, parentContext?.captures ?? new Map(), names);
   names.finish();
   return result;
@@ -85,6 +90,15 @@ export function reconstructFunction(
 /** Cleanup still consumes chunk-wide spelling hints. Keep a suffix hint only
  * when every function that produced that spelling agrees on its origin. */
 class ReconstructionNames {
+  constructor(readonly closureCachePrimes: ReadonlyMap<string, readonly CaptureIdentity[]>) {}
+  readonly closureIdentityDiagnostics: Diagnostic[] = [];
+  private readonly identityNotes = new Set<string>();
+  identityDiagnostic(code: string, prototypeId: number, pc: number, message: string): void {
+    const key = `${code}:${prototypeId}:${pc}`;
+    if (this.identityNotes.has(key)) return;
+    this.identityNotes.add(key);
+    this.closureIdentityDiagnostics.push({severity: "warning", code, prototypeId, pc, message});
+  }
   readonly declaredLocals = new Set<string>();
   readonly nameStems = new Map<string, string>();
   readonly workingNames = new Set<string>();
@@ -139,6 +153,7 @@ function buildFunction(
     declaredLocals: names.declaredLocals,
     nameStems: names.nameStems,
     workingNames: names.workingNames,
+    closureIdentityDiagnostics: names.closureIdentityDiagnostics,
   };
 }
 
@@ -233,6 +248,7 @@ class SourceBuilder {
   private readonly mainProto: Prototype | undefined;
   /** Repeated constant loads with proven capture identity and a dominating first load. */
   private readonly sharedClosureConstants = new Map<number, {pc: number; name: string; hoisted: boolean; factory?:string}>();
+  private readonly closureEffects: ClosureEffects;
 
   constructor(
     private readonly module: BytecodeModule,
@@ -242,6 +258,7 @@ class SourceBuilder {
     private readonly captures: Map<number, CaptureBinding>,
     private readonly reconstructionNames: ReconstructionNames,
   ) {
+    this.closureEffects = new ClosureEffects(module, proto, ir.cfg, ir.ssa);
     for (const [index, loop] of ir.loops.entries()) {
       const siblings = this.loopsByHeader.get(loop.header) ?? [];
       siblings.push(loop);
@@ -334,11 +351,6 @@ class SourceBuilder {
     }
     if (![...loads.values()].some(sites => sites.length > 1)) return;
     const cyclic = findCyclicBlocks(this.ir.cfg);
-    const inert = new Set([Opcode.NOP, Opcode.MOVE, Opcode.LOADNIL, Opcode.LOADB, Opcode.LOADN, Opcode.LOADK, Opcode.LOADKX,
-      Opcode.CAPTURE, Opcode.JUMP, Opcode.JUMPIF, Opcode.JUMPIFNOT]);
-    const environmentNeutral = new Set([...inert, Opcode.NEWTABLE, Opcode.DUPTABLE, Opcode.NEWCLOSURE,
-      Opcode.DUPCLOSURE, Opcode.GETVARARGS, Opcode.PREPVARARGS, Opcode.NOT, Opcode.AND, Opcode.OR,
-      Opcode.ANDK, Opcode.ORK, Opcode.JUMPXEQKNIL, Opcode.JUMPXEQKB, Opcode.JUMPXEQKN, Opcode.JUMPXEQKS]);
     let factoryLocals=0;
     for (const [constant, sites] of loads) {
       if (sites.length < 2) continue;
@@ -348,34 +360,38 @@ class SourceBuilder {
       const hoisted = sites.some(s => this.ir.cfg.blockOfPc.get(s.pc) !== home);
       const signature = this.constantCaptureSignature(first);
       if (signature === undefined || sites.some(s => this.constantCaptureSignature(s) !== signature)) continue;
-      let needsFactory=false;
-      // Keep the existing capture-free, same-block rule. Extending sharing to
-      // captures or other blocks requires stronger lifetime/environment proof.
-      // A constant caches its initial environment and first capture values.
-      // A nested function can be called again or have setfenv applied by its
-      // caller. Even the main chunk can change its environment before a load.
-      // Prove an environment-neutral prefix in a non-repeating top-level
-      // execution; arbitrary calls and metamethod-capable instructions fail closed.
-      if (hoisted || signature) {
-        if (this.proto !== this.mainProto || sites.some(s => cyclic.has(this.ir.cfg.blockOfPc.get(s.pc)!))) continue;
-        if (!this.everyInstructionBefore(first, i => environmentNeutral.has(i.opcode))) {
-          // One source literal behind a factory retains DUPCLOSURE's own
-          // environment/cache check at each load. Aliasing its first result
-          // would incorrectly share the fresh clones made after setfenv.
-          // Limit this form to stable top-level captures in the same block.
-          if (hoisted || this.proto.maxStackSize + this.sharedClosureConstants.size + factoryLocals + sites.length + 1 > 180) continue;
-          needsFactory=true;
-        }
-      }
+      const repeating = this.proto !== this.mainProto || sites.some(s => cyclic.has(this.ir.cfg.blockOfPc.get(s.pc)!));
+      if ((hoisted || signature) && repeating) continue;
+      // Even a capture-free DUPCLOSURE can clone: its constant retains the
+      // loader environment. Never alias the clones after an environment change.
+      // A nested activation's entry environment is unknown as well.
+      const entryEnvironment = !repeating && this.everyInstructionBefore(first,
+        i => this.closureEffects.neutral(i, false));
+      const needsFactory = !entryEnvironment;
+      if (needsFactory && (hoisted ||
+          this.proto.maxStackSize + this.sharedClosureConstants.size + factoryLocals + sites.length + 1 > 180)) continue;
       // PC order is not execution order. Follow predecessor edges back to the
       // dominating load, including acyclic detours outside the lexical interval.
       if (sites.slice(1).some(site => !this.everyInstructionBefore(site,
-        i => inert.has(i.opcode) || (i.opcode === Opcode.DUPCLOSURE && loads.has(i.d)), first))) continue;
-      const factory=needsFactory ? this.allocator.reserve("closureFactory") : undefined;
+        i => this.closureEffects.neutral(i, entryEnvironment), first))) continue;
+      // The closed carrier may deliberately resist inlining; it still has one
+      // native constant pool, independently of its number of activations.
+      const factory=needsFactory ? this.allocator.reserve(signature ? "closureFactory" : "sharedFunctionFactory") : undefined;
       if (factory) factoryLocals+=sites.length+1;
       const name = this.allocator.reserve(factory ? "closureValue" : "sharedFunction");
       this.sharedClosureConstants.set(constant, {pc: first.pc, name, hoisted, factory});
+      if (!factory) this.reconstructionNames.identityDiagnostic("closure-identity-entry-assumption", this.proto.id, first.pc,
+        `Sharing K${constant} assumes main starts in the loader environment with its initial cache captures. ` +
+        "Host-driven environment changes or repeated main activations with different captures are not proved by bytecode.");
       if (hoisted) this.declareInScope(name);
+    }
+    for (const [constant, sites] of loads) {
+      if (sites.length < 2 || this.sharedClosureConstants.has(constant)) continue;
+      const remaining = sites.filter(site => !this.isGuaranteedCacheMiss(site, this.capturesAfter(site.pc)));
+      if (remaining.length <= 1) continue;
+      this.reconstructionNames.identityDiagnostic("closure-identity-unresolved", this.proto.id, sites[0]!.pc,
+        `K${constant} has multiple closure loads without a proved common environment/capture lifetime. ` +
+        "Separate source literals may change function identity; this region requires further reconstruction support.");
     }
   }
 
@@ -409,7 +425,7 @@ class SourceBuilder {
     const child = constant?.kind === "closure" ? this.module.prototypes[constant.protoId] : undefined;
     const captures = this.capturesAfter(insn.pc);
     if (!child || captures.length !== child.numUpvalues) return undefined;
-    const signature: number[] = [];
+    const signature: string[] = [];
     for (const cap of captures) {
       // REF/UPVAL forwarding may designate a mutable cell; it needs a separate
       // proof across parent activations. Self captures also need cache modeling.
@@ -424,7 +440,13 @@ class SourceBuilder {
         value = op.source;
       }
       if (value === undefined || !this.isRawReflexiveCapture(value)) return undefined;
-      signature.push(value);
+      const definition = this.ir.ssa.values[value];
+      const load = definition?.instruction;
+      const shared = load?.opcode === Opcode.DUPCLOSURE ? this.sharedClosureConstants.get(load.d) : undefined;
+      // SSA versions distinguish definitions, not objects. Two proven aliases
+      // of an already indexed owner/K constant capture the same closure. Do not
+      // canonicalize a carrier's result: it may be a fresh environment clone.
+      signature.push(shared && !shared.factory ? `closure:${this.proto.id}:${load!.d}` : `ssa:${value}`);
     }
     return signature.join(",");
   }
@@ -2624,6 +2646,10 @@ class SourceBuilder {
         ...this.define(insn.a,ident(name),insn)];
     }
     const captures = this.capturesAfter(insn.pc);
+    const cacheMiss = insn.opcode === Opcode.DUPCLOSURE && this.isGuaranteedCacheMiss(insn, captures);
+    if (cacheMiss) this.reconstructionNames.identityDiagnostic("closure-identity-entry-assumption", this.proto.id, insn.pc,
+      "This guaranteed cache miss uses a first-capture proof from main's initial loader environment. " +
+      "An external environment change before main's first activation is outside that proof.");
     // Captured pending tables must be materialized before their names are read.
     const statements: Statement[] = [];
     const valueSnapshots = new Map<number, string>();
@@ -2658,8 +2684,9 @@ class SourceBuilder {
         // are unwritten top-level locals. A snapshot of a value that cannot
         // be a compile-time constant is an ordinary local of this activation.
         const runtimeValue = binding !== undefined && !binding.pinned && this.isRuntimeValue(binding.expression);
-        const freshSnapshot = !runtimeValue && !hasFreshSnapshot && repeated && insn.opcode === Opcode.NEWCLOSURE && binding &&
-          (Boolean(chunkLoop && binding.name && this.scopeStack[0]?.has(binding.name) && !binding.forwardRef && !mergedLocals.has(binding.name)) || binding.expression.kind === "literal" || !binding.pinned || !binding.name || !this.isDeclaredInScope(binding.name));
+        const freshSnapshot = !hasFreshSnapshot && binding && (cacheMiss ||
+          (!runtimeValue && repeated && insn.opcode === Opcode.NEWCLOSURE &&
+          (Boolean(chunkLoop && binding.name && this.scopeStack[0]?.has(binding.name) && !binding.forwardRef && !mergedLocals.has(binding.name)) || binding.expression.kind === "literal" || !binding.pinned || !binding.name || !this.isDeclaredInScope(binding.name))));
         if (binding && !valueSnapshots.has(source) && (freshSnapshot ||
             (binding.expression.kind !== "literal" &&
             (!binding.pinned || binding.forwardRef || (binding.name && mergedLocals.has(binding.name)))))) {
@@ -2771,7 +2798,7 @@ class SourceBuilder {
         this.declareInScope(shared.factory);
         this.declareInScope(shared.name);
         return [...statements,
-          {kind:"function-decl",local:true,name:shared.factory,params:[],isVararg:false,
+          {kind:"function-decl",local:true,name:shared.factory,params:[],isVararg:captures.length === 0,
             body:block([{kind:"return",values:[fn]}])},
           {kind:"local",names:[shared.name],values:[{kind:"call",callee:ident(shared.factory),args:[],open:false}]},
           ...this.define(insn.a,ident(shared.name),insn)];
@@ -2833,6 +2860,24 @@ class SourceBuilder {
     return hasFreshSnapshot
       ? [...statements, {kind: "local", names: [name], values: []}, scopedCreation]
       : [...statements, { kind: "local", names: [name], values: [fn] }];
+  }
+
+  /** A mismatching clone never replaces K. Once a closed, bounded entry prefix
+   * proves its first captures, a value from a different closure constant cannot
+   * match that slot later, even if both constants reference the same child.
+   * This is a sufficient proof only; unknown entry paths/captures stay unknown. */
+  private isGuaranteedCacheMiss(insn: DecodedInstruction, captures: DecodedInstruction[]): boolean {
+    const prime = this.reconstructionNames.closureCachePrimes.get(closureCacheKey(this.proto.id, insn.d));
+    if (!prime || prime.length !== captures.length) return false;
+    return captures.some((capture, index) => {
+      if (capture.capture?.type !== CaptureType.VAL || capture.capture.source === insn.a) return false;
+      const first = prime[index];
+      if (first?.kind !== "closureConstant") return false;
+      const value = this.closureEffects.root(this.closureEffects.valueAt(capture, capture.capture.source));
+      const load = value === undefined ? undefined : this.ir.ssa.values[value]?.instruction;
+      return load?.opcode === Opcode.DUPCLOSURE &&
+        (first.ownerProtoId !== this.proto.id || first.constantIndex !== load.d);
+    });
   }
 
   /** A method call, or a field read rooted in a lexical binding, is evaluated
