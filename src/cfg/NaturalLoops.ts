@@ -21,6 +21,16 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
     if (block.unreachable) {
       continue;
     }
+    if (block.instructions.at(-1)?.opcode === Opcode.FORGLOOP &&
+        block.branch !== undefined && block.fallthrough !== undefined &&
+        followPureJumps(cfg, block.branch) === followPureJumps(cfg, block.fallthrough) &&
+        followPureJumps(cfg, block.branch) !== block.id) {
+      // Jump folding can merge a body's immediate break with exhaustion.
+      // The step still executes once, but the shared destination is the
+      // continuation, not a loop header that may be entered a second time.
+      loops.push({header: block.id, latch: block.id, blocks: [block.id], backEdges: [], kind: "generic-for"});
+      continue;
+    }
     for (const succ of block.successors) {
       if (cfg.blocks[succ]?.unreachable) {
         continue;

@@ -459,3 +459,39 @@ an effectful `__iter`, distinct captured tables and nil return holes; it
 passes 12/12. With the preceding canonical-region-stop repair, seed 1042
 passes all six normal and six Hard profiles. Evidence is retained in
 `benchmarks/results/rosetta-terminal-generic-2026-11-27`.
+
+### Local budgets inside generated scopes
+
+The lifetime pass previously closed a completed region into `do` without
+processing the shorter lifetimes inside that newly created region. A region
+with fewer than 128 locals still shares the function's 200-local budget with
+its parent. Rosetta seed1634 retained 89 parent locals and approximately 112
+inner declarations, so its reconstructed program failed compilation.
+
+Generated dependency-closed regions now close their own completed intervals
+recursively. Initializer order and binding identity remain unchanged, and each
+recursive region is a strict subset. The last-use region remains unwrapped so
+wide calls and returns can reuse dead parent registers. Under high pressure,
+a single-use scalar initializer immediately consumed as the first unary or
+binary operand can also remain at its original evaluation position without
+a separate local. This does not move a right operand past a new left-hand
+effect, merge captured cells, or expand scalar calls into multiple results.
+
+The pinned official compiler's `pushLocal`, `allocReg`, `RegScope`,
+`compileExprUnary` and `compileExprBinary` were inspected. Tovek's pinned
+`coalesce_locals.rs` counts parent scopes and protects captured identities;
+its `inline_temps.rs` documents effect/capture motion constraints. This repair
+uses independently implemented interval recursion and immediate first-operand
+substitution, rather than importing the reference's local coalescer.
+
+The authored `nested-register-pressure` source initially failed all six
+normal profiles at the 200-local limit. Its sealed original is retained.
+Recursion alone recovered those six, seed1634's twelve and the twelve
+`register_pressure` controls, but failed four Hard variants of the authored
+source because shuffled blocks retained additional arithmetic temporaries.
+The bounded operand fold closes those variants: all 36 profiles now pass.
+`ordered-operator-pressure` adds twelve passing controls for call order,
+metamethod timing, a captured cell and multiple returns with nil holes.
+The original failure, incomplete intermediate report, final reports and
+fixture hashes are preserved in
+`benchmarks/results/rosetta-nested-register-pressure-2026-11-27`.

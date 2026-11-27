@@ -23,7 +23,10 @@ function closeLifetimes(body: Block, fold: boolean): void {
   // Binding/arity safety is mandatory when the uncollapsed form would exceed
   // Luau's local register budget, even with optional folding switched off.
   const pressure = body.statements.reduce((n, s) => n + (s.kind === 'local' ? s.names.length : s.kind === 'function-decl' && s.local ? 1 : 0), 0);
-  if (pressure >= 128) coalesceAdjacentResultAliases(body);
+  if (pressure >= 128) {
+    coalesceAdjacentResultAliases(body);
+    foldAdjacentFirstOperands(body);
+  }
   if (fold || pressure >= 128) {
     inlineArgumentLiterals(body);
     foldOrderedArguments(body);
@@ -31,6 +34,10 @@ function closeLifetimes(body: Block, fold: boolean): void {
   }
   const count = body.statements.reduce((n, s) => n + (s.kind === 'local' ? s.names.length : s.kind === 'function-decl' && s.local ? 1 : 0), 0);
   if (count < 128) return;
+  closeCompletedIntervals(body);
+}
+
+function closeCompletedIntervals(body: Block): void {
   // Map every nested reference's owning statement back to this block. A closure
   // body belongs to its creation statement, while later writes keep its cell live.
   const owners = new Map<object, number>();
@@ -62,7 +69,13 @@ function closeLifetimes(body: Block, fold: boolean): void {
       // wrap the final use region: an extra lexical boundary there prevents
       // Luau from reusing dead parent registers for a wide call/return pack.
       if (end < ceiling && end < finalDeclaration) {
-        result.push({kind: 'do', body: block(body.statements.slice(i, end + 1))});
+        const nested = block(body.statements.slice(i, end + 1));
+        // The generated scope still shares the local budget of its parents.
+        // Close its completed inner lifetimes too, even when this region by
+        // itself has fewer than the entry threshold. Each region is a strict
+        // subset; initializer order and escaping bindings stay unchanged.
+        closeCompletedIntervals(nested);
+        result.push({kind: 'do', body: nested});
         i = end;
         continue;
       }
@@ -70,6 +83,29 @@ function closeLifetimes(body: Block, fold: boolean): void {
     result.push(body.statements[i]!);
   }
   body.statements = result;
+}
+
+/** A scalar local immediately consumed as the first operand can keep its
+ * original evaluation position without a separate lexical register. This also
+ * covers operators that may throw or invoke metamethods: no other operand or
+ * statement runs between the initializer and that first evaluation. Calls in
+ * an operator operand stay scalar; captured or rewritten cells remain locals. */
+function foldAdjacentFirstOperands(body: Block): void {
+  const declarations = new Map(analyzeBindings(body).bindings.map(binding => [binding.declaration, binding]));
+  for (let i = 0; i + 1 < body.statements.length; i++) {
+    const declaration = body.statements[i]!, consumer = body.statements[i + 1]!;
+    if (declaration.kind !== 'local' || declaration.names.length !== 1 || declaration.values.length !== 1 ||
+        !['binary', 'unary', 'call', 'method-call', 'property', 'index'].includes(declaration.values[0]!.kind) ||
+        consumer.kind !== 'local' || consumer.names.length !== 1 || consumer.values.length !== 1) continue;
+    const binding = declarations.get(declaration);
+    if (!binding || binding.scope !== body || binding.captured || binding.writes.length || binding.reads.length !== 1) continue;
+    const value = consumer.values[0]!, read = binding.reads[0]!.node;
+    if (value.kind === 'binary' && value.left === read) value.left = declaration.values[0]!;
+    else if (value.kind === 'unary' && value.argument === read) value.argument = declaration.values[0]!;
+    else continue;
+    body.statements.splice(i, 1);
+    i--;
+  }
 }
 
 /** A fixed call tuple can acquire debug-name copies after reconstruction. If a

@@ -1,0 +1,50 @@
+[
+  {
+    "profile": "O0g1",
+    "originalVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "transformedVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidate": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O0g2",
+    "originalVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "transformedVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidate": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O1g1",
+    "originalVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "transformedVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidate": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O1g2",
+    "originalVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "transformedVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidate": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O2g1",
+    "originalVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "transformedVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidate": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O2g2",
+    "originalVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "transformedVm": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidate": "step,three,seven,step,step,exhausted\t3\t7\t2\n0\n",
+    "candidateExitCode": 0,
+    "pass": true
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "base": "387a3c1",
+  "beforeDist": "381d813 (terminalGenericFollow does not apply to these bodies)",
+  "originalVsAdaptersVm": "6/6 identical",
+  "rawReconstructionBefore": "0/6",
+  "rawReconstructionAfter": "6/6",
+  "normalizationNote": "The small authored full-pipeline source already passes12/12; raw reconstruction must also preserve terminal edges when normalization declines.",
+  "references": {
+    "Tovek": "ce2ea3325547fa3896f274b68013386338039040 MIT restructure/src/region.rs join_return and while_body_with_exit_adapter",
+    "Luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f VM/src/lvmexecute.cpp RETURN; Compiler/src/Compiler.cpp compileStatReturn"
+  },
+  "implementation": "Independent terminal-path guard reused for conditional exit adapters"
+}

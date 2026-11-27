@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "baselineEngine": "50d6d9646060ff3d9a4cd0a20be0e9aa894ce999",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "transform": "transform-2",
+  "scope": "AND/OR with identical operand registers are scalar copies of the already evaluated VM value. The repair is in reconstruction, independent of whether the optional normalization pass can complete.",
+  "rawCoreScope": "The project-authored parallel fixture failed O1g1+x2 and O0g2+x2 when sent directly from the official decoder into reconstructFunction, without normalization or cleanup. Both now match the official VM. The complete first six-profile raw-core report is retained: its unrelated O2g1+x3 timeout and O1g2+x3 control-flow mismatch are not claimed fixed.",
+  "productionScope": "Three own sources pass all six normal and six Hard profiles (36/36) through the production CLI. These smaller controls already passed their baseline Hard checks because normalization completed. Authentic seed1726 O1g1+x2 and O0g2+x2 improve from mismatch to pass; its separate reconstruction timeouts belong to the loop boundary repair.",
+  "profiles": [
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "sourceHashes": {
+    "self-copy-after-dead-numeric-loop.luau": "d6eccf448583118d8bd8c31d17ec579df268b2079c8e8b291d419887bc9c9823",
+    "register-self-copy-effects.luau": "bcca50c1983aeb0eba485dc1847f4dcc00ffeb96baf7f03d6df6726b450ace85",
+    "parallel-self-copy-effects.luau": "95de74e8f3602998085e409c42abea20511e524c4db8fae0c6ce3184a22a149f"
+  },
+  "authenticSeed1726": {
+    "command": [
+      "rosetta",
+      "gen",
+      "1726"
+    ],
+    "sha256": "fcd527718af461d13a0dc1d4b2212f0c45b29134159a7e1b4a56a32c1fed226c"
+  },
+  "noAssertionChanges": true,
+  "tests": "1224/1224 unit tests in 125 files, including 18 new tests; TypeScript checking passes on Node24."
+}

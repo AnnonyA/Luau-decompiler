@@ -18,6 +18,7 @@ const names = [
   'iterator-shuffled-follow',
   'open-pack-dead-predecessor',
   'terminal-iterator-continuation', 'terminal-iterator-effects',
+  'nested-register-pressure', 'ordered-operator-pressure',
 ];
 const fixture = (name: string, profile: string) => readFileSync(new URL(
   `fixtures/rosetta-semantics/${name}-${profile}.luauc`, import.meta.url));

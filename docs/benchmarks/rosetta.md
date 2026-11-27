@@ -114,8 +114,9 @@ result hash, validation summary, and any failure. A dirty engine is labeled
 measurement to detect a build changing during a run. A sidecar documents a
 local measurement; it does not make a result officially verified by Rosetta.
 
-The separate **Rosetta** workflow runs a strict Quick gate for pull requests
-and pushes to `main`. Manual `workflow_dispatch` can run any tier or all four,
+The separate **Rosetta** workflow runs strict Quick and Hard Quick gates for
+pull requests and pushes to `main`. Both reconstruct every verdict and require
+882/882 passing profiles. Manual `workflow_dispatch` can run any tier or all four,
 with an explicit measurement-only switch that defaults to false. Complete
 evidence is uploaded even when the benchmark step fails. The existing Node
 20/22, official parser/runtime, and demo checks remain in force. Validator and

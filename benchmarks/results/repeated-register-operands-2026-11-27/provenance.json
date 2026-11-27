@@ -1,0 +1,144 @@
+{
+  "base": "b3b143c",
+  "luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "profile": "O1g1",
+  "vm_runner": "/workspace/scratch/eb5e4be57451/run-normalized-bytecode",
+  "checks": [
+    {
+      "case": "repeated-scalar-operands",
+      "source_sha256": "0de60a90e834956e960102d16713b7485676b7a32fe79551904fbe015f633b6a",
+      "records": [
+        {
+          "label": "original",
+          "status": 0,
+          "stdout": "2\t1\n",
+          "stderr": "",
+          "bytecode_sha256": "576a4c916cc45838784db52b47d8bedb9497332e1e4076611ca7c7ee30f2a452"
+        },
+        {
+          "label": "before",
+          "status": 0,
+          "stdout": "3\t2\n",
+          "stderr": "",
+          "bytecode_sha256": "e8d262b499bb60d733f0f34ac5dcf0c5408edf2b2feabdaa0524c84093cee8d5"
+        },
+        {
+          "label": "after",
+          "status": 0,
+          "stdout": "2\t1\n",
+          "stderr": "",
+          "bytecode_sha256": "f94966b7dc20d264a1d9d32e6c064626d7364a6364827b844af65ac78d83b307"
+        }
+      ],
+      "before_matches": false,
+      "after_matches": true
+    },
+    {
+      "case": "repeated-object-operands",
+      "source_sha256": "321527af2d93b8f52787f57e411abd5981daaa24a608b62f8a1b016ad5d7d6ce",
+      "records": [
+        {
+          "label": "original",
+          "status": 0,
+          "stdout": "add identity\ttrue\nsum\t17\t1\nless identity\ttrue\nless\ttrue\t2\nequal callback\ttrue\nequal\tfalse\t3\nindex identity\ttrue\nlookup\t23\t4\nstore identity\ttrue\ttrue\nstored\t5\narity\t4\npack\ttable\ttrue\ttail\ttrue\nclosed counter\t6\n",
+          "stderr": "",
+          "bytecode_sha256": "68f3b1d68cb70472c08f410a9580d8766ccda08dc90d3017526db99b6fb306e9"
+        },
+        {
+          "label": "before",
+          "status": 0,
+          "stdout": "add identity\tfalse\nsum\t17\t2\nless identity\tfalse\nless\tfalse\t4\nequal callback\tfalse\nequal\tfalse\t6\nindex identity\tfalse\nlookup\t23\t8\nstore identity\tfalse\tfalse\nstored\t11\narity\t4\npack\ttable\ttrue\ttail\ttrue\nclosed counter\t12\n",
+          "stderr": "",
+          "bytecode_sha256": "bdab3a982609949a6865707b2544c1e6eab439db2be51da138794cb32d44444d"
+        },
+        {
+          "label": "after",
+          "status": 0,
+          "stdout": "add identity\ttrue\nsum\t17\t1\nless identity\ttrue\nless\ttrue\t2\nequal callback\ttrue\nequal\tfalse\t3\nindex identity\ttrue\nlookup\t23\t4\nstore identity\ttrue\ttrue\nstored\t5\narity\t4\npack\ttable\ttrue\ttail\ttrue\nclosed counter\t6\n",
+          "stderr": "",
+          "bytecode_sha256": "e9ddaf4faca49b87ab0de14c6b8b7658877ab0a14afaeacbb459de115325c2f3"
+        }
+      ],
+      "before_matches": false,
+      "after_matches": true
+    },
+    {
+      "case": "self-selection-arity",
+      "source_sha256": "fef51ebc780e0dc96bffb1ed2f9c5a4ec170c6cf7c41d77e1e206000df09b5e2",
+      "records": [
+        {
+          "label": "original",
+          "status": 0,
+          "stdout": "values\t3\tfalse\tfalse\tnil\nvalues\t3\t0\t0\tnil\nvalues\t3\ttext\ttext\tnil\nvalues\t4\topen\tnil\textra\tnil\ncaptured calls\t7\nfastcall\t8\t8\n",
+          "stderr": "",
+          "bytecode_sha256": "b12643bf8e31dd7c9292f5b8d650fbec9371ea36a96da87f05702500fbef3d5d"
+        },
+        {
+          "label": "before",
+          "status": 0,
+          "stdout": "values\t3\tfalse\tfalse\tnil\nvalues\t3\t0\t0\tnil\nvalues\t3\ttext\ttext\tnil\nvalues\t4\topen\tnil\textra\tnil\ncaptured calls\t7\nfastcall\t8\t8\n",
+          "stderr": "",
+          "bytecode_sha256": "82006b5798d6b28cd3ae8b2181b26a41f56ca8391681f268e8647b12791c85a5"
+        },
+        {
+          "label": "after",
+          "status": 0,
+          "stdout": "values\t3\tfalse\tfalse\tnil\nvalues\t3\t0\t0\tnil\nvalues\t3\ttext\ttext\tnil\nvalues\t4\topen\tnil\textra\tnil\ncaptured calls\t7\nfastcall\t8\t8\n",
+          "stderr": "",
+          "bytecode_sha256": "82006b5798d6b28cd3ae8b2181b26a41f56ca8391681f268e8647b12791c85a5"
+        }
+      ],
+      "before_matches": true,
+      "after_matches": true
+    },
+    {
+      "case": "empty-scalar-arity",
+      "source_sha256": "44d5d66ba4a5bf11147c371ae10eefeb7debec6e2aa03f67d760cc0f1c7d719c",
+      "records": [
+        {
+          "label": "original",
+          "status": 0,
+          "stdout": "arity\t1\tnil\narity\t1\tnil\narity\t0\ncalls\t3\n",
+          "stderr": "",
+          "bytecode_sha256": "ea17c6376f89efd7e7a56ef4a0d80e1d89f51ec836105c504af967e34da0a660"
+        },
+        {
+          "label": "before",
+          "status": 0,
+          "stdout": "arity\t1\tnil\narity\t1\tnil\narity\t0\ncalls\t3\n",
+          "stderr": "",
+          "bytecode_sha256": "5d67e129bd6c11d7c6034bf14a3aed14b383eb0d760b69feb25663549f585181"
+        },
+        {
+          "label": "after",
+          "status": 0,
+          "stdout": "arity\t1\tnil\narity\t1\tnil\narity\t0\ncalls\t3\n",
+          "stderr": "",
+          "bytecode_sha256": "5d67e129bd6c11d7c6034bf14a3aed14b383eb0d760b69feb25663549f585181"
+        }
+      ],
+      "before_matches": true,
+      "after_matches": true
+    }
+  ],
+  "unit_tests": {
+    "before_new_tests": {
+      "passed": 2,
+      "failed": 5
+    },
+    "after_focused": {
+      "passed": 46,
+      "failed": 0,
+      "files": 8
+    }
+  },
+  "notes": [
+    "The first independent result predates the extended controls and is preserved unchanged.",
+    "count-only-development.json is an intermediate failing candidate, before the speculative guard correction.",
+    "The engine counts occurrences within each consumer but deduplicates consumer PCs across CFG paths.",
+    "FASTCALL and loop-step protocol operands remain excluded by isFakeUse.",
+    "This is a development subset, not a full-suite or competitor result."
+  ]
+}

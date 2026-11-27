@@ -1,0 +1,11 @@
+{
+  "base": "293be52",
+  "luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "change": "terminal generic region owns only its step, without registering the continuation as a second header",
+  "first_own": "0/12 ordinary and Hard, duplicate iterator raised attempt-to-iterate-number",
+  "after": "36/36: own conditional iterator, independent single-step/capture/__iter control and development seed1571, ordinary and Hard",
+  "units": "178/178 across twelve focused CFG and reconstruction suites",
+  "comparison": "development regression checks, not a full-suite score"
+}

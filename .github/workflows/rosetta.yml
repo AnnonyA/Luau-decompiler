@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        tier: ${{ fromJSON(github.event_name != 'workflow_dispatch' && '["quick"]' || inputs.tier == 'all' && '["quick","full","hard-quick","hard-full"]' || format('["{0}"]', inputs.tier)) }}
+        tier: ${{ fromJSON(github.event_name != 'workflow_dispatch' && '["quick","hard-quick"]' || inputs.tier == 'all' && '["quick","full","hard-quick","hard-full"]' || format('["{0}"]', inputs.tier)) }}
     steps:
       - name: Check out the decompiler
         uses: actions/checkout@v4

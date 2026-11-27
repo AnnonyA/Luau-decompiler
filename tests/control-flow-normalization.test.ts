@@ -95,6 +95,20 @@ describe("reconstruction control-flow normalization", () => {
     expect(normalized.prototypes[0]!.instructions.some(insn => insn.opcode === Opcode.FORNLOOP)).toBe(true);
   });
 
+  it("does not retain a different dead loop merely because its register window is reused", () => {
+    const { normalized } = normalize([
+      ad(Opcode.LOADN, 0, 3), ad(Opcode.LOADN, 1, 1), ad(Opcode.LOADN, 2, 1),
+      ad(Opcode.FORNPREP, 0, 3), abc(Opcode.MOVE, 3, 2, 0), ad(Opcode.JUMP, 0, 1),
+      ad(Opcode.FORNLOOP, 0, -3), abc(Opcode.LOADB, 4, 0, 0), ad(Opcode.JUMPIFNOT, 4, 6),
+      ad(Opcode.LOADN, 0, 3), ad(Opcode.LOADN, 1, 1), ad(Opcode.LOADN, 2, 1),
+      ad(Opcode.FORNPREP, 0, 2), abc(Opcode.ADDK, 3, 3, 0), ad(Opcode.FORNLOOP, 0, -2),
+      abc(Opcode.RETURN, 3, 2, 0),
+    ], { constants: [{kind: "number", value: 1}] });
+    const markers = normalized.prototypes[0]!.instructions.filter(insn => insn.opcode === Opcode.FORNLOOP);
+    expect(markers).toHaveLength(1);
+    expect(markers[0]!.originalPc).toBe(6);
+  });
+
   it.each(["O0g2-x2", "O2g1-x3"])("keeps the terminal numeric-loop break after shuffled %s layout", profile => {
     const result = decompile(readFileSync(new URL(`./fixtures/control-flow-normalization/shuffled-terminal-loops-${profile}.luauc`, import.meta.url)));
     if (!result.ok) throw new Error(result.error);

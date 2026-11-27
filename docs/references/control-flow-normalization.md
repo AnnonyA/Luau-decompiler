@@ -323,3 +323,107 @@ profiles and their Hard counterparts pass. Its O1/O2 profiles retain a separate
 table-to-nil mismatch; this change does not claim to resolve that mismatch.
 Reports, the component's original and repaired source, and exact provenance
 are kept in `benchmarks/results/canonical-region-stop-2026-11-27`.
+
+## Match dead numeric markers to their own preparation
+
+Keeping a dead FORNLOOP is necessary for a reachable numeric loop whose body
+always exits. Register A alone does not establish that relationship: another
+dead loop can reuse the same window. Previously an unrelated retained marker
+could point into its removed body, making PC remapping decline the entire
+optimization. A large transformed function then retained its opaque branches
+and unused register writes.
+
+The normalizer now pairs each dead step with a reachable FORNPREP using its
+register base and both control destinations: the body's entry and the loop's
+exit, resolved only through the existing pure-adapter helper. It continues to
+retain the correctly paired dead step and its required exit adapters. It does
+not retain a different dead loop based only on register reuse.
+
+This independently implemented pairing follows the numeric-loop protocol in
+official Luau `c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f`'s `Bytecode.h` and
+FORNPREP/FORNLOOP VM handlers. The inspected Tovek
+`ce2ea3325547fa3896f274b68013386338039040` `find_numeric_loops` also retains
+explicit numeric markers when the body has no natural backedge. No code was
+copied from that implementation.
+
+An isolated bytecode reduction reuses A for a reachable always-breaking loop
+and an unrelated dead loop. Before the change normalization retained both
+markers and all sixteen body words; afterward it keeps the required marker
+and eight words. Original and normalized bytecode both print one in the
+official VM. The authored `numeric-marker-reuse.luau` additionally checks two
+independent mutable closure cells and return arity in twelve ordinary/Hard
+round trips. All twelve pass, as do the ordinary/Hard profiles of development
+seed1338 on the combined engine containing the terminal-generic fix.
+
+A targeted combined-engine replay of sixteen prior failing Hard families
+passes 95 of 96 round trips, with no mismatches or decompilation timeouts. The
+remaining seed1634 O2g1+x3 fails recompilation at the VM's local-register limit;
+it is retained as a failure. A separate five-family replay passes 28 of 30,
+retaining two seed1571 output mismatches. These are development subsets, not
+full-suite results. Reports, exact revisions and raw VM comparisons are in
+`benchmarks/results/numeric-marker-pairing-2026-11-27`.
+
+## An exhausted iterator destination is not a new loop entry
+
+The terminal-generic reconstruction handles a FORGLOOP whose body and exhaustion
+edges meet at the same continuation. Its region must describe only the iterator
+step, with no backedge. Registering the continuation as its header lets an
+enclosing conditional encounter that header again and emit a second iterator
+using unrelated register values restored at the join.
+
+Natural-loop discovery now gives that zero-or-one-iteration region the step
+itself as its header and excludes the continuation. Prepared-loop lookup accepts
+that representation. The existing terminal-generic emitter still emits the
+required `break`, so iterator preparation and the initial iterator call remain
+observable. Pure jump adapters are resolved consistently; a shared destination
+that returns to the step itself is not classified as a terminal region.
+
+The new authored `conditional-terminal-iterator.luau` observes an iterator with
+a mutable call counter in one conditional arm, and then takes the other arm.
+All twelve ordinary/Hard profiles originally raised an attempt-to-iterate-number
+error from the duplicate loop. All twelve now match; the existing independent
+single-step iterator control and Rosetta development seed1571 also pass all
+twelve profiles each. The former additionally covers `__iter`, empty iteration,
+independent captured tables and trailing nil return values.
+
+This independently implemented region correction uses the same pinned Tovek
+loop-exit and official FORGPREP/FORGLOOP references above. Its first failures,
+36 runtime round trips and focused CFG tests are preserved in
+`benchmarks/results/terminal-iterator-region-2026-11-27`.
+
+## Repeated operands still read one stored scalar value
+
+The CFG lifetime query correctly deduplicates a consumer reached through more
+than one path, but each consumer can contain several reads of the same register.
+Counting only distinct instruction PCs allowed an effectful initializer to be
+substituted twice into `value + value` or three times into `value[value] = value`.
+The query now counts operand occurrences once per consumer PC, retaining its
+existing traversal, overwrite boundaries, cache and protocol-use exclusions.
+FASTCALL still does not add a second use of its fallback CALL's arguments.
+
+The speculative boolean guard walker also removed a scalar declaration when
+the comparison consumed that register twice. It now declines that extraction
+and leaves the stored value to ordinary reconstruction. This protects identity
+and effect order for comparisons as well as arithmetic and table access. The
+existing self-AND/OR treatment continues to evaluate the selected value once.
+
+This was independently implemented after reviewing Tovek
+`ce2ea3325547fa3896f274b68013386338039040`'s `inline_temps::collect_usage_in_statement`
+and `copy_cleanup` usage aggregation, which count individual local reads, and
+official Luau `c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f`'s CALL and ADD VM
+handlers. The VM obtains both operands from the stored register; it does not
+repeat the producing call. No reference implementation code was copied.
+
+The first independent scalar reduction printed `3, 2` instead of `2, 1` before
+the change. Extended controls initially passed 9 of 18 ordinary round trips;
+the combined correction passes all 36 ordinary/Hard round trips. They observe
+object identity in arithmetic, comparison, index and assignment metamethods,
+captured mutable counters, self-selection and trailing nil return values. An
+additional empty-result control passes all twelve ordinary/Hard profiles before
+and after, distinguishing one scalar nil from an open zero-result call. Direct
+execution with the pinned official VM also matches all four authored sources
+after reconstruction, compared with two before. All 46 focused unit tests pass.
+
+The original failure, expanded first results, the intermediate count-only
+candidate's remaining comparison failures, final reports and exact VM statuses
+are retained in `benchmarks/results/repeated-register-operands-2026-11-27`.

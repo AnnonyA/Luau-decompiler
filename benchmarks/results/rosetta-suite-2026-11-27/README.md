@@ -12,6 +12,19 @@ Luau 0.747 and transform-2 with the standard six profiles for each tier.
 | Published checkpoint 3, local `c5cb88e` | 882/882 | 12,098/12,276 | 842/882 | Not measured |
 | Intermediate `489ce27` | Not measured | Not measured | Not measured | 11,850/12,276 |
 | Regression checkpoint `764ca6d` | 868/882 | Not measured | 751/882 | Not measured |
+| Intermediate `50d6d96` | 872/882 | Not measured | Not measured | Not measured |
+| Checkpoint `387a3c1` | 882/882 | 12,272/12,276 | Not measured | Not measured |
+| Checkpoint `84a7e16` | Not measured | Not measured | 882/882 | Not measured |
+
+The separate `targeted-development` directory records checks against sources
+that failed an earlier suite. Its checkpoint-6 report has 1,350/1,440 passing
+Hard profiles across 240 sources, with 20 decompilation failures, one recompilation
+failure and 69 mismatches. This is a development corpus, not a Hard Full score.
+The source manifest retains its origin and hashes. Full-suite scores are never
+inferred by adding those recovered cases to an earlier engine's result.
+The checkpoint-8 replay improves the same corpus to 1,436/1,440: three
+mismatches and one recompilation failure, with no decompilation failures or
+refusals. Its four remaining profiles are retained with the report.
 
 The c5 source tree is identical to published GitHub commit
 `8adfb799c40f390ca9e04f700110a7ad19f6fb40`. Its required Node 20/22,

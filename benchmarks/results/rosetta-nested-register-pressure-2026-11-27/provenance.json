@@ -1,0 +1,200 @@
+{
+  "base": "8623424 (src identical to root 84a7e16)",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "luauTag": "0.747",
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "tovekRevision": "ce2ea3325547fa3896f274b68013386338039040",
+  "references": [
+    "Compiler/src/Compiler.cpp: pushLocal, allocReg, RegScope, compileExprUnary, compileExprBinary",
+    "ast/src/coalesce_locals.rs: coalesce_generated_locals and declared_local_pressure_counts_scopes_and_closures",
+    "ast/src/inline_temps.rs: capture and effect ordering invariants"
+  ],
+  "implementation": "Independent recursion over dependency-closed intervals and an adjacent first-operand fold; no reference code copied or adapted.",
+  "validation": {
+    "firstIndependent": {
+      "pass": 0,
+      "total": 6,
+      "kind": "recompile_failed"
+    },
+    "candidatePressure": {
+      "pass": 36,
+      "total": 36
+    },
+    "operatorEffectsArityCaptureControl": {
+      "pass": 12,
+      "total": 12
+    },
+    "unitTests": 148
+  },
+  "status": "Development regression plus additional controls. Both incomplete intermediate measurement and first failure preserved. Full tiers are measured separately by the integrated runner.",
+  "fixtures": [
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O0g1",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O0g1.luauc",
+      "sha256": "4f6b2194db986a3ea333392561a676e98f110821eb363b64966acdb89aa19c96"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O1g1",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O1g1.luauc",
+      "sha256": "d0f1f6aaf59cb924589df9a9b5129aa342c36152e4e96041efe624b030755762"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O2g1",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O2g1.luauc",
+      "sha256": "d0f1f6aaf59cb924589df9a9b5129aa342c36152e4e96041efe624b030755762"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O0g2",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O0g2.luauc",
+      "sha256": "ae87bd287ef61d922bcd971655516f7175d411aba7c9d31645e76cff6f3db816"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O1g2",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O1g2.luauc",
+      "sha256": "2c895acba986f731df7a8441a076c664d3de84e15c0c70aff6eddbe5bf1e679b"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O2g2",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O2g2.luauc",
+      "sha256": "2c895acba986f731df7a8441a076c664d3de84e15c0c70aff6eddbe5bf1e679b"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O0g1+x1",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O0g1+x1.luauc",
+      "sha256": "400a9c40291950172d810eeb5d97ae240922b4914859932610c200303cdf6a2d"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O1g1+x2",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O1g1+x2.luauc",
+      "sha256": "d04e6c5322934d894e7336c248d19eba72de3f7189262e89b2f462351a2daf67"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O2g1+x3",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O2g1+x3.luauc",
+      "sha256": "332ad5f125d34e0643a60a124f3ec67176ffb0c91d52b010f64f2944290ecab8"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O0g2+x2",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O0g2+x2.luauc",
+      "sha256": "b57a3907184004f4c80869c56a01b60a4f676210f0da2938aa5e93048cb7979a"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O1g2+x3",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O1g2+x3.luauc",
+      "sha256": "dfa705b90f83f37ea3ddfa5d761f62502d8285626cdfe8a06635c78e572820b9"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/nested-register-pressure.luau",
+      "sourceSha256": "41896e4d294aed8a5836f222945859291da9a3f4882577da89d8fb2e595c46ba",
+      "profile": "O2g2+x1",
+      "bytecode": "tests/fixtures/rosetta-semantics/nested-register-pressure-O2g2+x1.luauc",
+      "sha256": "a5e12b65e162adca86e4139f68ff3cd5c4e7fbf3e8a2364b89c7ce30bddf3cd8"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O0g1",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O0g1.luauc",
+      "sha256": "3958eeb0adf0aa1ad419f4b538b414351a19d704b15f6118781ff88718383627"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O1g1",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O1g1.luauc",
+      "sha256": "bb37aa43ea6c4015c1e41742913b3c29c4a53a8acd393931a3ace413e99efb70"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O2g1",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O2g1.luauc",
+      "sha256": "464bf8ab4a3a88c137adf3c33171fbe6c26ed344ec9ca1d672c49985c48a960c"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O0g2",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O0g2.luauc",
+      "sha256": "0466883745ff330631a9ec8b66335cba89a0d952044cda22ffec9358c3ac5a3c"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O1g2",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O1g2.luauc",
+      "sha256": "ab1492eb6aa426725b23211900ab99df1744bf48a26c2ce7ae76837bb42c9adf"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O2g2",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O2g2.luauc",
+      "sha256": "5d1f2b55dfb0c71687d4f5fb00f6f9005bdce6d57b5d3d8ffacf22d7533cd86a"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O0g1+x1",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O0g1+x1.luauc",
+      "sha256": "a6a06f64992799e2df9f46fe2be8b12e42966ba71ff6fd826aba6f2f0f7ac2fc"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O1g1+x2",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O1g1+x2.luauc",
+      "sha256": "e1b239d829d5774a632a35f71e6017a8818205dc01b2d6dd117353e55ea024a2"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O2g1+x3",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O2g1+x3.luauc",
+      "sha256": "b8fbbf62159a0bf44876c7912ed9b4c0b0e4a795741051aac5aeda681ba24689"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O0g2+x2",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O0g2+x2.luauc",
+      "sha256": "341ed6b57a8f201a87115a218e3c3c2f247233b3b054447e1552a0107cf7d407"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O1g2+x3",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O1g2+x3.luauc",
+      "sha256": "8fc9fb9b1a1589c69b9c8c3a1bacbadb121f50b08405776082a12334a17d2330"
+    },
+    {
+      "source": "tests/fixtures/rosetta-semantics/ordered-operator-pressure.luau",
+      "sourceSha256": "2c6afd9f41cab5f9a4374dd61795a7bee3b80a8d02da097d663d4ac858d6a7b2",
+      "profile": "O2g2+x1",
+      "bytecode": "tests/fixtures/rosetta-semantics/ordered-operator-pressure-O2g2+x1.luauc",
+      "sha256": "3d7376ee45e71bd1d79f9adba0d7b2ad1032f937e289ce51bce9ac4f898e8601"
+    }
+  ]
+}

@@ -519,6 +519,10 @@ class SourceBuilder {
     const declarations: Statement[] = [...this.sharedClosureConstants.values()].filter(s => s.hoisted && !s.factory)
       .map(s => ({kind: "local", names: [s.name], values: []}));
     const body = block([...declarations, ...this.emitRange(0, undefined, new Set())]);
+    // Only source placement proves a bare return redundant. A physically
+    // last bytecode RETURN can be an early exit from a shuffled loop body.
+    const tail = body.statements.at(-1);
+    if (tail?.kind === "return" && tail.values.length === 0) body.statements.pop();
     if (this.refCells.size) {
       // REF is evidence of a mutable cell even when earlier stores disappeared
       // from bytecode. Preserve a written local if no actual writes survived;
@@ -1097,7 +1101,10 @@ class SourceBuilder {
       const latch = this.ir.cfg.blocks[followPureJumps(this.ir.cfg, block.branch)];
       const step = latch?.instructions.at(-1);
       if (step?.opcode === Opcode.FORGLOOP && step.a === last.a && latch?.branch !== undefined) {
-        return this.loopsByHeader.get(latch.branch)?.find(loop => loop.kind === "generic-for" && loop.latch === latch.id);
+        for (const header of [latch.branch, latch.id]) {
+          const loop = this.loopsByHeader.get(header)?.find(loop => loop.kind === "generic-for" && loop.latch === latch.id);
+          if (loop) return loop;
+        }
       }
     }
     return undefined;
@@ -1355,7 +1362,10 @@ class SourceBuilder {
           (outsideBlock !== undefined &&
             outsideBlock.instructions.every((insn) => isControlOnly(insn.opcode)) &&
             outsideBlock.successors.length > 0 &&
-            outsideBlock.successors.every((id) => !activeLoop.blocks.includes(id)))));
+            outsideBlock.successors.every((id) => !activeLoop.blocks.includes(id)) &&
+            // A jump-only adapter may lead to a terminal return arm that the
+            // natural loop excludes. Keep its effects and return values.
+            !this.externalReturnPath(outsideId, activeLoop))));
         if (exitsLoop) {
           const jumpExits = thenInside;
           this.consumed.add(last.pc);
@@ -1840,6 +1850,10 @@ class SourceBuilder {
         statements.push(...this.flushObserved(insn, target));
       }
       if (insn.defs.includes(t)) {
+        // Removing this scalar declaration would repeat its initializer in
+        // both operands of a comparison. Ordinary reconstruction retains the
+        // stored value and its identity before evaluating that condition.
+        if ((basic.instructions.at(-1)?.uses.filter(register => register === t).length ?? 0) > 1) return fail();
         // Registers are reused; only the last define before the guard is the
         // value, but earlier definitions must not carry side effects we drop.
         const before = new Map(this.env);
@@ -2665,6 +2679,16 @@ class SourceBuilder {
         statements.push(...this.define(insn.a, { kind: "table", fields: normalizeArrayFields(fields) }, insn, true));
         break;
       }
+      case Opcode.AND:
+      case Opcode.OR:
+        // Both operands already hold VM values. Selecting a register against
+        // itself is a scalar copy, even if its deferred producer is a call.
+        // Normalization may decline a whole prototype; reconstruction must
+        // still avoid evaluating that producer twice or reopening its pack.
+        statements.push(...this.define(insn.a, insn.b === insn.c
+          ? singleValue(this.readRegister(insn.b, insn))
+          : {kind: "binary", op: binop(insn.opcode), left: this.readRegister(insn.b, insn), right: this.readRegister(insn.c, insn)}, insn));
+        break;
       case Opcode.ADD:
       case Opcode.SUB:
       case Opcode.MUL:
@@ -2672,8 +2696,6 @@ class SourceBuilder {
       case Opcode.MOD:
       case Opcode.POW:
       case Opcode.IDIV:
-      case Opcode.AND:
-      case Opcode.OR:
         statements.push(
           ...this.define(
             insn.a,
@@ -2837,9 +2859,7 @@ class SourceBuilder {
             values.push(i === count - 1 ? singleValue(value) : value);
           }
         }
-        if (!(count === 0 && this.isTerminalReturn(insn))) {
-          statements.push({ kind: "return", values });
-        }
+        statements.push({ kind: "return", values });
         break;
       }
       case Opcode.GETVARARGS:
@@ -3966,6 +3986,7 @@ class SourceBuilder {
     if (cached) return cached;
     const home = this.ir.cfg.blockOfPc.get(fromPc);
     const readers = new Set<number>();
+    let count = 0;
     let outsideBlock = false;
     if (home !== undefined) {
       const pending: Array<{id: number; after: number}> = [{id: home, after: fromPc}];
@@ -3986,7 +4007,13 @@ class SourceBuilder {
             ((insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) &&
               insn.b === 0 && !insn.uses.some(slot => slot > insn.a) && register >= insn.a + 1);
           if (reads) {
-            readers.add(insn.pc);
+            if (!readers.has(insn.pc)) {
+              readers.add(insn.pc);
+              // One consumer can read the same stored value several times
+              // (ADD R0 R0 R0 or SETTABLE R0 R0 R0). Count those operands,
+              // while a join reaching this PC again still counts it once.
+              count += Math.max(1, insn.uses.filter(slot => slot === register).length);
+            }
             if (id !== home) outsideBlock = true;
           }
           if (insn.defs.includes(register)) { overwritten = true; break; }
@@ -3994,7 +4021,7 @@ class SourceBuilder {
         if (!overwritten) pending.push(...basic.successors.map(id => ({id, after: -1})));
       }
     }
-    const result = {count: readers.size, outsideBlock};
+    const result = {count, outsideBlock};
     this.definitionUses.set(key, result);
     return result;
   }
@@ -4242,9 +4269,6 @@ class SourceBuilder {
     return test;
   }
 
-  private isTerminalReturn(insn: DecodedInstruction): boolean {
-    return insn === this.proto.instructions.at(-1) && insn.b === 1;
-  }
 }
 
 // --------------------------------------------------------------------- helpers

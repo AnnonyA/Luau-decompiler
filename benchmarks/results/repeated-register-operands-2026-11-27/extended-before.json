@@ -1,0 +1,102 @@
+{
+  "generator": "typed-v2",
+  "cases": 3,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "before": {
+      "pass": 9,
+      "mismatch": 9
+    }
+  },
+  "by_profile": {
+    "before": {
+      "O0g1": 2,
+      "O0g2": 1,
+      "O1g1": 2,
+      "O1g2": 1,
+      "O2g1": 2,
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "before": [
+      {
+        "case": "repeated-object-operands",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `add identity\ttrue` got `add identity\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `add identity\ttrue` got `add identity\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `add identity\ttrue` got `add identity\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-scalar-operands",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t1` got `3\t2`"
+      },
+      {
+        "case": "repeated-scalar-operands",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t1` got `3\t2`"
+      },
+      {
+        "case": "repeated-scalar-operands",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t1` got `3\t2`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 9,
+    "by_decompiler": {
+      "before": {
+        "round_trips": 9,
+        "similarity": 70.16347911622789,
+        "size": 1.4592382365628207,
+        "locals": 1.2355400333034703,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 72.72727272727273,
+        "cpu_ms_median": 132.939,
+        "cpu_ms_total": 1215.312
+      }
+    }
+  }
+}

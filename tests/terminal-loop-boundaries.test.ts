@@ -117,3 +117,18 @@ it("keeps a nested loop's enclosing join when its exit crosses a pure adapter", 
   expect(nodes<ReturnStatement>(result.body, "return")).toHaveLength(1);
   expect(result.body.statements.at(-1)?.kind).toBe("return");
 });
+
+it("does not register an always-breaking iterator's continuation as another loop entry", () => {
+  const bytes = fixture("conditional-terminal-iterator-O1g1");
+  const module = normalizeControlFlow(decodeBytecode(bytes).module);
+  const prototype = module.prototypes.find(prototype => prototype.debugName === "choose")!;
+  const ir = analyzePrototype(prototype);
+  const loop = ir.loops.find(loop => loop.kind === "generic-for")!;
+  const step = ir.cfg.blocks[loop.latch]!;
+  expect(step.branch).toBe(step.fallthrough);
+  expect(loop.blocks).not.toContain(step.fallthrough);
+  expect(loop.backEdges).toEqual([]);
+  const result = decompile(bytes);
+  if (!result.ok) throw new Error(result.error);
+  expect(nodes<GenericForStatement>(result.ast, "generic-for")).toHaveLength(1);
+});

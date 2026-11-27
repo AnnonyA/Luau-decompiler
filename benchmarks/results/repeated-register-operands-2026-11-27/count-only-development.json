@@ -1,0 +1,132 @@
+{
+  "generator": "typed-v2",
+  "cases": 3,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "after": {
+      "pass": 24,
+      "mismatch": 12
+    }
+  },
+  "by_profile": {
+    "after": {
+      "O0g1": 1,
+      "O0g1+x1": 1,
+      "O0g2": 1,
+      "O0g2+x2": 1,
+      "O1g1": 1,
+      "O1g1+x2": 1,
+      "O1g2": 1,
+      "O1g2+x3": 1,
+      "O2g1": 1,
+      "O2g1+x3": 1,
+      "O2g2": 1,
+      "O2g2+x1": 1
+    }
+  },
+  "failures": {
+    "after": [
+      {
+        "case": "repeated-object-operands",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O0g1+x1",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O1g1+x2",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O2g1+x3",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O0g2+x2",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O1g2+x3",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      },
+      {
+        "case": "repeated-object-operands",
+        "profile": "O2g2+x1",
+        "kind": "mismatch",
+        "detail": "line 5: want `equal callback\ttrue` got `equal callback\tfalse`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 24,
+    "by_decompiler": {
+      "after": {
+        "round_trips": 24,
+        "similarity": 72.18433221181235,
+        "size": 1.427209192829377,
+        "locals": 1.2992761732107143,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 57.57575757575758,
+        "cpu_ms_median": 105.727,
+        "cpu_ms_total": 2676.1160000000004
+      }
+    }
+  }
+}

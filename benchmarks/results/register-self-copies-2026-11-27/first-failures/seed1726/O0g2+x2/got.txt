@@ -1,0 +1,30 @@
+L1	3	false "eslaf" "\
+end"
+L2	0	
+L3	5	"a!" "zz!" nil -1 "one"
+L4	3	"hi child" true true
+L5	2	true "]]"
+L6	1	"10000000000"
+L7	4	"��313" "true{x}31" -inf 8
+L8	4	0 {""="é","nil"=-1000,-1=1,1="true{x}31"} inf "true{x}31"
+L9	4	"trueend[[" 0.0025 nan 3
+L11	1	127
+L13	4	1.0000001 4 "0.0025" -5e-07
+L14	8	"k,v,a,b,b2,a2,a2,x,y,l,r,m,p,z,c1,c2,ck,cv,s1,s1,s2,s3" 2 1 7 2 true "abc" {"count"=1,"key"=1,"x"=2,"y"=1}
+L15	4	"é" "é" "[[" "é"
+L16	1	"����"
+L17	2	"s" " | falseinf"
+L17	2	"s" " | falseinf"
+L17	2	"s" " | falseinf"
+L17	2	"s" " | falseinf"
+L17	2	"s" " | falseinf"
+L17	2	"s" " | falseinf"
+L18	3	false true true
+L19	4	"%d%%{x}0end127|4" "TRUE" false 7
+L20	6	{1="é",2="nil",3="%d%%{x}0end127"} {"nil"=false} 0 -993 "-0.4" "é"
+L21	1	1
+L22	4	"false" nil nil false
+L23	2	{"name"="single","x"="false",2=0.0025} {"name"="single","x"="false",2=0.0025}
+L24	4	10 false {"name"="single","x"="false",2=0.0025} true
+L25	5	3 0 {"name"="single","x"="false",2=0.0025} "false" nil
+== Returned

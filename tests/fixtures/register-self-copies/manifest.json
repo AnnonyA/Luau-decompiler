@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "entries": [
+    {
+      "profile": "O1g1+x2",
+      "source": "parallel-self-copy-effects.luau",
+      "sourceSha256": "95de74e8f3602998085e409c42abea20511e524c4db8fae0c6ce3184a22a149f",
+      "bytecode": "parallel-self-copy-effects-O1g1+x2.luauc",
+      "sha256": "f3a8bb1006dcd8424aa97ffda545bdfd0aaf944d033ceb6ad29bd1702e7f3291"
+    },
+    {
+      "profile": "O0g2+x2",
+      "source": "parallel-self-copy-effects.luau",
+      "sourceSha256": "95de74e8f3602998085e409c42abea20511e524c4db8fae0c6ce3184a22a149f",
+      "bytecode": "parallel-self-copy-effects-O0g2+x2.luauc",
+      "sha256": "c38dc7855868924a10d5288ae51f664185a5e463e95129542d53308d93647ac1"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+values	3	false	false	nil
+values	3	0	0	nil
+values	3	text	text	nil
+values	4	open	nil	extra	nil
+captured calls	7
+fastcall	8	8

@@ -296,10 +296,21 @@ function normalizePrototype(proto: Prototype): Prototype {
   }
   // Removing a jump that targets its lexical successor rejoins split open
   // result packs; CAPTURE, NAMECALL/CALL and the register protocol stay intact.
-  const prepared = new Set(rewritten.filter(insn => reachable.has(insn.pc) && insn.opcode === Opcode.FORNPREP).map(insn => insn.a));
+  const prepared = new Set<string>();
+  for (const insn of rewritten) {
+    if (!reachable.has(insn.pc) || insn.opcode !== Opcode.FORNPREP || insn.jumpTarget === undefined) continue;
+    const body = original[indexOf.get(insn.pc)! + 1]?.pc;
+    if (body !== undefined) prepared.add(`${insn.a}:${thread(body)}:${thread(insn.jumpTarget)}`);
+  }
   // A body that always breaks can make FORNLOOP unreachable. Its register
   // protocol still describes the reachable FORNPREP; retain that metadata.
-  const loopMarkers = new Set(rewritten.filter(insn => insn.opcode === Opcode.FORNLOOP && prepared.has(insn.a)).map(insn => insn.pc));
+  // A later, dead loop can reuse the same register window. It belongs to a
+  // different preparation unless both its body and exit destinations match.
+  const loopMarkers = new Set(rewritten.flatMap(insn => {
+    if (reachable.has(insn.pc) || insn.opcode !== Opcode.FORNLOOP || insn.jumpTarget === undefined) return [];
+    const exit = original[indexOf.get(insn.pc)! + 1]?.pc;
+    return exit !== undefined && prepared.has(`${insn.a}:${thread(insn.jumpTarget)}:${thread(exit)}`) ? [insn.pc] : [];
+  }));
   const metadata = new Set(loopMarkers);
   for (const pc of loopMarkers) {
     // A shuffled dead step can fall through a dead jump stub to its exit.
