@@ -77,3 +77,55 @@ test("rejects either execution failure even when their output matches", () => {
   assert.equal(compareTraces({ ...run("same"), ok: false, status: 1 }, run("same")).status, "ERROR");
   assert.equal(compareTraces(run("same"), { ...run("same"), ok: false, signal: "SIGTERM" }).status, "ERROR");
 });
+
+test("saved-bytecode oracle keeps O0 bytes even after the original source changes", async () => {
+  const {mkdtemp, writeFile, rm, chmod} = await import("node:fs/promises");
+  const {writeFileSync} = await import("node:fs");
+  const {tmpdir} = await import("node:os");
+  const {join} = await import("node:path");
+  const {runSemanticProfile} = await import("./bench-semantic.mjs");
+  const dir = await mkdtemp(join(tmpdir(), "semantic-oracle-test-"));
+  try {
+    // A small compiler/VM protocol double checks the boundary between the two
+    // executables: the VM accepts only bytes, and optimization affects identity.
+    const compiler = join(dir, "compiler.cjs"), runner = join(dir, "vm.cjs"), source = join(dir, "original.luau");
+    await writeFile(compiler, `#!${process.execPath}\n` + String.raw`
+const fs = require("node:fs");
+const args = process.argv.slice(2);
+if (args.length !== 4 || args[0] !== "--binary" || args[2] !== "-g1") process.exit(3);
+const optimization = Number(args[1].slice(2));
+const source = fs.readFileSync(args[3], "utf8");
+process.stdout.write(Buffer.concat([Buffer.from([14, optimization]), Buffer.from(source)]));
+`);
+    await writeFile(runner, `#!${process.execPath}\n` + String.raw`
+const fs = require("node:fs");
+const bytes = fs.readFileSync(process.argv[2]);
+if (bytes[0] !== 14) process.exit(4);
+process.stdout.write((bytes[1] === 0 ? "distinct:" : "shared:") + bytes.subarray(2).toString() + "\n");
+`);
+    await chmod(compiler, 0o755); await chmod(runner, 0o755);
+    for (const optimization of [0, 1]) {
+      await writeFile(source, "before");
+      let observed;
+      const result = await runSemanticProfile({compiler, bytecodeRunner: runner, originalPath: source,
+        optimization, tempDir: dir, caseId: `boundary-O${optimization}`, engine(bytes) {
+          observed = Buffer.from(bytes);
+          // A source-interpreter oracle would now see "after" and the wrong
+          // default optimization; a bytecode oracle must remain unchanged.
+          writeFileSync(source, "after");
+          return {ok: true, source: "before", disassembly: "fixture boundary"};
+        }});
+      assert.equal(result.comparison.status, "MATCH");
+      assert.equal(result.originalExecution.stdout, `${optimization === 0 ? "distinct" : "shared"}:before\n`);
+      assert.deepEqual(Buffer.from(result.originalBytecodeBase64, "base64"), observed);
+      assert.deepEqual(Buffer.from(result.recoveredBytecodeBase64, "base64"), observed);
+      assert.equal(result.optimization, optimization);
+    }
+  } finally { await rm(dir, {recursive: true, force: true}); }
+});
+
+test("source interpreter alone is rejected instead of silently replacing the bytecode oracle", async () => {
+  const {runSemanticBenchmark} = await import("./bench-semantic.mjs");
+  await assert.rejects(runSemanticBenchmark({compiler: "/unused/compiler", interpreter: "/unused/interpreter"}),
+    /--bytecode-runner.*saved bytecode oracle/);
+});

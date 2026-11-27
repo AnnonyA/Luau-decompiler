@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { decompile } from "../src/decompile.ts";
-import { abc, ad, compile, Opcode, proto, ret, strings } from "./helpers.ts";
+import { abc, ad, compile, Opcode, proto, ret, strings, printWithoutCallBoundaries } from "./helpers.ts";
 
 // A synthetic Luau register sequence: each guarded result remains live until
 // the final call, so a phi-name rollback must not alias the distinct values.
@@ -10,8 +10,10 @@ describe("independent short-circuit values", () => {
     const bytes = readFileSync(new URL("./fixtures/rewrites/short-circuit-selected-call-O1.luauc", import.meta.url));
     const result = decompile(bytes, { opcodeEncoding: "official" });
     if (!result.ok) throw Error(result.error);
-    expect(result.source.match(/\bcheck\(3\)/g)).toHaveLength(1);
-    expect(result.source).toMatch(/\band check\(3\)\)? or check\(4\)/);
+    const structure = printWithoutCallBoundaries(result.ast);
+    expect(structure.match(/\bcheck\(3\)/g)).toHaveLength(1);
+    expect(structure).toMatch(/\band check\(3\)\)? or check\(4\)/);
+    expect(result.source.match(/\(if true then check else nil\)\(3\)/g)).toHaveLength(1);
   });
 
   it("does not alias values across sequential short-circuit joins", () => {

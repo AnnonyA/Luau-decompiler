@@ -1,0 +1,283 @@
+{
+  "schema": 2,
+  "officialLuau": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "provenance": "Development regression requested after the first e260 holdout observation; original VM traces sealed before any candidate evaluation of this source.",
+  "profiles": [
+    {
+      "profile_id": "development/runtime_nan/v9/O0/one-nan-nan-one",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 0,
+      "debug": 2,
+      "bytecode_version": 9,
+      "input_sha256": "23ef5c6f49609a1fadc560437932bd9dd822a33f43094aa4d4c9540f1ec68662",
+      "sealed_stdout": "load=once activations=4 sequence=one-nan-nan-one\npair_eq false false false false \nf1=f4 false f2=f3 false f1=f2 false\nkeys_first first second nil nil \nkeys_second nil nil nil nil \nvalues 1 1 nan nan nan nan 1 1 \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v9/O0.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "one-nan-nan-one"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v9/O0/nan-one-one-nan",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 0,
+      "debug": 2,
+      "bytecode_version": 9,
+      "input_sha256": "23ef5c6f49609a1fadc560437932bd9dd822a33f43094aa4d4c9540f1ec68662",
+      "sealed_stdout": "load=once activations=4 sequence=nan-one-one-nan\npair_eq false false false false \nf1=f4 false f2=f3 false f1=f2 false\nkeys_first first second nil nil \nkeys_second nil nil nil nil \nvalues nan nan 1 1 1 1 nan nan \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v9/O0.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "nan-one-one-nan"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v9/O1/one-nan-nan-one",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 1,
+      "debug": 2,
+      "bytecode_version": 9,
+      "input_sha256": "394d30bae96200d75f010160611356f34ee33ae2d0437b268c02272e1a5a9d58",
+      "sealed_stdout": "load=once activations=4 sequence=one-nan-nan-one\npair_eq true false false true \nf1=f4 true f2=f3 false f1=f2 false\nkeys_first first second nil first \nkeys_second first nil nil first \nvalues 1 1 nan nan nan nan 1 1 \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v9/O1.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "one-nan-nan-one"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v9/O1/nan-one-one-nan",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 1,
+      "debug": 2,
+      "bytecode_version": 9,
+      "input_sha256": "394d30bae96200d75f010160611356f34ee33ae2d0437b268c02272e1a5a9d58",
+      "sealed_stdout": "load=once activations=4 sequence=nan-one-one-nan\npair_eq false false false false \nf1=f4 false f2=f3 false f1=f2 false\nkeys_first first second nil nil \nkeys_second nil nil nil nil \nvalues nan nan 1 1 1 1 nan nan \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v9/O1.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "nan-one-one-nan"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v9/O2/one-nan-nan-one",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 9,
+      "input_sha256": "1c18828796ec67607ab91f6de19ec239603c018b4d6813ee2b4ee94f9bfc23e9",
+      "sealed_stdout": "load=once activations=4 sequence=one-nan-nan-one\npair_eq true false false true \nf1=f4 true f2=f3 false f1=f2 false\nkeys_first first second nil first \nkeys_second first nil nil first \nvalues 1 1 nan nan nan nan 1 1 \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v9/O2.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "one-nan-nan-one"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v9/O2/nan-one-one-nan",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 9,
+      "input_sha256": "1c18828796ec67607ab91f6de19ec239603c018b4d6813ee2b4ee94f9bfc23e9",
+      "sealed_stdout": "load=once activations=4 sequence=nan-one-one-nan\npair_eq false false false false \nf1=f4 false f2=f3 false f1=f2 false\nkeys_first first second nil nil \nkeys_second nil nil nil nil \nvalues nan nan 1 1 1 1 nan nan \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v9/O2.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "nan-one-one-nan"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v14/O0/one-nan-nan-one",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 0,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "d256f72c938dad4f244ac0f201135e05144b3cd369af6fcf112e8f0ef7c17aac",
+      "sealed_stdout": "load=once activations=4 sequence=one-nan-nan-one\npair_eq false false false false \nf1=f4 false f2=f3 false f1=f2 false\nkeys_first first second nil nil \nkeys_second nil nil nil nil \nvalues 1 1 nan nan nan nan 1 1 \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v14/O0.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "one-nan-nan-one"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v14/O0/nan-one-one-nan",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 0,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "d256f72c938dad4f244ac0f201135e05144b3cd369af6fcf112e8f0ef7c17aac",
+      "sealed_stdout": "load=once activations=4 sequence=nan-one-one-nan\npair_eq false false false false \nf1=f4 false f2=f3 false f1=f2 false\nkeys_first first second nil nil \nkeys_second nil nil nil nil \nvalues nan nan 1 1 1 1 nan nan \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v14/O0.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "nan-one-one-nan"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v14/O1/one-nan-nan-one",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 1,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "4095271f41ad80886e5490b6fb03045ba65b427292e3b643f8c574c320370ef8",
+      "sealed_stdout": "load=once activations=4 sequence=one-nan-nan-one\npair_eq true false false true \nf1=f4 true f2=f3 false f1=f2 false\nkeys_first first second nil first \nkeys_second first nil nil first \nvalues 1 1 nan nan nan nan 1 1 \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v14/O1.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "one-nan-nan-one"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v14/O1/nan-one-one-nan",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 1,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "4095271f41ad80886e5490b6fb03045ba65b427292e3b643f8c574c320370ef8",
+      "sealed_stdout": "load=once activations=4 sequence=nan-one-one-nan\npair_eq false false false false \nf1=f4 false f2=f3 false f1=f2 false\nkeys_first first second nil nil \nkeys_second nil nil nil nil \nvalues nan nan 1 1 1 1 nan nan \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v14/O1.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "nan-one-one-nan"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v14/O2/one-nan-nan-one",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "838373389a9af6f7446fb765b12d38105f40cea91eee2e264384346bd5abc046",
+      "sealed_stdout": "load=once activations=4 sequence=one-nan-nan-one\npair_eq true false false true \nf1=f4 true f2=f3 false f1=f2 false\nkeys_first first second nil first \nkeys_second first nil nil first \nvalues 1 1 nan nan nan nan 1 1 \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v14/O2.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "one-nan-nan-one"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    },
+    {
+      "profile_id": "development/runtime_nan/v14/O2/nan-one-one-nan",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "runtime_nan",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "838373389a9af6f7446fb765b12d38105f40cea91eee2e264384346bd5abc046",
+      "sealed_stdout": "load=once activations=4 sequence=nan-one-one-nan\npair_eq false false false false \nf1=f4 false f2=f3 false f1=f2 false\nkeys_first first second nil nil \nkeys_second nil nil nil nil \nvalues nan nan 1 1 1 1 nan nan \nvalues_match true\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "bytecode/v14/O2.luauc",
+      "runner": {
+        "kind": "numeric-pairs",
+        "arguments": [
+          "nan-one-one-nan"
+        ],
+        "activation_count": 4
+      },
+      "single_load": true,
+      "source_sha256": "01ca94346bacd548e64c9be2c1414ac089c786516887f292cf56d6afeb8ececb"
+    }
+  ]
+}

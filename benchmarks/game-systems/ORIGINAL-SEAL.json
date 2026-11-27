@@ -1,0 +1,594 @@
+{
+  "official_luau_sha": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "phase": "SEALED_BEFORE_FIRST_DECOMPILER_EVALUATION",
+  "external_requests": 0,
+  "counts": {
+    "programs": 2,
+    "bytecodes": 12,
+    "profiles": 24,
+    "activations": 96,
+    "passed": 24
+  },
+  "files": [
+    {
+      "path": "sources/physics-bezier-arena.luau",
+      "sha256": "2242b29733a42d795b428ea5caeb3890154ff91cfe069e9462108d32fcb1441f",
+      "bytes": 13831
+    },
+    {
+      "path": "sources/service-controller-raid.luau",
+      "sha256": "6276e2cd8efee9b8345e9d8b60fe43a04ed5704d1c897ea5e9950aa6947cc185",
+      "bytes": 14406
+    },
+    {
+      "path": "tools/compile_api.cpp",
+      "sha256": "04b31e66823c23788a3d20fa12a0f92e81ae7fdd971d5f68f5e05431c4e5ca8d",
+      "bytes": 770
+    },
+    {
+      "path": "tools/measure_originals.py",
+      "sha256": "f60d614f110f68b0f85ac335b8d953708fdf4f65db1a9962462c74af73b847d9",
+      "bytes": 5949
+    },
+    {
+      "path": "tools/measure_originals_exact.py",
+      "sha256": "c88fbd9b2234fa3fe524317144aa98d0e7d216a389c315e3e4876c481710c717",
+      "bytes": 5955
+    },
+    {
+      "path": "tools/run_single_load.cpp",
+      "sha256": "4e67592163002c01f02c99f302bae7c7fe10478f1358dc0d588545b2b7aa745b",
+      "bytes": 3837
+    },
+    {
+      "path": "tools/run_single_load_exact.cpp",
+      "sha256": "6b90a3551ca111848fd6c4591f23dccae5b18a28aea31b6202a41e9d0c6cd0b9",
+      "bytes": 3896
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v14/O0/compiler-text.asm",
+      "sha256": "3b494be211885608afdbd89a021701c96a7b1bcde19595a095a563a3e8c576ae",
+      "bytes": 67677
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v14/O0/original.luauc",
+      "sha256": "18150d87925fcb432c23743f2d5081470cf4aeb5fe47e2036a1b6df497dba27d",
+      "bytes": 16383
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v14/O1/compiler-text.asm",
+      "sha256": "34446ed5708fa53f46e605ad41a37cf3fbf7d74b82cc64c91c096bfc8b68beca",
+      "bytes": 65822
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v14/O1/original.luauc",
+      "sha256": "5552abc5aee74bec180a56063f0999c61309484197a8867fb5e0f5dce17b3248",
+      "bytes": 16028
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v14/O2/compiler-text.asm",
+      "sha256": "afcb1e02356faf42883edbf816426b25abf9224ae4d0b97437453d6a68054c97",
+      "bytes": 138464
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v14/O2/original.luauc",
+      "sha256": "7c37238a8ce7821efda48219317c2f549b26c90efb113244416973c417e77e7f",
+      "bytes": 26289
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v9/O0/compiler-text.asm",
+      "sha256": "3b494be211885608afdbd89a021701c96a7b1bcde19595a095a563a3e8c576ae",
+      "bytes": 67677
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v9/O0/original.luauc",
+      "sha256": "82a94db22417917c399eb9ce881e73e2fb3d3c2c6b16d19de3656f88c31a191b",
+      "bytes": 15685
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v9/O1/compiler-text.asm",
+      "sha256": "34446ed5708fa53f46e605ad41a37cf3fbf7d74b82cc64c91c096bfc8b68beca",
+      "bytes": 65822
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v9/O1/original.luauc",
+      "sha256": "1af51762815e63668e219aea43319f3c9cac978a1d9dff8558409ba27d17dbe1",
+      "bytes": 15407
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v9/O2/compiler-text.asm",
+      "sha256": "afcb1e02356faf42883edbf816426b25abf9224ae4d0b97437453d6a68054c97",
+      "bytes": 138464
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v9/O2/original.luauc",
+      "sha256": "8c3bb5daa2fa191609a9c1ae3643e2b85d1f8dc2728665162253eb069c137ae3",
+      "bytes": 26008
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v14/O0/compiler-text.asm",
+      "sha256": "ef8834382ee2d86a9106aebb2b450c9648b50e12fa44c916be4e82542948f18e",
+      "bytes": 66939
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v14/O0/original.luauc",
+      "sha256": "516ce296895868a704e209390df946575c5662c524045afad36b96d05f40862e",
+      "bytes": 16120
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v14/O1/compiler-text.asm",
+      "sha256": "a9f2fde3c4dc395898ff8ddedd7aa05d05dd781815dcea3e9b9462b7d366a191",
+      "bytes": 65537
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v14/O1/original.luauc",
+      "sha256": "30808af987886be7c24e6195f2804290856c62258529c6f103d80cbc02f53efd",
+      "bytes": 15906
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v14/O2/compiler-text.asm",
+      "sha256": "a28cef22058c18c0c4ad791ee37e0422ead2a0e67cdf4a376c0c0eff8696e2c8",
+      "bytes": 67348
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v14/O2/original.luauc",
+      "sha256": "afc92d340f34d4e4dc4daabda627d500e58b2dca4421ab306198f8b1166fb2db",
+      "bytes": 15958
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v9/O0/compiler-text.asm",
+      "sha256": "ef8834382ee2d86a9106aebb2b450c9648b50e12fa44c916be4e82542948f18e",
+      "bytes": 66939
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v9/O0/original.luauc",
+      "sha256": "d7d19f22d81d92e0fc7665f7d94fc2a8c1fda77a85cbbbc2c0d4377ea0d1d79e",
+      "bytes": 15484
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v9/O1/compiler-text.asm",
+      "sha256": "a9f2fde3c4dc395898ff8ddedd7aa05d05dd781815dcea3e9b9462b7d366a191",
+      "bytes": 65537
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v9/O1/original.luauc",
+      "sha256": "defe749d99b34015320634ca2b19a34089935334721880413366d279e4e5b5d3",
+      "bytes": 15391
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v9/O2/compiler-text.asm",
+      "sha256": "a28cef22058c18c0c4ad791ee37e0422ead2a0e67cdf4a376c0c0eff8696e2c8",
+      "bytes": 67348
+    },
+    {
+      "path": "originals/oracle-02-exact/bytecode/service-controller-raid/v9/O2/original.luauc",
+      "sha256": "cb2e05ea8f84bf68eb1167e370f3d65094f8a617b2bca7c42bfb9535de453465",
+      "bytes": 15441
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/build-api-compiler.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/build-api-compiler.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/build-host.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/build-host.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O0-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O0-alternate.stdout",
+      "sha256": "edf643c97e87dc1a4e500b7b505c6a7c903c381ffc601b98204736e845bce8d2",
+      "bytes": 1249
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O0-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O0-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O0-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O0-mixed.stdout",
+      "sha256": "01768ac09ef93753037467d44b97334807a3e457b9a2ba8c2fbef450c479ba95",
+      "bytes": 1255
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O1-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O1-alternate.stdout",
+      "sha256": "e920fb041a1e971531e902d3fe801117abb605a5d6e1c4f8a878d9d58ff2873d",
+      "bytes": 1240
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O1-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O1-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O1-mixed.stdout",
+      "sha256": "c8ebe1ff9a99629865495cb4c9d6cd2451e3afaeb0bec59db23867f549b022f6",
+      "bytes": 1246
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O2-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O2-alternate.stdout",
+      "sha256": "e920fb041a1e971531e902d3fe801117abb605a5d6e1c4f8a878d9d58ff2873d",
+      "bytes": 1240
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O2-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O2-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v14-O2-mixed.stdout",
+      "sha256": "c8ebe1ff9a99629865495cb4c9d6cd2451e3afaeb0bec59db23867f549b022f6",
+      "bytes": 1246
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O0-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O0-alternate.stdout",
+      "sha256": "edf643c97e87dc1a4e500b7b505c6a7c903c381ffc601b98204736e845bce8d2",
+      "bytes": 1249
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O0-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O0-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O0-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O0-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O0-mixed.stdout",
+      "sha256": "01768ac09ef93753037467d44b97334807a3e457b9a2ba8c2fbef450c479ba95",
+      "bytes": 1255
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O1-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O1-alternate.stdout",
+      "sha256": "e920fb041a1e971531e902d3fe801117abb605a5d6e1c4f8a878d9d58ff2873d",
+      "bytes": 1240
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O1-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O1-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O1-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O1-mixed.stdout",
+      "sha256": "c8ebe1ff9a99629865495cb4c9d6cd2451e3afaeb0bec59db23867f549b022f6",
+      "bytes": 1246
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O2-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O2-alternate.stdout",
+      "sha256": "e920fb041a1e971531e902d3fe801117abb605a5d6e1c4f8a878d9d58ff2873d",
+      "bytes": 1240
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O2-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O2-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O2-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/physics-bezier-arena-v9-O2-mixed.stdout",
+      "sha256": "c8ebe1ff9a99629865495cb4c9d6cd2451e3afaeb0bec59db23867f549b022f6",
+      "bytes": 1246
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O0-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O0-alternate.stdout",
+      "sha256": "830db624f317d400aeda63ddd6c973e9e79b360b0e7939869f05e9c550d58c07",
+      "bytes": 1623
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O0-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O0-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O0-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O0-mixed.stdout",
+      "sha256": "f9420a1d5089f100a89367f09071ea4bd44931d72d35e369b55c8e38f1f4576f",
+      "bytes": 1627
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O1-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O1-alternate.stdout",
+      "sha256": "7eb7ac9547c04927f0f0be70b350bf129b36afb9e991cb2a29de72ac515c645a",
+      "bytes": 1614
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O1-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O1-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O1-mixed.stdout",
+      "sha256": "274e524730065b4e73bf7f747972fe9e4285e370facff188515e1a6e54e73270",
+      "bytes": 1618
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O2-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O2-alternate.stdout",
+      "sha256": "7eb7ac9547c04927f0f0be70b350bf129b36afb9e991cb2a29de72ac515c645a",
+      "bytes": 1614
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O2-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O2-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v14-O2-mixed.stdout",
+      "sha256": "274e524730065b4e73bf7f747972fe9e4285e370facff188515e1a6e54e73270",
+      "bytes": 1618
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O0-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O0-alternate.stdout",
+      "sha256": "830db624f317d400aeda63ddd6c973e9e79b360b0e7939869f05e9c550d58c07",
+      "bytes": 1623
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O0-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O0-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O0-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O0-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O0-mixed.stdout",
+      "sha256": "f9420a1d5089f100a89367f09071ea4bd44931d72d35e369b55c8e38f1f4576f",
+      "bytes": 1627
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O1-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O1-alternate.stdout",
+      "sha256": "7eb7ac9547c04927f0f0be70b350bf129b36afb9e991cb2a29de72ac515c645a",
+      "bytes": 1614
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O1-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O1-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O1-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O1-mixed.stdout",
+      "sha256": "274e524730065b4e73bf7f747972fe9e4285e370facff188515e1a6e54e73270",
+      "bytes": 1618
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O2-alternate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O2-alternate.stdout",
+      "sha256": "7eb7ac9547c04927f0f0be70b350bf129b36afb9e991cb2a29de72ac515c645a",
+      "bytes": 1614
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O2-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O2-compiler-text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O2-mixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "originals/oracle-02-exact/commands/service-controller-raid-v9-O2-mixed.stdout",
+      "sha256": "274e524730065b4e73bf7f747972fe9e4285e370facff188515e1a6e54e73270",
+      "bytes": 1618
+    },
+    {
+      "path": "originals/oracle-02-exact/commands.json",
+      "sha256": "fc32b602b4565f8a971672d769c8be681eda49fde46c02235f6b28a8442a59e9",
+      "bytes": 41721
+    },
+    {
+      "path": "originals/oracle-02-exact/original-results.tsv",
+      "sha256": "84b0151557177007ffee09070a56a70e028ede52dc8f91f0baf25a5080daf873",
+      "bytes": 5778
+    },
+    {
+      "path": "originals/oracle-02-exact/original-validation.json",
+      "sha256": "76c62f0fa83bfe157cac131e9b6c22984d7ebefe9f33b40c4e41249a8559914a",
+      "bytes": 70505
+    }
+  ]
+}

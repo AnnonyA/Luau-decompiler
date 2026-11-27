@@ -1,0 +1,73 @@
+{
+  "original_seal_sha256": "ea4a9e0e61c66b9ee5e42ba136e65a316424736ce86bd1a4c9f7e743bfc6598a",
+  "first_valid_observation_sha256": "c557cec5f0afc7e13734d3ebb29605561e7032509951e9912c224ebd456c4390",
+  "first_valid_observation_profiles": 48,
+  "original_profiles": 24,
+  "original_bytecodes": 12,
+  "host_source_sha256": "6b90a3551ca111848fd6c4591f23dccae5b18a28aea31b6202a41e9d0c6cd0b9",
+  "precision_digits": 17,
+  "source_or_assertion_edits": false,
+  "initial_wrapper_failure_preserved_at": "identity-fix/round2/game-systems/evaluations/first-e26040ae; not interpreted as engine results",
+  "bytecode_mapping": [
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v9/O0/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/physics-bezier-arena/v9/O0/original.luauc",
+      "input_sha256": "82a94db22417917c399eb9ce881e73e2fb3d3c2c6b16d19de3656f88c31a191b"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v9/O1/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/physics-bezier-arena/v9/O1/original.luauc",
+      "input_sha256": "1af51762815e63668e219aea43319f3c9cac978a1d9dff8558409ba27d17dbe1"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v9/O2/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/physics-bezier-arena/v9/O2/original.luauc",
+      "input_sha256": "8c3bb5daa2fa191609a9c1ae3643e2b85d1f8dc2728665162253eb069c137ae3"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v14/O0/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/physics-bezier-arena/v14/O0/original.luauc",
+      "input_sha256": "18150d87925fcb432c23743f2d5081470cf4aeb5fe47e2036a1b6df497dba27d"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v14/O1/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/physics-bezier-arena/v14/O1/original.luauc",
+      "input_sha256": "5552abc5aee74bec180a56063f0999c61309484197a8867fb5e0f5dce17b3248"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/physics-bezier-arena/v14/O2/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/physics-bezier-arena/v14/O2/original.luauc",
+      "input_sha256": "7c37238a8ce7821efda48219317c2f549b26c90efb113244416973c417e77e7f"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/service-controller-raid/v9/O0/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/service-controller-raid/v9/O0/original.luauc",
+      "input_sha256": "d7d19f22d81d92e0fc7665f7d94fc2a8c1fda77a85cbbbc2c0d4377ea0d1d79e"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/service-controller-raid/v9/O1/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/service-controller-raid/v9/O1/original.luauc",
+      "input_sha256": "defe749d99b34015320634ca2b19a34089935334721880413366d279e4e5b5d3"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/service-controller-raid/v9/O2/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/service-controller-raid/v9/O2/original.luauc",
+      "input_sha256": "cb2e05ea8f84bf68eb1167e370f3d65094f8a617b2bca7c42bfb9535de453465"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/service-controller-raid/v14/O0/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/service-controller-raid/v14/O0/original.luauc",
+      "input_sha256": "516ce296895868a704e209390df946575c5662c524045afad36b96d05f40862e"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/service-controller-raid/v14/O1/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/service-controller-raid/v14/O1/original.luauc",
+      "input_sha256": "30808af987886be7c24e6195f2804290856c62258529c6f103d80cbc02f53efd"
+    },
+    {
+      "original_path": "originals/oracle-02-exact/bytecode/service-controller-raid/v14/O2/original.luauc",
+      "repository_path": "benchmarks/game-systems/bytecode/service-controller-raid/v14/O2/original.luauc",
+      "input_sha256": "afc92d340f34d4e4dc4daabda627d500e58b2dca4421ab306198f8b1166fb2db"
+    }
+  ]
+}

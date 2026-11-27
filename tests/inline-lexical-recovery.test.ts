@@ -66,7 +66,8 @@ it('restores retained scalar and tuple helpers in official O2 nested consumers',
   // The two cached closure loads now use one literal behind a factory;
   // its helper call is printed once rather than duplicating the closure body.
   expect(result.source.match(/weighted\((?:index|i)\)/g)).toHaveLength(4);
-  expect(result.source.match(/closureFactory\(\)/g)).toHaveLength(3); // declaration and both loads
+  expect(result.source).toContain('function closureFactory(...)'); // native cache survives without helper inlining
+  expect(result.source.match(/closureFactory\(\)/g)).toHaveLength(2); // both original loads
   expect(result.source).toContain('measure(index)');
   const disabled=decompile(bytes,{opcodeEncoding:'official',recoverInlinedFunctions:false});
   expect(disabled.ok).toBe(true);if(!disabled.ok)throw Error(disabled.error);

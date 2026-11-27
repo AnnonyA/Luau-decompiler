@@ -15,6 +15,8 @@ import { DiagnosticBag, type Diagnostic } from "./diagnostics.js";
 import { disassembleModule } from "./disasm/Disassembler.js";
 import { printLuau, hasArtificialComments, type PrintOptions } from "./print/LuauPrinter.js";
 import { reconstructFunction } from "./reconstruct/Reconstructor.js";
+import { lowerClosureIdentity } from "./reconstruct/ClosureIdentityLowering.js";
+import { recoverClosureFactories } from "./reconstruct/ClosureInlineRecovery.js";
 import { applyRuntimeContext, parseRuntimeContext, type RuntimeContext } from "./reconstruct/RuntimeContext.js";
 import { styleLocalNames, type NameStyleOptions } from "./reconstruct/NameStyle.js";
 import { recoverFunctionEvidence } from "./reconstruct/FunctionEvidence.js";
@@ -106,6 +108,21 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
     }
   }
 
+  for (const prototype of decoded.module.prototypes) {
+    if (!prototype.constants.some(constant => constant.kind === "vector")) continue;
+    const firstUses = new Map<number, number>();
+    for (const instruction of prototype.instructions) {
+      const index = instruction.constantIndex;
+      if (index !== undefined && !firstUses.has(index)) firstUses.set(index, instruction.pc);
+    }
+    prototype.constants.forEach((constant, index) => {
+      if (constant.kind !== "vector") return;
+      diagnostics.warning("vector-constructor-assumption",
+        `prototype ${prototype.id} K${index} is a ${constant.precise ? "64" : "32"}-bit vector constant; reconstructed vector.create requires the native constructor and compatible VM vector size/precision and recompilation options. The bytecode does not identify a callable constructor or the host configuration.`,
+        { prototypeId: prototype.id, pc: firstUses.get(index) });
+    });
+  }
+
   const main = decoded.module.prototypes[decoded.module.mainProtoId];
   if (!main) {
     return { ok: false, error: "missing main prototype", code: "main", diagnostics: [...diagnostics.all] };
@@ -113,8 +130,23 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
 
   try {
     const reconstructed = reconstructFunction(decoded.module, main);
-    for (const diagnostic of reconstructed.closureIdentityDiagnostics) diagnostics.push(diagnostic);
-    const raw = presentClosures(chunk(reconstructed.body.statements));
+    const factories = recoverClosureFactories(chunk(reconstructed.body.statements), decoded.module);
+    const lowered = lowerClosureIdentity(factories.ast, decoded.module);
+    const resolvedKeys = new Set(lowered.resolvedKeys);
+    for (const diagnostic of factories.diagnostics) {
+      diagnostics.push(diagnostic);
+      if (diagnostic.code !== "closure-identity-native-inline" || diagnostic.prototypeId === undefined) continue;
+      const instruction = decoded.module.prototypes[diagnostic.prototypeId]?.instructions.find(instruction => instruction.pc === diagnostic.pc);
+      if (instruction?.opcode === Opcode.DUPCLOSURE) resolvedKeys.add(`${diagnostic.prototypeId}:${instruction.d}`);
+    }
+    for (const diagnostic of reconstructed.closureIdentityDiagnostics) {
+      const instruction = diagnostic.prototypeId !== undefined && diagnostic.pc !== undefined
+        ? decoded.module.prototypes[diagnostic.prototypeId]?.instructions.find(instruction => instruction.pc === diagnostic.pc) : undefined;
+      if (diagnostic.code === "closure-identity-unresolved" && instruction?.opcode === Opcode.DUPCLOSURE &&
+          resolvedKeys.has(`${diagnostic.prototypeId}:${instruction.d}`)) continue;
+      diagnostics.push(diagnostic);
+    }
+    const raw = presentClosures(lowered.ast);
     const debugNames = new Set(decoded.module.prototypes.flatMap((prototype) => prototype.locals.map((local) => local.name)));
     const sourceNames = new Set([...reconstructed.declaredLocals, ...debugNames]);
     const cleaned = cleanupAst(raw, { ...defaultCleanupOptions(options), sourceNames, debugNames,
@@ -140,11 +172,12 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
 
     const printOptions: PrintOptions = {indent: options.indent ?? 4, unicodeStrings: options.unicodeStrings,
       upvalueComments: options.upvalueComments, functionLineComments: options.functionLineComments, preferConst: options.preferConst};
-    const source = printLuau(ast, printOptions);
+    const printedSource = printLuau(ast, printOptions);
+    const source = factories.requiresOptimization2 ? `--!optimize 2\n${printedSource}` : printedSource;
     // Opt-in metadata comments are deliberate. Still verify the same AST with
     // annotations disabled so comments cannot conceal an accidental token.
     const bareSource = options.upvalueComments || options.functionLineComments
-      ? printLuau(ast, {...printOptions, upvalueComments: false, functionLineComments: false}) : source;
+      ? printLuau(ast, {...printOptions, upvalueComments: false, functionLineComments: false}) : printedSource;
     if (hasArtificialComments(bareSource)) {
       diagnostics.error("comments", "printer emitted a comment");
     }

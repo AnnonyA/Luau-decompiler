@@ -1,0 +1,289 @@
+{
+  "schema": 2,
+  "officialLuau": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "description": "Additional design regressions, distinct from the preserved 116-profile historical and independent matrix.",
+  "profiles": [
+    {
+      "profile_id": "development/capture_pressure/O2",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "capture_pressure",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "96d119377fd1fdf56c519532d9963cef7a81af17a1b24f47df9e9b118bdeb13d",
+      "sealed_stdout": "false\tfalse\tnil\tnil\n1\t2\t2\t1\n130\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "capture_pressure/O2.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/owner_environment_between/O0",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "owner_environment_between",
+      "optimization": 0,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "2f623ddfec47abb5d7678f886b69d711518ebd5208fc243caed2fbf29f979e9e",
+      "sealed_stdout": "false\tfalse\tnil\tnil\tnil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "owner_environment_between/O0.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/owner_environment_between/O1",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "owner_environment_between",
+      "optimization": 1,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "6d7e84a11a9753d09d3da491015776d7dd60ee073a278070c2a202ea16ec6647",
+      "sealed_stdout": "true\ttrue\tnil\tnil\tnil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "owner_environment_between/O1.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/owner_environment_between/O2",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "owner_environment_between",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "cae5b01804d0b59f1ab1b8010561bdef113c03ad5797c43d6f9684a78796ffb8",
+      "sealed_stdout": "true\tfalse\tnil\tB\tnil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "owner_environment_between/O2.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/capture_before_environment/O2",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "capture_before_environment",
+      "optimization": 2,
+      "debug": 0,
+      "bytecode_version": 14,
+      "input_sha256": "ef03b15c086bf48408fa89bed0c0f5137e17d805cad0f3b2e4b43f29794df10b",
+      "sealed_stdout": "nil\tnil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "capture_before_environment/O2.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/preload_after_environment_miss/O2",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "preload_after_environment_miss",
+      "optimization": 2,
+      "debug": 0,
+      "bytecode_version": 14,
+      "input_sha256": "b4be1225463cb7e4e715bcdd0539dd62edf0a8dfa791796214e84b7c11393c5b",
+      "sealed_stdout": "false\ttrue\tnil\tcached\tcached\tnil\n1\t2\t2\t1\nfalse\tfalse\ttrue\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "preload_after_environment_miss/O2.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/creation_before_environment/O0",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "creation_before_environment",
+      "optimization": 0,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "f0de69c8a9e1f7149df19628136f58ab8d1504df4e00ab4646a41e27025b4a82",
+      "sealed_stdout": "nil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "creation_before_environment/O0.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/creation_before_environment/O1",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "creation_before_environment",
+      "optimization": 1,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "c31232e5f7d7eb19eca2629c4de301c2cc0adb0e07f62726bc06ecaec7aa6715",
+      "sealed_stdout": "nil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "creation_before_environment/O1.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/creation_before_environment/O2",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "creation_before_environment",
+      "optimization": 2,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "c31232e5f7d7eb19eca2629c4de301c2cc0adb0e07f62726bc06ecaec7aa6715",
+      "sealed_stdout": "nil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "creation_before_environment/O2.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/field_before_environment/O0",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "field_before_environment",
+      "optimization": 0,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "d3733c280e40c8810b24f0a18a0cdba58ce6fa183b099bb460e5205c4f613039",
+      "sealed_stdout": "nil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "field_before_environment/O0.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/field_before_environment/O1",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "field_before_environment",
+      "optimization": 1,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "07e91406e6374b7cebe32567202062af54bb10ffea17569307ce3ef5d524d111",
+      "sealed_stdout": "nil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "field_before_environment/O1.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/field_before_environment/O2",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "field_before_environment",
+      "optimization": 2,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "07e91406e6374b7cebe32567202062af54bb10ffea17569307ce3ef5d524d111",
+      "sealed_stdout": "nil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "field_before_environment/O2.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      }
+    },
+    {
+      "profile_id": "development/captured_entry_environment/O0",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "captured_entry_environment",
+      "optimization": 0,
+      "debug": 0,
+      "bytecode_version": 14,
+      "input_sha256": "fcd00a346f2b506cbe9df6eade3db0b2f1a7ea167fa8b0b8ecbb2a4aa635b310",
+      "sealed_stdout": "false\nfalse\nfalse\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "captured_entry_environment/O0.luauc",
+      "runner": {
+        "kind": "entry-env",
+        "activation_count": 3
+      }
+    },
+    {
+      "profile_id": "development/captured_entry_environment/O1",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "captured_entry_environment",
+      "optimization": 1,
+      "debug": 0,
+      "bytecode_version": 14,
+      "input_sha256": "dd0724418a0890390f2a108ff57d22b0fa5bb229bf953a05663d5bde9c234d02",
+      "sealed_stdout": "true\nfalse\nfalse\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "captured_entry_environment/O1.luauc",
+      "runner": {
+        "kind": "entry-env",
+        "activation_count": 3
+      }
+    },
+    {
+      "profile_id": "development/captured_entry_environment/O2",
+      "suite": "development",
+      "group": "round2-development",
+      "case": "captured_entry_environment",
+      "optimization": 2,
+      "debug": 0,
+      "bytecode_version": 14,
+      "input_sha256": "020220da25e2a47a978d8b29c67677a5bf08badd63c0a98dd954ad85464a13f9",
+      "sealed_stdout": "true\nfalse\nfalse\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "captured_entry_environment/O2.luauc",
+      "runner": {
+        "kind": "entry-env",
+        "activation_count": 3
+      }
+    }
+  ]
+}

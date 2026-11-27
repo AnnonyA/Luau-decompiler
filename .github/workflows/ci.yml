@@ -138,9 +138,13 @@ jobs:
       - name: Compare behavior of controlled original and decompiled Luau
         shell: bash
         run: |
+          c++ -std=c++17 -O2 -I "$RUNNER_TEMP/luau-source/VM/include" \
+            scripts/closure-identity/run_bytecode.cpp \
+            "$RUNNER_TEMP/luau-build/libLuau.VM.a" "$RUNNER_TEMP/luau-build/libLuau.Common.a" \
+            -o "$RUNNER_TEMP/luau-bytecode-runner"
           npm run bench:semantic -- \
             --luau-compile "$RUNNER_TEMP/luau-build/luau-compile" \
-            --luau "$RUNNER_TEMP/luau-build/luau" \
+            --bytecode-runner "$RUNNER_TEMP/luau-bytecode-runner" \
             --output "$RUNNER_TEMP/luau-semantic-report.json"
       - name: Upload controlled execution comparison
         if: always()
@@ -162,6 +166,20 @@ jobs:
         with:
           name: luau-closure-identity
           path: ${{ runner.temp }}/closure-identity
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Check sealed game systems with one load and four activations
+        run: |
+          npm run bench:game-systems -- \
+            --luau-source "$RUNNER_TEMP/luau-source" \
+            --luau-build "$RUNNER_TEMP/luau-build" \
+            --output "$RUNNER_TEMP/game-systems"
+      - name: Upload game system traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: luau-game-systems
+          path: ${{ runner.temp }}/game-systems
           if-no-files-found: warn
           retention-days: 30
       - name: Check 12 independent originals against the official VM

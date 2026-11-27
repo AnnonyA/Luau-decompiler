@@ -1,0 +1,105 @@
+{
+  "schema": 2,
+  "officialLuau": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "description": "Three saved synthetic bytecodes, five observations from round1. Original traces remain unmodified.",
+  "profiles": [
+    {
+      "profile_id": "extra/cfg_table_write/nil",
+      "suite": "additional",
+      "case": "cfg_table_write",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "14fc1c39dd4389f2999c056380f209d8b6e4eba5a4a453b5dc52fa918ca8d3d5",
+      "sealed_stdout": "true\tsecond\tsecond\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "cfg_table_write/original.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      },
+      "group": "round1-extra"
+    },
+    {
+      "profile_id": "extra/cfg_table_write/yes",
+      "suite": "additional",
+      "case": "cfg_table_write",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "14fc1c39dd4389f2999c056380f209d8b6e4eba5a4a453b5dc52fa918ca8d3d5",
+      "sealed_stdout": "false\tfirst\tsecond\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "cfg_table_write/original.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [
+          "yes"
+        ],
+        "activation_count": 1
+      },
+      "group": "round1-extra"
+    },
+    {
+      "profile_id": "extra/runtime_first_capture/nil",
+      "suite": "additional",
+      "case": "runtime_first_capture",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "ec68666f7e5145602cee1da84b34a18f57601cf9c1543f018210d68a28db12bc",
+      "sealed_stdout": "true\ttrue\tsecond\tsecond\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "runtime_first_capture/original.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [],
+        "activation_count": 1
+      },
+      "group": "round1-extra"
+    },
+    {
+      "profile_id": "extra/runtime_first_capture/yes",
+      "suite": "additional",
+      "case": "runtime_first_capture",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "ec68666f7e5145602cee1da84b34a18f57601cf9c1543f018210d68a28db12bc",
+      "sealed_stdout": "true\tfalse\tfirst\tnil\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "runtime_first_capture/original.luauc",
+      "runner": {
+        "kind": "plain",
+        "arguments": [
+          "yes"
+        ],
+        "activation_count": 1
+      },
+      "group": "round1-extra"
+    },
+    {
+      "profile_id": "extra/host_entry_environment/A-B-A",
+      "suite": "additional",
+      "case": "host_entry_environment",
+      "optimization": 2,
+      "debug": 2,
+      "bytecode_version": 14,
+      "input_sha256": "8fdcfc9cc58464bad50cbbd27051b9411db0f478b8bd7192253c721bd3689230",
+      "sealed_stdout": "true\nfalse\ntrue\n",
+      "sealed_stderr": "",
+      "sealed_exit": 0,
+      "bytecode": "host_entry_environment/original.luauc",
+      "runner": {
+        "kind": "entry-env",
+        "activation_count": 3
+      },
+      "group": "round1-extra"
+    }
+  ]
+}

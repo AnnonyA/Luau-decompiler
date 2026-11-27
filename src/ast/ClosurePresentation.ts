@@ -1,4 +1,5 @@
 import type { Chunk, Expression, FunctionExpression, Statement } from "./Ast.js";
+import { analyzeBindings } from "../analysis/Bindings.js";
 import {
   countIdentifier,
   forEachDeclaredName,
@@ -14,7 +15,8 @@ import {
  * Luau records a debug name for `local function f`, `function t.f()` and
  * `{ f = function() end }`, and none for a function expression. A prototype
  * without a name was therefore written as an expression: when its value has
- * exactly one reader it returns to that position instead of a hoisted local.
+ * exactly one reader it can return to that position when evaluation order
+ * proves the creation still observes the same environment and captures.
  *
  * Runs on the reconstructor's raw tree, where every generated binding has a
  * module-unique name; a binding declared more than once is left alone.
@@ -25,10 +27,14 @@ export function presentClosures(ast: Chunk): Chunk {
   const references = new Map<string, number>();
   forEachIdentifier(ast.body, (name) => references.set(name, (references.get(name) ?? 0) + 1));
   const unique = (name: string): boolean => declarations.get(name) === 1;
+  const localReads = new Set<object>();
+  for (const binding of analyzeBindings(ast.body).bindings) {
+    for (const reference of binding.reads) localReads.add(reference.node);
+  }
 
   const body = rewriteBlocks(ast.body, (block) => {
     const merged = mergeForwardDeclarations(block.statements, unique, references);
-    return { ...block, statements: inlineSingleUse(merged, unique, references) };
+    return { ...block, statements: inlineSingleUse(merged, unique, references, localReads) };
   });
   return { ...ast, body };
 }
@@ -56,6 +62,8 @@ function mergeForwardDeclarations(
           out.push({
             kind: "function-decl", local: true, name, params: fn.params, paramTypes: fn.paramTypes,
             returnType: fn.returnType, isVararg: fn.isVararg, body: fn.body, line: fn.line,
+            closureIdentity: fn.closureIdentity,
+            creationSite: fn.creationSite,
           });
           index += 1;
           continue;
@@ -78,6 +86,7 @@ function inlineSingleUse(
   statements: Statement[],
   unique: (name: string) => boolean,
   references: Map<string, number>,
+  localReads: ReadonlySet<object>,
 ): Statement[] {
   const out = [...statements];
   for (let index = out.length - 1; index >= 0; index--) {
@@ -86,19 +95,136 @@ function inlineSingleUse(
     const name = declaration.names[0]!;
     const fn = declaration.values[0]!;
     if (fn.kind !== "function-expr" || fn.debugName !== undefined) continue;
+    // Factory recovery relies on both the direct initializer and its original
+    // creation point. Moving it into the call can cross an environment change.
+    if (fn.closureIdentity?.inlineCaptureInitializer) continue;
     if (!unique(name) || references.get(name) !== 1) continue;
-    for (let next = index + 1; next < out.length; next++) {
-      const consumer = out[next]!;
-      if (countIdentifier(consumer, name) === 0) continue;
-      const replaced = substituteOnce(consumer, name, fn);
-      if (replaced) {
-        out[next] = replaced;
-        out.splice(index, 1);
-      }
-      break;
+    // Creation observes the owner's environment at this point. A single use
+    // does not permit moving the literal across another statement, nor past
+    // a call/lookup in the immediately following statement.
+    const consumer = out[index + 1];
+    if (!consumer || !creationMotionIsOrdered(consumer, name, fn, localReads)) continue;
+    const replaced = substituteOnce(consumer, name, fn);
+    if (replaced) {
+      out[index + 1] = replaced;
+      out.splice(index, 1);
     }
   }
   return out;
+}
+
+/** A raw callback may follow receiver/argument preparation in the bytecode
+ * even though those expressions are printed in its later CALL statement.
+ * Keep that useful form only when the original SSA definition proves each
+ * effectful prefix was already evaluated before the closure was created.
+ * Otherwise every evaluation preceding the replacement must be inert. */
+function creationMotionIsOrdered(
+  statement: Statement,
+  name: string,
+  fn: FunctionExpression,
+  localReads: ReadonlySet<object>,
+): boolean {
+  let ordered = true;
+  let found = false;
+  let conditional = 0;
+
+  const inert = (expression: Expression): boolean => {
+    switch (expression.kind) {
+      case "literal": case "vararg": return true;
+      case "identifier": return localReads.has(expression);
+      case "paren": return inert(expression.expression);
+      case "unary": return expression.op === "not" && inert(expression.argument);
+      case "table": return expression.fields.every(field => (!field.key || inert(field.key)) && inert(field.value));
+      default: return false;
+    }
+  };
+  const preparedBefore = (call: Extract<Expression, {kind: "call" | "method-call"}>, index: number): boolean => {
+    const site = fn.creationSite;
+    const definition = call.evaluation?.operandPcs[index];
+    return !!site && call.evaluation?.ownerProtoId === site.ownerProtoId &&
+      definition !== undefined && definition < site.pc;
+  };
+  const tableConstructor = (expression: Expression): boolean => expression.kind === "table" ||
+    (expression.kind === "paren" && tableConstructor(expression.expression));
+  const operand = (expression: Expression, prepared = false): void => {
+    if (found) return;
+    if (countIdentifier(expression, name) === 0) {
+      // A table's SSA definition is the allocation, not its later field
+      // initializers; that PC alone cannot order their effects.
+      if (!inert(expression) && !(prepared && !tableConstructor(expression))) ordered = false;
+      return;
+    }
+    visit(expression);
+  };
+  const visit = (expression: Expression): void => {
+    if (found) return;
+    if (expression.kind === "identifier" && expression.name === name) {
+      found = true;
+      ordered &&= conditional === 0;
+      return;
+    }
+    switch (expression.kind) {
+      case "paren": case "unary": operand(expression.kind === "paren" ? expression.expression : expression.argument); return;
+      case "binary":
+        operand(expression.left);
+        if (expression.op === "and" || expression.op === "or") conditional += 1;
+        operand(expression.right);
+        if (expression.op === "and" || expression.op === "or") conditional -= 1;
+        return;
+      case "call":
+        operand(expression.callee, preparedBefore(expression, 0));
+        expression.args.forEach((argument, index) => operand(argument, preparedBefore(expression, index + 1)));
+        return;
+      case "method-call":
+        // The official compiler evaluates the receiver before arguments but
+        // emits NAMECALL (including __index) after them. Only receiver work
+        // precedes a callback argument in this source form.
+        operand(expression.object, preparedBefore(expression, 0));
+        expression.args.forEach((argument, index) => operand(argument, preparedBefore(expression, index + 1)));
+        return;
+      case "property": operand(expression.object); return;
+      case "index": operand(expression.table); operand(expression.key); return;
+      case "table":
+        expression.fields.forEach(field => { if (field.key) operand(field.key); operand(field.value); });
+        return;
+      case "if-expr":
+        operand(expression.test);
+        conditional += 1;
+        operand(expression.consequent);
+        for (const branch of expression.branches) { operand(branch.test); operand(branch.value); }
+        operand(expression.alternate);
+        conditional -= 1;
+        return;
+      case "interp":
+        for (const part of expression.parts) if (part.kind === "expr" && typeof part.value !== "string") {
+          operand(part.value);
+          // String conversion of an earlier part can invoke __tostring.
+          if (!found && part.value.kind !== "literal") ordered = false;
+        }
+        return;
+      // A read in a nested function body does not occur at its creation.
+      default: ordered = false;
+    }
+  };
+  const targets = (expression: Expression, reads: boolean): void => {
+    if (expression.kind === "property") operand(expression.object);
+    else if (expression.kind === "index") { operand(expression.table); operand(expression.key); }
+    if (reads && (expression.kind !== "identifier" || !localReads.has(expression))) ordered = false;
+  };
+  switch (statement.kind) {
+    case "local": case "return": statement.values.forEach(value => operand(value)); break;
+    case "assign":
+      statement.targets.forEach(target => targets(target, false));
+      statement.values.forEach(value => operand(value));
+      break;
+    case "compound-assign": targets(statement.target, true); operand(statement.value); break;
+    case "expression-stmt": operand(statement.expression); break;
+    case "if": operand(statement.test); break;
+    case "numeric-for": operand(statement.start); operand(statement.stop); if (statement.step) operand(statement.step); break;
+    case "generic-for": statement.iterators.forEach(value => operand(value)); break;
+    default: return false;
+  }
+  return found && ordered;
 }
 
 /** Replace the one read of `name` among the expressions this statement

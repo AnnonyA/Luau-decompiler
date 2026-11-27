@@ -1,0 +1,97 @@
+{
+  "observation_sha256": "fc1b63e99e03134fab32b3c68ec4d047077a8432f5cdebf21bdf00bfc71087f2",
+  "first_candidate": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+  "original_seal_sha256": "f6fcc875f9192bed6c6936314e2762997d974587b71a987baaf59d61548b1bdf",
+  "mapping": [
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v9/O0/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v9/O0.luauc",
+      "sha256": "b5d5b76b373fe73d8a6436f6aec5717c7bdd57527bf269fdedca091d36765fc9"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v9/O0/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v9/O0.luauc",
+      "sha256": "b5d5b76b373fe73d8a6436f6aec5717c7bdd57527bf269fdedca091d36765fc9"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v9/O1/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v9/O1.luauc",
+      "sha256": "2b220dd082d53b6adf388db550f7e24f62078081d50b7b0350c2cd38e5a03ca7"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v9/O1/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v9/O1.luauc",
+      "sha256": "2b220dd082d53b6adf388db550f7e24f62078081d50b7b0350c2cd38e5a03ca7"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v9/O2/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v9/O2.luauc",
+      "sha256": "47bb79493e0ffa8e3de3080fdd27d613918754acc4d80def21483ed1a053e9a1"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v9/O2/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v9/O2.luauc",
+      "sha256": "47bb79493e0ffa8e3de3080fdd27d613918754acc4d80def21483ed1a053e9a1"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v14/O0/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v14/O0.luauc",
+      "sha256": "ebcf34f32312f87a51c35aac499b0cd05c1837bef1403dbd906b91f9a6a432d2"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v14/O0/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v14/O0.luauc",
+      "sha256": "ebcf34f32312f87a51c35aac499b0cd05c1837bef1403dbd906b91f9a6a432d2"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v14/O1/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v14/O1.luauc",
+      "sha256": "250739c3935005d076c27c59b8583dbfcbbfee6bdb8875b8310ffc09bafdab49"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v14/O1/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v14/O1.luauc",
+      "sha256": "250739c3935005d076c27c59b8583dbfcbbfee6bdb8875b8310ffc09bafdab49"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v14/O2/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v14/O2.luauc",
+      "sha256": "9bd61bc50c69b92e1543cd7a7c96a8d962cdd44015892dba358f272e67cf461a"
+    },
+    {
+      "sealed_path": "originals/r2h01_raw_capture_alias/v14/O2/original.luac",
+      "imported_path": "bytecode/r2h01_raw_capture_alias/v14/O2.luauc",
+      "sha256": "9bd61bc50c69b92e1543cd7a7c96a8d962cdd44015892dba358f272e67cf461a"
+    },
+    {
+      "sealed_path": "originals/r2h02_cache_environment_pairs/v9/O0/original.luac",
+      "imported_path": "bytecode/r2h02_cache_environment_pairs/v9/O0.luauc",
+      "sha256": "82ef7f2372bd0879282f73d6ba1fdb826ac6f7e559185b2f8dd3656c26ecb620"
+    },
+    {
+      "sealed_path": "originals/r2h02_cache_environment_pairs/v9/O1/original.luac",
+      "imported_path": "bytecode/r2h02_cache_environment_pairs/v9/O1.luauc",
+      "sha256": "aa1996f18853065415c7b9bca422690b3948054a350eb46551adcfcd3aadc87b"
+    },
+    {
+      "sealed_path": "originals/r2h02_cache_environment_pairs/v9/O2/original.luac",
+      "imported_path": "bytecode/r2h02_cache_environment_pairs/v9/O2.luauc",
+      "sha256": "c0254e2c539367e0d3128186ccaa7313689c6c3e4e495d5a210fb0e79552b337"
+    },
+    {
+      "sealed_path": "originals/r2h02_cache_environment_pairs/v14/O0/original.luac",
+      "imported_path": "bytecode/r2h02_cache_environment_pairs/v14/O0.luauc",
+      "sha256": "7ca2ceff948fdaafa24d16907d3cfa76cf69c8bb6b9875a73605082ce21be432"
+    },
+    {
+      "sealed_path": "originals/r2h02_cache_environment_pairs/v14/O1/original.luac",
+      "imported_path": "bytecode/r2h02_cache_environment_pairs/v14/O1.luauc",
+      "sha256": "955d96830ad07dfdd6a175fc7c2b1f0c192ab79d99de0c9219ca2a4a94ef70a9"
+    },
+    {
+      "sealed_path": "originals/r2h02_cache_environment_pairs/v14/O2/original.luac",
+      "imported_path": "bytecode/r2h02_cache_environment_pairs/v14/O2.luauc",
+      "sha256": "e4ccb49e825778b6acc31fc846faa1dbee087fa85fe3ad2b4e591e0ec4244b0d"
+    }
+  ]
+}

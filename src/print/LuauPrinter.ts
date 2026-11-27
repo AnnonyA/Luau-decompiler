@@ -1,6 +1,7 @@
 import type { Block, Chunk, Expression, Literal, Statement, TableField } from "../ast/Ast.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
 import { escapedByte } from "../decode/BytecodeString.js";
+import { formatInteger } from "../decode/Constant.js";
 import { analyzePrinterBindings, type PrintedFunction, type PrinterBindings } from "./PrinterBindings.js";
 
 const PREC: Record<string, number> = {
@@ -208,8 +209,18 @@ class Printer {
         }
         return text;
       }
-      case "call":
-        return `${this.callCallee(expression.callee)}(${expression.args.map((arg) => this.expr(arg)).join(", ")})`;
+      case "call": {
+        // Official Luau 9d7748a4 Compiler.cpp getFunctionExpr (353-378)
+        // does not unwrap IfElse. The constant branch preserves a CALL without
+        // allocating a table, changing the function binding/captures/arity, or
+        // evaluating the callee more than once. It is a required semantic fence
+        // even when optional if-expression presentation is disabled.
+        const callee = expression.preserveBoundary && !expression.inlineForIdentity
+          ? `(if true then ${this.expr(expression.callee)} else nil)`
+          : this.callCallee(expression.callee);
+        const call = `${callee}(${expression.args.map((arg) => this.expr(arg)).join(", ")})`;
+        return expression.inlineForIdentity ? `(${call})` : call;
+      }
       case "method-call":
         return `${this.memberObject(expression.object)}:${expression.name}(${expression.args.map((arg) => this.expr(arg)).join(", ")})`;
       case "index":
@@ -409,7 +420,7 @@ function literalToSource(value: Literal["value"], unicodeStrings: boolean): stri
     return String(value);
   }
   if (typeof value === "bigint") {
-    return value.toString();
+    return formatInteger(value);
   }
   return quote(value, unicodeStrings);
 }

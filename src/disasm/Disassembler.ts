@@ -75,7 +75,7 @@ function formatConstant(constant: { kind: string; [key: string]: unknown }): str
     case "integer":
       return `int ${constant.value}`;
     case "vector":
-      return `vector ${constant.x},${constant.y},${constant.z}`;
+      return `${constant.precise ? "vector64" : "vector"} ${constant.x},${constant.y},${constant.z},${constant.w}`;
     default:
       return constant.kind;
   }

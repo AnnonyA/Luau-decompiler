@@ -29,7 +29,9 @@
     "bench:performance": "node scripts/bench-performance.mjs",
     "bench:independent": "node scripts/bench-independent.mjs",
     "bench:closure-identity": "node scripts/bench-closure-identity.mjs",
-    "bench:closure-identity:adversarial": "node scripts/bench-closure-identity.mjs --manifest benchmarks/closure-identity/holdouts/manifest.json"
+    "bench:closure-identity:adversarial": "node scripts/bench-closure-identity.mjs --manifest benchmarks/closure-identity/holdouts/manifest.json",
+    "bench:game-systems": "node scripts/bench-closure-identity.mjs --manifest benchmarks/game-systems/manifest.json",
+    "bench:literal-fidelity": "node scripts/bench-literal-fidelity.mjs"
   },
   "engines": {
     "node": ">=20"
