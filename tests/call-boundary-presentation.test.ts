@@ -45,11 +45,11 @@ it("keeps a captured immutable literal protected in a nested function", () => {
   expect(printLuau(ast)).toContain("return (true and handler)()\n");
 });
 
-it("does not infer a literal initializer for a rewritten or variadic function", () => {
+it("keeps a rewritten target grouped and permits a known non-inlineable variadic literal", () => {
   expect(output([local("handler", fn()), {kind: "assign", targets: [ident("handler")], values: [ident("replacement")]}],
     invoke(ident("handler")))).toContain("return (handler)()\n");
   expect(output([local("handler", fn(true))], invoke(ident("handler"))))
-    .toContain("return (handler)()\n");
+    .toContain("return handler()\n");
 });
 
 it("does not create another adjustment around an already grouped callee", () => {

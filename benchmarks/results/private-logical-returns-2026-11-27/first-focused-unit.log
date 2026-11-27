@@ -1,0 +1,69 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-classifiers
+
+ ❯ tests/private-logical-returns.test.ts (20 tests | 1 failed) 504ms
+   ✓ retains exact selected values and property effects in a private logical chain (or: false) 17ms
+   ✓ retains exact selected values and property effects in a private logical chain (or: true) 5ms
+   ✓ does not confuse an unrelated captured local with the same spelling 2ms
+   ✓ retains ordinary locals, global reads and effectful or allocated intermediate values 1ms
+   ✓ retains captured inputs and residual reads of the result cell 0ms
+   ✓ keeps open return packs and closure creation sites outside the proof 0ms
+   ✓ retains the one-result adjustment of an assigned final call including zero results 0ms
+   × respects the preference to keep conditional expressions disabled 12ms
+     → expected 'local function enabled(first, second)…' to contain 'if result then'
+   ✓ validates the sealed private-value, capture and arity control at O0g1 89ms
+   ✓ validates the sealed private-value, capture and arity control at O1g1 25ms
+   ✓ validates the sealed private-value, capture and arity control at O2g1 55ms
+   ✓ validates the sealed private-value, capture and arity control at O0g2 20ms
+   ✓ validates the sealed private-value, capture and arity control at O1g2 23ms
+   ✓ validates the sealed private-value, capture and arity control at O2g2 27ms
+   ✓ validates the sealed private-value, capture and arity control at O0g1+x1 18ms
+   ✓ validates the sealed private-value, capture and arity control at O1g1+x2 22ms
+   ✓ validates the sealed private-value, capture and arity control at O2g1+x3 37ms
+   ✓ validates the sealed private-value, capture and arity control at O0g2+x2 41ms
+   ✓ validates the sealed private-value, capture and arity control at O1g2+x3 55ms
+   ✓ validates the sealed private-value, capture and arity control at O2g2+x1 51ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/private-logical-returns.test.ts > respects the preference to keep conditional expressions disabled
+AssertionError: expected 'local function enabled(first, second)…' to contain 'if result then'
+
+- Expected
++ Received
+
+- if result then
++ local function enabled(first, second)
++     local first2 = first
++     if first2 then
++         first2 = second
++         if first2 then
++             if flag then
++                 return data.force
++             end
++             first2 = true
++             return first2
++         end
++         return first2
++     end
++     return first2
++ end
++
+
+ ❯ tests/private-logical-returns.test.ts:119:29
+    117|   const result = cleanupAst(chunk([fn(chain())]), defaultCleanupOption…
+    118|   expect(printLuau(result)).not.toContain("(if flag");
+    119|   expect(printLuau(result)).toContain("if result then");
+       |                             ^
+    120| });
+    121| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 19 passed (20)
+   Start at  21:45:36
+   Duration  1.77s (transform 835ms, setup 0ms, collect 1.04s, tests 504ms, environment 0ms, prepare 58ms)
+

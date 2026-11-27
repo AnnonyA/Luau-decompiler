@@ -1,0 +1,16 @@
+{
+  "auditedRevision": "850211e4d011ea8610ccee2f7262f93b8fc94191",
+  "auditedTree": "efa414186131b91d32598e5ae68c878acb7783aa",
+  "nodeVersion": "v24.22.3",
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "sources": 6,
+  "profilesPerSource": 12,
+  "configurations": 4,
+  "roundTrips": 288,
+  "passed": 288,
+  "engineChangedDuringAudit": false,
+  "officialTierBenchmark": false,
+  "scope": "Integration option compatibility for temporary provenance, primitive loop defaults, scalar printing and iterator arity; not a Rosetta tier score.",
+  "rawWrapper": "wrapper-original.mjs"
+}

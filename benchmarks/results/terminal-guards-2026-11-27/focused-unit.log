@@ -1,0 +1,67 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-classifiers
+
+ ❯ tests/terminal-guards.test.ts (20 tests | 4 failed) 514ms
+   ✓ merges equal return guards with exact truthiness, evaluation order and tuple arity 4ms
+   ✓ does not merge returned closure creation sites or non-terminal branch work 1ms
+   ✓ keeps distinct return actions and limits a merged condition's size 0ms
+   ✓ rebuilds return ladders without changing open, scalar, zero-result or nil-containing packs 1ms
+   ✓ joins nested disjunctions with the outer test while preserving its position 1ms
+   ✓ places a shorter terminal return first without capturing the former outer binding 5ms
+   ✓ does not introduce a negative guard or extend a local through a repeat condition 0ms
+   ✓ simplifies equality complements but keeps NaN-sensitive ordering complements 2ms
+   ✓ validates the sealed terminal guard, capture and pack control at O0g1 96ms
+   ✓ validates the sealed terminal guard, capture and pack control at O1g1 51ms
+   × validates the sealed terminal guard, capture and pack control at O2g1 51ms
+     → expected [ 'print', 'select', …(3) ] to deeply equal [ 'math', 'print', 'select', …(3) ]
+   ✓ validates the sealed terminal guard, capture and pack control at O0g2 32ms
+   ✓ validates the sealed terminal guard, capture and pack control at O1g2 29ms
+   × validates the sealed terminal guard, capture and pack control at O2g2 32ms
+     → expected [ 'print', 'select', …(3) ] to deeply equal [ 'math', 'print', 'select', …(3) ]
+   ✓ validates the sealed terminal guard, capture and pack control at O0g1+x1 40ms
+   ✓ validates the sealed terminal guard, capture and pack control at O1g1+x2 41ms
+   × validates the sealed terminal guard, capture and pack control at O2g1+x3 45ms
+     → expected [ 'print', 'select', …(3) ] to deeply equal [ 'math', 'print', 'select', …(3) ]
+   ✓ validates the sealed terminal guard, capture and pack control at O0g2+x2 27ms
+   ✓ validates the sealed terminal guard, capture and pack control at O1g2+x3 30ms
+   × validates the sealed terminal guard, capture and pack control at O2g2+x1 25ms
+     → expected [ 'print', 'select', …(3) ] to deeply equal [ 'math', 'print', 'select', …(3) ]
+ ✓ tests/valuepack.test.ts (16 tests) 57ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/terminal-guards.test.ts > validates the sealed terminal guard, capture and pack control at O2g1
+ FAIL  tests/terminal-guards.test.ts > validates the sealed terminal guard, capture and pack control at O2g2
+ FAIL  tests/terminal-guards.test.ts > validates the sealed terminal guard, capture and pack control at O2g1+x3
+ FAIL  tests/terminal-guards.test.ts > validates the sealed terminal guard, capture and pack control at O2g2+x1
+AssertionError: expected [ 'print', 'select', …(3) ] to deeply equal [ 'math', 'print', 'select', …(3) ]
+
+- Expected
++ Received
+
+@@ -1,7 +1,6 @@
+  [
+-   "math",
+    "print",
+    "select",
+    "setmetatable",
+    "table",
+    "tostring",
+
+ ❯ tests/terminal-guards.test.ts:181:66
+    179|     if (!result.ok) throw new Error(result.error);
+    180|     expect(result.validation).toEqual([]);
+    181|     expect([...analyzeBindings(result.ast.body).globals].sort()).toEqu…
+       |                                                                  ^
+    182|   });
+    183| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  4 failed | 32 passed (36)
+   Start at  21:34:29
+   Duration  2.28s (transform 963ms, setup 0ms, collect 1.35s, tests 571ms, environment 0ms, prepare 99ms)
+

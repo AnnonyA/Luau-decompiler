@@ -1,9 +1,9 @@
-import type { Block, CallExpression, Chunk, Expression, Literal, Statement, TableField } from "../ast/Ast.js";
+import type { Block, Chunk, Expression, Literal, Statement, TableField } from "../ast/Ast.js";
 import { isValidIdentifier } from "../reconstruct/Naming.js";
 import { escapedByte } from "../decode/BytecodeString.js";
 import { formatInteger, formatNumber } from "../decode/Constant.js";
 import { analyzePrinterBindings, type PrintedFunction, type PrinterBindings } from "./PrinterBindings.js";
-import { groupedCallBoundaries } from "./CallBoundaries.js";
+import { analyzeCallBoundaries, type CallBoundaryPresentation } from "./CallBoundaries.js";
 
 const PREC: Record<string, number> = {
   or: 1,
@@ -35,7 +35,7 @@ export interface PrintOptions {
 
 export function printLuau(ast: Chunk, options: PrintOptions = {}): string {
   const bindings = analyzePrinterBindings(ast.body, options.preferConst ?? false, options.upvalueComments ?? false);
-  const printer = new Printer(options, bindings, groupedCallBoundaries(ast.body));
+  const printer = new Printer(options, bindings, analyzeCallBoundaries(ast.body));
   printer.printBlock(ast.body, false);
   return printer.finish();
 }
@@ -48,7 +48,7 @@ class Printer {
   private readonly unit: string;
 
   constructor(private readonly options: PrintOptions, private readonly bindings: PrinterBindings,
-    private readonly groupedCalls: ReadonlySet<CallExpression>) {
+    private readonly callBoundaries: CallBoundaryPresentation) {
     const indent = options.indent ?? 4;
     this.unit = indent === "tab" ? "\t" : " ".repeat(indent);
   }
@@ -233,8 +233,8 @@ class Printer {
         // the callee exactly once, before its arguments, and adjusting it to
         // one value. Unlike a truthiness test of the callee, this also keeps
         // false/nil callees and their error behavior unchanged.
-        const callee = expression.preserveBoundary && !expression.inlineForIdentity
-          ? this.groupedCalls.has(expression)
+        const callee = expression.preserveBoundary && !expression.inlineForIdentity && !this.callBoundaries.direct.has(expression)
+          ? this.callBoundaries.grouped.has(expression)
             ? expression.callee.kind === "paren" ? this.expr(expression.callee) : `(${this.expr(expression.callee)})`
             : `(true and ${this.expr(expression.callee, PREC.and, true)})`
           : this.callCallee(expression.callee);
@@ -368,7 +368,7 @@ class Printer {
   }
 
   private nested(fn: PrintedFunction): string {
-    const nested = new Printer(this.options, this.bindings, this.groupedCalls);
+    const nested = new Printer(this.options, this.bindings, this.callBoundaries);
     nested.indentLevel = this.indentLevel + 1;
     nested.functionComments(fn);
     nested.printBlock(fn.body, false);

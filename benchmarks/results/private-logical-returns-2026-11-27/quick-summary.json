@@ -1,0 +1,35 @@
+{
+  "baselineCommit": "8472145",
+  "candidate": "private-logical-returns; source and evidence in this commit",
+  "metric": "Unchanged Rosetta 80f3c13 quality.rs and lex.rs; per-profile normalized Myers similarity with its 2 second bound; debugNames follows g2; arithmetic mean similarity and geometric mean token ratio.",
+  "baselineScores": "../terminal-guards-2026-11-27/quick-scores.jsonl",
+  "baseline": {
+    "profiles": 882,
+    "meanSimilarityPercent": 76.5058954691941,
+    "geometricTokenRatio": 1.000299965966013,
+    "outputTokens": 1467443,
+    "sourceTokens": 1635498
+  },
+  "candidateScores": {
+    "profiles": 882,
+    "meanSimilarityPercent": 76.58172970185745,
+    "geometricTokenRatio": 0.9990651293979346,
+    "outputTokens": 1466147,
+    "sourceTokens": 1635498
+  },
+  "similarityGainPercentagePoints": 0.07583423266335387,
+  "outputTokensRemoved": 1296,
+  "profilesWithHigherSimilarity": 76,
+  "profilesWithLowerSimilarity": 0,
+  "profilesWithEqualSimilarity": 806,
+  "validation": {
+    "unitFiles": 142,
+    "unitTestsPassed": 1459,
+    "nativeQuickAndHardQuickProfilesPassed": 1764,
+    "authoredBaselineProfilesPassed": 12,
+    "authoredCandidateProfilesPassed": 12,
+    "authoredEvaluatorCombinations": 784
+  },
+  "proofRestriction": "Intermediate nonliteral inputs must be unchanged uncaptured own-function parameters. Ordinary lexical locals are not accepted. This stricter candidate produces identical 882 outputs to the discarded broader exploratory proof.",
+  "firstObservation": "The first focused unit run failed one new assertion that assumed a generated local spelling; the final option control resolves the actual AST binding. Existing behavior assertions were not weakened."
+}

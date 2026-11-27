@@ -1,0 +1,15 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> luau-decompiler@0.2.0 test
+> vitest run --maxWorkers=2 tests/variadic-call-boundaries.test.ts
+
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/Luau-decompiler
+
+ ✓ tests/variadic-call-boundaries.test.ts (17 tests) 336ms
+
+ Test Files  1 passed (1)
+      Tests  17 passed (17)
+   Start at  21:37:51
+   Duration  1.42s (transform 699ms, setup 0ms, collect 878ms, tests 336ms, environment 0ms, prepare 52ms)
+

@@ -19,7 +19,7 @@ import {
 import { isValidIdentifier } from "../reconstruct/Naming.js";
 import { inferHumanNames, repairUndeclaredAutoLocals } from "../reconstruct/NameInference.js";
 import { forEachChildExpression, mapStatementBlocks, mapStatementExpressions, rewriteBlocks } from "./AstWalk.js";
-import { refineStructure } from "./StructureRefinement.js";
+import { refineStructure, recoverPrivateLogicalReturns } from "./StructureRefinement.js";
 import { foldTemporaries } from "./TempFolding.js";
 import { recoverLoopResultDefaults } from "./LoopResultDefaults.js";
 
@@ -68,7 +68,7 @@ const named = inferHumanNames(folded, {foldSingleUseTemps: options.foldSingleUse
     debugNames: options.debugNames, nameStems: options.nameStems, workingNames: options.workingNames});
   // Scratch folding can expose scalar return arms after the first structural
   // pass. Revisit only return structure, not naming, effects or declarations.
-  return options.ifExpressions ? finalizeReturnExpressions(named) : named;
+  return options.ifExpressions ? recoverPrivateLogicalReturns(finalizeReturnExpressions(named)) : named;
 }
 
 /** Folding changes initializers; derive each local's annotation from the

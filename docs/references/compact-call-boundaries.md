@@ -89,3 +89,28 @@ the baseline still fails **0/6** in the
 The report's combined `allPass` includes the old engine and is consequently
 false; the per-engine `match` fields retain that distinction. These observed
 programs are now development regressions, not blind evaluations.
+
+## Known variadic targets
+
+An immutable local bound to a known variadic function literal can keep the
+ordinary call spelling. Both inspected compiler revisions disable inlining
+when `func->vararg` is true (`Compiler.cpp::compileFunction`), and
+`Builtins.cpp::getBuiltin` cannot classify a function literal as a builtin.
+The function's signature, body, frame, captures, argument evaluation and open
+return pack are unchanged. Immutable aliases are resolved by binding identity;
+rewritten locals, unknown properties, shadowing parameters and cycles do not
+qualify. Explicit identity-recovery calls keep their existing path.
+
+The independently authored variadic control covers zero and many arguments,
+nil holes, effectful unused arguments, frame names observed with `debug.info`,
+mutable captures and distinct closure-factory results. Both the preceding
+integrated engine `850211e` and this candidate pass **12/12** normal and Hard
+profiles. Immutable originals and hashes are retained in
+[`variadic-call-boundaries`](../../tests/fixtures/variadic-call-boundaries/manifest.json);
+raw evidence is in
+[`variadic-call-boundaries-2026-11-27`](../../benchmarks/results/variadic-call-boundaries-2026-11-27/).
+
+A broader final-AST analysis of pure fixed-arity helpers was prototyped and
+discarded: the existing bytecode `ClosureEffects.neutral` proof already handles
+most such calls. Its Quick diagnostic improvement was only **0.03277 percentage
+points** for about 180 additional analysis lines. It is not part of the engine.

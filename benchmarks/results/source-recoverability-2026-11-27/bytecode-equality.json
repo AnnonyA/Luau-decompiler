@@ -1,0 +1,240 @@
+{
+  "luauCommit": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "rosettaCommit": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "pairs": {
+    "constant_fold": [
+      "return 1 + 2\n",
+      "return 3\n"
+    ],
+    "dead_branch": [
+      "if false then print(\"unused\") end return 3\n",
+      "return 3\n"
+    ],
+    "type_assertion": [
+      "return (7 :: number)\n",
+      "return 7\n"
+    ],
+    "inline_call": [
+      "local function helper(x) return x + 1 end return helper(4)\n",
+      "local function helper(x) return x + 1 end return 5\n"
+    ]
+  },
+  "results": [
+    {
+      "pair": "constant_fold",
+      "profile": "O0g1",
+      "identicalBytes": false,
+      "aBytes": 69,
+      "bBytes": 50,
+      "aSha256": "411629341993a2b7c92f41a9d3705c6c054b2c3edb9f85ff245e54cdcb84167e",
+      "bSha256": "aa104c14c39a47cac02dc44fb926fb211ffe75a18396651a1f8bda48fe41ab13"
+    },
+    {
+      "pair": "constant_fold",
+      "profile": "O1g1",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a",
+      "bSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a"
+    },
+    {
+      "pair": "constant_fold",
+      "profile": "O2g1",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a",
+      "bSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a"
+    },
+    {
+      "pair": "constant_fold",
+      "profile": "O0g2",
+      "identicalBytes": false,
+      "aBytes": 69,
+      "bBytes": 50,
+      "aSha256": "411629341993a2b7c92f41a9d3705c6c054b2c3edb9f85ff245e54cdcb84167e",
+      "bSha256": "aa104c14c39a47cac02dc44fb926fb211ffe75a18396651a1f8bda48fe41ab13"
+    },
+    {
+      "pair": "constant_fold",
+      "profile": "O1g2",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a",
+      "bSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a"
+    },
+    {
+      "pair": "constant_fold",
+      "profile": "O2g2",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a",
+      "bSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a"
+    },
+    {
+      "pair": "dead_branch",
+      "profile": "O0g1",
+      "identicalBytes": false,
+      "aBytes": 97,
+      "bBytes": 50,
+      "aSha256": "8e3cbb40a69ac75cb1975654b6b9b71f8d9beefa16bf1891a7591209e78ad73a",
+      "bSha256": "aa104c14c39a47cac02dc44fb926fb211ffe75a18396651a1f8bda48fe41ab13"
+    },
+    {
+      "pair": "dead_branch",
+      "profile": "O1g1",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a",
+      "bSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a"
+    },
+    {
+      "pair": "dead_branch",
+      "profile": "O2g1",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a",
+      "bSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a"
+    },
+    {
+      "pair": "dead_branch",
+      "profile": "O0g2",
+      "identicalBytes": false,
+      "aBytes": 97,
+      "bBytes": 50,
+      "aSha256": "8e3cbb40a69ac75cb1975654b6b9b71f8d9beefa16bf1891a7591209e78ad73a",
+      "bSha256": "aa104c14c39a47cac02dc44fb926fb211ffe75a18396651a1f8bda48fe41ab13"
+    },
+    {
+      "pair": "dead_branch",
+      "profile": "O1g2",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a",
+      "bSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a"
+    },
+    {
+      "pair": "dead_branch",
+      "profile": "O2g2",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a",
+      "bSha256": "0ed85e4d52610de16cdaeb9a352b96062ea000cac646005e0d6a53e667931d4a"
+    },
+    {
+      "pair": "type_assertion",
+      "profile": "O0g1",
+      "identicalBytes": true,
+      "aBytes": 50,
+      "bBytes": 50,
+      "aSha256": "6ba6f67cd2cd67022eba8e8428f4018714f38e340c0e0dab21ddb5abd2fa6ee5",
+      "bSha256": "6ba6f67cd2cd67022eba8e8428f4018714f38e340c0e0dab21ddb5abd2fa6ee5"
+    },
+    {
+      "pair": "type_assertion",
+      "profile": "O1g1",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "af2da0a865a6aed5a404f6b6b5de22da7d8acfcc7cc95ffdceebc70b2dd06974",
+      "bSha256": "af2da0a865a6aed5a404f6b6b5de22da7d8acfcc7cc95ffdceebc70b2dd06974"
+    },
+    {
+      "pair": "type_assertion",
+      "profile": "O2g1",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "af2da0a865a6aed5a404f6b6b5de22da7d8acfcc7cc95ffdceebc70b2dd06974",
+      "bSha256": "af2da0a865a6aed5a404f6b6b5de22da7d8acfcc7cc95ffdceebc70b2dd06974"
+    },
+    {
+      "pair": "type_assertion",
+      "profile": "O0g2",
+      "identicalBytes": true,
+      "aBytes": 50,
+      "bBytes": 50,
+      "aSha256": "6ba6f67cd2cd67022eba8e8428f4018714f38e340c0e0dab21ddb5abd2fa6ee5",
+      "bSha256": "6ba6f67cd2cd67022eba8e8428f4018714f38e340c0e0dab21ddb5abd2fa6ee5"
+    },
+    {
+      "pair": "type_assertion",
+      "profile": "O1g2",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "af2da0a865a6aed5a404f6b6b5de22da7d8acfcc7cc95ffdceebc70b2dd06974",
+      "bSha256": "af2da0a865a6aed5a404f6b6b5de22da7d8acfcc7cc95ffdceebc70b2dd06974"
+    },
+    {
+      "pair": "type_assertion",
+      "profile": "O2g2",
+      "identicalBytes": true,
+      "aBytes": 41,
+      "bBytes": 41,
+      "aSha256": "af2da0a865a6aed5a404f6b6b5de22da7d8acfcc7cc95ffdceebc70b2dd06974",
+      "bSha256": "af2da0a865a6aed5a404f6b6b5de22da7d8acfcc7cc95ffdceebc70b2dd06974"
+    },
+    {
+      "pair": "inline_call",
+      "profile": "O0g1",
+      "identicalBytes": false,
+      "aBytes": 117,
+      "bBytes": 107,
+      "aSha256": "f8c37032fb440814b6d1ce8b7e4fa372138ef00a416ea9d0b83c598c38e895b5",
+      "bSha256": "f1f629a272785f1f52136241f7836f85b097a273d66325b826d8162cf9ab87ab"
+    },
+    {
+      "pair": "inline_call",
+      "profile": "O1g1",
+      "identicalBytes": false,
+      "aBytes": 105,
+      "bBytes": 95,
+      "aSha256": "1642143248eb1df5e40449d1349fee91ed7bef63a5e47135f14eb2be211b54e1",
+      "bSha256": "c9c486dbf14ace27cfe96d6daa981e24e2465b81fd3342c2c22a859ab8278450"
+    },
+    {
+      "pair": "inline_call",
+      "profile": "O2g1",
+      "identicalBytes": true,
+      "aBytes": 95,
+      "bBytes": 95,
+      "aSha256": "c9c486dbf14ace27cfe96d6daa981e24e2465b81fd3342c2c22a859ab8278450",
+      "bSha256": "c9c486dbf14ace27cfe96d6daa981e24e2465b81fd3342c2c22a859ab8278450"
+    },
+    {
+      "pair": "inline_call",
+      "profile": "O0g2",
+      "identicalBytes": false,
+      "aBytes": 131,
+      "bBytes": 121,
+      "aSha256": "d91d6d61be2b3e51f24a6d8e0a80860dc0000b6b24c87617005279ed33a75c8e",
+      "bSha256": "fdc5f47bcb05991182cfb5785760f6bf557b5f26e9878ec9c44212768b160ba9"
+    },
+    {
+      "pair": "inline_call",
+      "profile": "O1g2",
+      "identicalBytes": false,
+      "aBytes": 119,
+      "bBytes": 109,
+      "aSha256": "e04eadfc9b552404f1b68b0acef59e0f94496cc3adba7a5ae90d5a211f92edd5",
+      "bSha256": "b6e9e5248bd6917a584a702c6af0f78557d705c6117336c1843eeb62387e61e6"
+    },
+    {
+      "pair": "inline_call",
+      "profile": "O2g2",
+      "identicalBytes": true,
+      "aBytes": 109,
+      "bBytes": 109,
+      "aSha256": "b6e9e5248bd6917a584a702c6af0f78557d705c6117336c1843eeb62387e61e6",
+      "bSha256": "b6e9e5248bd6917a584a702c6af0f78557d705c6117336c1843eeb62387e61e6"
+    }
+  ]
+}

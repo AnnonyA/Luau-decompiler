@@ -1,6 +1,11 @@
 import { analyzeBindings, type LexicalBinding } from "../analysis/Bindings.js";
 import type { Block, CallExpression, Expression } from "../ast/Ast.js";
 
+export interface CallBoundaryPresentation {
+  grouped: ReadonlySet<CallExpression>;
+  direct: ReadonlySet<CallExpression>;
+}
+
 /** Calls whose final source cannot reveal an inlineable literal to Luau.
  *
  * Compiler.cpp::getFunctionExpr follows immutable local initializers, groups
@@ -12,7 +17,7 @@ import type { Block, CallExpression, Expression } from "../ast/Ast.js";
  * This is a printer-only decision on the final lexical scopes. It neither
  * removes the bytecode boundary metadata nor assumes the callee is pure.
  */
-export function groupedCallBoundaries(body: Block): ReadonlySet<CallExpression> {
+export function analyzeCallBoundaries(body: Block): CallBoundaryPresentation {
   const calls: CallExpression[] = [];
   const pending: unknown[] = [body];
   while (pending.length) {
@@ -26,10 +31,11 @@ export function groupedCallBoundaries(body: Block): ReadonlySet<CallExpression> 
     pending.push(...Object.values(value));
   }
   const grouped = new Set<CallExpression>();
-  if (!calls.length) return grouped;
+  if (!calls.length) return {grouped, direct: new Set()};
 
   const references = new Map<Expression, LexicalBinding | null>();
-  for (const binding of analyzeBindings(body).bindings) {
+  const {bindings} = analyzeBindings(body);
+  for (const binding of bindings) {
     for (const {node} of binding.reads) {
       // Reused AST nodes must not turn two lexical bindings into one proof.
       if (references.has(node) && references.get(node) !== binding) references.set(node, null);
@@ -79,5 +85,25 @@ export function groupedCallBoundaries(body: Block): ReadonlySet<CallExpression> 
   for (const call of calls) {
     if (!canRevealLiteral(call.callee, new Set())) grouped.add(call);
   }
-  return grouped;
+  // A known literal vararg function cannot be inlined by either pinned Luau
+  // compiler. getBuiltin cannot reinterpret a function literal either, so an
+  // immutable local/alias to it needs no extra group, regardless of body effects.
+  const variadicLiteral = (expression: Expression, seen: Set<LexicalBinding>): boolean => {
+    expression = ungroup(expression);
+    if (expression.kind === "function-expr") return expression.isVararg;
+    if (expression.kind !== "identifier") return false;
+    const binding = references.get(expression);
+    if (!binding || binding.writes.length || seen.has(binding) || seen.size >= 32) return false;
+    const declaration = binding.declaration;
+    if (declaration.kind === "function-decl")
+      return declaration.local && binding.scope !== declaration.body && declaration.isVararg;
+    const value = initializer(binding);
+    return !!value && variadicLiteral(value, new Set(seen).add(binding));
+  };
+  const direct = new Set(calls.filter(call => ungroup(call.callee).kind === "identifier" && variadicLiteral(call.callee, new Set())));
+  return {grouped, direct};
+}
+
+export function groupedCallBoundaries(body: Block): ReadonlySet<CallExpression> {
+  return analyzeCallBoundaries(body).grouped;
 }

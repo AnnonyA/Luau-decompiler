@@ -1,6 +1,6 @@
 import { analyzeBindings } from "../analysis/Bindings.js";
 import type { Block, Chunk, Expression, Statement } from "./Ast.js";
-import { countIdentifier, endsInExit, mapChildExpressions, mapStatementExpressions } from "./AstWalk.js";
+import { countIdentifier, endsInExit, mapChildExpressions, mapStatementExpressions, rewriteBlocks } from "./AstWalk.js";
 
 export interface StructureOptions {
   ifExpressions: boolean;
@@ -34,27 +34,60 @@ interface Context {
  * and positive conditions instead of negated guards.
  */
 export function refineStructure(ast: Chunk, options: StructureOptions): Chunk {
-  const captured = new Set<string>();
-  for (const binding of analyzeBindings(ast.body).bindings) {
-    if (binding.captured) captured.add(binding.name);
-  }
-  const refiner = new Refiner(options, captured);
+  const {captured, stableInputs, privateLocals} = structuralBindings(ast);
+  const refiner = new Refiner(options, captured, stableInputs, privateLocals);
   return { ...ast, body: refiner.block(ast.body, { tail: "function", root: true }) };
 }
 
+/** Late temporary folding can expose the terminal shape after the ordinary
+ * structural pass. Revisit only this value proof, without changing guards. */
+export function recoverPrivateLogicalReturns(ast: Chunk): Chunk {
+  const {captured, stableInputs, privateLocals} = structuralBindings(ast);
+  const refiner = new Refiner({ifExpressions: true, guards: false}, captured, stableInputs, privateLocals);
+  return {...ast, body: rewriteBlocks(ast.body, body => {
+    const statements = refiner.recoverLogicalReturn(body.statements);
+    return statements === body.statements ? body : {...body, statements};
+  })};
+}
+
+function structuralBindings(ast: Chunk): {captured: Set<string>; stableInputs: Set<Expression>; privateLocals: Set<Statement>} {
+  const captured = new Set<string>();
+  const stableInputs = new Set<Expression>();
+  const privateLocals = new Set<Statement>();
+  for (const binding of analyzeBindings(ast.body).bindings) {
+    if (binding.captured) captured.add(binding.name);
+    if (!binding.captured && binding.declaration.kind === "local") privateLocals.add(binding.declaration);
+    // In the pinned compilers a parameter has no owner block, so statement
+    // register reuse cannot release its backing reference in either form.
+    // Ordinary locals can be released at preceding statement boundaries and
+    // are deliberately not accepted. See private-logical-returns.md.
+    const parameter = (binding.declaration.kind === "function-decl" || binding.declaration.kind === "function-expr") &&
+      binding.declarationIndex !== undefined;
+    if (parameter && !binding.captured && binding.writes.length === 0) {
+      for (const read of binding.reads) stableInputs.add(read.node);
+    }
+  }
+  return {captured, stableInputs, privateLocals};
+}
+
 class Refiner {
-  constructor(private readonly options: StructureOptions, private readonly captured: ReadonlySet<string>) {}
+  constructor(private readonly options: StructureOptions, private readonly captured: ReadonlySet<string>,
+    private readonly stableInputs: ReadonlySet<Expression>, private readonly privateLocals: ReadonlySet<Statement>) {}
 
   block(body: Block, context: Context): Block {
     const count = body.statements.length;
     let statements = body.statements.map((statement, index) =>
       this.statement(statement, index === count - 1 ? context.tail : undefined));
+    statements = mergeTerminalGuards(statements);
     statements = statements.map((statement) => (statement.kind === "if" ? mergeEqualArms(statement) : statement));
     statements = this.recoverValues(statements);
+    if (this.options.ifExpressions) statements = this.recoverLogicalReturn(statements);
     statements = dropTailExit(statements, context);
     if (this.options.guards) statements = flattenExits(statements, context);
+    if (this.options.guards) statements = preferSmallReturnGuard(statements, context);
     if (this.options.guards) statements = wrapNegatedGuards(statements, context);
     statements = rebuildLadders(statements, context);
+    statements = returningLadders(mergeTerminalGuards(statements));
     const unchanged = statements.length === count && statements.every((statement, index) => statement === body.statements[index]);
     return unchanged ? body : { ...body, statements };
   }
@@ -164,11 +197,80 @@ class Refiner {
     }
     return undefined;
   }
+
+  /** A private result cell used only by terminal truthiness guards can be the
+   * value of `and`/`or`. Each intermediate input must remain rooted by another
+   * unchanged parameter, or be a primitive literal; private alone is insufficient
+   * because dropping the last table reference early can be observed by GC. */
+  recoverLogicalReturn(statements: Statement[]): Statement[] {
+    for (let index = statements.length - 3; index >= 0; index--) {
+      const declaration = statements[index]!;
+      if (declaration.kind !== "local" || declaration.names.length !== 1 || declaration.values.length !== 1) continue;
+      const name = declaration.names[0]!;
+      const stable = (value: Expression): boolean => value.kind === "literal" ||
+        (value.kind === "identifier" && this.stableInputs.has(value)) ||
+        (value.kind === "paren" && stable(value.expression));
+      if (!this.privateLocals.has(declaration) || !stable(declaration.values[0]!)) continue;
+      let budget = 48;
+      const safe = (value: Expression): boolean => countIdentifier(value, name) === 0 && !containsFunction(value);
+      const returnsCell = (statement: Statement | undefined): boolean => statement?.kind === "return" &&
+        statement.values.length === 1 && statement.values[0]!.kind === "identifier" && statement.values[0]!.name === name;
+      const scalar = (value: Expression): Expression => value.kind === "call" || value.kind === "method-call" || value.kind === "vararg"
+        ? {kind: "paren", expression: value} : value;
+      const logical = (body: Statement[], input: Expression): Expression | undefined => {
+        if (--budget < 0 || body.length !== 2 || !isGuard(body[0]) || !returnsCell(body[1])) return undefined;
+        let test = body[0].test;
+        while (test.kind === "paren") test = test.expression;
+        const inverted = test.kind === "unary" && test.op === "not";
+        if (test.kind === "unary" && test.op === "not") test = test.argument;
+        while (test.kind === "paren") test = test.expression;
+        if (test.kind !== "identifier" || test.name !== name) return undefined;
+        const right = closed(body[0].consequent.statements);
+        return right && simplifyExpression({kind: "binary", op: inverted ? "or" : "and", left: input, right});
+      };
+      const closed = (body: Statement[]): Expression | undefined => {
+        if (--budget < 0) return undefined;
+        const first = body[0];
+        if (body.length === 1 && first?.kind === "return" && first.values.length === 1) {
+          const value = first.values[0]!;
+          // An existing return call or vararg is an open pack, not one value.
+          if (value.kind !== "call" && value.kind !== "method-call" && value.kind !== "vararg" && safe(value)) return value;
+        }
+        const assignment = first?.kind === "assign" ? singleStore(first) : undefined;
+        if (assignment?.name === name && safe(assignment.value)) {
+          if (body.length === 2 && returnsCell(body[1])) return scalar(assignment.value);
+          if (stable(assignment.value)) return logical(body.slice(1), assignment.value);
+        }
+        if (first?.kind === "if" && first.branches.length === 0 && safe(first.test)) {
+          const remaining = first.alternate ? (body.length === 1 ? first.alternate.statements : undefined) : body.slice(1);
+          if (remaining) {
+            const consequent = closed(first.consequent.statements);
+            const alternate = closed(remaining);
+            if (consequent && alternate) return simplifyExpression({kind: "if-expr", test: first.test,
+              consequent, branches: [], alternate});
+          }
+        }
+        return undefined;
+      };
+      const value = logical(statements.slice(index + 1), declaration.values[0]!);
+      if (value) return [...statements.slice(0, index), {kind: "return", values: [value]}];
+    }
+    return statements;
+  }
 }
 
 // ---------------------------------------------------------------- expressions
 
 function simplifyExpression(expression: Expression): Expression {
+  if (expression.kind === "unary" && expression.op === "not") {
+    let argument = expression.argument;
+    while (argument.kind === "paren") argument = argument.expression;
+    // Equality and inequality are exact boolean complements, including for
+    // NaN and __eq. Relational comparisons deliberately keep their negation.
+    if (argument.kind === "binary" && (argument.op === "==" || argument.op === "~=")) {
+      return { ...argument, op: argument.op === "==" ? "~=" : "==" };
+    }
+  }
   if (expression.kind === "binary" && (expression.op === "and" || expression.op === "or")) {
     // `and`/`or` are associative in both value and evaluation order.
     const right = expression.right;
@@ -197,7 +299,7 @@ function simplifyExpression(expression: Expression): Expression {
       if (consequent.value) return asBoolean(expression.test);
       if (expression.test.kind === "unary" && expression.test.op === "not")
         return asBoolean(expression.test.argument);
-      return {kind: "unary", op: "not", argument: expression.test};
+      return simplifyExpression({kind: "unary", op: "not", argument: expression.test});
     }
     if (isInertLiteral(alternate) && consequent.kind === "binary" && consequent.op === "or" &&
         sameNode(consequent.right, alternate)) {
@@ -321,6 +423,60 @@ function isGuard(statement: Statement | undefined): statement is IfStatement {
   return statement?.kind === "if" && statement.branches.length === 0 && !statement.alternate;
 }
 
+/** Adjacent guards with the same exit share the exit, while `or` preserves
+ * exactly which predicates run. Never merge closure creation sites. */
+function mergeTerminalGuards(statements: Statement[]): Statement[] {
+  const terminal = (statement: Statement | undefined): statement is IfStatement => {
+    if (!isGuard(statement) || statement.consequent.statements.length !== 1) return false;
+    const exit = statement.consequent.statements[0]!;
+    return exit.kind === "return" && !containsFunction(exit);
+  };
+  const terms = (test: Expression): number => test.kind === "binary" && test.op === "or"
+    ? terms(test.left) + terms(test.right) : 1;
+  const out: Statement[] = [];
+  for (const statement of statements) {
+    const previous = out.at(-1);
+    if (terminal(previous) && terminal(statement) &&
+        sameNode(previous.consequent, statement.consequent) && terms(previous.test) + terms(statement.test) <= 6) {
+      out[out.length - 1] = {...previous, test: disjunction(previous.test, statement.test)};
+    } else {
+      out.push(statement);
+    }
+  }
+  return out;
+}
+
+function containsFunction(value: unknown): boolean {
+  if (!value || typeof value !== "object") return false;
+  const node = value as Record<string, unknown>;
+  return node.kind === "function-expr" || node.kind === "function-decl" || Object.values(node).some(containsFunction);
+}
+
+/** A run of three or more value-return guards is a dispatch ladder. Branch
+ * bodies and their original return packs remain in their original scopes. */
+function returningLadders(statements: Statement[]): Statement[] {
+  const guard = (statement: Statement | undefined): statement is IfStatement => isGuard(statement) &&
+    statement.consequent.statements.length === 1 && statement.consequent.statements[0]!.kind === "return" &&
+    (statement.consequent.statements[0] as Extract<Statement, {kind: "return"}>).values.length > 0;
+  const out: Statement[] = [];
+  for (let index = 0; index < statements.length;) {
+    let end = index;
+    while (guard(statements[end])) end += 1;
+    if (end - index < 3) {
+      out.push(statements[index++]!);
+      continue;
+    }
+    const first = statements[index] as IfStatement;
+    const branches = (statements.slice(index + 1, end) as IfStatement[])
+      .map(statement => ({test: statement.test, body: statement.consequent}));
+    const fallback = statements[end];
+    out.push({...first, branches, ...(fallback?.kind === "return"
+      ? {alternate: {kind: "block" as const, statements: [fallback]}} : {})});
+    index = end + (fallback?.kind === "return" ? 1 : 0);
+  }
+  return out;
+}
+
 function isBreakGuard(statement: Statement | undefined): statement is IfStatement {
   return isGuard(statement) && statement.consequent.statements.length === 1 &&
     statement.consequent.statements[0]!.kind === "break";
@@ -430,6 +586,16 @@ function flattenExits(statements: Statement[], context: Context): Statement[] {
     for (;;) {
       const rest = [...current.branches.map((branch) => branch.body), ...(current.alternate ? [current.alternate] : [])];
       if (rest.length === 0) break;
+      // When both arms leave, prefer the small exit as the guard over nesting
+      // the remaining dispatch behind a negated condition.
+      if (current.branches.length === 0 && current.alternate &&
+          blockSize(current.alternate) === 1 && endsInExit(current.alternate) &&
+          blockSize(current.consequent) > 1 && endsInExit(current.consequent) && canHoist(current.consequent) &&
+          negationCost(negateTest(current.test)) <= negationCost(current.test)) {
+        out.push({kind: "if", test: negateTest(current.test), consequent: current.alternate, branches: []},
+          ...current.consequent.statements);
+        return;
+      }
       if (endsInExit(current.consequent)) {
         if (current.branches.length > 0 && current.branches.every((branch) => endsInExit(branch.body))) {
           // A ladder of exits stays a ladder; its `else` is what follows it.
@@ -459,6 +625,22 @@ function flattenExits(statements: Statement[], context: Context): Statement[] {
     out.push(current);
   });
   return out;
+}
+
+/** Earlier guard recovery may already have detached the smaller return from
+ * its `else`. Reorient that terminal pair only when its test becomes no more
+ * negative and the larger body's locals cannot escape to following code. */
+function preferSmallReturnGuard(statements: Statement[], context: Context): Statement[] {
+  const fallback = statements.at(-1);
+  const guarded = statements.at(-2);
+  if (fallback?.kind !== "return" || !isGuard(guarded) ||
+      blockSize(guarded.consequent) <= 1 || !endsInExit(guarded.consequent) ||
+      !hoistable(guarded.consequent, [], context)) return statements;
+  const positive = negateTest(guarded.test);
+  if (negationCost(positive) > negationCost(guarded.test)) return statements;
+  return [...statements.slice(0, -2),
+    {kind: "if", test: positive, consequent: {kind: "block", statements: [fallback]}, branches: []},
+    ...guarded.consequent.statements];
 }
 
 /** Moving a branch body into the enclosing block widens the scope of its
