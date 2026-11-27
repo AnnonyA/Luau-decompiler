@@ -1,0 +1,361 @@
+{"revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84", "node": "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node", "command": ["npm", "run", "bench:test"], "startedAt": "2026-11-27T22:08:13.427098+00:00"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> luau-decompiler@0.2.0 bench:test
+> node --test scripts/bench-compare.test.mjs scripts/bench-summary.test.mjs scripts/bench-assert-syntax.test.mjs scripts/bench-semantic.test.mjs scripts/bench-performance.test.mjs scripts/bench-tovek.test.mjs scripts/competition/benchmark.test.mjs scripts/large/benchmark.test.mjs scripts/fuzz/generator.test.mjs scripts/fuzz/observe.test.mjs scripts/fuzz/reducer.test.mjs scripts/rosetta/validate.test.mjs
+
+TAP version 13
+# Subtest: accepts genuine successful parser results from both published and own source
+ok 1 - accepts genuine successful parser results from both published and own source
+  ---
+  duration_ms: 1.388047
+  ...
+# Subtest: records actual syntax failure as a measured result rather than inventing PASS
+ok 2 - records actual syntax failure as a measured result rather than inventing PASS
+  ---
+  duration_ms: 0.178169
+  ...
+# Subtest: requireAllPass makes syntax failures a blocking, diagnosed regression
+ok 3 - requireAllPass makes syntax failures a blocking, diagnosed regression
+  ---
+  duration_ms: 0.372232
+  ...
+# Subtest: rejects missing, skipped, or errored official compiler invocation
+ok 4 - rejects missing, skipped, or errored official compiler invocation
+  ---
+  duration_ms: 0.902273
+  ...
+# Subtest: rejects failed decompilation and empty corpus instead of recording false success
+ok 5 - rejects failed decompilation and empty corpus instead of recording false success
+  ---
+  duration_ms: 0.175465
+  ...
+# Subtest: manifest includes the three existing real bytecode fixtures
+ok 6 - manifest includes the three existing real bytecode fixtures
+  ---
+  duration_ms: 6.736945
+  ...
+# Subtest: an opt-in source directory contains the reconstructed fixtures for diagnosis
+ok 7 - an opt-in source directory contains the reconstructed fixtures for diagnosis
+  ---
+  duration_ms: 562.212984
+  ...
+# Subtest: source metrics are deterministic and identify explicit register placeholders
+ok 8 - source metrics are deterministic and identify explicit register placeholders
+  ---
+  duration_ms: 0.19181
+  ...
+# Subtest: a syntax check is not claimed when official compiler is unavailable
+ok 9 - a syntax check is not claimed when official compiler is unavailable
+  ---
+  duration_ms: 5.727201
+  ...
+# Subtest: own benchmark records hashes, versions, evidence limits and result counts
+ok 10 - own benchmark records hashes, versions, evidence limits and result counts
+  ---
+  duration_ms: 375.039348
+  ...
+# Subtest: pinned LunaUX clone is measured without claiming competitor execution
+ok 11 - pinned LunaUX clone is measured without claiming competitor execution
+  ---
+  duration_ms: 2122.642316
+  ...
+# Subtest: pinned corpus verification rejects modified binary content
+ok 12 - pinned corpus verification rejects modified binary content
+  ---
+  duration_ms: 15.860127
+  ...
+# Subtest: pinned corpus verification rejects modified competitor source
+ok 13 - pinned corpus verification rejects modified competitor source
+  ---
+  duration_ms: 10.891148
+  ...
+# Subtest: pinned corpus verification rejects missing or extra samples
+ok 14 - pinned corpus verification rejects missing or extra samples
+  ---
+  duration_ms: 7.396467
+  ...
+# Subtest: summarizes measured samples without dropping slower observations
+ok 15 - summarizes measured samples without dropping slower observations
+  ---
+  duration_ms: 0.965569
+  ...
+# Subtest: rejects missing and invalid measurements
+ok 16 - rejects missing and invalid measurements
+  ---
+  duration_ms: 0.217628
+  ...
+# Subtest: all 100 standalone source programs are distinct and included in the allowlist
+ok 17 - all 100 standalone source programs are distinct and included in the allowlist
+  ---
+  duration_ms: 39.451407
+  ...
+# Subtest: semantic corpus is a fixed allowlist of owned Luau sources
+ok 18 - semantic corpus is a fixed allowlist of owned Luau sources
+  ---
+  duration_ms: 0.177438
+  ...
+# Subtest: CI gates all 200 behavior profiles verified by the pinned official VM
+ok 19 - CI gates all 200 behavior profiles verified by the pinned official VM
+  ---
+  duration_ms: 0.2581
+  ...
+# Subtest: optimization matrix gates all 200 confirmed pairs
+ok 20 - optimization matrix gates all 200 confirmed pairs
+  ---
+  duration_ms: 0.130607
+  ...
+# Subtest: matches equal nonempty deterministic traces
+ok 21 - matches equal nonempty deterministic traces
+  ---
+  duration_ms: 0.107843
+  ...
+# Subtest: detects changed evaluation results and output ordering
+ok 22 - detects changed evaluation results and output ordering
+  ---
+  duration_ms: 0.054743
+  ...
+# Subtest: does not count two empty outputs as a successful semantic comparison
+ok 23 - does not count two empty outputs as a successful semantic comparison
+  ---
+  duration_ms: 0.090417
+  ...
+# Subtest: rejects either execution failure even when their output matches
+ok 24 - rejects either execution failure even when their output matches
+  ---
+  duration_ms: 0.069295
+  ...
+# Subtest: saved-bytecode oracle keeps O0 bytes even after the original source changes
+ok 25 - saved-bytecode oracle keeps O0 bytes even after the original source changes
+  ---
+  duration_ms: 218.559142
+  ...
+# Subtest: source interpreter alone is rejected instead of silently replacing the bytecode oracle
+ok 26 - source interpreter alone is rejected instead of silently replacing the bytecode oracle
+  ---
+  duration_ms: 0.724534
+  ...
+# Subtest: benchmark summary distinguishes measured decode from unmeasured semantics
+ok 27 - benchmark summary distinguishes measured decode from unmeasured semantics
+  ---
+  duration_ms: 0.924537
+  ...
+# Subtest: summary does not silently accept malformed reports
+ok 28 - summary does not silently accept malformed reports
+  ---
+  duration_ms: 3.411732
+  ...
+# Subtest: escapes dynamic fields in Markdown tables
+ok 29 - escapes dynamic fields in Markdown tables
+  ---
+  duration_ms: 0.136296
+  ...
+# Subtest: verifies pinned bytes and returns the exact input without recompiling
+ok 30 - verifies pinned bytes and returns the exact input without recompiling
+  ---
+  duration_ms: 10.300792
+  ...
+# Subtest: rejects tampering before any engine evaluation
+ok 31 - rejects tampering before any engine evaluation
+  ---
+  duration_ms: 4.184971
+  ...
+# Subtest: rejects unlocked bytecode files and traversal paths
+ok 32 - rejects unlocked bytecode files and traversal paths
+  ---
+  duration_ms: 2.156797
+  ...
+# Subtest: decodes the locked text transport without changing Roblox opcode bytes
+ok 33 - decodes the locked text transport without changing Roblox opcode bytes
+  ---
+  duration_ms: 2.296799
+  ...
+# Subtest: both request schemas preserve precisely the same bytes
+ok 34 - both request schemas preserve precisely the same bytes
+  ---
+  duration_ms: 1.657874
+  ...
+# Subtest: transport/auth errors and undocumented responses are not semantic failures
+ok 35 - transport/auth errors and undocumented responses are not semantic failures
+  ---
+  duration_ms: 0.346013
+  ...
+# Subtest: HTTP cache avoids duplicate requests, retains exact bodies, and bounds traffic
+ok 36 - HTTP cache avoids duplicate requests, retains exact bodies, and bounds traffic
+  ---
+  duration_ms: 31.238753
+  ...
+# Subtest: classification prioritizes syntax and observed behavior over source resemblance
+ok 37 - classification prioritizes syntax and observed behavior over source resemblance
+  ---
+  duration_ms: 0.262546
+  ...
+# Subtest: lexical metrics ignore comments and strings and disclose their limits
+ok 38 - lexical metrics ignore comments and strings and disclose their limits
+  ---
+  duration_ms: 0.687368
+  ...
+# Subtest: rate limiting opens the circuit and is cached without retries
+ok 39 - rate limiting opens the circuit and is cached without retries
+  ---
+  duration_ms: 11.406768
+  ...
+# Subtest: a hanging API request times out and cannot become a semantic verdict
+ok 40 - a hanging API request times out and cannot become a semantic verdict
+  ---
+  duration_ms: 117.649997
+  ...
+# Subtest: 12 originals are distinct from all 100 previous sources and each has multiple inputs
+ok 41 - 12 originals are distinct from all 100 previous sources and each has multiple inputs
+  ---
+  duration_ms: 31.867482
+  ...
+# Subtest: parser infrastructure failure is not mislabeled as invalid source
+ok 42 - parser infrastructure failure is not mislabeled as invalid source
+  ---
+  duration_ms: 0.40392
+  ...
+# Subtest: a seed reproduces source and inputs after unrelated generations
+ok 43 - a seed reproduces source and inputs after unrelated generations
+  ---
+  duration_ms: 3.990777
+  ...
+# Subtest: generator rejects seeds and sizes that cannot be reproduced or bounded
+ok 44 - generator rejects seeds and sizes that cannot be reproduced or bounded
+  ---
+  duration_ms: 0.350239
+  ...
+# Subtest: trace differences, runtime errors, syntax errors and timeouts remain distinct
+ok 45 - trace differences, runtime errors, syntax errors and timeouts remain distinct
+  ---
+  duration_ms: 2.569061
+  ...
+# Subtest: reducer preserves an executed trace mismatch while removing unrelated statements
+ok 46 - reducer preserves an executed trace mismatch while removing unrelated statements
+  ---
+  duration_ms: 5.291622
+  ...
+# Subtest: reducer does not turn invalid originals, timeouts, or other failure kinds into a reproducer
+ok 47 - reducer does not turn invalid originals, timeouts, or other failure kinds into a reproducer
+  ---
+  duration_ms: 0.942334
+  ...
+# Subtest: large reports describe measured profiles and input counts, not the old fixed corpus
+ok 48 - large reports describe measured profiles and input counts, not the old fixed corpus
+  ---
+  duration_ms: 0.901522
+  ...
+# Subtest: significant lines exclude formatting, comments and control delimiters
+ok 49 - significant lines exclude formatting, comments and control delimiters
+  ---
+  duration_ms: 0.23171
+  ...
+# Subtest: sealed manifests reject modified sources and keep holdout separate
+ok 50 - sealed manifests reject modified sources and keep holdout separate
+  ---
+  duration_ms: 14.466529
+  ...
+# Subtest: isolated decoding records bounded worker resources and unsupported inputs honestly
+ok 51 - isolated decoding records bounded worker resources and unsupported inputs honestly
+  ---
+  duration_ms: 82.122717
+  ...
+# Subtest: comparative summaries count only measured matches and retain holdout provenance
+ok 52 - comparative summaries count only measured matches and retain holdout provenance
+  ---
+  duration_ms: 6.149177
+  ...
+# Subtest: the committed pin records all four published suite fingerprints and full corpus inventories
+ok 53 - the committed pin records all four published suite fingerprints and full corpus inventories
+  ---
+  duration_ms: 2.043637
+  ...
+# Subtest: quick: reconstructs the complete all-pass result, preserving only pinned unusable originals
+ok 54 - quick: reconstructs the complete all-pass result, preserving only pinned unusable originals
+  ---
+  duration_ms: 1.377831
+  ...
+# Subtest: full: reconstructs the complete all-pass result, preserving only pinned unusable originals
+ok 55 - full: reconstructs the complete all-pass result, preserving only pinned unusable originals
+  ---
+  duration_ms: 11.004652
+  ...
+# Subtest: hard-quick: reconstructs the complete all-pass result, preserving only pinned unusable originals
+ok 56 - hard-quick: reconstructs the complete all-pass result, preserving only pinned unusable originals
+  ---
+  duration_ms: 0.570702
+  ...
+# Subtest: hard-full: reconstructs the complete all-pass result, preserving only pinned unusable originals
+ok 57 - hard-full: reconstructs the complete all-pass result, preserving only pinned unusable originals
+  ---
+  duration_ms: 5.838769
+  ...
+# Subtest: rejects malformed JSON and unsupported metadata, versions, profile order and verdict mapping
+ok 58 - rejects malformed JSON and unsupported metadata, versions, profile order and verdict mapping
+  ---
+  duration_ms: 1.786087
+  ...
+# Subtest: a self-consistent smaller corpus, duplicate or substituted case cannot pass
+ok 59 - a self-consistent smaller corpus, duplicate or substituted case cannot pass
+  ---
+  duration_ms: 0.975944
+  ...
+# Subtest: rejects inflated or understated scores and totals, even when a process reported success
+ok 60 - rejects inflated or understated scores and totals, even when a process reported success
+  ---
+  duration_ms: 3.763224
+  ...
+# Subtest: refusals, recompilation failures, crashes and mismatches all fail the default gate
+ok 61 - refusals, recompilation failures, crashes and mismatches all fail the default gate
+  ---
+  duration_ms: 3.847641
+  ...
+# Subtest: a changed unusable-original exclusion cannot hide a failure or reduce the denominator
+ok 62 - a changed unusable-original exclusion cannot hide a failure or reduce the denominator
+  ---
+  duration_ms: 2.895394
+  ...
+# Subtest: validates every profile letter and its corresponding failure detail
+ok 63 - validates every profile letter and its corresponding failure detail
+  ---
+  duration_ms: 0.781811
+  ...
+# Subtest: comparable measurement rejects semantic overrides, including explicitly empty variables
+ok 64 - comparable measurement rejects semantic overrides, including explicitly empty variables
+  ---
+  duration_ms: 0.21207
+  ...
+# Subtest: the direct CLI command never relies on shell quoting and the runner rejects unknown switches
+ok 65 - the direct CLI command never relies on shell quoting and the runner rejects unknown switches
+  ---
+  duration_ms: 0.639747
+  ...
+# Subtest: a real subprocess exiting zero with a failing result fails the gate and preserves evidence
+ok 66 - a real subprocess exiting zero with a failing result fails the gate and preserves evidence
+  ---
+  duration_ms: 23.41162
+  ...
+# Subtest: measurement-only preserves failures, but still rejects inconsistent JSON
+ok 67 - measurement-only preserves failures, but still rejects inconsistent JSON
+  ---
+  duration_ms: 68.842078
+  ...
+# Subtest: a nonzero process exit cannot pass, even when it left a complete all-pass JSON
+ok 68 - a nonzero process exit cannot pass, even when it left a complete all-pass JSON
+  ---
+  duration_ms: 24.619354
+  ...
+# Subtest: engine changes during measurement invalidate otherwise passing results
+ok 69 - engine changes during measurement invalidate otherwise passing results
+  ---
+  duration_ms: 27.285657
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 69
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3203.51813

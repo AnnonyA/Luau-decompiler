@@ -35,18 +35,51 @@ On the three real fixtures currently used by the project, the generated output c
 
 ## Rosetta 3 reconstruction results
 
-**Complete measured results.** Quick **882/882**; Full **12,276/12,276**; Hard Quick **882/882**; Hard Full **12,276/12,276**. All four strict gates passed every usable original/profile pair. The measured engine uses one frozen source snapshot, published as [`08259cd6c312fe9c41eda0e0c5d0d03d9524cf71`](https://github.com/AnnonyA/Luau-decompiler/commit/08259cd6c312fe9c41eda0e0c5d0d03d9524cf71).
+**Complete measured behavioral coverage:** Quick **882/882**; Full
+**12,276/12,276**; Hard Quick **882/882**; Hard Full **12,276/12,276**.
+All four strict gates use the same frozen engine, published as
+[`f9543bbb`](https://github.com/AnnonyA/Luau-decompiler/commit/f9543bbb26615f50aa599cead318beb0f9a6e7a0).
+
+The source-similarity improvements shorten call wrappers and remove unnecessary
+temporaries, duplicated continuations and loop scaffolding while preserving
+observed behavior. **The 82.2% and 90% source-similarity targets remain unmet.**
+
+| Tier | Behavioral pass | Previous similarity | New similarity | Output/original tokens |
+| --- | ---: | ---: | ---: | ---: |
+| Quick | 882/882 | 72.30% | **76.93%** | 99.27% |
+| Full | 12,276/12,276 | 70.27% | **73.91%** | 87.55% |
+| Hard Quick | 882/882 | 71.81% | **76.39%** | 99.79% |
+| Hard Full | 12,276/12,276 | 69.89% | **73.53%** | 87.72% |
+
+Similarity uses Rosetta's normalized source tokens. Output size is its geometric
+token ratio, **not bytes or a claim of equal length for every program**.
+The full tiers produce about 88% of the original tokens, so closeness to the
+original token size has not improved uniformly.
+The [complete report and raw evidence](benchmarks/results/rosetta-source-similarity-2026-11-27/README.md)
+include exact values, hashes, validation and the unchanged
+[previous baseline](benchmarks/results/rosetta-final-2026-11-27/README.md).
+[Engine changes and remaining source-recovery work](docs/references/rosetta-source-similarity-2026-11-27.md)
+describe the bounded reconstruction proofs.
+
+### Behavioral coverage against published snapshots
 
 | Tier | AnnonyA | Luacid published result | lua.expert published result |
 | --- | ---: | ---: | ---: |
-| Quick | [882/882](benchmarks/results/rosetta-final-2026-11-27/annonyA-quick.json) | [879/882](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-quick.json) | [882/882](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-quick.json) |
-| Full | [12,276/12,276](benchmarks/results/rosetta-final-2026-11-27/annonyA-full.json) | [12,237/12,276](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-full.json) | [12,167/12,276](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-full.json) |
-| Hard Quick | [882/882](benchmarks/results/rosetta-final-2026-11-27/annonyA-hard-quick.json) | [353/882](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-quick.json) | [264/882](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-quick.json) |
-| Hard Full | [12,276/12,276](benchmarks/results/rosetta-final-2026-11-27/annonyA-hard-full.json) | [5,622/12,276](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-full.json) | [3,859/12,276](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-full.json) |
+| Quick | [882/882](benchmarks/results/rosetta-source-similarity-2026-11-27/annonyA-quick.json) | [879/882](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-quick.json) | [882/882](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-quick.json) |
+| Full | [12,276/12,276](benchmarks/results/rosetta-source-similarity-2026-11-27/annonyA-full.json) | [12,237/12,276](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-full.json) | [12,167/12,276](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-full.json) |
+| Hard Quick | [882/882](benchmarks/results/rosetta-source-similarity-2026-11-27/annonyA-hard-quick.json) | [353/882](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-quick.json) | [264/882](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-quick.json) |
+| Hard Full | [12,276/12,276](benchmarks/results/rosetta-source-similarity-2026-11-27/annonyA-hard-full.json) | [5,622/12,276](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-full.json) | [3,859/12,276](https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-full.json) |
 
-See the [four-tier report and raw evidence](benchmarks/results/rosetta-final-2026-11-27/README.md) for the exact Quick, Full, Hard Quick and Hard Full counts, and [the engine changes](docs/references/rosetta-final-2026-11-27.md) for the reconstruction fixes and official-VM controls.
+By behavioral pass coverage, this engine exceeds the published Luacid results
+in all four tiers, ties lua.expert on Quick, and exceeds it on the other three.
+Full and Hard Full each retain six unusable upstream original/profile pairs
+outside their 12,276 graded pairs. These are finite-corpus development results,
+not a guarantee for all Luau programs or a speed ranking.
 
-Against these published snapshots, AnnonyA exceeds Luacid in all four tiers. It ties lua.expert on Quick at 882/882 and exceeds it on Full, Hard Quick, and Hard Full. Full and Hard Full each retain six unusable upstream original/profile pairs outside their 12,276 graded pairs. These are finite-corpus accuracy results against the audited published competitor snapshots; no speed comparison is claimed. Quick and Hard Quick run as strict automatic CI gates.
+Peer similarity averages can cover different passing populations; see the
+[quality and coverage comparison](benchmarks/results/rosetta-source-similarity-2026-11-27/comparison.md).
+No best-source-similarity claim is made. Quick and Hard Quick remain strict
+automatic CI gates.
 
 ## Quick start
 

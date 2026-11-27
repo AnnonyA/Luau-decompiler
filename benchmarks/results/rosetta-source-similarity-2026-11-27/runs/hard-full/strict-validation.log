@@ -1,0 +1,41 @@
+{"revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84", "node": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node", "command": ["/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-full-engine/scripts/rosetta/validate.mjs", "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-full/annonyA-hard-full.json", "--tier", "hard-full", "--expected-version", "326d85ed21c0a7bef6dcd07a26e38b49f0148a84"], "startedAt": "2026-11-27T22:06:56.978756+00:00"}
+(node:110577) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "tier": "hard-full",
+  "hash": "9921d3bde4a99bfd",
+  "passed": 12276,
+  "total": 12276,
+  "roundTrips": 12282,
+  "counts": {
+    "pass": 12276,
+    "mismatch": 0,
+    "recompile_failed": 0,
+    "decompile_failed": 0,
+    "refused": 0,
+    "unusable": 6
+  },
+  "sections": [
+    {
+      "id": "cases",
+      "passed": 246,
+      "total": 246
+    },
+    {
+      "id": "libraries",
+      "passed": 36,
+      "total": 36
+    },
+    {
+      "id": "generated",
+      "passed": 5994,
+      "total": 5994
+    },
+    {
+      "id": "mutants",
+      "passed": 6000,
+      "total": 6000
+    }
+  ],
+  "allPass": true
+}

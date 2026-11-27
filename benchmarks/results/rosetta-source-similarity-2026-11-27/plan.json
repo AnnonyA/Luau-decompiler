@@ -1,0 +1,79 @@
+{
+  "format": "annonyA-frozen-validation-plan",
+  "schema": 1,
+  "preparedAt": "2026-11-27T21:50:17.895091+00:00",
+  "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+  "tree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+  "output": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01",
+  "threadsPerTier": 4,
+  "suiteManifestSha256": "0b67b06dee91960755f9e5fbeadcd0722ec77e7d1a0b54878285b77af66ee142",
+  "rosetta": {
+    "checkout": "/workspace/scratch/eb5e4be57451/rosetta-research",
+    "revision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "tree": "dd5acdc6b2612b04b3fb15ef5e5d3bf07f65920a",
+    "binarySha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b",
+    "luau": "0.747"
+  },
+  "nodes": {
+    "node20": {
+      "executable": "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+      "version": "v20.20.2",
+      "sha256": "6295488653f0d93b0a157841746fef7e72cc4328cfb60c4bbe0ca2668a836ffd"
+    },
+    "node22": {
+      "executable": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "version": "v22.23.5",
+      "sha256": "2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd"
+    }
+  },
+  "worktrees": {
+    "quick": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-quick-engine",
+    "full": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-full-engine",
+    "hard-quick": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-quick-engine",
+    "hard-full": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-hard-full-engine",
+    "node20": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-node20-engine",
+    "node22": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01-node22-engine"
+  },
+  "expected": {
+    "quick": {
+      "usable": 882,
+      "roundTrips": 882,
+      "hash": "e24826907050bd1d"
+    },
+    "full": {
+      "usable": 12276,
+      "roundTrips": 12282,
+      "hash": "f0eae8ffcedd440e"
+    },
+    "hard-quick": {
+      "usable": 882,
+      "roundTrips": 882,
+      "hash": "9bcb49d29e867a92"
+    },
+    "hard-full": {
+      "usable": 12276,
+      "roundTrips": 12282,
+      "hash": "9921d3bde4a99bfd"
+    }
+  },
+  "engineOptions": "default; no overrides",
+  "gallery": {
+    "enabled": true,
+    "reduction": false,
+    "reruns": false,
+    "upstreamPerSectionCap": 150,
+    "upstreamTextClipBytes": 16384
+  },
+  "recommendedScheduling": [
+    [
+      "quick",
+      "hard-quick"
+    ],
+    [
+      "full",
+      "hard-full"
+    ]
+  ],
+  "dependencyDonor": "/workspace/scratch/eb5e4be57451/similarity-local-scopes",
+  "dependencyLockSha256": "e160f5ca3b42025a6186604028f9f5667bcbaacbf43ede5449e62867c04afd4d"
+}

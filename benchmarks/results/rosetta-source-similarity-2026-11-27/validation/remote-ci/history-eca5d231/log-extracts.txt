@@ -1,0 +1,113 @@
+## node20: https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795187/job/140750235932
+
+2026-11-27T21:40:20.4868652Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9bd343caa0ee04c2714b77c2d5af631bdda29ef7:refs/remotes/pull/83/merge
+2026-11-27T21:40:22.2916644Z HEAD is now at 9bd343c Merge eca5d23168f56c2c96dce10817ffe2165e55959c into dc4d32d0c38b881006c04b8c20d72549f420aeed
+2026-11-27T21:41:15.3605893Z  Test Files  142 passed (142)
+2026-11-27T21:41:15.3607637Z       Tests  1483 passed (1483)
+2026-11-27T21:41:26.7361650Z # tests 69
+2026-11-27T21:41:26.7362098Z # pass 69
+2026-11-27T21:41:26.7362320Z # fail 0
+2026-11-27T21:41:26.7362978Z # skipped 0
+2026-11-27T21:41:28.8941738Z HEAD is now at 910ccd4 Update README.md
+
+## node22: https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795187/job/140751124326
+
+2026-11-27T21:42:58.5336284Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9bd343caa0ee04c2714b77c2d5af631bdda29ef7:refs/remotes/pull/83/merge
+2026-11-27T21:43:00.6432917Z HEAD is now at 9bd343c Merge eca5d23168f56c2c96dce10817ffe2165e55959c into dc4d32d0c38b881006c04b8c20d72549f420aeed
+2026-11-27T21:44:19.5651997Z  Test Files  142 passed (142)
+2026-11-27T21:44:19.5657010Z       Tests  1483 passed (1483)
+2026-11-27T21:44:33.5029057Z # tests 69
+2026-11-27T21:44:33.5029470Z # pass 69
+2026-11-27T21:44:33.5029654Z # fail 0
+2026-11-27T21:44:33.5030431Z # skipped 0
+2026-11-27T21:44:36.7763653Z HEAD is now at 910ccd4 Update README.md
+
+## browser: https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795169/job/140750236004
+
+2026-11-27T21:40:26.8165816Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9bd343caa0ee04c2714b77c2d5af631bdda29ef7:refs/remotes/pull/83/merge
+2026-11-27T21:40:28.7344473Z HEAD is now at 9bd343c Merge eca5d23168f56c2c96dce10817ffe2165e55959c into dc4d32d0c38b881006c04b8c20d72549f420aeed
+2026-11-27T21:41:24.8483140Z  Test Files  142 passed (142)
+2026-11-27T21:41:24.8484131Z       Tests  1483 passed (1483)
+2026-11-27T21:41:29.0052534Z # tests 6
+2026-11-27T21:41:29.0052955Z # pass 6
+2026-11-27T21:41:29.0053198Z # fail 0
+2026-11-27T21:41:29.0053621Z # skipped 0
+2026-11-27T21:41:45.9307795Z # tests 1
+2026-11-27T21:41:45.9308497Z # pass 1
+2026-11-27T21:41:45.9308726Z # fail 0
+2026-11-27T21:41:45.9309507Z # skipped 0
+
+## official: https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795187/job/140751725716
+
+2026-11-27T21:44:46.3133730Z ##[group]Run actions/checkout@v4
+2026-11-27T21:44:46.6813110Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9bd343caa0ee04c2714b77c2d5af631bdda29ef7:refs/remotes/pull/83/merge
+2026-11-27T21:44:48.4742803Z HEAD is now at 9bd343c Merge eca5d23168f56c2c96dce10817ffe2165e55959c into dc4d32d0c38b881006c04b8c20d72549f420aeed
+2026-11-27T21:44:48.5065894Z ##[group]Run actions/setup-node@v4
+2026-11-27T21:44:49.6428864Z ##[group]Run npm ci
+2026-11-27T21:44:54.5911312Z ##[group]Run git init "$RUNNER_TEMP/luau-source"
+2026-11-27T21:44:55.9112641Z HEAD is now at 9d7748a Sync to upstream/release/743 (#3054)
+2026-11-27T21:44:55.9152570Z ##[group]Run cmake -S "$RUNNER_TEMP/luau-source" -B "$RUNNER_TEMP/luau-build" \
+2026-11-27T21:45:54.1530103Z ##[group]Run git init "$RUNNER_TEMP/lunaux-corpus"
+2026-11-27T21:45:54.3799233Z HEAD is now at 910ccd4 Update README.md
+2026-11-27T21:45:54.3832353Z ##[group]Run npm run bench:compare -- \
+2026-11-27T21:45:55.6164466Z ##[group]Run git init "$RUNNER_TEMP/tovek-corpus"
+2026-11-27T21:45:56.6356528Z HEAD is now at 77edf38 docs: point all current download links to V2.6.1
+2026-11-27T21:45:56.6409085Z ##[group]Run npm run bench:tovek -- --corpus "$RUNNER_TEMP/tovek-corpus" \
+2026-11-27T21:46:05.5808513Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:46:06.7134850Z ##[group]Run c++ -std=c++17 -O2 -I "$RUNNER_TEMP/luau-source/VM/include" \
+2026-11-27T21:46:10.1060833Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:46:10.8715972Z ##[group]Run npm run bench:closure-identity -- \
+2026-11-27T21:46:18.2113684Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:46:19.9509364Z ##[group]Run npm run bench:game-systems -- \
+2026-11-27T21:46:25.2910825Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:46:26.4792262Z ##[group]Run npm run bench:competition -- \
+2026-11-27T21:46:27.6698973Z ##[group]Run npm run bench:regressions -- \
+2026-11-27T21:46:29.5184122Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:46:30.3797402Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:46:31.2978170Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:46:32.0876110Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:46:32.8365491Z ##[group]Run npm run bench:large:regressions -- --name-styles \
+2026-11-27T21:47:01.4490272Z ##[group]Run npm run bench:large:regressions -- --rewrite-options \
+2026-11-27T21:48:20.1627585Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:48:23.3374103Z ##[group]Run npm run bench:large -- \
+2026-11-27T21:48:32.9013977Z ##[group]Run npm run bench:large -- \
+2026-11-27T21:48:39.5991326Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:48:41.7062309Z ##[group]Run npm run bench:large -- \
+2026-11-27T21:48:58.7416233Z ##[group]Run npm run bench:large -- \
+2026-11-27T21:49:06.6157206Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:49:08.0693845Z ##[group]Run npm run bench:fuzz -- --count 6 --reduce-attempts 12 \
+2026-11-27T21:49:12.1383151Z ##[group]Run actions/upload-artifact@v4
+2026-11-27T21:49:13.0298625Z ##[group]Run npm run bench:independent -- \
+2026-11-27T21:49:16.0475421Z ##[group]Run actions/upload-artifact@v4
+
+## quick: https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795195/job/140750235723
+
+2026-11-27T21:40:24.4905551Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9bd343caa0ee04c2714b77c2d5af631bdda29ef7:refs/remotes/pull/83/merge
+2026-11-27T21:40:25.6934855Z HEAD is now at 9bd343c Merge eca5d23168f56c2c96dce10817ffe2165e55959c into dc4d32d0c38b881006c04b8c20d72549f420aeed
+2026-11-27T21:40:30.5940472Z # tests 17
+2026-11-27T21:40:30.5941126Z # pass 17
+2026-11-27T21:40:30.5941423Z # fail 0
+2026-11-27T21:40:30.5942280Z # skipped 0
+2026-11-27T21:40:31.5600178Z HEAD is now at 80f3c13 publish sunberry 0.5.7's rosetta-3 results
+2026-11-27T21:44:01.6844299Z quick: 882/882; {"pass":882,"mismatch":0,"recompile_failed":0,"decompile_failed":0,"refused":0,"unusable":0}
+
+## hard-quick: https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795195/job/140750236046
+
+2026-11-27T21:40:20.5848610Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9bd343caa0ee04c2714b77c2d5af631bdda29ef7:refs/remotes/pull/83/merge
+2026-11-27T21:40:22.4615331Z HEAD is now at 9bd343c Merge eca5d23168f56c2c96dce10817ffe2165e55959c into dc4d32d0c38b881006c04b8c20d72549f420aeed
+2026-11-27T21:40:25.0340056Z # tests 17
+2026-11-27T21:40:25.0340913Z # pass 17
+2026-11-27T21:40:25.0341136Z # fail 0
+2026-11-27T21:40:25.0347845Z # skipped 0
+2026-11-27T21:40:26.0801475Z HEAD is now at 80f3c13 publish sunberry 0.5.7's rosetta-3 results
+2026-11-27T21:44:31.2371367Z hard-quick: 882/882; {"pass":882,"mismatch":0,"recompile_failed":0,"decompile_failed":0,"refused":0,"unusable":0}
+
+## Preserved first infrastructure failure
+
+2026-11-27T21:41:32.5088476Z   duration_ms: 0.854035
+2026-11-27T21:41:32.5116403Z   ---
+2026-11-27T21:41:32.5124403Z   duration_ms: 33.69966
+2026-11-27T21:41:32.5195390Z   duration_ms: 65.403432
+2026-11-27T21:41:35.0127805Z git -C "$RUNNER_TEMP/lunaux-corpus" fetch --depth 1 origin 910ccd4d546fd0c8e21f770a30732ae246eab5c5
+2026-11-27T21:41:35.0809539Z fatal: unable to access 'https://github.com/boydev-1444/lunaux-decompiler.git/': The requested URL returned error: 403
+2026-11-27T21:41:35.0830459Z ##[error]Process completed with exit code 128.

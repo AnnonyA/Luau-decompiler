@@ -1,0 +1,66 @@
+{"revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84", "node": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node", "command": ["npm", "run", "demo:test"], "startedAt": "2026-11-27T22:08:17.430537+00:00"}
+(node:3361) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> luau-decompiler@0.2.0 demo:test
+> node --test scripts/demo.test.mjs scripts/browser-startup.test.mjs
+
+(node:3374) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# (node:3381) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: reads readiness without a stderr announcement and tolerates a partial file
+ok 1 - reads readiness without a stderr announcement and tolerates a partial file
+  ---
+  duration_ms: 167.162761
+  type: 'test'
+  ...
+# Subtest: reports an early exit and its diagnostic instead of waiting for timeout
+ok 2 - reports an early exit and its diagnostic instead of waiting for timeout
+  ---
+  duration_ms: 52.977095
+  type: 'test'
+  ...
+# Subtest: times out a process that never becomes ready, retaining diagnostics
+ok 3 - times out a process that never becomes ready, retaining diagnostics
+  ---
+  duration_ms: 511.2119
+  type: 'test'
+  ...
+# (node:3382) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:3382) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the published example decompiles in the isolated demo worker
+ok 4 - the published example decompiles in the isolated demo worker
+  ---
+  duration_ms: 76.66835
+  type: 'test'
+  ...
+# (node:3382) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the worker returns an actionable unsupported-bytecode diagnostic
+ok 5 - the worker returns an actionable unsupported-bytecode diagnostic
+  ---
+  duration_ms: 62.094016
+  type: 'test'
+  ...
+# (node:3382) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the worker rejects malformed requests without crashing
+ok 6 - the worker rejects malformed requests without crashing
+  ---
+  duration_ms: 63.068514
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 782.420788

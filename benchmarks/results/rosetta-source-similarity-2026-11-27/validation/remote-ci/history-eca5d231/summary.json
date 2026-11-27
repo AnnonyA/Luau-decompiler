@@ -1,0 +1,321 @@
+{
+  "format": "exact-head-ci-evidence",
+  "schema": 1,
+  "observedAt": "2026-11-27 21:55:20 UTC",
+  "localSourceCommit": "850211e4d011ea8610ccee2f7262f93b8fc94191",
+  "publishedHead": "eca5d23168f56c2c96dce10817ffe2165e55959c",
+  "tree": "efa414186131b91d32598e5ae68c878acb7783aa",
+  "executedCommit": "9bd343caa0ee04c2714b77c2d5af631bdda29ef7",
+  "executionKind": "GitHub refs/pull/83/merge synthetic test merge; not an actual merge to main",
+  "parents": [
+    "dc4d32d0c38b881006c04b8c20d72549f420aeed",
+    "eca5d23168f56c2c96dce10817ffe2165e55959c"
+  ],
+  "allRequiredJobsPass": true,
+  "runs": [
+    {
+      "id": 46071795187,
+      "name": "CI",
+      "head_sha": "eca5d23168f56c2c96dce10817ffe2165e55959c",
+      "status": "completed",
+      "conclusion": "success",
+      "run_attempt": 2,
+      "html_url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795187"
+    },
+    {
+      "id": 46071795195,
+      "name": "Rosetta",
+      "head_sha": "eca5d23168f56c2c96dce10817ffe2165e55959c",
+      "status": "completed",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "html_url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795195"
+    },
+    {
+      "id": 46071795169,
+      "name": "Browser demo",
+      "head_sha": "eca5d23168f56c2c96dce10817ffe2165e55959c",
+      "status": "completed",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "html_url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795169"
+    }
+  ],
+  "jobs": {
+    "node20": {
+      "apiJobId": 140751126219,
+      "logJobId": 140750235932,
+      "name": "Test, typecheck and build (Node 20)",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795187/job/140751126219",
+      "conclusion": "success",
+      "checks": {
+        "unitPassed": 1483,
+        "unitTotal": 1483,
+        "unitFiles": 142,
+        "harness": {
+          "passed": 69,
+          "total": 69,
+          "skipped": 0
+        }
+      },
+      "note": "The successful first-attempt Node 20 job was reused by the failed-jobs retry; the API retry snapshot gives that reused result a new job ID. The preserved log is the successful original Node 20 execution."
+    },
+    "node22": {
+      "apiJobId": 140751124326,
+      "logJobId": 140751124326,
+      "name": "Test, typecheck and build (Node 22)",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795187/job/140751124326",
+      "conclusion": "success",
+      "checks": {
+        "unitPassed": 1483,
+        "unitTotal": 1483,
+        "unitFiles": 142,
+        "harness": {
+          "passed": 69,
+          "total": 69,
+          "skipped": 0
+        }
+      }
+    },
+    "browser": {
+      "apiJobId": 140750236004,
+      "logJobId": 140750236004,
+      "name": "build",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795169/job/140750236004",
+      "conclusion": "success",
+      "checks": {
+        "unitPassed": 1483,
+        "unitTotal": 1483,
+        "unitFiles": 142,
+        "demo": {
+          "passed": 6,
+          "total": 6,
+          "skipped": 0
+        },
+        "chromium": {
+          "passed": 1,
+          "total": 1,
+          "skipped": 0
+        }
+      }
+    },
+    "official": {
+      "apiJobId": 140751725716,
+      "logJobId": 140751725716,
+      "name": "Parse source with official pinned Luau",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795187/job/140751725716",
+      "conclusion": "success",
+      "checks": {
+        "officialSteps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out our decompiler",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install and build our decompiler",
+            "conclusion": "success"
+          },
+          {
+            "name": "Fetch pinned official Luau compiler",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build official syntax checker",
+            "conclusion": "success"
+          },
+          {
+            "name": "Fetch pinned LunaUX public fixture corpus",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check our output and published references with official parser",
+            "conclusion": "success"
+          },
+          {
+            "name": "Fetch pinned Tovek public samples and fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check pinned Tovek bytes and paired-source observations",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload Tovek public corpus measurements",
+            "conclusion": "success"
+          },
+          {
+            "name": "Compare behavior of controlled original and decompiled Luau",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload controlled execution comparison",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check sealed closure identity and single-load controls",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload closure identity traces",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check sealed game systems with one load and four activations",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload game system traces",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check 12 independent originals against the official VM",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check scope, register and CFG regressions with extra inputs",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload regression traces",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload original-source comparison evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload generated Luau for parse-error triage",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload official parser results",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check reduced large-system regressions in the official VM",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check individual rewrite switches and both extremes in the official VM",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload rewrite option evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check sealed large development systems",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check observed large regressions without external requests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload large-system evidence including failures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check sealed second-cohort development systems",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check observed second-cohort regressions",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload second-cohort evidence including failures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check seeded captures, effects and multiple returns",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload generated semantic observations and reductions",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check sealed independent systems now tracked as regressions",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload independent regression observations",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out our decompiler",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    },
+    "quick": {
+      "apiJobId": 140750235723,
+      "logJobId": 140750235723,
+      "name": "Rosetta quick (Node 22)",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795195/job/140750235723",
+      "conclusion": "success",
+      "checks": {
+        "strictAllPass": true,
+        "passed": 882,
+        "total": 882,
+        "counts": {
+          "pass": 882,
+          "mismatch": 0,
+          "recompile_failed": 0,
+          "decompile_failed": 0,
+          "refused": 0,
+          "unusable": 0
+        }
+      }
+    },
+    "hard-quick": {
+      "apiJobId": 140750236046,
+      "logJobId": 140750236046,
+      "name": "Rosetta hard-quick (Node 22)",
+      "url": "https://github.com/AnnonyA/Luau-decompiler/actions/runs/46071795195/job/140750236046",
+      "conclusion": "success",
+      "checks": {
+        "strictAllPass": true,
+        "passed": 882,
+        "total": 882,
+        "counts": {
+          "pass": 882,
+          "mismatch": 0,
+          "recompile_failed": 0,
+          "decompile_failed": 0,
+          "refused": 0,
+          "unusable": 0
+        }
+      }
+    }
+  },
+  "historicalRetry": {
+    "runId": 46071795187,
+    "reason": "Node22 corpus git fetch returned HTTP403; Node20 identical pinned corpus fetch succeeded. Retrying only failed jobs without engine or workflow changes.",
+    "originalFailedJob": 140750235423,
+    "result": "Node22 retry completed success",
+    "successfulRetryJob": 140751124326
+  },
+  "apiSnapshotSha256": "bbf4a0cd9eda2752413501179811df71e2149b954c6e44cd79e19a5e7361c91d",
+  "executedCommitProofSha256": "21ec3d89cb51f1835f111481cfe88c5833b26bcdbd248096a087ab01ad69bd11",
+  "rawLogDirectory": "/workspace/scratch/eb5e4be57451/measurements/ci-similarity-eca5d231-raw",
+  "laterHeadRequiresFreshCi": true
+}

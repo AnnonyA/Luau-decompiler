@@ -1,0 +1,11 @@
+{
+  "localCommit": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+  "publishedCommit": "f9543bbb26615f50aa599cead318beb0f9a6e7a0",
+  "tree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+  "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+  "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921",
+  "sourceOfMapping": "Immutable Git trees plus completed Quick/Hard Quick provenance",
+  "author": "AnnonyA",
+  "committer": "AnnonyA"
+}
+

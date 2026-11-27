@@ -1,0 +1,40 @@
+{
+  "sha": "9bd343caa0ee04c2714b77c2d5af631bdda29ef7",
+  "node_id": "C_kwDOT7faoNoAKDliZDM0M2NhYTBlZTA0YzI3MTRiNzdjMmQ1YWY2MzFiZGRhMjllZjc",
+  "url": "https://api.github.com/repos/AnnonyA/Luau-decompiler/git/commits/9bd343caa0ee04c2714b77c2d5af631bdda29ef7",
+  "html_url": "https://github.com/AnnonyA/Luau-decompiler/commit/9bd343caa0ee04c2714b77c2d5af631bdda29ef7",
+  "author": {
+    "name": "AnnonyA",
+    "email": "79977221+AnnonyA@users.noreply.github.com",
+    "date": "2026-11-27T21:40:13Z"
+  },
+  "committer": {
+    "name": "GitHub",
+    "email": "noreply@github.com",
+    "date": "2026-11-27T21:40:13Z"
+  },
+  "tree": {
+    "sha": "efa414186131b91d32598e5ae68c878acb7783aa",
+    "url": "https://api.github.com/repos/AnnonyA/Luau-decompiler/git/trees/efa414186131b91d32598e5ae68c878acb7783aa"
+  },
+  "message": "Merge eca5d23168f56c2c96dce10817ffe2165e55959c into dc4d32d0c38b881006c04b8c20d72549f420aeed",
+  "parents": [
+    {
+      "sha": "dc4d32d0c38b881006c04b8c20d72549f420aeed",
+      "url": "https://api.github.com/repos/AnnonyA/Luau-decompiler/git/commits/dc4d32d0c38b881006c04b8c20d72549f420aeed",
+      "html_url": "https://github.com/AnnonyA/Luau-decompiler/commit/dc4d32d0c38b881006c04b8c20d72549f420aeed"
+    },
+    {
+      "sha": "eca5d23168f56c2c96dce10817ffe2165e55959c",
+      "url": "https://api.github.com/repos/AnnonyA/Luau-decompiler/git/commits/eca5d23168f56c2c96dce10817ffe2165e55959c",
+      "html_url": "https://github.com/AnnonyA/Luau-decompiler/commit/eca5d23168f56c2c96dce10817ffe2165e55959c"
+    }
+  ],
+  "verification": {
+    "verified": true,
+    "reason": "valid",
+    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJrCfi9CRC1aQ7uu5UhlAAAFNMQACZ1cN65g4P2TKw64RTh1Jrp\nX6qALqyH76pSjqtjOZt9CVusTC7iZAbA8FHY7IoLU8FCKStOSkutIaYs7ewZezKC\nJsVEWvWbWzLCOHE2LU59WDLdlEGW35ZMwWI3+7XTxBSur0SftKuUrPQfsMv6Y3sw\nuDKjsdxL4hhEspxqSKTsaXjG8FwCWN+X7yVRdCE8oU4Ksl6meSUMaNCvHEyX68HQ\nP5rwnapZiobKxDRAQthSf+8uqu9FNN2CEX3g6jwMQUyd+wdzU2hxHdLnB2YFN24B\nYDTyE/+KdgL+IfFH4vtNcz+8jTY0Em00GwTntHWawo+xllDHgfo5xFiNoUpsupYX\nglXf1wtRAZLUYA+jX2RQlf+L8S9GssxTEbubUDXwBaVdaIdGpjHl/pazDCtdWa3g\ncEtQrcp6660zvV7j7fj2Mh1VgH2PKW79zveOEE8Kue1kDoxR8NMnFwL35puYsnMo\nJbNeJB/4Nh3ywoB7NsMVDBVX447Z2GXS1Z7lMUpjDpC1rXRQ/nrt0Xc50iRKDWnR\n2YMftC/wwvy8f6BmpWeKyeEXRJTlh6lp977qXG2VPnLdZSToqldawpgAtfPWDfSO\nwnQcJLKIws4RMIxUYXakiHryt7sYm452cfudUUpKDLANkYqdlItoFPeFptlKVNz8\njV6rDsyExuAY3jzdnyYN\n=t2gP\n-----END PGP SIGNATURE-----\n",
+    "payload": "tree efa414186131b91d32598e5ae68c878acb7783aa\nparent dc4d32d0c38b881006c04b8c20d72549f420aeed\nparent eca5d23168f56c2c96dce10817ffe2165e55959c\nauthor AnnonyA <79977221+AnnonyA@users.noreply.github.com> 1795815613 -0300\ncommitter GitHub <noreply@github.com> 1795815613 -0300\n\nMerge eca5d23168f56c2c96dce10817ffe2165e55959c into dc4d32d0c38b881006c04b8c20d72549f420aeed\n",
+    "verified_at": "2026-11-27T21:40:14Z"
+  }
+}

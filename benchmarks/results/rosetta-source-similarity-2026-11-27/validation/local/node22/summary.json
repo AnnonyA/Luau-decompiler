@@ -1,0 +1,143 @@
+{
+  "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+  "runtime": {
+    "executable": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+    "version": "v22.23.5",
+    "sha256": "2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd"
+  },
+  "startedAt": "2026-11-27T22:07:25.170614+00:00",
+  "gates": [
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "seconds": 3.259,
+      "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/build.log",
+      "passed": true
+    },
+    {
+      "gate": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 2.046,
+      "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/typecheck.log",
+      "passed": true
+    },
+    {
+      "gate": "unit",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--maxWorkers=2"
+      ],
+      "exitCode": 0,
+      "seconds": 40.468,
+      "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/unit.log",
+      "passed": true,
+      "testsPassed": 1540,
+      "testFilesPassed": 145
+    },
+    {
+      "gate": "bench-test",
+      "command": [
+        "npm",
+        "run",
+        "bench:test"
+      ],
+      "exitCode": 0,
+      "seconds": 3.129,
+      "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/bench-test.log",
+      "passed": true,
+      "testsPassed": 69,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    },
+    {
+      "gate": "bench-smoke",
+      "command": [
+        "npm",
+        "run",
+        "bench:compare",
+        "--",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/baseline.json"
+      ],
+      "exitCode": 0,
+      "seconds": 0.673,
+      "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/bench-smoke.log",
+      "passed": true,
+      "fixtureCounts": {
+        "total": 3,
+        "repository": 3,
+        "lunaux": 0,
+        "successful": 3
+      },
+      "syntaxAndSemantics": "Smoke only; official parser and runtime are separate gates."
+    },
+    {
+      "gate": "build-demo",
+      "command": [
+        "npm",
+        "run",
+        "build:demo"
+      ],
+      "exitCode": 0,
+      "seconds": 2.682,
+      "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/build-demo.log",
+      "passed": true
+    },
+    {
+      "gate": "demo-test",
+      "command": [
+        "npm",
+        "run",
+        "demo:test"
+      ],
+      "exitCode": 0,
+      "seconds": 0.9,
+      "log": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/node22/demo-test.log",
+      "passed": true,
+      "testsPassed": 6,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    }
+  ],
+  "notRun": [
+    {
+      "gate": "real-browser-demo",
+      "reason": "The known /usr/bin/chromium launcher has no /usr/lib/chromium/chromium binary. No browser result is claimed; exact-head remote CI remains required."
+    },
+    {
+      "gate": "official-pinned-Luau-and-public-corpora",
+      "reason": "Local reference checkouts have different revisions from CI; no substitution. Exact-head remote CI remains required."
+    }
+  ],
+  "unchangedSource": true,
+  "compiled": {
+    "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+    "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+  },
+  "allExecutedGatesPassed": true,
+  "finishedAt": "2026-11-27T22:08:18.352095+00:00",
+  "filesSha256": {
+    "baseline.json": "bdff25a8f6a673284dac5f3befdb56a9c57cb628bc25b3a136739f3ec80adc09",
+    "bench-smoke.log": "00aa4362bf470487cd5ef0156fc7e87ea9049cf528ffd6a6fbd49ab735a0bd33",
+    "bench-test.log": "1af2459c9f5e0033e2e2c753a0533fb1d85739a7584388b9349e2bc0b165ba62",
+    "build-demo.log": "196ae84ab6489be7f325ca1cabd8c32012232108ae31d0c40e3270c0cf2d1ef0",
+    "build.log": "052477a90aae3b57211b56e788cf54c931eca1f5698d26dd20472e063912c000",
+    "demo-test.log": "bdfa6508a0c33355d594b346120d62f9830cfb32c1aab3a495247387a6feaf1b",
+    "source-after.json": "8fa164f364fe80b61c931a11916e093c017959230a90d2a449bdd6eb8cfa8b57",
+    "source-before.json": "8fa164f364fe80b61c931a11916e093c017959230a90d2a449bdd6eb8cfa8b57",
+    "typecheck.log": "a5a6e8194d2bdea1f7461c7118c27038a0ed4b432c67a5987796c717da3cafa0",
+    "unit.log": "bcc9ed28a637492674c71767fdc017d5976d77fc2184811c3ec5663cccfed828"
+  }
+}

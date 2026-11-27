@@ -1,0 +1,11 @@
+{
+  "checkedAtUtc": "2026-11-27 22:01:55 UTC",
+  "source": "https://api.github.com/repos/Scrensayol/rosetta/commits/main",
+  "latestCommit": "c5a09742a72ee163901692de3ab58822fe54bfdb",
+  "latestCommitUrl": "https://github.com/Scrensayol/rosetta/commit/c5a09742a72ee163901692de3ab58822fe54bfdb",
+  "latestCommitDate": "2026-11-27T18:47:15Z",
+  "pinnedCommit": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "sameAsPriorAuditedUpstream": true,
+  "priorAudit": "Luau-decompiler/benchmarks/results/rosetta-upstream-2026-11-27/comparison.json",
+  "meaning": "Current main is the same immutable object already audited: metric, harness, corpus and eight Luacid/lua.expert reports remain unchanged from the pin. This is not a fresh measurement of either live service."
+}

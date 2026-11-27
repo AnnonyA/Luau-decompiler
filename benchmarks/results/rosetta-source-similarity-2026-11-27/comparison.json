@@ -1,0 +1,1717 @@
+{
+  "format": "rosetta-source-quality-comparison",
+  "schema": 1,
+  "rosettaPin": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "sourceCommit": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+  "qualityScope": "Global passing-profile aggregate only. No individual profile/section quality is present in the pinned strict JSON format.",
+  "peerPolicy": "Compare source quality directly only when the complete passing populations are identical. Otherwise show coverage and the published own-pass aggregate without a source-quality ranking.",
+  "tiers": {
+    "quick": {
+      "corpus": {
+        "name": "rosetta-3",
+        "tier": "quick",
+        "hash": "e24826907050bd1d"
+      },
+      "counts": {
+        "pass": 882,
+        "mismatch": 0,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 0
+      },
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "quality": {
+        "round_trips": 882,
+        "similarity": 76.92827095114995,
+        "size": 0.9927495865084095,
+        "locals": 1.0963497723161764,
+        "nesting": -0.33900226757369617,
+        "endless": 38,
+        "names": 61.02136376938835,
+        "cpu_ms_median": 271.589,
+        "cpu_ms_total": 291592.278
+      },
+      "baselineQuality": {
+        "round_trips": 882,
+        "similarity": 72.29585059948458,
+        "size": 1.1000264933334862,
+        "locals": 1.1191486730052247,
+        "nesting": 0.20521541950113378,
+        "endless": 178,
+        "names": 59.48200175592625,
+        "cpu_ms_median": 272.329,
+        "cpu_ms_total": 305854.56900000025
+      },
+      "qualityDeltas": {
+        "similarity": 4.632420351665374,
+        "size": -0.10727690682507673,
+        "locals": -0.02279890068904833,
+        "nesting": -0.54421768707483,
+        "endless": -140,
+        "names": 1.539362013462103
+      },
+      "sections": {
+        "cases": {
+          "passed": 246,
+          "total": 246,
+          "counts": {
+            "pass": 246
+          }
+        },
+        "libraries": {
+          "passed": 36,
+          "total": 36,
+          "counts": {
+            "pass": 36
+          }
+        },
+        "generated": {
+          "passed": 300,
+          "total": 300,
+          "counts": {
+            "pass": 300
+          }
+        },
+        "mutants": {
+          "passed": 300,
+          "total": 300,
+          "counts": {
+            "pass": 300
+          }
+        }
+      },
+      "profiles": {
+        "O0g1": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O1g1": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O2g1": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O0g2": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O1g2": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O2g2": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        }
+      },
+      "sectionProfiles": {
+        "cases/O0g1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O0g1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O0g1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O0g1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O1g1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O1g1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O1g1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O1g1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O2g1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O2g1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O2g1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O2g1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O0g2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O0g2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O0g2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O0g2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O1g2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O1g2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O1g2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O1g2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O2g2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O2g2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O2g2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O2g2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        }
+      },
+      "passingPopulationSha256": "7bf849f52296c5ca226e5d041c603fa7ad4eb92ea97786feb32e7c3c26f2c188",
+      "qualityByProfileAvailable": false,
+      "qualityBySectionAvailable": false,
+      "newBehavioralRegressions": [],
+      "unusableOriginals": [],
+      "peers": {
+        "luacid": {
+          "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-quick.json",
+          "created": "2026-11-26T14:50:42Z",
+          "decompiler": {
+            "name": "luacid"
+          },
+          "reportSha256": "f6643dcc0ff0e0e2fedf153027baee6cde024e01dfe38698d41ff03d18b04662",
+          "corpusHash": "e24826907050bd1d",
+          "score": {
+            "passed": 879,
+            "total": 882
+          },
+          "quality": {
+            "round_trips": 879,
+            "similarity": 81.91764155006517,
+            "size": 0.8961542393099485,
+            "locals": 0.9232724481083701,
+            "nesting": -0.7110352673492605,
+            "endless": 167,
+            "names": 68.03939385057302,
+            "cpu_ms_median": 53.643,
+            "cpu_ms_total": 42694.63899999994
+          },
+          "commonPasses": 879,
+          "commonPopulationSha256": "3ca511d70a3911be07ed4616dfec1e199f0a4935fc0a7e7bc3fd3df3157592a9",
+          "sameCompletePassingPopulation": false,
+          "ourQualityOnCommonPopulation": null,
+          "sourceQualityComparable": false,
+          "ourMinusPeerSimilarityPoints": null
+        },
+        "lua-expert": {
+          "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-quick.json",
+          "created": "2026-11-26T14:41:27Z",
+          "decompiler": {
+            "name": "lua.expert"
+          },
+          "reportSha256": "986203adbb2b6720cb04f75ff1f5b4a43fec6fc4d375052ee4acde8e54555640",
+          "corpusHash": "e24826907050bd1d",
+          "score": {
+            "passed": 882,
+            "total": 882
+          },
+          "quality": {
+            "round_trips": 882,
+            "similarity": 80.3179103568568,
+            "size": 0.8802898146917756,
+            "locals": 0.9241909193772453,
+            "nesting": -1.0430839002267573,
+            "endless": 590,
+            "names": 47.971905179982436,
+            "cpu_ms_median": 56.138,
+            "cpu_ms_total": 46758.461999999985
+          },
+          "commonPasses": 882,
+          "commonPopulationSha256": "7bf849f52296c5ca226e5d041c603fa7ad4eb92ea97786feb32e7c3c26f2c188",
+          "sameCompletePassingPopulation": true,
+          "ourQualityOnCommonPopulation": {
+            "round_trips": 882,
+            "similarity": 76.92827095114995,
+            "size": 0.9927495865084095,
+            "locals": 1.0963497723161764,
+            "nesting": -0.33900226757369617,
+            "endless": 38,
+            "names": 61.02136376938835,
+            "cpu_ms_median": 271.589,
+            "cpu_ms_total": 291592.278
+          },
+          "sourceQualityComparable": true,
+          "ourMinusPeerSimilarityPoints": -3.389639405706845
+        }
+      }
+    },
+    "full": {
+      "corpus": {
+        "name": "rosetta-3",
+        "tier": "full",
+        "hash": "f0eae8ffcedd440e"
+      },
+      "counts": {
+        "pass": 12276,
+        "mismatch": 0,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 6
+      },
+      "score": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "quality": {
+        "round_trips": 12276,
+        "similarity": 73.9126053558339,
+        "size": 0.8755172980549799,
+        "locals": 1.0236131793625425,
+        "nesting": -0.6653633105246008,
+        "endless": 702,
+        "names": 54.42526758570154,
+        "cpu_ms_median": 239.489,
+        "cpu_ms_total": 3080845.7550000018
+      },
+      "baselineQuality": {
+        "round_trips": 12276,
+        "similarity": 70.2723884178638,
+        "size": 0.966659142844551,
+        "locals": 1.028567598404651,
+        "nesting": -0.2185565330726621,
+        "endless": 2204,
+        "names": 52.61824253458967,
+        "cpu_ms_median": 237.073,
+        "cpu_ms_total": 3128068.0519999955
+      },
+      "qualityDeltas": {
+        "similarity": 3.6402169379701093,
+        "size": -0.0911418447895711,
+        "locals": -0.004954419042108471,
+        "nesting": -0.44680677745193875,
+        "endless": -1502,
+        "names": 1.8070250511118715
+      },
+      "sections": {
+        "cases": {
+          "passed": 246,
+          "total": 246,
+          "counts": {
+            "pass": 246
+          }
+        },
+        "libraries": {
+          "passed": 36,
+          "total": 36,
+          "counts": {
+            "pass": 36
+          }
+        },
+        "generated": {
+          "passed": 5994,
+          "total": 5994,
+          "counts": {
+            "pass": 5994,
+            "unusable": 6
+          }
+        },
+        "mutants": {
+          "passed": 6000,
+          "total": 6000,
+          "counts": {
+            "pass": 6000
+          }
+        }
+      },
+      "profiles": {
+        "O0g1": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O1g1": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O2g1": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O0g2": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O1g2": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O2g2": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        }
+      },
+      "sectionProfiles": {
+        "cases/O0g1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O0g1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O0g1": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O0g1": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O1g1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O1g1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O1g1": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O1g1": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O2g1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O2g1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O2g1": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O2g1": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O0g2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O0g2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O0g2": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O0g2": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O1g2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O1g2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O1g2": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O1g2": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O2g2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O2g2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O2g2": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O2g2": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        }
+      },
+      "passingPopulationSha256": "7779f135e36b9bcf13e6b18791d321c727c614bee93478280435a557018b7012",
+      "qualityByProfileAvailable": false,
+      "qualityBySectionAvailable": false,
+      "newBehavioralRegressions": [],
+      "unusableOriginals": [
+        [
+          "generated",
+          "seed1541",
+          "O0g1"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O1g1"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O2g1"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O0g2"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O1g2"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O2g2"
+        ]
+      ],
+      "peers": {
+        "luacid": {
+          "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-full.json",
+          "created": "2026-11-26T18:45:15Z",
+          "decompiler": {
+            "name": "luacid"
+          },
+          "reportSha256": "d625ffa9666675ace542f238c92ffdad3fba41d42d24cc69a862e70b80fa4f05",
+          "corpusHash": "f0eae8ffcedd440e",
+          "score": {
+            "passed": 12237,
+            "total": 12276
+          },
+          "quality": {
+            "round_trips": 12237,
+            "similarity": 78.31918348089351,
+            "size": 0.8011965434842931,
+            "locals": 0.8342695790649052,
+            "nesting": -0.8825692571708752,
+            "endless": 1741,
+            "names": 61.36717437562997,
+            "cpu_ms_median": 34.727000000000004,
+            "cpu_ms_total": 459340.2799999985
+          },
+          "commonPasses": 12237,
+          "commonPopulationSha256": "34883e4aaac8da6c220658fb76e0878d9c3304926a3b9232faa73d98671a79ab",
+          "sameCompletePassingPopulation": false,
+          "ourQualityOnCommonPopulation": null,
+          "sourceQualityComparable": false,
+          "ourMinusPeerSimilarityPoints": null
+        },
+        "lua-expert": {
+          "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-full.json",
+          "created": "2026-11-26T16:06:58Z",
+          "decompiler": {
+            "name": "lua.expert"
+          },
+          "reportSha256": "66242dfd1b1b48b225672a77b21d11389a98c17338b783915d2690549d8b84d7",
+          "corpusHash": "f0eae8ffcedd440e",
+          "score": {
+            "passed": 12167,
+            "total": 12276
+          },
+          "quality": {
+            "round_trips": 12167,
+            "similarity": 76.28447617874686,
+            "size": 0.7736133320720379,
+            "locals": 0.7486239462830749,
+            "nesting": -0.8142516643379634,
+            "endless": 5628,
+            "names": 40.98377836378726,
+            "cpu_ms_median": 24.733999999999998,
+            "cpu_ms_total": 364505.518
+          },
+          "commonPasses": 12167,
+          "commonPopulationSha256": "53a85fb56745cc1b2e2aea6c1e083302f54230044bdccaefac1a02c55f30e357",
+          "sameCompletePassingPopulation": false,
+          "ourQualityOnCommonPopulation": null,
+          "sourceQualityComparable": false,
+          "ourMinusPeerSimilarityPoints": null
+        }
+      }
+    },
+    "hard-quick": {
+      "corpus": {
+        "name": "rosetta-3",
+        "tier": "hard-quick",
+        "hash": "9bcb49d29e867a92"
+      },
+      "counts": {
+        "pass": 882,
+        "mismatch": 0,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 0
+      },
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "quality": {
+        "round_trips": 882,
+        "similarity": 76.39291395270635,
+        "size": 0.9979334617090493,
+        "locals": 1.1011063319340824,
+        "nesting": -0.3378684807256236,
+        "endless": 36,
+        "names": 30.01463271875914,
+        "cpu_ms_median": 303.105,
+        "cpu_ms_total": 330422.27500000026
+      },
+      "baselineQuality": {
+        "round_trips": 882,
+        "similarity": 71.81462835404815,
+        "size": 1.1077324554430525,
+        "locals": 1.1163284152384538,
+        "nesting": 0.20294784580498867,
+        "endless": 178,
+        "names": 29.367866549604916,
+        "cpu_ms_median": 300.931,
+        "cpu_ms_total": 337697.28
+      },
+      "qualityDeltas": {
+        "similarity": 4.578285598658198,
+        "size": -0.10979899373400326,
+        "locals": -0.01522208330437147,
+        "nesting": -0.5408163265306123,
+        "endless": -142,
+        "names": 0.6467661691542261
+      },
+      "sections": {
+        "cases": {
+          "passed": 246,
+          "total": 246,
+          "counts": {
+            "pass": 246
+          }
+        },
+        "libraries": {
+          "passed": 36,
+          "total": 36,
+          "counts": {
+            "pass": 36
+          }
+        },
+        "generated": {
+          "passed": 300,
+          "total": 300,
+          "counts": {
+            "pass": 300
+          }
+        },
+        "mutants": {
+          "passed": 300,
+          "total": 300,
+          "counts": {
+            "pass": 300
+          }
+        }
+      },
+      "profiles": {
+        "O0g1+x1": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O1g1+x2": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O2g1+x3": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O0g2+x2": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O1g2+x3": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        },
+        "O2g2+x1": {
+          "passed": 147,
+          "total": 147,
+          "counts": {
+            "pass": 147
+          }
+        }
+      },
+      "sectionProfiles": {
+        "cases/O0g1+x1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O0g1+x1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O0g1+x1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O0g1+x1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O1g1+x2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O1g1+x2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O1g1+x2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O1g1+x2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O2g1+x3": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O2g1+x3": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O2g1+x3": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O2g1+x3": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O0g2+x2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O0g2+x2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O0g2+x2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O0g2+x2": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O1g2+x3": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O1g2+x3": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O1g2+x3": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O1g2+x3": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "cases/O2g2+x1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O2g2+x1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O2g2+x1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        },
+        "mutants/O2g2+x1": {
+          "passed": 50,
+          "total": 50,
+          "counts": {
+            "pass": 50
+          }
+        }
+      },
+      "passingPopulationSha256": "d96a56667be3604760029bb08eab9d0740ec3d1f5022d3b661e4da24097177ca",
+      "qualityByProfileAvailable": false,
+      "qualityBySectionAvailable": false,
+      "newBehavioralRegressions": [],
+      "unusableOriginals": [],
+      "peers": {
+        "luacid": {
+          "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-quick.json",
+          "created": "2026-11-26T15:08:03Z",
+          "decompiler": {
+            "name": "luacid"
+          },
+          "reportSha256": "d419982abdff9bbe1d3adfd9378bef0754a81c0f840ace6d3971988c159d8521",
+          "corpusHash": "9bcb49d29e867a92",
+          "score": {
+            "passed": 353,
+            "total": 882
+          },
+          "quality": {
+            "round_trips": 353,
+            "similarity": 76.97266433968423,
+            "size": 1.0520337936489292,
+            "locals": 1.103340929908179,
+            "nesting": -0.09915014164305949,
+            "endless": 125,
+            "names": 51.83422737497837,
+            "cpu_ms_median": 23.514,
+            "cpu_ms_total": 9062.845999999996
+          },
+          "commonPasses": 353,
+          "commonPopulationSha256": "8716b41219f2e2741f175e18053e6c9e575247e08517b784589a1ab8221b4980",
+          "sameCompletePassingPopulation": false,
+          "ourQualityOnCommonPopulation": null,
+          "sourceQualityComparable": false,
+          "ourMinusPeerSimilarityPoints": null
+        },
+        "lua-expert": {
+          "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-quick.json",
+          "created": "2026-11-26T14:48:57Z",
+          "decompiler": {
+            "name": "lua.expert"
+          },
+          "reportSha256": "c4c3d231673c6ee88c359f0103b541227fab2df76d06048e0ddb8660bee7d2ac",
+          "corpusHash": "9bcb49d29e867a92",
+          "score": {
+            "passed": 264,
+            "total": 882
+          },
+          "quality": {
+            "round_trips": 264,
+            "similarity": 78.40640529087095,
+            "size": 0.9185845880007787,
+            "locals": 0.9865856908703957,
+            "nesting": -1.1174242424242424,
+            "endless": 165,
+            "names": 42.079772079772084,
+            "cpu_ms_median": 53.844,
+            "cpu_ms_total": 13470.446000000005
+          },
+          "commonPasses": 264,
+          "commonPopulationSha256": "63c4cdd09a7a63c40de27dc6ee0360dbe971e967ba9102649d80bb7c62502429",
+          "sameCompletePassingPopulation": false,
+          "ourQualityOnCommonPopulation": null,
+          "sourceQualityComparable": false,
+          "ourMinusPeerSimilarityPoints": null
+        }
+      }
+    },
+    "hard-full": {
+      "corpus": {
+        "name": "rosetta-3",
+        "tier": "hard-full",
+        "hash": "9921d3bde4a99bfd"
+      },
+      "counts": {
+        "pass": 12276,
+        "mismatch": 0,
+        "recompile_failed": 0,
+        "decompile_failed": 0,
+        "refused": 0,
+        "unusable": 6
+      },
+      "score": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "quality": {
+        "round_trips": 12276,
+        "similarity": 73.5312923103202,
+        "size": 0.8771820934845871,
+        "locals": 1.0205919152960723,
+        "nesting": -0.6722059302704464,
+        "endless": 703,
+        "names": 25.077681660415774,
+        "cpu_ms_median": 257.16,
+        "cpu_ms_total": 3411124.0429999917
+      },
+      "baselineQuality": {
+        "round_trips": 12276,
+        "similarity": 69.89278795907607,
+        "size": 0.9718250006451438,
+        "locals": 1.023285634419585,
+        "nesting": -0.229227761485826,
+        "endless": 2283,
+        "names": 24.33204959320261,
+        "cpu_ms_median": 259.564,
+        "cpu_ms_total": 3407718.3089999873
+      },
+      "qualityDeltas": {
+        "similarity": 3.638504351244123,
+        "size": -0.09464290716055668,
+        "locals": -0.0026937191235127944,
+        "nesting": -0.4429781687846204,
+        "endless": -1580,
+        "names": 0.7456320672131653
+      },
+      "sections": {
+        "cases": {
+          "passed": 246,
+          "total": 246,
+          "counts": {
+            "pass": 246
+          }
+        },
+        "libraries": {
+          "passed": 36,
+          "total": 36,
+          "counts": {
+            "pass": 36
+          }
+        },
+        "generated": {
+          "passed": 5994,
+          "total": 5994,
+          "counts": {
+            "pass": 5994,
+            "unusable": 6
+          }
+        },
+        "mutants": {
+          "passed": 6000,
+          "total": 6000,
+          "counts": {
+            "pass": 6000
+          }
+        }
+      },
+      "profiles": {
+        "O0g1+x1": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O1g1+x2": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O2g1+x3": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O0g2+x2": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O1g2+x3": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        },
+        "O2g2+x1": {
+          "passed": 2046,
+          "total": 2046,
+          "counts": {
+            "pass": 2046,
+            "unusable": 1
+          }
+        }
+      },
+      "sectionProfiles": {
+        "cases/O0g1+x1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O0g1+x1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O0g1+x1": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O0g1+x1": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O1g1+x2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O1g1+x2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O1g1+x2": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O1g1+x2": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O2g1+x3": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O2g1+x3": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O2g1+x3": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O2g1+x3": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O0g2+x2": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O0g2+x2": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O0g2+x2": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O0g2+x2": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O1g2+x3": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O1g2+x3": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O1g2+x3": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O1g2+x3": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        },
+        "cases/O2g2+x1": {
+          "passed": 41,
+          "total": 41,
+          "counts": {
+            "pass": 41
+          }
+        },
+        "libraries/O2g2+x1": {
+          "passed": 6,
+          "total": 6,
+          "counts": {
+            "pass": 6
+          }
+        },
+        "generated/O2g2+x1": {
+          "passed": 999,
+          "total": 999,
+          "counts": {
+            "pass": 999,
+            "unusable": 1
+          }
+        },
+        "mutants/O2g2+x1": {
+          "passed": 1000,
+          "total": 1000,
+          "counts": {
+            "pass": 1000
+          }
+        }
+      },
+      "passingPopulationSha256": "2c7df0afaaf32cfbca393f8c1f8abc532e41dcf56d6e744b50f519bc0674b156",
+      "qualityByProfileAvailable": false,
+      "qualityBySectionAvailable": false,
+      "newBehavioralRegressions": [],
+      "unusableOriginals": [
+        [
+          "generated",
+          "seed1541",
+          "O0g1+x1"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O1g1+x2"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O2g1+x3"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O0g2+x2"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O1g2+x3"
+        ],
+        [
+          "generated",
+          "seed1541",
+          "O2g2+x1"
+        ]
+      ],
+      "peers": {
+        "luacid": {
+          "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-full.json",
+          "created": "2026-11-26T22:32:51Z",
+          "decompiler": {
+            "name": "luacid"
+          },
+          "reportSha256": "2493c9d24ccd1b77c8e428de858e8fb56f560da96979b25053bfe80d9e6943b6",
+          "corpusHash": "9921d3bde4a99bfd",
+          "score": {
+            "passed": 5622,
+            "total": 12276
+          },
+          "quality": {
+            "round_trips": 5622,
+            "similarity": 73.32417744969567,
+            "size": 0.9815169830435967,
+            "locals": 0.9924298265744936,
+            "nesting": -0.17378157239416578,
+            "endless": 2092,
+            "names": 44.86324362192772,
+            "cpu_ms_median": 51.697,
+            "cpu_ms_total": 280936.6559999999
+          },
+          "commonPasses": 5622,
+          "commonPopulationSha256": "a365420102bda3e8943a839d18b4a566cc3f2ada6c671f84108ad03f8d9605b4",
+          "sameCompletePassingPopulation": false,
+          "ourQualityOnCommonPopulation": null,
+          "sourceQualityComparable": false,
+          "ourMinusPeerSimilarityPoints": null
+        },
+        "lua-expert": {
+          "source": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-full.json",
+          "created": "2026-11-26T17:22:33Z",
+          "decompiler": {
+            "name": "lua.expert"
+          },
+          "reportSha256": "7d3f5893dac81679a71f68406431aa27675cfdc21d8bbef1dd94c533777cb9fe",
+          "corpusHash": "9921d3bde4a99bfd",
+          "score": {
+            "passed": 3859,
+            "total": 12276
+          },
+          "quality": {
+            "round_trips": 3859,
+            "similarity": 74.65957290275507,
+            "size": 0.8086053737569158,
+            "locals": 0.7985218303189832,
+            "nesting": -0.766778958279347,
+            "endless": 1797,
+            "names": 36.098352515561544,
+            "cpu_ms_median": 22.663,
+            "cpu_ms_total": 98836.06300000031
+          },
+          "commonPasses": 3859,
+          "commonPopulationSha256": "a6cba1b898384fac1bc6516b2c86bf4ba34dc7f43b39fdbad2fb62debce8ac9f",
+          "sameCompletePassingPopulation": false,
+          "ourQualityOnCommonPopulation": null,
+          "sourceQualityComparable": false,
+          "ourMinusPeerSimilarityPoints": null
+        }
+      }
+    }
+  },
+  "sourceIdentity": {
+    "revision": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+    "commitTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198",
+    "sourceTreeSha256": "a34c6a6bad5fba17fa20fe7329fb448cf97952390a826a4185884b329cdc616b",
+    "distSha256": "54cdc0eda358e7f06430db3d17bef3099b80bec39924347759946e06e7a7f921"
+  },
+  "baselineSourceIdentity": {
+    "revision": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+    "commitTree": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+    "sourceTreeSha256": "5f30831cc22670b8ab20822aa5a7a8d26785d8228e7408070669e6ada5dfd965",
+    "distSha256": "4970b410c82ae8465054ca58f748848bc6e531740d393a248ddd6e30675caff4"
+  },
+  "harnessIdentity": {
+    "revision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "commitTree": "dd5acdc6b2612b04b3fb15ef5e5d3bf07f65920a",
+    "suite": "rosetta-3",
+    "luau": "0.747",
+    "transform": "transform-2",
+    "binarySha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b"
+  },
+  "integrationIdentity": {
+    "pinSha256": "0b67b06dee91960755f9e5fbeadcd0722ec77e7d1a0b54878285b77af66ee142",
+    "runnerSha256": "6c128909fea9acdbf0f6a5c7582b81204a017f73f2f75a820c9ff8a1523b63d3",
+    "validatorSha256": "888718cf60934d8795392149f2cbd5e5999ce2e431a096602a42f61d172bfc15"
+  },
+  "publication": {
+    "repository": "AnnonyA/Luau-decompiler",
+    "branch": "improve/source-similarity",
+    "pr": 83,
+    "url": "https://github.com/AnnonyA/Luau-decompiler/pull/83",
+    "remoteCommit": "f9543bbb26615f50aa599cead318beb0f9a6e7a0",
+    "sourceCommit": "326d85ed21c0a7bef6dcd07a26e38b49f0148a84",
+    "sourceTree": "596bd4510ff32ebb978dbfaf15d9814dbcc1b198"
+  },
+  "allFourStrictPass": true,
+  "inputFiles": {
+    "annonyA-quick.json": {
+      "sha256": "9964a73573df91501e187f35fde5ea645e6279fa6daa0981ff4c576e11005fbd",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/quick/annonyA-quick.json",
+      "repositoryRelativePath": "annonyA-quick.json"
+    },
+    "annonyA-quick.provenance.json": {
+      "sha256": "7e911e201c517a2df6247f5ad73058013a66977eabe76bf93fe9c4b13eb757e0",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/quick/annonyA-quick.provenance.json",
+      "repositoryRelativePath": "annonyA-quick.provenance.json"
+    },
+    "baseline-quick.json": {
+      "sha256": "70c79a0d9162db9e6473316725d433148eddf373e057086c615ea89d7de66d5d",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/integrated-11/annonyA-quick.json",
+      "repositoryRelativePath": "../rosetta-final-2026-11-27/annonyA-quick.json"
+    },
+    "baseline-quick.provenance.json": {
+      "sha256": "68297afa94fae0c5247105c98e4ea173fbcc42a6a9fefec59aa8d042255425f9",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/integrated-11/annonyA-quick.provenance.json",
+      "repositoryRelativePath": "../rosetta-final-2026-11-27/annonyA-quick.provenance.json"
+    },
+    "luacid-quick.json": {
+      "sha256": "f6643dcc0ff0e0e2fedf153027baee6cde024e01dfe38698d41ff03d18b04662",
+      "originalPath": "/workspace/scratch/eb5e4be57451/rosetta-research/site/results/luacid-quick.json",
+      "publishedUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-quick.json"
+    },
+    "lua-expert-quick.json": {
+      "sha256": "986203adbb2b6720cb04f75ff1f5b4a43fec6fc4d375052ee4acde8e54555640",
+      "originalPath": "/workspace/scratch/eb5e4be57451/rosetta-research/site/results/lua-expert-quick.json",
+      "publishedUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-quick.json"
+    },
+    "annonyA-full.json": {
+      "sha256": "b20f54a8bb6c131bf9743fe3316e0a4acaca25d082b13e501b2faf6db13a2220",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/full/annonyA-full.json",
+      "repositoryRelativePath": "annonyA-full.json"
+    },
+    "annonyA-full.provenance.json": {
+      "sha256": "7332ca68bcf0aee700b72d945b12fd7d37699f6a5d79a96eb1b98d333505e683",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/full/annonyA-full.provenance.json",
+      "repositoryRelativePath": "annonyA-full.provenance.json"
+    },
+    "baseline-full.json": {
+      "sha256": "05e3d698fac3b6cc02f29eb5ba38c428282ee27d143bd7d596dee50c5fc26494",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/integrated-11/annonyA-full.json",
+      "repositoryRelativePath": "../rosetta-final-2026-11-27/annonyA-full.json"
+    },
+    "baseline-full.provenance.json": {
+      "sha256": "5cb3c8deda95f0ee94c904432cf3f448198a98673ab9c5df2689a8a186d683c2",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/integrated-11/annonyA-full.provenance.json",
+      "repositoryRelativePath": "../rosetta-final-2026-11-27/annonyA-full.provenance.json"
+    },
+    "luacid-full.json": {
+      "sha256": "d625ffa9666675ace542f238c92ffdad3fba41d42d24cc69a862e70b80fa4f05",
+      "originalPath": "/workspace/scratch/eb5e4be57451/rosetta-research/site/results/luacid-full.json",
+      "publishedUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-full.json"
+    },
+    "lua-expert-full.json": {
+      "sha256": "66242dfd1b1b48b225672a77b21d11389a98c17338b783915d2690549d8b84d7",
+      "originalPath": "/workspace/scratch/eb5e4be57451/rosetta-research/site/results/lua-expert-full.json",
+      "publishedUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-full.json"
+    },
+    "annonyA-hard-quick.json": {
+      "sha256": "bbcc0c50c90c4090590225f74c3fc25452866bed79596a4a32a690b1814efa45",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-quick/annonyA-hard-quick.json",
+      "repositoryRelativePath": "annonyA-hard-quick.json"
+    },
+    "annonyA-hard-quick.provenance.json": {
+      "sha256": "2a9ea5981f5bd3a36613480c2d758741424de4cfa34609ca36a7efda165bf14f",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-quick/annonyA-hard-quick.provenance.json",
+      "repositoryRelativePath": "annonyA-hard-quick.provenance.json"
+    },
+    "baseline-hard-quick.json": {
+      "sha256": "27fc5e3d2de34c081bc18e8455f5b93617fc762a9813211b36d9392c85b16dff",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/integrated-11/annonyA-hard-quick.json",
+      "repositoryRelativePath": "../rosetta-final-2026-11-27/annonyA-hard-quick.json"
+    },
+    "baseline-hard-quick.provenance.json": {
+      "sha256": "cfe41e8d73e8ce98436705f2e5b3510ed9735cb744362f054ffad7991fdf8ac0",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/integrated-11/annonyA-hard-quick.provenance.json",
+      "repositoryRelativePath": "../rosetta-final-2026-11-27/annonyA-hard-quick.provenance.json"
+    },
+    "luacid-hard-quick.json": {
+      "sha256": "d419982abdff9bbe1d3adfd9378bef0754a81c0f840ace6d3971988c159d8521",
+      "originalPath": "/workspace/scratch/eb5e4be57451/rosetta-research/site/results/luacid-hard-quick.json",
+      "publishedUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-quick.json"
+    },
+    "lua-expert-hard-quick.json": {
+      "sha256": "c4c3d231673c6ee88c359f0103b541227fab2df76d06048e0ddb8660bee7d2ac",
+      "originalPath": "/workspace/scratch/eb5e4be57451/rosetta-research/site/results/lua-expert-hard-quick.json",
+      "publishedUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-quick.json"
+    },
+    "annonyA-hard-full.json": {
+      "sha256": "3b77ce6eb3243405199ee371cfe8fd6513fd0cc5a580da81e47813c0dc14da1b",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-full/annonyA-hard-full.json",
+      "repositoryRelativePath": "annonyA-hard-full.json"
+    },
+    "annonyA-hard-full.provenance.json": {
+      "sha256": "9ab172209d66eced126703a7fd111df1588aef3fb1e609f228f2f7877e8655cc",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/similarity-final-01/hard-full/annonyA-hard-full.provenance.json",
+      "repositoryRelativePath": "annonyA-hard-full.provenance.json"
+    },
+    "baseline-hard-full.json": {
+      "sha256": "f91481e9da33a8041b835a583854f666709e7799e8d873946591b9b521feed41",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/integrated-11/annonyA-hard-full.json",
+      "repositoryRelativePath": "../rosetta-final-2026-11-27/annonyA-hard-full.json"
+    },
+    "baseline-hard-full.provenance.json": {
+      "sha256": "b238886c0b2938bdff56568ed36fd5c55422d50e49c80b35fd727bc3e97b509e",
+      "originalPath": "/workspace/scratch/eb5e4be57451/measurements/integrated-11/annonyA-hard-full.provenance.json",
+      "repositoryRelativePath": "../rosetta-final-2026-11-27/annonyA-hard-full.provenance.json"
+    },
+    "luacid-hard-full.json": {
+      "sha256": "2493c9d24ccd1b77c8e428de858e8fb56f560da96979b25053bfe80d9e6943b6",
+      "originalPath": "/workspace/scratch/eb5e4be57451/rosetta-research/site/results/luacid-hard-full.json",
+      "publishedUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-full.json"
+    },
+    "lua-expert-hard-full.json": {
+      "sha256": "7d3f5893dac81679a71f68406431aa27675cfdc21d8bbef1dd94c533777cb9fe",
+      "originalPath": "/workspace/scratch/eb5e4be57451/rosetta-research/site/results/lua-expert-hard-full.json",
+      "publishedUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-full.json"
+    },
+    "publication.json": {
+      "sha256": "1f97dbe64d895416c74b5fa2ed14b9ef0e70cf07e4c20b429446d0c852c84ec3",
+      "originalPath": "/workspace/scratch/eb5e4be57451/publish-similarity-2/publication.json",
+      "repositoryRelativePath": "publication-receipt.json"
+    }
+  },
+  "validatorSha256": "888718cf60934d8795392149f2cbd5e5999ce2e431a096602a42f61d172bfc15",
+  "similarityRegressionTiers": [],
+  "targets": {
+    "82.2": [],
+    "90": [],
+    "100": []
+  }
+}
