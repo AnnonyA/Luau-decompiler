@@ -26,3 +26,19 @@ The official VM regression job runs the fixtures listed in
 [`full-debug-profiles.json`](../../../tests/fixtures/full-debug-profiles.json)
 at all three optimization and debug levels. It also runs the name-style and
 rewrite-option matrices at debug level 1.
+
+The controlled VM suite caught an additional regression on PR revision
+`8f23b6d`. In [`computednilkey.luau`](../../semantic/computednilkey.luau),
+the function that computes the table key increments a captured counter. At O0
+and O1 the reconstructed program printed a final counter of 0 instead of 1
+because it read the counter before evaluating the key. The constructor now
+evaluates deferred field expressions before a later read can observe the
+global or captured state they changed. The existing fixture checks both the
+counter and the resulting empty table.
+
+A separate identity probe still diverges at O2 on both `cec71fb` and this
+branch. A factory chooses between two functions with no captures. Calling the
+factory twice with the same branch can return the same function in the original
+program, while the reconstructed source creates distinct functions. Comparing
+those functions for equality exposes the difference even when their return
+values match. This probe is outside the seven cases counted above.

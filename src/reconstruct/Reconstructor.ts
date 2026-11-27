@@ -1928,8 +1928,14 @@ class SourceBuilder {
 
   /** Materialize every pending table observed by `insn` (via uses or defs). */
   private flushObserved(insn: DecodedInstruction, except?: PendingTable): Statement[] {
+    if (this.pendingStack.length === 0) return [];
     const statements: Statement[] = [];
-    if (["call", "mutation", "metamethod", "table-read"].includes(effectOf(insn))) {
+    // A deferred field can invoke user code that changes a global or a shared
+    // cell. Evaluate it before an instruction observes that state, even when
+    // the observing instruction is a plain register copy.
+    const observesCell = (insn.opcode === Opcode.GETUPVAL && this.captures.get(insn.b)?.mutable) ||
+      insn.uses.some(register => this.env.get(register)?.forwardRef);
+    if (observesCell || ["call", "mutation", "metamethod", "table-read", "global-read"].includes(effectOf(insn))) {
       // Constructor fields are writes at their bytecode position. Delaying
       // their reads/calls until the literal is flushed can snapshot state
       // AFTER a callback mutates it. Materialize scalar field expressions,
