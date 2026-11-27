@@ -206,7 +206,7 @@ details[open] > summary .icon { transform: rotate(180deg); }
 .options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; padding: 0 0 19px; }
 .options label { font-size: .8125rem; color: var(--muted); min-width: 0; }
 .options label:first-child { grid-column: 1 / -1; }
-.options select { display: block; width: 100%; padding: 9px 27px 9px 10px; margin-top: 5px; font-size: .875rem; color: var(--text); background-color: #1c1625; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23ad9bbb' stroke-width='1.5'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E"); background-position: right 8px center; background-repeat: no-repeat; }
+.options select { display: block; width: 100%; padding: 9px 27px 9px 10px; margin-top: 5px; font-size: .875rem; color: var(--text); background-color: #1c1625; appearance: none; background-image: url("./chevron.svg"); background-position: right 8px center; background-repeat: no-repeat; }
 .checks { display: grid; gap: 3px; padding-bottom: 18px; font-size: .875rem; }
 .checks label { display: flex; align-items: center; gap: 10px; min-height: 34px; color: #d8cde2; cursor: pointer; }
 .checks input { accent-color: #aa7ef4; margin: 0; width: 16px; height: 16px; flex-shrink: 0; }

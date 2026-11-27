@@ -281,5 +281,5 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
   assert.equal(await evaluate('document.documentElement.scrollWidth <= window.innerWidth'), true, "workspace fits 320px");
   assert.deepEqual(errors, []);
   assert.ok(requests.every((request) => request.method === "GET"), "no bytecode is POSTed to a backend");
-  assert.ok(requests.every((request) => request.url.startsWith(base)), "all requests stay within the static site");
+  assert.deepEqual(requests.filter((request) => !request.url.startsWith(base)).map((request) => request.url), [], "all requests stay within the static site");
 });
