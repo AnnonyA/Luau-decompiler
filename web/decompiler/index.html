@@ -3,67 +3,67 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore Luau bytecode in your browser. Upload a binary or paste Base64, then inspect and download the reconstructed source.">
+  <meta name="description" content="The LUVEX workbench. Decompile Luau bytecode locally, inspect source and instructions, and download the result.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; worker-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'">
   <meta name="color-scheme" content="dark">
-  <title>Decompiler · AnnonyA</title>
-  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0b0912">
+  <title>Workbench · LUVEX</title>
+  <link rel="icon" href="../assets/luvex-logo.webp" type="image/webp">
   <link rel="stylesheet" href="../assets/style.css">
   <script type="module" src="../assets/app.js"></script>
 </head>
 <body class="workbench-page">
-  <header class="header"><a class="brand" href="../"><img src="../assets/icon.svg" width="30" height="30" alt="">Annony<span>A</span><small>DECOMPILER</small></a><nav aria-label="Main navigation"><a href="../#features">Features</a><a href="https://github.com/AnnonyA/Luau-decompiler#readme" target="_blank" rel="noopener noreferrer">Documentation <svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#external"/></svg></a></nav></header>
+  <a class="skip-link" href="#workspace">Skip to workbench</a>
+  <header class="header"><a class="brand" href="../" aria-label="LUVEX home"><img src="../assets/luvex-logo.webp" width="40" height="40" alt=""><span>LUVEX</span><small>WORKBENCH</small></a><nav aria-label="Main navigation"><a href="../#benchmarks">Benchmarks</a><a href="https://github.com/AnnonyA/Luau-decompiler#readme">Docs</a><a class="github-link" href="https://github.com/AnnonyA/Luau-decompiler" aria-label="GitHub repository"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#github"/></svg></a></nav></header>
   <main>
-    <div class="workspace">
+    <div class="workbench-intro"><div><h1>Luau decompiler</h1><p>Bring the bytecode. Get a clearer picture.</p></div><span class="local-badge"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#shield"/></svg> Private by design · runs locally</span></div>
+    <div class="workspace" id="workspace">
       <section class="input-panel" aria-labelledby="input-title">
-        <div class="section-heading"><h2 id="input-title">Bytecode</h2><span class="subtle">MAX 16 MiB</span></div>
-        <div class="segmented" aria-label="Input method"><button id="mode-file" class="selected" aria-pressed="true">Upload file</button><button id="mode-base64" aria-pressed="false">Paste Base64</button></div>
-        <div id="file-panel">
-          <label class="dropzone" id="dropzone" for="file"><svg class="upload-icon" aria-hidden="true"><use href="../assets/icons.svg#upload"/></svg><strong id="file-name">Drop your bytecode here</strong><span id="file-detail">or click to choose a file</span><span class="file-hint">.luauc, .luac, .bin or any binary chunk</span><input id="file" type="file" aria-label="Choose Luau bytecode"></label>
+        <div class="input-scroll">
+          <div class="section-heading"><h2 id="input-title">Your bytecode</h2><span class="subtle">UP TO 16 MiB</span></div>
+          <div class="segmented" role="group" aria-label="Input method"><button id="mode-file" class="selected" aria-pressed="true" aria-controls="file-panel">Upload file</button><button id="mode-base64" aria-pressed="false" aria-controls="base64-panel">Paste Base64</button></div>
+          <div id="file-panel"><label class="dropzone" id="dropzone" for="file"><span class="upload-disc"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#upload"/></svg></span><strong id="file-name">Drop your bytecode here</strong><span id="file-detail">or click to browse your files</span><span class="file-hint">.luauc · .luac · .bin</span><input id="file" type="file" aria-label="Choose Luau bytecode"></label></div>
+          <div id="base64-panel" hidden><label class="field-label" for="base64">Encoded bytecode</label><textarea id="base64" placeholder="Paste Base64 bytecode here…" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="23418152"></textarea></div>
+          <button id="example" class="example"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#play"/></svg> Just exploring? <strong>Try an example</strong></button>
+          <details class="settings-group"><summary>Output preferences<svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#chevron"/></svg></summary>
+            <div class="options">
+              <label for="types">Type annotations<select id="types"><option value="useful">Useful annotations</option><option value="functions">Functions only</option><option value="off">Off</option></select></label>
+              <label for="encoding">Opcode encoding<select id="encoding"><option value="auto">Auto-detect</option><option value="official">Official Luau</option><option value="roblox">Roblox</option></select></label>
+              <label for="generated-names">Local names<select id="generated-names"><option value="readable">Readable</option><option value="compact">Compact (v1, v2…)</option></select></label>
+              <label for="name-casing">Name casing<select id="name-casing"><option value="preserve">Preserve</option><option value="camelCase">camelCase</option><option value="snake_case">snake_case</option><option value="PascalCase">PascalCase</option></select></label>
+              <label for="indent">Indentation<select id="indent"><option value="4">4 spaces</option><option value="2">2 spaces</option><option value="tab">Tabs</option></select></label>
+            </div>
+          </details>
+          <details class="settings-group" id="advanced-settings"><summary>Advanced rewrites<span class="settings-count">14</span><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#chevron"/></svg></summary>
+            <div class="checks">
+              <label><input id="interpolation" type="checkbox"> Interpolated strings</label>
+              <label title="Name repeated exact mathematical constants with private locals; no new global math lookups"><input id="math-constants" type="checkbox"> Math constants</label>
+              <label><input id="if-expressions" type="checkbox" checked> If-expressions</label>
+              <label><input id="early-continue" type="checkbox" checked> Early continue</label>
+              <label><input id="early-return" type="checkbox" checked> Early return</label>
+              <label title="Recover local functions only for bounded, proven numeric helper patterns"><input id="recover-inlined" type="checkbox" checked> Uninline local functions</label>
+              <label title="Recover loops from repeated primitive updates only"><input id="reroll-unrolled-loops" type="checkbox"> Reroll unrolled loops</label>
+              <label><input id="fold-single-use-temps" type="checkbox" checked> Fold single-use temps</label>
+              <label><input id="unfold-module-tables" type="checkbox" checked> Unfold module tables</label>
+              <label><input id="keep-dead-functions" type="checkbox" checked> Keep dead functions</label>
+              <label title="Use const for immutable bindings; requires recent Luau"><input id="prefer-const" type="checkbox"> Prefer const</label>
+              <label><input id="unicode-strings" type="checkbox" checked> Unicode strings</label>
+              <label><input id="upvalue-comments" type="checkbox"> Upvalue comments</label>
+              <label><input id="function-line-comments" type="checkbox"> Function line comments</label>
+            </div>
+          </details>
+          <p class="support">Official Luau v3–9 · v10–14 experimental. Decode encrypted or compressed wrappers first. Reconstruction may be incomplete.</p>
         </div>
-        <div id="base64-panel" hidden><label class="field-label" for="base64">Encoded bytecode</label><textarea id="base64" placeholder="Paste Base64 here…" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="23418152"></textarea></div>
-        <button id="example" class="example">Start with a sample. <strong>Try an example <svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#external"/></svg></strong></button>
-        <div class="divider"></div>
-        <p class="eyebrow">FORMATTING</p><div class="options">
-          <label for="types">Type annotations<select id="types"><option value="useful">Useful annotations</option><option value="functions">Functions only</option><option value="off">Off</option></select></label>
-          <label for="encoding">Opcode encoding<select id="encoding"><option value="auto">Auto-detect</option><option value="official">Official Luau</option><option value="roblox">Roblox</option></select></label>
-          <label for="generated-names">Local names<select id="generated-names"><option value="readable">Readable</option><option value="compact">Compact (v1, v2…)</option></select></label>
-          <label for="name-casing">Readable name casing<select id="name-casing"><option value="preserve">Preserve</option><option value="camelCase">camelCase</option><option value="snake_case">snake_case</option><option value="PascalCase">PascalCase</option></select></label>
-        </div>
-        <div class="options extra-options"><label for="indent">Indent<select id="indent"><option value="4">4 spaces</option><option value="2">2 spaces</option><option value="tab">Tabs</option></select></label></div>
-        <div class="divider"></div><p class="eyebrow">REWRITES</p>
-        <div class="checks">
-          <label><input id="interpolation" type="checkbox"> Interpolated strings</label>
-          <label title="Name repeated exact mathematical constants with private locals; no new global math lookups"><input id="math-constants" type="checkbox"> Math constants</label>
-          <label><input id="if-expressions" type="checkbox" checked> If-expressions</label>
-          <label><input id="early-continue" type="checkbox" checked> Early continue</label>
-          <label><input id="early-return" type="checkbox" checked> Early return</label>
-          <label title="Recover local functions only for bounded, proven numeric helper patterns"><input id="recover-inlined" type="checkbox" checked> Uninline local functions</label>
-          <label title="Recover loops from repeated primitive updates only"><input id="reroll-unrolled-loops" type="checkbox"> Reroll unrolled loops</label>
-          <label><input id="fold-single-use-temps" type="checkbox" checked> Fold single-use temps</label>
-          <label><input id="unfold-module-tables" type="checkbox" checked> Unfold module tables</label>
-          <label><input id="keep-dead-functions" type="checkbox" checked> Keep dead functions</label>
-          <label title="Use const for immutable bindings; requires recent Luau"><input id="prefer-const" type="checkbox"> Prefer const</label>
-          <label><input id="unicode-strings" type="checkbox" checked> Unicode strings</label>
-          <label><input id="upvalue-comments" type="checkbox"> Upvalue comments</label>
-          <label><input id="function-line-comments" type="checkbox"> Function line comments</label>
-        </div>
-        <div class="privacy"><span class="dot"></span> Local processing · no API key needed</div>
-        <div class="run-row"><button id="run" class="primary">Decompile <span aria-hidden="true">→</span></button><button id="cancel" hidden>Cancel</button></div>
-        <p id="status" role="status" aria-live="polite">Ready when you are.</p>
-        <p class="support">Official Luau v3–9 · v10–14 experimental.<br>Encrypted or compressed wrappers need decoding first. Reconstruction may be incomplete.</p>
+        <div class="input-actions"><div class="run-row"><button id="run" class="primary"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#play"/></svg> Decompile</button><button id="cancel" hidden>Cancel</button></div><p id="status" role="status" aria-live="polite">Ready when you are.</p><p class="privacy"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#lock"/></svg> Your bytecode stays on your device.</p></div>
       </section>
       <section class="output-panel" aria-labelledby="output-title">
-        <div class="section-heading"><h2 id="output-title"><span id="loaded-name">No file loaded</span></h2><div class="output-actions"><button id="copy" disabled>Copy</button><button id="download" disabled>Download ↓</button></div></div>
+        <div class="section-heading"><h2 id="output-title"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#code"/></svg><span id="loaded-name">No file loaded</span></h2><div class="output-actions"><button id="copy" disabled><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#copy"/></svg> Copy</button><button id="download" disabled><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#download"/></svg> Download</button></div></div>
         <div class="output-nav"><div class="tabs" role="tablist" aria-label="Output view"><button id="tab-source" role="tab" data-tab="source" aria-selected="true" aria-controls="result">Source</button><button id="tab-disassembly" role="tab" data-tab="disassembly" aria-selected="false" aria-controls="result" tabindex="-1">Disassembly</button><button id="tab-diagnostics" role="tab" data-tab="diagnostics" aria-selected="false" aria-controls="result" tabindex="-1">Diagnostics <span id="diagnostic-count">0</span></button></div><span id="result-meta"></span></div>
-        <div class="result" id="result" role="tabpanel" aria-labelledby="tab-source" tabindex="0">
-          <div class="empty" id="empty"><span class="empty-line-number" aria-hidden="true">1</span><p>Upload bytecode and select Decompile to see Luau here.</p></div>
-          <div id="output" class="code-view" hidden><pre id="line-numbers" class="line-numbers" aria-hidden="true"></pre><pre><code id="code"></code></pre></div>
-        </div>
-        <div class="output-footer"><span id="output-info">Waiting for input</span><span>Luau <span class="dot small"></span></span></div>
+        <div class="result" id="result" role="tabpanel" aria-labelledby="tab-source" tabindex="0"><div class="empty" id="empty"><img src="../assets/luvex-logo.webp" width="104" height="104" alt=""><p class="empty-title">Your source starts here.</p><p>Upload a compiled chunk or try the built-in example.<br>We’ll help you find the logic inside.</p><div class="empty-formats"><span>Binary or Base64</span><span>Processed locally</span></div></div><div id="output" class="code-view" hidden><pre id="line-numbers" class="line-numbers" aria-hidden="true"></pre><pre><code id="code"></code></pre></div></div>
+        <div class="output-footer"><span id="output-info">Waiting for input</span><span>Luau · UTF-8</span></div>
       </section>
     </div>
-    <footer><span>Open source. Built for understanding.</span><span>AnnonyA / Luau-decompiler <span id="revision"></span></span></footer>
+    <footer class="workbench-footer"><span>LUVEX <span class="footer-separator">/</span> Made for understanding.</span><a href="https://github.com/AnnonyA/Luau-decompiler">AnnonyA / Luau-decompiler <span id="revision"></span></a></footer>
     <noscript><p class="no-script">Enable JavaScript to run the decompiler locally in your browser.</p></noscript>
   </main>
 </body>

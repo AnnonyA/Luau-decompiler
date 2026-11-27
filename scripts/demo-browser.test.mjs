@@ -20,7 +20,7 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
       const file = new URL(relative.endsWith("/") ? relative + "index.html" : relative || "index.html", root);
       if (!file.href.startsWith(root.href)) throw new Error("outside site");
       const body = await readFile(file);
-      const types = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".json": "application/json" };
+      const types = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".webp": "image/webp", ".json": "application/json" };
       response.writeHead(200, { "Content-Type": types[extname(file.pathname)] ?? "application/octet-stream" });
       response.end(body);
     } catch { response.writeHead(404); response.end("Not found"); }
@@ -78,27 +78,76 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     const until=Date.now()+8000;
     const poll=()=>{if(${expression})resolve(true);else if(Date.now()>until)reject(new Error("UI condition timed out"));else setTimeout(poll,30)};poll();
   })`);
+  const checkBrand = async () => {
+    assert.match(await evaluate('document.title'), /\bLUVEX\b/);
+    await waitFor('document.querySelector("header .brand img")?.complete && document.querySelector("header .brand img").naturalWidth > 0');
+    assert.match(await evaluate('new URL(document.querySelector("header .brand img").currentSrc).pathname'), /\/assets\/luvex-logo\.webp$/);
+  };
+  const pressKey = async (key) => {
+    const windowsVirtualKeyCode = { ArrowLeft: 37, ArrowRight: 39, Enter: 13 }[key];
+    await page("Input.dispatchKeyEvent", { type: "keyDown", key, code: key, windowsVirtualKeyCode, ...(key === "Enter" ? {text: "\r"} : {}) });
+    await page("Input.dispatchKeyEvent", { type: "keyUp", key, code: key, windowsVirtualKeyCode });
+  };
   const base = `http://127.0.0.1:${server.address().port}/Luau-decompiler/`;
   await page("Page.navigate", { url: base });
   await waitFor('document.getElementById("sample-code")?.textContent');
+  await checkBrand();
   assert.equal(await evaluate(`document.querySelectorAll('a[href*="discord"], a[href*="pricing"]').length`), 0);
   await evaluate('document.getElementById("sample-before").click()');
   assert.match(await evaluate('document.getElementById("sample-code").textContent'), /local v0/);
   await evaluate('document.getElementById("sample-after").click()');
   assert.match(await evaluate('document.getElementById("sample-code").textContent'), /local Players/);
+  await evaluate('document.getElementById("sample-after").focus()');
+  await pressKey("ArrowLeft");
+  assert.equal(await evaluate('document.activeElement.id'), "sample-before");
+  assert.equal(await evaluate('document.getElementById("preview-code").getAttribute("aria-labelledby")'), "sample-before");
+  assert.match(await evaluate('document.getElementById("sample-code").textContent'), /local v0/);
+  await pressKey("ArrowRight");
+  assert.equal(await evaluate('document.getElementById("sample-after").getAttribute("aria-selected")'), "true");
+
+  // Public pass counts and source similarity are separate measured claims.
+  const published = JSON.parse(await readFile(new URL("../benchmarks/results/rosetta-source-similarity-2026-11-27/comparison.json", import.meta.url), "utf8"));
+  const benchmark = await evaluate(`({
+    headers: [...document.querySelectorAll('#benchmarks table thead th')].map(cell => cell.textContent.trim()),
+    rows: [...document.querySelectorAll('#benchmarks table tbody tr')].map(row => [...row.cells].map(cell => cell.textContent.trim()))
+  })`);
+  const passColumn = benchmark.headers.findIndex(label => /pass|behavior/i.test(label));
+  const similarityColumn = benchmark.headers.findIndex(label => /similarity/i.test(label));
+  assert.ok(passColumn >= 0 && similarityColumn >= 0 && passColumn !== similarityColumn);
+  assert.equal(benchmark.rows.length, 4);
+  for (const [tier, measured] of Object.entries(published.tiers)) {
+    const row = benchmark.rows.find(cells => cells[0].toLowerCase().replace(/[^a-z]/g, "") === tier.replace(/[^a-z]/g, ""));
+    assert.ok(row, `missing benchmark tier ${tier}`);
+    assert.ok(row[passColumn].replace(/[,\s]/g, "").includes(`${measured.score.passed}/${measured.score.total}`), tier);
+    assert.ok(row[similarityColumn].includes(`${measured.quality.similarity.toFixed(2)}%`), tier);
+  }
   await page("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   assert.equal(await evaluate('document.documentElement.scrollWidth <= window.innerWidth'), true);
   if (process.env.DEMO_SCREENSHOT) {
     const shot = await page("Page.captureScreenshot", { format: "png", captureBeyondViewport: true });
     await writeFile(process.env.DEMO_SCREENSHOT.replace(/\.png$/, "-landing-mobile.png"), Buffer.from(shot.data, "base64"));
   }
+  await page("Emulation.setDeviceMetricsOverride", { width: 320, height: 844, deviceScaleFactor: 1, mobile: true });
+  assert.equal(await evaluate('document.documentElement.scrollWidth <= window.innerWidth'), true, "landing fits 320px");
   await page("Emulation.setDeviceMetricsOverride", { width: 1440, height: 1100, deviceScaleFactor: 1, mobile: false });
   if (process.env.DEMO_SCREENSHOT) {
     const shot = await page("Page.captureScreenshot", { format: "png", captureBeyondViewport: true });
     await writeFile(process.env.DEMO_SCREENSHOT.replace(/\.png$/, "-landing.png"), Buffer.from(shot.data, "base64"));
   }
-  await page("Page.navigate", { url: base + "decompiler/" });
+  const workspaceLink = `Array.from(document.querySelectorAll('a')).find(link => link.href === ${JSON.stringify(base + "decompiler/")})`;
+  assert.equal(await evaluate(`!!(${workspaceLink})`), true, "landing links to the repository's workspace");
+  await page("Page.navigate", { url: await evaluate(`(${workspaceLink}).href`) });
   await waitFor('document.getElementById("revision")?.textContent');
+  assert.equal(await evaluate('location.href'), base + "decompiler/");
+  await checkBrand();
+  assert.equal(await evaluate('document.querySelectorAll("main h1").length'), 1);
+  assert.ok(await evaluate('document.querySelector("main h1").textContent.trim().length > 0'));
+  const advancedOpen = await evaluate('document.querySelector("details#advanced-settings").open');
+  await evaluate('document.querySelector("#advanced-settings > summary").focus()');
+  await pressKey("Enter");
+  assert.equal(await evaluate('document.getElementById("advanced-settings").open'), !advancedOpen);
+  await pressKey("Enter");
+  assert.equal(await evaluate('document.getElementById("advanced-settings").open'), advancedOpen);
   assert.equal(await evaluate(`(async()=>{
     const {renderCode}=await import('../assets/highlight.js');
     const code=document.createElement('code'),lines=document.createElement('pre');
@@ -112,6 +161,7 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     'prefer-const':false,'unicode-strings':true,'upvalue-comments':false,'function-line-comments':false};
   for (const [id, checked] of Object.entries(rewriteDefaults)) {
     assert.equal(await evaluate(`document.getElementById(${JSON.stringify(id)})?.checked`), checked, id);
+    assert.ok(await evaluate(`document.getElementById(${JSON.stringify(id)}).labels.length > 0`), `${id} has an accessible label`);
     await evaluate(`document.getElementById(${JSON.stringify(id)}).checked=${!checked}`);
   }
   await evaluate(`
@@ -227,6 +277,8 @@ test("static demo works under a repository subpath in Chromium", { timeout: 60_0
     const shot = await page("Page.captureScreenshot", { format: "png", captureBeyondViewport: true });
     await writeFile(process.env.DEMO_SCREENSHOT.replace(/\.png$/, "-mobile.png"), Buffer.from(shot.data, "base64"));
   }
+  await page("Emulation.setDeviceMetricsOverride", { width: 320, height: 844, deviceScaleFactor: 1, mobile: true });
+  assert.equal(await evaluate('document.documentElement.scrollWidth <= window.innerWidth'), true, "workspace fits 320px");
   assert.deepEqual(errors, []);
   assert.ok(requests.every((request) => request.method === "GET"), "no bytecode is POSTed to a backend");
   assert.ok(requests.every((request) => request.url.startsWith(base)), "all requests stay within the static site");
