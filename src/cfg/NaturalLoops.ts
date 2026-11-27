@@ -220,6 +220,14 @@ function findRepeatTestBlock(cfg: ControlFlowGraph, loop: Pick<NaturalLoop, "hea
   if (latchLast && isConditionalJump(latchLast.opcode)) {
     return loop.latch;
   }
+  // A condition before a latch is an `until` only when the latch contains
+  // no body work. A compound while condition can have an internal join
+  // before its final test; consuming that test as `until` would omit the
+  // assignments/calls between the test and the backedge.
+  if (latchBlock.instructions.some(instruction => instruction.opcode !== Opcode.JUMPBACK &&
+      instruction.opcode !== Opcode.JUMP && instruction.opcode !== Opcode.NOP)) {
+    return undefined;
+  }
   // Otherwise look for the last body block that jumps to the loop exit and
   // falls through into the pure back-edge latch — the `until` test position.
   // (A block whose conditional jumps to the latch is a `continue` guard, and a

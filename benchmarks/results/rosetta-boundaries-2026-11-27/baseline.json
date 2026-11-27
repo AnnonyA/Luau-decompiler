@@ -1,0 +1,110 @@
+{
+  "generator": "typed-v2",
+  "cases": 4,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "ann": {
+      "pass": 8,
+      "refused": 6,
+      "recompile_failed": 2,
+      "mismatch": 8
+    }
+  },
+  "by_profile": {
+    "ann": {
+      "O0g1": 2,
+      "O0g2": 2,
+      "O1g1": 1,
+      "O1g2": 1,
+      "O2g1": 2,
+      "O2g2": 2
+    }
+  },
+  "failures": {
+    "ann": [
+      {
+        "case": "constructor-before-return",
+        "profile": "O2g1",
+        "kind": "recompile_failed",
+        "detail": "syntax error: 6: Expected 'end' (to close 'function' at line 4), got 'local'"
+      },
+      {
+        "case": "constructor-before-return",
+        "profile": "O2g2",
+        "kind": "recompile_failed",
+        "detail": "syntax error: 6: Expected 'end' (to close 'function' at line 4), got 'local'"
+      },
+      {
+        "case": "materialized-list-writes",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 2"
+      },
+      {
+        "case": "materialized-list-writes",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 2"
+      },
+      {
+        "case": "method-result-call",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `17\t2\t5\tnil` got `function: 0x#1`"
+      },
+      {
+        "case": "method-result-call",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `17\t2\t5\tnil` got `function: 0x#1`"
+      },
+      {
+        "case": "method-result-call",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `17\t2\t5\tnil` got `function: 0x#1`"
+      },
+      {
+        "case": "method-result-call",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `17\t2\t5\tnil` got `function: 0x#1`"
+      },
+      {
+        "case": "method-result-call",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `17\t2\t5\tnil` got `function: 0x#1`"
+      },
+      {
+        "case": "method-result-call",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `17\t2\t5\tnil` got `function: 0x#1`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 8,
+    "by_decompiler": {
+      "ann": {
+        "round_trips": 8,
+        "similarity": 69.66642439365387,
+        "size": 1.3291664763375588,
+        "locals": 1.3146092649815875,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 33.33333333333333,
+        "cpu_ms_median": 114.581,
+        "cpu_ms_total": 912.31
+      }
+    }
+  }
+}

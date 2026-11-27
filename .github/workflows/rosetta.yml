@@ -1,0 +1,107 @@
+name: Rosetta
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      tier:
+        description: Pinned Rosetta tier to run
+        type: choice
+        options: [quick, full, hard-quick, hard-full, all]
+        default: all
+        required: true
+      measure_only:
+        description: Retain measured failures without asserting an all-pass result
+        type: boolean
+        default: false
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    name: Rosetta ${{ matrix.tier }} (Node 22)
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        tier: ${{ fromJSON(github.event_name != 'workflow_dispatch' && '["quick"]' || inputs.tier == 'all' && '["quick","full","hard-quick","hard-full"]' || format('["{0}"]', inputs.tier)) }}
+    steps:
+      - name: Check out the decompiler
+        uses: actions/checkout@v4
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install pinned dependencies
+        run: npm ci
+      - name: Test strict result validation and process failure handling
+        run: npm run bench:rosetta:test
+      - name: Read the Rosetta source pin
+        id: pin
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const pin = JSON.parse(fs.readFileSync('benchmarks/rosetta/suite.json', 'utf8'));
+          if (!/^[0-9a-f]{40}$/.test(pin.revision)) throw new Error('Invalid Rosetta source pin');
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `revision=${pin.revision}\n`);
+          NODE
+      - name: Fetch the exact Rosetta source revision
+        uses: actions/checkout@v4
+        with:
+          repository: Scrensayol/rosetta
+          ref: ${{ steps.pin.outputs.revision }}
+          path: tmp/rosetta-source
+          persist-credentials: false
+      - name: Set up the pinned Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.100.0
+      - name: Build Rosetta with its committed dependency lockfile
+        working-directory: tmp/rosetta-source
+        run: cargo build --release --locked
+      - name: Rebuild and measure the decompiler with strict corpus validation
+        env:
+          ROSETTA_TIER: ${{ matrix.tier }}
+          ROSETTA_MEASURE_ONLY: ${{ github.event_name == 'workflow_dispatch' && inputs.measure_only || false }}
+        shell: bash
+        run: |
+          args=(--rosetta-dir "$PWD/tmp/rosetta-source"
+                --tier "$ROSETTA_TIER"
+                --out "$PWD/tmp/rosetta-results/$ROSETTA_TIER"
+                --threads 2 --gallery)
+          if [[ "$ROSETTA_MEASURE_ONLY" == "true" ]]; then
+            args+=(--measure-only)
+          fi
+          npm run bench:rosetta -- "${args[@]}"
+      - name: Summarize the measured verdicts
+        if: always()
+        env:
+          ROSETTA_TIER: ${{ matrix.tier }}
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const path = `tmp/rosetta-results/${process.env.ROSETTA_TIER}/annonyA-${process.env.ROSETTA_TIER}.provenance.json`;
+          if (fs.existsSync(path)) {
+            const run = JSON.parse(fs.readFileSync(path, 'utf8'));
+            const score = run.summary ? `${run.summary.passed}/${run.summary.total}` : 'No validated result';
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+              `## Rosetta ${run.tier}\n\nMode: ${run.gate}. Status: ${run.status}. Score: **${score}**.\n\n` +
+              (run.summary ? `Verdicts: \`${JSON.stringify(run.summary.counts)}\`.\n\n` : '') +
+              (run.error ? `Failure: ${run.error}\n\n` : '') +
+              `Engine: \`${run.engine.revision}\`. Rosetta: \`${run.rosetta.revision}\`.\n`);
+          }
+          NODE
+      - name: Retain complete results, failure galleries and provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rosetta-${{ matrix.tier }}-node22-${{ github.sha }}
+          path: tmp/rosetta-results/${{ matrix.tier }}
+          if-no-files-found: warn
+          retention-days: 30

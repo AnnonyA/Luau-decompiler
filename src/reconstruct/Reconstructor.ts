@@ -910,10 +910,15 @@ class SourceBuilder {
     if (last && isCompare(last.opcode)) {
       this.consumed.add(last.pc);
     }
-    const body =
-      loop.header === loop.latch
-        ? this.emitStraight(header)
-        : this.emitRange(loop.header, this.loopFollow(loop), new Set(visited));
+    const separateTest = testBlockId !== loop.header && testBlockId !== loop.latch;
+    const body = loop.header === loop.latch
+      ? this.emitStraight(header)
+      : this.emitRange(loop.header, separateTest ? testBlockId : this.loopFollow(loop), new Set(visited));
+    // Reconstruct the condition's setup after all body alternatives rejoin.
+    // A breaking arm never executes it; a continuing arm must use its own
+    // reaching definitions, not the register environment saved before the
+    // preceding if (which may contain a different value in the same slot).
+    if (separateTest) body.push(...this.emitStraight(testBlock));
     const test =
       last && isCompare(last.opcode)
         ? this.conditionFrom(last, testBlockId === loop.latch && testBlock.branch === loop.header)
@@ -1038,13 +1043,17 @@ class SourceBuilder {
 
   /** Whether `register` is a result (or the self copy) of the call expression
    * in slot `base` of a generic-for. */
-  private callDefinedSlot(base: number, register: number): boolean {
-    for (const insn of this.proto.instructions) {
-      if ((insn.opcode === Opcode.NAMECALL || insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) && insn.a === base && insn.defs.includes(register)) {
-        return true;
-      }
-    }
-    return false;
+  private callDefinedSlot(base: number, register: number, prep: DecodedInstruction | undefined): boolean {
+    if (!prep) return false;
+    const home = this.ir.cfg.blockOfPc.get(prep.pc);
+    if (home === undefined) return false;
+    const callee = this.ir.ssa.useAt.get(`${home}:${prep.pc}:${base}`);
+    const slot = this.ir.ssa.useAt.get(`${home}:${prep.pc}:${register}`);
+    if (callee === undefined || slot === undefined) return false;
+    const producer = this.ir.ssa.values[callee]?.instruction;
+    return producer !== undefined && producer === this.ir.ssa.values[slot]?.instruction &&
+      (producer.opcode === Opcode.CALL || producer.opcode === Opcode.CALLFB) &&
+      producer.a === base && producer.defs.includes(register);
   }
 
   private genericForPrep(loop: NaturalLoop): DecodedInstruction | undefined {
@@ -1110,9 +1119,7 @@ class SourceBuilder {
       names.push(this.bindLocal(register, loopInsn?.pc ?? header.startPc, i === 0 ? "key" : "value"));
     }
     let iterators: Expression[];
-    if (prep?.opcode === Opcode.FORGPREP_INEXT || prep?.opcode === Opcode.FORGPREP_NEXT) {
-      iterators = [this.readRegister(base, prep)];
-    } else {
+    {
       const slots = [base, base + 1, base + 2];
       iterators = slots.map((register) => this.readRegister(register, prep));
       // The compiler emits `nil, nil, <expr>` for `for ... in <expr>`; drop the
@@ -1125,7 +1132,7 @@ class SourceBuilder {
       // be dropped because re-evaluating `f()` yields the same slots.
       const first = iterators[0];
       if (iterators.length > 1 && (first?.kind === "call" || first?.kind === "method-call")) {
-        while (iterators.length > 1 && this.callDefinedSlot(base, slots[iterators.length - 1]!)) {
+        while (iterators.length > 1 && this.callDefinedSlot(base, slots[iterators.length - 1]!, prep)) {
           iterators.pop();
         }
       }
@@ -1264,7 +1271,14 @@ class SourceBuilder {
       }
     }
 
-    const join = this.joinOf(basic);
+    const candidateJoin = this.joinOf(basic);
+    // An inner conditional can post-dominate beyond the enclosing arm's
+    // boundary (for example one arm continues and another reaches a shared
+    // loop tail). Stop at that enclosing boundary; consuming the tail here
+    // and again after the outer if would execute its assignments twice.
+    const join = stop !== undefined && candidateJoin !== undefined &&
+      !this.ir.dominators.dominates(stop, basic.id) &&
+      this.reachesWithoutBackedge(stop, candidateJoin) ? stop : candidateJoin;
     if (join === undefined) {
       // Terminal branch: emit the if without a follow; both arms end on their own.
       this.consumed.add(last.pc);
@@ -1424,6 +1438,21 @@ class SourceBuilder {
       return leftMax - rightMax || fromA.get(left)! + fromB.get(left)! - fromA.get(right)! - fromB.get(right)!;
     });
     return joins[0];
+  }
+
+  private reachesWithoutBackedge(start: number, target: number): boolean {
+    const seen = new Set<number>();
+    const pending = [start];
+    while (pending.length) {
+      const current = pending.pop()!;
+      if (current === target) return true;
+      if (seen.has(current)) continue;
+      seen.add(current);
+      for (const successor of this.ir.cfg.blocks[current]?.successors ?? []) {
+        if (!this.ir.dominators.dominates(successor, current)) pending.push(successor);
+      }
+    }
+    return false;
   }
 
   private declareJoinPhis(join: number, statements: Statement[], outerScopes = 0): void {
@@ -1703,7 +1732,7 @@ class SourceBuilder {
         // The assignment is removed from the prelude, so subsequent reads
         // must see its captured value, not the old local occupying this slot.
         value = captured;
-        this.env.set(t, { expression: captured, pinned: false });
+        this.env.set(t, { expression: captured, pinned: false, methodSelf: this.env.get(t)?.methodSelf });
         continue;
       }
       const before = new Map(this.env);
@@ -1868,7 +1897,7 @@ class SourceBuilder {
           return fail();
         }
         capture(value);
-        this.env.set(t, { expression: value, pinned: false });
+        this.env.set(t, { expression: value, pinned: false, methodSelf: this.env.get(t)?.methodSelf });
         continue;
       }
       const before = new Map(this.env);
@@ -2197,6 +2226,14 @@ class SourceBuilder {
       if (this.consumed.has(insn.pc) || isControlOnly(insn.opcode)) {
         continue;
       }
+      if (insn.opcode === Opcode.RETURN) {
+        // Unobserved constructors still allocate and evaluate their fields.
+        // Commit them before the terminator: a late flush would place their
+        // effects after the return and would not even be valid Luau syntax.
+        for (const pending of [...this.pendingStack].reverse()) {
+          if (!pending.flushed) statements.push(...this.flushPending(pending));
+        }
+      }
       const writeTarget = this.writeTargetOf(insn);
       if (writeTarget === undefined) {
         statements.push(...this.flushObserved(insn));
@@ -2445,6 +2482,18 @@ class SourceBuilder {
           }
           return { statements };
         }
+        if (insn.c !== 0) {
+          // SETLIST mutates the existing table; it never allocates a second
+          // one. An earlier field/capture may already have forced the table
+          // out of the constructor stack. Keep its identity and keyed fields.
+          const target = this.readRegister(insn.a, insn);
+          if (fields.length > 0) statements.push({
+            kind: "assign",
+            targets: fields.map(field => ({kind: "index", table: target, key: field.key!})),
+            values: fields.map(field => field.value),
+          });
+          break;
+        }
         statements.push(...this.define(insn.a, { kind: "table", fields: normalizeArrayFields(fields) }, insn, true));
         break;
       }
@@ -2531,7 +2580,7 @@ class SourceBuilder {
         const argCount = insn.call?.argumentCount ?? 0;
         const calleeBinding = this.env.get(insn.a);
         let expression: Expression;
-        if (calleeBinding?.expression.kind === "method-call") {
+        if (calleeBinding?.methodSelf !== undefined && calleeBinding.expression.kind === "method-call") {
           const args: Expression[] = [];
           if (argCount === "multret") {
             args.push(...this.openArgs(insn.a + 2, insn));
@@ -3695,6 +3744,13 @@ class SourceBuilder {
       return undefined;
     }
     const existing = this.env.get(register);
+    const loop = this.currentLoop();
+    const carried = loop && (this.loopPhiNames.get(`${loop.header}:${register}`) ??
+      this.loopPhiNames.get(`${loop.latch}:${register}`));
+    // The last write feeds the backedge phi, but earlier read/modify/write
+    // steps in the same iteration still update that lexical accumulator.
+    // Debug names starting mid-iteration cannot create a new shadow cell.
+    if (carried && existing?.name === carried && !existing.alias && insn.uses.includes(register)) return carried;
     const debug = debugNameAt(this.proto, register, insn.pc + insn.width);
     if (debug && existing?.name === debug && !existing.alias && insn.uses.includes(register) &&
         ![...this.env].some(([slot, binding]) => slot !== register && binding.name === debug)) {
