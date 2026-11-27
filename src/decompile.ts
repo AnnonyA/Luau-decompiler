@@ -113,6 +113,7 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
 
   try {
     const reconstructed = reconstructFunction(decoded.module, main);
+    for (const diagnostic of reconstructed.closureIdentityDiagnostics) diagnostics.push(diagnostic);
     const raw = presentClosures(chunk(reconstructed.body.statements));
     const debugNames = new Set(decoded.module.prototypes.flatMap((prototype) => prototype.locals.map((local) => local.name)));
     const sourceNames = new Set([...reconstructed.declaredLocals, ...debugNames]);

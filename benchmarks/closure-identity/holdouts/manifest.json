@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "officialLuau": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "firstCandidate": "8ff6964ac8ded7366ef6c3452d27be306815a211",
+  "firstIndependentObservation": "6/9 executions MATCH; both sources became development regressions after that observation. h01 O2 remains a known divergence.",
+  "profiles": [
+    {
+      "profile_id": "holdout/h01/O0/input0",
+      "suite": "main",
+      "case": "h01",
+      "mode": null,
+      "optimization": 0,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "928f5e864a9e01b3fd9a77dea61c8058d71d7b2d22cbe4912e4af2fd67189308",
+      "sealed_stdout": "false\tfalse\tfalse\nfirst\tsecond\tthird\tnil\ndetached\tnil\tnil\tnil\n",
+      "bytecode": "bytecode/h01/O0.luauc",
+      "arguments": []
+    },
+    {
+      "profile_id": "holdout/h01/O1/input0",
+      "suite": "main",
+      "case": "h01",
+      "mode": null,
+      "optimization": 1,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "27770c2834ea4f9d6aff1e08b0e0990e0a9a5df486d723cce5e588a88f1a4a03",
+      "sealed_stdout": "false\tfalse\ttrue\nfirst\tsecond\tthird\tfirst\ndetached\tnil\tnil\tnil\n",
+      "bytecode": "bytecode/h01/O1.luauc",
+      "arguments": []
+    },
+    {
+      "profile_id": "holdout/h01/O2/input0",
+      "suite": "main",
+      "case": "h01",
+      "mode": null,
+      "optimization": 2,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "bb628cd6602a70f900b8282ed6f6e600bdec80f2406c236ea633d3b0618a5470",
+      "sealed_stdout": "false\tfalse\ttrue\nfirst\tsecond\tthird\tfirst\ndetached\tnil\tnil\tnil\n",
+      "bytecode": "bytecode/h01/O2.luauc",
+      "arguments": []
+    },
+    {
+      "profile_id": "holdout/h02/O0/input0",
+      "suite": "main",
+      "case": "h02",
+      "mode": null,
+      "optimization": 0,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "28f2aab2f75d0335f23be534a641091e9380c6562245760c67098447239fc88c",
+      "sealed_stdout": "false\tfirst\tselected\t8\t8\n",
+      "bytecode": "bytecode/h02/O0.luauc",
+      "arguments": [
+        "left"
+      ]
+    },
+    {
+      "profile_id": "holdout/h02/O0/input1",
+      "suite": "main",
+      "case": "h02",
+      "mode": null,
+      "optimization": 0,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "28f2aab2f75d0335f23be534a641091e9380c6562245760c67098447239fc88c",
+      "sealed_stdout": "false\tfirst\tselected\t9\t9\n",
+      "bytecode": "bytecode/h02/O0.luauc",
+      "arguments": [
+        "right"
+      ]
+    },
+    {
+      "profile_id": "holdout/h02/O1/input0",
+      "suite": "main",
+      "case": "h02",
+      "mode": null,
+      "optimization": 1,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "6b08a2b9a2be54902d0358e6c6055e7603f0d2799720d59741994a42a80018ba",
+      "sealed_stdout": "true\tselected\tselected\t8\t8\n",
+      "bytecode": "bytecode/h02/O1.luauc",
+      "arguments": [
+        "left"
+      ]
+    },
+    {
+      "profile_id": "holdout/h02/O1/input1",
+      "suite": "main",
+      "case": "h02",
+      "mode": null,
+      "optimization": 1,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "6b08a2b9a2be54902d0358e6c6055e7603f0d2799720d59741994a42a80018ba",
+      "sealed_stdout": "true\tselected\tselected\t9\t9\n",
+      "bytecode": "bytecode/h02/O1.luauc",
+      "arguments": [
+        "right"
+      ]
+    },
+    {
+      "profile_id": "holdout/h02/O2/input0",
+      "suite": "main",
+      "case": "h02",
+      "mode": null,
+      "optimization": 2,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "0eac0328443c90d00ac81ff34bcd03466c7a497be2d9bb4c802f78c41047241b",
+      "sealed_stdout": "true\tselected\tselected\t8\t8\n",
+      "bytecode": "bytecode/h02/O2.luauc",
+      "arguments": [
+        "left"
+      ]
+    },
+    {
+      "profile_id": "holdout/h02/O2/input1",
+      "suite": "main",
+      "case": "h02",
+      "mode": null,
+      "optimization": 2,
+      "debug": 1,
+      "bytecode_version": 14,
+      "input_sha256": "0eac0328443c90d00ac81ff34bcd03466c7a497be2d9bb4c802f78c41047241b",
+      "sealed_stdout": "true\tselected\tselected\t9\t9\n",
+      "bytecode": "bytecode/h02/O2.luauc",
+      "arguments": [
+        "right"
+      ]
+    }
+  ]
+}

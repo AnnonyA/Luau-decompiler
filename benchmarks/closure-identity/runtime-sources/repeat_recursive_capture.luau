@@ -1,0 +1,3 @@
+local value = ...
+local function self() return self, value end
+return self
