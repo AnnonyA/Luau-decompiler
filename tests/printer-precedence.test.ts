@@ -15,6 +15,17 @@ function returnSource(value: Expression): string {
 }
 
 describe("reconstructed Luau expression precedence", () => {
+  it("separates statements that begin with a parenthesized receiver", () => {
+    const receiver: Expression = {kind: "paren", expression: ident("handler")};
+    const invocation: Expression = {kind: "call", callee: receiver, args: [], open: false};
+    const field: Expression = {kind: "property", object: receiver, name: "value"};
+    expect(printLuau(chunk([
+      {kind: "expression-stmt", expression: invocation},
+      {kind: "expression-stmt", expression: invocation},
+      {kind: "assign", targets: [field], values: [lit(1)]},
+      {kind: "compound-assign", target: field, op: "+", value: lit(2)},
+    ]))).toBe("(handler)();\n(handler)();\n(handler).value = 1;\n(handler).value += 2\n");
+  });
   it.each([
     [-2, "-2"],
     [-0, "-0"],

@@ -1570,17 +1570,7 @@ class SourceBuilder {
     } else if (andForm) {
       expr = { kind: "binary", op: "and", left: condReg, right: thenValue };
     } else if (thenPath.guards.length > 0) {
-      const test = foldAnd([guardTest, ...thenPath.guards]);
-      const lastGuardInsn = thenPath.lastGuardBlock?.instructions.at(-1);
-      const lastGuardReg =
-        lastGuardInsn && lastGuardInsn.a === t
-          ? thenValue
-          : this.conditionRegisterOf(thenPath.lastGuardBlock);
-      if (lastGuardReg !== undefined && sameExpr(thenValue, lastGuardReg)) {
-        expr = { kind: "binary", op: "or", left: test, right: elseValue };
-      } else {
-        expr = makeIfExpr(test, thenValue, elseValue);
-      }
+      expr = guardedValue(guardTest, thenPath.guards, thenValue, elseValue, thenPath.selectsTruthyResult);
     } else {
       expr = makeIfExpr(guardTest, thenValue, elseValue);
     }
@@ -1683,23 +1673,14 @@ class SourceBuilder {
     return { statements, value };
   }
 
-  private conditionRegisterOf(block: BasicBlock | undefined): Expression | undefined {
-    if (!block) {
-      return undefined;
-    }
-    const last = block.instructions.at(-1);
-    return last && isCompare(last.opcode) ? this.readRegister(last.a, last) : undefined;
-  }
-
   private walkValuePath(
     start: number,
     join: number,
     t: number,
     outerFallback: number,
-  ): { guards: Expression[]; value?: Expression; lastGuardBlock?: BasicBlock } | undefined {
+  ): { guards: Expression[]; value?: Expression; selectsTruthyResult?: boolean } | undefined {
     const guards: Expression[] = [];
     let current = start;
-    let lastGuard: BasicBlock | undefined;
     let seen = new Set<number>();
     while (current !== undefined && current !== join) {
       if (seen.has(current)) {
@@ -1717,11 +1698,13 @@ class SourceBuilder {
             return undefined;
           }
           guards.push(this.conditionFrom(last, true));
-          lastGuard = block;
           current = block.fallthrough!;
           continue;
         }
         if (block.fallthrough === outerFallback) {
+          // This expression contributes both the truthiness test and the
+          // selected value. Only the taken edge directly to the join proves it.
+          if (last.opcode !== Opcode.JUMPIF || last.a !== t || block.branch !== join) return undefined;
           const value = this.blockValue(block, join, t);
           if (value === undefined) {
             return undefined;
@@ -1729,16 +1712,15 @@ class SourceBuilder {
           // The jump tests the value register itself: use the captured value
           // as the guard (a phi name bound during the dry run must not leak
           // into the expression).
-          guards.push(last.a === t ? value : this.conditionFrom(last, false));
-          lastGuard = block;
-          return { guards, value, lastGuardBlock: block };
+          guards.push(value);
+          return { guards, value, selectsTruthyResult: true };
         }
         return undefined;
       }
       const value = this.blockValue(block, join, t);
-      return value !== undefined ? { guards, value, lastGuardBlock: lastGuard } : undefined;
+      return value !== undefined ? { guards, value } : undefined;
     }
-    return { guards, value: undefined, lastGuardBlock: lastGuard };
+    return { guards, value: undefined };
   }
 
   private buildElseValue(start: number, join: number, t: number): Expression | undefined {
@@ -1764,11 +1746,7 @@ class SourceBuilder {
       if (elseValue === undefined) {
         return undefined;
       }
-      const test =
-        path.guards.length > 0
-          ? foldAnd([guard, ...path.guards])
-          : guard;
-      return makeIfExpr(test, path.value, elseValue);
+      return guardedValue(guard, path.guards, path.value, elseValue, path.selectsTruthyResult);
     }
     return this.blockValue(block, join, t);
   }
@@ -1950,8 +1928,14 @@ class SourceBuilder {
 
   /** Materialize every pending table observed by `insn` (via uses or defs). */
   private flushObserved(insn: DecodedInstruction, except?: PendingTable): Statement[] {
+    if (this.pendingStack.length === 0) return [];
     const statements: Statement[] = [];
-    if (["call", "mutation", "metamethod", "table-read"].includes(effectOf(insn))) {
+    // A deferred field can invoke user code that changes a global or a shared
+    // cell. Evaluate it before an instruction observes that state, even when
+    // the observing instruction is a plain register copy.
+    const observesCell = (insn.opcode === Opcode.GETUPVAL && this.captures.get(insn.b)?.mutable) ||
+      insn.uses.some(register => this.env.get(register)?.forwardRef);
+    if (observesCell || ["call", "mutation", "metamethod", "table-read", "global-read"].includes(effectOf(insn))) {
       // Constructor fields are writes at their bytecode position. Delaying
       // their reads/calls until the literal is flushed can snapshot state
       // AFTER a callback mutates it. Materialize scalar field expressions,
@@ -2699,6 +2683,12 @@ class SourceBuilder {
     const selfCaptured = captures.some((capture) => capture.capture?.source === insn.a);
     const onlyField = !hasFreshSnapshot && Boolean(fieldName) && !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
     const existing = this.env.get(insn.a);
+    const join = shared || existing?.forwardRef ? undefined : this.phiBinding(insn.a, insn);
+    // A VAL self capture must retain this particular function if a later
+    // branch or loop iteration overwrites the join. A REF self capture must
+    // observe writes to the destination cell instead.
+    const capturesSelfValue = captures.some(cap => cap.capture?.type === CaptureType.VAL && cap.capture.source === insn.a);
+    const capturesSelfRef = captures.some(cap => cap.capture?.type === CaptureType.REF && cap.capture.source === insn.a);
     const preferred =
       (existing?.forwardRef ? existing.name : undefined) ??
       debug ??
@@ -2706,7 +2696,7 @@ class SourceBuilder {
       this.pendingCallbackHint(insn.a) ??
       peekPredicateName(child) ??
       "function";
-    const name = shared?.name ?? (
+    const name = shared?.name ?? (capturesSelfValue ? undefined : join) ?? (
       existing?.forwardRef && existing.name
         ? existing.name
         : onlyField
@@ -2800,6 +2790,18 @@ class SourceBuilder {
     const creation: Statement = {kind: "assign", targets: [ident(name)], values: [fn]};
     const scopedCreation: Statement = hasFreshSnapshot
       ? {kind: "do", body: block([...freshStatements, creation])} : creation;
+    if (join) {
+      if (!this.isDeclaredInScope(name)) {
+        this.declareInScope(name);
+        statements.push({kind: "local", names: [name], values: []});
+      }
+      if (name !== join) {
+        return [...statements, scopedCreation, ...this.define(insn.a, ident(name), insn, false, join)];
+      }
+      const aliases = this.snapshotRegisterAliases(insn.a, name);
+      this.env.set(insn.a, {name, expression: ident(name), pinned: true, forwardRef: capturesSelfRef});
+      return [...statements, ...aliases, scopedCreation];
+    }
     if (existing?.forwardRef && existing.name) {
       // MOVE keeps the old function value, while REF captures keep this cell.
       // Closure creation bypasses define(), so preserve deferred register
@@ -2809,7 +2811,7 @@ class SourceBuilder {
       return [...statements, scopedCreation];
     }
     if (selfCaptured || mutable) {
-      this.env.set(insn.a, { name, expression: ident(name), pinned: true });
+      this.env.set(insn.a, { name, expression: ident(name), pinned: true, forwardRef: capturesSelfRef });
       this.declareInScope(name);
       return [
         ...statements,
@@ -3357,6 +3359,7 @@ class SourceBuilder {
         expression.kind === "identifier" &&
         expression.name === preferred &&
         !forceLocal &&
+        !(insn.opcode === Opcode.MOVE && this.env.get(insn.b)?.forwardRef) &&
         !debug &&
         phi === undefined &&
         !refCaptured &&
@@ -3413,13 +3416,17 @@ class SourceBuilder {
 
   /** Keep evaluation before statements that cannot become part of its consumer. */
   private crossesStatementBeforeUse(register: number, definition: DecodedInstruction, expression?: Expression): boolean {
+    const copiedCell = definition.opcode === Opcode.MOVE && this.env.get(definition.b)?.forwardRef;
     const dependencies = new Set<string>();
-    let containsCall = Boolean(definition.call);
+    const deferredEffect = effectOf(definition);
+    let invokesUserCode = deferredEffect === "call" || deferredEffect === "table-read" || deferredEffect === "metamethod";
     const collect = (value: unknown): void => {
       if (!value || typeof value !== "object") return;
-      const node = value as {kind?: string; name?: string};
+      const node = value as {kind?: string; name?: string; op?: string};
       if (node.kind === "function-expr") return;
-      if (node.kind === "call" || node.kind === "method-call") containsCall = true;
+      if (node.kind === "call" || node.kind === "method-call" || node.kind === "property" || node.kind === "index" ||
+          (node.kind === "binary" && node.op !== "and" && node.op !== "or") ||
+          (node.kind === "unary" && node.op !== "not")) invokesUserCode = true;
       if (node.kind === "identifier" && node.name) dependencies.add(node.name);
       Object.values(value).forEach(collect);
     };
@@ -3435,7 +3442,8 @@ class SourceBuilder {
       if (next.uses.includes(register) ||
           (next.call?.argumentCount === "multret" && register > next.a) ||
           (next.opcode === Opcode.RETURN && next.b === 0 && register >= next.a)) {
-        return false;
+        // Another MOVE can carry the copy well beyond this first use.
+        return Boolean(copiedCell && next.opcode === Opcode.MOVE);
       }
       if (next.defs.includes(register)) {
         return false;
@@ -3446,17 +3454,19 @@ class SourceBuilder {
         const name = this.env.get(slot)?.name;
         return name !== undefined && dependencies.has(name);
       })) return true;
-      // A call can mutate the state observed by a later read. In particular
-      // Luau evaluates assignment targets before RHS expressions, so moving
-      // table.remove into an RHS would evaluate #table against the old state.
-      if (containsCall && ["call", "table-read", "metamethod"].includes(effectOf(next))) return true;
-      // Snapshot a callee lookup before independent calls that can replace it.
-      if (["global-read", "table-read"].includes(effectOf(definition)) && effectOf(next) === "call") return true;
+      // Both __index and arithmetic metamethods can change the state observed
+      // by the next independent operation, just like an explicit function call.
+      const nextEffect = effectOf(next);
+      // MOVE snapshots an open REF cell. A call or metamethod can mutate
+      // that cell without an explicit bytecode write to its register.
+      if ((invokesUserCode || copiedCell) && (nextEffect === "call" || nextEffect === "table-read" || nextEffect === "metamethod")) return true;
+      // Snapshot a global lookup before an independent call can replace it.
+      if (deferredEffect === "global-read" && nextEffect === "call") return true;
       // An independent call can later be materialized before this deferred
       // value (e.g. an inlined constructor argument). Only a direct consumer
       // may nest it; that case returned above when checking register uses.
       // Discarded/multiple results also force non-call reads to be captured.
-      if (effectOf(next) === "mutation" ||
+      if (nextEffect === "mutation" ||
           (next.call && (next.call.resultCount === 0 ||
             (typeof next.call.resultCount === "number" && next.call.resultCount > 1)))) {
         return true;
@@ -4087,6 +4097,16 @@ function makeIfExpr(test: Expression, consequent: Expression, alternate: Express
     };
   }
   return { kind: "if-expr", test, consequent, branches: [], alternate };
+}
+
+function guardedValue(
+  guard: Expression, guards: Expression[], value: Expression, fallback: Expression, selectsTruthyResult = false,
+): Expression {
+  const test = foldAnd([guard, ...guards]);
+  // When JUMPIF carries its operand to the join, Luau's `or` returns that
+  // exact operand. Repeating it in an if-expression would run a call twice.
+  return selectsTruthyResult ? { kind: "binary", op: "or", left: test, right: fallback }
+    : makeIfExpr(test, value, fallback);
 }
 
 function foldAnd(expressions: Expression[]): Expression {

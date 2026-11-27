@@ -58,15 +58,25 @@ for(const family of ['large','object-optimized','rewrites']) {
   fixtures.push({file:family+'/'+file,original:join(root,file),inputs,prelude});
  }
 }
-for(const {file,original,inputs,prelude} of fixtures)for(const optimization of [0,1,2]){
- const source=await readFile(original),dir=join(output,file.slice(0,-5),`O${optimization}`);
+// These fixtures also exercise register reconstruction with stripped and full
+// debug metadata. Keep the existing style matrix and artifact paths at g1.
+const fullDebugProfiles = new Set(JSON.parse(await readFile(
+ new URL('../tests/fixtures/full-debug-profiles.json',import.meta.url),'utf8')));
+for (const file of fullDebugProfiles) {
+ if (!fixtures.some(f => f.file === file)) throw Error('unknown debug-profile fixture: ' + file);
+}
+const profiles = fixtures.flatMap(fixture => (fullDebugProfiles.has(fixture.file) ? [1,0,2] : [1])
+ .map(debugLevel => ({...fixture,debugLevel})));
+for(const {file,original,inputs,prelude,debugLevel} of profiles)for(const optimization of [0,1,2]){
+ const profile = debugLevel === 1 ? `O${optimization}` : `O${optimization}-g${debugLevel}`;
+ const source=await readFile(original),dir=join(output,file.slice(0,-5),profile);
  await mkdir(dir,{recursive:true});
- const compiled=spawnSync(compiler,['--binary',`-O${optimization}`,'-g1',original],{timeout:15000,maxBuffer:4*1024*1024});
+ const compiled=spawnSync(compiler,['--binary',`-O${optimization}`,`-g${debugLevel}`,original],{timeout:15000,maxBuffer:4*1024*1024});
  if(compiled.status!==0||compiled.error)throw Error(`compile failed: ${file}`);
  await writeFile(join(dir,'bytecode.luauc'),compiled.stdout);
  const originalRun = await runtimeFile(original,source,prelude,join(dir,'original-runtime.luau'));
  const originals=inputs.map(args=>launch(vm,[`-O${optimization}`,originalRun,'-a',...args],dir));
- for(const [style,naming] of styles){
+ for(const [style,naming] of debugLevel === 1 ? styles : [styles[0]]){
   const result=decompile(compiled.stdout,{opcodeEncoding:'official',...naming});
   const target=join(dir,style==='default'?'annony.luau':`annony-${style}.luau`);
   await writeFile(target,result.ok?result.source:'');
@@ -74,8 +84,8 @@ for(const {file,original,inputs,prelude} of fixtures)for(const optimization of [
   const targetRun = await runtimeFile(target,result.ok?result.source:'',prelude,join(dir,`runtime-${style}.luau`));
   const runs=parser?.ok?inputs.map(args=>launch(vm,[`-O${optimization}`,targetRun,'-a',...args],dir)):[];
   const comparison=classify({parser,originals,runs});
-  results.push({id:file,optimization,style,inputs,options:naming,sourceSha256:digest(source),bytecodeSha256:digest(compiled.stdout),...comparison,parser,originals,runs});
-  console.log(`${file}/O${optimization}/${style}: ${comparison.status}`);
+  results.push({id:file,optimization,debugLevel,style,inputs,options:naming,sourceSha256:digest(source),bytecodeSha256:digest(compiled.stdout),...comparison,parser,originals,runs});
+  console.log(`${file}/${profile}/${style}: ${comparison.status}`);
  }
 
 }

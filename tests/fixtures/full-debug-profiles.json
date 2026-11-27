@@ -1,0 +1,9 @@
+[
+  "rewrites/branch-selected-closure.luau",
+  "rewrites/captured-cell-argument-order.luau",
+  "rewrites/indexed-arithmetic-order.luau",
+  "rewrites/indexed-read-order.luau",
+  "rewrites/recursive-closure-snapshot.luau",
+  "rewrites/selected-handler-factory.luau",
+  "rewrites/short-circuit-selected-call.luau"
+]
