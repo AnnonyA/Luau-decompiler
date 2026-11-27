@@ -168,3 +168,76 @@ fields and an alias. Predecessor `35b8e0c` passes 2/6 official profiles and the
 repair passes 6/6. Preserved failures and reports are in
 `benchmarks/results/rosetta-empty-key-2026-11-27`. Rosetta's seed1142 also passes
 all six normal profiles with the integrated fixes.
+
+### Computed loop updates through temporaries
+
+A complex accumulator update can read the old value several instructions before
+its final store. The final ADD reads temporary registers, so checking only that
+instruction's direct register reads missed the relationship. Debug names then
+created an inner local, while the loop continued reading its outer phi binding.
+
+The loop-owner check now also follows SSA value dependencies through moves,
+arithmetic, unary operations, concatenation and phis. It requires both the
+existing non-alias owner and a path back to that loop's phi. A reused physical
+slot alone does not qualify. Tovek's pinned SSA destructor self-update checks and
+the official pinned compiler's `compileExprBinary`/`compileExprAndOr` lowering
+were inspected; no reference code was copied.
+
+`computed-loop-update` reverses several bit patterns with an update split across
+temporary values. Predecessor `2b4d692` passes g1 but fails every g2 profile; the
+repair passes 6/6. Preserved failures and both reports are in
+`benchmarks/results/rosetta-computed-loop-2026-11-27`. Libdeflate
+now reaches its chat encoding tests in all six profiles, with that remaining
+loop reconstruction failure reported separately.
+
+## Nested constructors in selected-value guard preludes
+
+Reference revisions remain Tovek `ce2ea3325547fa3896f274b68013386338039040`
+and official Luau `c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f` (0.747).
+Tovek's `luau-lifter/src/lifter.rs` SETLIST lowering retains every operand
+register as an explicit read. Its `ast/src/inline_temps.rs` also treats those
+operands as constructor consumers. Official `compileExprTable` batches array
+operands before emitting SETLIST, and the VM copies their current values into
+the destination table.
+
+The ordinary reconstruction path already materialized pending child tables
+before reading those operands. The speculative selected-value guard path did
+not: it could preserve the child allocation as a separate local while storing
+the previous scalar value from the child's physical register in its parent.
+The independent repair applies the same operand materialization to retained
+guard preludes, excluding the destination constructor itself. No reference
+implementation was copied.
+
+The authored `guard-constructor-operands` fixture exercises two nested tables,
+subsequent mutation, fixed and open call returns, and a following conditional
+value. Its first independent result was 2/6; after the repair all six official
+optimization/debug profiles pass. Rosetta seed 1945 also passes all six, giving
+12/12 directed round trips in the preserved candidate report. Baseline, first
+failure and candidate evidence are in
+`benchmarks/results/rosetta-guard-constructors-2026-11-27`. This is a development
+regression result, not a new blind benchmark total.
+
+## Shared early returns are not loop continuations
+
+The same pinned Tovek `restructure/src/region.rs` computes common
+post-dominators while retaining all exit paths; `cfg/src/ssa/structuring.rs`
+preserves the values and arity of short-circuit return edges. Official Luau
+0.747's `compileConditionValue` branches each failed `and` operand to the
+early-return block, while a successful final operand reaches the remaining
+loop body.
+
+Our loop-local join fallback previously mistook that shared early-return block
+for a continuation simply because both alternatives could reach it. The
+successful path also had a backedge, so the return did not post-dominate the
+branch. The independently implemented repair limits this reachability fallback
+to joins inside the current loop. True post-dominator joins retain their
+existing handling; early terminal regions remain in their guarded alternatives.
+
+The authored `compound-guard-return` fixture tests two valid iterations, each
+of four failed operands, an empty loop, and both return values. It improves
+from 0/6 to 6/6 across the official optimization/debug profiles. Libdeflate's
+unmodified specification now passes all six profiles as well, including every
+encoding/decoding assertion after the former DecodeForPrint failure. The
+12/12 directed result and first independent fixture failures are preserved in
+`benchmarks/results/rosetta-compound-returns-2026-11-27`. These are development
+regressions; aggregate suite results are recorded separately.

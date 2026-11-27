@@ -44,9 +44,32 @@ export function layoutControlFlow(proto: Prototype): Prototype {
   const reachable = new Set<number>(), pending = [0];
   while (pending.length) { const id = pending.pop()!; if (reachable.has(id)) continue; reachable.add(id); pending.push(...blocks[id]!.successors); }
   for (const block of blocks) block.unreachable = !reachable.has(block.id);
-  // Dead numeric iteration markers carry structural metadata for a live
-  // FORNPREP. Leave their lexical placement intact until it can be paired.
-  if (blocks.some(block => block.unreachable && block.instructions.some(insn => insn.opcode === Opcode.FORNLOOP))) return proto;
+  const resolvePureJump = (id: number): number => {
+    const seen = new Set<number>();
+    while (!seen.has(id)) {
+      seen.add(id);
+      const block = blocks[id]!;
+      if (block.successors.length !== 1 || !block.instructions.every(insn =>
+        insn.opcode === Opcode.NOP || insn.opcode === Opcode.JUMP || insn.opcode === Opcode.JUMPX)) break;
+      id = block.successors[0]!;
+    }
+    return id;
+  };
+  // A dead iteration marker still records an always-terminal numeric body's
+  // register protocol. Pair by its actual body/exit edges before changing the
+  // layout, rather than relying on its physical position in the bytecode.
+  const deadMarkers = blocks.filter(block => block.unreachable && block.instructions.at(-1)?.opcode === Opcode.FORNLOOP);
+  const markerFor = new Map<number, BasicBlock>(), usedMarkers = new Set<number>();
+  for (const block of blocks) {
+    const prep = block.instructions.at(-1)!;
+    if (block.unreachable || prep.opcode !== Opcode.FORNPREP || block.fallthrough === undefined || block.branch === undefined) continue;
+    const candidates = deadMarkers.filter(marker => !usedMarkers.has(marker.id) && marker.instructions.at(-1)!.a === prep.a &&
+      marker.branch !== undefined && marker.fallthrough !== undefined &&
+      resolvePureJump(marker.branch) === resolvePureJump(block.fallthrough!) &&
+      resolvePureJump(marker.fallthrough) === resolvePureJump(block.branch!));
+    if (candidates.length === 1) { markerFor.set(block.id, candidates[0]!); usedMarkers.add(candidates[0]!.id); }
+  }
+  if (deadMarkers.some(marker => !usedMarkers.has(marker.id))) return proto;
   const cfg: ControlFlowGraph = { prototype: proto, blocks, entry: 0,
     exits: blocks.filter(block => block.successors.length === 0).map(block => block.id), blockOfPc };
   const dom = computeDominators(cfg);
@@ -63,6 +86,13 @@ export function layoutControlFlow(proto: Prototype): Prototype {
     seen.add(task.id); order.push(task.id);
     if (task.append) continue;
     const last = block.instructions.at(-1)!;
+    const marker = markerFor.get(block.id);
+    if (marker && block.fallthrough !== undefined && block.branch !== undefined) {
+      const stops = new Set([...task.stops, marker.id, block.branch]);
+      work.push({ id: block.branch, stops: task.stops }, { id: marker.id, stops: task.stops, append: true },
+        { id: block.fallthrough, stops });
+      continue;
+    }
     if (genericPrep(last.opcode) && block.branch !== undefined) {
       const latch = blocks[block.branch]!;
       if (latch.instructions.at(-1)?.opcode === Opcode.FORGLOOP && latch.branch !== undefined &&

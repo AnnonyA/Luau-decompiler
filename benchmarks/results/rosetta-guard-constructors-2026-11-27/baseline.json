@@ -1,0 +1,70 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "candidate": {
+      "pass": 2,
+      "mismatch": 4
+    }
+  },
+  "by_profile": {
+    "candidate": {
+      "O0g1": 1,
+      "O0g2": 1,
+      "O1g1": 1,
+      "O1g2": 1
+    }
+  },
+  "failures": {
+    "candidate": [
+      {
+        "case": "nested-list-snapshots",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `table\ttable\t-3\t17\tmarker\t3\t3` got `number\tnumber\t-3\t17\tmarker\t3\t3`"
+      },
+      {
+        "case": "nested-list-snapshots",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `table\ttable\t-3\t17\tmarker\t3\t3` got `number\tnumber\t-3\t17\tmarker\t3\t3`"
+      },
+      {
+        "case": "nested-list-snapshots",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 2: want `table\ttable\t-3\t17\tmarker\t3\t3` got `number\tnumber\t-3\t17\tmarker\t3\t3`"
+      },
+      {
+        "case": "nested-list-snapshots",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 2: want `table\ttable\t-3\t17\tmarker\t3\t3` got `number\tnumber\t-3\t17\tmarker\t3\t3`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 2,
+    "by_decompiler": {
+      "candidate": {
+        "round_trips": 2,
+        "similarity": 64.65927362442017,
+        "size": 0.7486187845303868,
+        "locals": 1.0666666666666667,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 7.142857142857142,
+        "cpu_ms_median": 178.47,
+        "cpu_ms_total": 344.131
+      }
+    }
+  }
+}

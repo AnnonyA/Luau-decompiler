@@ -125,7 +125,7 @@ function followPureJumps(cfg: ControlFlowGraph, start: number): number {
     seen.add(current);
     const block = cfg.blocks[current];
     if (!block || block.successors.length !== 1 || !block.instructions.every(insn =>
-      insn.opcode === Opcode.NOP || insn.opcode === Opcode.JUMP)) return current;
+      insn.opcode === Opcode.NOP || insn.opcode === Opcode.JUMP || insn.opcode === Opcode.JUMPX)) return current;
     current = block.successors[0]!;
   }
   return current;

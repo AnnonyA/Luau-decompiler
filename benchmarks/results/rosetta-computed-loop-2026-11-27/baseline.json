@@ -1,0 +1,62 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 3,
+      "mismatch": 3
+    }
+  },
+  "by_profile": {
+    "baseline": {
+      "O0g2": 1,
+      "O1g2": 1,
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "baseline": [
+      {
+        "case": "computed-loop-update",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 3"
+      },
+      {
+        "case": "computed-loop-update",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 3"
+      },
+      {
+        "case": "computed-loop-update",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 3"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 3,
+    "by_decompiler": {
+      "baseline": {
+        "round_trips": 3,
+        "similarity": 76.99814240137735,
+        "size": 1.3624656197434935,
+        "locals": 1.5,
+        "nesting": 0.0,
+        "endless": 0,
+        "cpu_ms_median": 122.628,
+        "cpu_ms_total": 369.101
+      }
+    }
+  }
+}

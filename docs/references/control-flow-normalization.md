@@ -31,7 +31,8 @@ CAPTURE modes, CLOSEUPVALS boundaries and register-pack arity are preserved.
 A separate layout pass schedules basic-block regions only when backward acyclic
 edges demonstrate a shuffled physical order and local debug ranges are absent.
 Each moved edge remains explicit, and short LOADB/FASTCALL bundles stay together.
-It leaves numeric-loop metadata with no execution path in its existing placement.
+It pairs numeric-loop metadata with no execution path by its preparation's
+body/exit edges; an ambiguous pair retains the existing function layout.
 This is not arbitrary irreducible-CFG recovery or a proof that all reconstruction
 passes are independent of physical register numbering.
 
@@ -84,3 +85,61 @@ an unordered NaN comparison; it now passes. Together with the project-authored
 `boolean-skip-observations.luau`, ordinary O0/O1/O2 and all six Hard profiles pass
 18 runtime comparisons. The CFG regression directly checks that the skipped
 block is not a successor.
+
+## Terminal numeric bodies in shuffled code
+
+An unreachable FORNLOOP can still describe a live preparation whose body always
+breaks or returns. Keeping only that instruction is insufficient when its exit
+runs through an unreachable jump stub. Compaction now retains that pure exit
+chain, and layout pairs the marker with its preparation only when both body and
+exit destinations match through NOP/JUMP/JUMPX chains. CLOSEUPVALS and other
+effects are never threaded as control-only instructions. The marker is placed
+after its body with every actual execution edge preserved.
+
+Locally constant guards can appear even on those unreachable marker paths.
+Constant propagation analyzes numeric iteration markers as additional entries
+with no facts, allowing their local primitive guards to be proved. These extra
+entries can only remove otherwise known facts; executable reachability and
+instruction retention still start from the real function entry. Source loop
+break/continue recognition also treats JUMPX like the equivalent JUMP encoding.
+The implementation is independent and follows the official numeric loop
+protocol and Tovek iteration provenance cited above.
+
+The new project-authored `shuffled-terminal-loops.luau` passed five of nine
+profiles before this fix and all nine afterward. The two committed bytecode
+regressions use official Luau 0.747 through Rosetta `80f3c13ce48dc3318d5d49f54958f580937ca8aa`,
+with O0g2+x2 and O2g1+x3. Together with `contextual_keywords`, all eighteen
+ordinary/Hard runtime round trips pass. Four direct original-bytecode versus
+normalized-bytecode comparisons also exit successfully with identical output;
+they cover both committed fixtures and contextual keywords at O1g1+x2 and
+O1g2+x3.
+
+## Tracking the producer of an open result tail
+
+Liveness now distinguishes an open pack from prior scalar contents in higher
+frame slots. A bounded forward analysis records the producer PC and base of an
+open CALL or GETVARARGS. A join retains that information only when every incoming
+path agrees. The proof survives control-only transfers and a small set of
+top-preserving loads/copies below the tail; a write into the tail, fixed call or
+unrecognized operation discards it. An identified consumer reads its fixed prefix
+and the producer's tail, while an unknown consumer conservatively reads the
+whole possible register window. This does not change the scalar definition kills
+described above: a later scalar use still keeps its old definition live.
+
+Besides the pinned CALL and vararg VM implementations, this change inspected
+`VM/src/lvmutils.cpp` `callTMres` and `VM/src/lvmload.cpp` `luaV_getimport` at the
+same official revision. Those fallback global/import loads restore the current
+top, including when a metamethod runs. Writes to REF-captured registers remain
+excluded from dead-result elimination. Tovek's explicit fixed arguments followed
+by an open tail (`luau-lifter/src/lifter.rs`, same pinned revision) informed the
+representation; the analysis is independently implemented.
+
+This removes an otherwise unused boolean between a numeric preparation and its
+loop header in `loop_closures` O2g1+x3, which previously hid the remaining source
+after that loop. That case and three existing project-authored fixtures pass
+36 ordinary/Hard runtime checks. The additional `open-tail-loop-capture.luau`
+fixture passes nine profiles both before and after the change. Six independent
+raw-bytecode comparisons exercise zero and three returned values, a scalar read
+after the call, and a scalar written into an existing tail; all exit successfully
+with identical output. Unit cases also cover an incoming path without a producer
+and a fixed call that resets the frame top.

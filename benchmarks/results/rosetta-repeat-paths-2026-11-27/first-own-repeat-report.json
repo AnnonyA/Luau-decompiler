@@ -1,0 +1,56 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "ann": {
+      "pass": 4,
+      "mismatch": 2
+    }
+  },
+  "by_profile": {
+    "ann": {
+      "O0g1": 1,
+      "O0g2": 1
+    }
+  },
+  "failures": {
+    "ann": [
+      {
+        "case": "repeat-short-circuit-latch",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `3\t11,12,21,22,31,32` got `1\t11,12`"
+      },
+      {
+        "case": "repeat-short-circuit-latch",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `3\t11,12,21,22,31,32` got `1\t11,12`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 4,
+    "by_decompiler": {
+      "ann": {
+        "round_trips": 4,
+        "similarity": 72.86790311336517,
+        "size": 1.0651074037450894,
+        "locals": 0.9128709291752769,
+        "nesting": -0.5,
+        "endless": 2,
+        "names": 40.0,
+        "cpu_ms_median": 136.947,
+        "cpu_ms_total": 545.261
+      }
+    }
+  }
+}

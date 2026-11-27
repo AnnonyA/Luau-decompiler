@@ -1,0 +1,95 @@
+{
+  "generator": "typed-v2",
+  "cases": 28,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "candidate": {
+      "pass": 160,
+      "mismatch": 8
+    }
+  },
+  "by_profile": {
+    "candidate": {
+      "O0g1": 3,
+      "O0g2": 2,
+      "O1g1": 1,
+      "O1g2": 1,
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "candidate": [
+      {
+        "case": "seed1042",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "printed 18 lines, want 19"
+      },
+      {
+        "case": "seed1042",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "printed 18 lines, want 19"
+      },
+      {
+        "case": "seed1086",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 17: want `L10\t4\t1 nan true 0` got `L11\t1\t1`"
+      },
+      {
+        "case": "seed1086",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 17: want `L10\t4\t1 nan true 0` got `L11\t1\t1`"
+      },
+      {
+        "case": "seed1178",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "printed 19 lines, want 24"
+      },
+      {
+        "case": "seed1338",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 3 lines, want 26"
+      },
+      {
+        "case": "seed1945",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `L1\t8\t{1=3,2=123456789.125,3=1} {1=123456789.125,2=1,3=2} {\"\"=\"��\",1=-1,2={1=0,2=\"😀\"},3=4,4=1} {1=inf,2=4,3={1=-1,2=\"\\\n\"},4=1} 120 0 8 9` got `L1\t8\t{1=3,2=123456789.125,3=1} {1=123456789.125,2=1,3=2} {\"\"=\"��\",1=-1,2=-1,3=4,4=1} {1=inf,2=4,3=123456789.125,4=1} 120 0 8 9`"
+      },
+      {
+        "case": "seed1945",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `L1\t8\t{1=3,2=123456789.125,3=1} {1=123456789.125,2=1,3=2} {\"\"=\"��\",1=-1,2={1=0,2=\"😀\"},3=4,4=1} {1=inf,2=4,3={1=-1,2=\"\\\n\"},4=1} 120 0 8 9` got `L1\t8\t{1=3,2=123456789.125,3=1} {1=123456789.125,2=1,3=2} {\"\"=\"��\",1=-1,2=-1,3=4,4=1} {1=inf,2=4,3=123456789.125,4=1} 120 0 8 9`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 160,
+    "by_decompiler": {
+      "candidate": {
+        "round_trips": 160,
+        "similarity": 63.280079793184996,
+        "size": 0.7867969022789458,
+        "locals": 0.9396304938966776,
+        "nesting": -0.3,
+        "endless": 56,
+        "names": 51.76255548785795,
+        "cpu_ms_median": 398.084,
+        "cpu_ms_total": 67791.57800000001
+      }
+    }
+  }
+}

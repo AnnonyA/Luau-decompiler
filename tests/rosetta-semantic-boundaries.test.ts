@@ -9,6 +9,7 @@ const names = [
   'method-result-call', 'materialized-list-writes', 'constructor-before-return',
   'contextual-continue', 'conditional-method-calls', 'comparison-selected-values',
   'sequential-phi-ranges', 'captured-table-reset', 'shared-nested-phis', 'empty-constructor-key',
+  'computed-loop-update', 'guard-constructor-operands', 'compound-guard-return',
 ];
 const fixture = (name: string, profile: string) => readFileSync(new URL(
   `fixtures/rosetta-semantics/${name}-${profile}.luauc`, import.meta.url));
@@ -135,5 +136,40 @@ describe('call, constructor and contextual identifier boundaries', () => {
     if (!result.ok) throw new Error(result.error);
     const fields = nodes(result.ast, 'table').flatMap(table => table.fields);
     expect(fields.filter(field => field.key?.kind === 'literal' && field.key.value === '')).toHaveLength(1);
+  });
+
+  it.each(profiles)('keeps an accumulator update that reads its old value through SSA temporaries at %s', profile => {
+    const result = decompile(fixture('computed-loop-update', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    expect([...analyzeBindings(result.ast.body).globals].sort()).toEqual(['print']);
+  });
+
+  it.each(profiles)('keeps child constructors in a selected-value guard prelude at %s', profile => {
+    const result = decompile(fixture('guard-constructor-operands', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const tables = nodes(result.ast, 'table');
+    const first = tables.find(table => table.fields.some((field: any) =>
+      field.key?.kind === 'literal' && field.key.value === '' && field.value.value === 'marker'));
+    expect(first).toBeDefined();
+    const locals = new Map(nodes(result.ast, 'local').flatMap(local =>
+      local.names.map((name: string, index: number) => [name, local.values[index]])));
+    const operand = first.fields[1].value;
+    const child = operand.kind === 'identifier' ? locals.get(operand.name) : operand;
+    expect(child?.kind).toBe('table');
+    expect(child.fields.map((field: any) => field.value)).toEqual([
+      {kind: 'literal', value: 4}, {kind: 'literal', value: 'child'},
+    ]);
+  });
+
+  it.each(profiles)('keeps a shared early return conditional inside its loop at %s', profile => {
+    const result = decompile(fixture('compound-guard-return', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const loops = nodes(result.ast, 'while');
+    expect(loops).toHaveLength(1);
+    expect(loops[0].body.statements.some((statement: any) => statement.kind === 'return')).toBe(false);
+    expect(nodes(loops[0], 'return').length).toBeGreaterThan(0);
   });
 });

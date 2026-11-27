@@ -1,0 +1,34 @@
+[
+  {
+    "case": "shuffled-terminal-loops-O0g2-x2",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "shuffled-terminal-loops-O2g1-x3",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "contextual-hard",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "contextual-hard-g2",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ]
+  }
+]

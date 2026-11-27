@@ -7,7 +7,8 @@ import {Opcode} from '../src/decode/Opcode.ts';
 
 const profiles = [0, 1, 2].flatMap(opt => [1, 2].map(debug => `O${opt}g${debug}`));
 const names = ['conditional-binding-loop', 'shared-iteration-tail', 'iterator-state',
-  'repeat-condition-setup', 'loop-accumulator', 'terminal-numeric-for', 'predicate-loop-result'];
+  'repeat-condition-setup', 'loop-accumulator', 'terminal-numeric-for', 'predicate-loop-result',
+  'nullable-selection', 'guarded-reservation-loop'];
 const fixture = (name: string, profile: string) => readFileSync(new URL(
   `fixtures/rosetta-control/${name}-${profile}.luauc`, import.meta.url));
 function nodes(value: unknown, kind: string): Record<string, any>[] {
@@ -88,5 +89,21 @@ describe('loop state and nested region boundaries', () => {
       expect(follow).not.toBe(ir.cfg.blocks[loop.latch]!.fallthrough);
       expect(ir.ssa.phis.get(follow)?.length).toBeGreaterThan(0);
     }
+  });
+
+  it.each(profiles)('keeps an early return inside a compound while at %s', profile => {
+    const result = decompile(fixture('guarded-reservation-loop', profile));
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    const analyses = result.module.prototypes.map(analyzePrototype);
+    const owner = analyses.find(ir => ir.loops.some(loop => loop.kind === 'infinite'))!;
+    expect(owner).toBeDefined();
+    const loop = owner.loops.find(loop => loop.kind === 'infinite')!;
+    const follow = owner.structure.loopFollowByLoop.get(loop)!;
+    expect(follow).toBeDefined();
+    expect(owner.cfg.blocks[follow]!.instructions.at(-1)?.opcode).not.toBe(Opcode.RETURN);
+    const exits = loop.blocks.flatMap(id => owner.cfg.blocks[id]!.successors)
+      .filter(id => !loop.blocks.includes(id));
+    expect(exits.some(id => owner.cfg.blocks[id]!.instructions.at(-1)?.opcode === Opcode.RETURN)).toBe(true);
   });
 });

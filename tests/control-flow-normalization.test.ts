@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import { normalizeControlFlow } from "../src/decode/NormalizeControlFlow.ts";
 import { buildControlFlowGraph } from "../src/cfg/ControlFlowGraph.ts";
+import { decompile } from "../src/decompile.ts";
+import type { NumericForStatement } from "../src/ast/Ast.ts";
 import { abc, ad, CaptureType, decode, Opcode, proto, sourceOf } from "./helpers.ts";
 
 const normalize = (instructions: number[], options: Parameters<typeof proto>[0] extends infer T ? Partial<T> : never = {}) => {
@@ -66,6 +69,20 @@ describe("reconstruction control-flow normalization", () => {
     expect(normalized.prototypes[0]!.instructions.some(insn => insn.opcode === Opcode.FORNLOOP)).toBe(true);
   });
 
+  it.each(["O0g2-x2", "O2g1-x3"])("keeps the terminal numeric-loop break after shuffled %s layout", profile => {
+    const result = decompile(readFileSync(new URL(`./fixtures/control-flow-normalization/shuffled-terminal-loops-${profile}.luauc`, import.meta.url)));
+    if (!result.ok) throw new Error(result.error);
+    const loops: NumericForStatement[] = [];
+    const visit = (node: unknown): void => {
+      if (Array.isArray(node)) { node.forEach(visit); return; }
+      if (!node || typeof node !== "object") return;
+      if ((node as {kind?: string}).kind === "numeric-for") loops.push(node as NumericForStatement);
+      Object.values(node).forEach(visit);
+    };
+    visit(result.ast);
+    expect(loops.some(loop => loop.body.statements.at(-1)?.kind === "break")).toBe(true);
+  });
+
   it("preserves CLOSEUPVALS boundaries and scalar return arity across removed no-ops", () => {
     const { original, normalized } = normalize([ad(Opcode.LOADN, 0, 7), abc(Opcode.NOP, 0, 0, 0),
       abc(Opcode.CLOSEUPVALS, 2, 0, 0), ad(Opcode.JUMP, 0, 0), abc(Opcode.RETURN, 0, 2, 0)]);
@@ -109,6 +126,35 @@ describe("reconstruction control-flow normalization", () => {
   it("does not treat a potentially empty vararg pack as a definite scalar write", () => {
     const { normalized } = normalize([abc(Opcode.PREPVARARGS, 0, 0, 0), ad(Opcode.LOADN, 0, 37),
       abc(Opcode.GETVARARGS, 0, 0, 0), abc(Opcode.RETURN, 0, 2, 0)], { isVararg: true });
+    expect(normalized.prototypes[0]!.instructions.find(i => i.opcode === Opcode.LOADN)?.d).toBe(37);
+  });
+
+  it("does not make old high scalars live merely because a later producer has an open tail", () => {
+    const { normalized } = normalize([abc(Opcode.PREPVARARGS, 1, 0, 0), ad(Opcode.LOADN, 5, 37), ad(Opcode.LOADN, 1, 7),
+      abc(Opcode.GETVARARGS, 2, 0, 0), abc(Opcode.NOP, 0, 0, 0), ad(Opcode.JUMP, 0, 0),
+      abc(Opcode.CALL, 0, 0, 1), abc(Opcode.RETURN, 0, 1, 0)], { numParams: 1, isVararg: true });
+    const instructions = normalized.prototypes[0]!.instructions;
+    expect(instructions.some(i => i.opcode === Opcode.LOADN && i.a === 5)).toBe(false);
+    expect(instructions.find(i => i.opcode === Opcode.LOADN && i.a === 1)?.d).toBe(7);
+  });
+
+  it("keeps a scalar written into an existing dynamic result tail", () => {
+    const { normalized } = normalize([abc(Opcode.PREPVARARGS, 0, 0, 0), abc(Opcode.GETVARARGS, 2, 0, 0),
+      ad(Opcode.LOADN, 5, 37), abc(Opcode.RETURN, 2, 0, 0)], { isVararg: true });
+    expect(normalized.prototypes[0]!.instructions.find(i => i.opcode === Opcode.LOADN)?.d).toBe(37);
+  });
+
+  it("forgets an open tail when a fixed call resets the frame top", () => {
+    const { normalized } = normalize([abc(Opcode.PREPVARARGS, 1, 0, 0), ad(Opcode.LOADN, 5, 37),
+      abc(Opcode.GETVARARGS, 2, 0, 0), abc(Opcode.CALL, 0, 1, 1), abc(Opcode.RETURN, 2, 0, 0)],
+      { numParams: 1, isVararg: true });
+    expect(normalized.prototypes[0]!.instructions.find(i => i.opcode === Opcode.LOADN)?.d).toBe(37);
+  });
+
+  it("declines a bounded tail when one incoming path has no open producer", () => {
+    const { normalized } = normalize([abc(Opcode.PREPVARARGS, 2, 0, 0), ad(Opcode.LOADN, 5, 37),
+      ad(Opcode.JUMPIF, 1, 1), abc(Opcode.GETVARARGS, 2, 0, 0), abc(Opcode.CALL, 0, 0, 1), abc(Opcode.RETURN, 0, 1, 0)],
+      { numParams: 2, isVararg: true });
     expect(normalized.prototypes[0]!.instructions.find(i => i.opcode === Opcode.LOADN)?.d).toBe(37);
   });
 });

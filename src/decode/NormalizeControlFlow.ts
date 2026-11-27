@@ -129,9 +129,14 @@ function successors(insn: DecodedInstruction, next: number | undefined, decision
 // additional predecessors become executable; unknown branches retain both arms.
 function constantsAt(proto: Prototype): Map<number, Facts> {
   const insns = proto.instructions, byPc = new Map(insns.map((insn, index) => [insn.pc, index]));
-  const incoming = new Map<number, Facts>([[insns[0]!.pc, new Map()]]);
+  // An unreachable numeric step can still carry a preparation's structural
+  // exit through a locally constant guard. Analyze those marker paths with
+  // no incoming facts as well. Extra unknown entries can only lose proofs;
+  // actual reachability is still computed from the real function entry.
+  const entries = [...new Set([insns[0]!.pc, ...insns.filter(insn => insn.opcode === Opcode.FORNLOOP).map(insn => insn.pc)])];
+  const incoming = new Map<number, Facts>(entries.map(pc => [pc, new Map()]));
   const captured = new Set(insns.filter(insn => insn.capture?.type === CaptureType.REF).map(insn => insn.capture!.source));
-  const work = [insns[0]!.pc], queued = new Set(work);
+  const work = [...entries], queued = new Set(work);
   let cursor = 0;
   // A bounded optimization may decline without changing reconstruction.
   let budget = Math.max(10000, insns.length * 256);
@@ -155,11 +160,45 @@ function constantsAt(proto: Prototype): Map<number, Facts> {
   return budget < 0 ? new Map() : incoming;
 }
 
+/** A top-bounded result tail depends on its producer, not on older scalars in
+ * every higher frame slot. Retain that distinction only across a proved
+ * transparent window; any write into the tail or ambiguous join declines. */
+function openTailsAt(insns: DecodedInstruction[]): Map<number, number> {
+  type Tail = { base: number; producer: number };
+  const byPc = new Map(insns.map((insn, index) => [insn.pc, index]));
+  const incoming = new Map<number, Tail | undefined>([[insns[0]!.pc, undefined]]);
+  const transparent = new Set([Opcode.NOP, Opcode.COVERAGE, Opcode.MOVE, Opcode.LOADNIL, Opcode.LOADB,
+    Opcode.LOADN, Opcode.LOADK, Opcode.LOADKX, Opcode.GETUPVAL, Opcode.GETIMPORT, Opcode.GETGLOBAL,
+    Opcode.JUMP, Opcode.JUMPX, Opcode.JUMPIF, Opcode.JUMPIFNOT]);
+  const work = [insns[0]!.pc], queued = new Set(work);
+  let cursor = 0, budget = Math.max(10000, insns.length * 256);
+  while (cursor < work.length && --budget >= 0) {
+    const pc = work[cursor++]!; queued.delete(pc);
+    const index = byPc.get(pc)!, insn = insns[index]!;
+    let tail = incoming.get(pc);
+    if (insn.call?.resultCount === "multret" || (insn.opcode === Opcode.GETVARARGS && insn.b === 0)) {
+      tail = { base: insn.a, producer: pc };
+    } else if (!tail || (!transparent.has(insn.opcode) && !isFastCall(insn.opcode)) ||
+        insn.defs.some(register => register >= tail!.base)) tail = undefined;
+    for (const target of successors(insn, insns[index + 1]?.pc)) {
+      if (!byPc.has(target)) continue;
+      const known = incoming.has(target), previous = incoming.get(target);
+      const merged = !known ? tail : previous && tail && previous.base === tail.base && previous.producer === tail.producer ? previous : undefined;
+      if (!known || merged !== previous) {
+        incoming.set(target, merged);
+        if (!queued.has(target)) { work.push(target); queued.add(target); }
+      }
+    }
+  }
+  return budget < 0 ? new Map() : new Map([...incoming].flatMap(([pc, tail]) => tail ? [[pc, tail.base]] : []));
+}
+
 /** Remove only dead register computations proved free of heap/frame effects.
  * Open argument/result windows participate in liveness, as do REF captures.
  */
 function deadResults(proto: Prototype, insns: DecodedInstruction[], facts: Map<number, Facts>): Set<number> {
   const byPc = new Map(insns.map((insn, index) => [insn.pc, index]));
+  const openTails = openTailsAt(insns);
   const captured = new Set(insns.filter(insn => insn.capture?.type === CaptureType.REF).map(insn => insn.capture!.source));
   const pure = insns.map(insn => insn.defs.length === 1 && !captured.has(insn.a) && insn.jumpTarget === undefined &&
     (resultOf(insn, facts.get(insn.pc) ?? new Map(), proto) !== unknown ||
@@ -187,7 +226,11 @@ function deadResults(proto: Prototype, insns: DecodedInstruction[], facts: Map<n
       const start = insn.call?.argumentCount === "multret" ? insn.a :
         insn.opcode === Opcode.RETURN && insn.b === 0 ? insn.a :
         insn.opcode === Opcode.SETLIST && insn.c === 0 ? insn.b : undefined;
-      if (start !== undefined) for (let register = start; register < proto.maxStackSize; register++) out.add(register);
+      if (start !== undefined) {
+        const tail = openTails.get(insn.pc);
+        const end = tail !== undefined && tail >= start ? tail + 1 : proto.maxStackSize;
+        for (let register = start; register < end; register++) out.add(register);
+      }
     }
     if (out.size !== live[id]!.size || [...out].some(register => !live[id]!.has(register))) {
       live[id] = out;
@@ -257,7 +300,22 @@ function normalizePrototype(proto: Prototype): Prototype {
   // A body that always breaks can make FORNLOOP unreachable. Its register
   // protocol still describes the reachable FORNPREP; retain that metadata.
   const loopMarkers = new Set(rewritten.filter(insn => insn.opcode === Opcode.FORNLOOP && prepared.has(insn.a)).map(insn => insn.pc));
-  const live = rewritten.filter(insn => (reachable.has(insn.pc) || loopMarkers.has(insn.pc)) &&
+  const metadata = new Set(loopMarkers);
+  for (const pc of loopMarkers) {
+    // A shuffled dead step can fall through a dead jump stub to its exit.
+    // Retaining the step alone would give it an unrelated physical successor
+    // and erase the prep/step protocol needed by source reconstruction.
+    let next = original[indexOf.get(pc)! + 1]?.pc;
+    const seen = new Set<number>();
+    while (next !== undefined && !reachable.has(next) && !seen.has(next)) {
+      seen.add(next);
+      const index = indexOf.get(next), insn = index === undefined ? undefined : rewritten[index];
+      if (!insn || (insn.opcode !== Opcode.NOP && insn.opcode !== Opcode.JUMP && insn.opcode !== Opcode.JUMPX)) break;
+      metadata.add(next);
+      next = insn.opcode === Opcode.NOP ? original[index! + 1]?.pc : insn.jumpTarget;
+    }
+  }
+  const live = rewritten.filter(insn => (reachable.has(insn.pc) || metadata.has(insn.pc)) &&
     (insn.opcode !== Opcode.NOP || pinned.has(insn.pc)));
   const kept = live.filter((insn, index) =>
     !(!pinned.has(insn.pc) && (insn.opcode === Opcode.JUMP || insn.opcode === Opcode.JUMPX) && insn.jumpTarget === live[index + 1]?.pc));

@@ -507,7 +507,11 @@ function coalesceInStatements(statements: Statement[]): Statement[] {
       continue;
     }
     const owner = bindingOf(acc)!;
-    if ((owner.scope !== root && owner.scope !== binding.scope) ||
+    // A loop body starts a fresh lexical lifetime on each iteration. Its
+    // final temporary cannot overwrite a counter still read by the next
+    // header (or by repeat's until), even if it follows the last textual use.
+    // Keep storage sharing inside one declaration scope.
+    if (owner.scope !== binding.scope ||
         members.some(member => nameReadAfterDecl(statements, member, name))) {
       acc = name;
       members = [name];

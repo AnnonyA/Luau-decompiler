@@ -211,6 +211,66 @@
       "source": "predicate-loop-result.luau",
       "profile": "O2g2",
       "sha256": "004596122b1b9619e1fa23f1020028cf609179901d78d486872fcd4f0413b751"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O0g1",
+      "sha256": "3a88ffeae9723c35e6235634c39a44c10e6d3ad40d372ee743011b21a7797054"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O0g2",
+      "sha256": "48004e7af2720b6c88017b0fb21fa22c3e475db58d155e1a846358176c78b913"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O1g1",
+      "sha256": "3db38109a1ff72b5a90f3d54f0dbcd736cd6927bd79bc9ea7ec15e33d0b8342b"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O1g2",
+      "sha256": "042aa82279b70134619255d0f69a0dc3dd767044fd8d5be922ee20067ef3138d"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O2g1",
+      "sha256": "24ae290904c913cf3752b29eee40713d740577ab204ff3c03dde8de58eee07ab"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O2g2",
+      "sha256": "dd194bace7a87c418e7c53d2268958eda73bc385240c8b6bb0264a784bbacee3"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O0g1",
+      "sha256": "70319b7c8944376349cf5fcb691a86f71553ae7ca6d7e2aeb8e68514b3d0e166"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O0g2",
+      "sha256": "e5250c2d7716d9cfbc8904bf32704324cd4bdaff98c5a5f187f24e41d445b6f5"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O1g1",
+      "sha256": "26f15e5646cf8ae99f015a3e0376490888b4b2ac83e2c972f78182169f25c905"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O1g2",
+      "sha256": "5885184707686a5296a0f3373a652e724cadb2639d8a02abd29f8db29bc1b46e"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O2g1",
+      "sha256": "26f15e5646cf8ae99f015a3e0376490888b4b2ac83e2c972f78182169f25c905"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O2g2",
+      "sha256": "5885184707686a5296a0f3373a652e724cadb2639d8a02abd29f8db29bc1b46e"
     }
   ]
 }

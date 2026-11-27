@@ -42,6 +42,17 @@ to this project's existing CFG, SSA definitions and lexical binding ownership.
    jumping past the fallback, so their definitions must meet at that continuation.
    This additionally consults Tovek's `loop_continuation` and transfer-arm ownership
    and Luau's inline frame result targets and `compileInlineReturn`.
+8. A single-block value dry run needs a direct edge to its claimed join. Mere
+   reachability is insufficient: an intermediate test can replace a nil result
+   with an `or` fallback. Unsupported multi-block value paths retain their
+   ordinary statements and guards. This consults Tovek's shared-tail ownership
+   and official Luau's `compileExprAndOr` at the same pinned revisions.
+9. A compound while guard can have no single conditional header, and an early
+   return can remove its common post-dominator. When its exits contain exactly
+   one continuing block and direct terminal return blocks, that continuing
+   block owns the code after the loop. The return remains attached to its body
+   guard. This consults Tovek's `loop_continuation` and `is_return_block` and
+   official Luau's `compileStatWhile`, independently using this project's CFG.
 
 Five project-authored programs in `tests/fixtures/rosetta-control` are compiled
 at O0/O1/O2 and g1/g2. Their hashes are recorded in the adjacent manifest.
@@ -60,3 +71,14 @@ numeric loop bodies. The first preserved official execution comparison in
 through a generic loop. Its preserved first comparison against the integrated
 `05cb993` checkpoint passed 4/6 before and 6/6 after following the full
 post-dominator chain; see `rosetta-loop-follow-2026-11-27` in benchmark results.
+
+`nullable-selection.luau` checks a conditional nil value followed by a truthy
+fallback in a call argument. Its first comparison against `3d0dd7c` passed 2/6
+before and 6/6 after the direct-edge requirement. The preserved evidence lives
+in `rosetta-nullable-selection-2026-11-27` in benchmark results.
+
+`guarded-reservation-loop.luau` checks a compound entry guard, a returning
+exhaustion branch and an outer loop tail. The first captured comparison failed
+all six profiles before continuation selection was repaired; the later paired
+comparison preserves the baseline and repaired executions in
+`rosetta-guarded-reservation-2026-11-27`.

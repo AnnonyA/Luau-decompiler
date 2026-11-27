@@ -115,6 +115,13 @@ export function followOfLoop(
       }
     }
   }
+  // A compound entry test may have no single conditional header. When an
+  // early return prevents a common post-dominator, retain the unique
+  // nonterminal exit as the continuation; returning arms stay in the loop.
+  const continuing = [...new Set(outside)].filter(id =>
+    cfg.blocks[id]!.instructions.at(-1)?.opcode !== Opcode.RETURN);
+  if (continuing.length === 1 && outside.some(id =>
+      cfg.blocks[id]!.instructions.at(-1)?.opcode === Opcode.RETURN)) return continuing[0];
   return outside.sort((a, b) => a - b)[0];
 }
 

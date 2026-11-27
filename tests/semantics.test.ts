@@ -712,7 +712,7 @@ describe("semantic reconstruction", () => {
     expect(source).toMatch(/config47/);
   });
 
-  it("coalesces empty generated accumulators onto the first zero local", () => {
+  it("keeps an uninitialized iteration cell distinct from an outer zero local", () => {
     const ast = cleanupAst(
       chunk([
         {
@@ -748,12 +748,15 @@ describe("semantic reconstruction", () => {
       { typeAnnotations: "off", ifExpressions: false, earlyReturn: false, interpolatedStrings: false, mathConstants: false },
     );
     const source = printLuau(ast);
-    // Coalesce first, then the returned accumulator is renamed to `total`.
-    expect(source).toMatch(/local total = 0/);
+    // The iteration's nil initializer cannot borrow the outer zero. The
+    // original tree raises on its first +=; silently sharing storage would
+    // invent a numeric accumulator and change that observable behavior.
+    expect(source).toMatch(/local result5 = 0/);
+    expect(source).toMatch(/for i = 1, limit do\n\s+local total\n/);
     expect(source).toMatch(/total \+= i/);
-    expect(source).toMatch(/total \+= 1/);
-    expect(source).toMatch(/return total/);
-    expect(source).not.toMatch(/result5|result6|result8/);
+    expect(source).toMatch(/local calls\n\s+calls \+= 1/);
+    expect(source).toMatch(/return calls/);
+    expect(source).not.toMatch(/total = 0|calls = 0/);
   });
 
   it("names a += 1 returned local calls, not total", () => {

@@ -622,7 +622,7 @@ class SourceBuilder {
         const successor = block.successors[0]!;
         const loop = this.currentLoop();
         const last = block.instructions.at(-1);
-        if (loop && last?.opcode === Opcode.JUMP) {
+        if (loop && (last?.opcode === Opcode.JUMP || last?.opcode === Opcode.JUMPX)) {
           if (successor === loop.header || this.isPureLoopLatch(successor, loop)) {
             statements.push({ kind: "continue" });
             break;
@@ -637,7 +637,7 @@ class SourceBuilder {
         // `break`, even when it is not part of the natural loop (blocks that
         // never reach the latch are excluded from the loop body).
         if (
-          last?.opcode === Opcode.JUMP &&
+          (last?.opcode === Opcode.JUMP || last?.opcode === Opcode.JUMPX) &&
           successor === stop &&
           stop !== undefined &&
           loop !== undefined &&
@@ -907,6 +907,13 @@ class SourceBuilder {
     const testBlockId = loop.testBlock ?? loop.latch;
     const testBlock = this.ir.cfg.blocks[testBlockId]!;
     const last = testBlock.instructions.at(-1);
+    // A compound until can short-circuit directly to the backedge without
+    // evaluating its final test. Moving that test outside the body would
+    // evaluate it on the bypass path too. Keep each original exit/continue
+    // guard in the repeat body unless every backedge crosses the test.
+    if (testBlockId !== loop.latch && !this.ir.dominators.dominates(testBlockId, loop.latch)) {
+      return { kind: "repeat", body: block(this.emitRange(loop.header, this.loopFollow(loop), new Set(visited))), test: lit(false) };
+    }
     if (last && isCompare(last.opcode)) {
       this.consumed.add(last.pc);
     }
@@ -1406,7 +1413,11 @@ class SourceBuilder {
     }
     // Reachability alone does not establish a join: an alternative may
     // return before reaching that block. Terminal regions have no follow.
-    return loop ? this.commonJoin(basic.fallthrough, basic.branch, undefined) : undefined;
+    // The loop-local fallback can join surviving paths within the iteration,
+    // but a shared early return outside the loop is only conditionally reached.
+    // Hoisting it after the branch would also return on the backedge path.
+    const localJoin = loop ? this.commonJoin(basic.fallthrough, basic.branch, undefined) : undefined;
+    return localJoin !== undefined && loop?.blocks.includes(localJoin) ? localJoin : undefined;
   }
 
   private commonJoin(a: number, b: number, stop: number | undefined): number | undefined {
@@ -1721,6 +1732,11 @@ class SourceBuilder {
         // Mirror emitStraight: a table used by a non-write instruction (e.g. a
         // call argument) must be materialized before it is read.
         statements.push(...this.flushObserved(insn));
+      } else if (insn.opcode === Opcode.SETLIST) {
+        // The guard prelude survives successful speculation. Its SETLIST
+        // operands need the same constructor snapshots as ordinary emission;
+        // an unfinished child still has the previous register binding.
+        statements.push(...this.flushObserved(insn, target));
       }
       if (insn.defs.includes(t)) {
         // Registers are reused; only the last define before the guard is the
@@ -1849,7 +1865,10 @@ class SourceBuilder {
   /** Dry-run a pure value block: only defines of `t` (captured) and single-use
    * temps are allowed; returns the value expression for `t`, or undefined. */
   private blockValue(block: BasicBlock, join: number, t: number): Expression | undefined {
-    if (!this.reaches(block.id, join)) {
+    // This dry run consumes exactly one block. Merely reaching the join is
+    // insufficient: an intervening branch can replace a nil/false value or
+    // run observable work. Leave such paths to statement reconstruction.
+    if (!block.successors.includes(join)) {
       return undefined;
     }
     let value: Expression | undefined;
@@ -1857,25 +1876,6 @@ class SourceBuilder {
       return undefined;
     }
     return value;
-  }
-
-  private reaches(start: number, target: number): boolean {
-    const pending = [start];
-    const seen = new Set<number>();
-    while (pending.length > 0) {
-      const current = pending.pop()!;
-      if (current === target) {
-        return true;
-      }
-      if (seen.has(current)) {
-        continue;
-      }
-      seen.add(current);
-      for (const succ of this.ir.cfg.blocks[current]?.successors ?? []) {
-        pending.push(succ);
-      }
-    }
-    return false;
   }
 
   private dryRunBlock(block: BasicBlock, t: number, capture: (value: Expression) => void): boolean {
@@ -3761,10 +3761,12 @@ class SourceBuilder {
     const loop = this.currentLoop();
     const carried = loop && (this.loopPhiNames.get(`${loop.header}:${register}`) ??
       this.loopPhiNames.get(`${loop.latch}:${register}`));
+    const value = this.ir.ssa.defAt.get(`${home}:${insn.pc}:${register}`);
     // The last write feeds the backedge phi, but earlier read/modify/write
     // steps in the same iteration still update that lexical accumulator.
     // Debug names starting mid-iteration cannot create a new shadow cell.
-    if (carried && existing?.name === carried && !existing.alias && insn.uses.includes(register)) return carried;
+    if (carried && existing?.name === carried && !existing.alias &&
+        (insn.uses.includes(register) || (value !== undefined && this.dependsOnLoopPhi(value, loop!, register)))) return carried;
     const debug = debugNameAt(this.proto, register, insn.pc + insn.width);
     if (debug && existing?.name === debug && !existing.alias && insn.uses.includes(register) &&
         ![...this.env].some(([slot, binding]) => slot !== register && binding.name === debug)) {
@@ -3772,7 +3774,6 @@ class SourceBuilder {
     }
     // Consult the actual SSA definition reaching a phi, including paths
     // through intervening blocks. An entry phi does not own later slot reuse.
-    const value = this.ir.ssa.defAt.get(`${home}:${insn.pc}:${register}`);
     const keys = value === undefined ? [] : this.phiInputs.get(value) ?? [];
     const key = keys.find(key => this.phiNames.has(key)) ?? keys[0];
     // A fresh definition feeding an as-yet unbound phi need not belong to
@@ -3780,6 +3781,31 @@ class SourceBuilder {
     // by a loop counter). Established phi families still keep their owner.
     if (key) return this.phiNameFor(key, register, insn.pc, insn.uses.includes(register));
     return undefined;
+  }
+
+  /** Complex updates read the accumulator through temporary SSA definitions,
+   * rather than directly in the final store. Follow only value dependencies;
+   * the physical register by itself cannot establish lexical ownership. */
+  private dependsOnLoopPhi(value: number, loop: NaturalLoop, register: number): boolean {
+    const entries = new Set([loop.header, loop.latch].flatMap(blockId =>
+      (this.ir.ssa.phis.get(blockId) ?? []).filter(phi => phi.register === register).map(phi => phi.value)));
+    const pending = [value], visited = new Set<number>();
+    while (pending.length > 0) {
+      const current = pending.pop()!;
+      if (entries.has(current)) return true;
+      if (visited.has(current)) continue;
+      visited.add(current);
+      const op = this.ir.ssa.values[current]?.op;
+      if (!op) continue;
+      switch (op.kind) {
+        case "move": pending.push(op.source); break;
+        case "binary": pending.push(op.left, op.right); break;
+        case "unary": case "length": pending.push(op.operand); break;
+        case "concat": pending.push(...op.operands); break;
+        case "phi": pending.push(...op.operands.map(operand => operand.value)); break;
+      }
+    }
+    return false;
   }
 
   private redefinedInBlock(blockId: number, afterPc: number, register: number): boolean {
