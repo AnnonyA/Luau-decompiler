@@ -1,0 +1,16 @@
+{
+  "schema": 2,
+  "officialLuau": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "description": "Aggregates immutable original manifests; new independent profiles added only after first frozen-candidate observation.",
+  "include": [
+    "manifest.json",
+    {
+      "manifest": "holdouts/manifest.json",
+      "group": "round1-holdouts"
+    },
+    "additional/manifest.json",
+    "development/manifest.json",
+    "independent-round2/manifest.json",
+    "runtime-nan/manifest.json"
+  ]
+}

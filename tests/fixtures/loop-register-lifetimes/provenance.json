@@ -1,0 +1,44 @@
+{
+  "officialLuauCommit": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "source": "move-closure-loop.luau",
+  "sourceSha256": "9077c4ee03df8587bfeb8d8a4b29c149180ded046c90d0c61a54300de0143a5e",
+  "debugLevel": 2,
+  "bytecodes": [
+    {
+      "path": "move-closure-loop-v9-O0.luauc",
+      "version": 9,
+      "optimization": 0,
+      "sha256": "6e4a8653f15fcce02f029c38e41cc0b5a0c72060bcef223f833742a7d847769e"
+    },
+    {
+      "path": "move-closure-loop-v9-O1.luauc",
+      "version": 9,
+      "optimization": 1,
+      "sha256": "feebc4e18895e19a041230c24865163b349f444ad540e89b9801828807679867"
+    },
+    {
+      "path": "move-closure-loop-v9-O2.luauc",
+      "version": 9,
+      "optimization": 2,
+      "sha256": "879901c00b89620a72097c971f6f66cd4f411785ffb8664bfe7590696062c316"
+    },
+    {
+      "path": "move-closure-loop-v14-O0.luauc",
+      "version": 14,
+      "optimization": 0,
+      "sha256": "2183806f2d7ec744e751b5183f7ff5149c8935efb1aa389aad08cfbacd152a3c"
+    },
+    {
+      "path": "move-closure-loop-v14-O1.luauc",
+      "version": 14,
+      "optimization": 1,
+      "sha256": "3d62eb979c7d256212fef150677f566b3ff81615a4abe180c6a04286b7391acf"
+    },
+    {
+      "path": "move-closure-loop-v14-O2.luauc",
+      "version": 14,
+      "optimization": 2,
+      "sha256": "33b6887dffd5ef09394c3272c96f8f6b870f7d9a12355fab67971e0ed1b7ec73"
+    }
+  ]
+}

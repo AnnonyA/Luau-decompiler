@@ -1,25 +1,33 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { decompile } from "../src/decompile.ts";
+import { printWithoutCallBoundaries } from "./helpers.ts";
 
 /** Fixtures are project-authored Luau compiled with the official compiler
  * (`luau-compile --binary -O<n> -g1`); the source sits beside each chunk. */
-function decompileFixture(name: string): string {
+function decompileFixture(name: string, projectCallBoundaries = false): string {
   const bytes = readFileSync(new URL(`./fixtures/quality/${name}.luauc`, import.meta.url));
   const result = decompile(new Uint8Array(bytes), { opcodeEncoding: "official" });
   if (!result.ok) throw new Error(result.error);
-  return result.source;
+  return projectCallBoundaries ? printWithoutCallBoundaries(result.ast) : result.source;
 }
 
 describe("closure presentation", () => {
   const source = decompileFixture("inline-callbacks");
 
-  it("returns a single-use anonymous function to the call that receives it", () => {
-    expect(source).toMatch(/InputBegan:Connect\(function\(input: InputObject, gameProcessedEvent: boolean\)/);
-    expect(source).toMatch(/PreAnimation:Connect\(function\(\)/);
+  it("preserves callback creation before later builtin lookups and inlines ordered calls", () => {
+    // P6 creates its callback at PC21, before table.insert GETIMPORT PC27;
+    // P4 does likewise at PC9/PC17. FASTCALL does not license moving creation
+    // past a global lookup under a different compilation level/environment.
+    expect(source).toMatch(/local function onInputBegan\(input: InputObject, gameProcessedEvent: boolean\)/);
+    expect(source).toMatch(/local function onPreAnimation\(\)/);
+    expect(source.match(/InputBegan:Connect\(onInputBegan\)/g)).toHaveLength(1);
+    expect(source.match(/PreAnimation:Connect\(onPreAnimation\)/g)).toHaveLength(1);
+    expect(source.indexOf("local function onInputBegan(")).toBeLessThan(source.indexOf("InputBegan:Connect(onInputBegan)"));
+    expect(source.indexOf("local function onPreAnimation(")).toBeLessThan(source.indexOf("PreAnimation:Connect(onPreAnimation)"));
     expect(source).toMatch(/task\.delay\(1, function\(\)/);
     expect(source).toMatch(/task\.spawn\(function\(\)/);
-    expect(source).not.toMatch(/local function on[A-Z]/);
+    expect(source.match(/local function on[A-Z]/g)).toHaveLength(2);
     expect(source).not.toMatch(/\b(?:spawned|delayed)\b/);
   });
 
@@ -37,7 +45,7 @@ describe("closure presentation", () => {
 });
 
 describe("structure a person would have written", () => {
-  const source = decompileFixture("guard-structure");
+  const source = decompileFixture("guard-structure", true);
   const body = (name: string): string => {
     const start = source.indexOf(`local function ${name}(`);
     expect(start).toBeGreaterThanOrEqual(0);
@@ -119,7 +127,10 @@ describe("names from evidence", () => {
     expect(source).toContain('local sound: Sound = Instance.new("Sound")');
     expect(source).toContain('local frame: Frame = Instance.new("Frame")');
     expect(source).toContain('local props: Instance = workspace:WaitForChild("Props")');
-    expect(source).toContain("local success, result = pcall(function()");
+    // P4 NEWCLOSURE PC18 precedes FASTPCALL's fallback pcall lookup PC21.
+    expect(source).toContain("local function protected()");
+    expect(source.match(/local success, result = pcall\(protected\)/g)).toHaveLength(1);
+    expect(source.indexOf("local function protected()")).toBeLessThan(source.indexOf("local success, result = pcall(protected)"));
   });
 
   it("names a parameter after the API slot it fills or the way it is used", () => {

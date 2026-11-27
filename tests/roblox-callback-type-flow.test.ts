@@ -5,6 +5,7 @@ import {cleanupAst} from '../src/ast/AstCleanup.ts';
 import {decompile} from '../src/decompile.ts';
 import {printLuau} from '../src/print/LuauPrinter.ts';
 import {recoverFunctionEvidence} from '../src/reconstruct/FunctionEvidence.ts';
+import {printWithoutCallBoundaries} from './helpers.ts';
 
 const call = (name: string, ...args: Expression[]): Expression => ({kind: 'call', callee: ident(name), args, open: false});
 const property = (object: Expression, name: string): Expression => ({kind: 'property', object, name});
@@ -110,7 +111,8 @@ for (const typeAnnotations of ['functions', 'useful', 'off'] as const) {
     expect(source).toContain(typed ? 'PlayerAdded:Connect(function(p: Player)' : 'PlayerAdded:Connect(function(p)');
     // O2 inlines the only call, so the retained helper has no typed caller.
     expect(source).toContain(typed && level < 2 ? 'function formatName(p: Player): string\n' : 'function formatName(p)\n');
-    expect(source).toContain(level < 2 ? 'print(formatName(p))' : 'print(p.DisplayName)');
+    expect(printWithoutCallBoundaries(result.ast)).toContain(level < 2 ? 'print(formatName(p))' : 'print(p.DisplayName)');
+    if (level < 2) expect(source).toContain('print((if true then formatName else nil)(p))');
     if (!typed) expect(source).not.toMatch(/:\s*(?:Players?|string)\b/);
   });
 }

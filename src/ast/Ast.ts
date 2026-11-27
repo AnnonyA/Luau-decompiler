@@ -66,6 +66,21 @@ export interface FunctionDeclaration {
   body: Block;
   /** Source line from the prototype's `lineDefined`, when present. */
   line?: number;
+  closureIdentity?: ClosureIdentity;
+  creationSite?: {ownerProtoId: number; pc: number};
+}
+
+/** A load from the original prototype's constant pool. This is provenance,
+ * not a claim that two executions return the same object. */
+export interface ClosureIdentity {
+  ownerProtoId: number;
+  constantIndex: number;
+  childProtoId: number;
+  pc: number;
+  captureCount: number;
+  captureNames?: readonly string[];
+  /** A recovered factory needs this direct immutable initializer at O2. */
+  inlineCaptureInitializer?: boolean;
 }
 
 export interface IfStatement {
@@ -175,6 +190,14 @@ export interface CallExpression {
   callee: Expression;
   args: Expression[];
   open: boolean;
+  /** Preserve a bytecode CALL whose activation can observe an environment or
+   * own a closure cache. Lowered only by the printer, after cleanup. */
+  preserveBoundary?: boolean;
+  /** A deliberately recovered factory whose inlining is part of its contract. */
+  inlineForIdentity?: boolean;
+  /** SSA evaluation points for callee and each source argument, before
+   * closure presentation. Missing entries do not prove evaluation order. */
+  evaluation?: {ownerProtoId: number; pc: number; operandPcs: readonly (number | undefined)[]};
 }
 
 export interface MethodCallExpression {
@@ -183,6 +206,8 @@ export interface MethodCallExpression {
   name: string;
   args: Expression[];
   open: boolean;
+  /** Receiver then arguments. Luau's NAMECALL lookup follows the arguments. */
+  evaluation?: {ownerProtoId: number; pc: number; operandPcs: readonly (number | undefined)[]};
 }
 
 export interface IndexExpression {
@@ -221,6 +246,8 @@ export interface FunctionExpression {
   body: Block;
   /** Source line from the prototype's `lineDefined`, when present. */
   line?: number;
+  closureIdentity?: ClosureIdentity;
+  creationSite?: {ownerProtoId: number; pc: number};
 }
 
 export interface IfExpressionBranch {

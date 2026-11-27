@@ -147,6 +147,8 @@ function liftLocalFunctions(statements: Statement[]): Statement[] {
       isVararg: value.isVararg,
       body: value.body,
       line: value.line,
+      closureIdentity: value.closureIdentity,
+      creationSite: value.creationSite,
     };
   });
 }
@@ -362,6 +364,8 @@ function asFunctionExpr(statement: Statement): FunctionExpression | undefined {
       isVararg: statement.isVararg,
       body: statement.body,
       line: statement.line,
+      closureIdentity: statement.closureIdentity,
+      creationSite: statement.creationSite,
     };
   }
   if (statement.kind === "local" && statement.names.length === 1 && statement.values.length === 1) {
@@ -429,11 +433,21 @@ function liftExportedFunctions(statements: Statement[]): Statement[] {
 
   const skip = new Set<Statement>();
   const replacements = new Map<Statement, Statement>();
+  const localReads = new Set(analyzeBindings(block(statements)).bindings.flatMap(binding => binding.reads.map(read => read.node)));
   for (const [name, local] of locals) {
     const exported = exports.get(name);
     if (!exported || !isValidIdentifier(exported.field)) {
       continue;
     }
+    // A field declaration creates the closure at the export, after evaluating
+    // its receiver. Keep the original binding unless that exact movement is
+    // adjacent and the receiver is an already materialized local. Captured
+    // factory arguments additionally require their direct initializer shape.
+    const creation = local.assign ?? local.declare;
+    if (local.fn.closureIdentity?.inlineCaptureInitializer ||
+        statements.indexOf(exported.statement) !== statements.indexOf(creation) + 1 ||
+        !localReads.has(exported.object as Extract<Expression, {kind: "identifier"}>) ||
+        countNameUses([creation], name, new Set()) > (local.assign ? 1 : 0)) continue;
     const ignored = new Set<Statement>([local.declare, exported.statement]);
     if (local.assign) {
       ignored.add(local.assign);
@@ -454,6 +468,8 @@ function liftExportedFunctions(statements: Statement[]): Statement[] {
       paramTypes: receiver ? local.fn.paramTypes?.slice(1) : local.fn.paramTypes,
       returnType: local.fn.returnType,
       isVararg: local.fn.isVararg,
+      closureIdentity: local.fn.closureIdentity,
+      creationSite: local.fn.creationSite,
       body: receiver && local.fn.params[0] ? renameIdentifiers(local.fn.body, new Map([[local.fn.params[0], "self"]])) : local.fn.body,
     };
     skip.add(local.declare);

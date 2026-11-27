@@ -165,7 +165,9 @@ export function typeFromExpression(expression: Expression): string | undefined {
       return "string";
     }
     if (typeof expression.value === "bigint") {
-      return "number";
+      // LuauIntegerType2 enables both this builtin type and the `i` literal
+      // syntax. An integer constant must not be annotated as a float number.
+      return "integer";
     }
   }
   // Receiver-dependent Roblox facts are resolved on lexical bindings in FunctionEvidence.

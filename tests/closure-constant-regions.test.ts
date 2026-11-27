@@ -6,12 +6,25 @@ function source(name:string){const r=decompile(readFileSync(new URL(`./fixtures/
 it('reuses one closure with stable table capture instead of cloning its body',()=>{
  const code=source('stable-capture-constant');
  expect(code.match(/return .*\.bias/g)).toHaveLength(2); // factory body + one shared inlined body
- expect(code).toMatch(/\bsharedFunction\b/);
+ expect(code).toContain('function closureFactory(...)');
+ expect(code.match(/closureFactory\(\)/g)).toHaveLength(2); // each load repeats the native cache check
 });
 it('declares a shared constant outside the conditional use',()=>{
  const code=source('branch-closure-constant');
  expect(code.match(/return .* \+ 1/g)).toHaveLength(2);
  expect(code).toMatch(/\bsharedFunction\b/);
+});
+it('keeps a captured native carrier at its original entry-block creation for dominated branches',()=>{
+ const r=decompile(readFileSync(new URL('../benchmarks/closure-identity/holdouts/bytecode/h02/O2.luauc',import.meta.url)),{opcodeEncoding:'official'});
+ expect(r.ok).toBe(true);if(!r.ok)throw Error(r.error);
+ expect(r.validation).toEqual([]);
+ const carrier=r.ast.body.statements.find(statement=>statement.kind==='function-decl'&&statement.name==='closureFactory');
+ expect(carrier?.kind).toBe('function-decl');
+ if(carrier?.kind!=='function-decl')throw Error('expected entry-block carrier');
+ expect(carrier.local).toBe(true);expect(carrier.params).toEqual([]);expect(carrier.isVararg).toBe(true);
+ expect(r.source.match(/closureFactory\(\)/g)).toHaveLength(3);
+ expect(r.source.indexOf('function closureFactory(...)')).toBeLessThan(r.source.indexOf('if '));
+ expect(r.diagnostics.some(d=>d.code==='closure-identity-entry-assumption'||d.code==='closure-identity-unresolved')).toBe(false);
 });
 it('does not share closures whose captures differ',()=>{
  expect(source('different-closure-captures')).not.toMatch(/\bsharedFunction\b/);
@@ -55,7 +68,8 @@ it.each<WrittenConstant>([
 it('keeps separately cloned constants after the parent environment changes',()=>{
  const code = source('changed-closure-environment');
  expect(code).not.toContain('sharedFunction');
- expect(code.match(/closureFactory\(\)/g)).toHaveLength(3); // keep the VM cache check at both loads
+ expect(code).toContain('function closureFactory(...)'); // native constant persists without inlining
+ expect(code.match(/closureFactory\(\)/g)).toHaveLength(2); // keep the VM cache check at both loads
 });
 
 it('budgets every factory result local even when one bytecode register is reused',()=>{

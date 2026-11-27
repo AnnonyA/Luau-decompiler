@@ -22,14 +22,20 @@ export function constantAsLuauLiteral(constant: LuauConstant): string | undefine
     case "number":
       return formatNumber(constant.value);
     case "integer":
-      return constant.value.toString();
+      return formatInteger(constant.value);
     case "string":
       return quoteLuauString(constant.value);
     case "vector":
-      return `vector.create(${formatNumber(constant.x)}, ${formatNumber(constant.y)}, ${formatNumber(constant.z)})`;
+      return `vector.create(${[constant.x, constant.y, constant.z, constant.w].map(formatNumber).join(", ")})`;
     default:
       return undefined;
   }
+}
+
+export function formatInteger(value: bigint): string {
+  // The parser reads the positive magnitude before unary minus. Decimal
+  // 2^63 overflows, but a hexadecimal integer literal denotes all 64 bits.
+  return value === -(1n << 63n) ? "0x8000000000000000i" : `${value}i`;
 }
 
 export function formatNumber(value: number): string {

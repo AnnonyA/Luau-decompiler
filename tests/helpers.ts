@@ -2,6 +2,8 @@ import { abc, ad, writeBytecode, type WrittenConstant, type WrittenPrototype } f
 import { CaptureType, Opcode } from "../src/decode/Opcode.ts";
 import { decompile } from "../src/decompile.ts";
 import { decodeBytecode } from "../src/decode/Decoder.ts";
+import type { Chunk } from "../src/ast/Ast.ts";
+import { printLuau } from "../src/print/LuauPrinter.ts";
 
 export function proto(partial: Partial<WrittenPrototype> & { instructions: number[] }): WrittenPrototype {
   return {
@@ -47,6 +49,22 @@ export function strings(...values: string[]): WrittenConstant[] {
 
 export function importConst(path: string[]): WrittenConstant {
   return { kind: "import", path };
+}
+
+/** Structural source assertions may inspect the same calls without their
+ * compiler fences. This projection is never compiled or used as runtime
+ * evidence; closure-call-boundary tests separately assert the real printer
+ * fences, and runtime gates always execute result.source unchanged. */
+export function printWithoutCallBoundaries(ast: Chunk): string {
+  const projected = structuredClone(ast);
+  const visit = (node: unknown): void => {
+    if (!node || typeof node !== "object") return;
+    if ((node as {kind?: string}).kind === "call") delete (node as {preserveBoundary?: boolean}).preserveBoundary;
+    for (const value of Object.values(node)) if (Array.isArray(value)) value.forEach(visit);
+    else visit(value);
+  };
+  visit(projected);
+  return printLuau(projected);
 }
 
 export { abc, ad, Opcode, CaptureType };

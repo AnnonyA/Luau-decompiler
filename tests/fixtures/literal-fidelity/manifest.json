@@ -1,0 +1,442 @@
+{
+  "schema": 1,
+  "officialLuau": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+  "description": "Project-authored original bytes. Historical outcomes are immutable evidence, not expected-failure exemptions.",
+  "profiles": [
+    {
+      "id": "integer64/api/O0",
+      "source": "integer64.luau",
+      "sourceSha256": "a859f249920e403b2ac8d47f4ae0d19a3220d7f405233cc546afcafbce318c7b",
+      "bytecode": "integer64-api-O0.luauc",
+      "sha256": "cb03b29ea52619ca7768bbd4999a24802af5d3f28b429abba040090987fd31bd",
+      "bytecodeVersion": 9,
+      "optimization": 0,
+      "compiler": "api",
+      "compilerMode": "integer",
+      "compilerFlags": {
+        "API_default_flags": true,
+        "explicit": [
+          "LuauIntegerType2"
+        ]
+      },
+      "compilerOptions": {
+        "optimizationLevel": 0,
+        "debugLevel": 2,
+        "vectorPrecision": 0,
+        "vectorCtor": null
+      },
+      "vectorSize": 3,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "integer\t9007199254740993\tfalse\ttrue\ninteger\t9007199254740992\ttrue\tfalse\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "EXECUTION_DIVERGENCE",
+        "recovered": {
+          "exit": 0,
+          "stdout": "number\t9007199254740992\ttrue\ttrue\nnumber\t9007199254740992\ttrue\ttrue\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "integer64/api/O1",
+      "source": "integer64.luau",
+      "sourceSha256": "a859f249920e403b2ac8d47f4ae0d19a3220d7f405233cc546afcafbce318c7b",
+      "bytecode": "integer64-api-O1.luauc",
+      "sha256": "bf9a8ec5bd6daf400f8c9d287590aa7253e23c8ceca697c86f428d8865605f11",
+      "bytecodeVersion": 9,
+      "optimization": 1,
+      "compiler": "api",
+      "compilerMode": "integer",
+      "compilerFlags": {
+        "API_default_flags": true,
+        "explicit": [
+          "LuauIntegerType2"
+        ]
+      },
+      "compilerOptions": {
+        "optimizationLevel": 1,
+        "debugLevel": 2,
+        "vectorPrecision": 0,
+        "vectorCtor": null
+      },
+      "vectorSize": 3,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "integer\t9007199254740993\tfalse\ttrue\ninteger\t9007199254740992\ttrue\tfalse\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "EXECUTION_DIVERGENCE",
+        "recovered": {
+          "exit": 0,
+          "stdout": "number\t9007199254740992\ttrue\ttrue\nnumber\t9007199254740992\ttrue\ttrue\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "integer64/api/O2",
+      "source": "integer64.luau",
+      "sourceSha256": "a859f249920e403b2ac8d47f4ae0d19a3220d7f405233cc546afcafbce318c7b",
+      "bytecode": "integer64-api-O2.luauc",
+      "sha256": "bf9a8ec5bd6daf400f8c9d287590aa7253e23c8ceca697c86f428d8865605f11",
+      "bytecodeVersion": 9,
+      "optimization": 2,
+      "compiler": "api",
+      "compilerMode": "integer",
+      "compilerFlags": {
+        "API_default_flags": true,
+        "explicit": [
+          "LuauIntegerType2"
+        ]
+      },
+      "compilerOptions": {
+        "optimizationLevel": 2,
+        "debugLevel": 2,
+        "vectorPrecision": 0,
+        "vectorCtor": null
+      },
+      "vectorSize": 3,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "integer\t9007199254740993\tfalse\ttrue\ninteger\t9007199254740992\ttrue\tfalse\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "EXECUTION_DIVERGENCE",
+        "recovered": {
+          "exit": 0,
+          "stdout": "number\t9007199254740992\ttrue\ttrue\nnumber\t9007199254740992\ttrue\ttrue\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "integer64/cli/O0",
+      "source": "integer64.luau",
+      "sourceSha256": "a859f249920e403b2ac8d47f4ae0d19a3220d7f405233cc546afcafbce318c7b",
+      "bytecode": "integer64-cli-O0.luauc",
+      "sha256": "853a9f8b4d3bc00e0d87ef4f6172b28e34c1454bf3ee8fd41c02ebb4a897bf37",
+      "bytecodeVersion": 14,
+      "optimization": 0,
+      "compiler": "cli",
+      "compilerMode": "integer",
+      "compilerFlags": {
+        "CLI_default_Luau_flags": true,
+        "explicit": "LuauIntegerType2=true"
+      },
+      "compilerOptions": null,
+      "vectorSize": 3,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "integer\t9007199254740993\tfalse\ttrue\ninteger\t9007199254740992\ttrue\tfalse\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "EXECUTION_DIVERGENCE",
+        "recovered": {
+          "exit": 0,
+          "stdout": "number\t9007199254740992\ttrue\ttrue\nnumber\t9007199254740992\ttrue\ttrue\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "integer64/cli/O1",
+      "source": "integer64.luau",
+      "sourceSha256": "a859f249920e403b2ac8d47f4ae0d19a3220d7f405233cc546afcafbce318c7b",
+      "bytecode": "integer64-cli-O1.luauc",
+      "sha256": "0de95021dd7b92d75a50df8578b5325f19ad0310d059f096c05925123483dec1",
+      "bytecodeVersion": 14,
+      "optimization": 1,
+      "compiler": "cli",
+      "compilerMode": "integer",
+      "compilerFlags": {
+        "CLI_default_Luau_flags": true,
+        "explicit": "LuauIntegerType2=true"
+      },
+      "compilerOptions": null,
+      "vectorSize": 3,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "integer\t9007199254740993\tfalse\ttrue\ninteger\t9007199254740992\ttrue\tfalse\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "EXECUTION_DIVERGENCE",
+        "recovered": {
+          "exit": 0,
+          "stdout": "number\t9007199254740992\ttrue\ttrue\nnumber\t9007199254740992\ttrue\ttrue\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "integer64/cli/O2",
+      "source": "integer64.luau",
+      "sourceSha256": "a859f249920e403b2ac8d47f4ae0d19a3220d7f405233cc546afcafbce318c7b",
+      "bytecode": "integer64-cli-O2.luauc",
+      "sha256": "0de95021dd7b92d75a50df8578b5325f19ad0310d059f096c05925123483dec1",
+      "bytecodeVersion": 14,
+      "optimization": 2,
+      "compiler": "cli",
+      "compilerMode": "integer",
+      "compilerFlags": {
+        "CLI_default_Luau_flags": true,
+        "explicit": "LuauIntegerType2=true"
+      },
+      "compilerOptions": null,
+      "vectorSize": 3,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "integer\t9007199254740993\tfalse\ttrue\ninteger\t9007199254740992\ttrue\tfalse\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "EXECUTION_DIVERGENCE",
+        "recovered": {
+          "exit": 0,
+          "stdout": "number\t9007199254740992\ttrue\ttrue\nnumber\t9007199254740992\ttrue\ttrue\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "vector-constructor-replaced/api/O0",
+      "source": "vector-constructor-replaced.luau",
+      "sourceSha256": "d010d554ebfb4989f2481c51fed67c3785787eb0fef7f27865bdf75714442011",
+      "bytecode": "vector-constructor-replaced-api-O0.luauc",
+      "sha256": "aa73b6811a4c158f63e24c4b63f548691548e038ae4e63b450b8893ba15f97fb",
+      "bytecodeVersion": 9,
+      "optimization": 0,
+      "compiler": "api",
+      "compilerMode": "custom-vector",
+      "compilerFlags": {
+        "API_default_flags": true,
+        "explicit": []
+      },
+      "compilerOptions": {
+        "optimizationLevel": 0,
+        "debugLevel": 2,
+        "vectorPrecision": 0,
+        "vectorCtor": "customVector"
+      },
+      "vectorSize": 3,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "vector\t1, 2, 3\t0\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "MATCH",
+        "recovered": {
+          "exit": 0,
+          "stdout": "vector\t1, 2, 3\t0\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "vector-constructor-replaced/api/O1",
+      "source": "vector-constructor-replaced.luau",
+      "sourceSha256": "d010d554ebfb4989f2481c51fed67c3785787eb0fef7f27865bdf75714442011",
+      "bytecode": "vector-constructor-replaced-api-O1.luauc",
+      "sha256": "ef5799eba3b2acbcbd2ec009dad3f32d4d1ef250e971aa9c3ce45b60492b59b8",
+      "bytecodeVersion": 9,
+      "optimization": 1,
+      "compiler": "api",
+      "compilerMode": "custom-vector",
+      "compilerFlags": {
+        "API_default_flags": true,
+        "explicit": []
+      },
+      "compilerOptions": {
+        "optimizationLevel": 1,
+        "debugLevel": 2,
+        "vectorPrecision": 0,
+        "vectorCtor": "customVector"
+      },
+      "vectorSize": 3,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "vector\t1, 2, 3\t0\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "MATCH",
+        "recovered": {
+          "exit": 0,
+          "stdout": "vector\t1, 2, 3\t0\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "vector-constructor-replaced/api/O2",
+      "source": "vector-constructor-replaced.luau",
+      "sourceSha256": "d010d554ebfb4989f2481c51fed67c3785787eb0fef7f27865bdf75714442011",
+      "bytecode": "vector-constructor-replaced-api-O2.luauc",
+      "sha256": "9e8467b09e4761f58e591702202029db42a1b27b089e601474f19559f8d2de7f",
+      "bytecodeVersion": 9,
+      "optimization": 2,
+      "compiler": "api",
+      "compilerMode": "custom-vector",
+      "compilerFlags": {
+        "API_default_flags": true,
+        "explicit": []
+      },
+      "compilerOptions": {
+        "optimizationLevel": 2,
+        "debugLevel": 2,
+        "vectorPrecision": 0,
+        "vectorCtor": "customVector"
+      },
+      "vectorSize": 3,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "vector\t1, 2, 3\t0\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "EXECUTION_DIVERGENCE",
+        "recovered": {
+          "exit": 0,
+          "stdout": "string\treplacement\t1\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "vector-w/api/O0",
+      "source": "vector-w.luau",
+      "sourceSha256": "aa8fcb3214b1d6a294be89909a7586ee32b0ace37864af4678667bdcbe612dfc",
+      "bytecode": "vector-w-api-O0.luauc",
+      "sha256": "d7ca57b1f004bed693e04d9a5be5dbf7772200b6e80ef6a086769086d538467d",
+      "bytecodeVersion": 9,
+      "optimization": 0,
+      "compiler": "api",
+      "compilerMode": "vector",
+      "compilerFlags": {
+        "API_default_flags": true,
+        "explicit": []
+      },
+      "compilerOptions": {
+        "optimizationLevel": 0,
+        "debugLevel": 2,
+        "vectorPrecision": 0,
+        "vectorCtor": null
+      },
+      "vectorSize": 4,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "1\t2\t3\t4\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "MATCH",
+        "recovered": {
+          "exit": 0,
+          "stdout": "1\t2\t3\t4\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "vector-w/api/O1",
+      "source": "vector-w.luau",
+      "sourceSha256": "aa8fcb3214b1d6a294be89909a7586ee32b0ace37864af4678667bdcbe612dfc",
+      "bytecode": "vector-w-api-O1.luauc",
+      "sha256": "36db71306b0ed2643186fae844ca5d4b2a45d50b2b16dae37f80ca69f0d80fa5",
+      "bytecodeVersion": 9,
+      "optimization": 1,
+      "compiler": "api",
+      "compilerMode": "vector",
+      "compilerFlags": {
+        "API_default_flags": true,
+        "explicit": []
+      },
+      "compilerOptions": {
+        "optimizationLevel": 1,
+        "debugLevel": 2,
+        "vectorPrecision": 0,
+        "vectorCtor": null
+      },
+      "vectorSize": 4,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "1\t2\t3\t4\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "MATCH",
+        "recovered": {
+          "exit": 0,
+          "stdout": "1\t2\t3\t4\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "vector-w/api/O2",
+      "source": "vector-w.luau",
+      "sourceSha256": "aa8fcb3214b1d6a294be89909a7586ee32b0ace37864af4678667bdcbe612dfc",
+      "bytecode": "vector-w-api-O2.luauc",
+      "sha256": "b9a43c8e065dce79476b95110b9bac3aa09c4d7c37158305db667725fddc66e9",
+      "bytecodeVersion": 9,
+      "optimization": 2,
+      "compiler": "api",
+      "compilerMode": "vector",
+      "compilerFlags": {
+        "API_default_flags": true,
+        "explicit": []
+      },
+      "compilerOptions": {
+        "optimizationLevel": 2,
+        "debugLevel": 2,
+        "vectorPrecision": 0,
+        "vectorCtor": null
+      },
+      "vectorSize": 4,
+      "vectorDouble": false,
+      "original": {
+        "exit": 0,
+        "stdout": "1\t2\t3\t4\n",
+        "stderr": ""
+      },
+      "firstObservation": {
+        "engine": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+        "status": "EXECUTION_DIVERGENCE",
+        "recovered": {
+          "exit": 0,
+          "stdout": "1\t2\t3\t0\n",
+          "stderr": ""
+        }
+      }
+    }
+  ]
+}

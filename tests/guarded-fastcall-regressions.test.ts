@@ -3,6 +3,7 @@ import {expect,it} from 'vitest';
 import {decompile} from '../src/decompile.ts';
 import {analyzePrototype} from '../src/reconstruct/Reconstructor.ts';
 import {Opcode} from '../src/decode/Opcode.ts';
+import {printWithoutCallBoundaries} from './helpers.ts';
 const bytes=(name:string,level:number)=>readFileSync(new URL(`fixtures/rewrites/${name}-O${level}.luauc`,import.meta.url));
 it.each([0,1,2])('keeps both periodic-task guard edges inside the loop at O%i',level=>{
  const result=decompile(bytes('guarded-polling',level),{opcodeEncoding:'official'});
@@ -22,7 +23,8 @@ it('does not discard and then repeat arguments consumed by generic FASTCALL',()=
  expect(result.module.prototypes.some(p=>p.instructions.some(i=>i.opcode===Opcode.FASTCALL))).toBe(true);
  // Three min operations in combined plus the one variadic minimum.
  expect(result.source.match(/math\.min\(/g)).toHaveLength(4);
- expect(result.source.match(/\bobserve\(/g)).toHaveLength(9); // declaration and eight calls
+ expect(printWithoutCallBoundaries(result.ast).match(/\bobserve\(/g)).toHaveLength(9); // declaration and eight calls
+ expect(result.source.match(/\(if true then observe else nil\)\(/g)).toHaveLength(8);
 });
 it.each([0,1,2])('evaluates each generic/numeric loop input exactly once at O%i',level=>{
  const result=decompile(bytes('loop-input-observations',level),{opcodeEncoding:'official'});

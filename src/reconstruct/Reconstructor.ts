@@ -68,6 +68,8 @@ export interface CaptureBinding {
   expression?: Expression;
   /** REF capture: the child may assign to the upvalue. */
   mutable: boolean;
+  /** Known value-captured function; REF cells never receive this proof. */
+  prototypeId?: number;
 }
 
 export interface ChildContext {
@@ -350,6 +352,17 @@ class SourceBuilder {
       loads.set(insn.d, sites);
     }
     if (![...loads.values()].some(sites => sites.length > 1)) return;
+    const feedsCapturedConstant = new Set<number>();
+    for (let index = 0; index < this.proto.instructions.length; index++) {
+      const capture = this.proto.instructions[index]!;
+      if (capture.opcode !== Opcode.CAPTURE || capture.capture?.type !== CaptureType.VAL) continue;
+      let ownerIndex = index - 1;
+      while (ownerIndex >= 0 && this.proto.instructions[ownerIndex]!.opcode === Opcode.CAPTURE) ownerIndex--;
+      if (this.proto.instructions[ownerIndex]?.opcode !== Opcode.DUPCLOSURE) continue;
+      const value = this.closureEffects.root(this.closureEffects.valueAt(capture, capture.capture.source));
+      const origin = value === undefined ? undefined : this.ir.ssa.values[value]?.instruction;
+      if (origin?.opcode === Opcode.DUPCLOSURE) feedsCapturedConstant.add(origin.d);
+    }
     const cyclic = findCyclicBlocks(this.ir.cfg);
     let factoryLocals=0;
     for (const [constant, sites] of loads) {
@@ -360,30 +373,30 @@ class SourceBuilder {
       const hoisted = sites.some(s => this.ir.cfg.blockOfPc.get(s.pc) !== home);
       const signature = this.constantCaptureSignature(first);
       if (signature === undefined || sites.some(s => this.constantCaptureSignature(s) !== signature)) continue;
+      // Preserve the literal lineage for a combined producer/consumer factory
+      // recovery. A carrier result would hide the producer's initializer from
+      // Luau's shouldShareClosure when it is captured by another constant.
+      if (!signature && feedsCapturedConstant.has(constant)) continue;
       const repeating = this.proto !== this.mainProto || sites.some(s => cyclic.has(this.ir.cfg.blockOfPc.get(s.pc)!));
       if ((hoisted || signature) && repeating) continue;
-      // Even a capture-free DUPCLOSURE can clone: its constant retains the
-      // loader environment. Never alias the clones after an environment change.
-      // A nested activation's entry environment is unknown as well.
-      const entryEnvironment = !repeating && this.everyInstructionBefore(first,
-        i => this.closureEffects.neutral(i, false));
-      const needsFactory = !entryEnvironment;
-      if (needsFactory && (hoisted ||
-          this.proto.maxStackSize + this.sharedClosureConstants.size + factoryLocals + sites.length + 1 > 180)) continue;
+      // A harmless source prefix cannot prove main's host environment or the
+      // captures already cached by an earlier activation of the loaded module.
+      // Every load must retain its native VM check, including captured loads.
+      // A carrier first created in the entry block is already in the owner's
+      // lexical root and remains visible in dominated branches. Other captured
+      // cross-block cases need a separate scope proof; do not move creation.
+      if ((hoisted && Boolean(signature) && home !== this.ir.cfg.entry) ||
+          this.proto.maxStackSize + this.sharedClosureConstants.size + factoryLocals + sites.length + 1 > 180) continue;
       // PC order is not execution order. Follow predecessor edges back to the
       // dominating load, including acyclic detours outside the lexical interval.
       if (sites.slice(1).some(site => !this.everyInstructionBefore(site,
-        i => this.closureEffects.neutral(i, entryEnvironment), first))) continue;
+        i => this.closureEffects.neutral(i, false), first))) continue;
       // The closed carrier may deliberately resist inlining; it still has one
       // native constant pool, independently of its number of activations.
-      const factory=needsFactory ? this.allocator.reserve(signature ? "closureFactory" : "sharedFunctionFactory") : undefined;
-      if (factory) factoryLocals+=sites.length+1;
-      const name = this.allocator.reserve(factory ? "closureValue" : "sharedFunction");
+      const factory = this.allocator.reserve(signature ? "closureFactory" : "sharedFunctionFactory");
+      factoryLocals += sites.length + 1;
+      const name = this.allocator.reserve(signature ? "closureValue" : "sharedFunction");
       this.sharedClosureConstants.set(constant, {pc: first.pc, name, hoisted, factory});
-      if (!factory) this.reconstructionNames.identityDiagnostic("closure-identity-entry-assumption", this.proto.id, first.pc,
-        `Sharing K${constant} assumes main starts in the loader environment with its initial cache captures. ` +
-        "Host-driven environment changes or repeated main activations with different captures are not proved by bytecode.");
-      if (hoisted) this.declareInScope(name);
     }
     for (const [constant, sites] of loads) {
       if (sites.length < 2 || this.sharedClosureConstants.has(constant)) continue;
@@ -439,7 +452,15 @@ class SourceBuilder {
         if (op?.kind !== "move") break;
         value = op.source;
       }
-      if (value === undefined || !this.isRawReflexiveCapture(value)) return undefined;
+      if (value === undefined) return undefined;
+      // A main-chunk vararg remains a runtime lexical value when the carrier
+      // is recompiled. It need not be raw-equal to itself: the native constant
+      // checks that on every load (including NaN), and never invokes __eq.
+      // Literal NaNs remain excluded: embedding/folding a literal could erase
+      // the capture entirely. Other unknown producers need their own proof
+      // that recompilation retains the original captured value.
+      const runtimeArgument = this.proto === this.mainProto && this.ir.ssa.values[value]?.op.kind === "vararg";
+      if (!runtimeArgument && !this.isRawReflexiveCapture(value)) return undefined;
       const definition = this.ir.ssa.values[value];
       const load = definition?.instruction;
       const shared = load?.opcode === Opcode.DUPCLOSURE ? this.sharedClosureConstants.get(load.d) : undefined;
@@ -494,7 +515,7 @@ class SourceBuilder {
   }
 
   build(): Statement[] {
-    const declarations: Statement[] = [...this.sharedClosureConstants.values()].filter(s => s.hoisted)
+    const declarations: Statement[] = [...this.sharedClosureConstants.values()].filter(s => s.hoisted && !s.factory)
       .map(s => ({kind: "local", names: [s.name], values: []}));
     const body = block([...declarations, ...this.emitRange(0, undefined, new Set())]);
     if (this.refCells.size) {
@@ -666,12 +687,23 @@ class SourceBuilder {
       this.loopTails.set(loop, {entry: normal, follow, flag});
       this.declareJoinPhis(follow, declarations);
     }
+    const written = new Set(loop.blocks.flatMap(id => this.ir.cfg.blocks[id]!.instructions.flatMap(insn => insn.defs)));
+    for (const register of written) {
+      const binding = this.env.get(register);
+      if (binding?.name && binding.pinned && !binding.alias && !binding.forwardRef &&
+          this.isDeadLoopPhi(loop, register, false)) {
+        // This physical slot is overwritten on every path before its entry
+        // value is read. Copies in other registers (or by-value captures)
+        // still own that old value. Do not let a later branch phi adopt its
+        // lexical name merely because the VM reused the same register number.
+        this.env.set(register, {...binding, alias: true});
+      }
+    }
     this.emittingLoops.push(loop);
     const entryEnv = new Map(this.env);
     let statements: Statement[];
     try {
       statements = this.emitStructuredLoop(loop, visited);
-      const written = new Set(loop.blocks.flatMap(id => this.ir.cfg.blocks[id]!.instructions.flatMap(insn => insn.defs)));
       const merged = new Set((follow === undefined ? [] : this.ir.ssa.phis.get(follow) ?? []).map(phi => phi.register));
       // Terminal alternatives do not belong to the natural loop. Their writes
       // must not leak into the normal exit, except through an explicit phi.
@@ -2126,6 +2158,8 @@ class SourceBuilder {
       params,
       isVararg: fn.isVararg,
       body,
+      closureIdentity: fn.closureIdentity,
+      creationSite: fn.creationSite,
     };
   }
 
@@ -2150,6 +2184,8 @@ class SourceBuilder {
       params,
       isVararg: fn.isVararg,
       body,
+      closureIdentity: fn.closureIdentity,
+      creationSite: fn.creationSite,
     };
   }
 
@@ -2506,7 +2542,8 @@ class SourceBuilder {
               args.push(i === n - 1 ? singleValue(arg) : arg);
             }
           }
-          expression = { ...calleeBinding.expression, args, open: argCount === "multret" };
+          expression = { ...calleeBinding.expression, args, open: argCount === "multret",
+            evaluation: this.callEvaluation(insn, args.length, true) };
         } else {
           const args: Expression[] = [];
           if (argCount === "multret") {
@@ -2517,7 +2554,9 @@ class SourceBuilder {
               args.push(i === argCount - 1 ? singleValue(arg) : arg);
             }
           }
-          expression = { kind: "call", callee: this.readRegister(insn.a, insn), args, open: argCount === "multret" };
+          expression = { kind: "call", callee: this.readRegister(insn.a, insn), args, open: argCount === "multret",
+            evaluation: this.callEvaluation(insn, args.length, false),
+            ...(this.needsCallBoundary(insn) ? {preserveBoundary: true} : {}) };
         }
         // A call consumes the previous top and establishes its own results.
         this.openPacks.clear();
@@ -2737,7 +2776,8 @@ class SourceBuilder {
       const source = cap.capture!.source;
       const snapshot = cap.capture!.type === CaptureType.VAL ? valueSnapshots.get(source) : undefined;
       if (snapshot) {
-        captureMap.set(index, {name: snapshot, expression: ident(snapshot), mutable: false});
+        captureMap.set(index, {name: snapshot, expression: ident(snapshot), mutable: false,
+          prototypeId: this.closurePrototype(this.closureEffects.valueAt(cap, source))?.id});
         return;
       }
       if (source === insn.a && cap.capture!.type !== CaptureType.UPVAL) {
@@ -2751,6 +2791,7 @@ class SourceBuilder {
             name: parent.name,
             expression: parent.name ? ident(parent.name) : parent.expression,
             mutable: parent.mutable,
+            prototypeId: parent.mutable ? undefined : parent.prototypeId,
           });
           return;
         }
@@ -2774,9 +2815,11 @@ class SourceBuilder {
         this.refCells.add(refName);
         captureMap.set(index, { name: refName, expression: ident(refName), mutable: true });
       } else if (binding?.name && binding.pinned) {
-        captureMap.set(index, { name: binding.name, expression: ident(binding.name), mutable: false });
+        captureMap.set(index, { name: binding.name, expression: ident(binding.name), mutable: false,
+          prototypeId: this.closurePrototype(this.closureEffects.valueAt(cap, source))?.id });
       } else if (binding) {
-        captureMap.set(index, { name: undefined, expression: binding.expression, mutable: false });
+        captureMap.set(index, { name: undefined, expression: binding.expression, mutable: false,
+          prototypeId: this.closurePrototype(this.closureEffects.valueAt(cap, source))?.id });
       } else {
         const fallback = child.upvalueNames[index] ?? `up${index}`;
         captureMap.set(index, { name: fallback, expression: ident(fallback), mutable: false });
@@ -2791,6 +2834,13 @@ class SourceBuilder {
       isVararg: child.isVararg,
       body: reconstructed.body,
       line: child.lineDefined || undefined,
+      creationSite: {ownerProtoId: this.proto.id, pc: insn.pc},
+      ...(insn.opcode === Opcode.DUPCLOSURE ? {closureIdentity: {
+        ownerProtoId: this.proto.id, constantIndex: insn.d, childProtoId: child.id,
+        pc: insn.pc, captureCount: captures.length,
+        captureNames: [...captureMap.values()].every(capture => capture.name !== undefined)
+          ? [...captureMap.values()].map(capture => capture.name!) : undefined,
+      }} : {}),
     };
 
     if (shared) {
@@ -2798,7 +2848,7 @@ class SourceBuilder {
         this.declareInScope(shared.factory);
         this.declareInScope(shared.name);
         return [...statements,
-          {kind:"function-decl",local:true,name:shared.factory,params:[],isVararg:captures.length === 0,
+          {kind:"function-decl",local:true,name:shared.factory,params:[],isVararg:true,
             body:block([{kind:"return",values:[fn]}])},
           {kind:"local",names:[shared.name],values:[{kind:"call",callee:ident(shared.factory),args:[],open:false}]},
           ...this.define(insn.a,ident(shared.name),insn)];
@@ -2860,6 +2910,61 @@ class SourceBuilder {
     return hasFreshSnapshot
       ? [...statements, {kind: "local", names: [name], values: []}, scopedCreation]
       : [...statements, { kind: "local", names: [name], values: [fn] }];
+  }
+
+  private closurePrototype(value: number | undefined): Prototype | undefined {
+    value = this.closureEffects.root(value);
+    const op = value === undefined ? undefined : this.ir.ssa.values[value]?.op;
+    if (op?.kind === "constant") {
+      const constant = this.proto.constants[op.constantIndex];
+      return constant?.kind === "closure" ? this.module.prototypes[constant.protoId] : undefined;
+    }
+    if (op?.kind === "closure") return this.module.prototypes[this.proto.childProtoIds[op.protoIndex] ?? -1];
+    if (op?.kind === "upvalue" && !op.write) {
+      const capture = this.captures.get(op.index);
+      return capture && !capture.mutable && capture.prototypeId !== undefined
+        ? this.module.prototypes[capture.prototypeId] : undefined;
+    }
+    return undefined;
+  }
+
+  private callEvaluation(insn: DecodedInstruction, argumentCount: number, method: boolean): {
+    ownerProtoId: number; pc: number; operandPcs: (number | undefined)[];
+  } {
+    const registers = [insn.a, ...Array.from({length: argumentCount}, (_, index) => insn.a + (method ? 2 : 1) + index)];
+    const operandPcs = registers.map((register, index) => {
+      let value = this.closureEffects.root(this.closureEffects.valueAt(insn, register));
+      let definition = value === undefined ? undefined : this.ir.ssa.values[value];
+      // Luau evaluates a colon call's receiver, then arguments, then NAMECALL
+      // does the method lookup (Compiler.cpp:1524-1589 at 9d7748a4).
+      if (method && index === 0 && definition?.op.kind === "namecall") {
+        value = this.closureEffects.root(definition.op.object);
+        definition = value === undefined ? undefined : this.ir.ssa.values[value];
+      }
+      // A definition in this block (or a parameter) has an unambiguous order.
+      // Cross-block expressions require a separate dominance/lifetime proof.
+      return definition && (definition.op.kind === "parameter" || definition.block === this.ir.cfg.blockOfPc.get(insn.pc))
+        ? definition.pc : undefined;
+    });
+    return {ownerProtoId: this.proto.id, pc: insn.pc, operandPcs};
+  }
+
+  /** Reconstructing an indirect bytecode closure as a named literal can make
+   * O2 inline it for the first time. Preserve the original call boundary when
+   * that would move environment reads, effects, or closure-cache ownership. */
+  private needsCallBoundary(insn: DecodedInstruction): boolean {
+    const value = this.closureEffects.root(this.closureEffects.valueAt(insn, insn.a));
+    // Cleanup can absorb a field store into a table constructor. Luau then
+    // follows that constructor through getFunctionExpr and inlines a function
+    // whose original indirect CALL retained its own environment. Keep every
+    // ordinary table-derived call boundary, without claiming the field holds
+    // one particular prototype. GETIMPORT/FASTCALL evaluation stays separate.
+    if (value !== undefined && this.ir.ssa.values[value]?.op.kind === "table-get") return true;
+    const child = this.closurePrototype(value);
+    if (!child) return false;
+    return child.instructions.some(instruction =>
+      instruction.opcode === Opcode.NEWCLOSURE || instruction.opcode === Opcode.DUPCLOSURE) ||
+      !this.closureEffects.neutral(insn, false);
   }
 
   /** A mismatching clone never replaces K. Once a closed, bounded entry prefix
@@ -3021,6 +3126,8 @@ class SourceBuilder {
       if (other.pc <= insn.pc) {
         continue;
       }
+      if (writes === 0 && (this.ir.cfg.blockOfPc.get(other.pc) !== this.ir.cfg.blockOfPc.get(insn.pc) ||
+          other.opcode === Opcode.NEWCLOSURE || other.opcode === Opcode.DUPCLOSURE)) return false;
     if (other.opcode === Opcode.NOP) {
       continue;
     }
@@ -3039,6 +3146,9 @@ class SourceBuilder {
       writes += 1;
       continue;
     }
+      // Deferring the literal to its field assignment must not change the
+      // environment observed at creation or reorder another closure load.
+      if (writes === 0 && !this.closureEffects.neutral(other, false)) return false;
       if (other.defs.includes(register)) {
         break;
       }
@@ -3687,7 +3797,7 @@ class SourceBuilder {
       return {
         kind: "call",
         callee: { kind: "property", object: ident("vector"), name: "create" },
-        args: [lit(constant.x), lit(constant.y), lit(constant.z)],
+        args: [lit(constant.x), lit(constant.y), lit(constant.z), lit(constant.w)],
         open: false,
       };
     }

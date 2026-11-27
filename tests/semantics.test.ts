@@ -320,9 +320,13 @@ describe("semantic reconstruction", () => {
     expect((source.match(/return seed/g) ?? []).length).toBe(1);
   });
 
-  it("lifts a pure module alias into function module.X", () => {
+  it.each([
+    {name: "keeps creation before an unproved global module lookup", localReceiver: false},
+    {name: "lifts a pure local module alias into function module.X", localReceiver: true},
+  ])("$name", ({localReceiver}) => {
     const ast = cleanupAst(
       chunk([
+        ...(localReceiver ? [{kind: "local" as const, names: ["module"], values: [{kind: "table" as const, fields: []}]}] : []),
         { kind: "local", names: ["BuildMegaTable"], values: [] },
         {
           kind: "assign",
@@ -351,9 +355,18 @@ describe("semantic reconstruction", () => {
       },
     );
     const source = printLuau(ast);
-    expect(source).toContain("function module.BuildMegaTable(seed)");
-    expect(source).not.toMatch(/local BuildMegaTable/);
-    expect(source).not.toMatch(/module\.BuildMegaTable = BuildMegaTable/);
+    expect(source.match(/return seed/g)).toHaveLength(1);
+    if (localReceiver) {
+      expect(source).toContain("function module.BuildMegaTable(seed)");
+      expect(source).not.toMatch(/local BuildMegaTable/);
+      expect(source).not.toMatch(/module\.BuildMegaTable = BuildMegaTable/);
+    } else {
+      expect(source).toContain("local BuildMegaTable");
+      expect(source).toContain("BuildMegaTable = function(seed)");
+      expect(source.match(/module\.BuildMegaTable = BuildMegaTable/g)).toHaveLength(1);
+      expect(source.indexOf("BuildMegaTable = function(seed)")).toBeLessThan(source.indexOf("module.BuildMegaTable = BuildMegaTable"));
+      expect(source).not.toContain("function module.BuildMegaTable(seed)");
+    }
   });
 
   it("flattens a nested else/if return chain into elseif", () => {

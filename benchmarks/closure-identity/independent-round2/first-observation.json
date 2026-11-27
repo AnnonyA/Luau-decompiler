@@ -1,0 +1,380 @@
+[
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v9/O0/1",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "b5d5b76b373fe73d8a6436f6aec5717c7bdd57527bf269fdedca091d36765fc9",
+    "source_sha256": "bef68e24d980b2091cbf33d0660dddf30e530b8f532a15face0fd04368194c7b",
+    "recompiled_sha256": "83670da7968c2a59b069c40a8113cde0ba1c68efcdf27eb39f800ed598963fda",
+    "recompiled_version": 9,
+    "effective_source_optimization": 0,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 false f2=f3 false f1=f2 false\nkeys 1 2 nil nil \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 false f2=f3 false f1=f2 false\nkeys 1 2 nil nil \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v9/O0/2",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "b5d5b76b373fe73d8a6436f6aec5717c7bdd57527bf269fdedca091d36765fc9",
+    "source_sha256": "bef68e24d980b2091cbf33d0660dddf30e530b8f532a15face0fd04368194c7b",
+    "recompiled_sha256": "83670da7968c2a59b069c40a8113cde0ba1c68efcdf27eb39f800ed598963fda",
+    "recompiled_version": 9,
+    "effective_source_optimization": 0,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 false f2=f3 false f1=f2 false\nkeys 1 2 nil nil \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 false f2=f3 false f1=f2 false\nkeys 1 2 nil nil \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v9/O1/1",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "2b220dd082d53b6adf388db550f7e24f62078081d50b7b0350c2cd38e5a03ca7",
+    "source_sha256": "bef68e24d980b2091cbf33d0660dddf30e530b8f532a15face0fd04368194c7b",
+    "recompiled_sha256": "c86734533ff25f61ac9a89cdceec19d19d074a88ad10577322e57d4f68e552f1",
+    "recompiled_version": 9,
+    "effective_source_optimization": 1,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v9/O1/2",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "2b220dd082d53b6adf388db550f7e24f62078081d50b7b0350c2cd38e5a03ca7",
+    "source_sha256": "bef68e24d980b2091cbf33d0660dddf30e530b8f532a15face0fd04368194c7b",
+    "recompiled_sha256": "c86734533ff25f61ac9a89cdceec19d19d074a88ad10577322e57d4f68e552f1",
+    "recompiled_version": 9,
+    "effective_source_optimization": 1,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v9/O2/1",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "47bb79493e0ffa8e3de3080fdd27d613918754acc4d80def21483ed1a053e9a1",
+    "source_sha256": "1197345d59e78e4da21e4d84b49814111363a4fba53fea0335eed53d8874b332",
+    "recompiled_sha256": "4c53f8715cee17b1a6af3271fcdef7b62deaf40165b8223795d897bba93ba415",
+    "recompiled_version": 9,
+    "effective_source_optimization": 2,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v9/O2/2",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "47bb79493e0ffa8e3de3080fdd27d613918754acc4d80def21483ed1a053e9a1",
+    "source_sha256": "1197345d59e78e4da21e4d84b49814111363a4fba53fea0335eed53d8874b332",
+    "recompiled_sha256": "4c53f8715cee17b1a6af3271fcdef7b62deaf40165b8223795d897bba93ba415",
+    "recompiled_version": 9,
+    "effective_source_optimization": 2,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v14/O0/1",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "ebcf34f32312f87a51c35aac499b0cd05c1837bef1403dbd906b91f9a6a432d2",
+    "source_sha256": "bef68e24d980b2091cbf33d0660dddf30e530b8f532a15face0fd04368194c7b",
+    "recompiled_sha256": "0218f70b6808ca147f0bc3607e4e3d39edd64a2ff8b90834cb56bd53ffaa5e4d",
+    "recompiled_version": 14,
+    "effective_source_optimization": 0,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 false f2=f3 false f1=f2 false\nkeys 1 2 nil nil \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 false f2=f3 false f1=f2 false\nkeys 1 2 nil nil \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v14/O0/2",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "ebcf34f32312f87a51c35aac499b0cd05c1837bef1403dbd906b91f9a6a432d2",
+    "source_sha256": "bef68e24d980b2091cbf33d0660dddf30e530b8f532a15face0fd04368194c7b",
+    "recompiled_sha256": "0218f70b6808ca147f0bc3607e4e3d39edd64a2ff8b90834cb56bd53ffaa5e4d",
+    "recompiled_version": 14,
+    "effective_source_optimization": 0,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 false f2=f3 false f1=f2 false\nkeys 1 2 nil nil \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 false f2=f3 false f1=f2 false\nkeys 1 2 nil nil \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v14/O1/1",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "250739c3935005d076c27c59b8583dbfcbbfee6bdb8875b8310ffc09bafdab49",
+    "source_sha256": "bef68e24d980b2091cbf33d0660dddf30e530b8f532a15face0fd04368194c7b",
+    "recompiled_sha256": "104ea2acd721847b3727f665e371cbb3a1385808060073c4bbc4ff929dbb0431",
+    "recompiled_version": 14,
+    "effective_source_optimization": 1,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v14/O1/2",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "250739c3935005d076c27c59b8583dbfcbbfee6bdb8875b8310ffc09bafdab49",
+    "source_sha256": "bef68e24d980b2091cbf33d0660dddf30e530b8f532a15face0fd04368194c7b",
+    "recompiled_sha256": "104ea2acd721847b3727f665e371cbb3a1385808060073c4bbc4ff929dbb0431",
+    "recompiled_version": 14,
+    "effective_source_optimization": 1,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v14/O2/1",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "9bd61bc50c69b92e1543cd7a7c96a8d962cdd44015892dba358f272e67cf461a",
+    "source_sha256": "1197345d59e78e4da21e4d84b49814111363a4fba53fea0335eed53d8874b332",
+    "recompiled_sha256": "8e569638852dfcb4f855cd4f60e87fd43feed3f9c3c1642607c524449af6c6f2",
+    "recompiled_version": 14,
+    "effective_source_optimization": 2,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 1:1:true 2:1:true 2:2:true 1:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h01_raw_capture_alias/v14/O2/2",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "9bd61bc50c69b92e1543cd7a7c96a8d962cdd44015892dba358f272e67cf461a",
+    "source_sha256": "1197345d59e78e4da21e4d84b49814111363a4fba53fea0335eed53d8874b332",
+    "recompiled_sha256": "8e569638852dfcb4f855cd4f60e87fd43feed3f9c3c1642607c524449af6c6f2",
+    "recompiled_version": 14,
+    "effective_source_optimization": 2,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=table-capture\nf1=f4 true f2=f3 false f1=f2 false\nkeys 1 2 nil 1 \nstate 2:1:true 1:1:true 1:2:true 2:2:true \neq_calls 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h02_cache_environment_pairs/v9/O0/default",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "82ef7f2372bd0879282f73d6ba1fdb826ac6f7e559185b2f8dd3656c26ecb620",
+    "source_sha256": "af88154e905758259893915b74bf77a164132cae9bd8bd85d337163a542006a4",
+    "recompiled_sha256": "44188fd63237aefe6179c9d16edc1ba1b64fb6808b98a46fdbdb842640e228c8",
+    "recompiled_version": 9,
+    "effective_source_optimization": 0,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false false false false false \nretained_eq false true false false false \nkeys nil nil nil nil nil \nafter_restore B:5 A:6 A:7 B:8 A:9 \n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false false false false false \nretained_eq false true false false false \nkeys nil nil nil nil nil \nafter_restore B:5 A:6 A:7 B:8 A:9 \n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h02_cache_environment_pairs/v9/O1/default",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "aa1996f18853065415c7b9bca422690b3948054a350eb46551adcfcd3aadc87b",
+    "source_sha256": "af88154e905758259893915b74bf77a164132cae9bd8bd85d337163a542006a4",
+    "recompiled_sha256": "1717bd7e0bfcdd65e41649389dfe2d39aa74fbc6e88bc2ca997ded6bd1547899",
+    "recompiled_version": 9,
+    "effective_source_optimization": 1,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false true false true true \nretained_eq false true false true true \nkeys nil 2 nil 2 2 \nafter_restore B:5 A:6 A:7 A:8 A:9 \n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false true false true true \nretained_eq false true false true true \nkeys nil 2 nil 2 2 \nafter_restore B:5 A:6 A:7 A:8 A:9 \n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h02_cache_environment_pairs/v9/O2/default",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "c0254e2c539367e0d3128186ccaa7313689c6c3e4e495d5a210fb0e79552b337",
+    "source_sha256": "ea0e2eda759717f84ab21b2c8af61874f6c8ef481bc7a0ef11f66cd8852253f7",
+    "recompiled_sha256": "30e0fbea86e0289c5c5128c7239bcab6201583b366352a8cc092a2e104a3bc24",
+    "recompiled_version": 9,
+    "effective_source_optimization": 2,
+    "status": "RUNTIME_DIVERGENCE",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false true false true true \nretained_eq false true false true true \nkeys nil 2 nil 2 2 \nafter_restore B:5 A:6 A:7 A:8 A:9 \n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false false false false false \nretained_eq false true false true true \nkeys nil nil nil 2 2 \nafter_restore B:5 A:6 A:7 A:8 A:9 \n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h02_cache_environment_pairs/v14/O0/default",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "7ca2ceff948fdaafa24d16907d3cfa76cf69c8bb6b9875a73605082ce21be432",
+    "source_sha256": "af88154e905758259893915b74bf77a164132cae9bd8bd85d337163a542006a4",
+    "recompiled_sha256": "e08e1c2d5b428a58013fddfb1dc915b761bde9dda5d1c4d40a09609247dde478",
+    "recompiled_version": 14,
+    "effective_source_optimization": 0,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false false false false false \nretained_eq false true false false false \nkeys nil nil nil nil nil \nafter_restore B:5 A:6 A:7 B:8 A:9 \n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false false false false false \nretained_eq false true false false false \nkeys nil nil nil nil nil \nafter_restore B:5 A:6 A:7 B:8 A:9 \n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h02_cache_environment_pairs/v14/O1/default",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "955d96830ad07dfdd6a175fc7c2b1f0c192ab79d99de0c9219ca2a4a94ef70a9",
+    "source_sha256": "af88154e905758259893915b74bf77a164132cae9bd8bd85d337163a542006a4",
+    "recompiled_sha256": "874856febe1a7f201fa82699898b2d21c30b776cb6db5bca28380acbb1f0230b",
+    "recompiled_version": 14,
+    "effective_source_optimization": 1,
+    "status": "MATCH",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false true false true true \nretained_eq false true false true true \nkeys nil 2 nil 2 2 \nafter_restore B:5 A:6 A:7 A:8 A:9 \n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false true false true true \nretained_eq false true false true true \nkeys nil 2 nil 2 2 \nafter_restore B:5 A:6 A:7 A:8 A:9 \n",
+      "stderr": ""
+    }
+  },
+  {
+    "profile_id": "round2/r2h02_cache_environment_pairs/v14/O2/default",
+    "engine_revision": "e26040ae485b6e45eb7fa1b301903e3017c81fd7",
+    "input_sha256": "e4ccb49e825778b6acc31fc846faa1dbee087fa85fe3ad2b4e591e0ec4244b0d",
+    "source_sha256": "ea0e2eda759717f84ab21b2c8af61874f6c8ef481bc7a0ef11f66cd8852253f7",
+    "recompiled_sha256": "ce03951aeffce91093487891615d19cb3708ada69f07e47645a9b518d9736779",
+    "recompiled_version": 14,
+    "effective_source_optimization": 2,
+    "status": "RUNTIME_DIVERGENCE",
+    "explanation": "Exact stdout/stderr/exit comparison with raw original, same runner and activation sequence.",
+    "original": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false true false true true \nretained_eq false true false true true \nkeys nil 2 nil 2 2 \nafter_restore B:5 A:6 A:7 A:8 A:9 \n",
+      "stderr": ""
+    },
+    "reconstructed": {
+      "exit": 0,
+      "stdout": "load=once mode=environment-pairs\nbefore_restore B:1 B:2 A:3 B:4 \npair_eq false false false false false \nretained_eq false true false true true \nkeys nil nil nil 2 2 \nafter_restore B:5 A:6 A:7 A:8 A:9 \n",
+      "stderr": ""
+    }
+  }
+]

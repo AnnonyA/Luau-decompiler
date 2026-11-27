@@ -30,7 +30,7 @@ describe("reconstructed Luau expression precedence", () => {
     [-2, "-2"],
     [-0, "-0"],
     [-0.25, "-0.25"],
-    [-2n, "-2"],
+    [-2n, "-2i"],
   ] as const)("groups a negative literal base %s before exponentiation", (value, text) => {
     expect(returnSource({ kind: "binary", op: "^", left: lit(value), right: lit(2) })).toBe(
       `return (${text}) ^ 2\n`,
