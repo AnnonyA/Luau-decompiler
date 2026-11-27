@@ -1,0 +1,120 @@
+{
+  "base": "8aff1bd",
+  "source": "iterator-shuffled-follow.luau",
+  "profiles": {
+    "O0g1": {
+      "original": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "permuted": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "candidate": {
+        "code": 0,
+        "stdout": "7\t7\n-- Errored(\"prog:?: attempt to get length of a number value\")\n",
+        "stderr": ""
+      },
+      "pass": false
+    },
+    "O0g2": {
+      "original": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "permuted": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "candidate": {
+        "code": 0,
+        "stdout": "7\t7\n-- Errored(\"prog:?: attempt to get length of a number value\")\n",
+        "stderr": ""
+      },
+      "pass": false
+    },
+    "O1g1": {
+      "original": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "permuted": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "candidate": {
+        "code": 0,
+        "stdout": "7\t7\n-- Errored(\"prog:?: attempt to get length of a number value\")\n",
+        "stderr": ""
+      },
+      "pass": false
+    },
+    "O1g2": {
+      "original": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "permuted": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "candidate": {
+        "code": 0,
+        "stdout": "7\t7\n-- Errored(\"prog:?: attempt to get length of a number value\")\n",
+        "stderr": ""
+      },
+      "pass": false
+    },
+    "O2g1": {
+      "original": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "permuted": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "candidate": {
+        "code": 0,
+        "stdout": "7\t7\n-- Errored(\"prog:?: attempt to get length of a number value\")\n",
+        "stderr": ""
+      },
+      "pass": false
+    },
+    "O2g2": {
+      "original": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "permuted": {
+        "code": 0,
+        "stdout": "apricot\t7\nfinished\t14\nblue\t9\nfinished\t13\nfinished\t0\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "candidate": {
+        "code": 0,
+        "stdout": "7\t7\n-- Errored(\"prog:?: attempt to get length of a number value\")\n",
+        "stderr": ""
+      },
+      "pass": false
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "base": "944634c",
+  "luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "change": "pair unreachable numeric steps by register base and canonical body/exit destinations",
+  "component_before": {
+    "markers": 2,
+    "body_words": 16
+  },
+  "component_after": {
+    "markers": 1,
+    "body_words": 8
+  },
+  "raw_vm": "original and normalized before/after all exit0 and print1",
+  "own_source": "12/12 ordinary and Hard; capture identity, side effects and trailing nil arity",
+  "seed1338": "12/12 ordinary and Hard, combined with ac4409c terminal-generic correction",
+  "hard_timeout_families": {
+    "pass": 95,
+    "total": 96,
+    "remaining": "seed1634 O2g1+x3 recompile_failed: exceeds 200 local registers"
+  },
+  "hard_loop_families": {
+    "pass": 28,
+    "total": 30,
+    "remaining": "seed1571 O2g1+x3/O2g2+x1: output mismatch"
+  },
+  "units": "104/104",
+  "interpretation": "targeted combined-engine development checks; not a full-suite result"
+}

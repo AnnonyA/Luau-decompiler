@@ -71,7 +71,7 @@ describe("natural loop body boundaries", () => {
     expect(loops[0]!.kind).toBe("while");
   });
 
-  it("does not treat a forward FORGLOOP branch as a synthetic backedge", () => {
+  it("does not invent a generic loop for a standalone forward FORGLOOP without preparation", () => {
     const { loops } = analysis([
       ad(Opcode.FORGLOOP, 0, 2), 2, // pc 0 -> pc 3, not a backward loop edge
       ret(),                        // pc 2

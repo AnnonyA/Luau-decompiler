@@ -1,0 +1,120 @@
+{
+  "integration": {
+    "pinSha256": "0b67b06dee91960755f9e5fbeadcd0722ec77e7d1a0b54878285b77af66ee142",
+    "runnerSha256": "6c128909fea9acdbf0f6a5c7582b81204a017f73f2f75a820c9ff8a1523b63d3",
+    "validatorSha256": "888718cf60934d8795392149f2cbd5e5999ce2e431a096602a42f61d172bfc15"
+  },
+  "engine": {
+    "revision": "c5cb88ef5badb2e7a28d5cb718d6085e3d3f18b8",
+    "commitTree": "e2428459b2adcb95f458ba241190a1f610f05777",
+    "dirty": false,
+    "status": [],
+    "sourceTreeSha256": "b33f5a45d0ac6ef25854f5aa2b1b83fe268bd34d96e4202479b478fc481ecd48",
+    "distSha256": "76a3dca65d8c1f809aaa13b6096b48a1b852e3d521bc6ed01a2888e8879f01a0",
+    "checkout": "/workspace/scratch/eb5e4be57451/measurements/integrated-3-quick-engine",
+    "cli": "/workspace/scratch/eb5e4be57451/measurements/integrated-3-quick-engine/dist/cli.js",
+    "buildCommand": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/scratch/eb5e4be57451/measurements/integrated-3-quick-engine/node_modules/typescript/bin/tsc",
+      "-p",
+      "/workspace/scratch/eb5e4be57451/measurements/integrated-3-quick-engine/tsconfig.json"
+    ]
+  },
+  "rosetta": {
+    "revision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "commitTree": "dd5acdc6b2612b04b3fb15ef5e5d3bf07f65920a",
+    "dirty": false,
+    "checkout": "/workspace/scratch/eb5e4be57451/rosetta-research",
+    "repository": "https://github.com/Scrensayol/rosetta.git",
+    "suite": "rosetta-3",
+    "luau": "0.747",
+    "transform": "transform-2",
+    "binary": "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "binarySha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b"
+  },
+  "runtime": {
+    "node": "v24.22.3",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "executableSha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+    "platform": "linux",
+    "arch": "x64",
+    "nodeOptions": null
+  },
+  "timing": "direct CLI per bytecode; includes Node.js startup and decompilation; no HTTP client/server split",
+  "schemaVersion": 1,
+  "format": "annonyA-rosetta-provenance",
+  "tier": "quick",
+  "startedAt": "2026-11-27T18:52:38.392Z",
+  "status": "completed",
+  "gate": "all-pass",
+  "command": [
+    "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "bench",
+    "--tier",
+    "quick",
+    "--decompiler",
+    "annonyA=/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/eb5e4be57451/measurements/integrated-3-quick-engine/dist/cli.js decompile {}",
+    "--version",
+    "annonyA=c5cb88ef5badb2e7a28d5cb718d6085e3d3f18b8",
+    "--out",
+    "/workspace/scratch/eb5e4be57451/measurements/integrated-3",
+    "--gallery"
+  ],
+  "environment": {
+    "RAYON_NUM_THREADS": "3",
+    "forbiddenOverridesAbsent": [
+      "ROSETTA_TRANSFORM_OFF",
+      "ROSETTA_TRANSFORM_ONLY",
+      "LUAU_DECOMPILE_OPTS"
+    ]
+  },
+  "result": {
+    "path": "/workspace/scratch/eb5e4be57451/measurements/integrated-3/annonyA-quick.json",
+    "sha256": "731d7c98d633d552d879ecfb81b1bf4d60fdbc0f474e3f6ecbe6c14180fcbf54"
+  },
+  "summary": {
+    "tier": "quick",
+    "hash": "e24826907050bd1d",
+    "passed": 882,
+    "total": 882,
+    "roundTrips": 882,
+    "counts": {
+      "pass": 882,
+      "mismatch": 0,
+      "recompile_failed": 0,
+      "decompile_failed": 0,
+      "refused": 0,
+      "unusable": 0
+    },
+    "sections": [
+      {
+        "id": "cases",
+        "passed": 246,
+        "total": 246
+      },
+      {
+        "id": "libraries",
+        "passed": 36,
+        "total": 36
+      },
+      {
+        "id": "generated",
+        "passed": 300,
+        "total": 300
+      },
+      {
+        "id": "mutants",
+        "passed": 300,
+        "total": 300
+      }
+    ],
+    "allPass": true
+  },
+  "process": {
+    "exitCode": 0,
+    "signal": null,
+    "error": null
+  },
+  "finishedAt": "2026-11-27T18:55:44.911Z",
+  "elapsedSeconds": 186.517325599
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "reason": "The initial auxiliary check passed a nonexistent libraries/lume.luau path. Rosetta check at the pinned revision reads a missing source as an empty string, so its six purported Lume passes were empty-program checks. The other six register_pressure checks were valid. The original report is preserved and explicitly invalid for Lume.",
+  "invalidReport": "register-controls-invalid-empty-lume.json",
+  "invalidSourcePath": "/workspace/scratch/eb5e4be57451/rosetta-research/libraries/lume.luau",
+  "correctedReport": "register-controls.json",
+  "correction": "Repeated all six normal profiles with the real Lume directory, which loads both the implementation and its specification. All 12 genuine round trips pass.",
+  "engineCommit": "631f4c416ab4dfd2e4acc58cab3169f703bbda49",
+  "rosettaCommit": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "command": [
+    "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "check",
+    "/workspace/scratch/eb5e4be57451/rosetta-research/cases/register_pressure.luau",
+    "/workspace/scratch/eb5e4be57451/rosetta-research/libraries/lume",
+    "--decompiler",
+    "ann=node /workspace/scratch/eb5e4be57451/constructor-read-order/dist/cli.js decompile {}",
+    "--work",
+    "/workspace/scratch/eb5e4be57451/constructor-read-order-register-controls-corrected",
+    "--report",
+    "/workspace/scratch/eb5e4be57451/constructor-read-order-register-controls-corrected/report.json"
+  ],
+  "sources": [
+    {
+      "path": "/workspace/scratch/eb5e4be57451/rosetta-research/cases/register_pressure.luau",
+      "sha256": "31e1cb8677804940cb35ecdcdc552c628e0cd19400bf6c33e0528663e1a1f3b3"
+    },
+    {
+      "path": "/workspace/scratch/eb5e4be57451/rosetta-research/libraries/lume/lume.luau",
+      "sha256": "fb2856d60eb48516c8aa04de1e8b58b355a56fb7a05fd1170cfe330f8ad69b1a"
+    },
+    {
+      "path": "/workspace/scratch/eb5e4be57451/rosetta-research/libraries/lume/spec.luau",
+      "sha256": "2f189a01161525f1076ad76dee8e3a1adf2a5b9a5ab7988e52f0aeeacc2afbb5"
+    }
+  ],
+  "scope": "Auxiliary constructor controls only; the 30 directed constructor round trips, register_pressure controls, and pinned Quick/Full bench results are unaffected."
+}

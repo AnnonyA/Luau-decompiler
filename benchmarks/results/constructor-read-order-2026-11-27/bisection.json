@@ -1,0 +1,343 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "rosettaBinarySha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b",
+  "node": "v24.22.3",
+  "results": [
+    {
+      "revision": "c5cb88ef5badb2e7a28d5cb718d6085e3d3f18b8",
+      "tree": "e2428459b2adcb95f458ba241190a1f610f05777",
+      "exit": 0,
+      "seconds": 0.4136989116668701,
+      "totals": {
+        "ann": {
+          "pass": 12
+        }
+      },
+      "failures": {},
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "check",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/captured_args.luau",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/iterators.luau",
+        "--decompiler",
+        "ann=node /workspace/scratch/eb5e4be57451/quick-regression-bisect/dist/cli.js decompile {}",
+        "--work",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/c5cb88e",
+        "--report",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/c5cb88e/report.json"
+      ]
+    },
+    {
+      "revision": "489ce27b97ca607b578388f052f178d78b7ec27f",
+      "tree": "c4e11bb104db21dfdbb0d2b8f47a36a67e9e1aa1",
+      "exit": 0,
+      "seconds": 0.5010566711425781,
+      "totals": {
+        "ann": {
+          "pass": 12
+        }
+      },
+      "failures": {},
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "check",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/captured_args.luau",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/iterators.luau",
+        "--decompiler",
+        "ann=node /workspace/scratch/eb5e4be57451/quick-regression-bisect/dist/cli.js decompile {}",
+        "--work",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/489ce27",
+        "--report",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/489ce27/report.json"
+      ]
+    },
+    {
+      "revision": "f0c9d532d932ab19367799a60bcd0f6bd10bbce7",
+      "tree": "970ae3bfac1f77dd98604035abc26968b6ed5e93",
+      "exit": 0,
+      "seconds": 0.43813109397888184,
+      "totals": {
+        "ann": {
+          "pass": 12
+        }
+      },
+      "failures": {},
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "check",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/captured_args.luau",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/iterators.luau",
+        "--decompiler",
+        "ann=node /workspace/scratch/eb5e4be57451/quick-regression-bisect/dist/cli.js decompile {}",
+        "--work",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/f0c9d5",
+        "--report",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/f0c9d5/report.json"
+      ]
+    },
+    {
+      "revision": "dd16d7df8d8da1b64950636a4abe5f0887607dce",
+      "tree": "7c3f61d939b2165de514c1fb5fda33455829edc0",
+      "exit": 1,
+      "seconds": 0.5928702354431152,
+      "totals": {
+        "ann": {
+          "pass": 2,
+          "mismatch": 10
+        }
+      },
+      "failures": {
+        "ann": [
+          {
+            "case": "captured_args",
+            "profile": "O0g1",
+            "kind": "mismatch",
+            "detail": "line 6: want `51\t61\t61` got `51\t61\t51`"
+          },
+          {
+            "case": "captured_args",
+            "profile": "O1g1",
+            "kind": "mismatch",
+            "detail": "line 6: want `51\t61\t61` got `51\t61\t51`"
+          },
+          {
+            "case": "captured_args",
+            "profile": "O0g2",
+            "kind": "mismatch",
+            "detail": "line 6: want `51\t61\t61` got `51\t61\t51`"
+          },
+          {
+            "case": "captured_args",
+            "profile": "O1g2",
+            "kind": "mismatch",
+            "detail": "line 6: want `51\t61\t61` got `51\t61\t51`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O0g1",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O1g1",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O2g1",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O0g2",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O1g2",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O2g2",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          }
+        ]
+      },
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "check",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/captured_args.luau",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/iterators.luau",
+        "--decompiler",
+        "ann=node /workspace/scratch/eb5e4be57451/quick-regression-bisect/dist/cli.js decompile {}",
+        "--work",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/dd16d7d",
+        "--report",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/dd16d7d/report.json"
+      ]
+    },
+    {
+      "revision": "adc64821ffff19d1c1a25ffce4ac864149dfff3f",
+      "tree": "efae21720e2d0a88cc7acac9ecd9a889799b9ce8",
+      "exit": 0,
+      "seconds": 0.42533183097839355,
+      "totals": {
+        "ann": {
+          "pass": 12
+        }
+      },
+      "failures": {},
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "check",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/captured_args.luau",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/iterators.luau",
+        "--decompiler",
+        "ann=node /workspace/scratch/eb5e4be57451/quick-regression-bisect/dist/cli.js decompile {}",
+        "--work",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/adc6482",
+        "--report",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/adc6482/report.json"
+      ]
+    },
+    {
+      "revision": "e943d2533e898112700dcad5e345fc2108d9f626",
+      "tree": "3eef465d4b1db48c75320f8ed157cd6b2025571c",
+      "exit": 1,
+      "seconds": 0.4195287227630615,
+      "totals": {
+        "ann": {
+          "pass": 6,
+          "mismatch": 6
+        }
+      },
+      "failures": {
+        "ann": [
+          {
+            "case": "iterators",
+            "profile": "O0g1",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O1g1",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O2g1",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O0g2",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O1g2",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O2g2",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          }
+        ]
+      },
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "check",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/captured_args.luau",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/iterators.luau",
+        "--decompiler",
+        "ann=node /workspace/scratch/eb5e4be57451/quick-regression-bisect/dist/cli.js decompile {}",
+        "--work",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/e943d25",
+        "--report",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/e943d25/report.json"
+      ]
+    },
+    {
+      "revision": "a7041372c3a167b0288c1b1ca0ab5be57a32bdd8",
+      "tree": "52528f9928c606871e5f88b54984ce5edbe53a62",
+      "exit": 1,
+      "seconds": 0.581815242767334,
+      "totals": {
+        "ann": {
+          "pass": 2,
+          "mismatch": 10
+        }
+      },
+      "failures": {
+        "ann": [
+          {
+            "case": "captured_args",
+            "profile": "O0g1",
+            "kind": "mismatch",
+            "detail": "line 6: want `51\t61\t61` got `51\t61\t51`"
+          },
+          {
+            "case": "captured_args",
+            "profile": "O1g1",
+            "kind": "mismatch",
+            "detail": "line 6: want `51\t61\t61` got `51\t61\t51`"
+          },
+          {
+            "case": "captured_args",
+            "profile": "O0g2",
+            "kind": "mismatch",
+            "detail": "line 6: want `51\t61\t61` got `51\t61\t51`"
+          },
+          {
+            "case": "captured_args",
+            "profile": "O1g2",
+            "kind": "mismatch",
+            "detail": "line 6: want `51\t61\t61` got `51\t61\t51`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O0g1",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O1g1",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O2g1",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O0g2",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O1g2",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          },
+          {
+            "case": "iterators",
+            "profile": "O2g2",
+            "kind": "mismatch",
+            "detail": "line 28: want `collatz\t111` got `collatz\t1`"
+          }
+        ]
+      },
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "check",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/captured_args.luau",
+        "/workspace/scratch/eb5e4be57451/rosetta-research/cases/iterators.luau",
+        "--decompiler",
+        "ann=node /workspace/scratch/eb5e4be57451/quick-regression-bisect/dist/cli.js decompile {}",
+        "--work",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/a704137",
+        "--report",
+        "/workspace/scratch/eb5e4be57451/quick-regression-bisect-results/a704137/report.json"
+      ]
+    }
+  ]
+}

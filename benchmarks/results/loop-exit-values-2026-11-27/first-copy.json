@@ -1,0 +1,81 @@
+{
+  "generator": "typed-v2",
+  "cases": 2,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 6,
+      "mismatch": 6
+    }
+  },
+  "by_profile": {
+    "baseline": {
+      "O0g1": 2,
+      "O1g1": 2,
+      "O2g1": 2
+    }
+  },
+  "failures": {
+    "baseline": [
+      {
+        "case": "preloop-copy-capture",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `8.25\t3\t8.25\t8.25\t8.25` got `3\t3\t8.25\t1\t2`"
+      },
+      {
+        "case": "preloop-copy-capture",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `8.25\t3\t8.25\t8.25\t8.25` got `3\t3\t8.25\t1\t2`"
+      },
+      {
+        "case": "preloop-copy-capture",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `8.25\t3\t8.25\t8.25\t8.25` got `3\t3\t8.25\t1\t2`"
+      },
+      {
+        "case": "preloop-copy",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `2\tvalue:false\tvalue:falsevalue:falsevalue:false` got `2\tvalue:falsevalue:false\tvalue:falsevalue:falsevalue:falsevalue:false`"
+      },
+      {
+        "case": "preloop-copy",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `2\tvalue:false\tvalue:falsevalue:falsevalue:false` got `2\tvalue:falsevalue:false\tvalue:falsevalue:falsevalue:falsevalue:false`"
+      },
+      {
+        "case": "preloop-copy",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `2\tvalue:false\tvalue:falsevalue:falsevalue:false` got `2\tvalue:falsevalue:false\tvalue:falsevalue:falsevalue:falsevalue:false`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 6,
+    "by_decompiler": {
+      "baseline": {
+        "round_trips": 6,
+        "similarity": 87.64103651046753,
+        "size": 1.2240470513172252,
+        "locals": 1.1447142425533319,
+        "nesting": 0.3333333333333333,
+        "endless": 0,
+        "names": 37.5,
+        "cpu_ms_median": 118.851,
+        "cpu_ms_total": 734.105
+      }
+    }
+  }
+}

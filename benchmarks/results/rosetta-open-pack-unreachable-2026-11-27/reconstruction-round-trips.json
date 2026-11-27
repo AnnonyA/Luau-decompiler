@@ -1,0 +1,181 @@
+{
+  "base": "50d6d96 plus reachable predecessor filter",
+  "stage": "Decoded CFG -> reconstructFunction -> printer, before optional control normalization/cleanup.",
+  "source": "open-pack-dead-predecessor.luau",
+  "profiles": {
+    "O0g1": {
+      "original": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "transformed": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "normal": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      },
+      "deadPredecessor": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      }
+    },
+    "O0g2": {
+      "original": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "transformed": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "normal": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      },
+      "deadPredecessor": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      }
+    },
+    "O1g1": {
+      "original": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "transformed": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "normal": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      },
+      "deadPredecessor": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      }
+    },
+    "O1g2": {
+      "original": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "transformed": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "normal": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      },
+      "deadPredecessor": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      }
+    },
+    "O2g1": {
+      "original": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "transformed": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "normal": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      },
+      "deadPredecessor": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      }
+    },
+    "O2g2": {
+      "original": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "transformed": {
+        "code": 0,
+        "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+        "stderr": ""
+      },
+      "equivalentOriginal": true,
+      "normal": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      },
+      "deadPredecessor": {
+        "reconstructed": {
+          "code": 0,
+          "stdout": "empty\t0\nnil\t1\tnil\nholes\t4\t2\tnil\t4\tnil\neffect\t3\t7\tnil\t1\n1\n-- Returned\n",
+          "stderr": ""
+        },
+        "pass": true
+      }
+    }
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "schemaVersion": 1,
+  "suite": "rosetta-3",
+  "pin": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "upstreamAuditBase": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "upstreamAuditHead": "c5a09742a72ee163901692de3ab58822fe54bfdb",
+  "upstreamAuditSha256": "2386870643d109c59bdb19c9f8af73c5a540f470bebeb475629a52b787059782",
+  "annonyASourceCommit": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+  "reports": [
+    {
+      "path": "site/results/luacid-quick.json",
+      "decompiler": "luacid",
+      "tier": "quick",
+      "baseUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-quick.json",
+      "headUrl": "https://github.com/Scrensayol/rosetta/blob/c5a09742a72ee163901692de3ab58822fe54bfdb/site/results/luacid-quick.json",
+      "baseBlobSha": "2761844bf59bd82cd69bd2d7b0572c1e41ed29e8",
+      "headBlobSha": "2761844bf59bd82cd69bd2d7b0572c1e41ed29e8",
+      "sha256": "f6643dcc0ff0e0e2fedf153027baee6cde024e01dfe38698d41ff03d18b04662",
+      "bytes": 21114,
+      "byteIdentical": true,
+      "suite": {
+        "name": "rosetta-3",
+        "tier": "quick",
+        "hash": "e24826907050bd1d"
+      },
+      "profiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "score": {
+        "passed": 879,
+        "total": 882
+      },
+      "totals": {
+        "pass": 879,
+        "mismatch": 3
+      },
+      "publishedCreatedAt": "2026-11-26T14:50:42Z",
+      "annonyAScore": {
+        "passed": 882,
+        "total": 882
+      },
+      "annonyAAdditionalPasses": 3,
+      "basis": "Published upstream result; not a new live service request."
+    },
+    {
+      "path": "site/results/luacid-full.json",
+      "decompiler": "luacid",
+      "tier": "full",
+      "baseUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-full.json",
+      "headUrl": "https://github.com/Scrensayol/rosetta/blob/c5a09742a72ee163901692de3ab58822fe54bfdb/site/results/luacid-full.json",
+      "baseBlobSha": "28f0ad4f385e9d970409ed6531eac42e05d5d67d",
+      "headBlobSha": "28f0ad4f385e9d970409ed6531eac42e05d5d67d",
+      "sha256": "d625ffa9666675ace542f238c92ffdad3fba41d42d24cc69a862e70b80fa4f05",
+      "bytes": 194688,
+      "byteIdentical": true,
+      "suite": {
+        "name": "rosetta-3",
+        "tier": "full",
+        "hash": "f0eae8ffcedd440e"
+      },
+      "profiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "score": {
+        "passed": 12237,
+        "total": 12276
+      },
+      "totals": {
+        "pass": 12237,
+        "unusable": 6,
+        "refused": 2,
+        "mismatch": 37
+      },
+      "publishedCreatedAt": "2026-11-26T18:45:15Z",
+      "annonyAScore": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "annonyAAdditionalPasses": 39,
+      "basis": "Published upstream result; not a new live service request."
+    },
+    {
+      "path": "site/results/luacid-hard-quick.json",
+      "decompiler": "luacid",
+      "tier": "hard-quick",
+      "baseUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-quick.json",
+      "headUrl": "https://github.com/Scrensayol/rosetta/blob/c5a09742a72ee163901692de3ab58822fe54bfdb/site/results/luacid-hard-quick.json",
+      "baseBlobSha": "403b935d02170bdaf85e34de053467afae7c1cef",
+      "headBlobSha": "403b935d02170bdaf85e34de053467afae7c1cef",
+      "sha256": "d419982abdff9bbe1d3adfd9378bef0754a81c0f840ace6d3971988c159d8521",
+      "bytes": 141500,
+      "byteIdentical": true,
+      "suite": {
+        "name": "rosetta-3",
+        "tier": "hard-quick",
+        "hash": "9bcb49d29e867a92"
+      },
+      "profiles": [
+        "O0g1+x1",
+        "O1g1+x2",
+        "O2g1+x3",
+        "O0g2+x2",
+        "O1g2+x3",
+        "O2g2+x1"
+      ],
+      "score": {
+        "passed": 353,
+        "total": 882
+      },
+      "totals": {
+        "pass": 353,
+        "refused": 498,
+        "mismatch": 31
+      },
+      "publishedCreatedAt": "2026-11-26T15:08:03Z",
+      "annonyAScore": {
+        "passed": 882,
+        "total": 882
+      },
+      "annonyAAdditionalPasses": 529,
+      "basis": "Published upstream result; not a new live service request."
+    },
+    {
+      "path": "site/results/luacid-hard-full.json",
+      "decompiler": "luacid",
+      "tier": "hard-full",
+      "baseUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/luacid-hard-full.json",
+      "headUrl": "https://github.com/Scrensayol/rosetta/blob/c5a09742a72ee163901692de3ab58822fe54bfdb/site/results/luacid-hard-full.json",
+      "baseBlobSha": "ba948d34a9c5a55fba81a312982c95f1b5232839",
+      "headBlobSha": "ba948d34a9c5a55fba81a312982c95f1b5232839",
+      "sha256": "2493c9d24ccd1b77c8e428de858e8fb56f560da96979b25053bfe80d9e6943b6",
+      "bytes": 1671597,
+      "byteIdentical": true,
+      "suite": {
+        "name": "rosetta-3",
+        "tier": "hard-full",
+        "hash": "9921d3bde4a99bfd"
+      },
+      "profiles": [
+        "O0g1+x1",
+        "O1g1+x2",
+        "O2g1+x3",
+        "O0g2+x2",
+        "O1g2+x3",
+        "O2g2+x1"
+      ],
+      "score": {
+        "passed": 5622,
+        "total": 12276
+      },
+      "totals": {
+        "pass": 5622,
+        "unusable": 6,
+        "refused": 6071,
+        "recompile_failed": 5,
+        "mismatch": 578
+      },
+      "publishedCreatedAt": "2026-11-26T22:32:51Z",
+      "annonyAScore": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "annonyAAdditionalPasses": 6654,
+      "basis": "Published upstream result; not a new live service request."
+    },
+    {
+      "path": "site/results/lua-expert-quick.json",
+      "decompiler": "lua-expert",
+      "tier": "quick",
+      "baseUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-quick.json",
+      "headUrl": "https://github.com/Scrensayol/rosetta/blob/c5a09742a72ee163901692de3ab58822fe54bfdb/site/results/lua-expert-quick.json",
+      "baseBlobSha": "e42f2ee8ad4e8fbfbe8ffc86c0509832c6d6d51d",
+      "headBlobSha": "e42f2ee8ad4e8fbfbe8ffc86c0509832c6d6d51d",
+      "sha256": "986203adbb2b6720cb04f75ff1f5b4a43fec6fc4d375052ee4acde8e54555640",
+      "bytes": 20956,
+      "byteIdentical": true,
+      "suite": {
+        "name": "rosetta-3",
+        "tier": "quick",
+        "hash": "e24826907050bd1d"
+      },
+      "profiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "totals": {
+        "pass": 882
+      },
+      "publishedCreatedAt": "2026-11-26T14:41:27Z",
+      "annonyAScore": {
+        "passed": 882,
+        "total": 882
+      },
+      "annonyAAdditionalPasses": 0,
+      "basis": "Published upstream result; not a new live service request."
+    },
+    {
+      "path": "site/results/lua-expert-full.json",
+      "decompiler": "lua-expert",
+      "tier": "full",
+      "baseUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-full.json",
+      "headUrl": "https://github.com/Scrensayol/rosetta/blob/c5a09742a72ee163901692de3ab58822fe54bfdb/site/results/lua-expert-full.json",
+      "baseBlobSha": "ccb94a33f046966ca5ed9c0b86424b49ef598934",
+      "headBlobSha": "ccb94a33f046966ca5ed9c0b86424b49ef598934",
+      "sha256": "66242dfd1b1b48b225672a77b21d11389a98c17338b783915d2690549d8b84d7",
+      "bytes": 205120,
+      "byteIdentical": true,
+      "suite": {
+        "name": "rosetta-3",
+        "tier": "full",
+        "hash": "f0eae8ffcedd440e"
+      },
+      "profiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "score": {
+        "passed": 12167,
+        "total": 12276
+      },
+      "totals": {
+        "pass": 12167,
+        "unusable": 6,
+        "refused": 105,
+        "mismatch": 4
+      },
+      "publishedCreatedAt": "2026-11-26T16:06:58Z",
+      "annonyAScore": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "annonyAAdditionalPasses": 109,
+      "basis": "Published upstream result; not a new live service request."
+    },
+    {
+      "path": "site/results/lua-expert-hard-quick.json",
+      "decompiler": "lua-expert",
+      "tier": "hard-quick",
+      "baseUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-quick.json",
+      "headUrl": "https://github.com/Scrensayol/rosetta/blob/c5a09742a72ee163901692de3ab58822fe54bfdb/site/results/lua-expert-hard-quick.json",
+      "baseBlobSha": "5d5913820d931f5e8c7a72918b41b4c652e9b0ef",
+      "headBlobSha": "5d5913820d931f5e8c7a72918b41b4c652e9b0ef",
+      "sha256": "c4c3d231673c6ee88c359f0103b541227fab2df76d06048e0ddb8660bee7d2ac",
+      "bytes": 94442,
+      "byteIdentical": true,
+      "suite": {
+        "name": "rosetta-3",
+        "tier": "hard-quick",
+        "hash": "9bcb49d29e867a92"
+      },
+      "profiles": [
+        "O0g1+x1",
+        "O1g1+x2",
+        "O2g1+x3",
+        "O0g2+x2",
+        "O1g2+x3",
+        "O2g2+x1"
+      ],
+      "score": {
+        "passed": 264,
+        "total": 882
+      },
+      "totals": {
+        "pass": 264,
+        "refused": 618
+      },
+      "publishedCreatedAt": "2026-11-26T14:48:57Z",
+      "annonyAScore": {
+        "passed": 882,
+        "total": 882
+      },
+      "annonyAAdditionalPasses": 618,
+      "basis": "Published upstream result; not a new live service request."
+    },
+    {
+      "path": "site/results/lua-expert-hard-full.json",
+      "decompiler": "lua-expert",
+      "tier": "hard-full",
+      "baseUrl": "https://github.com/Scrensayol/rosetta/blob/80f3c13ce48dc3318d5d49f54958f580937ca8aa/site/results/lua-expert-hard-full.json",
+      "headUrl": "https://github.com/Scrensayol/rosetta/blob/c5a09742a72ee163901692de3ab58822fe54bfdb/site/results/lua-expert-hard-full.json",
+      "baseBlobSha": "74ca99e04d780e9b99e60e1fcdc9f4e3b440505c",
+      "headBlobSha": "74ca99e04d780e9b99e60e1fcdc9f4e3b440505c",
+      "sha256": "7d3f5893dac81679a71f68406431aa27675cfdc21d8bbef1dd94c533777cb9fe",
+      "bytes": 1193386,
+      "byteIdentical": true,
+      "suite": {
+        "name": "rosetta-3",
+        "tier": "hard-full",
+        "hash": "9921d3bde4a99bfd"
+      },
+      "profiles": [
+        "O0g1+x1",
+        "O1g1+x2",
+        "O2g1+x3",
+        "O0g2+x2",
+        "O1g2+x3",
+        "O2g2+x1"
+      ],
+      "score": {
+        "passed": 3859,
+        "total": 12276
+      },
+      "totals": {
+        "pass": 3859,
+        "unusable": 6,
+        "refused": 8416,
+        "mismatch": 1
+      },
+      "publishedCreatedAt": "2026-11-26T17:22:33Z",
+      "annonyAScore": {
+        "passed": 12276,
+        "total": 12276
+      },
+      "annonyAAdditionalPasses": 8417,
+      "basis": "Published upstream result; not a new live service request."
+    }
+  ],
+  "speedComparison": false,
+  "scope": "Finite published corpus; development regressions are not independent unseen wins."
+}

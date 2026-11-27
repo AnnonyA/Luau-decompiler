@@ -1,0 +1,84 @@
+{
+  "generator": "typed-v2",
+  "cases": 2,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 8,
+      "mismatch": 4
+    },
+    "candidate": {
+      "pass": 12
+    }
+  },
+  "by_profile": {
+    "baseline": {
+      "O0g1": 1,
+      "O0g2": 1,
+      "O1g1": 1,
+      "O1g2": 1
+    }
+  },
+  "failures": {
+    "baseline": [
+      {
+        "case": "unused-loop-call-before-pack",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `apple\tred` got `COMPLETE`"
+      },
+      {
+        "case": "unused-loop-call-before-pack",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `apple\tred` got `COMPLETE`"
+      },
+      {
+        "case": "unused-loop-call-before-pack",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `apple\tred` got `COMPLETE`"
+      },
+      {
+        "case": "unused-loop-call-before-pack",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `apple\tred` got `COMPLETE`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 8,
+    "by_decompiler": {
+      "baseline": {
+        "round_trips": 8,
+        "similarity": 90.2753934264183,
+        "size": 0.9913003557652901,
+        "locals": 1.2366192673032517,
+        "nesting": -0.25,
+        "endless": 0,
+        "names": 72.72727272727273,
+        "cpu_ms_median": 133.855,
+        "cpu_ms_total": 1068.848
+      },
+      "candidate": {
+        "round_trips": 8,
+        "similarity": 90.2753934264183,
+        "size": 0.9913003557652901,
+        "locals": 1.2366192673032517,
+        "nesting": -0.25,
+        "endless": 0,
+        "names": 72.72727272727273,
+        "cpu_ms_median": 126.78600000000002,
+        "cpu_ms_total": 1021.52
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "profile": "O0g1",
+    "candidateMatches": true,
+    "want": "0\t1\t15\n",
+    "got": "0\t1\t15\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O1g1",
+    "candidateMatches": true,
+    "want": "0\t1\t15\n",
+    "got": "0\t1\t15\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O2g1",
+    "candidateMatches": true,
+    "want": "0\t1\t15\n",
+    "got": "0\t1\t15\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O0g2",
+    "candidateMatches": true,
+    "want": "0\t1\t15\n",
+    "got": "0\t1\t15\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O1g2",
+    "candidateMatches": true,
+    "want": "0\t1\t15\n",
+    "got": "0\t1\t15\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O2g2",
+    "candidateMatches": true,
+    "want": "0\t1\t15\n",
+    "got": "0\t1\t15\n",
+    "stderr": ""
+  }
+]

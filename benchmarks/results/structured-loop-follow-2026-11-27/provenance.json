@@ -1,0 +1,10 @@
+{
+  "base": "9d1b634",
+  "first_base": "91fa0d7",
+  "luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "first": "own source 0/6: expected12,6; received3,1",
+  "normal_after": "24/24: own source, iterators, mutant376, mutant395",
+  "comparison": "development regression checks, not a full-suite benchmark"
+}

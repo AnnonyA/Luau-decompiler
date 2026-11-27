@@ -1,0 +1,22 @@
+{
+  "luau": "0.747",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "description": "Original and semantically equivalent permuted bytecode. Permutation retains only the full-function values parameter debug range to exercise CFG without layout normalization.",
+  "files": {
+    "O0g1-original.luauc": "b767a9b8275fccdd9cdef97489cc0f8715f958cdc0ac2c16f7eac2c1d4ee8a89",
+    "O0g1-shuffled.luauc": "030812640e011e2c17f2c6fc91b771fca9643709d4183ebba6371c78a5ae9e05",
+    "O0g2-original.luauc": "76d1a8f941b1e5419e91859492b5840be3362b24734b96ffa7c4feb8014dd141",
+    "O0g2-shuffled.luauc": "df6316b99807c848294499fd2df952154fc888c5f6311f0a68e69efc4213ed09",
+    "O1g1-original.luauc": "2289cc6a755bf46a71735c31d8d0e683b71e4a8bf1ed1d9750befca19a510483",
+    "O1g1-shuffled.luauc": "db6170cb29124143c860da5221dd63296cf36878848a2f60930e2e54fff8d65d",
+    "O1g2-original.luauc": "9e7957e1322644bda5545659cf6a5a1b26579c9765544aecd131871ff08c2aac",
+    "O1g2-shuffled.luauc": "ff4e2374490857fa4390d163551c9e58a9b3f8574beb778e023cc7befaa57c30",
+    "O2g1-original.luauc": "2289cc6a755bf46a71735c31d8d0e683b71e4a8bf1ed1d9750befca19a510483",
+    "O2g1-shuffled.luauc": "db6170cb29124143c860da5221dd63296cf36878848a2f60930e2e54fff8d65d",
+    "O2g2-original.luauc": "9e7957e1322644bda5545659cf6a5a1b26579c9765544aecd131871ff08c2aac",
+    "O2g2-shuffled.luauc": "ff4e2374490857fa4390d163551c9e58a9b3f8574beb778e023cc7befaa57c30",
+    "generic-entry-layout.luau": "3265c3db0575c2f5b0c04eed2485aad28cefa5e8364fcd92b1d28d9c6cf23521",
+    "generic-entry-permutation.luau": "684f2bab1d857ad0de324029d6fda8f364de71e23f32314c9a0ddf2156ee13d8",
+    "shuffle-generic-entry.mjs": "f9137b4779f5e40851d00496984c5c6205878b6c99fdf2be278451db35f65101"
+  }
+}

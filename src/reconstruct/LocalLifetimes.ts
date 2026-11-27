@@ -1,4 +1,4 @@
-import {block, type Block, type Chunk, type Statement, type Expression} from '../ast/Ast.js';
+import {block, cloneAst, type Block, type Chunk, type Statement, type Expression} from '../ast/Ast.js';
 import {analyzeBindings, replaceReferences, type LexicalBinding} from '../analysis/Bindings.js';
 
 /** Close completed lexical lifetimes in large reconstructed blocks. Luau limits
@@ -7,7 +7,7 @@ import {analyzeBindings, replaceReferences, type LexicalBinding} from '../analys
  * closed intervals in do. Captures and writes count as uses; repeat conditions
  * retain body visibility. */
 export function boundLocalLifetimes(ast: Chunk, options: {foldSingleUseTemps?: boolean} = {}): Chunk {
-  const result = structuredClone(ast);
+  const result = cloneAst(ast);
   const visit = (node: unknown, repeatBody = false): void => {
     if (!node || typeof node !== 'object') return;
     if (Array.isArray(node)) {node.forEach(value => visit(value)); return;}
@@ -23,6 +23,10 @@ function closeLifetimes(body: Block, fold: boolean): void {
   // Binding/arity safety is mandatory when the uncollapsed form would exceed
   // Luau's local register budget, even with optional folding switched off.
   const pressure = body.statements.reduce((n, s) => n + (s.kind === 'local' ? s.names.length : s.kind === 'function-decl' && s.local ? 1 : 0), 0);
+  if (pressure >= 128) {
+    coalesceAdjacentResultAliases(body);
+    foldAdjacentFirstOperands(body);
+  }
   if (fold || pressure >= 128) {
     inlineArgumentLiterals(body);
     foldOrderedArguments(body);
@@ -30,6 +34,10 @@ function closeLifetimes(body: Block, fold: boolean): void {
   }
   const count = body.statements.reduce((n, s) => n + (s.kind === 'local' ? s.names.length : s.kind === 'function-decl' && s.local ? 1 : 0), 0);
   if (count < 128) return;
+  closeCompletedIntervals(body);
+}
+
+function closeCompletedIntervals(body: Block): void {
   // Map every nested reference's owning statement back to this block. A closure
   // body belongs to its creation statement, while later writes keep its cell live.
   const owners = new Map<object, number>();
@@ -61,7 +69,13 @@ function closeLifetimes(body: Block, fold: boolean): void {
       // wrap the final use region: an extra lexical boundary there prevents
       // Luau from reusing dead parent registers for a wide call/return pack.
       if (end < ceiling && end < finalDeclaration) {
-        result.push({kind: 'do', body: block(body.statements.slice(i, end + 1))});
+        const nested = block(body.statements.slice(i, end + 1));
+        // The generated scope still shares the local budget of its parents.
+        // Close its completed inner lifetimes too, even when this region by
+        // itself has fewer than the entry threshold. Each region is a strict
+        // subset; initializer order and escaping bindings stay unchanged.
+        closeCompletedIntervals(nested);
+        result.push({kind: 'do', body: nested});
         i = end;
         continue;
       }
@@ -69,6 +83,60 @@ function closeLifetimes(body: Block, fold: boolean): void {
     result.push(body.statements[i]!);
   }
   body.statements = result;
+}
+
+/** A scalar local immediately consumed as the first operand can keep its
+ * original evaluation position without a separate lexical register. This also
+ * covers operators that may throw or invoke metamethods: no other operand or
+ * statement runs between the initializer and that first evaluation. Calls in
+ * an operator operand stay scalar; captured or rewritten cells remain locals. */
+function foldAdjacentFirstOperands(body: Block): void {
+  const declarations = new Map(analyzeBindings(body).bindings.map(binding => [binding.declaration, binding]));
+  for (let i = 0; i + 1 < body.statements.length; i++) {
+    const declaration = body.statements[i]!, consumer = body.statements[i + 1]!;
+    if (declaration.kind !== 'local' || declaration.names.length !== 1 || declaration.values.length !== 1 ||
+        !['binary', 'unary', 'call', 'method-call', 'property', 'index'].includes(declaration.values[0]!.kind) ||
+        consumer.kind !== 'local' || consumer.names.length !== 1 || consumer.values.length !== 1) continue;
+    const binding = declarations.get(declaration);
+    if (!binding || binding.scope !== body || binding.captured || binding.writes.length || binding.reads.length !== 1) continue;
+    const value = consumer.values[0]!, read = binding.reads[0]!.node;
+    if (value.kind === 'binary' && value.left === read) value.left = declaration.values[0]!;
+    else if (value.kind === 'unary' && value.argument === read) value.argument = declaration.values[0]!;
+    else continue;
+    body.statements.splice(i, 1);
+    i--;
+  }
+}
+
+/** A fixed call tuple can acquire debug-name copies after reconstruction. If a
+ * slot is read only by the immediately following local copy, let that slot
+ * declare the destination directly. The destination's reads, writes and captures
+ * keep their own cell; the unobserved source cell disappears. No initializer
+ * moves, and the tuple keeps every result slot, including nil holes and its tail.
+ * Restricting this to adjacency avoids extending a name over intervening code. */
+function coalesceAdjacentResultAliases(body: Block): void {
+  const sourceByRead = new Map<Expression, LexicalBinding>();
+  for (const binding of analyzeBindings(body).bindings) {
+    for (const reference of binding.reads) sourceByRead.set(reference.node, binding);
+  }
+  for (let index = 1; index < body.statements.length; index++) {
+    const sourceDeclaration = body.statements[index - 1]!, alias = body.statements[index]!;
+    if (sourceDeclaration.kind !== 'local' || sourceDeclaration.names.length < 2 || sourceDeclaration.values.length !== 1 ||
+        !['call', 'method-call'].includes(sourceDeclaration.values[0]!.kind) ||
+        alias.kind !== 'local' || alias.names.length !== 1 || alias.values.length !== 1 || alias.values[0]!.kind !== 'identifier') continue;
+    const source = sourceByRead.get(alias.values[0]!);
+    const slot = source?.declarationIndex;
+    if (!source || source.scope !== body || source.declaration !== sourceDeclaration ||
+        source.captured || source.writes.length || source.reads.length !== 1 || slot === undefined ||
+        sourceDeclaration.names[slot] !== source.name || sourceDeclaration.names.includes(alias.names[0]!)) continue;
+    sourceDeclaration.names[slot] = alias.names[0]!;
+    if (alias.types?.[0] !== undefined) {
+      sourceDeclaration.types ??= [];
+      sourceDeclaration.types[slot] = alias.types[0];
+    }
+    body.statements.splice(index, 1);
+    index--;
+  }
 }
 
 /** A call's argument slots are already ordered. Fuse only a consecutive chain

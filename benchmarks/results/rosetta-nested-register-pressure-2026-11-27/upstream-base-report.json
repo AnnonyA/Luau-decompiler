@@ -1,0 +1,49 @@
+{
+  "generator": "typed-v2",
+  "cases": 9,
+  "profiles": [
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "candidate": {
+      "pass": 53,
+      "recompile_failed": 1
+    }
+  },
+  "by_profile": {
+    "candidate": {
+      "O2g1+x3": 1
+    }
+  },
+  "failures": {
+    "candidate": [
+      {
+        "case": "seed1634",
+        "profile": "O2g1+x3",
+        "kind": "recompile_failed",
+        "detail": "syntax error: 219: Out of local registers when trying to allocate _63: exceeded limit 200"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 53,
+    "by_decompiler": {
+      "candidate": {
+        "round_trips": 53,
+        "similarity": 64.66358399616098,
+        "size": 0.6872548834460825,
+        "locals": 0.8573117679915573,
+        "nesting": -1.169811320754717,
+        "endless": 4,
+        "names": 23.649538866930172,
+        "cpu_ms_median": 308.738,
+        "cpu_ms_total": 17764.673
+      }
+    }
+  }
+}

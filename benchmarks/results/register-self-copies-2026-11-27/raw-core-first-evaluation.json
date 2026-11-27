@@ -1,0 +1,71 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "raw": {
+      "pass": 2,
+      "decompile_failed": 1,
+      "mismatch": 3
+    }
+  },
+  "by_profile": {
+    "raw": {
+      "O0g2+x2": 1,
+      "O1g1+x2": 1,
+      "O1g2+x3": 1,
+      "O2g1+x3": 1
+    }
+  },
+  "failures": {
+    "raw": [
+      {
+        "case": "parallel-self-copy-effects",
+        "profile": "O1g1+x2",
+        "kind": "mismatch",
+        "detail": "line 2: want `values\t5\t-inf true \"abc\" true 17` got `values\t5\t-inf true \"abc\" true 18`"
+      },
+      {
+        "case": "parallel-self-copy-effects",
+        "profile": "O2g1+x3",
+        "kind": "decompile_failed",
+        "detail": "timeout"
+      },
+      {
+        "case": "parallel-self-copy-effects",
+        "profile": "O0g2+x2",
+        "kind": "mismatch",
+        "detail": "line 2: want `values\t5\t-inf true \"abc\" true 17` got `values\t5\t-inf true \"abc\" true 19`"
+      },
+      {
+        "case": "parallel-self-copy-effects",
+        "profile": "O1g2+x3",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 3"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 2,
+    "by_decompiler": {
+      "raw": {
+        "round_trips": 2,
+        "similarity": 50.325508415699005,
+        "size": 1.8951540450141773,
+        "locals": 2.6325000875166267,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 63.63636363636363,
+        "cpu_ms_median": 92.534,
+        "cpu_ms_total": 173.397
+      }
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "baselineEngine": "40ff1d5cc6fd6677a9687b2230f158d5dec2e2a1",
+  "entries": [
+    {
+      "name": "repeat-short-circuit-latch",
+      "source": "repeat-short-circuit-latch.luau",
+      "sourceSha256": "30e0c1fb8e6ef1d4ebffb276df4d5eab5f53a27fdeb74078fac81d1b231571eb",
+      "profile": "O0g1",
+      "bytecode": "repeat-short-circuit-latch-O0g1.luauc",
+      "sha256": "01419e4bbb94a33290610b13cbc1d8d04ea5711d0487fd31d6c2b9340b2eb6e9"
+    },
+    {
+      "name": "repeat-short-circuit-latch",
+      "source": "repeat-short-circuit-latch.luau",
+      "sourceSha256": "30e0c1fb8e6ef1d4ebffb276df4d5eab5f53a27fdeb74078fac81d1b231571eb",
+      "profile": "O0g2",
+      "bytecode": "repeat-short-circuit-latch-O0g2.luauc",
+      "sha256": "292da2fb457e68d008feb8d9c4df17da609f9503ad4c6a1fb9fd9ca0b5ba6ebc"
+    },
+    {
+      "name": "repeat-short-circuit-latch",
+      "source": "repeat-short-circuit-latch.luau",
+      "sourceSha256": "30e0c1fb8e6ef1d4ebffb276df4d5eab5f53a27fdeb74078fac81d1b231571eb",
+      "profile": "O1g1",
+      "bytecode": "repeat-short-circuit-latch-O1g1.luauc",
+      "sha256": "d502d8bc50fbe032cf5ddd7cb620258644f4389d18008dd8c36c6b7189dfef42"
+    },
+    {
+      "name": "repeat-short-circuit-latch",
+      "source": "repeat-short-circuit-latch.luau",
+      "sourceSha256": "30e0c1fb8e6ef1d4ebffb276df4d5eab5f53a27fdeb74078fac81d1b231571eb",
+      "profile": "O1g2",
+      "bytecode": "repeat-short-circuit-latch-O1g2.luauc",
+      "sha256": "f3d0b325744b3bc4aa119985ab6cefbe2ee7525a25bec7957ba205ac7e4f7309"
+    },
+    {
+      "name": "repeat-short-circuit-latch",
+      "source": "repeat-short-circuit-latch.luau",
+      "sourceSha256": "30e0c1fb8e6ef1d4ebffb276df4d5eab5f53a27fdeb74078fac81d1b231571eb",
+      "profile": "O2g1",
+      "bytecode": "repeat-short-circuit-latch-O2g1.luauc",
+      "sha256": "ecbb29f3b767a4d975277d367337b41046bbbb985dc008680034359f523f282d"
+    },
+    {
+      "name": "repeat-short-circuit-latch",
+      "source": "repeat-short-circuit-latch.luau",
+      "sourceSha256": "30e0c1fb8e6ef1d4ebffb276df4d5eab5f53a27fdeb74078fac81d1b231571eb",
+      "profile": "O2g2",
+      "bytecode": "repeat-short-circuit-latch-O2g2.luauc",
+      "sha256": "ee1d6487a18c8156fa387bc607d02e39aa3d117b789b7699c3878428740a94a0"
+    },
+    {
+      "name": "repeat-gated-call-effects",
+      "source": "repeat-gated-call-effects.luau",
+      "sourceSha256": "c85a9ccd0e09131e38e7c69a741ad1191379f72def582493fe4866ed8f92e37a",
+      "profile": "O0g1",
+      "bytecode": "repeat-gated-call-effects-O0g1.luauc",
+      "sha256": "a2aae40c7476be5eacd725ea43d1b505b348b70081943393535826169f5707b8"
+    },
+    {
+      "name": "repeat-gated-call-effects",
+      "source": "repeat-gated-call-effects.luau",
+      "sourceSha256": "c85a9ccd0e09131e38e7c69a741ad1191379f72def582493fe4866ed8f92e37a",
+      "profile": "O0g2",
+      "bytecode": "repeat-gated-call-effects-O0g2.luauc",
+      "sha256": "babd37fbdf5853fa1e4b825edb447827ce399f499e036cff2422376fe1712508"
+    },
+    {
+      "name": "repeat-gated-call-effects",
+      "source": "repeat-gated-call-effects.luau",
+      "sourceSha256": "c85a9ccd0e09131e38e7c69a741ad1191379f72def582493fe4866ed8f92e37a",
+      "profile": "O1g1",
+      "bytecode": "repeat-gated-call-effects-O1g1.luauc",
+      "sha256": "f0e40500458e664643aedeaea610a682d66ce1ca4c1b97185f2bfb0c888fa4c4"
+    },
+    {
+      "name": "repeat-gated-call-effects",
+      "source": "repeat-gated-call-effects.luau",
+      "sourceSha256": "c85a9ccd0e09131e38e7c69a741ad1191379f72def582493fe4866ed8f92e37a",
+      "profile": "O1g2",
+      "bytecode": "repeat-gated-call-effects-O1g2.luauc",
+      "sha256": "6762164647649c19d2064698723b11f5601b39482c2266f46bc20353f1c824df"
+    },
+    {
+      "name": "repeat-gated-call-effects",
+      "source": "repeat-gated-call-effects.luau",
+      "sourceSha256": "c85a9ccd0e09131e38e7c69a741ad1191379f72def582493fe4866ed8f92e37a",
+      "profile": "O2g1",
+      "bytecode": "repeat-gated-call-effects-O2g1.luauc",
+      "sha256": "bbb6788252e0906fa42a652fc09e1172bc042393b521355974644aca23d48eb7"
+    },
+    {
+      "name": "repeat-gated-call-effects",
+      "source": "repeat-gated-call-effects.luau",
+      "sourceSha256": "c85a9ccd0e09131e38e7c69a741ad1191379f72def582493fe4866ed8f92e37a",
+      "profile": "O2g2",
+      "bytecode": "repeat-gated-call-effects-O2g2.luauc",
+      "sha256": "f795c33b3d497d1867f09c80a55dbdc7e8956aa15cba9266946284d162ef63f8"
+    },
+    {
+      "name": "compound-repeat-gates",
+      "source": "compound-repeat-gates.luau",
+      "sourceSha256": "dc0dc78e8f50c142a535b794c894b1f025a8d53aeccc78a0ddbf6cd41c982bc2",
+      "profile": "O0g1",
+      "bytecode": "compound-repeat-gates-O0g1.luauc",
+      "sha256": "4e4a70f03a507df3651a856931016901f0d4986776f89c1331ae3b6c08628730"
+    },
+    {
+      "name": "compound-repeat-gates",
+      "source": "compound-repeat-gates.luau",
+      "sourceSha256": "dc0dc78e8f50c142a535b794c894b1f025a8d53aeccc78a0ddbf6cd41c982bc2",
+      "profile": "O0g2",
+      "bytecode": "compound-repeat-gates-O0g2.luauc",
+      "sha256": "cdbea70d250f5bee80b3599ec65eaef18519cb79baa8ecdf30fdc0380fa9f271"
+    },
+    {
+      "name": "compound-repeat-gates",
+      "source": "compound-repeat-gates.luau",
+      "sourceSha256": "dc0dc78e8f50c142a535b794c894b1f025a8d53aeccc78a0ddbf6cd41c982bc2",
+      "profile": "O1g1",
+      "bytecode": "compound-repeat-gates-O1g1.luauc",
+      "sha256": "473b2af6588e5e43aac5de98bd2005b5f611635d12ff72b54719b30a591e5329"
+    },
+    {
+      "name": "compound-repeat-gates",
+      "source": "compound-repeat-gates.luau",
+      "sourceSha256": "dc0dc78e8f50c142a535b794c894b1f025a8d53aeccc78a0ddbf6cd41c982bc2",
+      "profile": "O1g2",
+      "bytecode": "compound-repeat-gates-O1g2.luauc",
+      "sha256": "2e74e719cbeb3e8aad94d24d39441a7ed62b41f611bb7d8d5ddf212925d904aa"
+    },
+    {
+      "name": "compound-repeat-gates",
+      "source": "compound-repeat-gates.luau",
+      "sourceSha256": "dc0dc78e8f50c142a535b794c894b1f025a8d53aeccc78a0ddbf6cd41c982bc2",
+      "profile": "O2g1",
+      "bytecode": "compound-repeat-gates-O2g1.luauc",
+      "sha256": "46aed1447c82d3086b9f6846f6b2047065f59eeaea09e1eabb71787cf93bd224"
+    },
+    {
+      "name": "compound-repeat-gates",
+      "source": "compound-repeat-gates.luau",
+      "sourceSha256": "dc0dc78e8f50c142a535b794c894b1f025a8d53aeccc78a0ddbf6cd41c982bc2",
+      "profile": "O2g2",
+      "bytecode": "compound-repeat-gates-O2g2.luauc",
+      "sha256": "8baa92b59724b5ad2870b7a82be52ac4123fb0d001906efcbf6147a09672740e"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "profile": "O0g1",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "10\t0\t7\n",
+    "got": "0\t0\t0\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O0g2",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "10\t0\t7\n",
+    "got": "0\t0\t0\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O1g1",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "10\t0\t7\n",
+    "got": "0\t0\t0\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O1g2",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "10\t0\t7\n",
+    "got": "0\t0\t0\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O2g1",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "10\t0\t7\n",
+    "got": "0\t0\t0\n",
+    "stderr": ""
+  },
+  {
+    "profile": "O2g2",
+    "transformationPreservesVm": true,
+    "candidateMatches": false,
+    "want": "10\t0\t7\n",
+    "got": "0\t0\t0\n",
+    "stderr": ""
+  }
+]

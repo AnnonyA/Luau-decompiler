@@ -1,0 +1,10 @@
+154
+after	2	22
+after	3	33
+array	1	11
+array	2	22
+array	3	33
+triple	1	11
+triple	2	22
+triple	3	33
+== Returned

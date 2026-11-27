@@ -1,0 +1,11 @@
+12	7	even,even,even
+-20	6	other,other,other,other,other
+3	4	other,even
+-8	4	other,other,other
+2	3	even
+-3	3	other,other
+40	3	even
+0	1	
+0	1	
+0	1	
+== Returned

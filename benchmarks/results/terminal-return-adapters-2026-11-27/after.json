@@ -1,0 +1,50 @@
+[
+  {
+    "profile": "O0g1",
+    "originalVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "transformedVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidate": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O0g2",
+    "originalVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "transformedVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidate": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O1g1",
+    "originalVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "transformedVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidate": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O1g2",
+    "originalVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "transformedVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidate": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O2g1",
+    "originalVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "transformedVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidate": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidateExitCode": 0,
+    "pass": true
+  },
+  {
+    "profile": "O2g2",
+    "originalVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "transformedVm": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidate": "true\tnil\ttrue\t3\n3\tnil\t3\t3\n0\tnil\tnil\nfound,absent,step,three,seven,step,step,exhausted\n",
+    "candidateExitCode": 0,
+    "pass": true
+  }
+]

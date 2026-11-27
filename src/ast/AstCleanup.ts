@@ -47,7 +47,7 @@ export interface CleanupOptions {
 }
 
 export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
-  const repaired = repairUndeclaredAutoLocals(ast);
+  const repaired = repairUndeclaredAutoLocals(ast, options.workingNames);
   const structured: Chunk = { kind: "chunk", body: transformBlock(repaired.body, options, true) };
   const fold = (chunk: Chunk): Chunk => options.foldSingleUseTemps === false
     ? chunk : foldTemporaries(chunk, { sourceNames: options.sourceNames });

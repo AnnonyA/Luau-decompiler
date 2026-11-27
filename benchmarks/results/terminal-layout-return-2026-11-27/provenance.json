@@ -1,0 +1,9 @@
+{
+  "base": "84a7e16",
+  "beforeDist": "ee39d9a (7fa numeric-marker normalization does not apply to this fixture)",
+  "originalVsTransformationVm": "6/6 identical",
+  "productionReconstructionBefore": "0/6",
+  "productionReconstructionAfter": "6/6",
+  "reference": "Tovek ce2ea3325547fa3896f274b68013386338039040 MIT terminal return and exit adapters; Luau c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f VM RETURN",
+  "implementation": "Independent: preserve all RETURN instructions; remove a redundant bare return only at the completed source function tail."
+}

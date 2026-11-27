@@ -1,0 +1,56 @@
+[
+  {
+    "case": "overwrite-0",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ],
+    "stdout": "prefix\n"
+  },
+  {
+    "case": "overwrite-3",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ],
+    "stdout": "prefix\ta\tb\t71\n"
+  },
+  {
+    "case": "scalar-0",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ],
+    "stdout": "prefix\n37\n"
+  },
+  {
+    "case": "scalar-3",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ],
+    "stdout": "prefix\ta\tb\tc\n37\n"
+  },
+  {
+    "case": "tail-0",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ],
+    "stdout": "prefix\n"
+  },
+  {
+    "case": "tail-3",
+    "pass": true,
+    "exit": [
+      0,
+      0
+    ],
+    "stdout": "prefix\ta\tb\tc\n"
+  }
+]

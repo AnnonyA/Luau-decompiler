@@ -1,0 +1,70 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "ann": {
+      "pass": 2,
+      "mismatch": 4
+    }
+  },
+  "by_profile": {
+    "ann": {
+      "O0g1": 1,
+      "O0g2": 1,
+      "O1g1": 1,
+      "O1g2": 1
+    }
+  },
+  "failures": {
+    "ann": [
+      {
+        "case": "repeat-gated-call-effects",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\ttrue\t1\tbody:1:1|body:1:2|ready:1|body:2:1|body:2:2|ready:2|finish:2` got `1\ttrue\t1\tbody:1:1|body:1:2|ready:1|finish:1`"
+      },
+      {
+        "case": "repeat-gated-call-effects",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\ttrue\t1\tbody:1:1|body:1:2|ready:1|body:2:1|body:2:2|ready:2|finish:2` got `1\ttrue\t1\tbody:1:1|body:1:2|ready:1|finish:1`"
+      },
+      {
+        "case": "repeat-gated-call-effects",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\ttrue\t1\tbody:1:1|body:1:2|ready:1|body:2:1|body:2:2|ready:2|finish:2` got `1\ttrue\t1\tbody:1:1|body:1:2|ready:1|finish:1`"
+      },
+      {
+        "case": "repeat-gated-call-effects",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\ttrue\t1\tbody:1:1|body:1:2|ready:1|body:2:1|body:2:2|ready:2|finish:2` got `1\ttrue\t1\tbody:1:1|body:1:2|ready:1|finish:1`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 2,
+    "by_decompiler": {
+      "ann": {
+        "round_trips": 2,
+        "similarity": 72.87670969963074,
+        "size": 1.3227848101265822,
+        "locals": 0.8,
+        "nesting": 0.0,
+        "endless": 2,
+        "names": 37.5,
+        "cpu_ms_median": 141.63,
+        "cpu_ms_total": 276.094
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 2,
+      "mismatch": 4
+    },
+    "candidate": {
+      "pass": 6
+    }
+  },
+  "by_profile": {
+    "baseline": {
+      "O1g1": 1,
+      "O1g2": 1,
+      "O2g1": 1,
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "baseline": [
+      {
+        "case": "comparison-selected-values",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `b,c` got `a,b,c`"
+      },
+      {
+        "case": "comparison-selected-values",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `b,c` got `a,b,c`"
+      },
+      {
+        "case": "comparison-selected-values",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `b,c` got `a,b,c`"
+      },
+      {
+        "case": "comparison-selected-values",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `b,c` got `a,b,c`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 2,
+    "by_decompiler": {
+      "baseline": {
+        "round_trips": 2,
+        "similarity": 78.81767153739929,
+        "size": 1.489444826025644,
+        "locals": 1.1489125293076057,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 87.5,
+        "cpu_ms_median": 133.271,
+        "cpu_ms_total": 262.61799999999994
+      },
+      "candidate": {
+        "round_trips": 2,
+        "similarity": 78.81767153739929,
+        "size": 1.489444826025644,
+        "locals": 1.1489125293076057,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 87.5,
+        "cpu_ms_median": 203.15800000000002,
+        "cpu_ms_total": 355.122
+      }
+    }
+  }
+}

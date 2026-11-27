@@ -1,0 +1,50 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "baselineEngine": "e9a3cc4b7bb629a3bc78ccaf722c7d80f0fd4f22",
+  "entries": [
+    {
+      "profile": "O0g1",
+      "source": "global-loop-choice.luau",
+      "sourceSha256": "5c9382b8662aa9c49ffbb0064038b38da13f0c03a4e7868051ed5dcc40667a98",
+      "bytecode": "global-loop-choice-O0g1.luauc",
+      "sha256": "1ca1151d420e027156d03b0243d4eca5c3fa83757abfbb39ba7d9fca25121e63"
+    },
+    {
+      "profile": "O0g2",
+      "source": "global-loop-choice.luau",
+      "sourceSha256": "5c9382b8662aa9c49ffbb0064038b38da13f0c03a4e7868051ed5dcc40667a98",
+      "bytecode": "global-loop-choice-O0g2.luauc",
+      "sha256": "a2c374be1451c783ac3aaab28a28719db458ecc66fcb9db573b92562ce1e9b39"
+    },
+    {
+      "profile": "O1g1",
+      "source": "global-loop-choice.luau",
+      "sourceSha256": "5c9382b8662aa9c49ffbb0064038b38da13f0c03a4e7868051ed5dcc40667a98",
+      "bytecode": "global-loop-choice-O1g1.luauc",
+      "sha256": "41a249ebacfe8d9107380b70b1eaa069eb1acee7a1891d50fbfcfc3f13602e2c"
+    },
+    {
+      "profile": "O1g2",
+      "source": "global-loop-choice.luau",
+      "sourceSha256": "5c9382b8662aa9c49ffbb0064038b38da13f0c03a4e7868051ed5dcc40667a98",
+      "bytecode": "global-loop-choice-O1g2.luauc",
+      "sha256": "f423c856dc202e7adc4158e4a279c59631af9b4da8cc20558f09c14061f9c04b"
+    },
+    {
+      "profile": "O2g1",
+      "source": "global-loop-choice.luau",
+      "sourceSha256": "5c9382b8662aa9c49ffbb0064038b38da13f0c03a4e7868051ed5dcc40667a98",
+      "bytecode": "global-loop-choice-O2g1.luauc",
+      "sha256": "68981f21feceae97f5caaf2a396ef682ba5e7b081e740376f0ed4dddcfc0a4cb"
+    },
+    {
+      "profile": "O2g2",
+      "source": "global-loop-choice.luau",
+      "sourceSha256": "5c9382b8662aa9c49ffbb0064038b38da13f0c03a4e7868051ed5dcc40667a98",
+      "bytecode": "global-loop-choice-O2g2.luauc",
+      "sha256": "1f99c781b82db1852c8886427cdd03039065dc80bc562cfe469568b553f843b0"
+    }
+  ]
+}

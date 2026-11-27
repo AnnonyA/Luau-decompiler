@@ -21,14 +21,35 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
     if (block.unreachable) {
       continue;
     }
+    if (block.instructions.at(-1)?.opcode === Opcode.FORGLOOP &&
+        block.branch !== undefined && block.fallthrough !== undefined &&
+        followPureJumps(cfg, block.branch) === followPureJumps(cfg, block.fallthrough) &&
+        followPureJumps(cfg, block.branch) !== block.id) {
+      // Jump folding can merge a body's immediate break with exhaustion.
+      // The step still executes once, but the shared destination is the
+      // continuation, not a loop header that may be entered a second time.
+      loops.push({header: block.id, latch: block.id, blocks: [block.id], backEdges: [], kind: "generic-for"});
+      continue;
+    }
     for (const succ of block.successors) {
       if (cfg.blocks[succ]?.unreachable) {
         continue;
       }
+      // Once preparation has only its real edge, the iterator step dominates
+      // the body. We represent that region using the successful FORGLOOP edge
+      // below; the body's ordinary return to the step is the same iteration,
+      // not a second enclosing loop rooted at the step.
+      const target = cfg.blocks[succ]!;
+      const iterationEdge = block.instructions.at(-1)?.opcode === Opcode.FORGLOOP && succ === block.branch;
+      if (!iterationEdge && target.instructions.at(-1)?.opcode === Opcode.FORGLOOP &&
+          target.predecessors.some(predecessor => isGenericEntry(cfg, predecessor, target.id))) continue;
       if (!dominators.dominates(succ, block.id)) {
         // Generic-for loops are entered through FORGPREP which jumps directly to
         // the FORGLOOP latch, so the body start does not dominate the latch.
-        if (!(block.instructions.at(-1)?.opcode === Opcode.FORGLOOP && succ === block.branch && succ < block.id)) {
+        // The iteration target can be physically after the latch in valid
+        // permuted bytecode. Its role comes from FORGLOOP, not PC ordering.
+        if (!(block.instructions.at(-1)?.opcode === Opcode.FORGLOOP && succ === block.branch &&
+            block.predecessors.some(predecessor => isGenericEntry(cfg, predecessor, block.id)))) {
           continue;
         }
       }
@@ -46,6 +67,31 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
         latch: block.id,
       });
     }
+  }
+  // An always-breaking/returning numeric for has no reachable backedge.
+  // Its explicit prep/step pair still owns a zero-or-one-iteration region;
+  // treating FORNPREP as an ordinary two-way block would lose the body.
+  for (const preparation of cfg.blocks) {
+    if (preparation.unreachable) continue;
+    const prep = preparation.instructions.at(-1);
+    if (prep?.opcode !== Opcode.FORNPREP || preparation.fallthrough === undefined || preparation.branch === undefined) continue;
+    const header = preparation.fallthrough;
+    const latch = cfg.blocks.find(candidate => candidate.unreachable &&
+      candidate.fallthrough !== undefined && candidate.branch !== undefined &&
+      followPureJumps(cfg, candidate.fallthrough) === followPureJumps(cfg, preparation.branch!) &&
+      followPureJumps(cfg, candidate.branch) === followPureJumps(cfg, header) &&
+      candidate.instructions.at(-1)?.opcode === Opcode.FORNLOOP &&
+      candidate.instructions.at(-1)?.a === prep.a);
+    if (!latch || loops.some(loop => loop.latch === latch.id)) continue;
+    const owned = new Set<number>([latch.id]);
+    const pending = [header];
+    while (pending.length) {
+      const current = pending.pop()!;
+      if (current === preparation.branch || owned.has(current) || !dominators.dominates(header, current)) continue;
+      owned.add(current);
+      pending.push(...cfg.blocks[current]!.successors);
+    }
+    loops.push({header, latch: latch.id, backEdges: [], blocks: [...owned].sort((a, b) => a - b), kind: "numeric-for"});
   }
   // Several continue paths may branch back to the same loop header. They
   // describe ONE natural loop, not separate nested loops with identical
@@ -88,6 +134,22 @@ export function findNaturalLoops(cfg: ControlFlowGraph, dominators: DominatorTre
     }
   }
   return merged;
+}
+
+/** Compiler jump threading or physical layout can introduce control-only exit
+ * stubs. Only those exact control edges are equal;
+ * CLOSEUPVALS and any register work still own observable semantics. */
+export function followPureJumps(cfg: ControlFlowGraph, start: number): number {
+  const seen = new Set<number>();
+  let current = start;
+  while (!seen.has(current)) {
+    seen.add(current);
+    const block = cfg.blocks[current];
+    if (!block || block.successors.length !== 1 || !block.instructions.every(insn =>
+      insn.opcode === Opcode.NOP || insn.opcode === Opcode.JUMP || insn.opcode === Opcode.JUMPX)) return current;
+    current = block.successors[0]!;
+  }
+  return current;
 }
 
 function isPreferredLatch(cfg: ControlFlowGraph, candidate: number, current: number): boolean {
@@ -219,6 +281,14 @@ function findRepeatTestBlock(cfg: ControlFlowGraph, loop: Pick<NaturalLoop, "hea
   const latchLast = latchBlock.instructions.at(-1);
   if (latchLast && isConditionalJump(latchLast.opcode)) {
     return loop.latch;
+  }
+  // A condition before a latch is an `until` only when the latch contains
+  // no body work. A compound while condition can have an internal join
+  // before its final test; consuming that test as `until` would omit the
+  // assignments/calls between the test and the backedge.
+  if (latchBlock.instructions.some(instruction => instruction.opcode !== Opcode.JUMPBACK &&
+      instruction.opcode !== Opcode.JUMP && instruction.opcode !== Opcode.NOP)) {
+    return undefined;
   }
   // Otherwise look for the last body block that jumps to the loop exit and
   // falls through into the pure back-edge latch — the `until` test position.

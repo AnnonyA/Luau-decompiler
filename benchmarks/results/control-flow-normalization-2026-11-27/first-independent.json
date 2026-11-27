@@ -1,0 +1,73 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "before": {
+      "pass": 5,
+      "mismatch": 4
+    }
+  },
+  "by_profile": {
+    "before": {
+      "O0g2+x2": 1,
+      "O1g1+x2": 1,
+      "O1g2+x3": 1,
+      "O2g1+x3": 1
+    }
+  },
+  "failures": {
+    "before": [
+      {
+        "case": "shuffled-terminal-loops",
+        "profile": "O1g1+x2",
+        "kind": "mismatch",
+        "detail": "line 1: want `first1,first2,single1,after1,after2,after3` got ``"
+      },
+      {
+        "case": "shuffled-terminal-loops",
+        "profile": "O2g1+x3",
+        "kind": "mismatch",
+        "detail": "line 1: want `first1,first2,single1,after1,after2,after3` got ``"
+      },
+      {
+        "case": "shuffled-terminal-loops",
+        "profile": "O0g2+x2",
+        "kind": "mismatch",
+        "detail": "line 1: want `first1,first2,single1,after1,after2,after3` got ``"
+      },
+      {
+        "case": "shuffled-terminal-loops",
+        "profile": "O1g2+x3",
+        "kind": "mismatch",
+        "detail": "line 1: want `first1,first2,single1,after1,after2,after3` got ``"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 5,
+    "by_decompiler": {
+      "before": {
+        "round_trips": 5,
+        "similarity": 87.64509558677673,
+        "size": 1.2801784173428052,
+        "locals": 1.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 80.0,
+        "cpu_ms_median": 138.672,
+        "cpu_ms_total": 711.8460000000001
+      }
+    }
+  }
+}

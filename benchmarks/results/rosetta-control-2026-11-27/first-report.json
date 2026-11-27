@@ -1,0 +1,170 @@
+{
+  "generator": "typed-v2",
+  "cases": 5,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 12,
+      "mismatch": 18
+    },
+    "candidate": {
+      "pass": 30
+    }
+  },
+  "by_profile": {
+    "baseline": {
+      "O0g1": 2,
+      "O0g2": 3,
+      "O1g1": 3,
+      "O1g2": 4,
+      "O2g1": 3,
+      "O2g2": 3
+    }
+  },
+  "failures": {
+    "baseline": [
+      {
+        "case": "conditional-binding-loop",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "conditional-binding-loop",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "conditional-binding-loop",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "conditional-binding-loop",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "conditional-binding-loop",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "conditional-binding-loop",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "iterator-state",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 9"
+      },
+      {
+        "case": "iterator-state",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 9"
+      },
+      {
+        "case": "iterator-state",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 9"
+      },
+      {
+        "case": "iterator-state",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 9"
+      },
+      {
+        "case": "loop-accumulator",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `58.25` got `nil`"
+      },
+      {
+        "case": "loop-accumulator",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `58.25` got `nil`"
+      },
+      {
+        "case": "repeat-condition-setup",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "printed 1 lines, want 2"
+      },
+      {
+        "case": "repeat-condition-setup",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "printed 1 lines, want 2"
+      },
+      {
+        "case": "repeat-condition-setup",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "printed 1 lines, want 2"
+      },
+      {
+        "case": "repeat-condition-setup",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "printed 1 lines, want 2"
+      },
+      {
+        "case": "repeat-condition-setup",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "printed 1 lines, want 2"
+      },
+      {
+        "case": "repeat-condition-setup",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 1 lines, want 2"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 12,
+    "by_decompiler": {
+      "baseline": {
+        "round_trips": 12,
+        "similarity": 82.68235921859741,
+        "size": 1.1994151540136122,
+        "locals": 0.9346552651840672,
+        "nesting": -0.16666666666666666,
+        "endless": 0,
+        "names": 29.411764705882355,
+        "cpu_ms_median": 134.69400000000002,
+        "cpu_ms_total": 1556.284
+      },
+      "candidate": {
+        "round_trips": 12,
+        "similarity": 84.43999091784158,
+        "size": 1.191600403895184,
+        "locals": 0.9346552651840672,
+        "nesting": -0.16666666666666666,
+        "endless": 0,
+        "names": 29.411764705882355,
+        "cpu_ms_median": 134.971,
+        "cpu_ms_total": 1637.8229999999999
+      }
+    }
+  }
+}

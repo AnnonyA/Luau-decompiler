@@ -1,0 +1,139 @@
+{
+  "generator": "typed-v2",
+  "cases": 3,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "before": {
+      "mismatch": 18
+    }
+  },
+  "by_profile": {
+    "before": {
+      "O0g1": 3,
+      "O0g2": 3,
+      "O1g1": 3,
+      "O1g2": 3,
+      "O2g1": 3,
+      "O2g2": 3
+    }
+  },
+  "failures": {
+    "before": [
+      {
+        "case": "seed1257",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 11: want `L11\t4\t\"lo|3.14159\" \"true\" 3.141592653589793 true` got `L11\t4\t\"lo|3.14159\" \"true\" 0 true`"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "printed 10 lines, want 15"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "printed 10 lines, want 15"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 11: want `L11\t4\t\"lo|3.14159\" \"true\" 3.141592653589793 true` got `L11\t4\t\"lo|3.14159\" \"true\" 0 true`"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "printed 10 lines, want 15"
+      },
+      {
+        "case": "seed1257",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 10 lines, want 15"
+      },
+      {
+        "case": "first-item-predicate",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `element\ttrue\t4` got `element\ttrue\tnil`"
+      },
+      {
+        "case": "first-item-predicate",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `element\ttrue\t4` got `element\ttrue\tnil`"
+      },
+      {
+        "case": "first-item-predicate",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `element\ttrue\t4` got `element\ttrue\tnil`"
+      },
+      {
+        "case": "first-item-predicate",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `element\ttrue\t4` got `element\ttrue\tnil`"
+      },
+      {
+        "case": "first-item-predicate",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `element\ttrue\t4` got `element\ttrue\tnil`"
+      },
+      {
+        "case": "first-item-predicate",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `element\ttrue\t4` got `element\ttrue\tnil`"
+      },
+      {
+        "case": "nested-loop-first-item",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "nested-loop-first-item",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "nested-loop-first-item",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "nested-loop-first-item",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "nested-loop-first-item",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "nested-loop-first-item",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      }
+    ]
+  }
+}

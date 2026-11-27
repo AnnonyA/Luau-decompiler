@@ -40,7 +40,11 @@ export function formatInteger(value: bigint): string {
 
 export function formatNumber(value: number): string {
   if (Number.isNaN(value)) {
-    return "(0/0)";
+    // Luau's 0/0 produces the negative default NaN on the supported VM;
+    // unary minus recovers the other sign without referring to a global.
+    const bits = new DataView(new ArrayBuffer(8));
+    bits.setFloat64(0, value, true);
+    return (bits.getUint8(7) & 0x80) !== 0 ? "(0/0)" : "(-(0/0))";
   }
   if (!Number.isFinite(value)) {
     return value > 0 ? "(1/0)" : "(-1/0)";

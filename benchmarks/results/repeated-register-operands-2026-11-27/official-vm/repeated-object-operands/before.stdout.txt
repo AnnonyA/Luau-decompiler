@@ -1,0 +1,13 @@
+add identity	false
+sum	17	2
+less identity	false
+less	false	4
+equal callback	false
+equal	false	6
+index identity	false
+lookup	23	8
+store identity	false	false
+stored	11
+arity	4
+pack	table	true	tail	true
+closed counter	12

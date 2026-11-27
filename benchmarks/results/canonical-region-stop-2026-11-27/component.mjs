@@ -1,0 +1,14 @@
+import {writeFileSync} from 'node:fs';
+const directory=process.argv[2];
+const {writeBytecode,abc,ad}=await import(directory+'/decode/BytecodeWriter.js');
+const {Opcode}=await import(directory+'/decode/Opcode.js');
+const {decodeBytecode}=await import(directory+'/decode/Decoder.js');
+const {reconstructFunction}=await import(directory+'/reconstruct/Reconstructor.js');
+const {printLuau}=await import(directory+'/print/LuauPrinter.js');
+const instructions=[ad(Opcode.LOADN,2,0),ad(Opcode.JUMPIFNOT,0,10),ad(Opcode.JUMPIFNOT,1,7),ad(Opcode.LOADN,3,2),ad(Opcode.LOADN,4,1),ad(Opcode.LOADN,5,1),ad(Opcode.FORNPREP,3,4),abc(Opcode.ADDK,2,2,0),ad(Opcode.FORNLOOP,3,-2),ad(Opcode.JUMP,0,1),ad(Opcode.LOADN,2,10),ad(Opcode.JUMP,0,1),ad(Opcode.LOADN,2,100),abc(Opcode.RETURN,2,2,0)];
+const bytes=writeBytecode({maxStackSize:8,numParams:2,numUpvalues:0,constants:[{kind:'number',value:1}],instructions},{version:6,typesVersion:1});
+const {module}=decodeBytecode(bytes); const r=reconstructFunction(module,module.prototypes[module.mainProtoId]);
+const ast={kind:'chunk',body:{kind:'block',statements:[{kind:'function-decl',local:true,name:'recovered',params:r.params,isVararg:false,body:r.body}]}};
+const source=printLuau(ast)+'\nprint(recovered(true,true), recovered(true,false), recovered(false,true), recovered(false,false))\n';
+if(process.argv[3])writeFileSync(process.argv[3],source);else console.log(source);
+console.error(JSON.stringify({returns:(source.match(/return /g)??[]).length,bytes:source.length}));

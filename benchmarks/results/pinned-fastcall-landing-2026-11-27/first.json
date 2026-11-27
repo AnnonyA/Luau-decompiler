@@ -1,0 +1,27 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O1g2+x3"
+  ],
+  "totals": {
+    "before": {
+      "mismatch": 1
+    }
+  },
+  "by_profile": {
+    "before": {
+      "O1g2+x3": 1
+    }
+  },
+  "failures": {
+    "before": [
+      {
+        "case": "seed1174",
+        "profile": "O1g2+x3",
+        "kind": "mismatch",
+        "detail": "line 5: want `L8\t8\t{1=0,2=7,3=0,4=10} {1.5=4,1=-10,2=-0.5,3=-1} {1=\"single\",2=1,3=nan} {1=-2,2=4} 53 0 11 9` got `L8\t8\t{1=0,2=7,3=0,4=10} {2=-0.5} {1=\"single\",2=1,3=nan} {1=-2,2=4} 53 0 11 9`"
+      }
+    ]
+  }
+}

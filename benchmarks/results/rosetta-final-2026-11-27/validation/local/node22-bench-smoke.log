@@ -1,0 +1,14 @@
+revision: ff0275ea025f150d73aa29e10f3f2b7b0111907a
+node: v22.23.5
+command: ['npm', 'run', 'bench:compare', '--', '--output', '/workspace/scratch/eb5e4be57451/measurements/integrated-11-validation/node22-baseline.json']
+
+(node:513) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> luau-decompiler@0.2.0 bench:compare
+> node scripts/bench-compare.mjs --output /workspace/scratch/eb5e4be57451/measurements/integrated-11-validation/node22-baseline.json
+
+(node:526) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Benchmark report saved to /workspace/scratch/eb5e4be57451/measurements/integrated-11-validation/node22-baseline.json

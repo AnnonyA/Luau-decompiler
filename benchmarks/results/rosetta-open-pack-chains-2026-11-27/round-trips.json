@@ -1,0 +1,52 @@
+{
+  "source": "open-pack-linear-chain.luau",
+  "variant": "producer and consumer blocks independently shuffled in official bytecode",
+  "profiles": [
+    {
+      "profile": "O0g1",
+      "originalEqualsShuffled": true,
+      "baseline": "mismatch",
+      "candidate": "pass"
+    },
+    {
+      "profile": "O0g2",
+      "originalEqualsShuffled": true,
+      "baseline": "mismatch",
+      "candidate": "pass"
+    },
+    {
+      "profile": "O1g1",
+      "originalEqualsShuffled": true,
+      "baseline": "mismatch",
+      "candidate": "pass"
+    },
+    {
+      "profile": "O1g2",
+      "originalEqualsShuffled": true,
+      "baseline": "mismatch",
+      "candidate": "pass"
+    },
+    {
+      "profile": "O2g1",
+      "originalEqualsShuffled": true,
+      "baseline": "mismatch",
+      "candidate": "pass"
+    },
+    {
+      "profile": "O2g2",
+      "originalEqualsShuffled": true,
+      "baseline": "mismatch",
+      "candidate": "pass"
+    }
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 0,
+      "mismatch": 6
+    },
+    "candidate": {
+      "pass": 6,
+      "mismatch": 0
+    }
+  }
+}

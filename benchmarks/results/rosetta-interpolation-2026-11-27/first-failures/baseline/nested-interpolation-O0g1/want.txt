@@ -1,0 +1,4 @@
+outer inner -- text end
+outer inner -- -- literal end
+prefix:��-- literal
+== Returned

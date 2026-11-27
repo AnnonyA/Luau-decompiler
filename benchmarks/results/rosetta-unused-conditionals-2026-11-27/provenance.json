@@ -1,0 +1,30 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "generator": "typed-v2",
+  "command": "rosetta gen <seed>",
+  "ownBaseline": "46f33f40b78abd2f3a2455f0b70df903de4f808f",
+  "generatedBaseline": "c10dd0eeee382a5068c0bdbc9030ff2ee788fa30",
+  "candidateBase": "0a0ac295dbd4d7e55b1027b1fd88d3a049448c71",
+  "sources": [
+    {
+      "seed": 1551,
+      "source": "seed1551.luau",
+      "sha256": "5b31721c8608324664ef214d56d27717ddf5b96377a13d3ecb34b7890f36492b"
+    },
+    {
+      "seed": 1715,
+      "source": "seed1715.luau",
+      "sha256": "0b0159d8441493b9fa276114979ded009a63325f77eee924d35ff83940d79a46"
+    },
+    {
+      "seed": 1746,
+      "source": "seed1746.luau",
+      "sha256": "27d61500c651d8390567bd55e49745db88728b338ae3a4a4ed453a79a9264e16"
+    },
+    {
+      "seed": 1796,
+      "source": "seed1796.luau",
+      "sha256": "4f3c442517574a81f1628c91c4db12d12216ff9248cde8f68a482d77dab3530c"
+    }
+  ]
+}

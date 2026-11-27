@@ -1,0 +1,5 @@
+1,5,7	8	nil	table: 0x#1
+halt	1	nil
+underflow	1	nil
+4
+== Returned

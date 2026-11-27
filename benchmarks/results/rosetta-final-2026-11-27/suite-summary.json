@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "pin": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "suite": "rosetta-3",
+  "luau": "0.747",
+  "transform": "transform-2",
+  "pinFileSha256": "0b67b06dee91960755f9e5fbeadcd0722ec77e7d1a0b54878285b77af66ee142",
+  "unusableOriginalReason": "seed1541 original execution exhausts the harness step budget in all six profiles of each full tier.",
+  "tiers": {
+    "quick": {
+      "hash": "e24826907050bd1d",
+      "profiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "roundTrips": 882,
+      "usable": 882,
+      "unusable": [],
+      "sections": [
+        {
+          "id": "cases",
+          "inventory": "cases",
+          "programs": 41,
+          "usable": 246
+        },
+        {
+          "id": "libraries",
+          "inventory": "libraries",
+          "programs": 6,
+          "usable": 36
+        },
+        {
+          "id": "generated",
+          "inventory": "generated-quick",
+          "programs": 50,
+          "usable": 300
+        },
+        {
+          "id": "mutants",
+          "inventory": "mutants-quick",
+          "programs": 50,
+          "usable": 300
+        }
+      ],
+      "reference": {
+        "path": "site/results/luacid-quick.json",
+        "sha256": "f6643dcc0ff0e0e2fedf153027baee6cde024e01dfe38698d41ff03d18b04662"
+      }
+    },
+    "full": {
+      "hash": "f0eae8ffcedd440e",
+      "profiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "roundTrips": 12282,
+      "usable": 12276,
+      "unusable": [
+        {
+          "section": "generated",
+          "test": "seed1541",
+          "profiles": [
+            "O0g1",
+            "O1g1",
+            "O2g1",
+            "O0g2",
+            "O1g2",
+            "O2g2"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "cases",
+          "inventory": "cases",
+          "programs": 41,
+          "usable": 246
+        },
+        {
+          "id": "libraries",
+          "inventory": "libraries",
+          "programs": 6,
+          "usable": 36
+        },
+        {
+          "id": "generated",
+          "inventory": "generated-full",
+          "programs": 1000,
+          "usable": 5994
+        },
+        {
+          "id": "mutants",
+          "inventory": "mutants-full",
+          "programs": 1000,
+          "usable": 6000
+        }
+      ],
+      "reference": {
+        "path": "site/results/luacid-full.json",
+        "sha256": "d625ffa9666675ace542f238c92ffdad3fba41d42d24cc69a862e70b80fa4f05"
+      }
+    },
+    "hard-quick": {
+      "hash": "9bcb49d29e867a92",
+      "profiles": [
+        "O0g1+x1",
+        "O1g1+x2",
+        "O2g1+x3",
+        "O0g2+x2",
+        "O1g2+x3",
+        "O2g2+x1"
+      ],
+      "roundTrips": 882,
+      "usable": 882,
+      "unusable": [],
+      "sections": [
+        {
+          "id": "cases",
+          "inventory": "cases",
+          "programs": 41,
+          "usable": 246
+        },
+        {
+          "id": "libraries",
+          "inventory": "libraries",
+          "programs": 6,
+          "usable": 36
+        },
+        {
+          "id": "generated",
+          "inventory": "generated-quick",
+          "programs": 50,
+          "usable": 300
+        },
+        {
+          "id": "mutants",
+          "inventory": "mutants-quick",
+          "programs": 50,
+          "usable": 300
+        }
+      ],
+      "reference": {
+        "path": "site/results/luacid-hard-quick.json",
+        "sha256": "d419982abdff9bbe1d3adfd9378bef0754a81c0f840ace6d3971988c159d8521"
+      }
+    },
+    "hard-full": {
+      "hash": "9921d3bde4a99bfd",
+      "profiles": [
+        "O0g1+x1",
+        "O1g1+x2",
+        "O2g1+x3",
+        "O0g2+x2",
+        "O1g2+x3",
+        "O2g2+x1"
+      ],
+      "roundTrips": 12282,
+      "usable": 12276,
+      "unusable": [
+        {
+          "section": "generated",
+          "test": "seed1541",
+          "profiles": [
+            "O0g1+x1",
+            "O1g1+x2",
+            "O2g1+x3",
+            "O0g2+x2",
+            "O1g2+x3",
+            "O2g2+x1"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "cases",
+          "inventory": "cases",
+          "programs": 41,
+          "usable": 246
+        },
+        {
+          "id": "libraries",
+          "inventory": "libraries",
+          "programs": 6,
+          "usable": 36
+        },
+        {
+          "id": "generated",
+          "inventory": "generated-full",
+          "programs": 1000,
+          "usable": 5994
+        },
+        {
+          "id": "mutants",
+          "inventory": "mutants-full",
+          "programs": 1000,
+          "usable": 6000
+        }
+      ],
+      "reference": {
+        "path": "site/results/luacid-hard-full.json",
+        "sha256": "2493c9d24ccd1b77c8e428de858e8fb56f560da96979b25053bfe80d9e6943b6"
+      }
+    }
+  }
+}

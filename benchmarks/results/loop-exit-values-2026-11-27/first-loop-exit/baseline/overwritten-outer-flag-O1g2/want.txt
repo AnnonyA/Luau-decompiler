@@ -1,0 +1,5 @@
+before	false
+zero	false
+before	false
+three	true
+== Returned

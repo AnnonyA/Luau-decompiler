@@ -1,0 +1,4 @@
+arity	1	nil
+arity	1	nil
+arity	0
+calls	3

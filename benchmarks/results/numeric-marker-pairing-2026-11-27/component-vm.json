@@ -1,0 +1,62 @@
+[
+  {
+    "phase": "before",
+    "normalization": {
+      "mainProtoId": 1,
+      "childWords": 16,
+      "markers": [
+        {
+          "pc": 6
+        },
+        {
+          "pc": 14
+        }
+      ]
+    },
+    "vm": [
+      {
+        "variant": "original",
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "sha256": "2041a3e1a463ebf4fb3248571abc65bad532560ba86780e69a9117a55dbd0ac8"
+      },
+      {
+        "variant": "normalized",
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "sha256": "2041a3e1a463ebf4fb3248571abc65bad532560ba86780e69a9117a55dbd0ac8"
+      }
+    ]
+  },
+  {
+    "phase": "after",
+    "normalization": {
+      "mainProtoId": 1,
+      "childWords": 8,
+      "markers": [
+        {
+          "pc": 6,
+          "originalPc": 6
+        }
+      ]
+    },
+    "vm": [
+      {
+        "variant": "original",
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "sha256": "2041a3e1a463ebf4fb3248571abc65bad532560ba86780e69a9117a55dbd0ac8"
+      },
+      {
+        "variant": "normalized",
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "sha256": "3936900d0513281abf99bfc9cb978bd3c5d237fc8ad45325a988dd60bc32dd34"
+      }
+    ]
+  }
+]

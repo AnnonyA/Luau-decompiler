@@ -1,0 +1,4 @@
+copies	9	false 11 true nil true 10 nil true 10
+values	5	-inf true "abc" true 18
+trace	1	"a1,b2,c3,d4,a25,b26,c27,d28,d29,f10,g11,left12,right13,s114,s215,s316,twice17,twice18"
+== Returned

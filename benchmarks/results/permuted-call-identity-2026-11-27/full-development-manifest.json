@@ -1,0 +1,1184 @@
+{
+  "schemaVersion": 1,
+  "purpose": "All mismatches from the completed Full c5 measurement; ready for a new directed check, not yet executed",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "sourceEngine": "c5cb88ef5badb2e7a28d5cb718d6085e3d3f18b8",
+  "sourceReport": "/workspace/scratch/eb5e4be57451/measurements/integrated-3/annonyA-full.json",
+  "sourceReportSha256": "d620cfeca77a176ceec1bfe3203ac20e93cbb07b9b022da9c6d534d92c071499",
+  "sourceScore": {
+    "passed": 12098,
+    "total": 12276
+  },
+  "sourceTotals": {
+    "pass": 12098,
+    "unusable": 6,
+    "mismatch": 178
+  },
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "programs": 51,
+  "fullProfileRoundTrips": 306,
+  "observedMismatches": 178,
+  "entries": [
+    {
+      "name": "seed1050",
+      "section": "generated",
+      "source": "seed1050.luau",
+      "sourceSha256": "511429e4e58db2a4b044a814f509c542fae086e6c0fdf26ec85098dcf6741f0d",
+      "failedProfiles": [
+        "O1g2"
+      ],
+      "originalResults": "ppppwp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1050,
+        "command": [
+          "rosetta",
+          "gen",
+          "1050"
+        ]
+      }
+    },
+    {
+      "name": "seed1073",
+      "section": "generated",
+      "source": "seed1073.luau",
+      "sourceSha256": "b43b7a005579ebdcc8dcaaf187462de938c0a82f91175987a6f1bb6df4568ecd",
+      "failedProfiles": [
+        "O2g1",
+        "O2g2"
+      ],
+      "originalResults": "ppwppw",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1073,
+        "command": [
+          "rosetta",
+          "gen",
+          "1073"
+        ]
+      }
+    },
+    {
+      "name": "seed1077",
+      "section": "generated",
+      "source": "seed1077.luau",
+      "sourceSha256": "d484e186299e6360fe46afeba89d8ec7db7eafac9f281ce65a37d1ecb91908c0",
+      "failedProfiles": [
+        "O1g1",
+        "O2g1",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "pwwpww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1077,
+        "command": [
+          "rosetta",
+          "gen",
+          "1077"
+        ]
+      }
+    },
+    {
+      "name": "seed1097",
+      "section": "generated",
+      "source": "seed1097.luau",
+      "sourceSha256": "40ac51cfe3cd5a65d31c2ddb80b0fdafe6a4a06613f484552e6ed16442987f27",
+      "failedProfiles": [
+        "O1g1",
+        "O2g1"
+      ],
+      "originalResults": "pwwppp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1097,
+        "command": [
+          "rosetta",
+          "gen",
+          "1097"
+        ]
+      }
+    },
+    {
+      "name": "seed1101",
+      "section": "generated",
+      "source": "seed1101.luau",
+      "sourceSha256": "70715bcbc1eb8aade977b5bc0b6f2f5e1882e2e99fe2c3e42c2cfe5b81b6b197",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1101,
+        "command": [
+          "rosetta",
+          "gen",
+          "1101"
+        ]
+      }
+    },
+    {
+      "name": "seed1113",
+      "section": "generated",
+      "source": "seed1113.luau",
+      "sourceSha256": "ff0ff614daf3f014e08641dae359f042847769a98857f1a524c2baebd08bb281",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1113,
+        "command": [
+          "rosetta",
+          "gen",
+          "1113"
+        ]
+      }
+    },
+    {
+      "name": "seed1140",
+      "section": "generated",
+      "source": "seed1140.luau",
+      "sourceSha256": "2d60f7e32fb57dd08f85b7b6eda2ab3f134cf8df2c12a88ed72bce80d2976c6e",
+      "failedProfiles": [
+        "O1g1",
+        "O1g2"
+      ],
+      "originalResults": "pwppwp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1140,
+        "command": [
+          "rosetta",
+          "gen",
+          "1140"
+        ]
+      }
+    },
+    {
+      "name": "seed1159",
+      "section": "generated",
+      "source": "seed1159.luau",
+      "sourceSha256": "67bdf617b76ffd412f7223cd4561bf43b0b65040288b08d026b7fab7fe927b1e",
+      "failedProfiles": [
+        "O0g2"
+      ],
+      "originalResults": "pppwpp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1159,
+        "command": [
+          "rosetta",
+          "gen",
+          "1159"
+        ]
+      }
+    },
+    {
+      "name": "seed1224",
+      "section": "generated",
+      "source": "seed1224.luau",
+      "sourceSha256": "f5593c1a7df507acf173ae081648d490b6f4300600f151abea0e81caead5d88d",
+      "failedProfiles": [
+        "O0g2"
+      ],
+      "originalResults": "pppwpp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1224,
+        "command": [
+          "rosetta",
+          "gen",
+          "1224"
+        ]
+      }
+    },
+    {
+      "name": "seed1247",
+      "section": "generated",
+      "source": "seed1247.luau",
+      "sourceSha256": "9c92e6a4c71e2841b7baf5ce688686ee68b075df70c2466761a0476354e28c27",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1247,
+        "command": [
+          "rosetta",
+          "gen",
+          "1247"
+        ]
+      }
+    },
+    {
+      "name": "seed1257",
+      "section": "generated",
+      "source": "seed1257.luau",
+      "sourceSha256": "92d54764cf2eb6f5ff62e03c965f3f9be268a95f05d2664222068e2d42de5695",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1257,
+        "command": [
+          "rosetta",
+          "gen",
+          "1257"
+        ]
+      }
+    },
+    {
+      "name": "seed1271",
+      "section": "generated",
+      "source": "seed1271.luau",
+      "sourceSha256": "e4d07beae12fe0daed71e779199119880ca6ed1f4908a703cd018417caf691b3",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2",
+        "O1g2"
+      ],
+      "originalResults": "wwpwwp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1271,
+        "command": [
+          "rosetta",
+          "gen",
+          "1271"
+        ]
+      }
+    },
+    {
+      "name": "seed1281",
+      "section": "generated",
+      "source": "seed1281.luau",
+      "sourceSha256": "d1a9830109d985a43a7c834dd8921e3a3d924b323ef2b56f13287f09ac080a2b",
+      "failedProfiles": [
+        "O0g1",
+        "O0g2"
+      ],
+      "originalResults": "wppwpp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1281,
+        "command": [
+          "rosetta",
+          "gen",
+          "1281"
+        ]
+      }
+    },
+    {
+      "name": "seed1297",
+      "section": "generated",
+      "source": "seed1297.luau",
+      "sourceSha256": "ab874b0f1144178fa41fc0076fba05e3b883018f07bccd82b5def6afba96d86f",
+      "failedProfiles": [
+        "O0g1",
+        "O0g2"
+      ],
+      "originalResults": "wppwpp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1297,
+        "command": [
+          "rosetta",
+          "gen",
+          "1297"
+        ]
+      }
+    },
+    {
+      "name": "seed1301",
+      "section": "generated",
+      "source": "seed1301.luau",
+      "sourceSha256": "63027c3dc93f2fc291be06b8b2b8b3064382679fca31848e6d514f2e6cfdc44b",
+      "failedProfiles": [
+        "O2g1",
+        "O2g2"
+      ],
+      "originalResults": "ppwppw",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1301,
+        "command": [
+          "rosetta",
+          "gen",
+          "1301"
+        ]
+      }
+    },
+    {
+      "name": "seed1306",
+      "section": "generated",
+      "source": "seed1306.luau",
+      "sourceSha256": "650840f76825e3a0a1f74d8af8fe6d7bdf14d1d44655ca062aa9a3194ce6a6ba",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1"
+      ],
+      "originalResults": "wwwppp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1306,
+        "command": [
+          "rosetta",
+          "gen",
+          "1306"
+        ]
+      }
+    },
+    {
+      "name": "seed1307",
+      "section": "generated",
+      "source": "seed1307.luau",
+      "sourceSha256": "d216882d413404cb24a1da172ae2f86b21fb820f8b7c15e85ec8e8e846d2e1e3",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1307,
+        "command": [
+          "rosetta",
+          "gen",
+          "1307"
+        ]
+      }
+    },
+    {
+      "name": "seed1334",
+      "section": "generated",
+      "source": "seed1334.luau",
+      "sourceSha256": "a1cc3d578ddfb96f2c9bfa1cfb6c0ed71fbf98dd98e11f00387823becd2cb1c4",
+      "failedProfiles": [
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "pppwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1334,
+        "command": [
+          "rosetta",
+          "gen",
+          "1334"
+        ]
+      }
+    },
+    {
+      "name": "seed1356",
+      "section": "generated",
+      "source": "seed1356.luau",
+      "sourceSha256": "98d04336fad7f88e98b47b6f32ba936b3d8a58bd964f17d9918918c96d689681",
+      "failedProfiles": [
+        "O0g1",
+        "O0g2"
+      ],
+      "originalResults": "wppwpp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1356,
+        "command": [
+          "rosetta",
+          "gen",
+          "1356"
+        ]
+      }
+    },
+    {
+      "name": "seed1369",
+      "section": "generated",
+      "source": "seed1369.luau",
+      "sourceSha256": "4d4fcd2b9cee25b88c194c61a7db1dbdd513ceb9841cad9b31b042b9287fb645",
+      "failedProfiles": [
+        "O0g1",
+        "O0g2"
+      ],
+      "originalResults": "wppwpp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1369,
+        "command": [
+          "rosetta",
+          "gen",
+          "1369"
+        ]
+      }
+    },
+    {
+      "name": "seed1376",
+      "section": "generated",
+      "source": "seed1376.luau",
+      "sourceSha256": "0ea674170512062d921c4e0b6c670a1afe8ad75202a77ae5c2ceaf0271d52e09",
+      "failedProfiles": [
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "pppwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1376,
+        "command": [
+          "rosetta",
+          "gen",
+          "1376"
+        ]
+      }
+    },
+    {
+      "name": "seed1424",
+      "section": "generated",
+      "source": "seed1424.luau",
+      "sourceSha256": "9dbe57fd9bbf5895bd472e71aa67bc87b4d9bb71da43b8f6542878827a127ab0",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1424,
+        "command": [
+          "rosetta",
+          "gen",
+          "1424"
+        ]
+      }
+    },
+    {
+      "name": "seed1444",
+      "section": "generated",
+      "source": "seed1444.luau",
+      "sourceSha256": "a6ccca257c8e4458d35415495d39f3c4cbe2e1e576f23ba5ac4a4fffc471e78c",
+      "failedProfiles": [
+        "O0g1",
+        "O0g2"
+      ],
+      "originalResults": "wppwpp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1444,
+        "command": [
+          "rosetta",
+          "gen",
+          "1444"
+        ]
+      }
+    },
+    {
+      "name": "seed1519",
+      "section": "generated",
+      "source": "seed1519.luau",
+      "sourceSha256": "5dffdef7a1d1084691410561bab04f26b28cc8e3dd75cc91655646929200aec1",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1519,
+        "command": [
+          "rosetta",
+          "gen",
+          "1519"
+        ]
+      }
+    },
+    {
+      "name": "seed1527",
+      "section": "generated",
+      "source": "seed1527.luau",
+      "sourceSha256": "62d913b29298cce5f27b03c97994e5c90bd2cd4c1c03a220399d53977692410d",
+      "failedProfiles": [
+        "O1g1",
+        "O2g1",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "pwwpww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1527,
+        "command": [
+          "rosetta",
+          "gen",
+          "1527"
+        ]
+      }
+    },
+    {
+      "name": "seed1551",
+      "section": "generated",
+      "source": "seed1551.luau",
+      "sourceSha256": "5b31721c8608324664ef214d56d27717ddf5b96377a13d3ecb34b7890f36492b",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1551,
+        "command": [
+          "rosetta",
+          "gen",
+          "1551"
+        ]
+      }
+    },
+    {
+      "name": "seed1715",
+      "section": "generated",
+      "source": "seed1715.luau",
+      "sourceSha256": "0b0159d8441493b9fa276114979ded009a63325f77eee924d35ff83940d79a46",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1715,
+        "command": [
+          "rosetta",
+          "gen",
+          "1715"
+        ]
+      }
+    },
+    {
+      "name": "seed1746",
+      "section": "generated",
+      "source": "seed1746.luau",
+      "sourceSha256": "27d61500c651d8390567bd55e49745db88728b338ae3a4a4ed453a79a9264e16",
+      "failedProfiles": [
+        "O1g1",
+        "O2g1",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "pwwpww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1746,
+        "command": [
+          "rosetta",
+          "gen",
+          "1746"
+        ]
+      }
+    },
+    {
+      "name": "seed1772",
+      "section": "generated",
+      "source": "seed1772.luau",
+      "sourceSha256": "37b988131d4627a2a6636c285e03aa493ec64d1c0cf949d9843439eff4aa79e5",
+      "failedProfiles": [
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "pppwww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1772,
+        "command": [
+          "rosetta",
+          "gen",
+          "1772"
+        ]
+      }
+    },
+    {
+      "name": "seed1796",
+      "section": "generated",
+      "source": "seed1796.luau",
+      "sourceSha256": "4f3c442517574a81f1628c91c4db12d12216ff9248cde8f68a482d77dab3530c",
+      "failedProfiles": [
+        "O1g1",
+        "O1g2"
+      ],
+      "originalResults": "pwppwp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1796,
+        "command": [
+          "rosetta",
+          "gen",
+          "1796"
+        ]
+      }
+    },
+    {
+      "name": "seed1861",
+      "section": "generated",
+      "source": "seed1861.luau",
+      "sourceSha256": "6873a5987d20de03de7d2361590cef3d840d44220053c7a30748cb39754e0f7d",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1"
+      ],
+      "originalResults": "wwwppp",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1861,
+        "command": [
+          "rosetta",
+          "gen",
+          "1861"
+        ]
+      }
+    },
+    {
+      "name": "seed1942",
+      "section": "generated",
+      "source": "seed1942.luau",
+      "sourceSha256": "bc6f992514f97a8a7adec9e8021b754b40597037325a693bc0aa325fabd0c7d6",
+      "failedProfiles": [
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "ppppww",
+      "origin": {
+        "generator": "typed-v2",
+        "seed": 1942,
+        "command": [
+          "rosetta",
+          "gen",
+          "1942"
+        ]
+      }
+    },
+    {
+      "name": "mut1-25",
+      "section": "mutants",
+      "source": "mut1-25.luau",
+      "sourceSha256": "8cadceb7dedebab229ff4a0881156c122f781bcd8ad96b7df4a670609f40d876",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2"
+      ],
+      "originalResults": "wwpwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-103",
+      "section": "mutants",
+      "source": "mut1-103.luau",
+      "sourceSha256": "85e23bf13598fd38745e0abcb34f7ac0e0a9772b2bc370691cd55bbb092a5e6f",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2"
+      ],
+      "originalResults": "wwpwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-170",
+      "section": "mutants",
+      "source": "mut1-170.luau",
+      "sourceSha256": "dbd3a7576bad24c15e368f86856553ba03962a890885d306bbac65451051f80d",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2"
+      ],
+      "originalResults": "wwpwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-298",
+      "section": "mutants",
+      "source": "mut1-298.luau",
+      "sourceSha256": "a317d51f8f131cb63f19899797bd79158219b3d41b4854c74ff9d54759af4746",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2",
+        "O1g2"
+      ],
+      "originalResults": "wwpwwp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-359",
+      "section": "mutants",
+      "source": "mut1-359.luau",
+      "sourceSha256": "ce43002ab299b02b143adbf4cbe7acae65abb8323bb6610919e690c17e05ff18",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2"
+      ],
+      "originalResults": "wwpwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-376",
+      "section": "mutants",
+      "source": "mut1-376.luau",
+      "sourceSha256": "8077606b146c417ac36bba7f62098818c72c099e1cd23334e7d539cd1509fa4b",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-395",
+      "section": "mutants",
+      "source": "mut1-395.luau",
+      "sourceSha256": "fb58201079e9878cabc310d3db8d5e3c450187bd506af6c23e3f5cce605104e7",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2",
+        "O1g2"
+      ],
+      "originalResults": "wwpwwp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-450",
+      "section": "mutants",
+      "source": "mut1-450.luau",
+      "sourceSha256": "0ad928c196a1e102ec07d14f2e200da03d82f437dfd1be7ada38aa452d9d83d3",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2"
+      ],
+      "originalResults": "wwpwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-473",
+      "section": "mutants",
+      "source": "mut1-473.luau",
+      "sourceSha256": "88ef6835916ac854550a8233aae537b62a99701520e5a428d9cbdb65cbe3a09b",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2"
+      ],
+      "originalResults": "wwpwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-494",
+      "section": "mutants",
+      "source": "mut1-494.luau",
+      "sourceSha256": "60c94017eebd67353367380f81fe3f61a548fa0ca2cf82f1e151845741bf0763",
+      "failedProfiles": [
+        "O0g1",
+        "O0g2"
+      ],
+      "originalResults": "wppwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-569",
+      "section": "mutants",
+      "source": "mut1-569.luau",
+      "sourceSha256": "fea57273d44107c45554d537ea2473b8a4a13178de80041322d5e182c09ec853",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-677",
+      "section": "mutants",
+      "source": "mut1-677.luau",
+      "sourceSha256": "e7ae1818b1bbb1fd7ce2fdd87c55274444000ae75083bc920684e8e1422d8b6a",
+      "failedProfiles": [
+        "O1g1",
+        "O2g1",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "pwwpww",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-695",
+      "section": "mutants",
+      "source": "mut1-695.luau",
+      "sourceSha256": "5111a122a6e19c4f26b8e4e98d51a86df97c699b2977489ddcc4b1dfbc1ee6ac",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2"
+      ],
+      "originalResults": "wwpwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-705",
+      "section": "mutants",
+      "source": "mut1-705.luau",
+      "sourceSha256": "2ccf7f9052884b7a5895b38e28681cf43c644f0462b7a15c0b129e04031e4307",
+      "failedProfiles": [
+        "O0g1",
+        "O0g2"
+      ],
+      "originalResults": "wppwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-787",
+      "section": "mutants",
+      "source": "mut1-787.luau",
+      "sourceSha256": "fc6795d282d68a697c50ce4cced585c88b9fdbbd97a55d8297e9f96ea6620549",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1"
+      ],
+      "originalResults": "wwpppp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-801",
+      "section": "mutants",
+      "source": "mut1-801.luau",
+      "sourceSha256": "a209558406efd0b6e497965bb064644c22aa64e7e09486d7e5f446a61d5832a5",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2",
+        "O1g2"
+      ],
+      "originalResults": "wwpwwp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-836",
+      "section": "mutants",
+      "source": "mut1-836.luau",
+      "sourceSha256": "e731c7f956bfc07bbd6900e9d5f48e5f4f0f66fe1b7c9e6e950e0ee82ff535f3",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "wwwwww",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-867",
+      "section": "mutants",
+      "source": "mut1-867.luau",
+      "sourceSha256": "b34b577a6d6e0e5b66061b1aab8682efd37f9667ad3874a94144d7608967358f",
+      "failedProfiles": [
+        "O0g1",
+        "O1g1",
+        "O0g2"
+      ],
+      "originalResults": "wwpwpp",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    },
+    {
+      "name": "mut1-936",
+      "section": "mutants",
+      "source": "mut1-936.luau",
+      "sourceSha256": "c09d20adb8f8ad530087ec63d0c894a231cf379eb69a773355046059b8bbf646",
+      "failedProfiles": [
+        "O1g1",
+        "O2g1",
+        "O1g2",
+        "O2g2"
+      ],
+      "originalResults": "pwwpww",
+      "origin": {
+        "command": [
+          "rosetta",
+          "mutate",
+          "--count",
+          "1000",
+          "--seed",
+          "1",
+          "--dump"
+        ],
+        "poolHash": "77408523"
+      }
+    }
+  ]
+}

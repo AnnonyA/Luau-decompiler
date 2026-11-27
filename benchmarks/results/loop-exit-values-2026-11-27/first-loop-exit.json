@@ -1,0 +1,75 @@
+{
+  "generator": "typed-v2",
+  "cases": 2,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "baseline": {
+      "pass": 7,
+      "mismatch": 5
+    }
+  },
+  "by_profile": {
+    "baseline": {
+      "O0g2": 2,
+      "O1g2": 2,
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "baseline": [
+      {
+        "case": "loop-local-snapshots",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `false\t0\ttrue\t3` got `nil\t0\tnil\t3`"
+      },
+      {
+        "case": "loop-local-snapshots",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `false\t0\ttrue\t3` got `nil\t0\tnil\t3`"
+      },
+      {
+        "case": "loop-local-snapshots",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `false\t0\ttrue\t3` got `false\t0\tnil\t3`"
+      },
+      {
+        "case": "overwritten-outer-flag",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 2: want `zero\tfalse` got `zero\tnil`"
+      },
+      {
+        "case": "overwritten-outer-flag",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 2: want `zero\tfalse` got `zero\tnil`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 7,
+    "by_decompiler": {
+      "baseline": {
+        "round_trips": 7,
+        "similarity": 78.65363359451294,
+        "size": 1.2926254573095024,
+        "locals": 1.1952194427106404,
+        "nesting": 0.42857142857142855,
+        "endless": 0,
+        "names": 100.0,
+        "cpu_ms_median": 119.157,
+        "cpu_ms_total": 885.593
+      }
+    }
+  }
+}

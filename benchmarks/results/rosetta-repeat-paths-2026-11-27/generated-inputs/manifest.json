@@ -1,0 +1,27 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "generator": "typed-v2",
+  "grammar": "full",
+  "entries": [
+    {
+      "seed": 1042,
+      "source": "seed1042.luau",
+      "sha256": "d1e0cbbd1cf1ecd1190e49b545a2e71ffc0501eb5ad70b6358d311c1ea8c29c0",
+      "command": [
+        "rosetta",
+        "gen",
+        "1042"
+      ]
+    },
+    {
+      "seed": 1086,
+      "source": "seed1086.luau",
+      "sha256": "decf2b51e58e6a943eddd7bfb537b0549149c07fa61476d3b2216126d51e8a70",
+      "command": [
+        "rosetta",
+        "gen",
+        "1086"
+      ]
+    }
+  ]
+}

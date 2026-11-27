@@ -1,0 +1,67 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "ann": {
+      "mismatch": 6
+    }
+  },
+  "by_profile": {
+    "ann": {
+      "O0g1": 1,
+      "O0g2": 1,
+      "O1g1": 1,
+      "O1g2": 1,
+      "O2g1": 1,
+      "O2g2": 1
+    }
+  },
+  "failures": {
+    "ann": [
+      {
+        "case": "global-loop-choice",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t2` got `nil\tnil`"
+      },
+      {
+        "case": "global-loop-choice",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t2` got `nil\tnil`"
+      },
+      {
+        "case": "global-loop-choice",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t2` got `nil\tnil`"
+      },
+      {
+        "case": "global-loop-choice",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t2` got `nil\tnil`"
+      },
+      {
+        "case": "global-loop-choice",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t2` got `nil\tnil`"
+      },
+      {
+        "case": "global-loop-choice",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `2\t2` got `nil\tnil`"
+      }
+    ]
+  }
+}

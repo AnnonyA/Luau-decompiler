@@ -1,0 +1,121 @@
+{
+  "generator": "typed-v2",
+  "cases": 4,
+  "profiles": [
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "ann": {
+      "pass": 12,
+      "decompile_failed": 3,
+      "mismatch": 9
+    }
+  },
+  "by_profile": {
+    "ann": {
+      "O0g1+x1": 1,
+      "O0g2+x2": 2,
+      "O1g1+x2": 2,
+      "O1g2+x3": 3,
+      "O2g1+x3": 3,
+      "O2g2+x1": 1
+    }
+  },
+  "failures": {
+    "ann": [
+      {
+        "case": "seed1055",
+        "profile": "O2g1+x3",
+        "kind": "mismatch",
+        "detail": "printed 3 lines, want 20"
+      },
+      {
+        "case": "seed1055",
+        "profile": "O1g2+x3",
+        "kind": "decompile_failed",
+        "detail": "timeout"
+      },
+      {
+        "case": "seed1630",
+        "profile": "O1g1+x2",
+        "kind": "mismatch",
+        "detail": "printed 12 lines, want 24"
+      },
+      {
+        "case": "seed1630",
+        "profile": "O2g1+x3",
+        "kind": "mismatch",
+        "detail": "printed 12 lines, want 24"
+      },
+      {
+        "case": "seed1630",
+        "profile": "O1g2+x3",
+        "kind": "mismatch",
+        "detail": "printed 12 lines, want 24"
+      },
+      {
+        "case": "seed1630",
+        "profile": "O2g2+x1",
+        "kind": "mismatch",
+        "detail": "printed 12 lines, want 24"
+      },
+      {
+        "case": "seed1657",
+        "profile": "O0g1+x1",
+        "kind": "mismatch",
+        "detail": "line 3: want `L3\t2\t{1=1,2=\"[[\",3=\"nil|3.5\",4=7,5=10,6=-1} {\"y\"=\"255\",1=-1e-07,2=1,3=3,4=-0.5}` got `L3\t2\t{5=10} {1=-1e-07,2=1,3=3,4=-0.5}`"
+      },
+      {
+        "case": "seed1657",
+        "profile": "O0g2+x2",
+        "kind": "mismatch",
+        "detail": "line 3: want `L3\t2\t{1=1,2=\"[[\",3=\"nil|3.5\",4=7,5=10,6=-1} {\"y\"=\"255\",1=-1e-07,2=1,3=3,4=-0.5}` got `L3\t2\t{5=10} {1=-1e-07,2=1,3=3,4=-0.5}`"
+      },
+      {
+        "case": "seed1726",
+        "profile": "O1g1+x2",
+        "kind": "mismatch",
+        "detail": "line 12: want `L14\t8\t\"k,v,a,b,b2,a2,x,y,l,r,m,p,z,c1,c2,ck,cv,s1,s2,s3\" 2 1 7 2 true \"abc\" {\"count\"=1,\"key\"=1,\"x\"=2,\"y\"=1}` got `L14\t8\t\"k,v,a,a,b,b2,a2,x,y,l,r,m,p,z,c1,c2,ck,cv,s1,s2,s3\" 2 1 7 2 true \"abc\" {\"count\"=1,\"key\"=1,\"x\"=2,\"y\"=1}`"
+      },
+      {
+        "case": "seed1726",
+        "profile": "O2g1+x3",
+        "kind": "decompile_failed",
+        "detail": "timeout"
+      },
+      {
+        "case": "seed1726",
+        "profile": "O0g2+x2",
+        "kind": "mismatch",
+        "detail": "line 12: want `L14\t8\t\"k,v,a,b,b2,a2,x,y,l,r,m,p,z,c1,c2,ck,cv,s1,s2,s3\" 2 1 7 2 true \"abc\" {\"count\"=1,\"key\"=1,\"x\"=2,\"y\"=1}` got `L14\t8\t\"k,v,a,b,b2,a2,a2,x,y,l,r,m,p,z,c1,c2,ck,cv,s1,s1,s2,s3\" 2 1 7 2 true \"abc\" {\"count\"=1,\"key\"=1,\"x\"=2,\"y\"=1}`"
+      },
+      {
+        "case": "seed1726",
+        "profile": "O1g2+x3",
+        "kind": "decompile_failed",
+        "detail": "timeout"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 12,
+    "by_decompiler": {
+      "ann": {
+        "round_trips": 12,
+        "similarity": 61.61209295193354,
+        "size": 0.7002744630595122,
+        "locals": 0.8536060815808606,
+        "nesting": -0.8333333333333334,
+        "endless": 1,
+        "names": 18.487394957983195,
+        "cpu_ms_median": 303.52000000000004,
+        "cpu_ms_total": 3685.449
+      }
+    }
+  }
+}

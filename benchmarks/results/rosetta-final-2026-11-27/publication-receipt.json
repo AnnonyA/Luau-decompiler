@@ -1,0 +1,51 @@
+{
+  "repository": "AnnonyA/Luau-decompiler",
+  "branch": "improve/rosetta-3-engine",
+  "pr": 82,
+  "url": "https://github.com/AnnonyA/Luau-decompiler/pull/82",
+  "draft": true,
+  "sourceCommit": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+  "sourceTree": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+  "sourceTreeSha256": "5f30831cc22670b8ab20822aa5a7a8d26785d8228e7408070669e6ada5dfd965",
+  "distSha256": "4970b410c82ae8465054ca58f748848bc6e531740d393a248ddd6e30675caff4",
+  "remoteCommit": "08259cd6c312fe9c41eda0e0c5d0d03d9524cf71",
+  "parentRemoteCommit": "492773f6dfabe4b41d9853b627a3a260e15c8f34",
+  "author": "AnnonyA",
+  "committer": "AnnonyA",
+  "treeVerified": true,
+  "expectedHeadLease": "492773f6dfabe4b41d9853b627a3a260e15c8f34",
+  "force": false,
+  "entryCount": 135,
+  "uploadedBlobs": 71,
+  "quick": {
+    "passed": 882,
+    "total": 882,
+    "resultSha256": "70c79a0d9162db9e6473316725d433148eddf373e057086c615ea89d7de66d5d"
+  },
+  "hardQuick": {
+    "passed": 882,
+    "total": 882,
+    "resultSha256": "27fc5e3d2de34c081bc18e8455f5b93617fc762a9813211b36d9392c85b16dff"
+  },
+  "full": {
+    "status": "running"
+  },
+  "hardFull": {
+    "status": "running"
+  },
+  "localValidation": {
+    "node": "22.23.5",
+    "unit": 1322,
+    "testFiles": 134,
+    "harness": 69,
+    "demoTests": 6,
+    "build": true,
+    "typecheck": true,
+    "smoke": true,
+    "demoBuild": true,
+    "node20": "Not rerun locally; exact-head CI required",
+    "browser": "Not rerun locally; known missing binary; exact-head CI required",
+    "officialLuau": "Exact-head remote CI required"
+  },
+  "merge": false
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "repository": "AnnonyA/Luau-decompiler",
+  "localSourceCommit": "ff0275ea025f150d73aa29e10f3f2b7b0111907a",
+  "publishedEngineCommit": "08259cd6c312fe9c41eda0e0c5d0d03d9524cf71",
+  "engineCommitTree": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+  "srcGitTree": "ca9ca62a55ff4cbb50ae8e0655619b254a230f44",
+  "sourceTreeSha256": "5f30831cc22670b8ab20822aa5a7a8d26785d8228e7408070669e6ada5dfd965",
+  "distSha256": "4970b410c82ae8465054ca58f748848bc6e531740d393a248ddd6e30675caff4",
+  "remoteAuthor": "AnnonyA",
+  "remoteCommitter": "AnnonyA",
+  "identityVerification": "GitHub Git commit API read-back before update_ref; tree SHA equality, parent, author and committer verified.",
+  "publishedEngineUrl": "https://github.com/AnnonyA/Luau-decompiler/commit/08259cd6c312fe9c41eda0e0c5d0d03d9524cf71",
+  "pullRequest": "https://github.com/AnnonyA/Luau-decompiler/pull/82",
+  "publicationReceiptSha256": "970bc9ea0d98393f6980b02e1e10992b62b5375a934af3dffc948ffa63e34d6c",
+  "publicationReceiptRole": "Immutable receipt from engine publication; the suite measurements may finish later.",
+  "ciSyntheticMergeCommit": "865f2715e55dbaec2f2059b7ed8d239374cbd569",
+  "ciSyntheticMergeTree": "ea3058b85283838ee3a765f19db2a3a7b3a0838f",
+  "ciSyntheticMergeTreeVerification": "Verified against supplied GitHub Git commit API proof.",
+  "ciSyntheticMergeMeaning": "refs/pull/82/merge checked out by Actions for testing; not a merge of the PR into main.",
+  "futureEvidenceCommit": "Documentation and report files may be added later. Preserve srcGitTree and sourceTreeSha256; do not relabel these measurements as a new engine run."
+}

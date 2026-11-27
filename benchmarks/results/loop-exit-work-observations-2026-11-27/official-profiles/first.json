@@ -1,0 +1,38 @@
+[
+  {
+    "profile": "O0g1",
+    "permutationEquivalent": true,
+    "baselineMatches": false,
+    "baselineCompiler": 0
+  },
+  {
+    "profile": "O0g2",
+    "permutationEquivalent": true,
+    "baselineMatches": false,
+    "baselineCompiler": 0
+  },
+  {
+    "profile": "O1g1",
+    "permutationEquivalent": true,
+    "baselineMatches": false,
+    "baselineCompiler": 0
+  },
+  {
+    "profile": "O1g2",
+    "permutationEquivalent": true,
+    "baselineMatches": false,
+    "baselineCompiler": 0
+  },
+  {
+    "profile": "O2g1",
+    "permutationEquivalent": true,
+    "baselineMatches": false,
+    "baselineCompiler": 0
+  },
+  {
+    "profile": "O2g2",
+    "permutationEquivalent": true,
+    "baselineMatches": false,
+    "baselineCompiler": 0
+  }
+]

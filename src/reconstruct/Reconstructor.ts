@@ -12,7 +12,7 @@ import { analyzeBindings, renameFreeBindings } from "../analysis/Bindings.js";
 import { effectOf } from "../analysis/SideEffects.js";
 import { buildControlFlowGraph, type BasicBlock, type ControlFlowGraph } from "../cfg/ControlFlowGraph.js";
 import { computeDominators, computePostDominators, type DominatorTree, type PostDominatorTree } from "../cfg/Dominators.js";
-import { findNaturalLoops, type NaturalLoop } from "../cfg/NaturalLoops.js";
+import { findNaturalLoops, followPureJumps, type NaturalLoop } from "../cfg/NaturalLoops.js";
 import { structureControlFlow, type StructureInfo } from "../cfg/Structure.js";
 import type { LuauConstant } from "../decode/Constant.js";
 import type { DecodedInstruction } from "../decode/DecodedInstruction.js";
@@ -232,6 +232,7 @@ class SourceBuilder {
   private cyclicBlocks?: Set<number>;
   private readonly loopTails = new Map<NaturalLoop, {entry: number; follow: number; flag: string}>();
   private readonly consumed = new Set<number>();
+  private readonly definitionUses = new Map<string, {count: number; outsideBlock: boolean}>();
   private readonly phiNames = new Map<string, string>();
   private readonly phiInputs = new Map<number, string[]>();
   private readonly phiFamilies = new Map<string, Set<string>>();
@@ -518,6 +519,10 @@ class SourceBuilder {
     const declarations: Statement[] = [...this.sharedClosureConstants.values()].filter(s => s.hoisted && !s.factory)
       .map(s => ({kind: "local", names: [s.name], values: []}));
     const body = block([...declarations, ...this.emitRange(0, undefined, new Set())]);
+    // Only source placement proves a bare return redundant. A physically
+    // last bytecode RETURN can be an early exit from a shuffled loop body.
+    const tail = body.statements.at(-1);
+    if (tail?.kind === "return" && tail.values.length === 0) body.statements.pop();
     if (this.refCells.size) {
       // REF is evidence of a mutable cell even when earlier stores disappeared
       // from bytecode. Preserve a written local if no actual writes survived;
@@ -561,23 +566,28 @@ class SourceBuilder {
   // ------------------------------------------------------------- block walk
 
   private emitRange(start: number, stop: number | undefined, visited: Set<number>): Statement[] {
+    // Loop follows are canonicalized through pure jump adapters. An enclosing
+    // arm may still name that adapter as its boundary; recognize the same
+    // boundary after a nested loop resumes at its canonical destination.
+    stop = stop === undefined ? undefined : followPureJumps(this.ir.cfg, stop);
     const statements: Statement[] = [];
     let current: number | undefined = start;
+    let directTransfer = true;
     while (current !== undefined) {
       const exit = this.loopExit(current);
-      if (exit) { statements.push(...exit); break; }
-      if (current === stop) break;
-      if (visited.has(current) || this.emitted.has(current)) {
-        const loop = this.currentLoop();
-        if (loop && this.loopTails.has(loop) && current === loop.header) statements.push({kind: "continue"});
-        break;
-      }
+      if (exit) { if (directTransfer) statements.push(...exit); break; }
       const activeLoop = this.currentLoop();
       if (activeLoop && current === this.loopFollow(activeLoop)) {
         // A nested conditional may have its own follow beyond this region.
         // Crossing the enclosing loop exit is a break, never permission to
         // emit the post-loop statements inside one alternative.
-        statements.push({ kind: "break" });
+        if (directTransfer) statements.push({ kind: "break" });
+        break;
+      }
+      if (current === stop) break;
+      if (visited.has(current) || this.emitted.has(current)) {
+        const loop = this.currentLoop();
+        if (loop && this.loopTails.has(loop) && current === loop.header) statements.push({kind: "continue"});
         break;
       }
       const block = this.ir.cfg.blocks[current];
@@ -589,6 +599,7 @@ class SourceBuilder {
         visited.add(this.loopVisitKeys.get(loop)!);
         statements.push(...this.emitLoop(loop, visited));
         current = this.loopFollow(loop);
+        directTransfer = true;
         continue;
       }
       const preparedLoop = this.preparedLoop(block);
@@ -597,13 +608,20 @@ class SourceBuilder {
         visited.add(this.loopVisitKeys.get(preparedLoop)!);
         statements.push(...this.emitLoop(preparedLoop, visited));
         current = this.loopFollow(preparedLoop);
+        directTransfer = true;
         continue;
       }
       const branch = this.tryIf(block, stop, visited);
       if (branch) {
+        // Value/boolean guards can emit their prelude without emitStraight.
+        // Once committed, a backedge must not emit that prelude a second time.
+        this.emitted.add(block.id);
         statements.push(...branch.statements);
         if (endsControl(branch.statements)) break;
         current = branch.follow;
+        // A structured if's alternatives already own their exit transfers.
+        // Its join is not a new edge that exits the surrounding loop.
+        directTransfer = !branch.followIsJoin;
         continue;
       }
       statements.push(...this.emitStraight(block));
@@ -622,12 +640,12 @@ class SourceBuilder {
         const successor = block.successors[0]!;
         const loop = this.currentLoop();
         const last = block.instructions.at(-1);
-        if (loop && last?.opcode === Opcode.JUMP) {
+        if (loop && (last?.opcode === Opcode.JUMP || last?.opcode === Opcode.JUMPX || last?.opcode === Opcode.JUMPBACK)) {
           if (successor === loop.header || this.isPureLoopLatch(successor, loop)) {
             statements.push({ kind: "continue" });
             break;
           }
-          if (!this.loopTails.has(loop) && !loop.blocks.includes(successor)) {
+          if (!this.loopTails.has(loop) && !loop.blocks.includes(successor) && !this.hasExternalExitWork(successor, loop)) {
             statements.push({ kind: "break" });
             current = undefined;
             continue;
@@ -637,7 +655,7 @@ class SourceBuilder {
         // `break`, even when it is not part of the natural loop (blocks that
         // never reach the latch are excluded from the loop body).
         if (
-          last?.opcode === Opcode.JUMP &&
+          (last?.opcode === Opcode.JUMP || last?.opcode === Opcode.JUMPX) &&
           successor === stop &&
           stop !== undefined &&
           loop !== undefined &&
@@ -649,12 +667,7 @@ class SourceBuilder {
           continue;
         }
         current = successor;
-        continue;
-      }
-      // FORGPREP blocks have two successors (header and the FORGLOOP latch that
-      // handles the first iteration); the emission continues at the header.
-      if (isGenericPrep(block.instructions.at(-1)?.opcode)) {
-        current = block.fallthrough;
+        directTransfer = true;
         continue;
       }
       break;
@@ -663,6 +676,29 @@ class SourceBuilder {
   }
 
   // ------------------------------------------------------------------ loops
+
+  /** A natural loop excludes arms that never reach its backedge. They can
+   * return, or perform writes and effects before the shared follow. Preserve
+   * that work when a linear, acyclic exit path proves it. Pure adapters to
+   * the follow keep the immediate-break fast path; branches and reentry
+   * remain outside this bounded proof. */
+  private hasExternalExitWork(start: number, loop: NaturalLoop): boolean {
+    const follow = this.loopFollow(loop), seen = new Set<number>();
+    let current = start;
+    let hasWork = false;
+    while (!seen.has(current)) {
+      if (current === follow) return hasWork;
+      if (loop.blocks.includes(current)) return false;
+      seen.add(current);
+      const basic = this.ir.cfg.blocks[current];
+      if (!basic || basic.unreachable) return false;
+      if (basic.instructions.at(-1)?.opcode === Opcode.RETURN) return true;
+      hasWork ||= basic.instructions.some(insn => insn.opcode !== Opcode.NOP && !isControlOnly(insn.opcode));
+      if (basic.successors.length !== 1) return false;
+      current = basic.successors[0]!;
+    }
+    return false;
+  }
 
   private loopExit(target: number): Statement[] | undefined {
     const loop = this.currentLoop();
@@ -676,9 +712,12 @@ class SourceBuilder {
 
   private emitLoop(loop: NaturalLoop, visited: Set<number>): Statement[] {
     const follow = this.loopFollow(loop);
-    const normal = loop.kind === "numeric-for" || loop.kind === "generic-for"
+    const normalEdge = loop.kind === "numeric-for" || loop.kind === "generic-for"
       ? this.ir.cfg.blocks[loop.latch]?.fallthrough
-      : loop.kind === "while" ? this.ir.cfg.blocks[loop.header]?.successors.find(id => !loop.blocks.includes(id)) : undefined;
+      : loop.kind === "while" ? this.ir.cfg.blocks[loop.header]?.successors.find(id => !loop.blocks.includes(id))
+      : loop.kind === "repeat" ? this.ir.cfg.blocks[loop.testBlock ?? loop.latch]?.successors.find(id => !loop.blocks.includes(id))
+      : undefined;
+    const normal = normalEdge === undefined ? undefined : followPureJumps(this.ir.cfg, normalEdge);
     const declarations: Statement[] = [];
     if (normal !== undefined && follow !== undefined && normal !== follow) {
       const flag = this.allocator.reserve("runTail");
@@ -690,6 +729,12 @@ class SourceBuilder {
     const written = new Set(loop.blocks.flatMap(id => this.ir.cfg.blocks[id]!.instructions.flatMap(insn => insn.defs)));
     for (const register of written) {
       const binding = this.env.get(register);
+      if (binding?.name && binding.pinned && !binding.alias) {
+        // Copies made before the loop retain its entry value. Taking this
+        // snapshot at the first body write would repeat it every iteration
+        // and incorrectly make those copies track the loop-carried cell.
+        declarations.push(...this.snapshotRegisterAliases(register, binding.name));
+      }
       if (binding?.name && binding.pinned && !binding.alias && !binding.forwardRef &&
           this.isDeadLoopPhi(loop, register, false)) {
         // This physical slot is overwritten on every path before its entry
@@ -860,7 +905,7 @@ class SourceBuilder {
         test = this.conditionFrom(last, bodyCandidate === header.fallthrough);
         const exit = header.successors.find(id => !loop.blocks.includes(id));
         const follow = this.loopFollow(loop);
-        if (!this.loopTails.has(loop) && exit !== undefined && follow !== undefined && exit !== follow) {
+        if (!this.loopTails.has(loop) && exit !== undefined && follow !== undefined && followPureJumps(this.ir.cfg, exit) !== follow) {
           // Inlined returns may join after a normal-exit fallback assignment.
           // Execute that region only when the entry test fails, not on break.
           this.declareJoinPhis(follow, declarations, 1);
@@ -879,7 +924,8 @@ class SourceBuilder {
         // Materialized calls and register writes must run before EVERY test.
         return [...declarations, { kind: "while", test: lit(true), body: block([
           ...headerSetup,
-          { kind: "if", test: { kind: "unary", op: "not", argument: test }, consequent: block([...exitSetup, { kind: "break" }]), branches: [] },
+          { kind: "if", test: { kind: "unary", op: "not", argument: test },
+            consequent: block([...exitSetup, ...(endsControl(exitSetup) ? [] : [{ kind: "break" } as Statement])]), branches: [] },
           ...body,
         ]) }];
       }
@@ -907,13 +953,29 @@ class SourceBuilder {
     const testBlockId = loop.testBlock ?? loop.latch;
     const testBlock = this.ir.cfg.blocks[testBlockId]!;
     const last = testBlock.instructions.at(-1);
+    // A compound until can short-circuit directly to the backedge without
+    // evaluating its final test. Moving that test outside the body would
+    // evaluate it on the bypass path too. Keep each original exit/continue
+    // guard in the repeat body unless every backedge crosses the test.
+    // Inlined returns can rejoin after a distinct normal-result tail. Keep
+    // the until guards in their original alternatives too: only those
+    // alternatives own the reaching values used by the final comparison.
+    if (this.loopTails.has(loop) ||
+        (testBlockId !== loop.latch && !this.ir.dominators.dominates(testBlockId, loop.latch))) {
+      return { kind: "repeat", body: block(this.emitRange(loop.header, this.loopFollow(loop), new Set(visited))), test: lit(false) };
+    }
     if (last && isCompare(last.opcode)) {
       this.consumed.add(last.pc);
     }
-    const body =
-      loop.header === loop.latch
-        ? this.emitStraight(header)
-        : this.emitRange(loop.header, this.loopFollow(loop), new Set(visited));
+    const separateTest = testBlockId !== loop.header && testBlockId !== loop.latch;
+    const body = loop.header === loop.latch
+      ? this.emitStraight(header)
+      : this.emitRange(loop.header, separateTest ? testBlockId : this.loopFollow(loop), new Set(visited));
+    // Reconstruct the condition's setup after all body alternatives rejoin.
+    // A breaking arm never executes it; a continuing arm must use its own
+    // reaching definitions, not the register environment saved before the
+    // preceding if (which may contain a different value in the same slot).
+    if (separateTest) body.push(...this.emitStraight(testBlock));
     const test =
       last && isCompare(last.opcode)
         ? this.conditionFrom(last, testBlockId === loop.latch && testBlock.branch === loop.header)
@@ -946,7 +1008,14 @@ class SourceBuilder {
       .filter(insn => insn.opcode === Opcode.FORGLOOP || insn.opcode === Opcode.FORNLOOP)
       .flatMap(insn => insn.defs));
     const namesByRegister = new Map<number, string>();
-    for (const blockId of [loop.header, loop.latch]) {
+    const follow = this.loopFollow(loop);
+    // A body can overwrite a value before every read and still export it at
+    // the exit. Such a register has an exit phi but no header/latch phi. Its
+    // binding must already exist outside the loop, including the zero-trip
+    // edge from the preheader.
+    const boundaries = new Set([loop.header, loop.latch]);
+    if (follow !== undefined) boundaries.add(follow);
+    for (const blockId of boundaries) {
       for (const phi of this.ir.ssa.phis.get(blockId) ?? []) {
         const key = `phi:${blockId}:${phi.register}`;
         if (this.deadLoopPhis.has(key) || controlRegisters.has(phi.register)) {
@@ -960,7 +1029,7 @@ class SourceBuilder {
         namesByRegister.set(phi.register, name);
         this.loopPhiNames.set(`${blockId}:${phi.register}`, name);
         this.setPhiName(key, name);
-        if (this.declaredPhis.has(key) || this.isDeclaredInScope(name)) {
+        if (this.isDeclaredInScope(name)) {
           this.declaredPhis.add(key);
           this.bindPhi(phi.register, name);
           continue;
@@ -969,7 +1038,9 @@ class SourceBuilder {
         // A latch phi may merge values defined during this iteration rather
         // than carry a value from entry. It still needs an outer declaration,
         // but evaluating a stale incoming register can access a dead scope.
-        const incoming = this.isDeadLoopPhi(loop, phi.register, false)
+        const carriesEntry = blockId !== follow || phi.operands.some(operand =>
+          !loop.blocks.includes(operand.pred) && this.ir.dominators.dominates(operand.pred, loop.header));
+        const incoming = !carriesEntry || this.isDeadLoopPhi(loop, phi.register, false)
           ? undefined : this.env.get(phi.register)?.expression;
         statements.push({ kind: "local", names: [name], values: incoming ? [incoming] : [] });
         this.declareInScope(name);
@@ -1019,17 +1090,36 @@ class SourceBuilder {
 
   private preparedLoop(block: BasicBlock): NaturalLoop | undefined {
     const last = block.instructions.at(-1);
-    if (last?.opcode !== Opcode.FORNPREP || block.fallthrough === undefined) {
-      return undefined;
+    if (last?.opcode === Opcode.FORNPREP && block.fallthrough !== undefined) {
+      // An always-breaking body can itself be a pure jump. Its explicit
+      // zero-or-one-iteration region takes precedence over adapter skipping.
+      for (const header of [block.fallthrough, followPureJumps(this.ir.cfg, block.fallthrough)]) {
+        const loop = this.loopsByHeader.get(header)?.find(loop => loop.kind === "numeric-for" &&
+          this.ir.cfg.blocks[loop.latch]?.instructions.at(-1)?.a === last.a);
+        if (loop) return loop;
+      }
     }
-    const loop = this.loopsByHeader.get(block.fallthrough)?.find(loop => loop.kind === "numeric-for");
-    return loop?.kind === "numeric-for" ? loop : undefined;
+    if (last && isGenericPrep(last.opcode) && block.branch !== undefined) {
+      // FORGPREP always transfers to the iterator step. The successful step
+      // identifies the body, even when neither block is physically adjacent.
+      const latch = this.ir.cfg.blocks[followPureJumps(this.ir.cfg, block.branch)];
+      const step = latch?.instructions.at(-1);
+      if (step?.opcode === Opcode.FORGLOOP && step.a === last.a && latch?.branch !== undefined) {
+        for (const header of [latch.branch, latch.id]) {
+          const loop = this.loopsByHeader.get(header)?.find(loop => loop.kind === "generic-for" && loop.latch === latch.id);
+          if (loop) return loop;
+        }
+      }
+    }
+    return undefined;
   }
 
   private numericForPrep(loop: NaturalLoop): DecodedInstruction | undefined {
     for (const block of this.ir.cfg.blocks) {
       const last = block.instructions.at(-1);
-      if (last?.opcode === Opcode.FORNPREP && block.fallthrough === loop.header) {
+      if (last?.opcode === Opcode.FORNPREP && block.fallthrough !== undefined &&
+          (block.fallthrough === loop.header || followPureJumps(this.ir.cfg, block.fallthrough) === loop.header) &&
+          this.ir.cfg.blocks[loop.latch]?.instructions.at(-1)?.a === last.a) {
         return last;
       }
     }
@@ -1038,13 +1128,17 @@ class SourceBuilder {
 
   /** Whether `register` is a result (or the self copy) of the call expression
    * in slot `base` of a generic-for. */
-  private callDefinedSlot(base: number, register: number): boolean {
-    for (const insn of this.proto.instructions) {
-      if ((insn.opcode === Opcode.NAMECALL || insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) && insn.a === base && insn.defs.includes(register)) {
-        return true;
-      }
-    }
-    return false;
+  private callDefinedSlot(base: number, register: number, prep: DecodedInstruction | undefined): boolean {
+    if (!prep) return false;
+    const home = this.ir.cfg.blockOfPc.get(prep.pc);
+    if (home === undefined) return false;
+    const callee = this.ir.ssa.useAt.get(`${home}:${prep.pc}:${base}`);
+    const slot = this.ir.ssa.useAt.get(`${home}:${prep.pc}:${register}`);
+    if (callee === undefined || slot === undefined) return false;
+    const producer = this.ir.ssa.values[callee]?.instruction;
+    return producer !== undefined && producer === this.ir.ssa.values[slot]?.instruction &&
+      (producer.opcode === Opcode.CALL || producer.opcode === Opcode.CALLFB) &&
+      producer.a === base && producer.defs.includes(register);
   }
 
   private genericForPrep(loop: NaturalLoop): DecodedInstruction | undefined {
@@ -1097,11 +1191,10 @@ class SourceBuilder {
     const base = loopInsn?.a ?? 0;
     const count = loopInsn?.aux !== undefined ? loopInsn.aux & 0xff : 2;
     const names: string[] = [];
-    const followId = this.loopFollow(loop);
-    const followPc = followId !== undefined ? this.ir.cfg.blocks[followId]?.startPc : undefined;
+    const usedRegisters = this.registersReadInLoopRegion(loop);
     for (let i = 0; i < count; i++) {
       const register = base + 3 + i;
-      if (this.useCountInRange(register, header.startPc, followPc) === 0) {
+      if (!usedRegisters.has(register)) {
         // The variable is never read in the body: emit `_` like the source did.
         this.env.set(register, { name: "_", expression: ident("_"), pinned: true });
         names.push("_");
@@ -1110,9 +1203,7 @@ class SourceBuilder {
       names.push(this.bindLocal(register, loopInsn?.pc ?? header.startPc, i === 0 ? "key" : "value"));
     }
     let iterators: Expression[];
-    if (prep?.opcode === Opcode.FORGPREP_INEXT || prep?.opcode === Opcode.FORGPREP_NEXT) {
-      iterators = [this.readRegister(base, prep)];
-    } else {
+    {
       const slots = [base, base + 1, base + 2];
       iterators = slots.map((register) => this.readRegister(register, prep));
       // The compiler emits `nil, nil, <expr>` for `for ... in <expr>`; drop the
@@ -1125,13 +1216,15 @@ class SourceBuilder {
       // be dropped because re-evaluating `f()` yields the same slots.
       const first = iterators[0];
       if (iterators.length > 1 && (first?.kind === "call" || first?.kind === "method-call")) {
-        while (iterators.length > 1 && this.callDefinedSlot(base, slots[iterators.length - 1]!)) {
+        while (iterators.length > 1 && this.callDefinedSlot(base, slots[iterators.length - 1]!, prep)) {
           iterators.pop();
         }
       }
     }
     const follow = this.loopFollow(loop);
-    const body = this.emitRange(loop.header, follow, new Set(visited));
+    const body: Statement[] = this.terminalGenericFollow(loop) !== undefined
+      ? [{ kind: "break" }]
+      : this.emitRange(loop.header, follow, new Set(visited));
     // The for-loop registers are dead once the loop ends; drop the bindings so
     // a later reuse of the same register starts with a fresh name.
     for (let i = 0; i < count; i++) {
@@ -1141,6 +1234,8 @@ class SourceBuilder {
   }
 
   private loopFollow(loop: NaturalLoop): number | undefined {
+    const terminal = this.terminalGenericFollow(loop);
+    if (terminal !== undefined) return terminal;
     const structured = this.ir.structure.loopFollowByLoop.get(loop);
     if (structured !== undefined) {
       return structured;
@@ -1161,6 +1256,17 @@ class SourceBuilder {
       }
     }
     return outside.sort((a, b) => a - b)[0];
+  }
+
+  /** An empty always-breaking generic body shares its entry with exhaustion.
+   * The shared successor is the continuation itself, not the end of whatever
+   * branch happens to begin there. The iterator must still run once. */
+  private terminalGenericFollow(loop: NaturalLoop): number | undefined {
+    if (loop.kind !== "generic-for") return undefined;
+    const latch = this.ir.cfg.blocks[loop.latch];
+    if (latch?.branch === undefined || latch.fallthrough === undefined) return undefined;
+    const body = followPureJumps(this.ir.cfg, latch.branch);
+    return body === followPureJumps(this.ir.cfg, latch.fallthrough) ? body : undefined;
   }
 
   private currentLoop(): NaturalLoop | undefined {
@@ -1187,9 +1293,9 @@ class SourceBuilder {
     basic: BasicBlock,
     stop: number | undefined,
     visited: Set<number>,
-  ): { statements: Statement[]; follow: number | undefined } | undefined {
+  ): { statements: Statement[]; follow: number | undefined; followIsJoin?: boolean } | undefined {
     const last = basic.instructions.at(-1);
-    if (!last || this.consumed.has(last.pc) || !isCompare(last.opcode) || basic.successors.length !== 2) {
+    if (!last || this.consumed.has(last.pc) || !isCompare(last.opcode)) {
       return undefined;
     }
     const thenId = basic.fallthrough;
@@ -1197,6 +1303,18 @@ class SourceBuilder {
     if (thenId === undefined || elseId === undefined) {
       return undefined;
     }
+    if (thenId === elseId) {
+      // Both outcomes continue at one block, but evaluating the condition
+      // still observes calls, metamethods and errors. Its operands can be
+      // deferred expressions whose only bytecode use is this comparison.
+      this.consumed.add(last.pc);
+      const statements = this.emitStraight(basic);
+      const name = this.allocator.reserve("_");
+      this.declareInScope(name);
+      statements.push({kind: "local", names: [name], values: [this.conditionFrom(last, true)]});
+      return {statements, follow: thenId};
+    }
+    if (basic.successors.length !== 2) return undefined;
     const activeLoop = this.currentLoop();
 
     // Boolean assignment pattern: `r = <comparison>` compiled through a
@@ -1248,7 +1366,10 @@ class SourceBuilder {
           (outsideBlock !== undefined &&
             outsideBlock.instructions.every((insn) => isControlOnly(insn.opcode)) &&
             outsideBlock.successors.length > 0 &&
-            outsideBlock.successors.every((id) => !activeLoop.blocks.includes(id)))));
+            outsideBlock.successors.every((id) => !activeLoop.blocks.includes(id)) &&
+            // An adapter can lead to work before the shared follow or a
+            // terminal return. Neither belongs to an immediate break.
+            !this.hasExternalExitWork(outsideId, activeLoop))));
         if (exitsLoop) {
           const jumpExits = thenInside;
           this.consumed.add(last.pc);
@@ -1264,7 +1385,17 @@ class SourceBuilder {
       }
     }
 
-    const join = this.joinOf(basic);
+    const candidateJoin = this.joinOf(basic);
+    // An inner conditional can post-dominate beyond the enclosing arm's
+    // boundary (for example one arm continues and another reaches a shared
+    // loop tail). A reachability-based candidate can also be bypassed on a
+    // path to that boundary. Stop at the enclosing boundary in either case;
+    // consuming its tail here and after the outer if executes assignments twice.
+    const join = stop !== undefined && candidateJoin !== undefined &&
+      !this.ir.dominators.dominates(stop, basic.id) &&
+      (this.reachesWithoutBackedge(stop, candidateJoin) ||
+        (activeLoop?.blocks.includes(stop) &&
+          this.reachesWithoutBackedge(basic.id, stop, candidateJoin))) ? stop : candidateJoin;
     if (join === undefined) {
       // Terminal branch: emit the if without a follow; both arms end on their own.
       this.consumed.add(last.pc);
@@ -1317,7 +1448,8 @@ class SourceBuilder {
     // at the join, and those branch locals cannot be referenced afterward.
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
       const binding = this.env.get(phi.register);
-      if (binding?.name && binding.forwardRef)
+      const name = this.phiNames.get(`phi:${join}:${phi.register}`);
+      if (binding?.name && (binding.forwardRef || name === binding.name))
         statements.push(...this.snapshotRegisterAliases(phi.register, binding.name));
     }
     const test = this.conditionFrom(last, true);
@@ -1371,7 +1503,7 @@ class SourceBuilder {
     };
     // Fuse `if a then <if b then X end> end` into `if a and b then X end`.
     const fused = fuseGuardChain(ifStmt);
-    return { statements: [...statements, fused], follow: join };
+    return { statements: [...statements, fused], follow: join, followIsJoin: true };
   }
 
   private joinOf(basic: BasicBlock): number | undefined {
@@ -1391,7 +1523,11 @@ class SourceBuilder {
     }
     // Reachability alone does not establish a join: an alternative may
     // return before reaching that block. Terminal regions have no follow.
-    return loop ? this.commonJoin(basic.fallthrough, basic.branch, undefined) : undefined;
+    // The loop-local fallback can join surviving paths within the iteration,
+    // but a shared early return outside the loop is only conditionally reached.
+    // Hoisting it after the branch would also return on the backedge path.
+    const localJoin = loop ? this.commonJoin(basic.fallthrough, basic.branch, undefined) : undefined;
+    return localJoin !== undefined && loop?.blocks.includes(localJoin) ? localJoin : undefined;
   }
 
   private commonJoin(a: number, b: number, stop: number | undefined): number | undefined {
@@ -1426,6 +1562,22 @@ class SourceBuilder {
     return joins[0];
   }
 
+  private reachesWithoutBackedge(start: number, target: number, avoid?: number): boolean {
+    const seen = new Set<number>();
+    const pending = [start];
+    while (pending.length) {
+      const current = pending.pop()!;
+      if (current === avoid) continue;
+      if (current === target) return true;
+      if (seen.has(current)) continue;
+      seen.add(current);
+      for (const successor of this.ir.cfg.blocks[current]?.successors ?? []) {
+        if (!this.ir.dominators.dominates(successor, current)) pending.push(successor);
+      }
+    }
+    return false;
+  }
+
   private declareJoinPhis(join: number, statements: Statement[], outerScopes = 0): void {
     for (const phi of this.ir.ssa.phis.get(join) ?? []) {
       const key = `phi:${join}:${phi.register}`;
@@ -1438,7 +1590,10 @@ class SourceBuilder {
         continue;
       }
       const name = this.phiNameFor(key, phi.register, this.ir.cfg.blocks[join]!.startPc);
-      if (!this.declaredPhis.has(key) && !this.isDeclaredInScope(name)) {
+      // A shared CFG region may be emitted in more than one alternative.
+      // Its phi cache survives that walk, but a sibling's declaration does
+      // not belong to the current lexical scope.
+      if (!this.isDeclaredInScope(name)) {
         this.declaredPhis.add(key);
         statements.push({ kind: "local", names: [name], values: [] });
         this.scopeStack[this.scopeStack.length - 1 - outerScopes]!.add(name);
@@ -1566,9 +1721,6 @@ class SourceBuilder {
     // with the name allocator; otherwise a subsequent value may reuse a name.
     const savedPhiNames = new Map(this.phiNames);
     const savedDeclaredPhis = new Set(this.declaredPhis);
-    // The value the guard tests before any define inside the block runs.
-    const condReg = this.readRegister(last.a, last);
-
     // Walk the guard block itself: it may hold the value (e.g. `t = x or y`)
     // while its other statements are ordinary prelude statements.
     const basicWalk = this.walkGuardBlock(basic, t);
@@ -1577,6 +1729,9 @@ class SourceBuilder {
       return undefined;
     }
     const basicValue = basicWalk.value;
+    // The branch reads the register after its prelude. Earlier contents may
+    // belong to a different value that reused the same physical register.
+    const condReg = this.readRegister(last.a, last);
     // The value `t` carries when the jump is taken: the guard block's define,
     // or the pre-existing binding when the block only tests the register.
     const guardValue = basicValue ?? condReg;
@@ -1609,20 +1764,24 @@ class SourceBuilder {
     }
 
     const thenValue = thenPath.value ?? basicValue!;
-    const orForm =
-      thenPath.guards.length === 0 &&
-      (sameExpr(thenValue, condReg) || (basicValue !== undefined && last.a === t && sameExpr(thenValue, basicValue)));
-    const andForm =
-      !orForm && thenPath.guards.length === 0 && thenPath.value !== undefined && sameExpr(elseValue, condReg);
+    // Only truthiness branches permit replacing a selected value by and/or.
+    // A comparison such as `x < 1 and 1 or x` also carries x on one arm, but
+    // testing x itself would drop the comparison (all numbers are truthy).
+    const truthiness = last.opcode === Opcode.JUMPIF || last.opcode === Opcode.JUMPIFNOT;
+    const truthyValue = last.opcode === Opcode.JUMPIFNOT ? thenValue : elseValue;
+    const falsyValue = last.opcode === Opcode.JUMPIFNOT ? elseValue : thenValue;
+    const orForm = truthiness && thenPath.guards.length === 0 && sameExpr(truthyValue, condReg);
+    const andForm = truthiness && !orForm && thenPath.guards.length === 0 &&
+      thenPath.value !== undefined && sameExpr(falsyValue, condReg);
     let expr: Expression;
     if (elseId === join && thenPath.guards.length === 0 && thenPath.value !== undefined) {
       // `JUMPIF t -> join`: the taken branch reuses the guard's value, so the
       // result is `t or <fallback>` (short-circuit).
       expr = { kind: "binary", op: last.opcode === Opcode.JUMPIFNOT ? "and" : "or", left: guardValue, right: thenValue };
     } else if (orForm) {
-      expr = { kind: "binary", op: "or", left: thenValue, right: elseValue };
+      expr = { kind: "binary", op: "or", left: condReg, right: falsyValue };
     } else if (andForm) {
-      expr = { kind: "binary", op: "and", left: condReg, right: thenValue };
+      expr = { kind: "binary", op: "and", left: condReg, right: truthyValue };
     } else if (thenPath.guards.length > 0) {
       expr = guardedValue(guardTest, thenPath.guards, thenValue, elseValue, thenPath.selectsTruthyResult);
     } else {
@@ -1680,12 +1839,25 @@ class SourceBuilder {
         continue;
       }
       const target = this.writeTargetOf(insn);
+      // This selected value would lose its declaration. A prelude read must
+      // keep that evaluation at its original position, before independent
+      // calls, metamethods or exceptions; ordinary reconstruction owns it.
+      if (value !== undefined && insn.uses.includes(t)) return fail();
       if (target === undefined) {
         // Mirror emitStraight: a table used by a non-write instruction (e.g. a
         // call argument) must be materialized before it is read.
         statements.push(...this.flushObserved(insn));
+      } else if (insn.opcode === Opcode.SETLIST) {
+        // The guard prelude survives successful speculation. Its SETLIST
+        // operands need the same constructor snapshots as ordinary emission;
+        // an unfinished child still has the previous register binding.
+        statements.push(...this.flushObserved(insn, target));
       }
       if (insn.defs.includes(t)) {
+        // Removing this scalar declaration would repeat its initializer in
+        // both operands of a comparison. Ordinary reconstruction retains the
+        // stored value and its identity before evaluating that condition.
+        if ((basic.instructions.at(-1)?.uses.filter(register => register === t).length ?? 0) > 1) return fail();
         // Registers are reused; only the last define before the guard is the
         // value, but earlier definitions must not carry side effects we drop.
         const before = new Map(this.env);
@@ -1703,11 +1875,15 @@ class SourceBuilder {
         // The assignment is removed from the prelude, so subsequent reads
         // must see its captured value, not the old local occupying this slot.
         value = captured;
-        this.env.set(t, { expression: captured, pinned: false });
+        this.env.set(t, { expression: captured, pinned: false, methodSelf: this.env.get(t)?.methodSelf });
         continue;
       }
       const before = new Map(this.env);
+      // These statements survive the successful guard walk. Their unused
+      // results still have observable evaluations, unlike a value-only probe.
+      this.inDryRun = false;
       const produced = this.interpret(insn, target);
+      this.inDryRun = true;
       if (produced.pendingTable) {
         this.pendingStack.push(produced.pendingTable);
         continue;
@@ -1812,7 +1988,10 @@ class SourceBuilder {
   /** Dry-run a pure value block: only defines of `t` (captured) and single-use
    * temps are allowed; returns the value expression for `t`, or undefined. */
   private blockValue(block: BasicBlock, join: number, t: number): Expression | undefined {
-    if (!this.reaches(block.id, join)) {
+    // This dry run consumes exactly one block. Merely reaching the join is
+    // insufficient: an intervening branch can replace a nil/false value or
+    // run observable work. Leave such paths to statement reconstruction.
+    if (!block.successors.includes(join)) {
       return undefined;
     }
     let value: Expression | undefined;
@@ -1820,25 +1999,6 @@ class SourceBuilder {
       return undefined;
     }
     return value;
-  }
-
-  private reaches(start: number, target: number): boolean {
-    const pending = [start];
-    const seen = new Set<number>();
-    while (pending.length > 0) {
-      const current = pending.pop()!;
-      if (current === target) {
-        return true;
-      }
-      if (seen.has(current)) {
-        continue;
-      }
-      seen.add(current);
-      for (const succ of this.ir.cfg.blocks[current]?.successors ?? []) {
-        pending.push(succ);
-      }
-    }
-    return false;
   }
 
   private dryRunBlock(block: BasicBlock, t: number, capture: (value: Expression) => void): boolean {
@@ -1868,7 +2028,7 @@ class SourceBuilder {
           return fail();
         }
         capture(value);
-        this.env.set(t, { expression: value, pinned: false });
+        this.env.set(t, { expression: value, pinned: false, methodSelf: this.env.get(t)?.methodSelf });
         continue;
       }
       const before = new Map(this.env);
@@ -1996,6 +2156,13 @@ class SourceBuilder {
       // keeping the constructor open for a later SETLIST multret tail.
       for (const pending of [...this.pendingStack]) {
         if (pending.flushed) continue;
+        // A completed open tail cannot be snapshotted into one local. Commit
+        // its entire constructor before another effect can observe its call.
+        if (pending.fields.some(field => field.list && isPackish(field.value)) &&
+            !this.hasFutureSetList(pending, insn.pc)) {
+          statements.push(...this.flushPending(pending));
+          continue;
+        }
         // Hundreds of deferred fields retain hundreds of snapshot locals until
         // one huge literal. Commit bounded batches before the next effect, but
         // keep SETLIST constructors open: an open pack cannot become one value.
@@ -2036,11 +2203,22 @@ class SourceBuilder {
     return statements;
   }
 
-  private hasFutureSetList(pending: PendingTable, fromPc: number): boolean {
-    for (const insn of this.proto.instructions) {
-      if (insn.pc < fromPc) continue;
-      if (insn.opcode === Opcode.SETLIST && insn.a === pending.register) return true;
-      if (insn.defs.includes(pending.register)) break;
+  private hasFutureSetList(pending: PendingTable, fromPc: number, openOnly = false): boolean {
+    let id = this.ir.cfg.blockOfPc.get(fromPc);
+    const seen = new Set<number>();
+    let first = true;
+    while (id !== undefined && !seen.has(id)) {
+      seen.add(id);
+      const basic = this.ir.cfg.blocks[id]!;
+      for (const insn of basic.instructions) {
+        if (first && insn.pc < fromPc) continue;
+        if (insn.opcode === Opcode.SETLIST && insn.a === pending.register && (!openOnly || insn.c === 0)) return true;
+        if (insn.defs.includes(pending.register)) return false;
+      }
+      first = false;
+      const next: number | undefined = basic.successors.length === 1 ? basic.successors[0] : undefined;
+      id = next !== undefined && this.ir.cfg.blocks[next]!.predecessors.filter(pred =>
+        !this.ir.cfg.blocks[pred]!.unreachable).length === 1 ? next : undefined;
     }
     return false;
   }
@@ -2197,6 +2375,14 @@ class SourceBuilder {
       if (this.consumed.has(insn.pc) || isControlOnly(insn.opcode)) {
         continue;
       }
+      if (insn.opcode === Opcode.RETURN) {
+        // Unobserved constructors still allocate and evaluate their fields.
+        // Commit them before the terminator: a late flush would place their
+        // effects after the return and would not even be valid Luau syntax.
+        for (const pending of [...this.pendingStack].reverse()) {
+          if (!pending.flushed) statements.push(...this.flushPending(pending));
+        }
+      }
       const writeTarget = this.writeTargetOf(insn);
       if (writeTarget === undefined) {
         statements.push(...this.flushObserved(insn));
@@ -2214,6 +2400,15 @@ class SourceBuilder {
     }
     for (const pending of [...this.pendingStack].reverse()) {
       if (!pending.flushed) {
+        const last = basic.instructions.at(-1);
+        const next = basic.successors.length === 1 ? basic.successors[0] : undefined;
+        // A physical block split does not complete a list constructor. Keep
+        // its identity and prefix until the open tail on one straight path;
+        // branches and real joins still commit their own constructor state.
+        if (last && next !== undefined &&
+            !(last.opcode === Opcode.SETLIST && last.a === pending.register && last.c === 0) &&
+            this.ir.cfg.blocks[next]!.predecessors.filter(pred => !this.ir.cfg.blocks[pred]!.unreachable).length === 1 &&
+            this.hasFutureSetList(pending, last.pc, true)) continue;
         statements.push(...this.flushPending(pending));
       }
     }
@@ -2330,6 +2525,11 @@ class SourceBuilder {
             this.removePureField(pendingTable, { key: this.readRegister(insn.c, insn), value: lit(null) });
             pendingTable.nested.push({ field: { key: this.readRegister(insn.c, insn) }, child: nested });
           } else if (this.mutableFieldValue(insn.a, insn)) {
+            if (this.hasFutureSetList(pendingTable, insn.pc, true)) {
+              this.addSnapshottedField(pendingTable,
+                {key: this.readRegister(insn.c, insn), value: this.readRegister(insn.a, insn)}, statements);
+              return {statements};
+            }
             // The value is a mutable local that gets reassigned later in the
             // block; capture the write as a statement so the table literal
             // does not read the final value.
@@ -2356,7 +2556,7 @@ class SourceBuilder {
         const name = this.stringConstant(insn.constantIndex ?? 0);
         const object = this.readRegister(insn.b, insn);
         const validFieldName = name !== undefined && isValidIdentifier(name);
-        if (pendingTable && pendingTable.register === insn.b && name) {
+        if (pendingTable && pendingTable.register === insn.b && name !== undefined) {
           // Bytecode keys are arbitrary strings. Only valid Luau identifiers
           // may be written as dotted properties or bare table fields.
           const fieldKey = validFieldName ? { name } : { key: lit(name) };
@@ -2369,6 +2569,11 @@ class SourceBuilder {
             this.removePureField(pendingTable, { ...fieldKey, value: lit(null) });
             pendingTable.nested.push({ field: fieldKey, child: nested });
           } else if (this.mutableFieldValue(insn.a, insn)) {
+            if (this.hasFutureSetList(pendingTable, insn.pc, true)) {
+              this.addSnapshottedField(pendingTable,
+                {...fieldKey, value: this.readRegister(insn.a, insn)}, statements);
+              return {statements};
+            }
             // The value is a mutable local that gets reassigned later in the
             // block; capture the write as a statement so the table literal
             // does not read the final value.
@@ -2418,9 +2623,15 @@ class SourceBuilder {
         });
         break;
       case Opcode.NEWTABLE:
-        return { statements, pendingTable: { register: insn.a, fields: [], nested: [], startPc: insn.pc, role: this.tableRole(insn), flushed: false } };
       case Opcode.DUPTABLE: {
-        const fields = this.dupTableFields(insn.d);
+        const fields = insn.opcode === Opcode.DUPTABLE ? this.dupTableFields(insn.d) : [];
+        if (this.env.get(insn.a)?.forwardRef) {
+          // A constructor assigned directly to a live REF cell is observable
+          // immediately by existing closures. Use the normal cell assignment
+          // path, including aliases, instead of deferring it as a fresh local.
+          statements.push(...this.define(insn.a, {kind: "table", fields}, insn));
+          return {statements};
+        }
         return { statements, pendingTable: { register: insn.a, fields, nested: [], startPc: insn.pc, role: this.tableRole(insn), flushed: false } };
       }
       case Opcode.SETLIST: {
@@ -2440,14 +2651,48 @@ class SourceBuilder {
           fields.push({ list: true, key: lit(startIndex + fixed), value: this.readRegister(insn.b + fixed, insn) });
         }
         if (pendingTable && pendingTable.register === insn.a) {
-          for (const field of fields) {
-            this.addField(pendingTable, field);
+          const fixed = insn.c !== 0 ? fields.length : fields.length - 1;
+          let snapshotThrough = -1;
+          for (let index = 0; index < fixed; index++) {
+            if (this.mutableFieldValue(insn.b + index, insn)) snapshotThrough = index;
+          }
+          for (const [index, field] of fields.entries()) {
+            // A later captured-cell read must follow earlier deferred calls
+            // in this list batch. Snapshot its entire scalar prefix in order;
+            // the final open result pack retains its original list context.
+            if (index <= snapshotThrough) {
+              this.addSnapshottedField(pendingTable, field, statements);
+            } else {
+              this.addField(pendingTable, field);
+            }
           }
           return { statements };
+        }
+        if (insn.c !== 0) {
+          // SETLIST mutates the existing table; it never allocates a second
+          // one. An earlier field/capture may already have forced the table
+          // out of the constructor stack. Keep its identity and keyed fields.
+          const target = this.readRegister(insn.a, insn);
+          if (fields.length > 0) statements.push({
+            kind: "assign",
+            targets: fields.map(field => ({kind: "index", table: target, key: field.key!})),
+            values: fields.map(field => field.value),
+          });
+          break;
         }
         statements.push(...this.define(insn.a, { kind: "table", fields: normalizeArrayFields(fields) }, insn, true));
         break;
       }
+      case Opcode.AND:
+      case Opcode.OR:
+        // Both operands already hold VM values. Selecting a register against
+        // itself is a scalar copy, even if its deferred producer is a call.
+        // Normalization may decline a whole prototype; reconstruction must
+        // still avoid evaluating that producer twice or reopening its pack.
+        statements.push(...this.define(insn.a, insn.b === insn.c
+          ? singleValue(this.readRegister(insn.b, insn))
+          : {kind: "binary", op: binop(insn.opcode), left: this.readRegister(insn.b, insn), right: this.readRegister(insn.c, insn)}, insn));
+        break;
       case Opcode.ADD:
       case Opcode.SUB:
       case Opcode.MUL:
@@ -2455,8 +2700,6 @@ class SourceBuilder {
       case Opcode.MOD:
       case Opcode.POW:
       case Opcode.IDIV:
-      case Opcode.AND:
-      case Opcode.OR:
         statements.push(
           ...this.define(
             insn.a,
@@ -2470,7 +2713,6 @@ class SourceBuilder {
       case Opcode.MULK:
       case Opcode.DIVK:
       case Opcode.MODK:
-      case Opcode.POWK:
       case Opcode.IDIVK:
       case Opcode.ANDK:
       case Opcode.ORK:
@@ -2482,6 +2724,24 @@ class SourceBuilder {
           ),
         );
         break;
+      case Opcode.POWK: {
+        const left = this.readRegister(insn.b, insn);
+        const right = this.constantExpr(insn.c);
+        let expression: Expression = {kind: "binary", op: "^", left, right};
+        const value = this.closureEffects.valueAt(insn, insn.b);
+        // The VM evaluates numeric POWK ^2/^3 with multiplication, whereas
+        // compiler constant folding uses pow. Recovered immutable locals can
+        // expose new folds and change the last bits. Preserve that VM order
+        // only for proven numbers and operands that are safe to read again.
+        if (right.kind === "literal" && (right.value === 2 || right.value === 3) &&
+            (left.kind === "literal" || left.kind === "identifier") &&
+            !this.env.get(insn.b)?.forwardRef && this.isKnownNumber(value, insn.pc)) {
+          expression = {kind: "binary", op: "*", left, right: cloneExpr(left)};
+          if (right.value === 3) expression = {kind: "binary", op: "*", left: expression, right: cloneExpr(left)};
+        }
+        statements.push(...this.define(insn.a, expression, insn));
+        break;
+      }
       case Opcode.SUBRK:
       case Opcode.DIVRK:
         statements.push(
@@ -2531,7 +2791,7 @@ class SourceBuilder {
         const argCount = insn.call?.argumentCount ?? 0;
         const calleeBinding = this.env.get(insn.a);
         let expression: Expression;
-        if (calleeBinding?.expression.kind === "method-call") {
+        if (calleeBinding?.methodSelf !== undefined && calleeBinding.expression.kind === "method-call") {
           const args: Expression[] = [];
           if (argCount === "multret") {
             args.push(...this.openArgs(insn.a + 2, insn));
@@ -2603,9 +2863,7 @@ class SourceBuilder {
             values.push(i === count - 1 ? singleValue(value) : value);
           }
         }
-        if (!(count === 0 && this.isTerminalReturn(insn))) {
-          statements.push({ kind: "return", values });
-        }
+        statements.push({ kind: "return", values });
         break;
       }
       case Opcode.GETVARARGS:
@@ -3321,31 +3579,43 @@ class SourceBuilder {
   }
 
   private isPackForwarded(register: number, fromPc: number): boolean {
-    for (const insn of this.proto.instructions) {
-      if (insn.pc <= fromPc) {
-        continue;
+    let blockId = this.ir.cfg.blockOfPc.get(fromPc);
+    const seen = new Set<number>();
+    let first = true;
+    while (blockId !== undefined && !seen.has(blockId)) {
+      seen.add(blockId);
+      const block = this.ir.cfg.blocks[blockId]!;
+      for (const insn of block.instructions) {
+        if (first && insn.pc <= fromPc) continue;
+        if (
+          // Open consumers read the dynamic top, even when a split control
+          // chain separates their instruction words from the producer.
+          (insn.opcode === Opcode.RETURN && insn.b === 0 && register >= insn.a) ||
+          ((insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) && insn.b === 0 && register >= insn.a + 1) ||
+          (insn.opcode === Opcode.SETLIST && insn.c === 0 && register >= insn.b) ||
+          (insn.opcode === Opcode.MOVE && insn.b === register)
+        ) return true;
+        if (insn.uses.includes(register) || insn.defs.includes(register) || insn.call ||
+            (insn.opcode === Opcode.GETVARARGS && insn.b === 0)) return false;
       }
-      if (
-        // An open `return ...` forwards every live register at or after `a`.
-        (insn.opcode === Opcode.RETURN && insn.b === 0 && register >= insn.a) ||
-        // An open call consumes every live register after `a` as an argument.
-        ((insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) && insn.b === 0 && register >= insn.a + 1) ||
-        (insn.opcode === Opcode.SETLIST && insn.c === 0) ||
-        (insn.opcode === Opcode.MOVE && insn.b === register)
-      ) {
-        return true;
-      }
-      if (insn.uses.includes(register) || insn.defs.includes(register)) {
-        return false;
-      }
+      first = false;
+      const next: number | undefined = block.successors.length === 1 ? block.successors[0] : undefined;
+      // A live branch, join or cycle requires a pack merge representation.
+      // Unreachable predecessors cannot replace the dynamic top established
+      // by this producer, and must not force its truncation to one scalar.
+      const predecessors = next === undefined ? [] : this.ir.cfg.blocks[next]?.predecessors
+        .filter(id => !this.ir.cfg.blocks[id]?.unreachable) ?? [];
+      blockId = predecessors.length === 1 ? next : undefined;
     }
     return false;
   }
 
   private handleMove(insn: DecodedInstruction): Statement[] {
     const source = this.env.get(insn.b);
-    if (source && !source.pinned && isPackish(source.expression)) {
+    if (source && !source.pinned && isPackish(source.expression) && this.openPacks.has(insn.b)) {
       // Unpacking a multret pack through consecutive MOVE instructions.
+      // A deferred scalar CALL can also precede adjacent MOVEs (e.g. a swap).
+      // Its neighboring register is an independent value, not another result.
       const moves: Array<{ dst: number; src: number }> = [{ dst: insn.a, src: insn.b }];
       for (const other of this.proto.instructions) {
         if (other.pc <= insn.pc) {
@@ -3430,6 +3700,20 @@ class SourceBuilder {
   private addField(pending: PendingTable, field: TableField): void {
     this.removePureField(pending, field);
     pending.fields.push(field);
+  }
+
+  /** Snapshot a field's current operands without closing a constructor that
+   * still receives SETLIST batches. In particular, an open tail must remain
+   * in its list context so all results, including nil holes, are preserved. */
+  private addSnapshottedField(pending: PendingTable, field: TableField, statements: Statement[]): void {
+    const snapshot = (value: Expression): Expression => {
+      if (value.kind === "literal") return value;
+      const name = this.allocator.reserve("field");
+      this.declareInScope(name);
+      statements.push({kind: "local", names: [name], values: [singleValue(value)]});
+      return ident(name);
+    };
+    this.addField(pending, {...field, ...(field.key ? {key: snapshot(field.key)} : {}), value: snapshot(field.value)});
   }
 
   private removePureField(pending: PendingTable, field: TableField): void {
@@ -3631,61 +3915,119 @@ class SourceBuilder {
   }
 
   private usedOutsideBlock(register: number, insn: DecodedInstruction): boolean {
-    const home = this.ir.cfg.blockOfPc.get(insn.pc);
-    for (const next of this.proto.instructions) {
-      if (next.pc <= insn.pc) {
-        continue;
-      }
-      if (next.uses.includes(register) && !isFakeUse(next.opcode)) {
-        if (this.ir.cfg.blockOfPc.get(next.pc) !== home) {
-          return true;
-        }
-      }
-      if (next.defs.includes(register)) {
-        return false;
+    return this.definitionUseInfo(register, insn.pc).outsideBlock;
+  }
+
+  /** A closed numeric proof for VM arithmetic specializations. Unknown reads,
+   * calls, phis and reference-captured slots cannot exclude metamethods. */
+  private isKnownNumber(value: number | undefined, readPc: number, seen = new Set<number>()): boolean {
+    if (value === undefined || seen.has(value) || seen.size >= 32) return false;
+    if (value < 0) return this.proto.constants[-value - 1]?.kind === "number";
+    const definition = this.ir.ssa.values[value];
+    if (!definition || this.referenceCaptureCanReach(definition.register, readPc)) return false;
+    seen = new Set(seen).add(value);
+    const op = definition.op;
+    if (op.kind === "immediate") return typeof op.value === "number";
+    if (op.kind === "constant") return this.proto.constants[op.constantIndex]?.kind === "number";
+    if (op.kind === "move") return this.isKnownNumber(op.source, definition.pc, seen);
+    if (op.kind === "unary" && op.op === "-") return this.isKnownNumber(op.operand, definition.pc, seen);
+    return op.kind === "binary" && ["+", "-", "*", "/", "%", "^", "//"].includes(op.op) &&
+      this.isKnownNumber(op.left, definition.pc, seen) && this.isKnownNumber(op.right, definition.pc, seen);
+  }
+
+  private referenceCaptureCanReach(register: number, readPc: number): boolean {
+    const target = this.ir.cfg.blockOfPc.get(readPc);
+    for (const insn of this.proto.instructions) {
+      if (insn.capture?.type !== CaptureType.REF || insn.capture.source !== register) continue;
+      const start = this.ir.cfg.blockOfPc.get(insn.pc);
+      if (start === target && insn.pc < readPc) return true;
+      // Include loop backedges: a capture later in layout may have happened
+      // in a previous iteration. A later unrelated reuse of the slot cannot
+      // invalidate an earlier numeric value if no CFG path returns to it.
+      const pending = [...(start === undefined ? [] : this.ir.cfg.blocks[start]!.successors)];
+      const seen = new Set<number>();
+      while (pending.length > 0) {
+        const current = pending.pop()!;
+        if (current === target) return true;
+        if (seen.has(current)) continue;
+        seen.add(current);
+        pending.push(...this.ir.cfg.blocks[current]!.successors);
       }
     }
     return false;
   }
 
-  /** Real uses of `register` in the pc range `[fromPc, toPc)`. */
-  private useCountInRange(register: number, fromPc: number, toPc: number | undefined): number {
-    let count = 0;
-    for (const insn of this.proto.instructions) {
-      if (insn.pc < fromPc || (toPc !== undefined && insn.pc >= toPc)) {
-        continue;
+  /** Conservatively find body reads, including returning arms outside the
+   * natural loop. A shuffled follow may precede its header in physical PC
+   * order; that cannot make two live iterator results the same `_` binding. */
+  private registersReadInLoopRegion(loop: NaturalLoop): Set<number> {
+    const used = new Set<number>(), seen = new Set<number>();
+    const follow = this.loopFollow(loop), pending = [loop.header];
+    while (pending.length > 0) {
+      const id = pending.pop()!;
+      if (id === follow || seen.has(id)) continue;
+      seen.add(id);
+      const basic = this.ir.cfg.blocks[id];
+      if (!basic || basic.unreachable) continue;
+      for (const insn of basic.instructions) {
+        if (!isFakeUse(insn.opcode)) for (const register of insn.uses) used.add(register);
       }
-      if (insn.uses.includes(register) && !isFakeUse(insn.opcode)) {
-        count += 1;
-      }
+      pending.push(...basic.successors);
     }
-    return count;
+    return used;
   }
 
   private useCount(register: number, fromPc: number): number {
+    return this.definitionUseInfo(register, fromPc).count;
+  }
+
+  /** Follow this definition until a real overwrite on each executable path.
+   * Physical instruction order cannot describe a value's lifetime after block
+   * permutation. Cache the immutable CFG query across speculative walks. */
+  private definitionUseInfo(register: number, fromPc: number): {count: number; outsideBlock: boolean} {
+    const key = `${register}:${fromPc}`;
+    const cached = this.definitionUses.get(key);
+    if (cached) return cached;
+    const home = this.ir.cfg.blockOfPc.get(fromPc);
+    const readers = new Set<number>();
     let count = 0;
-    for (const insn of this.proto.instructions) {
-      if (insn.pc <= fromPc) {
-        continue;
-      }
-      if (
-        (
-          (insn.uses.includes(register) && !isFakeUse(insn.opcode)) ||
-          // Open CALL argument lists use the live registers above A, even
-          // though the bytecode decoder cannot enumerate their upper bound
-          // statically (B=0). Count the use before discarding or inlining
-          // effectful calls: otherwise f() is emitted twice or lost.
-          ((insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) &&
-            insn.b === 0 && register >= insn.a + 1)
-        )
-      ) {
-        count += 1;
-      }
-      if (insn.defs.includes(register)) {
-        break;
+    let outsideBlock = false;
+    if (home !== undefined) {
+      const pending: Array<{id: number; after: number}> = [{id: home, after: fromPc}];
+      const visited = new Set<string>();
+      while (pending.length) {
+        const {id, after} = pending.pop()!;
+        const visit = `${id}:${after}`;
+        if (visited.has(visit)) continue;
+        visited.add(visit);
+        const basic = this.ir.cfg.blocks[id];
+        if (!basic || basic.unreachable) continue;
+        let overwritten = false;
+        for (const insn of basic.instructions) {
+          if (insn.pc <= after) continue;
+          // A known open CALL already records its prefix and tail. Unknown
+          // dynamic tops retain the existing conservative register fallback.
+          const reads = (insn.uses.includes(register) && !isFakeUse(insn.opcode)) ||
+            ((insn.opcode === Opcode.CALL || insn.opcode === Opcode.CALLFB) &&
+              insn.b === 0 && !insn.uses.some(slot => slot > insn.a) && register >= insn.a + 1);
+          if (reads) {
+            if (!readers.has(insn.pc)) {
+              readers.add(insn.pc);
+              // One consumer can read the same stored value several times
+              // (ADD R0 R0 R0 or SETTABLE R0 R0 R0). Count those operands,
+              // while a join reaching this PC again still counts it once.
+              count += Math.max(1, insn.uses.filter(slot => slot === register).length);
+            }
+            if (id !== home) outsideBlock = true;
+          }
+          if (insn.defs.includes(register)) { overwritten = true; break; }
+        }
+        if (!overwritten) pending.push(...basic.successors.map(id => ({id, after: -1})));
       }
     }
-    return count;
+    const result = {count, outsideBlock};
+    this.definitionUses.set(key, result);
+    return result;
   }
 
   private phiBinding(register: number, insn: DecodedInstruction): string | undefined {
@@ -3695,6 +4037,21 @@ class SourceBuilder {
       return undefined;
     }
     const existing = this.env.get(register);
+    const loop = this.currentLoop();
+    const carried = loop && (this.loopPhiNames.get(`${loop.header}:${register}`) ??
+      this.loopPhiNames.get(`${loop.latch}:${register}`));
+    const value = this.ir.ssa.defAt.get(`${home}:${insn.pc}:${register}`);
+    // The last write feeds the backedge phi, but earlier read/modify/write
+    // steps in the same iteration still update that lexical accumulator.
+    // Debug names starting mid-iteration cannot create a new shadow cell.
+    if (carried && existing?.name === carried && !existing.alias &&
+        (insn.uses.includes(register) || (value !== undefined && this.dependsOnLoopPhi(value, loop!, register)))) return carried;
+    const keys = value === undefined ? [] : this.phiInputs.get(value) ?? [];
+    const established = keys.find(key => this.phiNames.has(key));
+    // A debug local can begin at an intermediate write in the loop body.
+    // The final SSA definition still belongs to the enclosing exit phi;
+    // choosing that short-lived debug local would lose the exported value.
+    if (established) return this.phiNameFor(established, register, insn.pc, insn.uses.includes(register));
     const debug = debugNameAt(this.proto, register, insn.pc + insn.width);
     if (debug && existing?.name === debug && !existing.alias && insn.uses.includes(register) &&
         ![...this.env].some(([slot, binding]) => slot !== register && binding.name === debug)) {
@@ -3702,14 +4059,37 @@ class SourceBuilder {
     }
     // Consult the actual SSA definition reaching a phi, including paths
     // through intervening blocks. An entry phi does not own later slot reuse.
-    const value = this.ir.ssa.defAt.get(`${home}:${insn.pc}:${register}`);
-    const keys = value === undefined ? [] : this.phiInputs.get(value) ?? [];
-    const key = keys.find(key => this.phiNames.has(key)) ?? keys[0];
+    const key = keys[0];
     // A fresh definition feeding an as-yet unbound phi need not belong to
     // the old local in the same physical slot (e.g. a nested table followed
     // by a loop counter). Established phi families still keep their owner.
     if (key) return this.phiNameFor(key, register, insn.pc, insn.uses.includes(register));
     return undefined;
+  }
+
+  /** Complex updates read the accumulator through temporary SSA definitions,
+   * rather than directly in the final store. Follow only value dependencies;
+   * the physical register by itself cannot establish lexical ownership. */
+  private dependsOnLoopPhi(value: number, loop: NaturalLoop, register: number): boolean {
+    const entries = new Set([loop.header, loop.latch].flatMap(blockId =>
+      (this.ir.ssa.phis.get(blockId) ?? []).filter(phi => phi.register === register).map(phi => phi.value)));
+    const pending = [value], visited = new Set<number>();
+    while (pending.length > 0) {
+      const current = pending.pop()!;
+      if (entries.has(current)) return true;
+      if (visited.has(current)) continue;
+      visited.add(current);
+      const op = this.ir.ssa.values[current]?.op;
+      if (!op) continue;
+      switch (op.kind) {
+        case "move": pending.push(op.source); break;
+        case "binary": pending.push(op.left, op.right); break;
+        case "unary": case "length": pending.push(op.operand); break;
+        case "concat": pending.push(...op.operands); break;
+        case "phi": pending.push(...op.operands.map(operand => operand.value)); break;
+      }
+    }
+    return false;
   }
 
   private redefinedInBlock(blockId: number, afterPc: number, register: number): boolean {
@@ -3893,9 +4273,6 @@ class SourceBuilder {
     return test;
   }
 
-  private isTerminalReturn(insn: DecodedInstruction): boolean {
-    return insn === this.proto.instructions.at(-1) && insn.b === 1;
-  }
 }
 
 // --------------------------------------------------------------------- helpers

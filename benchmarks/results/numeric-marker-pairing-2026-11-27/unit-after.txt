@@ -1,0 +1,15 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/hard-engine
+
+ ✓ tests/rosetta-control-boundaries.test.ts (38 tests) 483ms
+ ✓ tests/rosetta-repeat-paths.test.ts (27 tests) 216ms
+ ✓ tests/terminal-loop-boundaries.test.ts (11 tests) 113ms
+ ✓ tests/control-flow-normalization.test.ts (22 tests) 92ms
+ ✓ tests/numeric-loop-entry.test.ts (6 tests) 73ms
+
+ Test Files  5 passed (5)
+      Tests  104 passed (104)
+   Start at  19:37:45
+   Duration  3.41s (transform 780ms, setup 0ms, collect 1.45s, tests 978ms, environment 1ms, prepare 279ms)
+

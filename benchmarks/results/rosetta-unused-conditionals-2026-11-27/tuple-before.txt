@@ -1,0 +1,54 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/unused-conditional-baseline-engine
+
+ ❯ tests/rewrite-integration.test.ts (5 tests | 1 failed) 138ms
+   ✓ parses all rewrite switches with documented defaults and explicit inverses 6ms
+   × recovers the complete O2 tuple while keeping a three-result helper and outer result cell 65ms
+     → expected 'local function measure(p)\n    local …' to match /local \w+, \w+, \w+ = measure\(index\)/
+   ✓ threads printable options through the complete O0 pipeline 23ms
+   ✓ threads printable options through the complete O1 pipeline 22ms
+   ✓ threads printable options through the complete O2 pipeline 21ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/rewrite-integration.test.ts > recovers the complete O2 tuple while keeping a three-result helper and outer result cell
+AssertionError: expected 'local function measure(p)\n    local …' to match /local \w+, \w+, \w+ = measure\(index\)/
+
+- Expected: 
+/local \w+, \w+, \w+ = measure\(index\)/
+
++ Received: 
+"local function measure(p)
+    local value = p * 7 + 3
+    return value, p * p - 5, if not (value > 10) then false else true
+end
+
+local first = ...
+local first2 = tonumber(first) or 6
+local result
+for index = -4, first2 do
+    local value = index * 7 + 3
+    local value2 = index * index - 5
+    result = value > 10
+    print(index, value, value2, result)
+end
+return measure
+"
+
+ ❯ tests/rewrite-integration.test.ts:17:25
+     15|  const enabled=decompile(input,{opcodeEncoding:'official'}),disabled=d…
+     16|  expect(enabled.ok && disabled.ok).toBe(true);if(!enabled.ok || !disab…
+     17|  expect(enabled.source).toMatch(/local \w+, \w+, \w+ = measure\(index\…
+       |                         ^
+     18|  expect(disabled.source).not.toMatch(/= measure\(index\)/);
+     19|  expect(enabled.source).toMatch(/return \w+, (\w+) \* \1 - 5, \w+ > 10…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  19:15:33
+   Duration  1.60s (transform 943ms, setup 0ms, collect 1.27s, tests 138ms, environment 0ms, prepare 59ms)
+

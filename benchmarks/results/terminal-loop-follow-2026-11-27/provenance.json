@@ -1,0 +1,40 @@
+{
+  "base_commit": "7dcf6d4",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "comparison": "development regressions; not an independent holdout or a full-suite score",
+  "first_evaluations": {
+    "own-before.json": "repeat-return-follow and generic-break-after-return: 0/12",
+    "inline-before.json": "repeat-inlined-return-tail: 0/6",
+    "mutants-before.json": "mut1-376 and mut1-395 before follow repair: 2/12",
+    "hard-generic-before.json": "generic-break-after-return and mut1-395: 5/12"
+  },
+  "final_evaluations": {
+    "normal-after.json": "42/42 ordinary profiles, 7 inputs",
+    "hard-after.json": "42/42 Hard profiles, 7 inputs"
+  },
+  "coverage": [
+    "normal loop completion",
+    "empty early returns",
+    "generic break",
+    "inlined result tails",
+    "shuffled exit adapters",
+    "reference/value captures",
+    "zero/open return arity"
+  ],
+  "unit_validation": {
+    "full_before_expectation_update": {
+      "pass": 1040,
+      "fail": 1,
+      "detail": "PR58 region identity expected NOP adapter PC6; canonical follow now resolves to outer FORGLOOP PC7."
+    },
+    "focused_after_expectation_update": {
+      "pass": 63,
+      "fail": 0,
+      "detail": "Loop-region membership assertions retained; follow assertion now checks PC7 and FORGLOOP."
+    },
+    "build": "passed",
+    "diff_check": "passed"
+  }
+}

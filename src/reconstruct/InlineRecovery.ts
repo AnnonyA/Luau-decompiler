@@ -1,5 +1,5 @@
 import type {Block, Chunk, Expression, Statement} from '../ast/Ast.js';
-import {ident} from '../ast/Ast.js';
+import {cloneAst,ident} from '../ast/Ast.js';
 import {analyzeBindings, replaceReferences, type LexicalBinding} from '../analysis/Bindings.js';
 import {lineAt, type BytecodeModule} from '../decode/Prototype.js';
 import {Opcode} from '../decode/Opcode.js';
@@ -382,7 +382,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>, re
         if (size(e) >= 2 + ordered.reduce((n,arg)=>n+size(arg),0) + 2 && ordered.every(arg=>visibleArguments(arg,visible)) &&
             preservesCaptures(e,ordered,context)) {
           if(selected){ambiguous=true;break;}
-          recoveredHelpers?.add(candidate.name);selected={kind:'call',callee:ident(candidate.name),args:structuredClone(ordered),open:false};
+          recoveredHelpers?.add(candidate.name);selected={kind:'call',callee:ident(candidate.name),args:cloneAst(ordered),open:false};
         }
       }
     }
@@ -449,7 +449,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>, re
         // Arguments expanded from earlier initializers have already passed the
         // destination binding proof. Detach them from replacements scheduled at
         // their old site: those calls can name helpers shadowed in this scope.
-        recoveredHelpers?.add(candidate.name);selected={count,call:{kind:'expression-stmt',expression:{kind:'call',callee:ident(candidate.name),args:structuredClone(ordered),open:false}}};
+        recoveredHelpers?.add(candidate.name);selected={count,call:{kind:'expression-stmt',expression:{kind:'call',callee:ident(candidate.name),args:cloneAst(ordered),open:false}}};
       }
     }
     return budget>0 ? selected : undefined;
@@ -489,7 +489,7 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>, re
       if(!ordered.every(arg=>visibleArguments(arg,visible)) ||
           !preservesCaptures(statements.slice(start,start+count),ordered,context))continue;
       if(selected)return; // No guessed winner between equally plausible helpers.
-      selected={count,candidate,args:structuredClone(ordered),slots};
+      selected={count,candidate,args:cloneAst(ordered),slots};
     }
     if(!selected || budget<=0)return;
     recoveredHelpers?.add(selected.candidate.name);const call:Expression={kind:'call',callee:ident(selected.candidate.name),args:selected.args,open:false};

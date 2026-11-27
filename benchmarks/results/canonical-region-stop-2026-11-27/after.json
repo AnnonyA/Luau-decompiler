@@ -1,0 +1,104 @@
+{
+  "generator": "typed-v2",
+  "cases": 5,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "after": {
+      "pass": 52,
+      "mismatch": 8
+    }
+  },
+  "by_profile": {
+    "after": {
+      "O1g1": 1,
+      "O1g1+x2": 1,
+      "O1g2": 1,
+      "O1g2+x3": 1,
+      "O2g1": 1,
+      "O2g1+x3": 1,
+      "O2g2": 1,
+      "O2g2+x1": 1
+    }
+  },
+  "failures": {
+    "after": [
+      {
+        "case": "seed1042",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 11: want `L16\t2\t\"back\\\\slash\" {1=258.1415926535898,2=0,3=-0}` got `L16\t2\t\"back\\\\slash\" nil`"
+      },
+      {
+        "case": "seed1042",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 11: want `L16\t2\t\"back\\\\slash\" {1=258.1415926535898,2=0,3=-0}` got `L16\t2\t\"back\\\\slash\" nil`"
+      },
+      {
+        "case": "seed1042",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 11: want `L16\t2\t\"back\\\\slash\" {1=258.1415926535898,2=0,3=-0}` got `L16\t2\t\"back\\\\slash\" nil`"
+      },
+      {
+        "case": "seed1042",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 11: want `L16\t2\t\"back\\\\slash\" {1=258.1415926535898,2=0,3=-0}` got `L16\t2\t\"back\\\\slash\" nil`"
+      },
+      {
+        "case": "seed1042",
+        "profile": "O1g1+x2",
+        "kind": "mismatch",
+        "detail": "line 11: want `L16\t2\t\"back\\\\slash\" {1=258.1415926535898,2=0,3=-0}` got `L16\t2\t\"back\\\\slash\" nil`"
+      },
+      {
+        "case": "seed1042",
+        "profile": "O2g1+x3",
+        "kind": "mismatch",
+        "detail": "line 11: want `L16\t2\t\"back\\\\slash\" {1=258.1415926535898,2=0,3=-0}` got `L16\t2\t\"back\\\\slash\" nil`"
+      },
+      {
+        "case": "seed1042",
+        "profile": "O1g2+x3",
+        "kind": "mismatch",
+        "detail": "line 11: want `L16\t2\t\"back\\\\slash\" {1=258.1415926535898,2=0,3=-0}` got `L16\t2\t\"back\\\\slash\" nil`"
+      },
+      {
+        "case": "seed1042",
+        "profile": "O2g2+x1",
+        "kind": "mismatch",
+        "detail": "line 11: want `L16\t2\t\"back\\\\slash\" {1=258.1415926535898,2=0,3=-0}` got `L16\t2\t\"back\\\\slash\" nil`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 52,
+    "by_decompiler": {
+      "after": {
+        "round_trips": 52,
+        "similarity": 78.08341051523502,
+        "size": 1.3302522796587137,
+        "locals": 1.0970427819356914,
+        "nesting": 0.4423076923076923,
+        "endless": 17,
+        "names": 35.148514851485146,
+        "cpu_ms_median": 144.561,
+        "cpu_ms_total": 10242.383000000002
+      }
+    }
+  }
+}

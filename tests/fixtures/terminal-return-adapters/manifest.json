@@ -1,0 +1,16 @@
+{
+  "O0g1-adapters.luauc": "66f15858fbd5c7d949a7efdc3f814771dc95d9c17c4840b457e9f485fd487729",
+  "O0g1-original.luauc": "c9ca85c3a1e42235d6bb590c6e89b44bde717179693c4d4adce1ce46a2c416ff",
+  "O0g2-adapters.luauc": "f3d66131cb8638e79fd7efd3a85d9f39bf8c368c2962e3d663f1cf30d695229a",
+  "O0g2-original.luauc": "b0bfd7a9aefdf6a9dd5e7707ede11dcc735d9ad7adaa61490310ddebb1489cae",
+  "O1g1-adapters.luauc": "476b0bec14259cec0410c2a1df6475c957682a7dd6be33cc5ed1f36546beb993",
+  "O1g1-original.luauc": "896c4f21e70b4fcbc2da4c6dc67fd35b693684555976928dcd1765823ff06b5c",
+  "O1g2-adapters.luauc": "bf2ec6485fa05f0f63ae8986e7e67ed78557be76e169694c280406f7785e562e",
+  "O1g2-original.luauc": "487f2813fe4dc780812d8dea1a2887c9ed000e09c74e7d4c40b97dbaced86e1a",
+  "O2g1-adapters.luauc": "476b0bec14259cec0410c2a1df6475c957682a7dd6be33cc5ed1f36546beb993",
+  "O2g1-original.luauc": "896c4f21e70b4fcbc2da4c6dc67fd35b693684555976928dcd1765823ff06b5c",
+  "O2g2-adapters.luauc": "bf2ec6485fa05f0f63ae8986e7e67ed78557be76e169694c280406f7785e562e",
+  "O2g2-original.luauc": "487f2813fe4dc780812d8dea1a2887c9ed000e09c74e7d4c40b97dbaced86e1a",
+  "insert-return-adapters.mjs": "ee3231544448e41a796ab945001d3ffa2c501724062af18112435622746178a4",
+  "terminal-edge-return.luau": "712eecc95f0f9819618c354e50c91dfee12f751274d8c2431f33e470afd33544"
+}

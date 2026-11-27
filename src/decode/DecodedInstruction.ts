@@ -33,6 +33,8 @@ export interface CaptureInfo {
 
 export interface DecodedInstruction {
   pc: number;
+  /** Original input PC when this instruction belongs to normalized reconstruction IR. */
+  originalPc?: number;
   rawWord: number;
   width: number;
   opcode: Opcode;

@@ -1,0 +1,16 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/hard-engine
+
+ ✓ tests/loop-exit-values.test.ts (6 tests) 532ms
+ ✓ tests/loop-backedge-regressions.test.ts (15 tests) 451ms
+ ✓ tests/loop-exits.test.ts (7 tests) 310ms
+ ✓ tests/natural-loop-regions.test.ts (8 tests) 103ms
+ ✓ tests/source-structure.test.ts (15 tests) 95ms
+ ✓ tests/cfg-ssa.test.ts (11 tests) 36ms
+
+ Test Files  6 passed (6)
+      Tests  62 passed (62)
+   Start at  19:42:10
+   Duration  9.93s (transform 2.44s, setup 0ms, collect 5.27s, tests 1.53s, environment 15ms, prepare 957ms)
+

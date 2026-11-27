@@ -1,0 +1,20 @@
+{
+  "luau": "0.747",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "files": {
+    "O0g1-original.luauc": "3be817b6be1a3ac1ae2bbd206d64ee4c8679785ee05021e1589a2de064dea99e",
+    "O0g1-shuffled.luauc": "a5bf17b26ad77c4cb6b2e13aeb70db0d9f94e2e6bd878a60841f4b81b60a73ed",
+    "O0g2-original.luauc": "ccf9e2f94659655b230aaa7b70b3feabbdcc6a4f127cdbc6753a321b17c9ffca",
+    "O0g2-shuffled.luauc": "8fa68c11c7712771f3e6f0ccbbaad085fa37b23e013a9fc63b40825a3e830dcf",
+    "O1g1-original.luauc": "aaaabb87d6a7057d391297fc8d323e2bb18ae1844c657ef35c93392e0a3fbdbc",
+    "O1g1-shuffled.luauc": "d70f2d9e2631a1d4d111e4925db783d3afa0887702b13ade868beb233d958f28",
+    "O1g2-original.luauc": "afecfc63c852e79ebb83e1dc2bd245add8ba56b4b2bd93943896a14b1c6934c8",
+    "O1g2-shuffled.luauc": "464e956ee99af2902f83577eedc1f393552f3c6baa247f54297408363c2eb419",
+    "O2g1-original.luauc": "aaaabb87d6a7057d391297fc8d323e2bb18ae1844c657ef35c93392e0a3fbdbc",
+    "O2g1-shuffled.luauc": "d70f2d9e2631a1d4d111e4925db783d3afa0887702b13ade868beb233d958f28",
+    "O2g2-original.luauc": "afecfc63c852e79ebb83e1dc2bd245add8ba56b4b2bd93943896a14b1c6934c8",
+    "O2g2-shuffled.luauc": "464e956ee99af2902f83577eedc1f393552f3c6baa247f54297408363c2eb419",
+    "permute-list-batches.mjs": "91cb22c1b0fe12456b1043e2506fc54a7d770a99eeb46e0ac46d0e6585e14c8b",
+    "split-open-table.luau": "4acdae852340687cde949e210d870eb431ac2ec351dbb2b93859cd1932249336"
+  }
+}

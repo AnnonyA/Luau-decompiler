@@ -1,0 +1,276 @@
+{
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "luau": "0.747",
+  "entries": [
+    {
+      "source": "conditional-binding-loop.luau",
+      "profile": "O0g1",
+      "sha256": "94d83b0442fc2fa4e7eecad7afc791c4fcbb107e4840d143c28984282d4062b8"
+    },
+    {
+      "source": "conditional-binding-loop.luau",
+      "profile": "O0g2",
+      "sha256": "3f41ebf5015211de246bc9562eb5796bccb41bd53cfd10d5218580a86025eb04"
+    },
+    {
+      "source": "conditional-binding-loop.luau",
+      "profile": "O1g1",
+      "sha256": "f707cd4e151536515061413d6a3eed7851fad7581d027bb6e4bdb8be79a81fcc"
+    },
+    {
+      "source": "conditional-binding-loop.luau",
+      "profile": "O1g2",
+      "sha256": "d3cbad063b687dc03d55ae69348a7239edd57db0c14a0ba99d478e41b455ba21"
+    },
+    {
+      "source": "conditional-binding-loop.luau",
+      "profile": "O2g1",
+      "sha256": "f707cd4e151536515061413d6a3eed7851fad7581d027bb6e4bdb8be79a81fcc"
+    },
+    {
+      "source": "conditional-binding-loop.luau",
+      "profile": "O2g2",
+      "sha256": "d3cbad063b687dc03d55ae69348a7239edd57db0c14a0ba99d478e41b455ba21"
+    },
+    {
+      "source": "iterator-state.luau",
+      "profile": "O0g1",
+      "sha256": "74b1b2d4a9bb70f09a02ef0f2b13d762ca82fc1fb7984d5aef529d4a911a4edf"
+    },
+    {
+      "source": "iterator-state.luau",
+      "profile": "O0g2",
+      "sha256": "3d0f3c9a9dd0f6425a9bc119dd0fea6d4315e9782aa4eb1a3e5577db84c8fe79"
+    },
+    {
+      "source": "iterator-state.luau",
+      "profile": "O1g1",
+      "sha256": "38e50b5606afd3532c04370c9a106ad0ac908b4fdc6676df7e2ca7d4a31df08b"
+    },
+    {
+      "source": "iterator-state.luau",
+      "profile": "O1g2",
+      "sha256": "adbec2e4782ecddee80f1a5fa352e0309bf7f14a46c8bbd041bef98723a01ed3"
+    },
+    {
+      "source": "iterator-state.luau",
+      "profile": "O2g1",
+      "sha256": "eaa0441d67bf9b8be9e436cf12342450a888b30fd4965cece2e01cf61a18b1f2"
+    },
+    {
+      "source": "iterator-state.luau",
+      "profile": "O2g2",
+      "sha256": "ee084948fffe5988d4d483727e8ee51920693b7492f0d2a5f3c66e146d1e204d"
+    },
+    {
+      "source": "loop-accumulator.luau",
+      "profile": "O0g1",
+      "sha256": "32898f86c874ac1694fce7296e36d3c71dc519a5c375784dabcd38b489e871d1"
+    },
+    {
+      "source": "loop-accumulator.luau",
+      "profile": "O0g2",
+      "sha256": "91e63e15656e1d7b9866163b011e46a8480b63a88f78f80abe0e11b694df1105"
+    },
+    {
+      "source": "loop-accumulator.luau",
+      "profile": "O1g1",
+      "sha256": "6c67fb253d115d3bab45dfdc435e65968a15ab730df86788e4fcbfec5321a7af"
+    },
+    {
+      "source": "loop-accumulator.luau",
+      "profile": "O1g2",
+      "sha256": "742881da0eaea22e4c1883f8cc1998f181eed74b278af620a72efef88556c713"
+    },
+    {
+      "source": "loop-accumulator.luau",
+      "profile": "O2g1",
+      "sha256": "f4a82a93b2eaf91e8f8fdc9bbb8c0fbaa62cf66e3aa88bafe61d72aba3057f0f"
+    },
+    {
+      "source": "loop-accumulator.luau",
+      "profile": "O2g2",
+      "sha256": "0eff8ad9e0c3edadbbf10333195c79e718ffcf9063cf644617481dd9e1c30d86"
+    },
+    {
+      "source": "repeat-condition-setup.luau",
+      "profile": "O0g1",
+      "sha256": "37160c5224b5edf3a3a97b20d9d95547d878e6452af9ac7909317a3a60c49188"
+    },
+    {
+      "source": "repeat-condition-setup.luau",
+      "profile": "O0g2",
+      "sha256": "8c90bf064f623323f005c58d0e1ba982bffb8f41f7b13cea574e573754cdedd9"
+    },
+    {
+      "source": "repeat-condition-setup.luau",
+      "profile": "O1g1",
+      "sha256": "c4cf706db987437b3f694c442f6fe50a27beab210b2a01da42e6e11c15f274db"
+    },
+    {
+      "source": "repeat-condition-setup.luau",
+      "profile": "O1g2",
+      "sha256": "72526c8d848cedae653ce7692e4aa073a25a0b1ae164a0a497df16c6d95d32f7"
+    },
+    {
+      "source": "repeat-condition-setup.luau",
+      "profile": "O2g1",
+      "sha256": "c4cf706db987437b3f694c442f6fe50a27beab210b2a01da42e6e11c15f274db"
+    },
+    {
+      "source": "repeat-condition-setup.luau",
+      "profile": "O2g2",
+      "sha256": "72526c8d848cedae653ce7692e4aa073a25a0b1ae164a0a497df16c6d95d32f7"
+    },
+    {
+      "source": "shared-iteration-tail.luau",
+      "profile": "O0g1",
+      "sha256": "a5c744c0298dfce67c7a3ad9af9bc2334b27a81d3c985e37c085b4ab6bd8ce37"
+    },
+    {
+      "source": "shared-iteration-tail.luau",
+      "profile": "O0g2",
+      "sha256": "2dc464d4d3bc06a682d42bad84bd7495caa86ede772a99b4bebe06f2a7414bba"
+    },
+    {
+      "source": "shared-iteration-tail.luau",
+      "profile": "O1g1",
+      "sha256": "a48396f3f60ad38a2d1807c56c499cdeb2a1a7af94d7ae54e5355299c6135499"
+    },
+    {
+      "source": "shared-iteration-tail.luau",
+      "profile": "O1g2",
+      "sha256": "8e925d3681954b90a01d0b11945bd92ede310d34bdbcb345b962251e38015af9"
+    },
+    {
+      "source": "shared-iteration-tail.luau",
+      "profile": "O2g1",
+      "sha256": "a48396f3f60ad38a2d1807c56c499cdeb2a1a7af94d7ae54e5355299c6135499"
+    },
+    {
+      "source": "shared-iteration-tail.luau",
+      "profile": "O2g2",
+      "sha256": "8e925d3681954b90a01d0b11945bd92ede310d34bdbcb345b962251e38015af9"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O0g1",
+      "sha256": "843d0b8ec7a3610363e537b85f84681f8a7903296032aa72771895396a0f433a"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O0g2",
+      "sha256": "af497ab05a1c668efbe19011f06eccecf3e2b6c1897f664160449c24c69686d4"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O1g1",
+      "sha256": "3a239b07a0a69c579002e5799fb6abc20a170270a73893f034c8ad657d7e7612"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O1g2",
+      "sha256": "37f352470c2133b456e358e00801b77fb0198a01fa3288c9c356f2256be7b117"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O2g1",
+      "sha256": "8baab4619e8924095dbeb63655a79ed5f528808cc48459b0505bcd55fa8ffb96"
+    },
+    {
+      "source": "terminal-numeric-for.luau",
+      "profile": "O2g2",
+      "sha256": "8b455ae4ec1d22916c071469c95550b48ae455dd8d95b2f2b2b63dec45e0199d"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O0g1",
+      "sha256": "15a80b15dd6081af2aab4ba01191a8b1a8a04d4bd30288492526abbb4429beda"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O0g2",
+      "sha256": "16cbd024aa7140dc375d2941d7563a69fd00fd579c1d4beda49a180af495d865"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O1g1",
+      "sha256": "5ffd0cc1e8fc7b31a5ce6da85e2eb187e4526a25d71e3e1cebf5fc39fcd38017"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O1g2",
+      "sha256": "d086f45f32e9a4f1917dee556b5dcefb8a4dc52c32838a29010795a504ab16b8"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O2g1",
+      "sha256": "3e9d8d03da64aff5b42d06d715b4010244b1dc259fb7cb73c59edbb01740140e"
+    },
+    {
+      "source": "predicate-loop-result.luau",
+      "profile": "O2g2",
+      "sha256": "004596122b1b9619e1fa23f1020028cf609179901d78d486872fcd4f0413b751"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O0g1",
+      "sha256": "3a88ffeae9723c35e6235634c39a44c10e6d3ad40d372ee743011b21a7797054"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O0g2",
+      "sha256": "48004e7af2720b6c88017b0fb21fa22c3e475db58d155e1a846358176c78b913"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O1g1",
+      "sha256": "3db38109a1ff72b5a90f3d54f0dbcd736cd6927bd79bc9ea7ec15e33d0b8342b"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O1g2",
+      "sha256": "042aa82279b70134619255d0f69a0dc3dd767044fd8d5be922ee20067ef3138d"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O2g1",
+      "sha256": "24ae290904c913cf3752b29eee40713d740577ab204ff3c03dde8de58eee07ab"
+    },
+    {
+      "source": "nullable-selection.luau",
+      "profile": "O2g2",
+      "sha256": "dd194bace7a87c418e7c53d2268958eda73bc385240c8b6bb0264a784bbacee3"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O0g1",
+      "sha256": "70319b7c8944376349cf5fcb691a86f71553ae7ca6d7e2aeb8e68514b3d0e166"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O0g2",
+      "sha256": "e5250c2d7716d9cfbc8904bf32704324cd4bdaff98c5a5f187f24e41d445b6f5"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O1g1",
+      "sha256": "26f15e5646cf8ae99f015a3e0376490888b4b2ac83e2c972f78182169f25c905"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O1g2",
+      "sha256": "5885184707686a5296a0f3373a652e724cadb2639d8a02abd29f8db29bc1b46e"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O2g1",
+      "sha256": "26f15e5646cf8ae99f015a3e0376490888b4b2ac83e2c972f78182169f25c905"
+    },
+    {
+      "source": "guarded-reservation-loop.luau",
+      "profile": "O2g2",
+      "sha256": "5885184707686a5296a0f3373a652e724cadb2639d8a02abd29f8db29bc1b46e"
+    }
+  ]
+}

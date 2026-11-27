@@ -1,4 +1,4 @@
-import {block,ident,lit,type Block,type Chunk,type Expression,type Statement} from '../ast/Ast.js';
+import {block,cloneAst,ident,lit,type Block,type Chunk,type Expression,type Statement} from '../ast/Ast.js';
 import {analyzeBindings,replaceReferences,type LexicalBinding} from '../analysis/Bindings.js';
 import {numericStateBindings} from './NumericState.js';
 import {isValidIdentifier} from './Naming.js';
@@ -40,7 +40,7 @@ function allocator(bindings: readonly LexicalBinding[], globals: ReadonlySet<str
  * integer unit strides mirror the exact bounded subset of official Luau
  * 9d7748a4 compileUnrolledFor. No external implementation code is copied. */
 export function applyOptionalRewrites(ast: Chunk, options: OptionalRewriteOptions = {}): Chunk {
-  let result=structuredClone(ast);
+  let result=cloneAst(ast);
   if(!options.mathConstants && !options.rerollUnrolledLoops && options.keepDeadFunctions!==false && !options.unfoldModuleTables)return result;
   const nodes=objects(result);
   if(!nodes)return result;

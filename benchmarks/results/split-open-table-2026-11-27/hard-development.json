@@ -1,0 +1,56 @@
+{
+  "generator": "typed-v2",
+  "cases": 3,
+  "profiles": [
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "candidate": {
+      "pass": 16,
+      "decompile_failed": 2
+    }
+  },
+  "by_profile": {
+    "candidate": {
+      "O1g2+x3": 1,
+      "O2g1+x3": 1
+    }
+  },
+  "failures": {
+    "candidate": [
+      {
+        "case": "seed1461",
+        "profile": "O2g1+x3",
+        "kind": "decompile_failed",
+        "detail": "timeout"
+      },
+      {
+        "case": "seed1461",
+        "profile": "O1g2+x3",
+        "kind": "decompile_failed",
+        "detail": "timeout"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 16,
+    "by_decompiler": {
+      "candidate": {
+        "round_trips": 16,
+        "similarity": 71.0995577275753,
+        "size": 1.0429516458033126,
+        "locals": 1.1379723865402525,
+        "nesting": 1.25,
+        "endless": 2,
+        "names": 19.222462203023756,
+        "cpu_ms_median": 334.67400000000004,
+        "cpu_ms_total": 6705.71
+      }
+    }
+  }
+}

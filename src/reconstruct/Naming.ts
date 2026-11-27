@@ -23,8 +23,7 @@ const KEYWORDS = new Set([
   "true",
   "until",
   "while",
-  "continue",
-  // 'type' and 'export' are contextual keywords in Luau: they remain valid
+  // 'continue', 'type' and 'export' are contextual keywords in Luau: they remain valid
   // variable, property and method names outside type-declaration syntax.
 ]);
 

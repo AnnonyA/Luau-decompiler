@@ -1,0 +1,120 @@
+{
+  "generator": "typed-v2",
+  "cases": 3,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "totals": {
+    "before": {
+      "pass": 6,
+      "mismatch": 12
+    }
+  },
+  "by_profile": {
+    "before": {
+      "O0g1": 2,
+      "O0g2": 2,
+      "O1g1": 2,
+      "O1g2": 2,
+      "O2g1": 2,
+      "O2g2": 2
+    }
+  },
+  "failures": {
+    "before": [
+      {
+        "case": "seed1356",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 8: want `L9\t4\t\"\" \"s\" nan \"  spaced  \"` got `L11\t3\tnan false 3`"
+      },
+      {
+        "case": "seed1356",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 8: want `L9\t4\t\"\" \"s\" nan \"  spaced  \"` got `L11\t3\tnan false 3`"
+      },
+      {
+        "case": "seed1247",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `L3\t1\t4` got `L3\t1\t5`"
+      },
+      {
+        "case": "seed1247",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 2: want `L3\t1\t4` got `L3\t1\t5`"
+      },
+      {
+        "case": "seed1247",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 2: want `L3\t1\t4` got `L3\t1\t5`"
+      },
+      {
+        "case": "seed1247",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 2: want `L3\t1\t4` got `L3\t1\t5`"
+      },
+      {
+        "case": "repeat-boolean-prelude",
+        "profile": "O0g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `4\t4\ttruea\ttrueb\ttrueac` got `5\t3\ttruea\ttrueb\ttrueac`"
+      },
+      {
+        "case": "repeat-boolean-prelude",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `4\t4\ttruea\ttrueb\ttrueac` got `5\t3\ttruea\ttrueb\ttrueac`"
+      },
+      {
+        "case": "repeat-boolean-prelude",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 1: want `4\t4\ttruea\ttrueb\ttrueac` got `5\t3\ttruea\ttrueb\ttrueac`"
+      },
+      {
+        "case": "repeat-boolean-prelude",
+        "profile": "O0g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `4\t4\ttruea\ttrueb\ttrueac` got `5\t3\ttruea\ttrueb\ttrueac`"
+      },
+      {
+        "case": "repeat-boolean-prelude",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `4\t4\ttruea\ttrueb\ttrueac` got `5\t3\ttruea\ttrueb\ttrueac`"
+      },
+      {
+        "case": "repeat-boolean-prelude",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 1: want `4\t4\ttruea\ttrueb\ttrueac` got `5\t3\ttruea\ttrueb\ttrueac`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 6,
+    "by_decompiler": {
+      "before": {
+        "round_trips": 6,
+        "similarity": 69.62937414646149,
+        "size": 0.80761487288812,
+        "locals": 1.063789581327778,
+        "nesting": -0.6666666666666666,
+        "endless": 2,
+        "names": 55.67567567567567,
+        "cpu_ms_median": 293.348,
+        "cpu_ms_total": 1699.184
+      }
+    }
+  }
+}

@@ -1,0 +1,317 @@
+[
+  {
+    "checkpoint": "baseline",
+    "tier": "quick",
+    "revision": "9d4f03fde53d611aef91028a2b1f7529b2f4ffaa",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "score": {
+      "passed": 511,
+      "total": 882
+    },
+    "totals": {
+      "pass": 511,
+      "refused": 8,
+      "recompile_failed": 75,
+      "mismatch": 288
+    },
+    "seconds": 47.8
+  },
+  {
+    "checkpoint": "baseline",
+    "tier": "hard-quick",
+    "revision": "9d4f03fde53d611aef91028a2b1f7529b2f4ffaa",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-quick",
+      "hash": "9bcb49d29e867a92"
+    },
+    "score": {
+      "passed": 102,
+      "total": 882
+    },
+    "totals": {
+      "pass": 102,
+      "refused": 6,
+      "decompile_failed": 116,
+      "recompile_failed": 10,
+      "mismatch": 648
+    },
+    "seconds": 770.68
+  },
+  {
+    "checkpoint": "checkpoint-3",
+    "tier": "quick",
+    "revision": "c5cb88ef5badb2e7a28d5cb718d6085e3d3f18b8",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "totals": {
+      "pass": 882
+    },
+    "seconds": 179.9
+  },
+  {
+    "checkpoint": "checkpoint-3",
+    "tier": "full",
+    "revision": "c5cb88ef5badb2e7a28d5cb718d6085e3d3f18b8",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "full",
+      "hash": "f0eae8ffcedd440e"
+    },
+    "score": {
+      "passed": 12098,
+      "total": 12276
+    },
+    "totals": {
+      "pass": 12098,
+      "unusable": 6,
+      "mismatch": 178
+    },
+    "seconds": 1395.56
+  },
+  {
+    "checkpoint": "checkpoint-3",
+    "tier": "hard-quick",
+    "revision": "c5cb88ef5badb2e7a28d5cb718d6085e3d3f18b8",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-quick",
+      "hash": "9bcb49d29e867a92"
+    },
+    "score": {
+      "passed": 842,
+      "total": 882
+    },
+    "totals": {
+      "pass": 842,
+      "mismatch": 40
+    },
+    "seconds": 266.43
+  },
+  {
+    "checkpoint": "checkpoint-4",
+    "tier": "hard-full",
+    "revision": "489ce27b97ca607b578388f052f178d78b7ec27f",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-full",
+      "hash": "9921d3bde4a99bfd"
+    },
+    "score": {
+      "passed": 11850,
+      "total": 12276
+    },
+    "totals": {
+      "pass": 11850,
+      "unusable": 6,
+      "decompile_failed": 12,
+      "recompile_failed": 1,
+      "mismatch": 413
+    },
+    "seconds": 1176.86
+  },
+  {
+    "checkpoint": "checkpoint-5-regression",
+    "tier": "quick",
+    "revision": "764ca6d43a94104bde47b0cb841788a159ed8dea",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "score": {
+      "passed": 868,
+      "total": 882
+    },
+    "totals": {
+      "pass": 868,
+      "decompile_failed": 2,
+      "recompile_failed": 2,
+      "mismatch": 10
+    },
+    "seconds": 253.34
+  },
+  {
+    "checkpoint": "checkpoint-5-regression",
+    "tier": "hard-quick",
+    "revision": "764ca6d43a94104bde47b0cb841788a159ed8dea",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-quick",
+      "hash": "9bcb49d29e867a92"
+    },
+    "score": {
+      "passed": 751,
+      "total": 882
+    },
+    "totals": {
+      "pass": 751,
+      "decompile_failed": 2,
+      "recompile_failed": 96,
+      "mismatch": 33
+    },
+    "seconds": 344.05
+  },
+  {
+    "checkpoint": "checkpoint-6",
+    "tier": "quick",
+    "revision": "50d6d9646060ff3d9a4cd0a20be0e9aa894ce999",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "score": {
+      "passed": 872,
+      "total": 882
+    },
+    "totals": {
+      "pass": 872,
+      "decompile_failed": 2,
+      "mismatch": 8
+    },
+    "seconds": 194.8
+  },
+  {
+    "checkpoint": "checkpoint-7",
+    "tier": "quick",
+    "revision": "387a3c116ff011c3ec62cb89575e133ad26ca9e2",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "totals": {
+      "pass": 882
+    },
+    "seconds": 58.47
+  },
+  {
+    "checkpoint": "checkpoint-8",
+    "tier": "hard-quick",
+    "revision": "84a7e16c5dbb11a77ffd4980f8fb30bb8d5dbf99",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-quick",
+      "hash": "9bcb49d29e867a92"
+    },
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "totals": {
+      "pass": 882
+    },
+    "seconds": 149.67
+  },
+  {
+    "checkpoint": "checkpoint-7",
+    "tier": "full",
+    "revision": "387a3c116ff011c3ec62cb89575e133ad26ca9e2",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "full",
+      "hash": "f0eae8ffcedd440e"
+    },
+    "score": {
+      "passed": 12272,
+      "total": 12276
+    },
+    "totals": {
+      "pass": 12272,
+      "unusable": 6,
+      "mismatch": 4
+    },
+    "seconds": 584.37
+  },
+  {
+    "checkpoint": "checkpoint-10",
+    "tier": "quick",
+    "revision": "155d58129799231c26094a36e4a23d771969a1b6",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "totals": {
+      "pass": 882
+    },
+    "seconds": 255.54
+  },
+  {
+    "checkpoint": "checkpoint-10",
+    "tier": "full",
+    "revision": "155d58129799231c26094a36e4a23d771969a1b6",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "full",
+      "hash": "f0eae8ffcedd440e"
+    },
+    "score": {
+      "passed": 12276,
+      "total": 12276
+    },
+    "totals": {
+      "pass": 12276,
+      "unusable": 6
+    },
+    "seconds": 953.83
+  },
+  {
+    "checkpoint": "checkpoint-10",
+    "tier": "hard-quick",
+    "revision": "155d58129799231c26094a36e4a23d771969a1b6",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-quick",
+      "hash": "9bcb49d29e867a92"
+    },
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "totals": {
+      "pass": 882
+    },
+    "seconds": 269.52
+  },
+  {
+    "checkpoint": "checkpoint-10",
+    "tier": "hard-full",
+    "revision": "155d58129799231c26094a36e4a23d771969a1b6",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "hard-full",
+      "hash": "9921d3bde4a99bfd"
+    },
+    "score": {
+      "passed": 12274,
+      "total": 12276
+    },
+    "totals": {
+      "pass": 12274,
+      "unusable": 6,
+      "mismatch": 2
+    },
+    "seconds": 989.61
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "base": "155d58129799231c26094a36e4a23d771969a1b6",
+  "candidate": "3b946f2 (locally cherry-picked as bdbb23c)",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "luauTag": "0.747",
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "tovekRevision": "ce2ea3325547fa3896f274b68013386338039040",
+  "source": "tests/fixtures/loop-exit-work/break-tail-observations.luau",
+  "generator": "tests/fixtures/loop-exit-work/move-break-tail.mjs",
+  "fixtureManifest": "tests/fixtures/loop-exit-work/manifest.json",
+  "validation": {
+    "originalVersusPermuted": {
+      "pass": 6,
+      "total": 6
+    },
+    "firstPermutedRoundTrips": {
+      "pass": 0,
+      "total": 6
+    },
+    "candidatePermutedRoundTrips": {
+      "pass": 6,
+      "total": 6
+    },
+    "ordinaryAndHardBefore": {
+      "pass": 12,
+      "total": 12
+    },
+    "ordinaryAndHardAfter": {
+      "pass": 12,
+      "total": 12
+    },
+    "unitBefore": {
+      "pass": 12,
+      "fail": 6
+    },
+    "unitAfter": {
+      "pass": 18,
+      "fail": 0
+    },
+    "generatorByteExactProfiles": 6
+  },
+  "implementation": "Independent authored source and preserving block permutation; no engine changes or copied reference code in this commit.",
+  "status": "Development regression and retained controls. Original files and first failures are preserved; no benchmark expectations or harness behavior changed."
+}

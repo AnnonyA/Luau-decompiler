@@ -1,0 +1,16 @@
+{
+  "base": "8c2a164",
+  "source_equivalent_to": "50d6d96",
+  "first_component_base": "a1318c1",
+  "luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "change": "canonicalize source-region stop through pure adapters using existing helper",
+  "component_before": "2 returns instead of one shared continuation",
+  "component_after": "1 return; four branch combinations preserve 2, 10, 100, 100",
+  "runtime_controls": "48/48 authored ordinary and Hard profile checks",
+  "seed1042": "4/12 pass, eight O1/O2 table-to-nil mismatches retained; no remaining timeout",
+  "initial_timeout_check": "intermediate diagnosis before canonical stop, contains two timeouts and four table-to-nil mismatches",
+  "units": "91/91",
+  "comparison": "development checks; no full-suite claim"
+}

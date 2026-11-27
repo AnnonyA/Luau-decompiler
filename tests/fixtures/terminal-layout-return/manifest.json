@@ -1,0 +1,16 @@
+{
+  "O0g1-adapters.luauc": "4c81af81154a7dff2c980921838bdb77d4cceac642ab92204b66973a91c746a0",
+  "O0g1-original.luauc": "5edddc8f7ca63188e39097c0b05188aefac2dedaedb049eab46c8c4974c2db1d",
+  "O0g2-adapters.luauc": "f0faaa069583bd52c7c4d0d84d500f4f7540e88e8375881e88449e5ffc0dcf79",
+  "O0g2-original.luauc": "3490771e1e96ceb9b651b2e5f7d885be8f42a950a22a5edc3fa35fc671123400",
+  "O1g1-adapters.luauc": "8dceb56b720c89bdf5760db767a7697761773dee9e7c8c3ddf1efe4814b859f0",
+  "O1g1-original.luauc": "dccb17cea20b7896d7e6a2122306f325488cb07fe47a301e5633d047a6338670",
+  "O1g2-adapters.luauc": "7fdf4d341714d819c93094ef611143e3543a0d3c5c95afa69363981579075ed7",
+  "O1g2-original.luauc": "238d1f7c559f6b7bf3d25e477e35b584ed6267ce0d575ae1527339a443d885ad",
+  "O2g1-adapters.luauc": "8dceb56b720c89bdf5760db767a7697761773dee9e7c8c3ddf1efe4814b859f0",
+  "O2g1-original.luauc": "dccb17cea20b7896d7e6a2122306f325488cb07fe47a301e5633d047a6338670",
+  "O2g2-adapters.luauc": "7fdf4d341714d819c93094ef611143e3543a0d3c5c95afa69363981579075ed7",
+  "O2g2-original.luauc": "238d1f7c559f6b7bf3d25e477e35b584ed6267ce0d575ae1527339a443d885ad",
+  "move-bare-return.mjs": "f17304214dce6e0f3c239e5737ca2edc8e0bba6fc9600e5dbf84c145e7d22ee6",
+  "terminal-layout-return.luau": "7828460bf7eb4950497dc33d9f9952b3f52e7b43edc4cee5d6ff1f5f0a69ce72"
+}

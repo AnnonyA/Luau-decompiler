@@ -293,3 +293,20 @@ export function block(statements: Statement[] = []): Block {
 export function chunk(statements: Statement[]): Chunk {
   return { kind: "chunk", body: block(statements) };
 }
+
+/** Clone our plain AST records without serializing numeric primitives.
+ * structuredClone canonicalizes NaNs, losing their observable sign bits. Keep
+ * shared node identities within the copy while detaching all mutable records. */
+export function cloneAst<T>(value: T): T {
+  const copies = new Map<object, object>();
+  const copy = (node: unknown): unknown => {
+    if (node === null || typeof node !== "object") return node;
+    const previous = copies.get(node);
+    if (previous) return previous;
+    const result: object = Array.isArray(node) ? new Array(node.length) : {};
+    copies.set(node, result);
+    for (const [key, child] of Object.entries(node)) (result as Record<string, unknown>)[key] = copy(child);
+    return result;
+  };
+  return copy(value) as T;
+}

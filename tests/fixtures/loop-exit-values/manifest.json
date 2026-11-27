@@ -1,0 +1,42 @@
+{
+  "luau": "0.747",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2"
+  ],
+  "files": {
+    "loop-local-snapshots.luau": "09a84041fcb504ba2c6bc4791a6eec889266bff3b96789a91c9cb379c5831140",
+    "loop-local-snapshots-O0g1.luauc": "0270347eedd84177250cc7829f493de27ae45ccba231b7e53c158e947a70834d",
+    "loop-local-snapshots-O1g1.luauc": "c005bb7bab879fb44b285081a7b85f9cadd58bde9c9c72fe3fbedcc83520ac7e",
+    "loop-local-snapshots-O2g1.luauc": "e5a03921c588101ab93b833fbe44ba98bb686d5857012171d7cebff11fb1f028",
+    "loop-local-snapshots-O0g2.luauc": "80b8c0ccf25b802b8c874160b387516e5e9c02760e2a0f2f0e1f1475d61c090a",
+    "loop-local-snapshots-O1g2.luauc": "42966bccfb32971905aaa27b1898f1b59208200d76d54e6064e80a07cbbd2d19",
+    "loop-local-snapshots-O2g2.luauc": "62e2909ec98aa94dcbd8228b0695d0d3625f8f88ed6aab715e1b4b32932ac9f0",
+    "overwritten-outer-flag.luau": "609925c68e01ee79af0a167c11f04a2bc2599e86407916fd9f59e1fecb7dfecb",
+    "overwritten-outer-flag-O0g1.luauc": "04442d7d52cd023450e0ac9abc22f3b700d4883b48f7ac8e079b3f9b2c5538d7",
+    "overwritten-outer-flag-O1g1.luauc": "16594b9b034a44bf3b8c044a494d7f2d39def444f8ffc2bfab3b28c548b8c4f5",
+    "overwritten-outer-flag-O2g1.luauc": "97fe6a8f9fe28b47db9381bf270e397f5601685929c6585f18583db96400c8a6",
+    "overwritten-outer-flag-O0g2.luauc": "0e43777b926a0f0295f9c4048fe56cc813eb37604786e564fce14f8499f3b57c",
+    "overwritten-outer-flag-O1g2.luauc": "b5e1f82146be61d80f9d106e412963d0dea9bba098a6ffb70463467bcb9b1d17",
+    "overwritten-outer-flag-O2g2.luauc": "a85256d665f70b576b52d996ce2a3a3ff8eb4436ecf855b3eb40a62ca374f2c4",
+    "preloop-copy-capture.luau": "094c590811129ca0f96b9e32603962f003a1e23079144c5a50322f604a6a0de8",
+    "preloop-copy-capture-O0g1.luauc": "23dd9667eb4a4470068a11a62e68c0b7de680267e468b77df44a03ffa525083d",
+    "preloop-copy-capture-O1g1.luauc": "4d084137375adce67f87e8eafc508da27424d22ad222ab02420b8cd9a3837f7b",
+    "preloop-copy-capture-O2g1.luauc": "4d084137375adce67f87e8eafc508da27424d22ad222ab02420b8cd9a3837f7b",
+    "preloop-copy-capture-O0g2.luauc": "fdb978d975556340b96d371f312b121f4acb4fc66d9c4b6902c25e27f27f7128",
+    "preloop-copy-capture-O1g2.luauc": "6e59ad588b5559acffe207cabfe8c1bf8a3745d6a3d89f9e0114069752aaed51",
+    "preloop-copy-capture-O2g2.luauc": "6e59ad588b5559acffe207cabfe8c1bf8a3745d6a3d89f9e0114069752aaed51",
+    "preloop-copy.luau": "2d97e40ad4ca2764297582befa2d850a6fc4276ac9e13dac0d98f5dd769084b9",
+    "preloop-copy-O0g1.luauc": "bda67938d33d8f2ff94043b65847b53c1197c068cda9403be7198dff77d61f77",
+    "preloop-copy-O1g1.luauc": "35f9538427e4280fad90cd5e9c4e4e253afd55b14964fddf297441b6e70dd7d0",
+    "preloop-copy-O2g1.luauc": "35f9538427e4280fad90cd5e9c4e4e253afd55b14964fddf297441b6e70dd7d0",
+    "preloop-copy-O0g2.luauc": "d95eaffc88fc18e9bd85b17ab7d25a07915082841f139b138c100cdfab0d07a5",
+    "preloop-copy-O1g2.luauc": "e3d4b8c6472f480c686b85d80197a367e9db2e8d6e52e85fbce03bd3892f2a7c",
+    "preloop-copy-O2g2.luauc": "e3d4b8c6472f480c686b85d80197a367e9db2e8d6e52e85fbce03bd3892f2a7c"
+  }
+}

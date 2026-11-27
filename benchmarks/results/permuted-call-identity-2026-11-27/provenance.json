@@ -1,0 +1,11 @@
+{
+  "base": "3253bd8",
+  "first": "Original VM equals transformed VM6/6; decompiled false identity and7 factory calls instead of1 in6/6",
+  "after": "6/6 identity, mutation, capture and multret checks; hard control18/18; Full c5 failure corpus306/306",
+  "debugProbe": "initial-debug-metadata-probe has3 decode failures caused by authored g1 debug names omitted after adding local metadata. The permutation tool was corrected before first.json; the first valid six outputs are retained separately. No suite result uses this probe.",
+  "reference": {
+    "Tovek": "ce2ea3325547fa3896f274b68013386338039040 MIT cfg/src/ssa/destruct/liveness.rs and destruct.rs build_def_use",
+    "Luau": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f VM/src/lvmexecute.cpp CALL and MOVE"
+  },
+  "implementation": "Independent CFG traversal; no copied source."
+}

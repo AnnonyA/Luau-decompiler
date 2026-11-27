@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { decompile } from "../src/decompile.ts";
 import { block, chunk, ident, lit, type Expression, type Statement } from "../src/ast/Ast.ts";
 import { inferHumanNames, repairUndeclaredAutoLocals } from "../src/reconstruct/NameInference.ts";
 import { analyzeBindings } from "../src/analysis/Bindings.ts";
@@ -140,6 +142,42 @@ describe("cleanup respects lexical cells and observation points", () => {
 });
 
 describe("coalescing rewrites resolved cells in every AST container", () => {
+  it.each(['while', 'repeat'] as const)("keeps a %s counter separate from per-iteration temporaries", kind => {
+    const test: Expression = {kind: 'binary', op: kind === 'while' ? '<' : '>=', left: ident('result1'), right: lit(3)};
+    const body = block([
+      {kind: 'compound-assign', target: ident('result1'), op: '+', value: lit(1)},
+      {kind: 'local', names: ['result2'], values: [lit(0)]},
+      {kind: 'assign', targets: [ident('result2')], values: [call('observe')]},
+      {kind: 'expression-stmt', expression: call('consume', [ident('result2')])},
+    ]);
+    const output = inferHumanNames(chunk([
+      {kind: 'local', names: ['result1'], values: [lit(0)]},
+      {kind, body, test},
+    ]), {foldSingleUseTemps: false});
+    const loop = output.body.statements[1]!;
+    if (loop.kind !== kind || loop.test.kind !== 'binary') throw new Error('expected original loop');
+    const {bindings} = analyzeBindings(output.body);
+    const counter = bindings.find(binding => binding.reads.some(read => read.node === loop.test.left));
+    expect(counter?.writes).toHaveLength(1);
+    expect(counter?.writes[0]?.statement.kind).toBe('compound-assign');
+    expect(bindings.filter(binding => binding.scope === loop.body)).toHaveLength(1);
+  });
+
+  it.each([0, 1, 2].flatMap(opt => [1, 2].map(debug => `O${opt}g${debug}`)))(
+    'preserves the numeric repeat cell beside a closure at %s', profile => {
+      const result = decompile(readFileSync(new URL(
+        `fixtures/rosetta-cleanup/closure-in-repeat-${profile}.luauc`, import.meta.url)));
+      expect(result.ok).toBe(true);
+      if (!result.ok) throw new Error(result.error);
+      expect(result.validation).toEqual([]);
+      const repeat = result.ast.body.statements.find(statement => statement.kind === 'repeat');
+      if (repeat?.kind !== 'repeat') throw new Error('expected repeat');
+      const bindings = analyzeBindings(result.ast.body).bindings;
+      const counter = bindings.find(binding => binding.reads.some(read => read.statement === repeat));
+      expect(counter).toBeDefined();
+      expect(counter!.writes.every(write => write.statement.kind === 'compound-assign')).toBe(true);
+    });
+
   it("keeps closure assignments inside do blocks paired with their uses", () => {
     const closure = (value: number): Expression => ({kind: "function-expr", params: [], isVararg: false,
       body: block([{kind: "return", values: [lit(value)]}])});

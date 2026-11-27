@@ -1,0 +1,14 @@
+add identity	true
+sum	17	1
+less identity	true
+less	true	2
+equal callback	false
+equal	false	4
+index identity	true
+lookup	23	5
+store identity	true	true
+stored	6
+arity	4
+pack	table	true	tail	true
+closed counter	7
+== Returned
