@@ -1,0 +1,32 @@
+[
+  {
+    "id": "libraries/json/O1g1",
+    "baseline": 87.37913370132446,
+    "candidate": 88.06919455528259,
+    "deltaPoints": 0.6900608539581299
+  },
+  {
+    "id": "libraries/json/O1g2",
+    "baseline": 86.76099181175232,
+    "candidate": 87.44632601737976,
+    "deltaPoints": 0.6853342056274414
+  },
+  {
+    "id": "libraries/json/O2g1",
+    "baseline": 87.06896305084229,
+    "candidate": 87.60456442832947,
+    "deltaPoints": 0.5356013774871826
+  },
+  {
+    "id": "libraries/json/O2g2",
+    "baseline": 86.4551842212677,
+    "candidate": 86.98716163635254,
+    "deltaPoints": 0.5319774150848389
+  },
+  {
+    "id": "mutants/mut1-697/O2g1",
+    "baseline": 65.50724506378174,
+    "candidate": 65.34940004348755,
+    "deltaPoints": -0.15784502029418945
+  }
+]

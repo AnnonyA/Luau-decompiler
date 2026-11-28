@@ -4,6 +4,7 @@ import { escapedByte } from "../decode/BytecodeString.js";
 import { formatInteger, formatNumber } from "../decode/Constant.js";
 import { analyzePrinterBindings, type PrintedFunction, type PrinterBindings } from "./PrinterBindings.js";
 import { analyzeCallBoundaries, type CallBoundaryPresentation } from "./CallBoundaries.js";
+import { scalarFormatInterpolation } from "./FormatInterpolation.js";
 
 const PREC: Record<string, number> = {
   or: 1,
@@ -31,6 +32,7 @@ export interface PrintOptions {
   upvalueComments?: boolean;
   functionLineComments?: boolean;
   preferConst?: boolean;
+  interpolatedStrings?: boolean;
 }
 
 export function printLuau(ast: Chunk, options: PrintOptions = {}): string {
@@ -184,6 +186,8 @@ class Printer {
   private scalarExpression(expression: Expression, parent = 0, right = false): string {
     let inner = expression;
     while (inner.kind === "paren") inner = inner.expression;
+    const interpolation = this.options.interpolatedStrings === false ? undefined : scalarFormatInterpolation(inner);
+    if (interpolation) return this.expr(interpolation, parent, right);
     return this.expr(inner.kind === "call" || inner.kind === "method-call" || inner.kind === "vararg"
       ? inner : expression, parent, right);
   }
@@ -268,8 +272,13 @@ class Printer {
       }
       case "interp":
         return `\`${expression.parts.map((part) => this.interpPart(part)).join("")}\``;
-      case "paren":
+      case "paren": {
+        // A retained group is a scalar context too. Keep the group itself:
+        // it can also be the required primary expression of a call/index.
+        const interpolation = this.options.interpolatedStrings === false ? undefined : scalarFormatInterpolation(expression.expression);
+        if (interpolation) return `(${this.expr(interpolation)})`;
         return `(${this.expr(expression.expression)})`;
+      }
     }
   }
 
@@ -308,7 +317,10 @@ class Printer {
     if (part.kind === "text") {
       return escapeInterp(String(part.value), this.options.unicodeStrings ?? true);
     }
-    return `{${this.scalarExpression(part.value as Expression)}}`;
+    const value = this.scalarExpression(part.value as Expression);
+    // The interpolation lexer rejects adjacent opening braces. A table
+    // expression needs a primary group to distinguish it from `{{`.
+    return `{${value.startsWith("{") ? `(${value})` : value}}`;
   }
 
   private table(fields: TableField[]): string {

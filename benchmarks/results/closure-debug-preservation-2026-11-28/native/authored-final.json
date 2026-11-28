@@ -1,0 +1,187 @@
+{
+  "total": 12,
+  "pass": 4,
+  "node": "v22.23.5",
+  "results": [
+    {
+      "input": "aliases-and-shared-names-9d-O0g1.luauc",
+      "sha256": "1eaf9da1d367ac9e91398253dd90a4240c6bfa6078781138856f50b4b19091aa",
+      "pass": false,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-9d-O0g2.luauc",
+      "sha256": "3bc6243b40163033fc33d2f305a2d2510e3bf938e3bf8fb9c19207437b3ecca4",
+      "pass": false,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-9d-O1g1.luauc",
+      "sha256": "c8312d3d2d77e0ecbb09903fb01f6ff7d7489a89da7b2a89faf09c92faf5bf70",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-9d-O1g2.luauc",
+      "sha256": "4991f5467cf7ac1175eed0a8aefb2975ed83d2e1eaf3176f8ac3427e2ea377be",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-9d-O2g1.luauc",
+      "sha256": "c9f5fb50d49ed6294a06bbfc0edc5e4ebe5cabefdf2fc6e45b0e2fe070b0e54e",
+      "pass": false,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-9d-O2g2.luauc",
+      "sha256": "988f8f5c472823479e9bc103f1d8b80c56e0a8276db874eca5e59bac71741ecb",
+      "pass": false,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-c875-O0g1.luauc",
+      "sha256": "1eaf9da1d367ac9e91398253dd90a4240c6bfa6078781138856f50b4b19091aa",
+      "pass": false,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-c875-O0g2.luauc",
+      "sha256": "3bc6243b40163033fc33d2f305a2d2510e3bf938e3bf8fb9c19207437b3ecca4",
+      "pass": false,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-c875-O1g1.luauc",
+      "sha256": "c8312d3d2d77e0ecbb09903fb01f6ff7d7489a89da7b2a89faf09c92faf5bf70",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-c875-O1g2.luauc",
+      "sha256": "4991f5467cf7ac1175eed0a8aefb2975ed83d2e1eaf3176f8ac3427e2ea377be",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-c875-O2g1.luauc",
+      "sha256": "c9f5fb50d49ed6294a06bbfc0edc5e4ebe5cabefdf2fc6e45b0e2fe070b0e54e",
+      "pass": false,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "aliases-and-shared-names-c875-O2g2.luauc",
+      "sha256": "988f8f5c472823479e9bc103f1d8b80c56e0a8276db874eca5e59bac71741ecb",
+      "pass": false,
+      "original": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      }
+    }
+  ]
+}

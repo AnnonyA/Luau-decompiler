@@ -1,0 +1,84 @@
+{
+  "source": "completed-observations.luau",
+  "sourceSha256": "3a3cfef170edc684110d209fee3d5b5124fe39a4bcbc823c80c5267eb10f065a",
+  "compilerRevisions": {
+    "9d": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+    "c875": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f"
+  },
+  "inputs": [
+    {
+      "path": "completed-9d-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "sha256": "5edb4e82d0f02dfcd4d529f4c2f5c6c5ecc51e3e299580bfb4d2bb696eae54b5"
+    },
+    {
+      "path": "completed-9d-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "sha256": "6343d4cf630901db8a59de6e7a6c1a057f4800219b40ea2482a85ea75ee73507"
+    },
+    {
+      "path": "completed-9d-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "sha256": "eb6d4a1523a673b3598f71b007c604455e0d6baf0704561bf8e668a28957892b"
+    },
+    {
+      "path": "completed-9d-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "sha256": "e1b6f389650d7000093f597a0a437654807a6ec3b225a496d59001a0eb2260d1"
+    },
+    {
+      "path": "completed-9d-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "sha256": "5446c501cdacd0cf409c0607e879fbd0d63adbf774e8a7dc5a50bb7a8063464e"
+    },
+    {
+      "path": "completed-9d-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "sha256": "e131887a8fa545dd007e6c870da8ffcea19654e7720887681c94431e35483e66"
+    },
+    {
+      "path": "completed-c875-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "sha256": "5edb4e82d0f02dfcd4d529f4c2f5c6c5ecc51e3e299580bfb4d2bb696eae54b5"
+    },
+    {
+      "path": "completed-c875-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "sha256": "6343d4cf630901db8a59de6e7a6c1a057f4800219b40ea2482a85ea75ee73507"
+    },
+    {
+      "path": "completed-c875-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "sha256": "eb6d4a1523a673b3598f71b007c604455e0d6baf0704561bf8e668a28957892b"
+    },
+    {
+      "path": "completed-c875-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "sha256": "e1b6f389650d7000093f597a0a437654807a6ec3b225a496d59001a0eb2260d1"
+    },
+    {
+      "path": "completed-c875-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "sha256": "5446c501cdacd0cf409c0607e879fbd0d63adbf774e8a7dc5a50bb7a8063464e"
+    },
+    {
+      "path": "completed-c875-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "sha256": "e131887a8fa545dd007e6c870da8ffcea19654e7720887681c94431e35483e66"
+    }
+  ],
+  "previous": "manifest.json",
+  "note": "Initial control has a mismatched-metatable ordering comparison that errors in the original VM. It and its bytecodes are preserved; this separate control uses a shared comparison metatable and adds direct terminating predicates."
+}

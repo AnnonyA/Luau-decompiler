@@ -175,6 +175,25 @@ class Refiner {
   }
 
   private mergeWithPrevious(previous: Statement, statement: Statement): Statement | undefined {
+    // A fresh private cell initialized to an inert literal, then overwritten
+    // in exactly one branch, is a scalar select. The initializer contributes
+    // no effects or retained object, and neither expression may observe the
+    // cell before its initialization. Captured cells keep their writes: they
+    // can be observed during the test and affect native closure freshness.
+    if (this.options.ifExpressions && previous.kind === "local" && previous.names.length === 1 &&
+        previous.values.length === 1 && previous.values[0]!.kind === "literal" && isGuard(statement) &&
+        statement.consequent.statements.length === 1) {
+      const name = previous.names[0]!;
+      const store = statement.consequent.statements[0]!;
+      const assigned = store.kind === "assign" ? singleStore(store) : undefined;
+      if (assigned?.name === name && !this.captured.has(name) &&
+          countIdentifier(statement.test, name) === 0 && countIdentifier(assigned.value, name) === 0 &&
+          !containsFunction(statement.test) && !containsFunction(assigned.value) && !isPack(assigned.value)) {
+        const value: Expression = {kind: "if-expr", test: statement.test, consequent: assigned.value,
+          branches: [], alternate: previous.values[0]!};
+        return withStoredValue(previous, simplifyExpression(value));
+      }
+    }
     // `x = a; if x then x = b end`  is  `x = a and b`  (and `or` for `if not x`).
     const guarded = guardedReassignment(statement);
     if (guarded) {

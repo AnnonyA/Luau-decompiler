@@ -1,0 +1,83 @@
+{
+  "source": "review-controls.luau",
+  "sourceSha256": "2ee47a6b68664888664a8c4330fc41f04a0b806287f08183001c507eec9e184d",
+  "origin": "Independent review of the linear-exit guard implementation; existing REF cells, closed captured body cells, exit-only writes exported after loops, and shared exit guards. First baseline and candidate both passed 12/12.",
+  "compilerRevisions": {
+    "9d": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+    "c875": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f"
+  },
+  "inputs": [
+    {
+      "path": "review-9d-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "sha256": "5783f08088985ced517768d7b562565bd56a72a103277411c2df195191394673"
+    },
+    {
+      "path": "review-9d-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "sha256": "bcafe06e7f2aacff4a3a4da8d745b31efda85bc33ca82d3d3c37bf52727e1ca3"
+    },
+    {
+      "path": "review-9d-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "sha256": "5d20ea61ea7b983664d8bd7c4a75f9f9d8ee53efb4e3565ea3c55d0ba4642c92"
+    },
+    {
+      "path": "review-9d-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "sha256": "75dc0fc9c96af0e77335449434177510b276d507b216ff640a543344ef4770b1"
+    },
+    {
+      "path": "review-9d-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "sha256": "5c3737f88243fe9176bf002f362e95508324836f7830a3af6e3df703b249c113"
+    },
+    {
+      "path": "review-9d-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "sha256": "c42465c3a427ae0dd7b40f76d4829410fbbcd20ba165c69edb7b79790d65ff00"
+    },
+    {
+      "path": "review-c875-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "sha256": "5783f08088985ced517768d7b562565bd56a72a103277411c2df195191394673"
+    },
+    {
+      "path": "review-c875-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "sha256": "bcafe06e7f2aacff4a3a4da8d745b31efda85bc33ca82d3d3c37bf52727e1ca3"
+    },
+    {
+      "path": "review-c875-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "sha256": "5d20ea61ea7b983664d8bd7c4a75f9f9d8ee53efb4e3565ea3c55d0ba4642c92"
+    },
+    {
+      "path": "review-c875-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "sha256": "75dc0fc9c96af0e77335449434177510b276d507b216ff640a543344ef4770b1"
+    },
+    {
+      "path": "review-c875-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "sha256": "5c3737f88243fe9176bf002f362e95508324836f7830a3af6e3df703b249c113"
+    },
+    {
+      "path": "review-c875-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "sha256": "c42465c3a427ae0dd7b40f76d4829410fbbcd20ba165c69edb7b79790d65ff00"
+    }
+  ]
+}

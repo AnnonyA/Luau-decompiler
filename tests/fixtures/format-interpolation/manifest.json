@@ -1,0 +1,82 @@
+{
+  "source": "observations.luau",
+  "sourceSha256": "85c3b17844c2a7c8c3a3abbead4e77945677924a8678354b167f71b94a977984",
+  "compilerRevisions": {
+    "9d": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+    "c875": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f"
+  },
+  "inputs": [
+    {
+      "path": "9d-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "sha256": "5b712df1f300477206dd3be581492247dfc73d05e746b3fc51066046ff6e02fc"
+    },
+    {
+      "path": "9d-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "sha256": "a81b4d0c806daf734201ee5726178ddda5eee5d5bf4535e4801f292d53d2517f"
+    },
+    {
+      "path": "9d-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "sha256": "0c7f1c513567b78cc4d2747b30984e0fed03ee6a4326832c7113ae915a28bba0"
+    },
+    {
+      "path": "9d-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "sha256": "6909dff54f4d338561ceabb25e239ffb5310cbdbc93a2ef4255e36a83d62d37c"
+    },
+    {
+      "path": "9d-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "sha256": "26a4d4d71eee2419d35afaa7800cab1277a447dfd212f092f1f2080273275638"
+    },
+    {
+      "path": "9d-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "sha256": "a29fd26d85c219ea7add2e86ccdc526b3e06c6ea466444ec6abb957517c2ee0b"
+    },
+    {
+      "path": "c875-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "sha256": "5b712df1f300477206dd3be581492247dfc73d05e746b3fc51066046ff6e02fc"
+    },
+    {
+      "path": "c875-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "sha256": "a81b4d0c806daf734201ee5726178ddda5eee5d5bf4535e4801f292d53d2517f"
+    },
+    {
+      "path": "c875-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "sha256": "0c7f1c513567b78cc4d2747b30984e0fed03ee6a4326832c7113ae915a28bba0"
+    },
+    {
+      "path": "c875-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "sha256": "6909dff54f4d338561ceabb25e239ffb5310cbdbc93a2ef4255e36a83d62d37c"
+    },
+    {
+      "path": "c875-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "sha256": "26a4d4d71eee2419d35afaa7800cab1277a447dfd212f092f1f2080273275638"
+    },
+    {
+      "path": "c875-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "sha256": "a29fd26d85c219ea7add2e86ccdc526b3e06c6ea466444ec6abb957517c2ee0b"
+    }
+  ]
+}

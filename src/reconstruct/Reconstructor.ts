@@ -22,6 +22,7 @@ import type { Diagnostic } from "../diagnostics.js";
 import { buildSsa, type SsaFunction } from "../ssa/SsaBuilder.js";
 import { computeLiveness, type Liveness } from "../dataflow/Liveness.js";
 import { NameAllocator, debugNameAt, isValidIdentifier, parameterNames } from "./Naming.js";
+import { namedClosureDeclaration } from "./ClosureNames.js";
 import { eventCallbackName, nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
 import { ClosureEffects } from "./ClosureEffects.js";
 import { analyzeClosureCachePriming, closureCacheKey, type CaptureIdentity } from "./ClosureCachePriming.js";
@@ -1487,6 +1488,39 @@ class SourceBuilder {
             branches: [],
           });
           return { statements, follow: thenInside ? thenId : elseId };
+        }
+        if (!this.loopTails.has(activeLoop) && this.openPacks.size === 0 &&
+            !this.pendingStack.some(pending => !pending.flushed) &&
+            this.hasExternalExitWork(outsideId, activeLoop)) {
+          // Natural loops exclude a linear arm that does work and then exits.
+          // It cannot join the continuing arm in this iteration. Keep it as
+          // a guard so that the continuation owns its reaching definitions
+          // and scope (in particular callee/argument setup for repeat..until).
+          // A generic diamond would restore the split's register environment
+          // after both arms, even though only the inside arm reaches the test.
+          this.consumed.add(last.pc);
+          const statements = this.emitStraight(basic);
+          const test = this.conditionFrom(last, !thenInside);
+          const savedEnv = new Map(this.env), savedOpen = new Set(this.openPacks);
+          const savedConsumed = new Set(this.consumed), savedEmitted = new Set(this.emitted);
+          const savedPending = [...this.pendingStack], savedPendingState = this.snapshotPendings();
+          const savedPhis = new Map(this.phiNames), savedDeclared = new Set(this.declaredPhis);
+          this.pushScope();
+          const consequent = block(this.emitRange(outsideId, follow, new Set(visited)));
+          this.popScope();
+          // This arm cannot supply bindings to the continuing edge. Shared
+          // exit work may also be reached by another guard, so its emission
+          // state is local to this arm; allocated AST names remain reserved.
+          this.restore(savedEnv, savedOpen, savedConsumed, savedPending);
+          this.restorePendings(savedPendingState);
+          this.emitted.clear();
+          for (const id of savedEmitted) this.emitted.add(id);
+          this.phiNames.clear();
+          for (const [key, name] of savedPhis) this.setPhiName(key, name);
+          this.declaredPhis.clear();
+          for (const key of savedDeclared) this.declaredPhis.add(key);
+          statements.push({kind: "if", test, consequent, branches: []});
+          return {statements, follow: thenInside ? thenId : elseId};
         }
       }
     }
@@ -3238,7 +3272,12 @@ class SourceBuilder {
     const fieldName = this.nextFieldName(insn);
     const mutable = captures.some((capture) => capture.capture?.type === CaptureType.REF);
     const selfCaptured = captures.some((capture) => capture.capture?.source === insn.a);
-    const onlyField = !hasFreshSnapshot && Boolean(fieldName) && !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
+    // A different export key cannot carry the prototype's debug name. Keep
+    // its named lexical binding at this creation site instead of making an
+    // anonymous literal in an aliased record field.
+    const onlyField = !hasFreshSnapshot && Boolean(fieldName) &&
+      (child.debugName === undefined || child.debugName === fieldName) &&
+      !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
     const existing = this.env.get(insn.a);
     const join = shared || existing?.forwardRef ? undefined : this.phiBinding(insn.a, insn);
     // A VAL self capture must retain this particular function if a later
@@ -3338,9 +3377,11 @@ class SourceBuilder {
       if (shared.factory) {
         this.declareInScope(shared.factory);
         this.declareInScope(shared.name);
+        const declaration = namedClosureDeclaration(fn);
         return [...statements,
           {kind:"function-decl",local:true,name:shared.factory,params:[],isVararg:true,
-            body:block([{kind:"return",values:[fn]}])},
+            body:block(declaration ? [declaration, {kind:"return",values:[ident(declaration.name)]}]
+              : [{kind:"return",values:[fn]}])},
           {kind:"local",names:[shared.name],values:[{kind:"call",callee:ident(shared.factory),args:[],open:false}]},
           ...this.define(insn.a,ident(shared.name),insn)];
       }

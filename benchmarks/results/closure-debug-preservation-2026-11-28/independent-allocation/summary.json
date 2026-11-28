@@ -1,0 +1,379 @@
+{
+  "kind": "independent-closure-name-allocation-review",
+  "sourceSha256": "3589b71c3cd725677bfbeaa96a9e18845b15460a4ac64be08ab6730c891aea30",
+  "hostSourceSha256": "2d527b895437c5656f75d7accccd7db96b70cc98ab1e5f327a42f355530440ee",
+  "pins": {
+    "9d": {
+      "revision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "hostSha256": "bfe4c64f24bff983ef652a98a8bef726c5e562d972d8089c0a00029cf69419ca",
+      "hostBuild": [
+        "c++",
+        "-O2",
+        "-std=c++17",
+        "-I",
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/VM/include",
+        "/workspace/scratch/1c4124dc88e4/closure-name-review/run-bytecode.cpp",
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/libluauvm.a",
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/libluaucommon.a",
+        "-o",
+        "/workspace/scratch/1c4124dc88e4/closure-name-review/run-bytecode-9d"
+      ]
+    },
+    "c875": {
+      "revision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "hostSha256": "c351c036378b4c614d0d5251d59df2f46c0d926bc5d194a18779ccab84296409",
+      "hostBuild": [
+        "c++",
+        "-O2",
+        "-std=c++17",
+        "-I",
+        "/workspace/scratch/eb5e4be57451/reference-luau/VM/include",
+        "/workspace/scratch/1c4124dc88e4/closure-name-review/run-bytecode.cpp",
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/libluauvm.a",
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/libluaucommon.a",
+        "-o",
+        "/workspace/scratch/1c4124dc88e4/closure-name-review/run-bytecode-c875"
+      ]
+    }
+  },
+  "rows": [
+    {
+      "pin": "9d",
+      "profile": "O0g1",
+      "originalBytecodeSha256": "91645b9769f992657aef248339642ce4fdd337c5b1950629fb9f7af4827608f1",
+      "originalStdout": "",
+      "variants": {
+        "baseline": {
+          "match": false,
+          "stdout": "",
+          "codes": [
+            0,
+            0,
+            4
+          ],
+          "sourceSha256": "b0c94391183e2109ad500b836f2b5c3c9071f406b97b34dbe2c05671bea9e6f1"
+        },
+        "candidate": {
+          "match": false,
+          "stdout": "",
+          "codes": [
+            0,
+            0,
+            4
+          ],
+          "sourceSha256": "b0c94391183e2109ad500b836f2b5c3c9071f406b97b34dbe2c05671bea9e6f1"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O0g2",
+      "originalBytecodeSha256": "5c6d7b553ef4f0ef952310ef22a79fc624f787696589863730a58ad9f02a68b6",
+      "originalStdout": "",
+      "variants": {
+        "baseline": {
+          "match": false,
+          "stdout": "",
+          "codes": [
+            0,
+            0,
+            4
+          ],
+          "sourceSha256": "9d3095c9c3f2d8f020950bbf0fb13f4d205970edf37c75da55e2c78088cd8193"
+        },
+        "candidate": {
+          "match": false,
+          "stdout": "",
+          "codes": [
+            0,
+            0,
+            4
+          ],
+          "sourceSha256": "9d3095c9c3f2d8f020950bbf0fb13f4d205970edf37c75da55e2c78088cd8193"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O1g1",
+      "originalBytecodeSha256": "3a732bdfea991288e15ca0b442310649b5ed27828ace8811ad4cbaf0dfe0b50a",
+      "originalStdout": "allocation\t0\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "cbd904be1d01e1f3537199043c42de6eed3cd36a47b91e361ea561909da83220"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "cbd904be1d01e1f3537199043c42de6eed3cd36a47b91e361ea561909da83220"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O1g2",
+      "originalBytecodeSha256": "c7b0c0d3f01191105ece4d2514e2bbf98cec1bdd7477aa039ab253b9bcbb9846",
+      "originalStdout": "allocation\t0\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "75cb5db7d391f646107361354cc925f6080e97c31c638e71312b75931ecf83b0"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "75cb5db7d391f646107361354cc925f6080e97c31c638e71312b75931ecf83b0"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O2g1",
+      "originalBytecodeSha256": "9b4d0a781428a12fc69b3f2d91e246cbc9335ad0064873932f24e34a686ef1a9",
+      "originalStdout": "allocation\t0\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "ac190818d412774b0aeb5f19719d014ebda8490efc499d8cb8c226d0be89807e"
+        },
+        "candidate": {
+          "match": false,
+          "stdout": "allocation\t31\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "b734569fae3551e914c59b3e176945112a354efdb1a8fac940d2604c22b34c81"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O2g2",
+      "originalBytecodeSha256": "0f31ec3978f7ad545fba75234d051a742cf6729e13477f8f6806b7c4cfa31ae8",
+      "originalStdout": "allocation\t0\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "026b2a46a8c1c8ea8dc493182422d6c38743e048adfaf62099dbd41be006ee99"
+        },
+        "candidate": {
+          "match": false,
+          "stdout": "allocation\t31\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "0c4b43b5bb9a2007fcfbea2db6e8a7a0f9ea1b7f37c5164bbd08f9945425e6a9"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O0g1",
+      "originalBytecodeSha256": "91645b9769f992657aef248339642ce4fdd337c5b1950629fb9f7af4827608f1",
+      "originalStdout": "",
+      "variants": {
+        "baseline": {
+          "match": false,
+          "stdout": "",
+          "codes": [
+            0,
+            0,
+            4
+          ],
+          "sourceSha256": "b0c94391183e2109ad500b836f2b5c3c9071f406b97b34dbe2c05671bea9e6f1"
+        },
+        "candidate": {
+          "match": false,
+          "stdout": "",
+          "codes": [
+            0,
+            0,
+            4
+          ],
+          "sourceSha256": "b5ce50ba070c9a4b5ede5a38f88017e691bf2bf6b4544b5586498078a4be4e99"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O0g2",
+      "originalBytecodeSha256": "5c6d7b553ef4f0ef952310ef22a79fc624f787696589863730a58ad9f02a68b6",
+      "originalStdout": "",
+      "variants": {
+        "baseline": {
+          "match": false,
+          "stdout": "",
+          "codes": [
+            0,
+            0,
+            4
+          ],
+          "sourceSha256": "9d3095c9c3f2d8f020950bbf0fb13f4d205970edf37c75da55e2c78088cd8193"
+        },
+        "candidate": {
+          "match": false,
+          "stdout": "",
+          "codes": [
+            0,
+            0,
+            4
+          ],
+          "sourceSha256": "792c3f93d618e0bf9005d5cef48ad9f09321ddb9f2aefc72fe2aea15d4ddb109"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O1g1",
+      "originalBytecodeSha256": "3a732bdfea991288e15ca0b442310649b5ed27828ace8811ad4cbaf0dfe0b50a",
+      "originalStdout": "allocation\t0\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "0b5d226fceeb607f41c076ca603122b9040f8c58a4b6888113f5043dbb4aad08"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "0b5d226fceeb607f41c076ca603122b9040f8c58a4b6888113f5043dbb4aad08"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O1g2",
+      "originalBytecodeSha256": "c7b0c0d3f01191105ece4d2514e2bbf98cec1bdd7477aa039ab253b9bcbb9846",
+      "originalStdout": "allocation\t0\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "771ae35b957ff8613e3944613efd8d4e80e4446c403c9010e517a20508d64532"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "771ae35b957ff8613e3944613efd8d4e80e4446c403c9010e517a20508d64532"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O2g1",
+      "originalBytecodeSha256": "9b4d0a781428a12fc69b3f2d91e246cbc9335ad0064873932f24e34a686ef1a9",
+      "originalStdout": "allocation\t0\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "23c0d6dea0a00b53a0518721fd4cfdae52bf07fb5ece6e47140667e77dfdbccb"
+        },
+        "candidate": {
+          "match": false,
+          "stdout": "allocation\t31\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "767e2ed517ff3e5ea9247e6ae3824ac3abd01a4afe550c8ccbf0f67b2c57ca98"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O2g2",
+      "originalBytecodeSha256": "0f31ec3978f7ad545fba75234d051a742cf6729e13477f8f6806b7c4cfa31ae8",
+      "originalStdout": "allocation\t0\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "allocation\t0\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "b3747e7e847959d6f979578879a137dd07aa1167800804c1ef8a76b9d9975682"
+        },
+        "candidate": {
+          "match": false,
+          "stdout": "allocation\t31\n",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "a10ade808336d1dedc764d6757b2872c8a50948ae4b9eff6d597927ec805fb43"
+        }
+      }
+    }
+  ]
+}

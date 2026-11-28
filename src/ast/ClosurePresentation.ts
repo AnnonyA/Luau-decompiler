@@ -1,7 +1,9 @@
-import type { Chunk, Expression, FunctionExpression, Statement } from "./Ast.js";
+import { cloneAst, type Chunk, type Expression, type FunctionExpression, type Statement } from "./Ast.js";
 import { analyzeBindings } from "../analysis/Bindings.js";
+import { isValidIdentifier } from "../reconstruct/Naming.js";
 import {
   countIdentifier,
+  forEachChildExpression,
   forEachDeclaredName,
   forEachIdentifier,
   mapChildExpressions,
@@ -37,6 +39,60 @@ export function presentClosures(ast: Chunk): Chunk {
     return { ...block, statements: inlineSingleUse(merged, unique, references, localReads) };
   });
   return { ...ast, body };
+}
+
+/** A record field gives a function literal the same debug name as a local
+ * function declaration. Once constructor recovery has exposed that field,
+ * an adjacent private binding can return to it without inventing a name or
+ * moving creation across an effect. Resolve the sole use by lexical identity;
+ * a recursive, captured, overwritten or shared function remains a binding. */
+export function presentNamedTableClosures(ast: Chunk): Chunk {
+  const result = cloneAst(ast);
+  const { bindings } = analyzeBindings(result.body);
+  const localReads = new Set<object>(bindings.flatMap(binding => binding.reads.map(read => read.node)));
+  for (const binding of [...bindings].reverse()) {
+    if (binding.captured || binding.writes.length !== 0 || binding.reads.length !== 1) continue;
+    const declaration = binding.declaration;
+    let fn: FunctionExpression;
+    if (declaration.kind === "function-decl" && declaration.local &&
+        binding.declarationIndex === undefined && isValidIdentifier(declaration.name)) {
+      fn = { kind: "function-expr", debugName: declaration.name, params: declaration.params,
+        paramTypes: declaration.paramTypes, returnType: declaration.returnType, isVararg: declaration.isVararg,
+        body: declaration.body, line: declaration.line, closureIdentity: declaration.closureIdentity,
+        creationSite: declaration.creationSite };
+    } else if (declaration.kind === "local" && declaration.names.length === 1 && declaration.values.length === 1 &&
+        declaration.values[0]?.kind === "function-expr" && declaration.values[0].debugName !== undefined) {
+      fn = declaration.values[0];
+    } else continue;
+    if (fn.closureIdentity?.inlineCaptureInitializer || !fn.debugName || !isValidIdentifier(fn.debugName)) continue;
+    const index = binding.scope.statements.indexOf(declaration as Statement);
+    const consumer = binding.scope.statements[index + 1];
+    if (index < 0 || !consumer || binding.reads[0]!.statement !== consumer ||
+        (consumer.kind !== "local" && consumer.kind !== "assign" && consumer.kind !== "return")) continue;
+    let field: Extract<Expression, {kind: "table"}>["fields"][number] | undefined;
+    const visit = (expression: Expression): void => {
+      if (expression.kind === "table") {
+        // An export table is useful structure in its own right. Folding only
+        // its adjacent suffix would arbitrarily split a group of named helpers
+        // between standalone declarations and nested bodies. Mixed constructors
+        // that already contain callbacks do not have that uniform structure.
+        const namedHelpers = expression.fields.filter(candidate => candidate.value.kind === "identifier" &&
+          (candidate.name ?? (candidate.key?.kind === "literal" ? candidate.key.value : undefined)) === candidate.value.name);
+        const keepExports = namedHelpers.length > 1 &&
+          !expression.fields.some(candidate => candidate.value.kind === "function-expr");
+        for (const candidate of expression.fields) {
+          const key = candidate.name ?? (candidate.key?.kind === "literal" ? candidate.key.value : undefined);
+          if (!keepExports && !candidate.list && key === fn.debugName && candidate.value === binding.reads[0]!.node) field = candidate;
+        }
+      }
+      forEachChildExpression(expression, visit);
+    };
+    consumer.values.forEach(visit);
+    if (!field || !creationMotionIsOrdered(consumer, binding.name, fn, localReads)) continue;
+    field.value = fn;
+    binding.scope.statements.splice(index, 1);
+  }
+  return result;
 }
 
 /** `local f` directly followed by `f = function ... end` is one declaration. */
@@ -128,13 +184,20 @@ function creationMotionIsOrdered(
   let found = false;
   let conditional = 0;
 
+  // A table store can throw even when evaluating its key/value cannot: nil
+  // and NaN are invalid keys. The thrown error can make closure creation (and
+  // DUPCLOSURE cache priming) observable to a later activation.
+  const validKey = (key: Expression | undefined): boolean => key === undefined ||
+    (key.kind === "literal" && key.value !== null &&
+      !(typeof key.value === "number" && Number.isNaN(key.value)));
+
   const inert = (expression: Expression): boolean => {
     switch (expression.kind) {
       case "literal": case "vararg": return true;
       case "identifier": return localReads.has(expression);
       case "paren": return inert(expression.expression);
       case "unary": return expression.op === "not" && inert(expression.argument);
-      case "table": return expression.fields.every(field => (!field.key || inert(field.key)) && inert(field.value));
+      case "table": return expression.fields.every(field => validKey(field.key) && inert(field.value));
       default: return false;
     }
   };
@@ -185,7 +248,11 @@ function creationMotionIsOrdered(
       case "property": operand(expression.object); return;
       case "index": operand(expression.table); operand(expression.key); return;
       case "table":
-        expression.fields.forEach(field => { if (field.key) operand(field.key); operand(field.value); });
+        expression.fields.forEach(field => {
+          if (field.key) operand(field.key);
+          operand(field.value);
+          if (!found && !validKey(field.key)) ordered = false;
+        });
         return;
       case "if-expr":
         operand(expression.test);

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { block, chunk, ident, lit, type Chunk, type FunctionExpression, type Statement } from "../src/ast/Ast.ts";
 import { lowerClosureIdentity } from "../src/reconstruct/ClosureIdentityLowering.ts";
+import { analyzeBindings } from "../src/analysis/Bindings.ts";
 import { abc, ad, decode, Opcode, proto } from "./helpers.ts";
 
 function example(slots: number[] = [0, 0]) {
@@ -29,6 +30,25 @@ function physicalSlots(ast: Chunk): string[] {
 }
 
 describe("bounded native constant dispatcher", () => {
+  it("keeps an exact debug name distinct from its generated result cell", () => {
+    const {module, fn} = example();
+    const input = chunk([
+      {kind: "local", names: ["first"], values: [{...fn(0), debugName: "loadedClosure"}]},
+      {kind: "local", names: ["second"], values: [{...fn(1), debugName: "loadedClosure"}]},
+      {kind: "return", values: [ident("first"), ident("second")]},
+    ]);
+    const result = lowerClosureIdentity(input, module);
+    expect(result.resolvedKeys.size).toBe(1);
+    const {bindings} = analyzeBindings(result.ast.body);
+    const literal = bindings.find(binding => binding.declaration.kind === "function-decl")!;
+    expect(literal.name).toBe("loadedClosure");
+    expect(literal.writes).toHaveLength(0);
+    expect(literal.reads).toHaveLength(1);
+    const resultCell = bindings.find(binding => binding.name === "loadedClosure2")!;
+    expect(resultCell.writes).toHaveLength(1);
+    expect(resultCell.reads).toHaveLength(2);
+  });
+
   it("merges interleaved uses of each slot but keeps distinct slots with identical bodies apart", () => {
     const {module, fn} = example([0, 1, 0, 1]);
     const declarations: Statement[] = ["a", "b", "c", "d"].map((name, index) =>

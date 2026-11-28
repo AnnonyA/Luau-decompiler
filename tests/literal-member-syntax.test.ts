@@ -40,7 +40,7 @@ describe("Luau member syntax on literal receivers", () => {
 
   it("recovers valid literal format calls from the actual luac.bin fixture", () => {
     const bytes = readFileSync(new URL("./luac.bin", import.meta.url));
-    const result = decompile(bytes);
+    const result = decompile(bytes, {interpolatedStrings: false});
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(result.source).toMatch(/\("Callable\(calls=%\*\)"\):format\(\w+\.calls\)/);
@@ -50,7 +50,7 @@ describe("Luau member syntax on literal receivers", () => {
 
   it("recovers valid literal format calls from the actual IndexUI fixture", () => {
     const bytes = readFileSync(new URL("./IndexUI_ModuleScript_Bytecode.txt", import.meta.url));
-    const result = decompile(bytes);
+    const result = decompile(bytes, {interpolatedStrings: false});
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(result.source).toContain('("Role: %*"):format');

@@ -244,6 +244,12 @@ function sequentializeExitingBranches(statements: Statement[]): Statement[] {
 }
 
 function shouldExpandGuard(body: Block): boolean {
+  // A guarded exit describes when this loop stops. Turning it into a
+  // continue guard makes a search look like an unconditional exit and splits
+  // its predicate from the result it selects. Keep the branch and its local
+  // lifetime intact; ordinary iteration-work guards can still be expanded.
+  const tail = body.statements.at(-1);
+  if (tail?.kind === "break" || tail?.kind === "return") return false;
   if (body.statements.length > 1) {
     return true;
   }
@@ -369,6 +375,7 @@ function asFunctionExpr(statement: Statement): FunctionExpression | undefined {
   if (statement.kind === "function-decl") {
     return {
       kind: "function-expr",
+      debugName: declarationTail(statement.name),
       params: statement.params,
       paramTypes: statement.paramTypes,
       returnType: statement.returnType,
@@ -450,6 +457,9 @@ function liftExportedFunctions(statements: Statement[]): Statement[] {
     if (!exported || !isValidIdentifier(exported.field)) {
       continue;
     }
+    // A field declaration supplies its own debug name. Do not invent one
+    // for a recorded anonymous prototype or rename an aliased named function.
+    if (local.fn.debugName !== exported.field && (local.fn.creationSite || local.fn.debugName !== undefined)) continue;
     // A field declaration creates the closure at the export, after evaluating
     // its receiver. Keep the original binding unless that exact movement is
     // adjacent and the receiver is an already materialized local. Captured

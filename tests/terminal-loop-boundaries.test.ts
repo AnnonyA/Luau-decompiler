@@ -37,8 +37,12 @@ it.each(["O0g1", "O1g1-x2"])("retains the break after the alternative empty retu
   const result = decompile(fixture(`generic-break-after-return-${profile}`));
   if (!result.ok) throw new Error(result.error);
   const body = nodes<GenericForStatement>(result.ast, "generic-for")[0]!.body;
-  expect(body.statements.at(-1)?.kind).toBe("break");
-  expect(nodes<ReturnStatement>(body, "return").some(statement => statement.values.length === 0)).toBe(true);
+  const selected = body.statements.at(-1)!;
+  expect(selected.kind).toBe("if");
+  if (selected.kind !== "if") throw new Error("missing terminating selection guard");
+  expect(selected.alternate).toBeUndefined();
+  expect(selected.consequent.statements.at(-1)?.kind).toBe("break");
+  expect(nodes<ReturnStatement>(selected.consequent, "return").some(statement => statement.values.length === 0)).toBe(true);
 });
 
 it("tests the loaded element after an inlined repeat return instead of reusing its cancellation guard", () => {
