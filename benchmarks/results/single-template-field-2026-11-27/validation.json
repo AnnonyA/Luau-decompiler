@@ -1,0 +1,56 @@
+{
+  "buildExitCode": 0,
+  "fullUnitExitCode": 0,
+  "fullUnitTests": 1585,
+  "fullUnitFiles": 147,
+  "node": "v22.23.5",
+  "firstAuthored": {
+    "before": {
+      "pass": 33,
+      "mismatch": 3,
+      "total": 36
+    },
+    "after": {
+      "pass": 33,
+      "mismatch": 3,
+      "total": 36
+    }
+  },
+  "repairedAuthored": {
+    "before": {
+      "pass": 33,
+      "mismatch": 3,
+      "total": 36
+    },
+    "after": {
+      "pass": 36,
+      "mismatch": 0,
+      "total": 36
+    }
+  },
+  "firstSavedBytecode": {
+    "pass": 66,
+    "mismatch": 6,
+    "total": 72
+  },
+  "repairedSavedBytecode": {
+    "pass": 36,
+    "mismatch": 0,
+    "total": 36,
+    "originalObservationsUnchanged": true
+  },
+  "syntheticEarlyRead": {
+    "inputBytecodes": 1,
+    "recompileProfiles": 6,
+    "beforeMatches": 0,
+    "afterMatches": 6
+  },
+  "runtimeAcceptance": "stdout and stderr byte exact; original and recovered normal return required",
+  "qualityReplay": {
+    "profiles": 882,
+    "behaviorVerified": false,
+    "similarity": 77.07247213711814,
+    "size": 0.9913299112763122
+  },
+  "strictFourTierGate": "pending integration"
+}

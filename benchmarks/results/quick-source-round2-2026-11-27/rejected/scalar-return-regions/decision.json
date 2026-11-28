@@ -1,0 +1,39 @@
+{
+  "status": "REJECTED_FOR_INTEGRATION",
+  "reason": "Zero Quick incidence: all 882 produced outputs are byte-for-byte identical to the integrated baseline. No admission or safety gates were widened to force activation.",
+  "baselineCommit": "eba3c9971283a322e2e300834a6cc95fdd437b9c",
+  "branch": "engine/quick-return-regions",
+  "baselineJsTreeSha256": "6b7265185633c57656004439768262cc09b7167e90b2ba19ebe766c509bce9e5",
+  "candidateJsTreeSha256": "309b5a9bc4a4780f05c92752e5a62fa878dcdfef144cd2c4d4a536f9c3a39925",
+  "candidateSimilarity": 77.63762703152742,
+  "similarityDeltaPp": 0,
+  "inputs": 882,
+  "identicalOutputs": 882,
+  "native": {
+    "baselineFirstPassed": 36,
+    "candidateFirstPassed": 36,
+    "originalValid": 36,
+    "total": 36
+  },
+  "pins": {
+    "luauCi": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+    "luauRosetta": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+    "tovek": "ce2ea3325547fa3896f274b68013386338039040"
+  },
+  "sourcesSha256": {
+    "src/reconstruct/InlineRecovery.ts": "5dac255a3353957effc1a41265c14d907b74ca6ae85e670dd6960127bc69648b",
+    "src/reconstruct/ScalarReturnRegions.ts": "d79d31c90ca5e1eeb701bbe7706e685b6349f462a5df425e518992f3a297085b"
+  },
+  "experimentPatchSha256": "26acf469c64cd916a2414666466005d8cb7be65ddf8cbd988b851d66c59f00ed",
+  "independentReview": {
+    "kind": "authored AST DAG regression, not demonstrated bytecode end-to-end failure",
+    "matching": 0,
+    "total": 12,
+    "before": "3\tfalse\n",
+    "after": "3\tnil\n",
+    "summarySha256": "52c9587f5c0c0cb26e51d6b00e37350d03d09b11c9127b68780c15f9abf03b4a"
+  },
+  "experimentalCommit": "bb314c1ae926e91204ba7f033cc7e287a5a55962",
+  "nativeCandidateJsFilesEqualReplay": true,
+  "nativeCandidateJsFilesCompared": 70
+}

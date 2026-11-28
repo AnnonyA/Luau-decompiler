@@ -1,0 +1,42 @@
+{
+  "originalCommit": "ea133e3211f1dd8334ab87805de97971b188fee6",
+  "scratchOriginalDirectory": "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-evidence-raw-json",
+  "files": [
+    {
+      "originalPath": "quick-diagnostic-first.json",
+      "compressedPath": "quick-diagnostic-first.json.gz",
+      "originalSha256": "977980d9321fffa6b10674af200d2ad1747e40fa6bdcdfea5e54deafd0db20f8",
+      "compressedSha256": "e0ccd0400b6946e331bbe4f8be9cf28ecd0654a8f8c8edbb052e517622f4c223",
+      "originalBytes": 1207968,
+      "compressedBytes": 69268,
+      "compression": "gzip",
+      "compressionLevel": 9,
+      "mtime": 0,
+      "decompressionByteExact": true
+    },
+    {
+      "originalPath": "quick-diagnostic-initial.json",
+      "compressedPath": "quick-diagnostic-initial.json.gz",
+      "originalSha256": "ed6112d9f9d9c106577530ef3470133488e94fd3ae70de1d18b3a3cb18ffa9a2",
+      "compressedSha256": "3b2217c3e41311f46f9b4011420ba62a9bf9b6c71a9162e1fd13adaad2bcd7cb",
+      "originalBytes": 1207968,
+      "compressedBytes": 69271,
+      "compression": "gzip",
+      "compressionLevel": 9,
+      "mtime": 0,
+      "decompressionByteExact": true
+    },
+    {
+      "originalPath": "quick-diagnostic-final.json",
+      "compressedPath": "quick-diagnostic-final.json.gz",
+      "originalSha256": "fab29f4f4d9b437882297f736bd84bef94c87fd2d35ba9de2db48a4607065d7b",
+      "compressedSha256": "142211dbe5b8520fe9986318d9b72e8dd3d5a27f16fb7051601a2ed4cc741461",
+      "originalBytes": 1233568,
+      "compressedBytes": 81115,
+      "compression": "gzip",
+      "compressionLevel": 9,
+      "mtime": 0,
+      "decompressionByteExact": true
+    }
+  ]
+}

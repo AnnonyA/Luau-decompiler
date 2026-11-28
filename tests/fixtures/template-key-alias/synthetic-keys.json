@@ -1,0 +1,20 @@
+{
+  "createdAt": "2026-11-27T23:36:27.271Z",
+  "version": 6,
+  "typesVersion": 1,
+  "purpose": "Observe an empty or keyword-named loader slot before and after its explicit store",
+  "entries": [
+    {
+      "name": "empty",
+      "key": "",
+      "bytecode": "synthetic-empty-key.luauc",
+      "sha256": "9daf1723131c02f7fbe71aa0842434333d97f7238b72fcca0298af0ce289eef1"
+    },
+    {
+      "name": "keyword",
+      "key": "end",
+      "bytecode": "synthetic-keyword-key.luauc",
+      "sha256": "ba8c34d2991baff5f95947c76c21815f011618519f73aaedacabd19dfc7150bd"
+    }
+  ]
+}

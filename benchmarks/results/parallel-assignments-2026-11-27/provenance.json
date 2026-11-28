@@ -1,0 +1,19 @@
+{
+  "baseCommit": "36a344eeed74d194723e6f32a0ef7d699fac550f",
+  "compilerHostSha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b",
+  "beforeReplay": "edc5ff59d69f986aad80815f2485c4437c37e3a9bd9b04e64d1d146434903cbb",
+  "afterReplay": "1679004fd53e2cdc4cdc97dd3025b5a9884e00978faeaf8c02c2ff05bede1ab7",
+  "node": "v22.23.5",
+  "options": {},
+  "query": "",
+  "corpusChanged": false,
+  "scorerChanged": false,
+  "runnerChanged": false,
+  "validatorChanged": false,
+  "references": {
+    "Tovek": "ce2ea3325547fa3896f274b68013386338039040",
+    "Luau": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+    "RosettaLuau": "0.747"
+  },
+  "implementation": "Independent TypeScript implementation; no competitor source copied."
+}

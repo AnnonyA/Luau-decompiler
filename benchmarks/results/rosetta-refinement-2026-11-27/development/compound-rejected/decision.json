@@ -1,0 +1,10 @@
+{
+  "status": "rejected",
+  "reason": "No improvement of Quick source similarity over integrated baseline",
+  "integratedBaseline": 77.11222780669897,
+  "candidateDiagnostic": 77.10881640040685,
+  "deltaPoints": -0.003411406292116226,
+  "behavioralControl": "baseline and candidate each12/12 normal/hard profiles",
+  "diagnosticPath": "/workspace/scratch/eb5e4be57451/similarity-probes/v2-compound-parallel",
+  "behaviorVerifiedByDiagnostic": false
+}

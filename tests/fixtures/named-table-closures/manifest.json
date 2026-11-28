@@ -1,0 +1,534 @@
+{
+  "sources": [
+    {
+      "path": "effects.luau",
+      "sha256": "ebb20330b9a2dfa68b4251bab2651ae50f5da7e568ced838aa2fa03ff693b7bf"
+    },
+    {
+      "path": "names-and-packs.luau",
+      "sha256": "63017bcf40aa0a8b83c8ea740ee0b81a4bd870693644d8200a7196397e1d1a13"
+    },
+    {
+      "path": "records.luau",
+      "sha256": "87fbce2c10019d41095f368bab3b9c6a89f286b052196d858ba8cdac2b959eb4"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "effects-9d-O0g1.luauc",
+      "source": "effects.luau",
+      "pin": "9d",
+      "profile": "O0g1",
+      "sha256": "a541392f49c6847f7b51b8fb45ced7b3d0f96ce8f5e2eb32726e33519d2b7b9d",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-9d-O0g2.luauc",
+      "source": "effects.luau",
+      "pin": "9d",
+      "profile": "O0g2",
+      "sha256": "ad7ba54feac607c7762bd38531df9df79b3541ad7baa928a72523963d6f7d3a4",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-9d-O1g1.luauc",
+      "source": "effects.luau",
+      "pin": "9d",
+      "profile": "O1g1",
+      "sha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-9d-O1g2.luauc",
+      "source": "effects.luau",
+      "pin": "9d",
+      "profile": "O1g2",
+      "sha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-9d-O2g1.luauc",
+      "source": "effects.luau",
+      "pin": "9d",
+      "profile": "O2g1",
+      "sha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-9d-O2g2.luauc",
+      "source": "effects.luau",
+      "pin": "9d",
+      "profile": "O2g2",
+      "sha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-c875-O0g1.luauc",
+      "source": "effects.luau",
+      "pin": "c875",
+      "profile": "O0g1",
+      "sha256": "a541392f49c6847f7b51b8fb45ced7b3d0f96ce8f5e2eb32726e33519d2b7b9d",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-c875-O0g2.luauc",
+      "source": "effects.luau",
+      "pin": "c875",
+      "profile": "O0g2",
+      "sha256": "ad7ba54feac607c7762bd38531df9df79b3541ad7baa928a72523963d6f7d3a4",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-c875-O1g1.luauc",
+      "source": "effects.luau",
+      "pin": "c875",
+      "profile": "O1g1",
+      "sha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-c875-O1g2.luauc",
+      "source": "effects.luau",
+      "pin": "c875",
+      "profile": "O1g2",
+      "sha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-c875-O2g1.luauc",
+      "source": "effects.luau",
+      "pin": "c875",
+      "profile": "O2g1",
+      "sha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "effects-c875-O2g2.luauc",
+      "source": "effects.luau",
+      "pin": "c875",
+      "profile": "O2g2",
+      "sha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/effects.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-9d-O0g1.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "9d",
+      "profile": "O0g1",
+      "sha256": "7500a1fc85ae053717d02d63913942046df6b34df19382177be640abc2917eb2",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-9d-O0g2.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "9d",
+      "profile": "O0g2",
+      "sha256": "3b19680c52279cc74473ef804698ac500eb00ca5e5739fe33754cadfba371f39",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-9d-O1g1.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "9d",
+      "profile": "O1g1",
+      "sha256": "d67654fa3be904507c4518f1ce070704320fc33522c1e631b6718aea1caca300",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-9d-O1g2.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "9d",
+      "profile": "O1g2",
+      "sha256": "22b353a6f4447e9d5f96adf9dc65944b6282088d01e918965a719da552be63c2",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-9d-O2g1.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "9d",
+      "profile": "O2g1",
+      "sha256": "8e66c68f9c5e06264fee6f992a9156f95c6c87e992b23a26eead0be449f1a6d1",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-9d-O2g2.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "9d",
+      "profile": "O2g2",
+      "sha256": "03f3b709e5ff60e2d8123773830421027fa52b668eec505b17f68df6735b0840",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-c875-O0g1.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "c875",
+      "profile": "O0g1",
+      "sha256": "7500a1fc85ae053717d02d63913942046df6b34df19382177be640abc2917eb2",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-c875-O0g2.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "c875",
+      "profile": "O0g2",
+      "sha256": "3b19680c52279cc74473ef804698ac500eb00ca5e5739fe33754cadfba371f39",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-c875-O1g1.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "c875",
+      "profile": "O1g1",
+      "sha256": "d67654fa3be904507c4518f1ce070704320fc33522c1e631b6718aea1caca300",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-c875-O1g2.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "c875",
+      "profile": "O1g2",
+      "sha256": "22b353a6f4447e9d5f96adf9dc65944b6282088d01e918965a719da552be63c2",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-c875-O2g1.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "c875",
+      "profile": "O2g1",
+      "sha256": "8e66c68f9c5e06264fee6f992a9156f95c6c87e992b23a26eead0be449f1a6d1",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "names-and-packs-c875-O2g2.luauc",
+      "source": "names-and-packs.luau",
+      "pin": "c875",
+      "profile": "O2g2",
+      "sha256": "03f3b709e5ff60e2d8123773830421027fa52b668eec505b17f68df6735b0840",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/names-and-packs.luau"
+      ]
+    },
+    {
+      "path": "records-9d-O0g1.luauc",
+      "source": "records.luau",
+      "pin": "9d",
+      "profile": "O0g1",
+      "sha256": "7abb73eb34e750d6c9e82b4d09511f1b2ac406a00538e366234eef2b28301d16",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-9d-O0g2.luauc",
+      "source": "records.luau",
+      "pin": "9d",
+      "profile": "O0g2",
+      "sha256": "c377f7d18f276e4cc4fc975e5b1dc4b5bf079eec6075ebcdaf08f662e095ef10",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-9d-O1g1.luauc",
+      "source": "records.luau",
+      "pin": "9d",
+      "profile": "O1g1",
+      "sha256": "557ef60db78ac821642ca8e64a5b975fa881bc7abf788addb0c44b6dfcdf401a",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-9d-O1g2.luauc",
+      "source": "records.luau",
+      "pin": "9d",
+      "profile": "O1g2",
+      "sha256": "671eb221ce7a67283397d325b258fde2f943fe9cd5825ff44f01c5a1a10af201",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-9d-O2g1.luauc",
+      "source": "records.luau",
+      "pin": "9d",
+      "profile": "O2g1",
+      "sha256": "19133083a24dad84f22874a24fe5870ce3b9df4083cc58048e19542ed3318c40",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-9d-O2g2.luauc",
+      "source": "records.luau",
+      "pin": "9d",
+      "profile": "O2g2",
+      "sha256": "7d50fce7f0cbb5d47e28e6f10ee60a748da07bd2dc63463e671a097bdf239847",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-c875-O0g1.luauc",
+      "source": "records.luau",
+      "pin": "c875",
+      "profile": "O0g1",
+      "sha256": "7abb73eb34e750d6c9e82b4d09511f1b2ac406a00538e366234eef2b28301d16",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-c875-O0g2.luauc",
+      "source": "records.luau",
+      "pin": "c875",
+      "profile": "O0g2",
+      "sha256": "c377f7d18f276e4cc4fc975e5b1dc4b5bf079eec6075ebcdaf08f662e095ef10",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-c875-O1g1.luauc",
+      "source": "records.luau",
+      "pin": "c875",
+      "profile": "O1g1",
+      "sha256": "557ef60db78ac821642ca8e64a5b975fa881bc7abf788addb0c44b6dfcdf401a",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-c875-O1g2.luauc",
+      "source": "records.luau",
+      "pin": "c875",
+      "profile": "O1g2",
+      "sha256": "671eb221ce7a67283397d325b258fde2f943fe9cd5825ff44f01c5a1a10af201",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-c875-O2g1.luauc",
+      "source": "records.luau",
+      "pin": "c875",
+      "profile": "O2g1",
+      "sha256": "19133083a24dad84f22874a24fe5870ce3b9df4083cc58048e19542ed3318c40",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    },
+    {
+      "path": "records-c875-O2g2.luauc",
+      "source": "records.luau",
+      "pin": "c875",
+      "profile": "O2g2",
+      "sha256": "7d50fce7f0cbb5d47e28e6f10ee60a748da07bd2dc63463e671a097bdf239847",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tests/fixtures/named-table-closures/records.luau"
+      ]
+    }
+  ],
+  "pins": {
+    "9d": {
+      "revision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "hostSha256": "7d8d958fb0ba8537130697a1043f9da0b4b7ab4469345b08ab9153a4a146ae74"
+    },
+    "c875": {
+      "revision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "hostSha256": "c7a7f7d1a9f3fff6303eecfef9f4c20e7c7e88806e6c5323575b409b0f4d42b6"
+    }
+  }
+}

@@ -1,0 +1,368 @@
+{
+  "format": "authored-runtime-call-boundaries",
+  "profiles": 36,
+  "baselineEngine": "36a344eeed74d194723e6f32a0ef7d699fac550f",
+  "firstObservation": "All 24 initial profiles passed on both compilers; 12 scalar-position controls were then added and all 36 passed before and after the printer change.",
+  "entries": [
+    {
+      "id": "c875/inlined-arguments/O0g1",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/c875/inlined-arguments/O0g1.luauc",
+      "bytecodeSha256": "275a59621edeb1c2769a6e8613ecb0b24929777aa18614eec03067acb08c54a2",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\tfalse\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "c875/inlined-arguments/O0g2",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/c875/inlined-arguments/O0g2.luauc",
+      "bytecodeSha256": "18568fd4fad9cf555cff917349a1e3a9269bc63dd7939fb88f3713f596b5436e",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\tfalse\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "c875/inlined-arguments/O1g1",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/c875/inlined-arguments/O1g1.luauc",
+      "bytecodeSha256": "2715884da280939b0dd7617f434eaf7aeb7bc21fba13f0d1253be9c538bccced",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\tfalse\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "c875/inlined-arguments/O1g2",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/c875/inlined-arguments/O1g2.luauc",
+      "bytecodeSha256": "4e1960dfef041126f865e09629810813ebf412779af22f3667d5ed62724c3ff4",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\tfalse\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "c875/inlined-arguments/O2g1",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/c875/inlined-arguments/O2g1.luauc",
+      "bytecodeSha256": "fa950bc07ca0ae978c65d925b09b5095c499f78d33b1bf30b042353f496f8776",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\ttrue\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "c875/inlined-arguments/O2g2",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/c875/inlined-arguments/O2g2.luauc",
+      "bytecodeSha256": "4450cbb1fcc2e0e06b3b59451a1cf0e067a82d1c02166ba6a7383a07f0460c24",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\ttrue\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "c875/inlined-scalar-arguments/O0g1",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/c875/inlined-scalar-arguments/O0g1.luauc",
+      "bytecodeSha256": "3316a0f9b327c39034be803eb129271e963508eee3e3fab0d961de25bd21364a",
+      "stdout": "scalar-apply\t31\t37\t43\tapply:43\nscalar-factory\tfalse\t:47\nscalar-computed\tapply:53\n"
+    },
+    {
+      "id": "c875/inlined-scalar-arguments/O0g2",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/c875/inlined-scalar-arguments/O0g2.luauc",
+      "bytecodeSha256": "91c2d8c67181ce41bcfb4c86dabe824ee0c7edcb12e7eabdd64c2a516f0a5c20",
+      "stdout": "scalar-apply\t31\t37\t43\tapply:43\nscalar-factory\tfalse\t:47\nscalar-computed\tapply:53\n"
+    },
+    {
+      "id": "c875/inlined-scalar-arguments/O1g1",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/c875/inlined-scalar-arguments/O1g1.luauc",
+      "bytecodeSha256": "6a0e93ae632d78be182891bc05600af2b005acd5d35f12ab27baa1c241b4d026",
+      "stdout": "scalar-apply\t31\t37\t43\tapply:43\nscalar-factory\tfalse\t:47\nscalar-computed\tapply:53\n"
+    },
+    {
+      "id": "c875/inlined-scalar-arguments/O1g2",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/c875/inlined-scalar-arguments/O1g2.luauc",
+      "bytecodeSha256": "cefe8c7afb9ab6417e4159524288d53eeeb0da075a153f2e262febcf2cbd2f7f",
+      "stdout": "scalar-apply\t31\t37\t43\tapply:43\nscalar-factory\tfalse\t:47\nscalar-computed\tapply:53\n"
+    },
+    {
+      "id": "c875/inlined-scalar-arguments/O2g1",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/c875/inlined-scalar-arguments/O2g1.luauc",
+      "bytecodeSha256": "34c92f7e20f865fee74fa83c718e61a4ae8199c908e45eb38c842b9145e1f13b",
+      "stdout": "scalar-apply\t31\t37\t43\t:43\nscalar-factory\ttrue\t:47\nscalar-computed\t:53\n"
+    },
+    {
+      "id": "c875/inlined-scalar-arguments/O2g2",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/c875/inlined-scalar-arguments/O2g2.luauc",
+      "bytecodeSha256": "969c4f40d033cf1c579025f751f42364240212f8610f32e34b66bce62888f3f2",
+      "stdout": "scalar-apply\t31\t37\t43\t:43\nscalar-factory\ttrue\t:47\nscalar-computed\t:53\n"
+    },
+    {
+      "id": "c875/observations/O0g1",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/c875/observations/O0g1.luauc",
+      "bytecodeSha256": "fc1d8d861f3b2c323984a8c37c6aabbeeb3dd699bf97fab71b76fef38ce6aa60",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "c875/observations/O0g2",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/c875/observations/O0g2.luauc",
+      "bytecodeSha256": "30ee91743ac8cf91a9834fe77c839b86ff85375c3839afaff21fbd6d0b2900d0",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "c875/observations/O1g1",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/c875/observations/O1g1.luauc",
+      "bytecodeSha256": "7ab8f3acd737232f5d8bfbf2a1e33ddbc03e588891891978a04d7fca27a31e0e",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "c875/observations/O1g2",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/c875/observations/O1g2.luauc",
+      "bytecodeSha256": "1ddde0ab38b801f9db2e7e7c1529bc7e7fa461b23b900300246105033f2a9d1f",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "c875/observations/O2g1",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/c875/observations/O2g1.luauc",
+      "bytecodeSha256": "f21d8354a1bc1b0328a5ff1b68f69068b2f517c9393541ff52b40f8259ae7a57",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "c875/observations/O2g2",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/c875/observations/O2g2.luauc",
+      "bytecodeSha256": "a9cabd6883504e991167549d2e27164cf334672bc55de1c71092cd8740c12b98",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "9d/inlined-arguments/O0g1",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/9d/inlined-arguments/O0g1.luauc",
+      "bytecodeSha256": "275a59621edeb1c2769a6e8613ecb0b24929777aa18614eec03067acb08c54a2",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\tfalse\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "9d/inlined-arguments/O0g2",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/9d/inlined-arguments/O0g2.luauc",
+      "bytecodeSha256": "18568fd4fad9cf555cff917349a1e3a9269bc63dd7939fb88f3713f596b5436e",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\tfalse\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "9d/inlined-arguments/O1g1",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/9d/inlined-arguments/O1g1.luauc",
+      "bytecodeSha256": "2715884da280939b0dd7617f434eaf7aeb7bc21fba13f0d1253be9c538bccced",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\tfalse\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "9d/inlined-arguments/O1g2",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/9d/inlined-arguments/O1g2.luauc",
+      "bytecodeSha256": "4e1960dfef041126f865e09629810813ebf412779af22f3667d5ed62724c3ff4",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\tfalse\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "9d/inlined-arguments/O2g1",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/9d/inlined-arguments/O2g1.luauc",
+      "bytecodeSha256": "fa950bc07ca0ae978c65d925b09b5095c499f78d33b1bf30b042353f496f8776",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\ttrue\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "9d/inlined-arguments/O2g2",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-arguments.luau",
+      "sourceSha256": "ed4e2c375b932e20ae7f778d89fcf0e671c7581f1b54f91fc9902a8175818189",
+      "bytecode": "bytecode/9d/inlined-arguments/O2g2.luauc",
+      "bytecodeSha256": "4450cbb1fcc2e0e06b3b59451a1cf0e067a82d1c02166ba6a7383a07f0460c24",
+      "stdout": "builtin\t11\t13\nliteral\t34\nframe\t19\tapply\nidentity\ttrue\ncaptured-frame\t23\t\nruntime\t29\tapply\n"
+    },
+    {
+      "id": "9d/inlined-scalar-arguments/O0g1",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/9d/inlined-scalar-arguments/O0g1.luauc",
+      "bytecodeSha256": "3316a0f9b327c39034be803eb129271e963508eee3e3fab0d961de25bd21364a",
+      "stdout": "scalar-apply\t31\t37\t43\tapply:43\nscalar-factory\tfalse\t:47\nscalar-computed\tapply:53\n"
+    },
+    {
+      "id": "9d/inlined-scalar-arguments/O0g2",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/9d/inlined-scalar-arguments/O0g2.luauc",
+      "bytecodeSha256": "91c2d8c67181ce41bcfb4c86dabe824ee0c7edcb12e7eabdd64c2a516f0a5c20",
+      "stdout": "scalar-apply\t31\t37\t43\tapply:43\nscalar-factory\tfalse\t:47\nscalar-computed\tapply:53\n"
+    },
+    {
+      "id": "9d/inlined-scalar-arguments/O1g1",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/9d/inlined-scalar-arguments/O1g1.luauc",
+      "bytecodeSha256": "6a0e93ae632d78be182891bc05600af2b005acd5d35f12ab27baa1c241b4d026",
+      "stdout": "scalar-apply\t31\t37\t43\tapply:43\nscalar-factory\tfalse\t:47\nscalar-computed\tapply:53\n"
+    },
+    {
+      "id": "9d/inlined-scalar-arguments/O1g2",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/9d/inlined-scalar-arguments/O1g2.luauc",
+      "bytecodeSha256": "cefe8c7afb9ab6417e4159524288d53eeeb0da075a153f2e262febcf2cbd2f7f",
+      "stdout": "scalar-apply\t31\t37\t43\tapply:43\nscalar-factory\tfalse\t:47\nscalar-computed\tapply:53\n"
+    },
+    {
+      "id": "9d/inlined-scalar-arguments/O2g1",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/9d/inlined-scalar-arguments/O2g1.luauc",
+      "bytecodeSha256": "34c92f7e20f865fee74fa83c718e61a4ae8199c908e45eb38c842b9145e1f13b",
+      "stdout": "scalar-apply\t31\t37\t43\t:43\nscalar-factory\ttrue\t:47\nscalar-computed\t:53\n"
+    },
+    {
+      "id": "9d/inlined-scalar-arguments/O2g2",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "inlined-scalar-arguments.luau",
+      "sourceSha256": "b4ba3d3f2906fe8b9b059e3cefb3699413500df220d0aa75c2958a12050f44f9",
+      "bytecode": "bytecode/9d/inlined-scalar-arguments/O2g2.luauc",
+      "bytecodeSha256": "969c4f40d033cf1c579025f751f42364240212f8610f32e34b66bce62888f3f2",
+      "stdout": "scalar-apply\t31\t37\t43\t:43\nscalar-factory\ttrue\t:47\nscalar-computed\t:53\n"
+    },
+    {
+      "id": "9d/observations/O0g1",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/9d/observations/O0g1.luauc",
+      "bytecodeSha256": "fc1d8d861f3b2c323984a8c37c6aabbeeb3dd699bf97fab71b76fef38ce6aa60",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "9d/observations/O0g2",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/9d/observations/O0g2.luauc",
+      "bytecodeSha256": "30ee91743ac8cf91a9834fe77c839b86ff85375c3839afaff21fbd6d0b2900d0",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "9d/observations/O1g1",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/9d/observations/O1g1.luauc",
+      "bytecodeSha256": "7ab8f3acd737232f5d8bfbf2a1e33ddbc03e588891891978a04d7fca27a31e0e",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "9d/observations/O1g2",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/9d/observations/O1g2.luauc",
+      "bytecodeSha256": "1ddde0ab38b801f9db2e7e7c1529bc7e7fa461b23b900300246105033f2a9d1f",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "9d/observations/O2g1",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/9d/observations/O2g1.luauc",
+      "bytecodeSha256": "f21d8354a1bc1b0328a5ff1b68f69068b2f517c9393541ff52b40f8259ae7a57",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    },
+    {
+      "id": "9d/observations/O2g2",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "observations.luau",
+      "sourceSha256": "2e8aa5ae50ec865c25e8a39e3769873a06d4fb4d10b14375e6831ae239cf4e2e",
+      "bytecode": "bytecode/9d/observations/O2g2.luauc",
+      "bytecodeSha256": "a9cabd6883504e991167549d2e27164cf334672bc55de1c71092cd8740c12b98",
+      "stdout": "fixed-builtin\t1\t7\tnil\tnil\tnil\nfixed-alias\t1\t8\tnil\tnil\tnil\nfixed-literal\t1\t12\tnil\tnil\tnil\nfixed-observer\t4\t11\tnil\ttrue\ttable\nvariadic-observer\t4\t13\tnil\ttrue\ttable\nfactory-identity\tfalse\nfactory-observer\t4\t17\tnil\ttrue\ttable\nwritten-target\t4\t19\tnil\tfalse\ttable\nruntime-field\t4\t23\tnil\tfalse\ttable\ncomputed-field\t4\t29\tnil\tfalse\ttable\nreturned-target\t4\t31\tnil\tfalse\ttable\narray-target\t4\t37\tnil\tfalse\ttable\ncallable-table\t4\t41\t2\tnil\t43\nnil-call\t3\tfalse\tstring\ttrue\tnil\nfalse-call\t3\tfalse\tstring\ttrue\tnil\neffects\treplace/arg/lookup:fire/field-arg/lookup:computed/index-arg/callee/returned-arg/array-arg/callable-replace/meta-arg/metacall\n"
+    }
+  ]
+}

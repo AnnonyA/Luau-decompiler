@@ -1,0 +1,370 @@
+{
+  "kind": "independent-loop-environment-review",
+  "sourceSha256": "2ee47a6b68664888664a8c4330fc41f04a0b806287f08183001c507eec9e184d",
+  "rows": [
+    {
+      "pin": "9d",
+      "profile": "O0g1",
+      "originalBytecodeSha256": "5783f08088985ced517768d7b562565bd56a72a103277411c2df195191394673",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "f446542914bb8ad1a28b52e8384a8fba1a6c0a82d2aee04d88463541333490e3"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "10df4ecb8be103005ae4ac5c3e8be471cf0cf30f111c8a0f22b1120f354cc4a5"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O0g2",
+      "originalBytecodeSha256": "bcafe06e7f2aacff4a3a4da8d745b31efda85bc33ca82d3d3c37bf52727e1ca3",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "32105c88936afb39f97ee3d0dfb422c39d53e04285bf038a7a5465f1753b7a94"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "9e3c41f105b618857472511a6baa4ef84bfeff8086c9273c4fafa17dff5458fe"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O1g1",
+      "originalBytecodeSha256": "5d20ea61ea7b983664d8bd7c4a75f9f9d8ee53efb4e3565ea3c55d0ba4642c92",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "1f4ee7465e496ea42b86b403e01a477f5a420cc3b2f36fb347a6a71c5af5a4ce"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "1f4ee7465e496ea42b86b403e01a477f5a420cc3b2f36fb347a6a71c5af5a4ce"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O1g2",
+      "originalBytecodeSha256": "75dc0fc9c96af0e77335449434177510b276d507b216ff640a543344ef4770b1",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "337e27d15b6c3a11d5c2f2a4287bdf509d2610d240071c48f41be8396946462a"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "01fdfda97948f9cdb8e4cdf459b7c2632b39016ce1ce251f6d8ebeaabefeb6bb"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O2g1",
+      "originalBytecodeSha256": "5c3737f88243fe9176bf002f362e95508324836f7830a3af6e3df703b249c113",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "3592929fe99d775f8cb28ecb92275b0cad4d379df3194b71a48f3f1a67a10b9e"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "3592929fe99d775f8cb28ecb92275b0cad4d379df3194b71a48f3f1a67a10b9e"
+        }
+      }
+    },
+    {
+      "pin": "9d",
+      "profile": "O2g2",
+      "originalBytecodeSha256": "c42465c3a427ae0dd7b40f76d4829410fbbcd20ba165c69edb7b79790d65ff00",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "78f8361b029ae5739fbf72bf5076f08289218b3ec9b2a34b77f23ad3a4fa34b1"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "213134f4a7a96ccf87944486781edf214fb54053585b969c13a5f917ca39ac2d"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O0g1",
+      "originalBytecodeSha256": "5783f08088985ced517768d7b562565bd56a72a103277411c2df195191394673",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "10df4ecb8be103005ae4ac5c3e8be471cf0cf30f111c8a0f22b1120f354cc4a5"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "10df4ecb8be103005ae4ac5c3e8be471cf0cf30f111c8a0f22b1120f354cc4a5"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O0g2",
+      "originalBytecodeSha256": "bcafe06e7f2aacff4a3a4da8d745b31efda85bc33ca82d3d3c37bf52727e1ca3",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "18a6006d38c562faa55888428a39bd20862cc40bc6fef160e1f1ee1bf31f6dc8"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "9e3c41f105b618857472511a6baa4ef84bfeff8086c9273c4fafa17dff5458fe"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O1g1",
+      "originalBytecodeSha256": "5d20ea61ea7b983664d8bd7c4a75f9f9d8ee53efb4e3565ea3c55d0ba4642c92",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "1556d966ef7b0dcce96711b73b65705736facfff936bb1858aeb62d1a5eae884"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "1556d966ef7b0dcce96711b73b65705736facfff936bb1858aeb62d1a5eae884"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O1g2",
+      "originalBytecodeSha256": "75dc0fc9c96af0e77335449434177510b276d507b216ff640a543344ef4770b1",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "7a4939e185b09769b7f7c5f834fe9207af2679c198127c9e96a00b70130f0b8a"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "b67b8d1c250ebc2a249e479ee86d09dff717025c6a7437343c9c4d90c04c167f"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O2g1",
+      "originalBytecodeSha256": "5c3737f88243fe9176bf002f362e95508324836f7830a3af6e3df703b249c113",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "2f4f6dc4ee56caeaa59f831bb7e6f83da0bc6a3354b5ecf99002d549a76080b3"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "2f4f6dc4ee56caeaa59f831bb7e6f83da0bc6a3354b5ecf99002d549a76080b3"
+        }
+      }
+    },
+    {
+      "pin": "c875",
+      "profile": "O2g2",
+      "originalBytecodeSha256": "c42465c3a427ae0dd7b40f76d4829410fbbcd20ba165c69edb7b79790d65ff00",
+      "originalStdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+      "variants": {
+        "baseline": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "a599a37da616af3db193f13aaef724554cddd648c2813b565c2a45c52c7f7da1"
+        },
+        "candidate": {
+          "match": true,
+          "stdout": "repeat\t1\t12\t1012\tuntil:1:1,first:12:12\nsaved\t1\t2\t1012\nsaved\t2\t102\t1012\nrepeat\t2\t23\t1023\tuntil:1:1,until:2:2,second:23:23\nsaved\t1\t2\t1023\nsaved\t2\t3\t1023\nsaved\t3\t203\t1023\nrepeat\t3\t-1\t1004\tuntil:1:1,until:2:2,until:3:3,until:4:4\nsaved\t1\t2\t1004\nsaved\t2\t3\t1004\nsaved\t3\t4\t1004\nsaved\t4\t5\t1004\nshared\t1\t20\t120\t120\t2\n1,20\nshared\t2\t40\t140\t140\t4\n1,2,3,40\nshared\t3\t6\t106\tnone\n1,2,3,4,5,6\n",
+          "stderr": "",
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "sourceSha256": "91c5059515429690f4194d7a6a181bcf66328dce652037318835d3ebda861f06"
+        }
+      }
+    }
+  ],
+  "passed": {
+    "baseline": 12,
+    "candidate": 12
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "engineCommit": "36a344eeed74d194723e6f32a0ef7d699fac550f",
+  "engineJavaScriptTreeSha256": "edc5ff59d69f986aad80815f2485c4437c37e3a9bd9b04e64d1d146434903cbb",
+  "type": "baseline attribution for authored mixed-key layout source",
+  "results": [
+    {
+      "pin": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "opt": 0,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "sourceSha256": "6a8882611bdc1b15b7490e922145df8e6b30bc5fd40f79d9153a08dc1ae0c3d3",
+      "matchesBefore": false
+    },
+    {
+      "pin": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "opt": 1,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "sourceSha256": "24ea526920adbf43ee4f2910572b0265e1e1f375c4d717444f4b30ab76b3c723",
+      "matchesBefore": false
+    },
+    {
+      "pin": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "opt": 2,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "sourceSha256": "d67f26ec6c17d1608482599930157ba6247a02207aa0b1b448729a21cc45a2c3",
+      "matchesBefore": false
+    },
+    {
+      "pin": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "opt": 0,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "sourceSha256": "6a8882611bdc1b15b7490e922145df8e6b30bc5fd40f79d9153a08dc1ae0c3d3",
+      "matchesBefore": false
+    },
+    {
+      "pin": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "opt": 1,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "sourceSha256": "24ea526920adbf43ee4f2910572b0265e1e1f375c4d717444f4b30ab76b3c723",
+      "matchesBefore": false
+    },
+    {
+      "pin": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "opt": 2,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "sourceSha256": "d67f26ec6c17d1608482599930157ba6247a02207aa0b1b448729a21cc45a2c3",
+      "matchesBefore": false
+    }
+  ]
+}

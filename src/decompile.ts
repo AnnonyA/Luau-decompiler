@@ -5,7 +5,7 @@ import { validateAst, type ValidationFailure } from "./ast/AstValidator.js";
 import type { Chunk } from "./ast/Ast.js";
 import { chunk } from "./ast/Ast.js";
 import { cleanupAst, type CleanupOptions } from "./ast/AstCleanup.js";
-import { presentClosures } from "./ast/ClosurePresentation.js";
+import { presentClosures, presentNamedTableClosures } from "./ast/ClosurePresentation.js";
 import { foldTemporaries } from "./ast/TempFolding.js";
 import { decodeBytecode, type DecodeOptions, type DecodeResult } from "./decode/Decoder.js";
 import { BytecodeError } from "./decode/BytecodeError.js";
@@ -173,7 +173,8 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
       keepDeadFunctions: options.keepDeadFunctions ?? true,
       unfoldModuleTables: options.unfoldModuleTables ?? true,
     }) : recovered;
-    const contextual = options.runtimeContext === false ? rewritten : applyRuntimeContext(rewritten, options.runtimeContext);
+    const presented = options.foldSingleUseTemps === false ? rewritten : presentNamedTableClosures(rewritten);
+    const contextual = options.runtimeContext === false ? presented : applyRuntimeContext(presented, options.runtimeContext);
     const ast = boundLocalLifetimes(styleLocalNames(recoverFunctionEvidence(contextual, options), options), options);
     const validation = validateAst(ast);
     for (const failure of validation) {
@@ -181,7 +182,8 @@ export function decompile(input: Uint8Array | ArrayBuffer, options: DecompileOpt
     }
 
     const printOptions: PrintOptions = {indent: options.indent ?? 4, unicodeStrings: options.unicodeStrings,
-      upvalueComments: options.upvalueComments, functionLineComments: options.functionLineComments, preferConst: options.preferConst};
+      upvalueComments: options.upvalueComments, functionLineComments: options.functionLineComments, preferConst: options.preferConst,
+      interpolatedStrings: options.interpolatedStrings};
     const printedSource = printLuau(ast, printOptions);
     const source = factories.requiresOptimization2 ? `--!optimize 2\n${printedSource}` : printedSource;
     // Opt-in metadata comments are deliberate. Still verify the same AST with

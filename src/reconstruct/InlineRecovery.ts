@@ -7,6 +7,7 @@ import {canonicalWrites, tableStore} from './InlineWrites.js';
 import {numericStateBindings} from './NumericState.js';
 import {NameAllocator} from './Naming.js';
 import {rewriteRegisterCount} from './RegisterBudget.js';
+import {recoverPrimitiveRegions} from './PrimitiveRegions.js';
 
 const arithmetic = new Set(['+', '-', '*', '/', '//', '%', '^']);
 const comparisons = new Set(['<', '<=', '>', '>=', '==', '~=']);
@@ -581,5 +582,5 @@ export function recoverInlineCalls(ast: Chunk, evidence: ReadonlySet<number>, re
     return {available,visible};
   }
   walk(ast.body,new Map(),new Map(),{depth:0});
-  return replacements.size ? replaceReferences(ast,replacements) : ast;
+  return recoverPrimitiveRegions(replacements.size ? replaceReferences(ast,replacements) : ast, evidence, recoveredHelpers);
 }

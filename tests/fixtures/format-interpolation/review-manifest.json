@@ -1,0 +1,83 @@
+{
+  "source": "review-controls.luau",
+  "sourceSha256": "c1c38fe6ecca5e4ea91a9389038fdaa6331d0e14aa860949bc0382fdc9c30691",
+  "origin": "Independent review authored after implementation; first candidate failed all 12 parser checks on table-valued interpolation. Original inputs are unchanged.",
+  "compilerRevisions": {
+    "9d": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+    "c875": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f"
+  },
+  "inputs": [
+    {
+      "path": "review-9d-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "sha256": "8c2c57cfbed77f0037b0a7f72d784da500bf4bf67a7fbd87cde5163c2ae2a837"
+    },
+    {
+      "path": "review-9d-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "sha256": "84cb89d021acf961bca9c47245db9975f17ff73592114b290648e9fea83a04f9"
+    },
+    {
+      "path": "review-9d-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "sha256": "1fb5a3b7447d202a7293e7b43d57c27c8f692572fd49b4bed0744d2de29a97d0"
+    },
+    {
+      "path": "review-9d-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "sha256": "7ca9bf46e0f380ab4b33fc18ae007dd432bf315739be808b03e345d2fff91a96"
+    },
+    {
+      "path": "review-9d-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "sha256": "f4a8d17396714bf8ad02b30bc59681d27a97a311fdda17dce67fc7712f7c17dd"
+    },
+    {
+      "path": "review-9d-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "sha256": "7a4206ad512750fa8c1741520e584ceaae216cf0eb428df90455d88fc5896f4a"
+    },
+    {
+      "path": "review-c875-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "sha256": "8c2c57cfbed77f0037b0a7f72d784da500bf4bf67a7fbd87cde5163c2ae2a837"
+    },
+    {
+      "path": "review-c875-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "sha256": "84cb89d021acf961bca9c47245db9975f17ff73592114b290648e9fea83a04f9"
+    },
+    {
+      "path": "review-c875-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "sha256": "1fb5a3b7447d202a7293e7b43d57c27c8f692572fd49b4bed0744d2de29a97d0"
+    },
+    {
+      "path": "review-c875-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "sha256": "7ca9bf46e0f380ab4b33fc18ae007dd432bf315739be808b03e345d2fff91a96"
+    },
+    {
+      "path": "review-c875-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "sha256": "f4a8d17396714bf8ad02b30bc59681d27a97a311fdda17dce67fc7712f7c17dd"
+    },
+    {
+      "path": "review-c875-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "sha256": "7a4206ad512750fa8c1741520e584ceaae216cf0eb428df90455d88fc5896f4a"
+    }
+  ]
+}

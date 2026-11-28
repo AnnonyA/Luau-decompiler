@@ -1,0 +1,889 @@
+{
+  "commit": "eba3c9971283a322e2e300834a6cc95fdd437b9c",
+  "node": "v22.23.5",
+  "engineSnapshot": "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist",
+  "engineJsTreeSha256": "6b7265185633c57656004439768262cc09b7167e90b2ba19ebe766c509bce9e5",
+  "baselineSnapshot": "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/baseline-dist",
+  "baselineJsTreeSha256": "54451c8b198ce206b2b9097f1a47feccda2bc9b9e1f11961c465ffcd9f6f4067",
+  "treeHashAlgorithm": "SHA256 of sorted(relativeJSPath UTF8 + NUL + raw SHA256(fileBytes))",
+  "pins": {
+    "9d": {
+      "revision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "nativeHostSha256": "7d8d958fb0ba8537130697a1043f9da0b4b7ab4469345b08ab9153a4a146ae74",
+      "gcHostSha256": "bfe4c64f24bff983ef652a98a8bef726c5e562d972d8089c0a00029cf69419ca"
+    },
+    "c875": {
+      "revision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "nativeHostSha256": "c7a7f7d1a9f3fff6303eecfef9f4c20e7c7e88806e6c5323575b409b0f4d42b6",
+      "gcHostSha256": "c351c036378b4c614d0d5251d59df2f46c0d926bc5d194a18779ccab84296409"
+    }
+  },
+  "sourceHashes": {
+    "aliases-and-shared-names.luau": "c4dbbd43bbedeea869c4b87870be1782b1f9cccc609edab9c35b237389e2a010",
+    "allocation.luau": "3589b71c3cd725677bfbeaa96a9e18845b15460a4ac64be08ab6730c891aea30",
+    "gcHostSource": "2d527b895437c5656f75d7accccd7db96b70cc98ab1e5f327a42f355530440ee"
+  },
+  "counts": {
+    "homonymous": {
+      "total": 12,
+      "originalValid": 12,
+      "baselinePass": 0,
+      "candidatePass": 4
+    },
+    "allocation": {
+      "total": 8,
+      "originalValid": 8,
+      "baselinePass": 8,
+      "candidatePass": 8
+    }
+  },
+  "invalidOriginals": [
+    {
+      "pin": "9d",
+      "profile": "O0g1",
+      "originalValid": false,
+      "firstOriginalExitCode": 4,
+      "originalBytecodeSha256": "91645b9769f992657aef248339642ce4fdd337c5b1950629fb9f7af4827608f1",
+      "candidateExecuted": false,
+      "countedInPassTotal": false
+    },
+    {
+      "pin": "9d",
+      "profile": "O0g2",
+      "originalValid": false,
+      "firstOriginalExitCode": 4,
+      "originalBytecodeSha256": "5c6d7b553ef4f0ef952310ef22a79fc624f787696589863730a58ad9f02a68b6",
+      "candidateExecuted": false,
+      "countedInPassTotal": false
+    },
+    {
+      "pin": "c875",
+      "profile": "O0g1",
+      "originalValid": false,
+      "firstOriginalExitCode": 4,
+      "originalBytecodeSha256": "91645b9769f992657aef248339642ce4fdd337c5b1950629fb9f7af4827608f1",
+      "candidateExecuted": false,
+      "countedInPassTotal": false
+    },
+    {
+      "pin": "c875",
+      "profile": "O0g2",
+      "originalValid": false,
+      "firstOriginalExitCode": 4,
+      "originalBytecodeSha256": "5c6d7b553ef4f0ef952310ef22a79fc624f787696589863730a58ad9f02a68b6",
+      "candidateExecuted": false,
+      "countedInPassTotal": false
+    }
+  ],
+  "immutabilityChecks": {
+    "candidateSnapshotUnchanged": true,
+    "baselineSnapshotUnchanged": true,
+    "rootDistUnchanged": true,
+    "authoredInputsUnchanged": true,
+    "allocationInputsUnchanged": true
+  },
+  "results": [
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-9d-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "originalBytecodeSha256": "1eaf9da1d367ac9e91398253dd90a4240c6bfa6078781138856f50b4b19091aa",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "660f3a5a2bc466425e9fc8dea8d2c4973a80d3429ed3fe688f3e98e43de8f622",
+          "bytecodeSha256": "7d596b14a572a3afa36721670a4075ad0ce2083e72f5b4baeff900e19d0a8b3f"
+        },
+        "candidate": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "0c0d9326d9690f63d3ebaa0202331ad11298a2e80c4780ffba75f4d58dca316f",
+          "bytecodeSha256": "7d596b14a572a3afa36721670a4075ad0ce2083e72f5b4baeff900e19d0a8b3f"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-9d-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "originalBytecodeSha256": "3bc6243b40163033fc33d2f305a2d2510e3bf938e3bf8fb9c19207437b3ecca4",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "4973491b28a336c99aa87b8ba28736a3e734cfc6aa70ee747f50d9cf58042f57",
+          "bytecodeSha256": "317c99816a047066ba18c5204dfd291e63cb760a05b777b1b4c349ecef92d4b3"
+        },
+        "candidate": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "dcc65ccfa8c7caebf4fa06d07b2f8fdbebd99a2b48d926539941103c532197ac",
+          "bytecodeSha256": "317c99816a047066ba18c5204dfd291e63cb760a05b777b1b4c349ecef92d4b3"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-9d-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "originalBytecodeSha256": "c8312d3d2d77e0ecbb09903fb01f6ff7d7489a89da7b2a89faf09c92faf5bf70",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\t\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "8dea58ffcdcd7ff757f70fe87778ad540b741f697b8d7f4ddcaa8edbfa2dd80e",
+          "bytecodeSha256": "b9019f6424135afaadba871847693191ac94da6355b4eb14f34fde16bd448fcd"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "dfecc7763e15d8c0c9780e257f1fa4aa3a4b7f89e2b6f9ac1be3361c3e596d3d",
+          "bytecodeSha256": "67b08dd6948ae43b4a79600c783f0a7765027ecc3f8b66312b3ab20fa241f248"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-9d-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "originalBytecodeSha256": "4991f5467cf7ac1175eed0a8aefb2975ed83d2e1eaf3176f8ac3427e2ea377be",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\t\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "5d97cf4ee7ead964e6ae3d4289b4c432cd682aaa0ffac56b49896089379ceac4",
+          "bytecodeSha256": "c918583b19668c58067fa9b865a9ff6b1f48930de185224baa9446bb37436be9"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "7bb933bd59db175158abfbb1a534c6f535644e72fb5e68d53e7b0a4eb83735e5",
+          "bytecodeSha256": "94e86fd3cde5010a6f2bde5fa6402d0f60933eae1e23e857458fdbcaa91d6593"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-9d-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "originalBytecodeSha256": "c9f5fb50d49ed6294a06bbfc0edc5e4ebe5cabefdf2fc6e45b0e2fe070b0e54e",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\t\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "846baebc355579cd4e7286e9eb4c4246389be5b3e894788b033165132227af4f",
+          "bytecodeSha256": "9738ba0d4d386a88f6ead8d14f6791349504da3dc9dceff99dbb67311a56a2cb"
+        },
+        "candidate": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "3d8eacd5537eb49db3f1be66b0598abd0f1685a8975a42b05230e4853fee1df3",
+          "bytecodeSha256": "f5315d5e6658768f7620e77dc50cfecebb3f4a905ac58965be369fc85e182297"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-9d-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "originalBytecodeSha256": "988f8f5c472823479e9bc103f1d8b80c56e0a8276db874eca5e59bac71741ecb",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\t\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "9586111df72aeaa3896cba3e7dd621fc9bf2aab0856f6aa98be251bcf2e9c0b2",
+          "bytecodeSha256": "1d7b0162fe199e571538d087d11bfa189b0de84bda3688690b50c88673a53733"
+        },
+        "candidate": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "03b068df0494da593b1bcfccf1ebf212ee9779c586b1f6a49958c1cb0227f272",
+          "bytecodeSha256": "b87be11847afd0a45013907d71d032ed1c3723e2533baeb237490d085d820665"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-c875-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "originalBytecodeSha256": "1eaf9da1d367ac9e91398253dd90a4240c6bfa6078781138856f50b4b19091aa",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "0c0d9326d9690f63d3ebaa0202331ad11298a2e80c4780ffba75f4d58dca316f",
+          "bytecodeSha256": "7d596b14a572a3afa36721670a4075ad0ce2083e72f5b4baeff900e19d0a8b3f"
+        },
+        "candidate": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "0c0d9326d9690f63d3ebaa0202331ad11298a2e80c4780ffba75f4d58dca316f",
+          "bytecodeSha256": "7d596b14a572a3afa36721670a4075ad0ce2083e72f5b4baeff900e19d0a8b3f"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-c875-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "originalBytecodeSha256": "3bc6243b40163033fc33d2f305a2d2510e3bf938e3bf8fb9c19207437b3ecca4",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "dcc65ccfa8c7caebf4fa06d07b2f8fdbebd99a2b48d926539941103c532197ac",
+          "bytecodeSha256": "317c99816a047066ba18c5204dfd291e63cb760a05b777b1b4c349ecef92d4b3"
+        },
+        "candidate": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag2\tfalse\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag2\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "dcc65ccfa8c7caebf4fa06d07b2f8fdbebd99a2b48d926539941103c532197ac",
+          "bytecodeSha256": "317c99816a047066ba18c5204dfd291e63cb760a05b777b1b4c349ecef92d4b3"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-c875-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "originalBytecodeSha256": "c8312d3d2d77e0ecbb09903fb01f6ff7d7489a89da7b2a89faf09c92faf5bf70",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\t\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "8dea58ffcdcd7ff757f70fe87778ad540b741f697b8d7f4ddcaa8edbfa2dd80e",
+          "bytecodeSha256": "b9019f6424135afaadba871847693191ac94da6355b4eb14f34fde16bd448fcd"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "f37e151ecd28b02782fb0de946799ada3938d857a131e37bb842ba57020b0e2a",
+          "bytecodeSha256": "67b08dd6948ae43b4a79600c783f0a7765027ecc3f8b66312b3ab20fa241f248"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-c875-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "originalBytecodeSha256": "4991f5467cf7ac1175eed0a8aefb2975ed83d2e1eaf3176f8ac3427e2ea377be",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\t\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "30d70efae869540368559771ef73f28a087ac7556c121462893bbba9035a2c94",
+          "bytecodeSha256": "c918583b19668c58067fa9b865a9ff6b1f48930de185224baa9446bb37436be9"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "91de4653ab0eab4f3ae1868498c4148fc3a81cf42bd337cc44a1b6a8d7cd683f",
+          "bytecodeSha256": "94e86fd3cde5010a6f2bde5fa6402d0f60933eae1e23e857458fdbcaa91d6593"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-c875-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "originalBytecodeSha256": "c9f5fb50d49ed6294a06bbfc0edc5e4ebe5cabefdf2fc6e45b0e2fe070b0e54e",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\t\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "af019bf191c5b3610e4a368c9090b91502f82dc3f9e8addcad6b46b5b4f30875",
+          "bytecodeSha256": "9738ba0d4d386a88f6ead8d14f6791349504da3dc9dceff99dbb67311a56a2cb"
+        },
+        "candidate": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "e609332f70f0a358c57dca082530b57351fb9e50078748e77d415bedddfec170",
+          "bytecodeSha256": "f5315d5e6658768f7620e77dc50cfecebb3f4a905ac58965be369fc85e182297"
+        }
+      }
+    },
+    {
+      "group": "homonymous",
+      "input": "aliases-and-shared-names-c875-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "originalBytecodeSha256": "988f8f5c472823479e9bc103f1d8b80c56e0a8276db874eca5e59bac71741ecb",
+      "original": {
+        "exitCode": 0,
+        "stdout": "alias\toriginal\t11\tnil\t12\nfactory\ttag\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\ttrue\tshared\tglobal-tag\nanonymous\t\tanonymous\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\t\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "32359858e18412c018b32053cc4269f702b745cfeb3c268f1d63757210271a74",
+          "bytecodeSha256": "1d7b0162fe199e571538d087d11bfa189b0de84bda3688690b50c88673a53733"
+        },
+        "candidate": {
+          "match": false,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "alias\toriginal\t11\tnil\t12\nfactory\t\ttrue\tglobal-tag\tglobal-tag\nbetween\tglobal-tag\ndispatcher\ttag\tfalse\tnil\tglobal-tag\nanonymous\t\tanonymous\n",
+          "stderr": "",
+          "sourceSha256": "56ead2ee40c60f54ce44d4880b3d1d78211399dce62900b7349160de63f9db4d",
+          "bytecodeSha256": "b87be11847afd0a45013907d71d032ed1c3723e2533baeb237490d085d820665"
+        }
+      }
+    },
+    {
+      "group": "allocation",
+      "input": "9d-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "originalBytecodeSha256": "3a732bdfea991288e15ca0b442310649b5ed27828ace8811ad4cbaf0dfe0b50a",
+      "original": {
+        "exitCode": 0,
+        "stdout": "allocation\t0\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "056f2fb970744e5eb768311e1fcbe0e09983177a7a53d6c245292757a11261e8",
+          "bytecodeSha256": "6f593d5a7e20062e18b5b65e8916ef7bcf12f6b832d16e181beff15878718821"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "056f2fb970744e5eb768311e1fcbe0e09983177a7a53d6c245292757a11261e8",
+          "bytecodeSha256": "6f593d5a7e20062e18b5b65e8916ef7bcf12f6b832d16e181beff15878718821"
+        }
+      }
+    },
+    {
+      "group": "allocation",
+      "input": "9d-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "originalBytecodeSha256": "c7b0c0d3f01191105ece4d2514e2bbf98cec1bdd7477aa039ab253b9bcbb9846",
+      "original": {
+        "exitCode": 0,
+        "stdout": "allocation\t0\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "da2e3007fae7ddb2d869dd52930764c86d38a9aafad3b990742d7d6985d7b58f",
+          "bytecodeSha256": "7d68159029b48f4ed212964aa244fb0b4d5784df550cf491f3a20975c923a2d6"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "da2e3007fae7ddb2d869dd52930764c86d38a9aafad3b990742d7d6985d7b58f",
+          "bytecodeSha256": "7d68159029b48f4ed212964aa244fb0b4d5784df550cf491f3a20975c923a2d6"
+        }
+      }
+    },
+    {
+      "group": "allocation",
+      "input": "9d-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "originalBytecodeSha256": "9b4d0a781428a12fc69b3f2d91e246cbc9335ad0064873932f24e34a686ef1a9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "allocation\t0\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "7f717c5a5679e356f0c9b275e80d2bec3117afea16fb45e1c4f441b6b1ed44be",
+          "bytecodeSha256": "b396702387724dae01c1d24a7b4e4218774990ed91a3e4088b7329e9f7a996e6"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "b7ce74fea16d64a2c8278efd89ce78826cf16b605efd685a9f2089892ec3a0b3",
+          "bytecodeSha256": "ba6a880806e8d9fe3d0e5b4d421b077950b6eee7811fd1aef8efcbb2b70cb504"
+        }
+      }
+    },
+    {
+      "group": "allocation",
+      "input": "9d-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "originalBytecodeSha256": "0f31ec3978f7ad545fba75234d051a742cf6729e13477f8f6806b7c4cfa31ae8",
+      "original": {
+        "exitCode": 0,
+        "stdout": "allocation\t0\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "3311cc981589f1874bad61958b2ad62e2286c170d5893ec2334a94baa8d6ee21",
+          "bytecodeSha256": "9fc9c14b04b8377faa18092d04da0dd8cf596840039c7b55af8f7ed4c5620c73"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "ada89c46241193fe58a5f7200bc895908829ba1506e1588d21efb7cad17f01e7",
+          "bytecodeSha256": "d7d11545e9ee1e46cb8ffa2591ef9641e86f7b8859c84437a66b4099388cc6b4"
+        }
+      }
+    },
+    {
+      "group": "allocation",
+      "input": "c875-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "originalBytecodeSha256": "3a732bdfea991288e15ca0b442310649b5ed27828ace8811ad4cbaf0dfe0b50a",
+      "original": {
+        "exitCode": 0,
+        "stdout": "allocation\t0\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "97ee4322f15fa58838e83ddbc544e87f7b1c62fdb0855e04dc52449757c60af8",
+          "bytecodeSha256": "6f593d5a7e20062e18b5b65e8916ef7bcf12f6b832d16e181beff15878718821"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "97ee4322f15fa58838e83ddbc544e87f7b1c62fdb0855e04dc52449757c60af8",
+          "bytecodeSha256": "6f593d5a7e20062e18b5b65e8916ef7bcf12f6b832d16e181beff15878718821"
+        }
+      }
+    },
+    {
+      "group": "allocation",
+      "input": "c875-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "originalBytecodeSha256": "c7b0c0d3f01191105ece4d2514e2bbf98cec1bdd7477aa039ab253b9bcbb9846",
+      "original": {
+        "exitCode": 0,
+        "stdout": "allocation\t0\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "f5f915420593e9e5190816d5912999fbbed165473ef44263f243bda7dd6ec1c6",
+          "bytecodeSha256": "7d68159029b48f4ed212964aa244fb0b4d5784df550cf491f3a20975c923a2d6"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "f5f915420593e9e5190816d5912999fbbed165473ef44263f243bda7dd6ec1c6",
+          "bytecodeSha256": "7d68159029b48f4ed212964aa244fb0b4d5784df550cf491f3a20975c923a2d6"
+        }
+      }
+    },
+    {
+      "group": "allocation",
+      "input": "c875-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "originalBytecodeSha256": "9b4d0a781428a12fc69b3f2d91e246cbc9335ad0064873932f24e34a686ef1a9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "allocation\t0\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "481d847337f2d552313256f44aaaa3c4cd5376e9d2c3acdf9f9dfd49c4c0e182",
+          "bytecodeSha256": "b396702387724dae01c1d24a7b4e4218774990ed91a3e4088b7329e9f7a996e6"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "04a71a6a2422c786d41393b26be7ff185ed8c9734e7b91ddd0cabb5a4652fcc8",
+          "bytecodeSha256": "ba6a880806e8d9fe3d0e5b4d421b077950b6eee7811fd1aef8efcbb2b70cb504"
+        }
+      }
+    },
+    {
+      "group": "allocation",
+      "input": "c875-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "originalBytecodeSha256": "0f31ec3978f7ad545fba75234d051a742cf6729e13477f8f6806b7c4cfa31ae8",
+      "original": {
+        "exitCode": 0,
+        "stdout": "allocation\t0\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "86a70e8d79ee0193d93abdb34954239b510b927a72672896ca22754cb34b4b6e",
+          "bytecodeSha256": "9fc9c14b04b8377faa18092d04da0dd8cf596840039c7b55af8f7ed4c5620c73"
+        },
+        "candidate": {
+          "match": true,
+          "exitCodes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stdout": "allocation\t0\n",
+          "stderr": "",
+          "sourceSha256": "69ae15ffd5676036b60eb3e9cdfe3e0c205808dc3325cf5a4828f6c07ad32651",
+          "bytecodeSha256": "d7d11545e9ee1e46cb8ffa2591ef9641e86f7b8859c84437a66b4099388cc6b4"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "before": {
+      "pass": 4,
+      "mismatch": 8
+    }
+  },
+  "by_profile": {
+    "before": {
+      "O1g1": 1,
+      "O1g1+x2": 1,
+      "O1g2": 1,
+      "O1g2+x3": 1,
+      "O2g1": 1,
+      "O2g1+x3": 1,
+      "O2g2": 1,
+      "O2g2+x1": 1
+    }
+  },
+  "failures": {
+    "before": [
+      {
+        "case": "template-key-alias-effects",
+        "profile": "O1g1",
+        "kind": "mismatch",
+        "detail": "line 5: want `\t2` got `ready\t1`"
+      },
+      {
+        "case": "template-key-alias-effects",
+        "profile": "O2g1",
+        "kind": "mismatch",
+        "detail": "line 5: want `\t2` got `ready\t2`"
+      },
+      {
+        "case": "template-key-alias-effects",
+        "profile": "O1g2",
+        "kind": "mismatch",
+        "detail": "line 5: want `\t2` got `ready\t1`"
+      },
+      {
+        "case": "template-key-alias-effects",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "line 5: want `\t2` got `ready\t2`"
+      },
+      {
+        "case": "template-key-alias-effects",
+        "profile": "O1g1+x2",
+        "kind": "mismatch",
+        "detail": "line 5: want `\t2` got `ready\t1`"
+      },
+      {
+        "case": "template-key-alias-effects",
+        "profile": "O2g1+x3",
+        "kind": "mismatch",
+        "detail": "line 5: want `\t2` got `ready\t2`"
+      },
+      {
+        "case": "template-key-alias-effects",
+        "profile": "O1g2+x3",
+        "kind": "mismatch",
+        "detail": "line 5: want `\t2` got `ready\t1`"
+      },
+      {
+        "case": "template-key-alias-effects",
+        "profile": "O2g2+x1",
+        "kind": "mismatch",
+        "detail": "line 5: want `\t2` got `ready\t2`"
+      }
+    ]
+  },
+  "quality": {
+    "round_trips": 4,
+    "by_decompiler": {
+      "before": {
+        "round_trips": 4,
+        "similarity": 79.36206459999084,
+        "size": 1.2750578129015715,
+        "locals": 1.180314211231691,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 53.333333333333336,
+        "cpu_ms_median": 166.721,
+        "cpu_ms_total": 631.131
+      }
+    }
+  }
+}

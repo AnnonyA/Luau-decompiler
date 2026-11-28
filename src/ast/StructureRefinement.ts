@@ -175,6 +175,25 @@ class Refiner {
   }
 
   private mergeWithPrevious(previous: Statement, statement: Statement): Statement | undefined {
+    // A fresh private cell initialized to an inert literal, then overwritten
+    // in exactly one branch, is a scalar select. The initializer contributes
+    // no effects or retained object, and neither expression may observe the
+    // cell before its initialization. Captured cells keep their writes: they
+    // can be observed during the test and affect native closure freshness.
+    if (this.options.ifExpressions && previous.kind === "local" && previous.names.length === 1 &&
+        previous.values.length === 1 && previous.values[0]!.kind === "literal" && isGuard(statement) &&
+        statement.consequent.statements.length === 1) {
+      const name = previous.names[0]!;
+      const store = statement.consequent.statements[0]!;
+      const assigned = store.kind === "assign" ? singleStore(store) : undefined;
+      if (assigned?.name === name && !this.captured.has(name) &&
+          countIdentifier(statement.test, name) === 0 && countIdentifier(assigned.value, name) === 0 &&
+          !containsFunction(statement.test) && !containsFunction(assigned.value) && !isPack(assigned.value)) {
+        const value: Expression = {kind: "if-expr", test: statement.test, consequent: assigned.value,
+          branches: [], alternate: previous.values[0]!};
+        return withStoredValue(previous, simplifyExpression(value));
+      }
+    }
     // `x = a; if x then x = b end`  is  `x = a and b`  (and `or` for `if not x`).
     const guarded = guardedReassignment(statement);
     if (guarded) {
@@ -200,33 +219,46 @@ class Refiner {
 
   /** A private result cell used only by terminal truthiness guards can be the
    * value of `and`/`or`. Each intermediate input must remain rooted by another
-   * unchanged parameter, or be a primitive literal; private alone is insufficient
+   * unchanged parameter, or have a proved primitive result; private alone is insufficient
    * because dropping the last table reference early can be observed by GC. */
   recoverLogicalReturn(statements: Statement[]): Statement[] {
     for (let index = statements.length - 3; index >= 0; index--) {
       const declaration = statements[index]!;
       if (declaration.kind !== "local" || declaration.names.length !== 1 || declaration.values.length !== 1) continue;
       const name = declaration.names[0]!;
-      const stable = (value: Expression): boolean => value.kind === "literal" ||
+      const stable = (value: Expression): boolean => primitiveValue(value) ||
         (value.kind === "identifier" && this.stableInputs.has(value)) ||
         (value.kind === "paren" && stable(value.expression));
-      if (!this.privateLocals.has(declaration) || !stable(declaration.values[0]!)) continue;
+      if (!this.privateLocals.has(declaration) || !stable(declaration.values[0]!) ||
+          containsFunction(declaration.values[0]!)) continue;
       let budget = 48;
       const safe = (value: Expression): boolean => countIdentifier(value, name) === 0 && !containsFunction(value);
       const returnsCell = (statement: Statement | undefined): boolean => statement?.kind === "return" &&
         statement.values.length === 1 && statement.values[0]!.kind === "identifier" && statement.values[0]!.name === name;
       const scalar = (value: Expression): Expression => value.kind === "call" || value.kind === "method-call" || value.kind === "vararg"
         ? {kind: "paren", expression: value} : value;
-      const logical = (body: Statement[], input: Expression): Expression | undefined => {
-        if (--budget < 0 || body.length !== 2 || !isGuard(body[0]) || !returnsCell(body[1])) return undefined;
-        let test = body[0].test;
+      const cellTest = (statement: Statement | undefined): {guard: IfStatement; inverted: boolean} | undefined => {
+        if (!isGuard(statement)) return undefined;
+        let test = statement.test;
         while (test.kind === "paren") test = test.expression;
         const inverted = test.kind === "unary" && test.op === "not";
-        if (test.kind === "unary" && test.op === "not") test = test.argument;
+        if (inverted) test = (test as Extract<Expression, {kind: "unary"}>).argument;
         while (test.kind === "paren") test = test.expression;
-        if (test.kind !== "identifier" || test.name !== name) return undefined;
-        const right = closed(body[0].consequent.statements);
-        return right && simplifyExpression({kind: "binary", op: inverted ? "or" : "and", left: input, right});
+        return test.kind === "identifier" && test.name === name ? {guard: statement, inverted} : undefined;
+      };
+      const logical = (body: Statement[], input: Expression): Expression | undefined => {
+        if (--budget < 0 || body.length < 2) return undefined;
+        const tested = cellTest(body[0]);
+        if (!tested) return undefined;
+        // Flattened early returns represent the other spelling of the same
+        // short-circuit chain: `if result then return result end; rest`.
+        if (tested.guard.consequent.statements.length === 1 && returnsCell(tested.guard.consequent.statements[0])) {
+          const right = closed(body.slice(1));
+          return right && simplifyExpression({kind: "binary", op: tested.inverted ? "and" : "or", left: input, right});
+        }
+        if (body.length !== 2 || !returnsCell(body[1])) return undefined;
+        const right = closed(tested.guard.consequent.statements);
+        return right && simplifyExpression({kind: "binary", op: tested.inverted ? "or" : "and", left: input, right});
       };
       const closed = (body: Statement[]): Expression | undefined => {
         if (--budget < 0) return undefined;
@@ -254,6 +286,27 @@ class Refiner {
       };
       const value = logical(statements.slice(index + 1), declaration.values[0]!);
       if (value) return [...statements.slice(0, index), {kind: "return", values: [value]}];
+      // A complex remaining tail need not prevent joining a proved primitive
+      // prefix. Keep the final guard and the cell, so the rest still observes
+      // exactly the same writes and early exit. Intermediate object references
+      // and mutable/captured cells never qualify as the left-hand input.
+      let input = declaration.values[0]!;
+      let end = index + 1;
+      for (;;) {
+        const first = cellTest(statements[end]);
+        const next = cellTest(statements[end + 2]);
+        const store = statements[end + 1];
+        const assigned = store?.kind === "assign" ? singleStore(store) : undefined;
+        if (!stable(input) || !first || !next || first.inverted !== next.inverted ||
+            first.guard.consequent.statements.length !== 1 || !returnsCell(first.guard.consequent.statements[0]) ||
+            next.guard.consequent.statements.length !== 1 || !returnsCell(next.guard.consequent.statements[0]) ||
+            assigned?.name !== name || !safe(assigned.value)) break;
+        input = simplifyExpression({kind: "binary", op: first.inverted ? "and" : "or", left: input, right: scalar(assigned.value)});
+        end += 2;
+      }
+      if (end > index + 1) {
+        statements = [...statements.slice(0, index), {...declaration, values: [input], types: undefined}, ...statements.slice(end)];
+      }
     }
     return statements;
   }
@@ -301,6 +354,29 @@ function simplifyExpression(expression: Expression): Expression {
         return asBoolean(expression.test.argument);
       return simplifyExpression({kind: "unary", op: "not", argument: expression.test});
     }
+    // A boolean select may be the value form of a short-circuit condition.
+    // The selected arm is still evaluated once and adjusted to one result.
+    // `test and value` may return nil (or a truthy non-boolean), so keep the
+    // original select unless the reused test is proved to produce a boolean.
+    // Keep arbitrary truthiness selects in their explicit form; there is no
+    // evidence that their original value was a boolean logical expression.
+    // Function literals retain their original compiler naming/creation form.
+    if (!containsFunction(expression)) {
+      const bool = (value: Expression, expected: boolean): boolean =>
+        value.kind === "literal" && value.value === expected;
+      if (bool(alternate, false) && booleanValue(expression.test)) {
+        return conjunction(expression.test, consequent);
+      }
+      if (bool(consequent, true) && booleanValue(expression.test)) {
+        return disjunction(expression.test, alternate);
+      }
+      if (bool(consequent, false) && booleanValue(expression.test)) {
+        return conjunction(negateTest(expression.test), alternate);
+      }
+      if (bool(alternate, true) && booleanValue(expression.test)) {
+        return disjunction(negateTest(expression.test), consequent);
+      }
+    }
     if (isInertLiteral(alternate) && consequent.kind === "binary" && consequent.op === "or" &&
         sameNode(consequent.right, alternate)) {
       return {
@@ -311,6 +387,37 @@ function simplifyExpression(expression: Expression): Expression {
     }
   }
   return expression;
+}
+
+/** Value-level proof; truthiness alone cannot justify replacing a false/true
+ * arm by the original value of an identifier, property, or call. */
+function booleanValue(expression: Expression, depth = 0): boolean {
+  if (depth >= 32) return false;
+  if (expression.kind === "literal") return typeof expression.value === "boolean";
+  if (expression.kind === "paren") return booleanValue(expression.expression, depth + 1);
+  if (expression.kind === "unary") return expression.op === "not";
+  if (expression.kind === "binary") {
+    if (["==", "~=", "<", "<=", ">", ">="].includes(expression.op)) return true;
+    if (expression.op === "and" || expression.op === "or")
+      return booleanValue(expression.left, depth + 1) && booleanValue(expression.right, depth + 1);
+  }
+  return false;
+}
+
+/** Intermediate logical cells may be dropped only when they cannot retain an
+ * object. Comparisons and `not` return booleans even when operands invoke a
+ * metamethod. For `left and primitive`, a skipped right side returns only nil
+ * or false; a selected right side has the proved primitive result. */
+function primitiveValue(expression: Expression, depth = 0): boolean {
+  if (depth >= 32) return false;
+  if (expression.kind === "literal" || booleanValue(expression, depth)) return true;
+  if (expression.kind === "paren") return primitiveValue(expression.expression, depth + 1);
+  if (expression.kind === "binary" && expression.op === "and") return primitiveValue(expression.right, depth + 1);
+  if (expression.kind === "binary" && expression.op === "or")
+    return primitiveValue(expression.left, depth + 1) && primitiveValue(expression.right, depth + 1);
+  if (expression.kind === "if-expr") return primitiveValue(expression.consequent, depth + 1) &&
+    primitiveValue(expression.alternate, depth + 1) && expression.branches.every(branch => primitiveValue(branch.value, depth + 1));
+  return false;
 }
 
 function isInertLiteral(expression: Expression): boolean {

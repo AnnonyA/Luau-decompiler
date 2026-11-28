@@ -1,0 +1,108 @@
+diff --git a/src/ast/TempFolding.ts b/src/ast/TempFolding.ts
+index a16a809..1796572 100644
+--- a/src/ast/TempFolding.ts
++++ b/src/ast/TempFolding.ts
+@@ -1,5 +1,6 @@
+ import { analyzeBindings, type LexicalBinding } from "../analysis/Bindings.js";
+ import { isValidIdentifier } from "../reconstruct/Naming.js";
++import { rewriteRegisterCount } from "../reconstruct/RegisterBudget.js";
+ import type { Block, Chunk, Expression, LocalDeclaration, Statement, TableField } from "./Ast.js";
+ import { countIdentifier, mapChildExpressions, mapStatementExpressions, rewriteBlocks } from "./AstWalk.js";
+ 
+@@ -52,6 +53,8 @@ export function foldTemporaries(ast: Chunk, options: TempFoldingOptions = {}): C
+     return names ? names.has(name) : Boolean(options.debugNames?.has(name) || options.inferredSourceNames?.has(name));
+   };
+   const { bindings, globals } = analyzeBindings(ast.body);
++  const fitsRegisters = (consumer: Statement): boolean =>
++    rewriteRegisterCount(bindings, {kind: "block", statements: [consumer]}) <= 240;
+   const byDeclaration = new Map<Statement, LexicalBinding>();
+   const byRead = new Map<Expression, LexicalBinding>();
+   const assignedGlobals = new Set<string>();
+@@ -108,7 +111,7 @@ export function foldTemporaries(ast: Chunk, options: TempFoldingOptions = {}): C
+   const body = rewriteBlocks(ast.body, (block) => {
+     let statements = block.statements;
+     for (let round = 0; round < 8; round++) {
+-      const folded = foldRun(statements, foldable, stableIdentifier, isGlobal);
++      const folded = foldRun(statements, foldable, stableIdentifier, isGlobal, fitsRegisters);
+       const absorbed = absorbFieldStores(folded, rebind);
+       const changed = absorbed.length !== statements.length;
+       statements = absorbed;
+@@ -124,6 +127,7 @@ function foldRun(
+   foldable: (statement: Statement) => { binding: LexicalBinding; value: Expression } | undefined,
+   stableIdentifier: (node: Expression & { kind: "identifier" }) => boolean,
+   isGlobal: (node: Expression) => boolean,
++  fitsRegisters: (consumer: Statement) => boolean,
+ ): Statement[] {
+   let out = statements;
+   for (let index = out.length - 1; index > 0; index--) {
+@@ -144,9 +148,19 @@ function foldRun(
+     // adjustment, including a zero-result call becoming one explicit nil.
+     // A table bound before it is returned is the module or record it names.
+     if (value.kind === "table" && consumer.kind === "return") continue;
+-    if (weight(value) > 3 && site.weight - 1 + weight(value) > MAX_FOLDED_WEIGHT) continue;
++    const valueWeight = weight(value);
++    let rewritten: Statement | undefined;
++    if (valueWeight > 3 && site.wholeWeight - 1 + valueWeight > MAX_FOLDED_WEIGHT) {
++      // The original whole-expression limit also bounded nested call windows.
++      // Check the actual consumer after each fold: nested moves accumulate
++      // windows. All original bindings/loop slots are charged, even removed
++      // ones, so this conservative estimate never relies on guessed lifetimes.
++      if (site.weight - 1 + valueWeight > MAX_FOLDED_WEIGHT) continue;
++      rewritten = replaceInStatement(consumer, read, pack && site.tail ? { kind: "paren", expression: value } : value);
++      if (!fitsRegisters(rewritten)) continue;
++    }
+     if (out === statements) out = [...statements];
+-    out[index] = replaceInStatement(consumer, read, pack && site.tail ? { kind: "paren", expression: value } : value);
++    out[index] = rewritten ?? replaceInStatement(consumer, read, pack && site.tail ? { kind: "paren", expression: value } : value);
+     out.splice(index - 1, 1);
+   }
+   return out;
+@@ -159,6 +173,7 @@ interface ReadSite {
+   tail: boolean;
+   /** Size of the top-level expression that contains the read. */
+   weight: number;
++  wholeWeight: number;
+ }
+ 
+ function locate(
+@@ -171,11 +186,13 @@ function locate(
+   let conditional = 0;
+   let found: ReadSite | undefined;
+   let root: Expression | undefined;
++  let whole: Expression | undefined;
+ 
+   const visit = (expression: Expression, tail: boolean): void => {
+     if (found) return;
+     if (expression === target) {
+-      found = { ordered: inert && conditional === 0, tail, weight: root ? weight(root) : 1 };
++      found = { ordered: inert && conditional === 0, tail, weight: root ? weight(root) : 1,
++        wholeWeight: whole ? weight(whole) : 1 };
+       return;
+     }
+     switch (expression.kind) {
+@@ -213,7 +230,16 @@ function locate(
+         return;
+       case "call":
+         visit(expression.callee, false);
+-        expression.args.forEach((arg, index) => visit(arg, index === expression.args.length - 1));
++        // Each argument is a separate source expression. A wide call should
++        // not make a small adjacent producer exceed the readability limit
++        // merely because its other arguments already occupy many slots.
++        // The evaluation-order/conditional state is deliberately shared.
++        expression.args.forEach((arg, index) => {
++          const enclosing = root;
++          root = arg;
++          visit(arg, index === expression.args.length - 1);
++          root = enclosing;
++        });
+         inert = false;
+         return;
+       case "method-call":
+@@ -256,6 +282,7 @@ function locate(
+   const top = (expression: Expression, tail: boolean): void => {
+     if (found) return;
+     root = expression;
++    whole = expression;
+     visit(expression, tail);
+   };
+   const list = (values: Expression[]): void => values.forEach((value, index) => top(value, index === values.length - 1));

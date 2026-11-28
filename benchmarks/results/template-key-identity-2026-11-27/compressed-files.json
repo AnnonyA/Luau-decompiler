@@ -1,0 +1,158 @@
+{
+  "format": "lossless-evidence-manifest-v1",
+  "files": [
+    {
+      "path": "quick-intermediate.json.gz",
+      "format": "gzip",
+      "source": "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-key-quick-v1-comparison.json",
+      "rawBytes": 1237520,
+      "rawSha256": "1712992368986cf1d74fc045d7779a219918f432eef402e1295405e45666a948",
+      "compressedBytes": 81654,
+      "compressedSha256": "32732b0adb487ba72aed3f2fc5787963569d0ce2be1269877d33deb9d7ab2479",
+      "decompressedByteExact": true,
+      "gzipMtime": 0
+    },
+    {
+      "path": "quick-final.json.gz",
+      "format": "gzip",
+      "source": "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-key-quick-final-comparison.json",
+      "rawBytes": 1240469,
+      "rawSha256": "3e37978d1b8c0c5d8450af3141edf05f046083df597c60c52aa00b54a1ec99da",
+      "compressedBytes": 81665,
+      "compressedSha256": "dddd16d05f6d0f187431bad646bb4423b0d968bfd5369d50f69abe74709e0a11",
+      "decompressedByteExact": true,
+      "gzipMtime": 0
+    },
+    {
+      "path": "quick-versus-main.json.gz",
+      "format": "gzip",
+      "source": "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-key-quick-main-comparison.json",
+      "rawBytes": 1240658,
+      "rawSha256": "4aa1b166569a9eb66dcf85e3f763f422aa203fb2518c26d81db043d2c9bf226c",
+      "compressedBytes": 82366,
+      "compressedSha256": "9004574e8c420f3f549ff2dbcaa49f83b4ba9207fbbd280d3ddf14214fe40632",
+      "decompressedByteExact": true,
+      "gzipMtime": 0
+    },
+    {
+      "path": "raw-runtime-observations.members.json.gz",
+      "format": "gzip",
+      "source": "Per-member paths, hashes, and sizes for raw-runtime-observations.tar.gz",
+      "rawBytes": 1939452,
+      "rawSha256": "787701dff93dad629f2a86c86cf3c5a9983da45c21ee4e39ba834d8afc930297",
+      "compressedBytes": 98380,
+      "compressedSha256": "3aec0683e88711a62d1919afbc2f10f0755e01f5f6429a9eadaff4ed468f1236",
+      "decompressedByteExact": true,
+      "gzipMtime": 0
+    },
+    {
+      "path": "raw-runtime-observations.tar.gz",
+      "format": "tar+gzip",
+      "rawBytes": 8591360,
+      "rawSha256": "1def593a66dcae576947543baa1dd2f4c5a183a91e82faecc722aae5a1dfaf3a",
+      "compressedBytes": 317347,
+      "compressedSha256": "abadf02a09789bf08ad87eb2d01babb2a31fbb7cbfc264b8c6d253cd579d801f",
+      "gzipMtime": 0,
+      "decompressedByteExact": true,
+      "allMembersByteExact": true,
+      "memberCount": 5142,
+      "membersManifest": "raw-runtime-observations.members.json.gz"
+    },
+    {
+      "path": "raw-quick-intermediate.members.json.gz",
+      "format": "gzip",
+      "source": "Per-member paths, hashes, and sizes for raw-quick-intermediate.tar.gz",
+      "rawBytes": 292298,
+      "rawSha256": "f391b2bda2f7dcd9d52d234bcc1f9f4a9ca7b19ef707da96a9b1eac128f5d9b8",
+      "compressedBytes": 45964,
+      "compressedSha256": "638fb5cf632a008f3e092c7c5381768f297ddbac707af759c164199611666c63",
+      "decompressedByteExact": true,
+      "gzipMtime": 0
+    },
+    {
+      "path": "raw-quick-intermediate.tar.gz",
+      "format": "tar+gzip",
+      "rawBytes": 16721920,
+      "rawSha256": "35abe0bec45f4033890cc6d2c99dd87c744faec55e74940aba38e2434e28bc65",
+      "compressedBytes": 1389177,
+      "compressedSha256": "97ccde03bb04cca3d239aac05305ba865b367165ae286621afbb6b6cf8c5acdc",
+      "gzipMtime": 0,
+      "decompressedByteExact": true,
+      "allMembersByteExact": true,
+      "memberCount": 885,
+      "membersManifest": "raw-quick-intermediate.members.json.gz"
+    },
+    {
+      "path": "raw-quick-final.members.json.gz",
+      "format": "gzip",
+      "source": "Per-member paths, hashes, and sizes for raw-quick-final.tar.gz",
+      "rawBytes": 297608,
+      "rawSha256": "5ca49c63f3216c70018ab07c1c11b6eb36c700be56b904bcbd36408821c7efe6",
+      "compressedBytes": 45962,
+      "compressedSha256": "5b76c74a503a8235e651eb66f1d023a8374ac429ef3146775ab52e0a352bc4a4",
+      "decompressedByteExact": true,
+      "gzipMtime": 0
+    },
+    {
+      "path": "raw-quick-final.tar.gz",
+      "format": "tar+gzip",
+      "rawBytes": 16721920,
+      "rawSha256": "d7d13086bb4ff9ce0bb75688ec7e5f564f21f3a1cfaaec827931d24eddd92890",
+      "compressedBytes": 1389230,
+      "compressedSha256": "605f18f78b8d77c2fee25e3d88f47da4453e6ce993e86df74b460468a1ba6fc7",
+      "gzipMtime": 0,
+      "decompressedByteExact": true,
+      "allMembersByteExact": true,
+      "memberCount": 885,
+      "membersManifest": "raw-quick-final.members.json.gz"
+    },
+    {
+      "path": "raw-layout-review.members.json.gz",
+      "format": "gzip",
+      "source": "Per-member paths, hashes, and sizes for raw-layout-review.tar.gz",
+      "rawBytes": 9086,
+      "rawSha256": "63d1992fac309f964d64b7c521bda6e24d9947d1dfd2020c9851827a8bd333eb",
+      "compressedBytes": 1098,
+      "compressedSha256": "68f68b2bb50073536aafd03e4e97c3ea4cbf8a59a16c6b2424b0e59279fca405",
+      "decompressedByteExact": true,
+      "gzipMtime": 0
+    },
+    {
+      "path": "raw-layout-review.tar.gz",
+      "format": "tar+gzip",
+      "rawBytes": 143360,
+      "rawSha256": "102bf13cf878bcc166122107538221e0c497fca0b0e25157c579bcd1f85c8131",
+      "compressedBytes": 16404,
+      "compressedSha256": "b0e27bc0c718e3b38e32996c84d4dfd64e32d5875ee78b4a057f29008d989301",
+      "gzipMtime": 0,
+      "decompressedByteExact": true,
+      "allMembersByteExact": true,
+      "memberCount": 29,
+      "membersManifest": "raw-layout-review.members.json.gz"
+    },
+    {
+      "path": "reproduction-scripts.members.json.gz",
+      "format": "gzip",
+      "source": "Per-member paths, hashes, and sizes for reproduction-scripts.tar.gz",
+      "rawBytes": 4882,
+      "rawSha256": "79c0459c44c3edebb28102c44070d7d41176633582460f9685d38c9c324f6d96",
+      "compressedBytes": 1234,
+      "compressedSha256": "52be950cf8070b8a905b7b21b7bb5411e9a14a395817c222c1048b9d08133c6e",
+      "decompressedByteExact": true,
+      "gzipMtime": 0
+    },
+    {
+      "path": "reproduction-scripts.tar.gz",
+      "format": "tar+gzip",
+      "rawBytes": 112640,
+      "rawSha256": "ecd9a104b2fbe000d6acb2d2ebb22a2ee641f8841f39443885dfb0c8539f5910",
+      "compressedBytes": 13889,
+      "compressedSha256": "0ca96d08357378a7d60239dc34098b4e110ff0842197b6467fa092e00a2feb6e",
+      "gzipMtime": 0,
+      "decompressedByteExact": true,
+      "allMembersByteExact": true,
+      "memberCount": 18,
+      "membersManifest": "reproduction-scripts.members.json.gz"
+    }
+  ]
+}

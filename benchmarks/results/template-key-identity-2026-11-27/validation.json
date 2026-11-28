@@ -1,0 +1,159 @@
+{
+  "unit": {
+    "passed": 1600,
+    "total": 1600,
+    "passedFiles": 148,
+    "totalFiles": 148,
+    "completeFooterObserved": true,
+    "log": "logs/template-key-full-unit-v2.log"
+  },
+  "authoredSavedInputs": {
+    "sources": 5,
+    "profiles": 60,
+    "matches": 60,
+    "normalAndHardAuthoredProfiles": true,
+    "originalObservationsUnchanged": true
+  },
+  "nativePins": {
+    "9d7748a4": {
+      "before": {
+        "profiles": 36,
+        "matches": 28
+      },
+      "after": {
+        "profiles": 36,
+        "matches": 36
+      }
+    },
+    "c87565b8": {
+      "before": {
+        "profiles": 36,
+        "matches": 28
+      },
+      "after": {
+        "profiles": 36,
+        "matches": 36
+      }
+    }
+  },
+  "specialKeys": {
+    "rosetta747": {
+      "before": {
+        "profiles": 12,
+        "matches": 6
+      },
+      "after": {
+        "profiles": 12,
+        "matches": 12
+      }
+    },
+    "9d7748a4": {
+      "before": {
+        "profiles": 12,
+        "matches": 6
+      },
+      "after": {
+        "profiles": 12,
+        "matches": 12
+      }
+    },
+    "c87565b8": {
+      "before": {
+        "profiles": 12,
+        "matches": 6
+      },
+      "after": {
+        "profiles": 12,
+        "matches": 12
+      }
+    }
+  },
+  "runtimeContract": "Compile/decompile/recompile success, normal VM return, and byte-exact stdout/stderr.",
+  "firstAliasSourceCheck": {
+    "pass": 4,
+    "mismatch": 8,
+    "total": 12
+  },
+  "firstAliasDirectBytecode": {
+    "beforeMatches": 4,
+    "afterMatches": 4,
+    "totalPerEngine": 12
+  },
+  "firstCaptureDirectBytecode": {
+    "beforeMatches": 4,
+    "afterMatches": 12,
+    "totalPerEngine": 12
+  },
+  "knownPreexistingLayoutFailure": {
+    "solved": false,
+    "mainAndIntermediateMatchOriginal": false,
+    "profiles": 6,
+    "pins": 2,
+    "evidence": "layout-review-main-baseline.json"
+  },
+  "quickDiagnostic": {
+    "behaviorVerified": false,
+    "profiles": 882,
+    "baseline": {
+      "roundTrips": 882,
+      "similarity": 77.07247213711814,
+      "size": 0.9913299112763122,
+      "locals": 1.085531546874439,
+      "nesting": -0.33900226757369617,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "candidate": {
+      "roundTrips": 882,
+      "similarity": 77.06174602449074,
+      "size": 0.9902219463862219,
+      "locals": 1.085531546874439,
+      "nesting": -0.33900226757369617,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "deltas": {
+      "similarity": -0.010726112627395423,
+      "size": -0.0011079648900903516,
+      "locals": 0.0,
+      "nesting": 0.0,
+      "endless": 0,
+      "names": 0.0
+    },
+    "changedProfiles": {
+      "better": 170,
+      "equal": 568,
+      "worse": 144
+    }
+  },
+  "quickVersusMain": {
+    "baseline": {
+      "roundTrips": 882,
+      "similarity": 76.92827095114995,
+      "size": 0.9927495865084095,
+      "locals": 1.0963497723161764,
+      "nesting": -0.33900226757369617,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "candidate": {
+      "roundTrips": 882,
+      "similarity": 77.06174602449074,
+      "size": 0.9902219463862219,
+      "locals": 1.085531546874439,
+      "nesting": -0.33900226757369617,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "deltas": {
+      "similarity": 0.13347507334079012,
+      "size": -0.0025276401221876466,
+      "locals": -0.010818225441737273,
+      "nesting": 0.0,
+      "endless": 0,
+      "names": 0.0
+    }
+  },
+  "strictQuickGate": "Parent integration owns strict Quick; this replay is a source-quality diagnostic only.",
+  "scope": "Full and Hard benchmark tiers paused by the user; no new Full/Hard benchmark run in this continuation."
+}

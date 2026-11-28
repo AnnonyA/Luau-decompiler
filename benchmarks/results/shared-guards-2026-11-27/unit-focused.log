@@ -1,0 +1,19 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-v3-guards
+
+(node:35) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/iteration-continuations.test.ts (101 tests) 554ms
+(node:61) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/shared-guards.test.ts (85 tests) 375ms
+
+ Test Files  2 passed (2)
+      Tests  186 passed (186)
+   Start at  23:51:27
+   Duration  2.26s (transform 721ms, setup 0ms, collect 1.06s, tests 929ms, environment 0ms, prepare 67ms)
+
+(node:81) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

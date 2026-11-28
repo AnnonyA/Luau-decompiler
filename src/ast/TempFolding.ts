@@ -1,4 +1,5 @@
 import { analyzeBindings, type LexicalBinding } from "../analysis/Bindings.js";
+import { isValidIdentifier } from "../reconstruct/Naming.js";
 import type { Block, Chunk, Expression, LocalDeclaration, Statement, TableField } from "./Ast.js";
 import { countIdentifier, mapChildExpressions, mapStatementExpressions, rewriteBlocks } from "./AstWalk.js";
 
@@ -331,16 +332,29 @@ function absorbFieldStores(
       const table = previous.values[0]!;
       const target = statement.targets[0]!;
       const value = statement.values[0]!;
-      const field = target.kind === "property" && target.object.kind === "identifier" && target.object.name === name
-        ? target.name : undefined;
+      const receiver = target.kind === "property" ? target.object : target.kind === "index" ? target.table : undefined;
+      const field = receiver?.kind !== "identifier" || receiver.name !== name ? undefined
+        : target.kind === "property" ? target.name
+        : target.kind === "index" && target.key.kind === "literal" && typeof target.key.value === "string" &&
+          isValidIdentifier(target.key.value) && table.templateKeys?.[0] === target.key.value ? target.key.value : undefined;
+      const reserved = table.templateKeys?.[0];
+      const slot = table.fields[0];
+      const replacesReservation = reserved === field && table.fields.length === 1 && slot !== undefined && slot.name === field &&
+        slot.value.kind === "literal" && slot.value.value === 0;
       if (
         field !== undefined && !field.startsWith("__") && value.kind !== "function-expr" &&
+        (target.kind !== "index" || !containsFunctionLiteral(value)) &&
         countIdentifier(value, name) === 0 &&
-        table.fields.every((existing) => !existing.list && !existing.key && existing.name !== undefined && existing.name !== field)
+        // A reserved one-node template can regain precisely that field, not
+        // a larger constructor with a different hash layout. Unknown indexed
+        // stores retain their original bracket/statement form.
+        (!table.templateKeys || ((table.fields.length === 0 || replacesReservation) && reserved === field)) &&
+        table.fields.every((existing) => !existing.list && !existing.key && existing.name !== undefined &&
+          (existing.name !== field || replacesReservation))
       ) {
-        const fields: TableField[] = [...table.fields, { name: field, value }];
+        const fields: TableField[] = [...(replacesReservation ? [] : table.fields), { name: field, value }];
         const merged: Statement = { ...previous, values: [{ ...table, fields }] };
-        rebind(previous, merged, (target as Expression & { kind: "property" }).object);
+        rebind(previous, merged, receiver!);
         out[out.length - 1] = merged;
         continue;
       }
@@ -348,6 +362,16 @@ function absorbFieldStores(
     out.push(statement);
   }
   return out.length === statements.length ? statements : out;
+}
+
+function containsFunctionLiteral(expression: Expression): boolean {
+  if (expression.kind === "function-expr") return true;
+  let found = false;
+  mapChildExpressions(expression, child => {
+    found ||= containsFunctionLiteral(child);
+    return child;
+  });
+  return found;
 }
 
 /** A literal held by a never-written, uncaptured local with one reader is

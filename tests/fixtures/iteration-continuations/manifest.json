@@ -1,0 +1,545 @@
+{
+  "purpose": "Project-authored controls for same-iteration continuation boundaries; first observations preserved separately.",
+  "entries": [
+    {
+      "name": "iteration-continuation",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "c875/iteration-continuation-O0g1.luauc",
+      "sha256": "3ff17a7a358a55ee86b340a060a33806215f700fcda9bcf7c06c3346c30212cd"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "c875/iteration-continuation-O0g2.luauc",
+      "sha256": "aee60c92d4d352193ffb1426419e3bf5f7fcf8b70be6fc26b57578f7de83a7dd"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "c875/iteration-continuation-O1g1.luauc",
+      "sha256": "ffbe16a06034d71ba476225df23765e96237d1d4f0205e2cab1dfc9e26bb3d9c"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "c875/iteration-continuation-O1g2.luauc",
+      "sha256": "e081a27428bc6e9bdb39c21047e847fb8585a83048c64a2d030acb562274ac43"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "c875/iteration-continuation-O2g1.luauc",
+      "sha256": "70a2e2955f3f3027590ff708837bb2d0d5f2975a662a903877992d4acc8d7d5d"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "c875/iteration-continuation-O2g2.luauc",
+      "sha256": "173cbb108b153532cfbd72eef26e56dff3a84915f296c796f8f2821d65bb47fc"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "c875/primitive-prefix-O0g1.luauc",
+      "sha256": "46a70726db70f9763716c845944954180bb79f640dc3c2ad094a9a42a24b8c65"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "c875/primitive-prefix-O0g2.luauc",
+      "sha256": "fa933b7401219d9a363e718286a551debb9be61ffb045e24d8f00c80da7abc4e"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "c875/primitive-prefix-O1g1.luauc",
+      "sha256": "47201846efba98eaf93495de567f2d76e027893ed7564700ede94c307d6fb549"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "c875/primitive-prefix-O1g2.luauc",
+      "sha256": "7b8ac487c663a943f3d54f666a5e0a7a1be35864ff2ed829845be37c99288bf5"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "c875/primitive-prefix-O2g1.luauc",
+      "sha256": "47201846efba98eaf93495de567f2d76e027893ed7564700ede94c307d6fb549"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "c875/primitive-prefix-O2g2.luauc",
+      "sha256": "7b8ac487c663a943f3d54f666a5e0a7a1be35864ff2ed829845be37c99288bf5"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "c875/rejected-aliases-O0g1.luauc",
+      "sha256": "2e61a17f78db8c76f0940c1f63603c87855343633987d57583676b05962d8fa5"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "c875/rejected-aliases-O0g2.luauc",
+      "sha256": "4cfad4d80fe9a1f01788a719afe3ada078f889deb93260b171ea853509a0b345"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "c875/rejected-aliases-O1g1.luauc",
+      "sha256": "bc2beecbc8dfcc40de68f77c990079df45199cbc255e83939139964c3875849b"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "c875/rejected-aliases-O1g2.luauc",
+      "sha256": "65663029d14579e136f32a2d25fb9c1c7ff9478526ce1acdc38baf22044fb8e9"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "c875/rejected-aliases-O2g1.luauc",
+      "sha256": "1ed119bf3e1b172c0494274ab00af40c42525d8ac4ab6f83775be01e2ec0bdb0"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "c875/rejected-aliases-O2g2.luauc",
+      "sha256": "79c3c579b73c4c5595c948c1431c7ef56efb0e1309baf161090458176331c3e5"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "c875/rejected-lifetimes-O0g1.luauc",
+      "sha256": "6618f7e79857570e2eab7f7e318a61e10690986ed3794a290bfe7f9e373bde1a"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "c875/rejected-lifetimes-O0g2.luauc",
+      "sha256": "2ef50826f39512124ce1cfb1e39c7915c95ff97d7f2492bcda1634f350993d66"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "c875/rejected-lifetimes-O1g1.luauc",
+      "sha256": "1e348414dd4e5d66f019b671406e77f29279984dbe8e11e835f2f363ef8962a4"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "c875/rejected-lifetimes-O1g2.luauc",
+      "sha256": "0572896ea22b8e38cc2e596dc1f1fe5956e075d50e13599c7e44959a58ee49f7"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "c875/rejected-lifetimes-O2g1.luauc",
+      "sha256": "1e348414dd4e5d66f019b671406e77f29279984dbe8e11e835f2f363ef8962a4"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "c875/rejected-lifetimes-O2g2.luauc",
+      "sha256": "0572896ea22b8e38cc2e596dc1f1fe5956e075d50e13599c7e44959a58ee49f7"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "9d/iteration-continuation-O0g1.luauc",
+      "sha256": "3ff17a7a358a55ee86b340a060a33806215f700fcda9bcf7c06c3346c30212cd"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "9d/iteration-continuation-O0g2.luauc",
+      "sha256": "aee60c92d4d352193ffb1426419e3bf5f7fcf8b70be6fc26b57578f7de83a7dd"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "9d/iteration-continuation-O1g1.luauc",
+      "sha256": "ffbe16a06034d71ba476225df23765e96237d1d4f0205e2cab1dfc9e26bb3d9c"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "9d/iteration-continuation-O1g2.luauc",
+      "sha256": "e081a27428bc6e9bdb39c21047e847fb8585a83048c64a2d030acb562274ac43"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "9d/iteration-continuation-O2g1.luauc",
+      "sha256": "70a2e2955f3f3027590ff708837bb2d0d5f2975a662a903877992d4acc8d7d5d"
+    },
+    {
+      "name": "iteration-continuation",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "iteration-continuation.luau",
+      "sourceSha256": "a8b233f49bb2695958e16099bf31d8b63a44ae912eeeddd57674e4900bf29b9a",
+      "bytecode": "9d/iteration-continuation-O2g2.luauc",
+      "sha256": "173cbb108b153532cfbd72eef26e56dff3a84915f296c796f8f2821d65bb47fc"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "9d/primitive-prefix-O0g1.luauc",
+      "sha256": "46a70726db70f9763716c845944954180bb79f640dc3c2ad094a9a42a24b8c65"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "9d/primitive-prefix-O0g2.luauc",
+      "sha256": "fa933b7401219d9a363e718286a551debb9be61ffb045e24d8f00c80da7abc4e"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "9d/primitive-prefix-O1g1.luauc",
+      "sha256": "47201846efba98eaf93495de567f2d76e027893ed7564700ede94c307d6fb549"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "9d/primitive-prefix-O1g2.luauc",
+      "sha256": "7b8ac487c663a943f3d54f666a5e0a7a1be35864ff2ed829845be37c99288bf5"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "9d/primitive-prefix-O2g1.luauc",
+      "sha256": "47201846efba98eaf93495de567f2d76e027893ed7564700ede94c307d6fb549"
+    },
+    {
+      "name": "primitive-prefix",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "primitive-prefix.luau",
+      "sourceSha256": "27082b6b60bb5c7860b2eed28901e988e5937456099817f6d802230c6f9015be",
+      "bytecode": "9d/primitive-prefix-O2g2.luauc",
+      "sha256": "7b8ac487c663a943f3d54f666a5e0a7a1be35864ff2ed829845be37c99288bf5"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "9d/rejected-aliases-O0g1.luauc",
+      "sha256": "2e61a17f78db8c76f0940c1f63603c87855343633987d57583676b05962d8fa5"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "9d/rejected-aliases-O0g2.luauc",
+      "sha256": "4cfad4d80fe9a1f01788a719afe3ada078f889deb93260b171ea853509a0b345"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "9d/rejected-aliases-O1g1.luauc",
+      "sha256": "bc2beecbc8dfcc40de68f77c990079df45199cbc255e83939139964c3875849b"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "9d/rejected-aliases-O1g2.luauc",
+      "sha256": "65663029d14579e136f32a2d25fb9c1c7ff9478526ce1acdc38baf22044fb8e9"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "9d/rejected-aliases-O2g1.luauc",
+      "sha256": "1ed119bf3e1b172c0494274ab00af40c42525d8ac4ab6f83775be01e2ec0bdb0"
+    },
+    {
+      "name": "rejected-aliases",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-aliases.luau",
+      "sourceSha256": "3e80fbcbb4a47fe0ac529be5a563ef7b04bae16ba818b2f4ae9fa490657e3dfb",
+      "bytecode": "9d/rejected-aliases-O2g2.luauc",
+      "sha256": "79c3c579b73c4c5595c948c1431c7ef56efb0e1309baf161090458176331c3e5"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "9d/rejected-lifetimes-O0g1.luauc",
+      "sha256": "6618f7e79857570e2eab7f7e318a61e10690986ed3794a290bfe7f9e373bde1a"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "9d/rejected-lifetimes-O0g2.luauc",
+      "sha256": "2ef50826f39512124ce1cfb1e39c7915c95ff97d7f2492bcda1634f350993d66"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "9d/rejected-lifetimes-O1g1.luauc",
+      "sha256": "1e348414dd4e5d66f019b671406e77f29279984dbe8e11e835f2f363ef8962a4"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "9d/rejected-lifetimes-O1g2.luauc",
+      "sha256": "0572896ea22b8e38cc2e596dc1f1fe5956e075d50e13599c7e44959a58ee49f7"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "9d/rejected-lifetimes-O2g1.luauc",
+      "sha256": "1e348414dd4e5d66f019b671406e77f29279984dbe8e11e835f2f363ef8962a4"
+    },
+    {
+      "name": "rejected-lifetimes",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "rejected-lifetimes.luau",
+      "sourceSha256": "3e869e86e66f92682ac4c0f45c09125ee204e539c44bd4167bfec5987b259106",
+      "bytecode": "9d/rejected-lifetimes-O2g2.luauc",
+      "sha256": "0572896ea22b8e38cc2e596dc1f1fe5956e075d50e13599c7e44959a58ee49f7"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "c875/shared-closure-tail-O0g1.luauc",
+      "sha256": "131f4bab31b896cd36378c809714ab634733f17bf505209e67c532809725f667"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "c875/shared-closure-tail-O0g2.luauc",
+      "sha256": "32b0097a57603b3979e0f179b60794455cfc26ddeddb39f5ec8a5a7005152f59"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "c875/shared-closure-tail-O1g1.luauc",
+      "sha256": "5f4861233dc1635157acc9425385ab71262098c93e8dfd128b3c044d15cf0300"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "c875/shared-closure-tail-O1g2.luauc",
+      "sha256": "99f9fb8aed7d827e7dacd699ab87a4b4f49c3b5ad9e9c74ee67a5178d18b5a9b"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "c875/shared-closure-tail-O2g1.luauc",
+      "sha256": "5f4861233dc1635157acc9425385ab71262098c93e8dfd128b3c044d15cf0300"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "c875/shared-closure-tail-O2g2.luauc",
+      "sha256": "99f9fb8aed7d827e7dacd699ab87a4b4f49c3b5ad9e9c74ee67a5178d18b5a9b"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "9d/shared-closure-tail-O0g1.luauc",
+      "sha256": "131f4bab31b896cd36378c809714ab634733f17bf505209e67c532809725f667"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "9d/shared-closure-tail-O0g2.luauc",
+      "sha256": "32b0097a57603b3979e0f179b60794455cfc26ddeddb39f5ec8a5a7005152f59"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "9d/shared-closure-tail-O1g1.luauc",
+      "sha256": "5f4861233dc1635157acc9425385ab71262098c93e8dfd128b3c044d15cf0300"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "9d/shared-closure-tail-O1g2.luauc",
+      "sha256": "99f9fb8aed7d827e7dacd699ab87a4b4f49c3b5ad9e9c74ee67a5178d18b5a9b"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "9d/shared-closure-tail-O2g1.luauc",
+      "sha256": "5f4861233dc1635157acc9425385ab71262098c93e8dfd128b3c044d15cf0300"
+    },
+    {
+      "name": "shared-closure-tail",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "source": "shared-closure-tail.luau",
+      "sourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "bytecode": "9d/shared-closure-tail-O2g2.luauc",
+      "sha256": "99f9fb8aed7d827e7dacd699ab87a4b4f49c3b5ad9e9c74ee67a5178d18b5a9b"
+    }
+  ]
+}

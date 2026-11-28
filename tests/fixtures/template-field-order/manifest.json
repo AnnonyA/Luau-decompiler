@@ -1,0 +1,206 @@
+{
+  "sources": [
+    {
+      "path": "template-evaluation.luau",
+      "sha256": "b33b654064a02b85cc4995970df295a145e29b6ee27ccc9803e5a37539f3970f"
+    },
+    {
+      "path": "template-layout.luau",
+      "sha256": "726b8e584703136f7e95d4064730c54025d301233875f12df8e2ff91fefa515c"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "c875-template-evaluation-O0g1.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g1",
+      "sha256": "7353491e61a970175ac777bd8222db659a064f8971feba0df79098927e153964"
+    },
+    {
+      "path": "c875-template-evaluation-O0g2.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g2",
+      "sha256": "6fbcf62ae045296f7b43bb90ef4b0e029950de67f7cbc9ddad9c5f6af8df32f1"
+    },
+    {
+      "path": "c875-template-evaluation-O1g1.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g1",
+      "sha256": "f9c424a7cb23e406d7b9d91543b55d48437dbaf45a453606ea9941fb5ab4c831"
+    },
+    {
+      "path": "c875-template-evaluation-O1g2.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g2",
+      "sha256": "3e5b00fb091e2342b87c220531da576d885c45e382c7ada4bb709786232837e2"
+    },
+    {
+      "path": "c875-template-evaluation-O2g1.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g1",
+      "sha256": "f9c424a7cb23e406d7b9d91543b55d48437dbaf45a453606ea9941fb5ab4c831"
+    },
+    {
+      "path": "c875-template-evaluation-O2g2.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g2",
+      "sha256": "3e5b00fb091e2342b87c220531da576d885c45e382c7ada4bb709786232837e2"
+    },
+    {
+      "path": "c875-template-layout-O0g1.luauc",
+      "source": "template-layout.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g1",
+      "sha256": "79f83ba8b9d3bbc2f4b5735766a59b130aef27be6ce59c2e6f02e627173d9888"
+    },
+    {
+      "path": "c875-template-layout-O0g2.luauc",
+      "source": "template-layout.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g2",
+      "sha256": "de0130bef8933c5771ba6143be821513e73251a4bd940a4785e09af341ab8f96"
+    },
+    {
+      "path": "c875-template-layout-O1g1.luauc",
+      "source": "template-layout.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g1",
+      "sha256": "c5a6701bebaeaa82dc70d62590dd83b5dbc339302ca50e2c11ac73434aa61e9c"
+    },
+    {
+      "path": "c875-template-layout-O1g2.luauc",
+      "source": "template-layout.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g2",
+      "sha256": "4288df48c6b49aa5957d8b836f1e568afe4e3b039961cc1ea377618eedb77a9b"
+    },
+    {
+      "path": "c875-template-layout-O2g1.luauc",
+      "source": "template-layout.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g1",
+      "sha256": "c5a6701bebaeaa82dc70d62590dd83b5dbc339302ca50e2c11ac73434aa61e9c"
+    },
+    {
+      "path": "c875-template-layout-O2g2.luauc",
+      "source": "template-layout.luau",
+      "pin": "c875",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g2",
+      "sha256": "4288df48c6b49aa5957d8b836f1e568afe4e3b039961cc1ea377618eedb77a9b"
+    },
+    {
+      "path": "9d-template-evaluation-O0g1.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g1",
+      "sha256": "7353491e61a970175ac777bd8222db659a064f8971feba0df79098927e153964"
+    },
+    {
+      "path": "9d-template-evaluation-O0g2.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g2",
+      "sha256": "6fbcf62ae045296f7b43bb90ef4b0e029950de67f7cbc9ddad9c5f6af8df32f1"
+    },
+    {
+      "path": "9d-template-evaluation-O1g1.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g1",
+      "sha256": "f9c424a7cb23e406d7b9d91543b55d48437dbaf45a453606ea9941fb5ab4c831"
+    },
+    {
+      "path": "9d-template-evaluation-O1g2.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g2",
+      "sha256": "3e5b00fb091e2342b87c220531da576d885c45e382c7ada4bb709786232837e2"
+    },
+    {
+      "path": "9d-template-evaluation-O2g1.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g1",
+      "sha256": "f9c424a7cb23e406d7b9d91543b55d48437dbaf45a453606ea9941fb5ab4c831"
+    },
+    {
+      "path": "9d-template-evaluation-O2g2.luauc",
+      "source": "template-evaluation.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g2",
+      "sha256": "3e5b00fb091e2342b87c220531da576d885c45e382c7ada4bb709786232837e2"
+    },
+    {
+      "path": "9d-template-layout-O0g1.luauc",
+      "source": "template-layout.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g1",
+      "sha256": "79f83ba8b9d3bbc2f4b5735766a59b130aef27be6ce59c2e6f02e627173d9888"
+    },
+    {
+      "path": "9d-template-layout-O0g2.luauc",
+      "source": "template-layout.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g2",
+      "sha256": "de0130bef8933c5771ba6143be821513e73251a4bd940a4785e09af341ab8f96"
+    },
+    {
+      "path": "9d-template-layout-O1g1.luauc",
+      "source": "template-layout.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g1",
+      "sha256": "c5a6701bebaeaa82dc70d62590dd83b5dbc339302ca50e2c11ac73434aa61e9c"
+    },
+    {
+      "path": "9d-template-layout-O1g2.luauc",
+      "source": "template-layout.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g2",
+      "sha256": "4288df48c6b49aa5957d8b836f1e568afe4e3b039961cc1ea377618eedb77a9b"
+    },
+    {
+      "path": "9d-template-layout-O2g1.luauc",
+      "source": "template-layout.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g1",
+      "sha256": "c5a6701bebaeaa82dc70d62590dd83b5dbc339302ca50e2c11ac73434aa61e9c"
+    },
+    {
+      "path": "9d-template-layout-O2g2.luauc",
+      "source": "template-layout.luau",
+      "pin": "9d",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g2",
+      "sha256": "4288df48c6b49aa5957d8b836f1e568afe4e3b039961cc1ea377618eedb77a9b"
+    }
+  ]
+}

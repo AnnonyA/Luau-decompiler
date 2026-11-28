@@ -1,0 +1,31 @@
+import {expect, it} from "vitest";
+import {block, chunk, ident, lit, type Expression} from "../src/ast/Ast.ts";
+import {cleanupAst} from "../src/ast/AstCleanup.ts";
+import {defaultCleanupOptions} from "../src/decompile.ts";
+import {printLuau} from "../src/print/LuauPrinter.ts";
+
+const property = (object: Expression): Expression => ({kind: "property", object, name: "value"});
+const call = (): Expression => ({kind: "call", callee: ident("update"), args: [], open: false});
+function output(op: "//" | "^", target: Expression = ident("value"), rhs: Expression = lit(3)): string {
+  const ast = chunk([{kind: "function-decl", name: "apply", local: true, params: ["value", "object"], isVararg: false,
+    body: block([{kind: "assign", targets: [target], values: [
+      {kind: "binary", op, left: structuredClone(target), right: rhs},
+    ]}])}]);
+  const fn = cleanupAst(ast, defaultCleanupOptions({foldSingleUseTemps: false})).body.statements[0]!;
+  if (fn.kind !== "function-decl") throw new Error("expected the owning function");
+  return printLuau({kind: "chunk", body: fn.body});
+}
+
+it.each(["//", "^"] as const)("recovers the %s compound operator with a literal RHS", op => {
+  expect(output(op)).toBe(`value ${op}= 3\n`);
+  expect(output(op, property(ident("object")))).toBe(`object.value ${op}= 3\n`);
+});
+
+it.each(["//", "^"] as const)("does not move the target read past an effectful %s RHS", op => {
+  expect(output(op, ident("value"), call())).toBe(`value = value ${op} update()\n`);
+  expect(output(op, ident("value"), ident("unknownGlobal"))).toBe(`value = value ${op} unknownGlobal\n`);
+});
+
+it.each(["//", "^"] as const)("keeps repeated effectful target evaluation for %s", op => {
+  expect(output(op, property(call()))).toBe(`update().value = update().value ${op} 3\n`);
+});

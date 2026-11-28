@@ -1,0 +1,47 @@
+{
+  "format": "rosetta-quality-replay",
+  "startedAt": "2026-11-27T23:10:03.703197+00:00",
+  "finishedAt": "2026-11-27T23:10:35.111535+00:00",
+  "inputRecords": "/workspace/scratch/eb5e4be57451/quality-research/baseline/records/quick",
+  "sourceDist": "/workspace/scratch/eb5e4be57451/Luau-decompiler/dist",
+  "snapshotDist": "/workspace/scratch/eb5e4be57451/similarity-probes/v2-primitive-prefixes/engine-dist",
+  "jsTreeSha256": "a0e3b9f65dce4e16f032920084bb5fc054633bba8a48c2b9699ca2d415e0612b",
+  "treeHashAlgorithm": "SHA256 of sorted(relativeJSPath + NUL + SHA256(fileBytes))",
+  "node": "v24.22.3",
+  "query": "",
+  "options": {},
+  "count": 882,
+  "decompileFailures": 0,
+  "coreMatchesBaseline": 35,
+  "behaviorVerified": false,
+  "baselineQuality": {
+    "roundTrips": 882,
+    "similarity": 72.29585059948458,
+    "size": 1.1000264933334862,
+    "locals": 1.1191486730052247,
+    "nesting": 0.20521541950113378,
+    "endless": 178,
+    "names": 59.48200175592625
+  },
+  "quality": {
+    "roundTrips": 882,
+    "similarity": 76.95573258156679,
+    "size": 0.9919691340921389,
+    "locals": 1.0963497723161764,
+    "nesting": -0.33900226757369617,
+    "endless": 38,
+    "names": 61.02136376938835
+  },
+  "processExitCodes": {
+    "node": 0,
+    "scorer": 0
+  },
+  "deltas": {
+    "similarity": 4.6598819820822115,
+    "size": -0.1080573592413473,
+    "locals": -0.02279890068904833,
+    "nesting": -0.54421768707483,
+    "endless": -140,
+    "names": 1.539362013462103
+  }
+}

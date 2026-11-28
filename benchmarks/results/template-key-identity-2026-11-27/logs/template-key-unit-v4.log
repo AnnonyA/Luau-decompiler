@@ -1,0 +1,57 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+(node:18) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-v2-locals
+
+(node:49) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/single-template-field.test.ts (19 tests) 401ms
+   ✓ pins all independently executed normal and Hard inputs without discarding the first layout failure  371ms
+(node:74) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/template-key-identity.test.ts (9 tests | 2 failed) 177ms
+   ✓ recognizes name-key spelling of the same literal slot 17ms
+   ✓ recognizes key-name spelling of the same literal slot 3ms
+   ✓ consumes the one loader reservation when SETTABLE uses its literal string key 2ms
+   ✓ retains a different key beside the original reservation 2ms
+   ✓ does not equate a dynamic string expression with a known field name 2ms
+   ✓ keeps a prior call when matching the mixed key spelling 2ms
+   ✓ keeps a prior unary when matching the mixed key spelling 2ms
+   × pins the independent template-key-alias closure and effect observations 98ms
+     → expected false to be true // Object.is equality
+   × pins the independent template-key-captures closure and effect observations 48ms
+     → expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/template-key-identity.test.ts > pins the independent template-key-alias closure and effect observations
+ FAIL  tests/template-key-identity.test.ts > pins the independent template-key-captures closure and effect observations
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/template-key-identity.test.ts:91:105
+     89|           table.fields[0]!.value.kind === "function-expr" && table.fie…
+     90|           table.fields[1]!.value.kind === "function-expr" && table.fie…
+     91|           table.fields[1]!.key?.kind === (folder === "template-key-ali…
+       |                                                                                                         ^
+     92|       }
+     93|       if (folder === "template-key-alias" && entry.profile === "O2g2")…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 26 passed (28)
+   Start at  23:34:35
+   Duration  1.58s (transform 487ms, setup 0ms, collect 777ms, tests 578ms, environment 0ms, prepare 60ms)
+
+(node:94) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,87 @@
+{
+  "createdAt": "2026-11-27T23:33:11.259446+00:00",
+  "compiler": "Rosetta pinned Luau 0.747",
+  "compilerHostSha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b",
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "sources": [
+    {
+      "name": "template-key-captures",
+      "sourceSha256": "2b2f045f8cad43d0aa09a1a191b8121e01dff59ddaca5a16383d7b29dee69f43",
+      "bytecodes": [
+        {
+          "profile": "O0g1",
+          "path": "template-key-captures-O0g1.luauc",
+          "sha256": "5ab65eb69645f81bb536b3d222e19eee3eef5969927890fc5be44881f02679fc"
+        },
+        {
+          "profile": "O1g1",
+          "path": "template-key-captures-O1g1.luauc",
+          "sha256": "a42208c980830a1b31e395a177812f5e87a777171d9bb2704dc472f46b1b8d71"
+        },
+        {
+          "profile": "O2g1",
+          "path": "template-key-captures-O2g1.luauc",
+          "sha256": "7b83673bd04ea25e934af4c587606a1c5b93bf69f91add7939d487890b967dfd"
+        },
+        {
+          "profile": "O0g2",
+          "path": "template-key-captures-O0g2.luauc",
+          "sha256": "5eb85af81688bec36109ce22d4f039b4403cd3b813b7c85d0f74139be9e09081"
+        },
+        {
+          "profile": "O1g2",
+          "path": "template-key-captures-O1g2.luauc",
+          "sha256": "1e87b4af5201e0d63d28d2dff19606adbb61b681c5de4e89bd6ee910c3b97407"
+        },
+        {
+          "profile": "O2g2",
+          "path": "template-key-captures-O2g2.luauc",
+          "sha256": "597f983bb960ced17b2eb5abfe227b2e2b3ca9f8051a78a64e22d43782960351"
+        },
+        {
+          "profile": "O0g1+x1",
+          "path": "template-key-captures-O0g1+x1.luauc",
+          "sha256": "287c99eed5bb4af94d7aa2b3594318fc09a90b51ccee44b3aad23eac8f0fc25a"
+        },
+        {
+          "profile": "O1g1+x2",
+          "path": "template-key-captures-O1g1+x2.luauc",
+          "sha256": "af9523d16f223c8c126a00ceb5b6ad619db91c30ad7b021433ecddceddde439a"
+        },
+        {
+          "profile": "O2g1+x3",
+          "path": "template-key-captures-O2g1+x3.luauc",
+          "sha256": "15e60b294f14d011d70d0a7a05a9a256773c1fe0527978561a7024fc5919b465"
+        },
+        {
+          "profile": "O0g2+x2",
+          "path": "template-key-captures-O0g2+x2.luauc",
+          "sha256": "f2aa3b82eed6dabe37fc2f5d4208f4fd045657ded63d61878dc867d3ea79000f"
+        },
+        {
+          "profile": "O1g2+x3",
+          "path": "template-key-captures-O1g2+x3.luauc",
+          "sha256": "822c76855209edf622c397896d73541f7f087f4ee46190581f2638211f3c9a21"
+        },
+        {
+          "profile": "O2g2+x1",
+          "path": "template-key-captures-O2g2+x1.luauc",
+          "sha256": "eba8cad94c36351c04f85b0e37491cf55339f7b77f9cbbe43250e57ddd0e4089"
+        }
+      ]
+    }
+  ]
+}

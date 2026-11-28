@@ -1,0 +1,151 @@
+{
+  "note": "Real fixed engine from immutable JS snapshot, same original input bytes as first independent failures.",
+  "passed": 12,
+  "total": 12,
+  "rows": [
+    {
+      "pin": "9d",
+      "profile": "O0g1",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "8c2c57cfbed77f0037b0a7f72d784da500bf4bf67a7fbd87cde5163c2ae2a837",
+      "printedSourceSha256": "cba352a77b309c0bf77d6d8d1e728e6e805bf267664084b52171b2329fd4681e"
+    },
+    {
+      "pin": "9d",
+      "profile": "O0g2",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "84cb89d021acf961bca9c47245db9975f17ff73592114b290648e9fea83a04f9",
+      "printedSourceSha256": "40ed056c6ec489168202d25a1598b4de2d189f6f5184950c1db3e26a18b8ba6a"
+    },
+    {
+      "pin": "9d",
+      "profile": "O1g1",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "1fb5a3b7447d202a7293e7b43d57c27c8f692572fd49b4bed0744d2de29a97d0",
+      "printedSourceSha256": "c751ced6e68629b26a170ec36a6b49f3eb9f625a93009a7f16ce46473f7ca6c6"
+    },
+    {
+      "pin": "9d",
+      "profile": "O1g2",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "7ca9bf46e0f380ab4b33fc18ae007dd432bf315739be808b03e345d2fff91a96",
+      "printedSourceSha256": "5957686573e663a43a183584df19c3839bf009bc733e20aee8bc9634e28d58e1"
+    },
+    {
+      "pin": "9d",
+      "profile": "O2g1",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "f4a8d17396714bf8ad02b30bc59681d27a97a311fdda17dce67fc7712f7c17dd",
+      "printedSourceSha256": "27dba0e944b82471a3903501353504e279a388567c77eac87d4522d656f17753"
+    },
+    {
+      "pin": "9d",
+      "profile": "O2g2",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "7a4206ad512750fa8c1741520e584ceaae216cf0eb428df90455d88fc5896f4a",
+      "printedSourceSha256": "2f0aa04864e378a818e0314181f00e25fb16a77e8ef2cc1b5e6f3970b3279a29"
+    },
+    {
+      "pin": "c875",
+      "profile": "O0g1",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "8c2c57cfbed77f0037b0a7f72d784da500bf4bf67a7fbd87cde5163c2ae2a837",
+      "printedSourceSha256": "a49eee8143a19feec502bd058c752619c3f0436f682141214d824b920bee492c"
+    },
+    {
+      "pin": "c875",
+      "profile": "O0g2",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "84cb89d021acf961bca9c47245db9975f17ff73592114b290648e9fea83a04f9",
+      "printedSourceSha256": "72342f3ddf9b2b0b27c244de2fed6f65f069eb408ac81e8140e6cb6faae4b214"
+    },
+    {
+      "pin": "c875",
+      "profile": "O1g1",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "1fb5a3b7447d202a7293e7b43d57c27c8f692572fd49b4bed0744d2de29a97d0",
+      "printedSourceSha256": "cd2150998aab24fae86072bf1c77d7033fd12ff12f90dbb8a06b61240414a957"
+    },
+    {
+      "pin": "c875",
+      "profile": "O1g2",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "7ca9bf46e0f380ab4b33fc18ae007dd432bf315739be808b03e345d2fff91a96",
+      "printedSourceSha256": "31cea262aeb54c4dd393b2137226a5838a9bb215396a13ae50722574355f8de3"
+    },
+    {
+      "pin": "c875",
+      "profile": "O2g1",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "f4a8d17396714bf8ad02b30bc59681d27a97a311fdda17dce67fc7712f7c17dd",
+      "printedSourceSha256": "39bc2ff3522f31f3372f83983a7acfedadffcc7c5a4ec342e220ec4b5fe6492a"
+    },
+    {
+      "pin": "c875",
+      "profile": "O2g2",
+      "match": true,
+      "codes": [
+        0,
+        0,
+        0
+      ],
+      "originalInputSha256": "7a4206ad512750fa8c1741520e584ceaae216cf0eb428df90455d88fc5896f4a",
+      "printedSourceSha256": "b2db40543fb0336fa684294b097e3e80e23bdd28447374dcfe35cb7d40e2e9af"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+(node:18) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-v2-locals
+
+(node:48) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/parallel-assignments.test.ts (26 tests | 1 failed) 312ms
+   ✓ private parallel indexed assignments > restores a fixed store list and lets adjacent temporaries regain their original evaluation positions 4ms
+   ✓ private parallel indexed assignments > keeps aliased destinations in their existing left-to-right store order 1ms
+   ✓ private parallel indexed assignments > retains one result from each call initializer 0ms
+   ✓ private parallel indexed assignments > retains one result from each method-call initializer 0ms
+   ✓ private parallel indexed assignments > retains one result from each vararg initializer 0ms
+   ✓ private parallel indexed assignments > rejects missing producer ownership 0ms
+   ✓ private parallel indexed assignments > rejects debug producer ownership 0ms
+   ✓ private parallel indexed assignments > rejects parallel-debug producer ownership 0ms
+   ✓ private parallel indexed assignments > rejects different-prototype producer ownership 0ms
+   ✓ private parallel indexed assignments > retains caller-protected temporary declarations 0ms
+   ✓ private parallel indexed assignments > does not move an effectful-key before the first store 0ms
+   ✓ private parallel indexed assignments > does not move an effectful-object before the first store 0ms
+   ✓ private parallel indexed assignments > does not move an global-key before the first store 0ms
+   ✓ private parallel indexed assignments > does not move an global-object before the first store 0ms
+   ✓ private parallel indexed assignments > keeps a destination depending on mutable captured cell left 0ms
+   ✓ private parallel indexed assignments > keeps a destination depending on mutable captured cell right 0ms
+   ✓ private parallel indexed assignments > keeps a destination depending on mutable captured cell owner 0ms
+   ✓ private parallel indexed assignments > permits an immutable captured destination cell 0ms
+   ✓ private parallel indexed assignments > keeps captured scalar results 0ms
+   ✓ private parallel indexed assignments > keeps used-twice scalar results 0ms
+   ✓ private parallel indexed assignments > keeps written scalar results 0ms
+   ✓ private parallel indexed assignments > keeps gap scalar results 0ms
+   ✓ private parallel indexed assignments > keeps reverse-order scalar results 0ms
+   ✓ private parallel indexed assignments > keeps local-target scalar results 0ms
+   ✓ private parallel indexed assignments > respects the disabled temporary-recovery option 5ms
+   × private parallel indexed assignments > pins the independently executed normal and Hard bytecodes and exercises the recovered stores 298ms
+     → expected 0 to be greater than 0
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/parallel-assignments.test.ts > private parallel indexed assignments > pins the independently executed normal and Hard bytecodes and exercises the recovered stores
+AssertionError: expected 0 to be greater than 0
+ ❯ tests/parallel-assignments.test.ts:140:90
+    138|         if (!result.ok) throw new Error(source.name + "/" + entry.prof…
+    139|         expect(result.validation).toEqual([]);
+    140|         if (source.name === "parallel-store-effects") expect(parallelS…
+       |                                                                                          ^
+    141|       }
+    142|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 25 passed (26)
+   Start at  23:10:00
+   Duration  1.34s (transform 719ms, setup 0ms, collect 898ms, tests 312ms, environment 0ms, prepare 31ms)
+
+(node:74) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

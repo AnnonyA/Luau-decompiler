@@ -1,0 +1,98 @@
+{
+  "type": "Compact extraction of an existing strict result, not a new run",
+  "source": {
+    "path": "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-quick-885eb08/annonyA-quick.json",
+    "bytes": 21008,
+    "sha256": "4bda417e0c717bf463340a8e138af089f9e8a4d5ac1c3ae09e9aa99ad1dafc89"
+  },
+  "retainedFields": {
+    "format": "rosetta-result",
+    "schema": 1,
+    "rosetta": "0.1.0",
+    "luau": "0.747",
+    "suite": {
+      "name": "rosetta-3",
+      "tier": "quick",
+      "hash": "e24826907050bd1d"
+    },
+    "decompiler": {
+      "name": "annonyA",
+      "version": "885eb08b0fd1bd9beb513db9fd90e5c369e8293e"
+    },
+    "created": "2026-11-27T23:48:01Z",
+    "seconds": 55.78,
+    "threads": 4,
+    "profiles": [
+      "O0g1",
+      "O1g1",
+      "O2g1",
+      "O0g2",
+      "O1g2",
+      "O2g2"
+    ],
+    "letters": {
+      "c": "recompile_failed",
+      "f": "decompile_failed",
+      "p": "pass",
+      "r": "refused",
+      "u": "unusable",
+      "w": "mismatch"
+    },
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "totals": {
+      "pass": 882
+    },
+    "quality": {
+      "round_trips": 882,
+      "similarity": 77.25692801599871,
+      "size": 0.9854781501051265,
+      "locals": 1.083656549635942,
+      "nesting": -0.34807256235827666,
+      "endless": 38,
+      "names": 61.02136376938835,
+      "cpu_ms_median": 264.40599999999995,
+      "cpu_ms_total": 278442.632
+    }
+  },
+  "provenanceSummary": {
+    "tier": "quick",
+    "hash": "e24826907050bd1d",
+    "passed": 882,
+    "total": 882,
+    "roundTrips": 882,
+    "counts": {
+      "pass": 882,
+      "mismatch": 0,
+      "recompile_failed": 0,
+      "decompile_failed": 0,
+      "refused": 0,
+      "unusable": 0
+    },
+    "sections": [
+      {
+        "id": "cases",
+        "passed": 246,
+        "total": 246
+      },
+      {
+        "id": "libraries",
+        "passed": 36,
+        "total": 36
+      },
+      {
+        "id": "generated",
+        "passed": 300,
+        "total": 300
+      },
+      {
+        "id": "mutants",
+        "passed": 300,
+        "total": 300
+      }
+    ],
+    "allPass": true
+  }
+}

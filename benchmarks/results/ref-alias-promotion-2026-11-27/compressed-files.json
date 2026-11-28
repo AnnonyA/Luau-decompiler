@@ -1,0 +1,50 @@
+{
+  "format": "lossless-evidence-manifest-v1",
+  "files": [
+    {
+      "path": "research-first-observation.json.gz",
+      "rawBytes": 48091,
+      "rawSha256": "3d1386883aa941c8d0a74332511f42394d1d031839708f3b1bc832eb721626d8",
+      "compressedBytes": 3552,
+      "compressedSha256": "e4d6041453175e772be44f635456846742f3591f251b710bba428d29b717aac8",
+      "mtime": 0,
+      "decompressedByteExact": true
+    },
+    {
+      "path": "quick-comparison.json.gz",
+      "rawBytes": 1204373,
+      "rawSha256": "097e455695d829f2392b95f42ae1b1af7ccd0834d05b1e681ae194b0d27c0215",
+      "compressedBytes": 62705,
+      "compressedSha256": "9f52c2e5b8a5bd30facfb0103028c7437bca4055d449313cf866f8cc1c419d9b",
+      "mtime": 0,
+      "decompressedByteExact": true
+    },
+    {
+      "path": "raw-observations.tar.gz",
+      "rawBytes": 1495040,
+      "rawSha256": "c9bcaf56983207d907330ed6f8512be03addfe695b9be7b1cd5cec0bd26450dd",
+      "compressedBytes": 81431,
+      "compressedSha256": "dc4ded954a1438a115dcdcda8c98f80339f6c6c310b93f59624cc3b1d8a9adfb",
+      "mtime": 0,
+      "decompressedByteExact": true
+    },
+    {
+      "path": "raw-observations.members.json.gz",
+      "rawBytes": 263005,
+      "rawSha256": "53c1860e5fc575d1b73d169f5d75a38485bea5f86a14ede62a2d731818880b59",
+      "compressedBytes": 18370,
+      "compressedSha256": "098a8771ff329259d8b8590a74ec86e1f26437c46d58d34ac8db7499b746abdb",
+      "mtime": 0,
+      "decompressedByteExact": true
+    },
+    {
+      "path": "changed-source-pairs.json.gz",
+      "rawBytes": 461476,
+      "rawSha256": "a42d7ff0dabd21135e8461c3a3b309c261474dabef1e93ff18617395e40fb389",
+      "compressedBytes": 59428,
+      "compressedSha256": "6da5173c8d1bd43ff976d817fd92f2d23487894f84a3d514e6bd720f87a6e891",
+      "mtime": 0,
+      "decompressedByteExact": true
+    }
+  ]
+}

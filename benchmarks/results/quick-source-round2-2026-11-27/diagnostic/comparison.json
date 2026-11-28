@@ -1,0 +1,2099 @@
+{
+  "baselineSimilarity": 77.49586128999316,
+  "candidateSimilarity": 77.63762703152742,
+  "deltaPoints": 0.14176574153425747,
+  "profiles": {
+    "better": 427,
+    "equal": 361,
+    "worse": 94,
+    "changedOutputs": 521
+  },
+  "behaviorVerified": false,
+  "note": "The embedded baselineQuality/deltas in replay receipts refer to an older72.29585% run and are not used. Compare paired quality fields and separate baseline-replay receipt.",
+  "changed": [
+    {
+      "id": "cases/builtins/O0g1",
+      "deltaPoints": 0.7871627807617188
+    },
+    {
+      "id": "cases/builtins/O0g2",
+      "deltaPoints": 0.7839024066925049
+    },
+    {
+      "id": "cases/control_flow/O0g1",
+      "deltaPoints": 1.0712504386901855
+    },
+    {
+      "id": "cases/control_flow/O0g2",
+      "deltaPoints": 1.0712504386901855
+    },
+    {
+      "id": "cases/control_flow/O1g1",
+      "deltaPoints": 1.082444190979004
+    },
+    {
+      "id": "cases/control_flow/O1g2",
+      "deltaPoints": 1.082444190979004
+    },
+    {
+      "id": "cases/control_flow/O2g1",
+      "deltaPoints": 1.015019416809082
+    },
+    {
+      "id": "cases/control_flow/O2g2",
+      "deltaPoints": 1.015019416809082
+    },
+    {
+      "id": "cases/if_local/O0g1",
+      "deltaPoints": 0.692063570022583
+    },
+    {
+      "id": "cases/if_local/O0g2",
+      "deltaPoints": 0.9443581104278564
+    },
+    {
+      "id": "cases/if_local/O1g1",
+      "deltaPoints": 0.6920874118804932
+    },
+    {
+      "id": "cases/if_local/O1g2",
+      "deltaPoints": 0.945359468460083
+    },
+    {
+      "id": "cases/if_local/O2g1",
+      "deltaPoints": 0.40366649627685547
+    },
+    {
+      "id": "cases/if_local/O2g2",
+      "deltaPoints": 0.5983591079711914
+    },
+    {
+      "id": "cases/inventory/O0g1",
+      "deltaPoints": -0.36346912384033203
+    },
+    {
+      "id": "cases/inventory/O0g2",
+      "deltaPoints": -0.36271214485168457
+    },
+    {
+      "id": "cases/inventory/O1g1",
+      "deltaPoints": -0.36779046058654785
+    },
+    {
+      "id": "cases/inventory/O1g2",
+      "deltaPoints": -0.3670215606689453
+    },
+    {
+      "id": "cases/inventory/O2g1",
+      "deltaPoints": -0.36556124687194824
+    },
+    {
+      "id": "cases/inventory/O2g2",
+      "deltaPoints": -0.36479830741882324
+    },
+    {
+      "id": "cases/literals/O1g1",
+      "deltaPoints": 0.9059727191925049
+    },
+    {
+      "id": "cases/literals/O1g2",
+      "deltaPoints": 0.9059727191925049
+    },
+    {
+      "id": "cases/literals/O2g1",
+      "deltaPoints": 0.8400201797485352
+    },
+    {
+      "id": "cases/literals/O2g2",
+      "deltaPoints": 0.8400201797485352
+    },
+    {
+      "id": "cases/loop_exits/O0g1",
+      "deltaPoints": 1.6961395740509033
+    },
+    {
+      "id": "cases/loop_exits/O0g2",
+      "deltaPoints": 1.6961395740509033
+    },
+    {
+      "id": "cases/loop_exits/O1g1",
+      "deltaPoints": 1.1517882347106934
+    },
+    {
+      "id": "cases/loop_exits/O1g2",
+      "deltaPoints": 1.1517882347106934
+    },
+    {
+      "id": "cases/loop_exits/O2g1",
+      "deltaPoints": 1.5224993228912354
+    },
+    {
+      "id": "cases/loop_exits/O2g2",
+      "deltaPoints": 1.5224993228912354
+    },
+    {
+      "id": "cases/loops/O0g1",
+      "deltaPoints": 0.3199636936187744
+    },
+    {
+      "id": "cases/loops/O0g2",
+      "deltaPoints": 0.3199636936187744
+    },
+    {
+      "id": "cases/loops/O1g1",
+      "deltaPoints": 0.32352209091186523
+    },
+    {
+      "id": "cases/loops/O1g2",
+      "deltaPoints": 0.3216981887817383
+    },
+    {
+      "id": "cases/loops/O2g1",
+      "deltaPoints": 0.28177499771118164
+    },
+    {
+      "id": "cases/loops/O2g2",
+      "deltaPoints": 0.2803921699523926
+    },
+    {
+      "id": "cases/metatables/O0g1",
+      "deltaPoints": 0.6599903106689453
+    },
+    {
+      "id": "cases/metatables/O0g2",
+      "deltaPoints": 0.6621599197387695
+    },
+    {
+      "id": "cases/metatables/O1g1",
+      "deltaPoints": 0.6742119789123535
+    },
+    {
+      "id": "cases/metatables/O1g2",
+      "deltaPoints": 0.6764233112335205
+    },
+    {
+      "id": "cases/metatables/O2g1",
+      "deltaPoints": 0.5876779556274414
+    },
+    {
+      "id": "cases/metatables/O2g2",
+      "deltaPoints": 0.5706310272216797
+    },
+    {
+      "id": "cases/nested_inlining/O0g1",
+      "deltaPoints": 0.6058752536773682
+    },
+    {
+      "id": "cases/nested_inlining/O0g2",
+      "deltaPoints": 0.6040990352630615
+    },
+    {
+      "id": "cases/nested_inlining/O2g1",
+      "deltaPoints": 0.1345217227935791
+    },
+    {
+      "id": "cases/nested_inlining/O2g2",
+      "deltaPoints": 0.13418197631835938
+    },
+    {
+      "id": "cases/numbers/O1g1",
+      "deltaPoints": 1.4335215091705322
+    },
+    {
+      "id": "cases/numbers/O1g2",
+      "deltaPoints": 1.4335215091705322
+    },
+    {
+      "id": "cases/numbers/O2g1",
+      "deltaPoints": 0.8327960968017578
+    },
+    {
+      "id": "cases/numbers/O2g2",
+      "deltaPoints": 0.924372673034668
+    },
+    {
+      "id": "cases/refusals/O0g1",
+      "deltaPoints": 0.37249326705932617
+    },
+    {
+      "id": "cases/refusals/O0g2",
+      "deltaPoints": 0.37174224853515625
+    },
+    {
+      "id": "cases/refusals/O1g1",
+      "deltaPoints": 0.3654897212982178
+    },
+    {
+      "id": "cases/refusals/O1g2",
+      "deltaPoints": 0.3647804260253906
+    },
+    {
+      "id": "cases/refusals/O2g1",
+      "deltaPoints": 0.2954721450805664
+    },
+    {
+      "id": "cases/refusals/O2g2",
+      "deltaPoints": 0.2938687801361084
+    },
+    {
+      "id": "cases/strings/O1g1",
+      "deltaPoints": 0.5110859870910645
+    },
+    {
+      "id": "cases/strings/O1g2",
+      "deltaPoints": 0.5110859870910645
+    },
+    {
+      "id": "cases/strings/O2g1",
+      "deltaPoints": 0.4713475704193115
+    },
+    {
+      "id": "cases/strings/O2g2",
+      "deltaPoints": 0.4713475704193115
+    },
+    {
+      "id": "generated/seed1015/O0g1",
+      "deltaPoints": 0.03833770751953125
+    },
+    {
+      "id": "generated/seed1015/O0g2",
+      "deltaPoints": 0.03848671913146973
+    },
+    {
+      "id": "generated/seed1015/O1g1",
+      "deltaPoints": -0.04565715789794922
+    },
+    {
+      "id": "generated/seed1015/O1g2",
+      "deltaPoints": -0.04478096961975098
+    },
+    {
+      "id": "generated/seed1015/O2g1",
+      "deltaPoints": -0.14191865921020508
+    },
+    {
+      "id": "generated/seed1015/O2g2",
+      "deltaPoints": -0.13859272003173828
+    },
+    {
+      "id": "generated/seed1042/O0g1",
+      "deltaPoints": 0.0811457633972168
+    },
+    {
+      "id": "generated/seed1042/O0g2",
+      "deltaPoints": 0.08227229118347168
+    },
+    {
+      "id": "generated/seed1042/O1g1",
+      "deltaPoints": 0.09819269180297852
+    },
+    {
+      "id": "generated/seed1042/O1g2",
+      "deltaPoints": 0.10148882865905762
+    },
+    {
+      "id": "generated/seed1042/O2g1",
+      "deltaPoints": 0.018018484115600586
+    },
+    {
+      "id": "generated/seed1042/O2g2",
+      "deltaPoints": 0.021505355834960938
+    },
+    {
+      "id": "generated/seed1086/O0g1",
+      "deltaPoints": 0.32975077629089355
+    },
+    {
+      "id": "generated/seed1086/O0g2",
+      "deltaPoints": 0.3327369689941406
+    },
+    {
+      "id": "generated/seed1086/O1g1",
+      "deltaPoints": 0.24145841598510742
+    },
+    {
+      "id": "generated/seed1086/O1g2",
+      "deltaPoints": 0.33345818519592285
+    },
+    {
+      "id": "generated/seed1086/O2g1",
+      "deltaPoints": 0.34998655319213867
+    },
+    {
+      "id": "generated/seed1086/O2g2",
+      "deltaPoints": 0.3559887409210205
+    },
+    {
+      "id": "generated/seed1121/O0g1",
+      "deltaPoints": 0.10324716567993164
+    },
+    {
+      "id": "generated/seed1121/O0g2",
+      "deltaPoints": 0.1494765281677246
+    },
+    {
+      "id": "generated/seed1121/O1g1",
+      "deltaPoints": -0.13428926467895508
+    },
+    {
+      "id": "generated/seed1121/O1g2",
+      "deltaPoints": -0.13106465339660645
+    },
+    {
+      "id": "generated/seed1121/O2g1",
+      "deltaPoints": -0.16608834266662598
+    },
+    {
+      "id": "generated/seed1121/O2g2",
+      "deltaPoints": -0.1617133617401123
+    },
+    {
+      "id": "generated/seed1142/O0g1",
+      "deltaPoints": 0.16379356384277344
+    },
+    {
+      "id": "generated/seed1142/O0g2",
+      "deltaPoints": 0.16708970069885254
+    },
+    {
+      "id": "generated/seed1142/O1g1",
+      "deltaPoints": 0.2853214740753174
+    },
+    {
+      "id": "generated/seed1142/O1g2",
+      "deltaPoints": 0.4291236400604248
+    },
+    {
+      "id": "generated/seed1142/O2g1",
+      "deltaPoints": 0.020444393157958984
+    },
+    {
+      "id": "generated/seed1142/O2g2",
+      "deltaPoints": 0.02307891845703125
+    },
+    {
+      "id": "generated/seed1148/O0g1",
+      "deltaPoints": 0.0943601131439209
+    },
+    {
+      "id": "generated/seed1148/O0g2",
+      "deltaPoints": 0.0944375991821289
+    },
+    {
+      "id": "generated/seed1148/O1g1",
+      "deltaPoints": 0.16379952430725098
+    },
+    {
+      "id": "generated/seed1148/O1g2",
+      "deltaPoints": 0.16486048698425293
+    },
+    {
+      "id": "generated/seed1148/O2g1",
+      "deltaPoints": 0.14151930809020996
+    },
+    {
+      "id": "generated/seed1148/O2g2",
+      "deltaPoints": 0.14150738716125488
+    },
+    {
+      "id": "generated/seed1152/O0g1",
+      "deltaPoints": -0.01386404037475586
+    },
+    {
+      "id": "generated/seed1152/O1g1",
+      "deltaPoints": -0.015246868133544922
+    },
+    {
+      "id": "generated/seed1152/O1g2",
+      "deltaPoints": -0.014382600784301758
+    },
+    {
+      "id": "generated/seed1152/O2g1",
+      "deltaPoints": -0.02599358558654785
+    },
+    {
+      "id": "generated/seed1152/O2g2",
+      "deltaPoints": -0.024944543838500977
+    },
+    {
+      "id": "generated/seed1154/O0g1",
+      "deltaPoints": 0.04857182502746582
+    },
+    {
+      "id": "generated/seed1154/O0g2",
+      "deltaPoints": 0.04916787147521973
+    },
+    {
+      "id": "generated/seed1154/O1g1",
+      "deltaPoints": 0.0010967254638671875
+    },
+    {
+      "id": "generated/seed1154/O1g2",
+      "deltaPoints": 0.0012636184692382812
+    },
+    {
+      "id": "generated/seed1154/O2g1",
+      "deltaPoints": -0.14517903327941895
+    },
+    {
+      "id": "generated/seed1154/O2g2",
+      "deltaPoints": -0.14483928680419922
+    },
+    {
+      "id": "generated/seed1174/O0g1",
+      "deltaPoints": 0.213545560836792
+    },
+    {
+      "id": "generated/seed1174/O0g2",
+      "deltaPoints": 0.21792054176330566
+    },
+    {
+      "id": "generated/seed1174/O1g1",
+      "deltaPoints": 0.21752119064331055
+    },
+    {
+      "id": "generated/seed1174/O1g2",
+      "deltaPoints": 0.21913647651672363
+    },
+    {
+      "id": "generated/seed1174/O2g1",
+      "deltaPoints": -0.06434321403503418
+    },
+    {
+      "id": "generated/seed1174/O2g2",
+      "deltaPoints": -0.06262660026550293
+    },
+    {
+      "id": "generated/seed1178/O0g1",
+      "deltaPoints": 0.1556694507598877
+    },
+    {
+      "id": "generated/seed1178/O0g2",
+      "deltaPoints": 0.19369125366210938
+    },
+    {
+      "id": "generated/seed1178/O1g1",
+      "deltaPoints": 0.03077983856201172
+    },
+    {
+      "id": "generated/seed1178/O1g2",
+      "deltaPoints": 0.03158450126647949
+    },
+    {
+      "id": "generated/seed1178/O2g1",
+      "deltaPoints": -0.012058019638061523
+    },
+    {
+      "id": "generated/seed1178/O2g2",
+      "deltaPoints": -0.011366605758666992
+    },
+    {
+      "id": "generated/seed1202/O1g1",
+      "deltaPoints": -0.07867217063903809
+    },
+    {
+      "id": "generated/seed1202/O1g2",
+      "deltaPoints": -0.07846951484680176
+    },
+    {
+      "id": "generated/seed1220/O0g1",
+      "deltaPoints": 0.0451505184173584
+    },
+    {
+      "id": "generated/seed1220/O0g2",
+      "deltaPoints": 0.09518265724182129
+    },
+    {
+      "id": "generated/seed1220/O1g1",
+      "deltaPoints": -0.03742575645446777
+    },
+    {
+      "id": "generated/seed1220/O1g2",
+      "deltaPoints": -0.03615617752075195
+    },
+    {
+      "id": "generated/seed1220/O2g1",
+      "deltaPoints": -0.21309256553649902
+    },
+    {
+      "id": "generated/seed1220/O2g2",
+      "deltaPoints": -0.2084970474243164
+    },
+    {
+      "id": "generated/seed1229/O0g1",
+      "deltaPoints": 0.3312408924102783
+    },
+    {
+      "id": "generated/seed1229/O0g2",
+      "deltaPoints": 0.3304600715637207
+    },
+    {
+      "id": "generated/seed1229/O1g1",
+      "deltaPoints": 0.192338228225708
+    },
+    {
+      "id": "generated/seed1229/O1g2",
+      "deltaPoints": 0.19338726997375488
+    },
+    {
+      "id": "generated/seed1229/O2g1",
+      "deltaPoints": 0.22028684616088867
+    },
+    {
+      "id": "generated/seed1229/O2g2",
+      "deltaPoints": 0.22255182266235352
+    },
+    {
+      "id": "generated/seed1319/O0g1",
+      "deltaPoints": 0.5113661289215088
+    },
+    {
+      "id": "generated/seed1319/O0g2",
+      "deltaPoints": 0.4790663719177246
+    },
+    {
+      "id": "generated/seed1319/O1g1",
+      "deltaPoints": 0.4690408706665039
+    },
+    {
+      "id": "generated/seed1319/O1g2",
+      "deltaPoints": 0.5428791046142578
+    },
+    {
+      "id": "generated/seed1319/O2g1",
+      "deltaPoints": 0.3316223621368408
+    },
+    {
+      "id": "generated/seed1319/O2g2",
+      "deltaPoints": 0.4068613052368164
+    },
+    {
+      "id": "generated/seed1322/O0g1",
+      "deltaPoints": -0.010442733764648438
+    },
+    {
+      "id": "generated/seed1322/O0g2",
+      "deltaPoints": 0.024455785751342773
+    },
+    {
+      "id": "generated/seed1322/O1g1",
+      "deltaPoints": 0.062274932861328125
+    },
+    {
+      "id": "generated/seed1322/O1g2",
+      "deltaPoints": 0.09428262710571289
+    },
+    {
+      "id": "generated/seed1322/O2g1",
+      "deltaPoints": -0.1026153564453125
+    },
+    {
+      "id": "generated/seed1322/O2g2",
+      "deltaPoints": -0.06572604179382324
+    },
+    {
+      "id": "generated/seed1332/O0g1",
+      "deltaPoints": 0.11563897132873535
+    },
+    {
+      "id": "generated/seed1332/O0g2",
+      "deltaPoints": 0.11592507362365723
+    },
+    {
+      "id": "generated/seed1332/O1g1",
+      "deltaPoints": 0.0782012939453125
+    },
+    {
+      "id": "generated/seed1332/O1g2",
+      "deltaPoints": 0.07829070091247559
+    },
+    {
+      "id": "generated/seed1332/O2g1",
+      "deltaPoints": 0.05359649658203125
+    },
+    {
+      "id": "generated/seed1332/O2g2",
+      "deltaPoints": 0.05416274070739746
+    },
+    {
+      "id": "generated/seed1338/O0g1",
+      "deltaPoints": 0.20656585693359375
+    },
+    {
+      "id": "generated/seed1338/O0g2",
+      "deltaPoints": 0.20750761032104492
+    },
+    {
+      "id": "generated/seed1338/O1g1",
+      "deltaPoints": -0.08281469345092773
+    },
+    {
+      "id": "generated/seed1338/O1g2",
+      "deltaPoints": -0.0820457935333252
+    },
+    {
+      "id": "generated/seed1338/O2g1",
+      "deltaPoints": -0.06920695304870605
+    },
+    {
+      "id": "generated/seed1338/O2g2",
+      "deltaPoints": -0.06769299507141113
+    },
+    {
+      "id": "generated/seed1342/O0g1",
+      "deltaPoints": 0.26907920837402344
+    },
+    {
+      "id": "generated/seed1342/O0g2",
+      "deltaPoints": 0.2946794033050537
+    },
+    {
+      "id": "generated/seed1342/O1g1",
+      "deltaPoints": -0.034868717193603516
+    },
+    {
+      "id": "generated/seed1342/O1g2",
+      "deltaPoints": -0.03237128257751465
+    },
+    {
+      "id": "generated/seed1342/O2g1",
+      "deltaPoints": -0.07774829864501953
+    },
+    {
+      "id": "generated/seed1342/O2g2",
+      "deltaPoints": -0.07129311561584473
+    },
+    {
+      "id": "generated/seed1385/O0g1",
+      "deltaPoints": -0.0024139881134033203
+    },
+    {
+      "id": "generated/seed1385/O0g2",
+      "deltaPoints": -0.0006377696990966797
+    },
+    {
+      "id": "generated/seed1385/O1g1",
+      "deltaPoints": 0.023823976516723633
+    },
+    {
+      "id": "generated/seed1385/O1g2",
+      "deltaPoints": 0.001519918441772461
+    },
+    {
+      "id": "generated/seed1385/O2g1",
+      "deltaPoints": -0.0482022762298584
+    },
+    {
+      "id": "generated/seed1385/O2g2",
+      "deltaPoints": -0.07179975509643555
+    },
+    {
+      "id": "generated/seed1419/O0g1",
+      "deltaPoints": 0.03241300582885742
+    },
+    {
+      "id": "generated/seed1419/O0g2",
+      "deltaPoints": 0.03511309623718262
+    },
+    {
+      "id": "generated/seed1419/O1g1",
+      "deltaPoints": -0.18256306648254395
+    },
+    {
+      "id": "generated/seed1419/O1g2",
+      "deltaPoints": -0.17930865287780762
+    },
+    {
+      "id": "generated/seed1419/O2g1",
+      "deltaPoints": -0.5290985107421875
+    },
+    {
+      "id": "generated/seed1419/O2g2",
+      "deltaPoints": -0.5274713039398193
+    },
+    {
+      "id": "generated/seed1429/O0g1",
+      "deltaPoints": 0.38920044898986816
+    },
+    {
+      "id": "generated/seed1429/O0g2",
+      "deltaPoints": 0.3875434398651123
+    },
+    {
+      "id": "generated/seed1429/O1g1",
+      "deltaPoints": 0.22292733192443848
+    },
+    {
+      "id": "generated/seed1429/O1g2",
+      "deltaPoints": 0.22124052047729492
+    },
+    {
+      "id": "generated/seed1429/O2g1",
+      "deltaPoints": 0.14919042587280273
+    },
+    {
+      "id": "generated/seed1429/O2g2",
+      "deltaPoints": 0.14885663986206055
+    },
+    {
+      "id": "generated/seed1438/O0g1",
+      "deltaPoints": 0.018006563186645508
+    },
+    {
+      "id": "generated/seed1438/O0g2",
+      "deltaPoints": 0.018262863159179688
+    },
+    {
+      "id": "generated/seed1438/O1g1",
+      "deltaPoints": -0.02472400665283203
+    },
+    {
+      "id": "generated/seed1438/O1g2",
+      "deltaPoints": -0.024384260177612305
+    },
+    {
+      "id": "generated/seed1438/O2g1",
+      "deltaPoints": -0.061327219009399414
+    },
+    {
+      "id": "generated/seed1438/O2g2",
+      "deltaPoints": -0.061196088790893555
+    },
+    {
+      "id": "generated/seed1474/O0g1",
+      "deltaPoints": 0.41991472244262695
+    },
+    {
+      "id": "generated/seed1474/O0g2",
+      "deltaPoints": 0.42607784271240234
+    },
+    {
+      "id": "generated/seed1474/O1g1",
+      "deltaPoints": 0.3512084484100342
+    },
+    {
+      "id": "generated/seed1474/O1g2",
+      "deltaPoints": 0.4633486270904541
+    },
+    {
+      "id": "generated/seed1474/O2g1",
+      "deltaPoints": 0.04462003707885742
+    },
+    {
+      "id": "generated/seed1474/O2g2",
+      "deltaPoints": 0.05323290824890137
+    },
+    {
+      "id": "generated/seed1483/O0g1",
+      "deltaPoints": 0.000762939453125
+    },
+    {
+      "id": "generated/seed1483/O0g2",
+      "deltaPoints": 0.0017762184143066406
+    },
+    {
+      "id": "generated/seed1483/O1g1",
+      "deltaPoints": -0.2047419548034668
+    },
+    {
+      "id": "generated/seed1483/O1g2",
+      "deltaPoints": -0.19968748092651367
+    },
+    {
+      "id": "generated/seed1483/O2g1",
+      "deltaPoints": -0.22802352905273438
+    },
+    {
+      "id": "generated/seed1483/O2g2",
+      "deltaPoints": -0.21873116493225098
+    },
+    {
+      "id": "generated/seed1487/O0g1",
+      "deltaPoints": 0.01354217529296875
+    },
+    {
+      "id": "generated/seed1487/O0g2",
+      "deltaPoints": 0.01328587532043457
+    },
+    {
+      "id": "generated/seed1487/O1g1",
+      "deltaPoints": -0.06943941116333008
+    },
+    {
+      "id": "generated/seed1487/O1g2",
+      "deltaPoints": -0.06892681121826172
+    },
+    {
+      "id": "generated/seed1487/O2g1",
+      "deltaPoints": -0.08493661880493164
+    },
+    {
+      "id": "generated/seed1487/O2g2",
+      "deltaPoints": -0.08422732353210449
+    },
+    {
+      "id": "generated/seed1557/O0g1",
+      "deltaPoints": 0.16678571701049805
+    },
+    {
+      "id": "generated/seed1557/O0g2",
+      "deltaPoints": 0.16619563102722168
+    },
+    {
+      "id": "generated/seed1557/O1g1",
+      "deltaPoints": 0.23971199989318848
+    },
+    {
+      "id": "generated/seed1557/O1g2",
+      "deltaPoints": 0.2369999885559082
+    },
+    {
+      "id": "generated/seed1557/O2g1",
+      "deltaPoints": 0.10032057762145996
+    },
+    {
+      "id": "generated/seed1557/O2g2",
+      "deltaPoints": 0.09784698486328125
+    },
+    {
+      "id": "generated/seed1563/O0g1",
+      "deltaPoints": 0.06424784660339355
+    },
+    {
+      "id": "generated/seed1563/O0g2",
+      "deltaPoints": 0.06514787673950195
+    },
+    {
+      "id": "generated/seed1563/O1g1",
+      "deltaPoints": 0.1357734203338623
+    },
+    {
+      "id": "generated/seed1563/O1g2",
+      "deltaPoints": 0.13715624809265137
+    },
+    {
+      "id": "generated/seed1563/O2g1",
+      "deltaPoints": 0.07290244102478027
+    },
+    {
+      "id": "generated/seed1563/O2g2",
+      "deltaPoints": 0.11278390884399414
+    },
+    {
+      "id": "generated/seed1573/O0g1",
+      "deltaPoints": 0.2791404724121094
+    },
+    {
+      "id": "generated/seed1573/O0g2",
+      "deltaPoints": 0.2790093421936035
+    },
+    {
+      "id": "generated/seed1573/O1g1",
+      "deltaPoints": 0.09987354278564453
+    },
+    {
+      "id": "generated/seed1573/O1g2",
+      "deltaPoints": 0.10036826133728027
+    },
+    {
+      "id": "generated/seed1573/O2g1",
+      "deltaPoints": -0.09306073188781738
+    },
+    {
+      "id": "generated/seed1573/O2g2",
+      "deltaPoints": -0.10104775428771973
+    },
+    {
+      "id": "generated/seed1627/O1g1",
+      "deltaPoints": -0.058966875076293945
+    },
+    {
+      "id": "generated/seed1627/O1g2",
+      "deltaPoints": -0.05806684494018555
+    },
+    {
+      "id": "generated/seed1627/O2g1",
+      "deltaPoints": -0.07349848747253418
+    },
+    {
+      "id": "generated/seed1627/O2g2",
+      "deltaPoints": -0.07281899452209473
+    },
+    {
+      "id": "generated/seed1633/O0g1",
+      "deltaPoints": -0.13768672943115234
+    },
+    {
+      "id": "generated/seed1633/O0g2",
+      "deltaPoints": -0.1367807388305664
+    },
+    {
+      "id": "generated/seed1633/O1g1",
+      "deltaPoints": -0.20827054977416992
+    },
+    {
+      "id": "generated/seed1633/O1g2",
+      "deltaPoints": -0.20500421524047852
+    },
+    {
+      "id": "generated/seed1633/O2g1",
+      "deltaPoints": -0.23368597030639648
+    },
+    {
+      "id": "generated/seed1633/O2g2",
+      "deltaPoints": -0.22870898246765137
+    },
+    {
+      "id": "generated/seed1654/O0g1",
+      "deltaPoints": 0.04557371139526367
+    },
+    {
+      "id": "generated/seed1654/O0g2",
+      "deltaPoints": 0.0461578369140625
+    },
+    {
+      "id": "generated/seed1654/O1g1",
+      "deltaPoints": -0.045865774154663086
+    },
+    {
+      "id": "generated/seed1654/O1g2",
+      "deltaPoints": -0.04522204399108887
+    },
+    {
+      "id": "generated/seed1654/O2g1",
+      "deltaPoints": 0.028902292251586914
+    },
+    {
+      "id": "generated/seed1654/O2g2",
+      "deltaPoints": 0.028562545776367188
+    },
+    {
+      "id": "generated/seed1714/O0g1",
+      "deltaPoints": 0.18563270568847656
+    },
+    {
+      "id": "generated/seed1714/O0g2",
+      "deltaPoints": 0.18586516380310059
+    },
+    {
+      "id": "generated/seed1714/O1g1",
+      "deltaPoints": 0.18857121467590332
+    },
+    {
+      "id": "generated/seed1714/O1g2",
+      "deltaPoints": 0.18742084503173828
+    },
+    {
+      "id": "generated/seed1714/O2g1",
+      "deltaPoints": 0.06874799728393555
+    },
+    {
+      "id": "generated/seed1714/O2g2",
+      "deltaPoints": 0.06990432739257812
+    },
+    {
+      "id": "generated/seed1741/O0g1",
+      "deltaPoints": 0.40615200996398926
+    },
+    {
+      "id": "generated/seed1741/O0g2",
+      "deltaPoints": 0.40414929389953613
+    },
+    {
+      "id": "generated/seed1741/O1g1",
+      "deltaPoints": 0.42499303817749023
+    },
+    {
+      "id": "generated/seed1741/O1g2",
+      "deltaPoints": 0.4216015338897705
+    },
+    {
+      "id": "generated/seed1741/O2g1",
+      "deltaPoints": -0.03860592842102051
+    },
+    {
+      "id": "generated/seed1741/O2g2",
+      "deltaPoints": 0.026208162307739258
+    },
+    {
+      "id": "generated/seed1743/O0g1",
+      "deltaPoints": 0.18758177757263184
+    },
+    {
+      "id": "generated/seed1743/O0g2",
+      "deltaPoints": 0.18884539604187012
+    },
+    {
+      "id": "generated/seed1743/O1g1",
+      "deltaPoints": 0.19040703773498535
+    },
+    {
+      "id": "generated/seed1743/O1g2",
+      "deltaPoints": 0.19115805625915527
+    },
+    {
+      "id": "generated/seed1743/O2g1",
+      "deltaPoints": 0.18497705459594727
+    },
+    {
+      "id": "generated/seed1743/O2g2",
+      "deltaPoints": 0.1848280429840088
+    },
+    {
+      "id": "generated/seed1824/O0g1",
+      "deltaPoints": 0.06372928619384766
+    },
+    {
+      "id": "generated/seed1824/O0g2",
+      "deltaPoints": 0.0952601432800293
+    },
+    {
+      "id": "generated/seed1824/O1g1",
+      "deltaPoints": 0.03154873847961426
+    },
+    {
+      "id": "generated/seed1824/O1g2",
+      "deltaPoints": 0.031495094299316406
+    },
+    {
+      "id": "generated/seed1824/O2g1",
+      "deltaPoints": -0.030755996704101562
+    },
+    {
+      "id": "generated/seed1824/O2g2",
+      "deltaPoints": -0.029832124710083008
+    },
+    {
+      "id": "generated/seed1827/O0g1",
+      "deltaPoints": 0.4512608051300049
+    },
+    {
+      "id": "generated/seed1827/O0g2",
+      "deltaPoints": 0.4438638687133789
+    },
+    {
+      "id": "generated/seed1827/O1g1",
+      "deltaPoints": 0.37873387336730957
+    },
+    {
+      "id": "generated/seed1827/O1g2",
+      "deltaPoints": 0.3674626350402832
+    },
+    {
+      "id": "generated/seed1827/O2g1",
+      "deltaPoints": 0.024461746215820312
+    },
+    {
+      "id": "generated/seed1827/O2g2",
+      "deltaPoints": 0.01812577247619629
+    },
+    {
+      "id": "generated/seed1830/O0g1",
+      "deltaPoints": 0.09465813636779785
+    },
+    {
+      "id": "generated/seed1830/O0g2",
+      "deltaPoints": 0.09643435478210449
+    },
+    {
+      "id": "generated/seed1830/O1g1",
+      "deltaPoints": 0.15881657600402832
+    },
+    {
+      "id": "generated/seed1830/O1g2",
+      "deltaPoints": 0.16017556190490723
+    },
+    {
+      "id": "generated/seed1830/O2g1",
+      "deltaPoints": 0.08189678192138672
+    },
+    {
+      "id": "generated/seed1830/O2g2",
+      "deltaPoints": 0.08354783058166504
+    },
+    {
+      "id": "generated/seed1837/O0g1",
+      "deltaPoints": 0.10210275650024414
+    },
+    {
+      "id": "generated/seed1837/O0g2",
+      "deltaPoints": 0.10248422622680664
+    },
+    {
+      "id": "generated/seed1837/O1g1",
+      "deltaPoints": 0.14722347259521484
+    },
+    {
+      "id": "generated/seed1837/O1g2",
+      "deltaPoints": 0.14739036560058594
+    },
+    {
+      "id": "generated/seed1837/O2g1",
+      "deltaPoints": 0.09702444076538086
+    },
+    {
+      "id": "generated/seed1837/O2g2",
+      "deltaPoints": 0.09728670120239258
+    },
+    {
+      "id": "generated/seed1858/O0g1",
+      "deltaPoints": 0.10386109352111816
+    },
+    {
+      "id": "generated/seed1858/O0g2",
+      "deltaPoints": 0.10388493537902832
+    },
+    {
+      "id": "generated/seed1858/O1g1",
+      "deltaPoints": 0.09987950325012207
+    },
+    {
+      "id": "generated/seed1858/O1g2",
+      "deltaPoints": 0.10527968406677246
+    },
+    {
+      "id": "generated/seed1858/O2g1",
+      "deltaPoints": -0.1414954662322998
+    },
+    {
+      "id": "generated/seed1858/O2g2",
+      "deltaPoints": -0.13571977615356445
+    },
+    {
+      "id": "generated/seed1863/O0g1",
+      "deltaPoints": 0.22063851356506348
+    },
+    {
+      "id": "generated/seed1863/O0g2",
+      "deltaPoints": 0.22172927856445312
+    },
+    {
+      "id": "generated/seed1863/O1g1",
+      "deltaPoints": 0.15488862991333008
+    },
+    {
+      "id": "generated/seed1863/O1g2",
+      "deltaPoints": 0.1552879810333252
+    },
+    {
+      "id": "generated/seed1863/O2g1",
+      "deltaPoints": 0.16450881958007812
+    },
+    {
+      "id": "generated/seed1863/O2g2",
+      "deltaPoints": 0.1653611660003662
+    },
+    {
+      "id": "generated/seed1898/O0g1",
+      "deltaPoints": 0.14037489891052246
+    },
+    {
+      "id": "generated/seed1898/O0g2",
+      "deltaPoints": 0.14306306838989258
+    },
+    {
+      "id": "generated/seed1898/O1g1",
+      "deltaPoints": 0.14435052871704102
+    },
+    {
+      "id": "generated/seed1898/O1g2",
+      "deltaPoints": 0.14513134956359863
+    },
+    {
+      "id": "generated/seed1898/O2g1",
+      "deltaPoints": 0.21201372146606445
+    },
+    {
+      "id": "generated/seed1898/O2g2",
+      "deltaPoints": 0.21410584449768066
+    },
+    {
+      "id": "generated/seed1899/O0g1",
+      "deltaPoints": 0.14116764068603516
+    },
+    {
+      "id": "generated/seed1899/O0g2",
+      "deltaPoints": 0.14296770095825195
+    },
+    {
+      "id": "generated/seed1899/O1g1",
+      "deltaPoints": 0.11902451515197754
+    },
+    {
+      "id": "generated/seed1899/O1g2",
+      "deltaPoints": 0.12058615684509277
+    },
+    {
+      "id": "generated/seed1899/O2g1",
+      "deltaPoints": -0.20408034324645996
+    },
+    {
+      "id": "generated/seed1899/O2g2",
+      "deltaPoints": -0.16045570373535156
+    },
+    {
+      "id": "generated/seed1916/O0g1",
+      "deltaPoints": 0.26217103004455566
+    },
+    {
+      "id": "generated/seed1916/O0g2",
+      "deltaPoints": 0.26741623878479004
+    },
+    {
+      "id": "generated/seed1916/O1g1",
+      "deltaPoints": 0.17066597938537598
+    },
+    {
+      "id": "generated/seed1916/O1g2",
+      "deltaPoints": 0.17552971839904785
+    },
+    {
+      "id": "generated/seed1916/O2g1",
+      "deltaPoints": -0.0036895275115966797
+    },
+    {
+      "id": "generated/seed1916/O2g2",
+      "deltaPoints": 0.0008940696716308594
+    },
+    {
+      "id": "generated/seed1932/O0g1",
+      "deltaPoints": 0.2169966697692871
+    },
+    {
+      "id": "generated/seed1932/O0g2",
+      "deltaPoints": 0.21710991859436035
+    },
+    {
+      "id": "generated/seed1932/O1g1",
+      "deltaPoints": 0.22521615028381348
+    },
+    {
+      "id": "generated/seed1932/O1g2",
+      "deltaPoints": 0.22522211074829102
+    },
+    {
+      "id": "generated/seed1945/O0g1",
+      "deltaPoints": 0.2656400203704834
+    },
+    {
+      "id": "generated/seed1945/O0g2",
+      "deltaPoints": 0.26822686195373535
+    },
+    {
+      "id": "generated/seed1945/O1g1",
+      "deltaPoints": 0.29775500297546387
+    },
+    {
+      "id": "generated/seed1945/O1g2",
+      "deltaPoints": 0.29869675636291504
+    },
+    {
+      "id": "generated/seed1945/O2g1",
+      "deltaPoints": 0.09258389472961426
+    },
+    {
+      "id": "generated/seed1945/O2g2",
+      "deltaPoints": 0.09349584579467773
+    },
+    {
+      "id": "generated/seed1961/O0g1",
+      "deltaPoints": 0.06232261657714844
+    },
+    {
+      "id": "generated/seed1961/O0g2",
+      "deltaPoints": 0.06318092346191406
+    },
+    {
+      "id": "generated/seed1961/O1g1",
+      "deltaPoints": 0.10070204734802246
+    },
+    {
+      "id": "generated/seed1961/O1g2",
+      "deltaPoints": 0.10148286819458008
+    },
+    {
+      "id": "generated/seed1961/O2g1",
+      "deltaPoints": -0.00578761100769043
+    },
+    {
+      "id": "generated/seed1961/O2g2",
+      "deltaPoints": 0.025463104248046875
+    },
+    {
+      "id": "generated/seed1999/O0g1",
+      "deltaPoints": 0.2850472927093506
+    },
+    {
+      "id": "generated/seed1999/O0g2",
+      "deltaPoints": 0.2852320671081543
+    },
+    {
+      "id": "generated/seed1999/O1g1",
+      "deltaPoints": 0.1976609230041504
+    },
+    {
+      "id": "generated/seed1999/O1g2",
+      "deltaPoints": 0.1990199089050293
+    },
+    {
+      "id": "generated/seed1999/O2g1",
+      "deltaPoints": 0.01773238182067871
+    },
+    {
+      "id": "generated/seed1999/O2g2",
+      "deltaPoints": 0.023436546325683594
+    },
+    {
+      "id": "libraries/inspect/O0g1",
+      "deltaPoints": 0.3407299518585205
+    },
+    {
+      "id": "libraries/inspect/O0g2",
+      "deltaPoints": 0.34027695655822754
+    },
+    {
+      "id": "libraries/inspect/O1g1",
+      "deltaPoints": 0.35043954849243164
+    },
+    {
+      "id": "libraries/inspect/O1g2",
+      "deltaPoints": 0.349956750869751
+    },
+    {
+      "id": "libraries/inspect/O2g1",
+      "deltaPoints": 0.5130648612976074
+    },
+    {
+      "id": "libraries/inspect/O2g2",
+      "deltaPoints": 0.5124986171722412
+    },
+    {
+      "id": "libraries/json/O1g1",
+      "deltaPoints": 0.6900608539581299
+    },
+    {
+      "id": "libraries/json/O1g2",
+      "deltaPoints": 0.6853342056274414
+    },
+    {
+      "id": "libraries/json/O2g1",
+      "deltaPoints": 0.5356013774871826
+    },
+    {
+      "id": "libraries/json/O2g2",
+      "deltaPoints": 0.5319774150848389
+    },
+    {
+      "id": "libraries/libdeflate/O0g1",
+      "deltaPoints": -0.04380345344543457
+    },
+    {
+      "id": "libraries/libdeflate/O0g2",
+      "deltaPoints": -0.04366636276245117
+    },
+    {
+      "id": "libraries/libdeflate/O1g1",
+      "deltaPoints": -0.04391670227050781
+    },
+    {
+      "id": "libraries/libdeflate/O1g2",
+      "deltaPoints": -0.04372596740722656
+    },
+    {
+      "id": "libraries/libdeflate/O2g1",
+      "deltaPoints": -0.03712773323059082
+    },
+    {
+      "id": "libraries/libdeflate/O2g2",
+      "deltaPoints": -0.03696084022521973
+    },
+    {
+      "id": "libraries/lume/O0g1",
+      "deltaPoints": 0.16928911209106445
+    },
+    {
+      "id": "libraries/lume/O0g2",
+      "deltaPoints": 0.17015933990478516
+    },
+    {
+      "id": "libraries/lume/O1g1",
+      "deltaPoints": 0.1689612865447998
+    },
+    {
+      "id": "libraries/lume/O1g2",
+      "deltaPoints": 0.1699388027191162
+    },
+    {
+      "id": "libraries/lume/O2g1",
+      "deltaPoints": 0.15102028846740723
+    },
+    {
+      "id": "libraries/lume/O2g2",
+      "deltaPoints": 0.1516282558441162
+    },
+    {
+      "id": "libraries/tween/O0g1",
+      "deltaPoints": 0.42452216148376465
+    },
+    {
+      "id": "libraries/tween/O0g2",
+      "deltaPoints": 0.42209625244140625
+    },
+    {
+      "id": "libraries/tween/O1g1",
+      "deltaPoints": 0.36667585372924805
+    },
+    {
+      "id": "libraries/tween/O1g2",
+      "deltaPoints": 0.36523938179016113
+    },
+    {
+      "id": "libraries/tween/O2g1",
+      "deltaPoints": 0.3242671489715576
+    },
+    {
+      "id": "libraries/tween/O2g2",
+      "deltaPoints": 0.3207683563232422
+    },
+    {
+      "id": "mutants/mut1-201/O0g1",
+      "deltaPoints": 0.5835056304931641
+    },
+    {
+      "id": "mutants/mut1-201/O0g2",
+      "deltaPoints": 0.5818545818328857
+    },
+    {
+      "id": "mutants/mut1-201/O2g1",
+      "deltaPoints": 0.13142824172973633
+    },
+    {
+      "id": "mutants/mut1-201/O2g2",
+      "deltaPoints": 0.13109445571899414
+    },
+    {
+      "id": "mutants/mut1-239/O0g1",
+      "deltaPoints": 0.5901753902435303
+    },
+    {
+      "id": "mutants/mut1-239/O0g2",
+      "deltaPoints": 0.5884945392608643
+    },
+    {
+      "id": "mutants/mut1-239/O2g1",
+      "deltaPoints": 0.07947087287902832
+    },
+    {
+      "id": "mutants/mut1-239/O2g2",
+      "deltaPoints": 0.07924437522888184
+    },
+    {
+      "id": "mutants/mut1-248/O0g1",
+      "deltaPoints": 0.5801200866699219
+    },
+    {
+      "id": "mutants/mut1-248/O0g2",
+      "deltaPoints": 0.5784988403320312
+    },
+    {
+      "id": "mutants/mut1-248/O2g1",
+      "deltaPoints": 0.13045668601989746
+    },
+    {
+      "id": "mutants/mut1-248/O2g2",
+      "deltaPoints": 0.1301407814025879
+    },
+    {
+      "id": "mutants/mut1-294/O0g1",
+      "deltaPoints": 0.6028592586517334
+    },
+    {
+      "id": "mutants/mut1-294/O0g2",
+      "deltaPoints": 0.6011068820953369
+    },
+    {
+      "id": "mutants/mut1-294/O2g1",
+      "deltaPoints": 0.08262395858764648
+    },
+    {
+      "id": "mutants/mut1-294/O2g2",
+      "deltaPoints": 0.08237957954406738
+    },
+    {
+      "id": "mutants/mut1-319/O0g1",
+      "deltaPoints": 0.5784749984741211
+    },
+    {
+      "id": "mutants/mut1-319/O0g2",
+      "deltaPoints": 0.5768537521362305
+    },
+    {
+      "id": "mutants/mut1-319/O2g1",
+      "deltaPoints": 0.13123750686645508
+    },
+    {
+      "id": "mutants/mut1-319/O2g2",
+      "deltaPoints": 0.13039112091064453
+    },
+    {
+      "id": "mutants/mut1-329/O0g1",
+      "deltaPoints": 0.5753874778747559
+    },
+    {
+      "id": "mutants/mut1-329/O0g2",
+      "deltaPoints": 0.5737900733947754
+    },
+    {
+      "id": "mutants/mut1-329/O2g1",
+      "deltaPoints": 0.12883543968200684
+    },
+    {
+      "id": "mutants/mut1-329/O2g2",
+      "deltaPoints": 0.12801885604858398
+    },
+    {
+      "id": "mutants/mut1-330/O0g1",
+      "deltaPoints": 0.586402416229248
+    },
+    {
+      "id": "mutants/mut1-330/O0g2",
+      "deltaPoints": 0.5847394466400146
+    },
+    {
+      "id": "mutants/mut1-330/O2g1",
+      "deltaPoints": 0.0795602798461914
+    },
+    {
+      "id": "mutants/mut1-330/O2g2",
+      "deltaPoints": 0.07933378219604492
+    },
+    {
+      "id": "mutants/mut1-332/O0g1",
+      "deltaPoints": 0.5817532539367676
+    },
+    {
+      "id": "mutants/mut1-332/O0g2",
+      "deltaPoints": 0.5801200866699219
+    },
+    {
+      "id": "mutants/mut1-332/O2g1",
+      "deltaPoints": 0.13577938079833984
+    },
+    {
+      "id": "mutants/mut1-332/O2g2",
+      "deltaPoints": 0.13543367385864258
+    },
+    {
+      "id": "mutants/mut1-464/O0g1",
+      "deltaPoints": 0.586402416229248
+    },
+    {
+      "id": "mutants/mut1-464/O0g2",
+      "deltaPoints": 0.5847394466400146
+    },
+    {
+      "id": "mutants/mut1-464/O2g1",
+      "deltaPoints": 0.0795602798461914
+    },
+    {
+      "id": "mutants/mut1-464/O2g2",
+      "deltaPoints": 0.07933378219604492
+    },
+    {
+      "id": "mutants/mut1-540/O0g1",
+      "deltaPoints": 0.5633771419525146
+    },
+    {
+      "id": "mutants/mut1-540/O0g2",
+      "deltaPoints": 0.5618453025817871
+    },
+    {
+      "id": "mutants/mut1-540/O2g1",
+      "deltaPoints": 0.10581016540527344
+    },
+    {
+      "id": "mutants/mut1-540/O2g2",
+      "deltaPoints": 0.10553598403930664
+    },
+    {
+      "id": "mutants/mut1-542/O0g1",
+      "deltaPoints": 0.6969153881072998
+    },
+    {
+      "id": "mutants/mut1-542/O0g2",
+      "deltaPoints": 0.6950199604034424
+    },
+    {
+      "id": "mutants/mut1-542/O2g1",
+      "deltaPoints": 0.0791788101196289
+    },
+    {
+      "id": "mutants/mut1-542/O2g2",
+      "deltaPoints": 0.07895231246948242
+    },
+    {
+      "id": "mutants/mut1-572/O0g1",
+      "deltaPoints": 0.5663156509399414
+    },
+    {
+      "id": "mutants/mut1-572/O0g2",
+      "deltaPoints": 0.5647599697113037
+    },
+    {
+      "id": "mutants/mut1-572/O2g1",
+      "deltaPoints": 0.12772679328918457
+    },
+    {
+      "id": "mutants/mut1-572/O2g2",
+      "deltaPoints": 0.12742280960083008
+    },
+    {
+      "id": "mutants/mut1-574/O0g1",
+      "deltaPoints": 0.5751490592956543
+    },
+    {
+      "id": "mutants/mut1-574/O0g2",
+      "deltaPoints": 0.5735516548156738
+    },
+    {
+      "id": "mutants/mut1-574/O2g1",
+      "deltaPoints": 0.037860870361328125
+    },
+    {
+      "id": "mutants/mut1-574/O2g2",
+      "deltaPoints": 0.03753304481506348
+    },
+    {
+      "id": "mutants/mut1-593/O0g1",
+      "deltaPoints": 0.5706965923309326
+    },
+    {
+      "id": "mutants/mut1-593/O0g2",
+      "deltaPoints": 0.5691289901733398
+    },
+    {
+      "id": "mutants/mut1-593/O2g1",
+      "deltaPoints": 0.13129711151123047
+    },
+    {
+      "id": "mutants/mut1-593/O2g2",
+      "deltaPoints": 0.13097524642944336
+    },
+    {
+      "id": "mutants/mut1-597/O0g1",
+      "deltaPoints": 0.5716443061828613
+    },
+    {
+      "id": "mutants/mut1-597/O0g2",
+      "deltaPoints": 0.570070743560791
+    },
+    {
+      "id": "mutants/mut1-597/O2g1",
+      "deltaPoints": 0.04293322563171387
+    },
+    {
+      "id": "mutants/mut1-597/O2g2",
+      "deltaPoints": 0.04254579544067383
+    },
+    {
+      "id": "mutants/mut1-647/O0g1",
+      "deltaPoints": 0.6888270378112793
+    },
+    {
+      "id": "mutants/mut1-647/O0g2",
+      "deltaPoints": 0.6869792938232422
+    },
+    {
+      "id": "mutants/mut1-647/O2g1",
+      "deltaPoints": 0.08048415184020996
+    },
+    {
+      "id": "mutants/mut1-647/O2g2",
+      "deltaPoints": 0.08025169372558594
+    },
+    {
+      "id": "mutants/mut1-669/O0g1",
+      "deltaPoints": 0.5801200866699219
+    },
+    {
+      "id": "mutants/mut1-669/O0g2",
+      "deltaPoints": 0.5784988403320312
+    },
+    {
+      "id": "mutants/mut1-669/O2g1",
+      "deltaPoints": 0.1311182975769043
+    },
+    {
+      "id": "mutants/mut1-669/O2g2",
+      "deltaPoints": 0.13079047203063965
+    },
+    {
+      "id": "mutants/mut1-684/O0g1",
+      "deltaPoints": 0.6805598735809326
+    },
+    {
+      "id": "mutants/mut1-684/O0g2",
+      "deltaPoints": 0.6787538528442383
+    },
+    {
+      "id": "mutants/mut1-684/O2g1",
+      "deltaPoints": 0.0800013542175293
+    },
+    {
+      "id": "mutants/mut1-684/O2g2",
+      "deltaPoints": 0.07976889610290527
+    },
+    {
+      "id": "mutants/mut1-697/O0g1",
+      "deltaPoints": 0.5558490753173828
+    },
+    {
+      "id": "mutants/mut1-697/O0g2",
+      "deltaPoints": 0.5522608757019043
+    },
+    {
+      "id": "mutants/mut1-697/O2g1",
+      "deltaPoints": -0.031632184982299805
+    },
+    {
+      "id": "mutants/mut1-697/O2g2",
+      "deltaPoints": 0.12598037719726562
+    },
+    {
+      "id": "mutants/mut1-719/O0g1",
+      "deltaPoints": 0.5671918392181396
+    },
+    {
+      "id": "mutants/mut1-719/O0g2",
+      "deltaPoints": 0.565636157989502
+    },
+    {
+      "id": "mutants/mut1-719/O2g1",
+      "deltaPoints": 0.13058781623840332
+    },
+    {
+      "id": "mutants/mut1-719/O2g2",
+      "deltaPoints": 0.13027191162109375
+    },
+    {
+      "id": "mutants/mut1-720/O0g1",
+      "deltaPoints": 0.5797326564788818
+    },
+    {
+      "id": "mutants/mut1-720/O0g2",
+      "deltaPoints": 0.5781054496765137
+    },
+    {
+      "id": "mutants/mut1-720/O2g1",
+      "deltaPoints": 0.13557076454162598
+    },
+    {
+      "id": "mutants/mut1-720/O2g2",
+      "deltaPoints": 0.13523101806640625
+    },
+    {
+      "id": "mutants/mut1-730/O0g1",
+      "deltaPoints": 0.6697177886962891
+    },
+    {
+      "id": "mutants/mut1-730/O0g2",
+      "deltaPoints": 0.6679654121398926
+    },
+    {
+      "id": "mutants/mut1-730/O2g1",
+      "deltaPoints": 0.07470846176147461
+    },
+    {
+      "id": "mutants/mut1-730/O2g2",
+      "deltaPoints": 0.07450580596923828
+    },
+    {
+      "id": "mutants/mut1-748/O0g1",
+      "deltaPoints": 0.582045316696167
+    },
+    {
+      "id": "mutants/mut1-748/O0g2",
+      "deltaPoints": 0.5804061889648438
+    },
+    {
+      "id": "mutants/mut1-748/O2g1",
+      "deltaPoints": 0.13008713722229004
+    },
+    {
+      "id": "mutants/mut1-748/O2g2",
+      "deltaPoints": 0.12976527214050293
+    },
+    {
+      "id": "mutants/mut1-752/O0g1",
+      "deltaPoints": 0.5821824073791504
+    },
+    {
+      "id": "mutants/mut1-752/O0g2",
+      "deltaPoints": 0.5805492401123047
+    },
+    {
+      "id": "mutants/mut1-752/O2g1",
+      "deltaPoints": 0.1325368881225586
+    },
+    {
+      "id": "mutants/mut1-752/O2g2",
+      "deltaPoints": 0.13155341148376465
+    },
+    {
+      "id": "mutants/mut1-758/O0g1",
+      "deltaPoints": 0.6726324558258057
+    },
+    {
+      "id": "mutants/mut1-758/O0g2",
+      "deltaPoints": 0.6708621978759766
+    },
+    {
+      "id": "mutants/mut1-758/O2g1",
+      "deltaPoints": 0.07864832878112793
+    },
+    {
+      "id": "mutants/mut1-758/O2g2",
+      "deltaPoints": 0.07842779159545898
+    },
+    {
+      "id": "mutants/mut1-760/O0g1",
+      "deltaPoints": 0.6732404232025146
+    },
+    {
+      "id": "mutants/mut1-760/O0g2",
+      "deltaPoints": 0.6714761257171631
+    },
+    {
+      "id": "mutants/mut1-760/O2g1",
+      "deltaPoints": 0.07941722869873047
+    },
+    {
+      "id": "mutants/mut1-760/O2g2",
+      "deltaPoints": 0.07919669151306152
+    },
+    {
+      "id": "mutants/mut1-764/O0g1",
+      "deltaPoints": 0.563889741897583
+    },
+    {
+      "id": "mutants/mut1-764/O0g2",
+      "deltaPoints": 0.5623519420623779
+    },
+    {
+      "id": "mutants/mut1-764/O2g1",
+      "deltaPoints": 0.10524392127990723
+    },
+    {
+      "id": "mutants/mut1-764/O2g2",
+      "deltaPoints": 0.10496973991394043
+    },
+    {
+      "id": "mutants/mut1-781/O0g1",
+      "deltaPoints": 0.598907470703125
+    },
+    {
+      "id": "mutants/mut1-781/O0g2",
+      "deltaPoints": 0.5971729755401611
+    },
+    {
+      "id": "mutants/mut1-781/O2g1",
+      "deltaPoints": 0.08123517036437988
+    },
+    {
+      "id": "mutants/mut1-781/O2g2",
+      "deltaPoints": 0.08099675178527832
+    },
+    {
+      "id": "mutants/mut1-784/O0g1",
+      "deltaPoints": 0.5972146987915039
+    },
+    {
+      "id": "mutants/mut1-784/O0g2",
+      "deltaPoints": 0.5954921245574951
+    },
+    {
+      "id": "mutants/mut1-784/O2g1",
+      "deltaPoints": 0.03916621208190918
+    },
+    {
+      "id": "mutants/mut1-784/O2g2",
+      "deltaPoints": 0.038999319076538086
+    },
+    {
+      "id": "mutants/mut1-799/O0g1",
+      "deltaPoints": 0.5684196949005127
+    },
+    {
+      "id": "mutants/mut1-799/O0g2",
+      "deltaPoints": 0.5668580532073975
+    },
+    {
+      "id": "mutants/mut1-799/O2g1",
+      "deltaPoints": 0.12429952621459961
+    },
+    {
+      "id": "mutants/mut1-799/O2g2",
+      "deltaPoints": 0.1240074634552002
+    },
+    {
+      "id": "mutants/mut1-806/O0g1",
+      "deltaPoints": 0.567924976348877
+    },
+    {
+      "id": "mutants/mut1-806/O0g2",
+      "deltaPoints": 0.5663752555847168
+    },
+    {
+      "id": "mutants/mut1-806/O2g1",
+      "deltaPoints": 0.1285254955291748
+    },
+    {
+      "id": "mutants/mut1-806/O2g2",
+      "deltaPoints": 0.12770891189575195
+    },
+    {
+      "id": "mutants/mut1-822/O0g1",
+      "deltaPoints": 0.667262077331543
+    },
+    {
+      "id": "mutants/mut1-822/O0g2",
+      "deltaPoints": 0.665515661239624
+    },
+    {
+      "id": "mutants/mut1-822/O2g1",
+      "deltaPoints": 0.07874369621276855
+    },
+    {
+      "id": "mutants/mut1-822/O2g2",
+      "deltaPoints": 0.07852315902709961
+    },
+    {
+      "id": "mutants/mut1-846/O0g1",
+      "deltaPoints": 0.5667626857757568
+    },
+    {
+      "id": "mutants/mut1-846/O0g2",
+      "deltaPoints": 0.5652070045471191
+    },
+    {
+      "id": "mutants/mut1-846/O2g1",
+      "deltaPoints": 0.1281440258026123
+    },
+    {
+      "id": "mutants/mut1-846/O2g2",
+      "deltaPoints": 0.12733936309814453
+    },
+    {
+      "id": "mutants/mut1-852/O0g1",
+      "deltaPoints": 0.5717456340789795
+    },
+    {
+      "id": "mutants/mut1-852/O0g2",
+      "deltaPoints": 0.5701661109924316
+    },
+    {
+      "id": "mutants/mut1-852/O2g1",
+      "deltaPoints": 0.12956857681274414
+    },
+    {
+      "id": "mutants/mut1-852/O2g2",
+      "deltaPoints": 0.12924671173095703
+    },
+    {
+      "id": "mutants/mut1-872/O0g1",
+      "deltaPoints": 0.59165358543396
+    },
+    {
+      "id": "mutants/mut1-872/O0g2",
+      "deltaPoints": 0.5899667739868164
+    },
+    {
+      "id": "mutants/mut1-872/O2g1",
+      "deltaPoints": -0.265735387802124
+    },
+    {
+      "id": "mutants/mut1-872/O2g2",
+      "deltaPoints": -0.26541948318481445
+    },
+    {
+      "id": "mutants/mut1-876/O0g1",
+      "deltaPoints": 0.5787968635559082
+    },
+    {
+      "id": "mutants/mut1-876/O0g2",
+      "deltaPoints": 0.57716965675354
+    },
+    {
+      "id": "mutants/mut1-876/O2g1",
+      "deltaPoints": 0.13454556465148926
+    },
+    {
+      "id": "mutants/mut1-876/O2g2",
+      "deltaPoints": 0.13420581817626953
+    },
+    {
+      "id": "mutants/mut1-889/O0g1",
+      "deltaPoints": 0.5936741828918457
+    },
+    {
+      "id": "mutants/mut1-889/O0g2",
+      "deltaPoints": 0.5919694900512695
+    },
+    {
+      "id": "mutants/mut1-889/O2g1",
+      "deltaPoints": 0.03904104232788086
+    },
+    {
+      "id": "mutants/mut1-889/O2g2",
+      "deltaPoints": 0.038874149322509766
+    },
+    {
+      "id": "mutants/mut1-950/O0g1",
+      "deltaPoints": 0.5740106105804443
+    },
+    {
+      "id": "mutants/mut1-950/O0g2",
+      "deltaPoints": 0.5724191665649414
+    },
+    {
+      "id": "mutants/mut1-950/O2g1",
+      "deltaPoints": 0.1344740390777588
+    },
+    {
+      "id": "mutants/mut1-950/O2g2",
+      "deltaPoints": 0.13413429260253906
+    },
+    {
+      "id": "mutants/mut1-954/O0g1",
+      "deltaPoints": 0.5842030048370361
+    },
+    {
+      "id": "mutants/mut1-954/O0g2",
+      "deltaPoints": 0.5825579166412354
+    },
+    {
+      "id": "mutants/mut1-954/O2g1",
+      "deltaPoints": 0.1298666000366211
+    },
+    {
+      "id": "mutants/mut1-954/O2g2",
+      "deltaPoints": 0.12955069541931152
+    },
+    {
+      "id": "mutants/mut1-971/O0g1",
+      "deltaPoints": 0.586855411529541
+    },
+    {
+      "id": "mutants/mut1-971/O0g2",
+      "deltaPoints": 0.5851924419403076
+    },
+    {
+      "id": "mutants/mut1-971/O2g1",
+      "deltaPoints": 0.10976195335388184
+    },
+    {
+      "id": "mutants/mut1-971/O2g2",
+      "deltaPoints": 0.10946989059448242
+    }
+  ]
+}

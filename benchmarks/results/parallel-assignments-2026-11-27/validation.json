@@ -1,0 +1,26 @@
+{
+  "buildExitCode": 0,
+  "node": "v22.23.5",
+  "fullUnitTests": 1566,
+  "fullUnitFiles": 146,
+  "fullUnitExitCode": 0,
+  "authoredBefore": {
+    "pass": 36,
+    "total": 36
+  },
+  "authoredAfter": {
+    "pass": 36,
+    "total": 36
+  },
+  "savedBytecodeObservations": {
+    "pass": 72,
+    "total": 72,
+    "stdoutAndStderrByteExact": true,
+    "normalReturnRequired": true
+  },
+  "qualityReplay": {
+    "profiles": 882,
+    "behaviorVerified": false
+  },
+  "strictFourTierGate": "pending integration"
+}

@@ -1,0 +1,51 @@
+{
+  "baseRevision": "885eb08b0fd1bd9beb513db9fd90e5c369e8293e",
+  "candidateSourceSha256": {
+    "src/reconstruct/TemplateFieldOrder.ts": "856437221d59347c20b3619247a8682bdbb4f6063132f85d0d35791802d9dbbb",
+    "src/reconstruct/Reconstructor.ts": "821819d50a2d7c4dc66f2fd9c75a797b0b910bbb9cdb8016fd70214563951a99"
+  },
+  "observations": [
+    {
+      "archive": "baseline-first-885.tar.gz",
+      "sha256": "f8acf7588ff82e745e1094f080cfd5c9eab3aa68fdb38d4781e61368f6f25c1d",
+      "canonicalJsTreeSha256": "8c1aafdefa0dba0610ccd2d8c232850ea3a101bc7bdddbd1b959da3996285658",
+      "summaryJsTreeHashAlgorithm": "SHA256 of sorted(relativeJSPath + NUL + hexadecimal SHA256(fileBytes)); unchanged original observation"
+    },
+    {
+      "archive": "candidate-first-885.tar.gz",
+      "sha256": "67c6e4707f94bdc1239720c098d031a33ed603925ba6878ff683d96f61825f25",
+      "canonicalJsTreeSha256": "4b74b3ae9131ee0c5f99f7c5550130d79d2455a686ffd081782cd31ffb8918e3",
+      "summaryJsTreeHashAlgorithm": "SHA256 of sorted(relativeJSPath + NUL + hexadecimal SHA256(fileBytes)); unchanged original observation"
+    }
+  ],
+  "fullUnit": {
+    "files": 155,
+    "passed": 1828,
+    "failed": 0
+  },
+  "newFocusedUnit": {
+    "passed": 28,
+    "failed": 0
+  },
+  "authoredBefore": {
+    "passed": 16,
+    "failed": 8,
+    "total": 24
+  },
+  "authoredAfter": {
+    "passed": 24,
+    "failed": 0,
+    "total": 24
+  },
+  "quickDiagnostic": {
+    "beforeSimilarity": 77.25692801599871,
+    "afterSimilarity": 77.32243386525957,
+    "deltaPoints": 0.06550584926086218,
+    "changedAndImproved": 228,
+    "sameSource": 654,
+    "regressed": 0,
+    "count": 882,
+    "behaviorVerified": false
+  },
+  "noFullOrHardRuns": true
+}

@@ -1,0 +1,593 @@
+{
+  "scope": "Quality-only replay; native authored controls below; strict combined Quick gate belongs to the integration report.",
+  "count": 882,
+  "overall": {
+    "baseline": {
+      "roundTrips": 882,
+      "similarity": 77.49586128999316,
+      "size": 0.9820264838255064,
+      "locals": 1.0824637944726487,
+      "nesting": -0.41609977324263037,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "candidate": {
+      "roundTrips": 882,
+      "similarity": 77.52962061066746,
+      "size": 0.9812874738412655,
+      "locals": 1.0813144039083078,
+      "nesting": -0.41609977324263037,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "deltas": {
+      "similarity": 0.03375932067430654,
+      "size": -0.0007390099842409237,
+      "locals": -0.0011493905643409352,
+      "nesting": 0.0,
+      "endless": 0,
+      "names": 0.0
+    }
+  },
+  "changedProfiles": {
+    "better": 90,
+    "equal": 792,
+    "worse": 0
+  },
+  "baselineReplay": "/workspace/scratch/1c4124dc88e4/measurements/baseline-replay/summary.json",
+  "candidateReplay": "/workspace/scratch/1c4124dc88e4/structure-literal-select-v1/summary.json",
+  "candidateEngineJsTreeSha256": "de829785e6f8ae51346e36f14c8aaa7286294f102aad8d0e5dbaa6faee2be479",
+  "baselineEngineJsTreeSha256": "54451c8b198ce206b2b9097f1a47feccda2bc9b9e1f11961c465ffcd9f6f4067",
+  "native": {
+    "baseline": {
+      "passed": 24,
+      "total": 24
+    },
+    "candidate": {
+      "passed": 24,
+      "total": 24
+    }
+  },
+  "perProfile": [
+    {
+      "section": "cases",
+      "name": "if_local",
+      "profile": "O0g1",
+      "similarityDelta": 0.692063570022583
+    },
+    {
+      "section": "cases",
+      "name": "if_local",
+      "profile": "O0g2",
+      "similarityDelta": 0.9443581104278564
+    },
+    {
+      "section": "cases",
+      "name": "if_local",
+      "profile": "O1g1",
+      "similarityDelta": 0.6920874118804932
+    },
+    {
+      "section": "cases",
+      "name": "if_local",
+      "profile": "O1g2",
+      "similarityDelta": 0.945359468460083
+    },
+    {
+      "section": "cases",
+      "name": "if_local",
+      "profile": "O2g1",
+      "similarityDelta": 0.40366649627685547
+    },
+    {
+      "section": "cases",
+      "name": "if_local",
+      "profile": "O2g2",
+      "similarityDelta": 0.5983591079711914
+    },
+    {
+      "section": "cases",
+      "name": "loop_exits",
+      "profile": "O0g1",
+      "similarityDelta": 0.5774378776550293
+    },
+    {
+      "section": "cases",
+      "name": "loop_exits",
+      "profile": "O0g2",
+      "similarityDelta": 0.5774378776550293
+    },
+    {
+      "section": "cases",
+      "name": "loop_exits",
+      "profile": "O1g1",
+      "similarityDelta": 0.583416223526001
+    },
+    {
+      "section": "cases",
+      "name": "loop_exits",
+      "profile": "O1g2",
+      "similarityDelta": 0.583416223526001
+    },
+    {
+      "section": "cases",
+      "name": "loop_exits",
+      "profile": "O2g1",
+      "similarityDelta": 0.7943689823150635
+    },
+    {
+      "section": "cases",
+      "name": "loop_exits",
+      "profile": "O2g2",
+      "similarityDelta": 0.7943689823150635
+    },
+    {
+      "section": "cases",
+      "name": "metatables",
+      "profile": "O0g1",
+      "similarityDelta": 0.6599903106689453
+    },
+    {
+      "section": "cases",
+      "name": "metatables",
+      "profile": "O0g2",
+      "similarityDelta": 0.6621599197387695
+    },
+    {
+      "section": "cases",
+      "name": "metatables",
+      "profile": "O1g1",
+      "similarityDelta": 0.6742119789123535
+    },
+    {
+      "section": "cases",
+      "name": "metatables",
+      "profile": "O1g2",
+      "similarityDelta": 0.6764233112335205
+    },
+    {
+      "section": "cases",
+      "name": "metatables",
+      "profile": "O2g1",
+      "similarityDelta": 0.5876779556274414
+    },
+    {
+      "section": "cases",
+      "name": "metatables",
+      "profile": "O2g2",
+      "similarityDelta": 0.5706310272216797
+    },
+    {
+      "section": "generated",
+      "name": "seed1086",
+      "profile": "O0g1",
+      "similarityDelta": 0.3297865390777588
+    },
+    {
+      "section": "generated",
+      "name": "seed1086",
+      "profile": "O0g2",
+      "similarityDelta": 0.3312051296234131
+    },
+    {
+      "section": "generated",
+      "name": "seed1086",
+      "profile": "O1g1",
+      "similarityDelta": 0.2851724624633789
+    },
+    {
+      "section": "generated",
+      "name": "seed1086",
+      "profile": "O1g2",
+      "similarityDelta": 0.2857804298400879
+    },
+    {
+      "section": "generated",
+      "name": "seed1086",
+      "profile": "O2g1",
+      "similarityDelta": 0.27449727058410645
+    },
+    {
+      "section": "generated",
+      "name": "seed1086",
+      "profile": "O2g2",
+      "similarityDelta": 0.27527809143066406
+    },
+    {
+      "section": "generated",
+      "name": "seed1121",
+      "profile": "O0g1",
+      "similarityDelta": 0.07771849632263184
+    },
+    {
+      "section": "generated",
+      "name": "seed1121",
+      "profile": "O0g2",
+      "similarityDelta": 0.09025335311889648
+    },
+    {
+      "section": "generated",
+      "name": "seed1142",
+      "profile": "O0g1",
+      "similarityDelta": 0.12616515159606934
+    },
+    {
+      "section": "generated",
+      "name": "seed1142",
+      "profile": "O0g2",
+      "similarityDelta": 0.12734532356262207
+    },
+    {
+      "section": "generated",
+      "name": "seed1142",
+      "profile": "O1g1",
+      "similarityDelta": 0.24510622024536133
+    },
+    {
+      "section": "generated",
+      "name": "seed1142",
+      "profile": "O1g2",
+      "similarityDelta": 0.38788914680480957
+    },
+    {
+      "section": "generated",
+      "name": "seed1319",
+      "profile": "O0g1",
+      "similarityDelta": 0.4640161991119385
+    },
+    {
+      "section": "generated",
+      "name": "seed1319",
+      "profile": "O0g2",
+      "similarityDelta": 0.46416521072387695
+    },
+    {
+      "section": "generated",
+      "name": "seed1319",
+      "profile": "O1g1",
+      "similarityDelta": 0.4599630832672119
+    },
+    {
+      "section": "generated",
+      "name": "seed1319",
+      "profile": "O1g2",
+      "similarityDelta": 0.45903921127319336
+    },
+    {
+      "section": "generated",
+      "name": "seed1319",
+      "profile": "O2g1",
+      "similarityDelta": 0.33513307571411133
+    },
+    {
+      "section": "generated",
+      "name": "seed1319",
+      "profile": "O2g2",
+      "similarityDelta": 0.33271312713623047
+    },
+    {
+      "section": "generated",
+      "name": "seed1429",
+      "profile": "O0g1",
+      "similarityDelta": 0.12710094451904297
+    },
+    {
+      "section": "generated",
+      "name": "seed1429",
+      "profile": "O0g2",
+      "similarityDelta": 0.1266002655029297
+    },
+    {
+      "section": "generated",
+      "name": "seed1429",
+      "profile": "O1g1",
+      "similarityDelta": 0.13016462326049805
+    },
+    {
+      "section": "generated",
+      "name": "seed1429",
+      "profile": "O1g2",
+      "similarityDelta": 0.1291215419769287
+    },
+    {
+      "section": "generated",
+      "name": "seed1429",
+      "profile": "O2g1",
+      "similarityDelta": 0.08849501609802246
+    },
+    {
+      "section": "generated",
+      "name": "seed1429",
+      "profile": "O2g2",
+      "similarityDelta": 0.08788704872131348
+    },
+    {
+      "section": "generated",
+      "name": "seed1474",
+      "profile": "O0g1",
+      "similarityDelta": 0.24012327194213867
+    },
+    {
+      "section": "generated",
+      "name": "seed1474",
+      "profile": "O0g2",
+      "similarityDelta": 0.2416074275970459
+    },
+    {
+      "section": "generated",
+      "name": "seed1474",
+      "profile": "O1g1",
+      "similarityDelta": 0.2568185329437256
+    },
+    {
+      "section": "generated",
+      "name": "seed1474",
+      "profile": "O1g2",
+      "similarityDelta": 0.26286840438842773
+    },
+    {
+      "section": "generated",
+      "name": "seed1557",
+      "profile": "O0g1",
+      "similarityDelta": 0.10562539100646973
+    },
+    {
+      "section": "generated",
+      "name": "seed1557",
+      "profile": "O0g2",
+      "similarityDelta": 0.10524988174438477
+    },
+    {
+      "section": "generated",
+      "name": "seed1557",
+      "profile": "O1g1",
+      "similarityDelta": 0.17684698104858398
+    },
+    {
+      "section": "generated",
+      "name": "seed1557",
+      "profile": "O1g2",
+      "similarityDelta": 0.17479658126831055
+    },
+    {
+      "section": "generated",
+      "name": "seed1573",
+      "profile": "O0g1",
+      "similarityDelta": 0.2791404724121094
+    },
+    {
+      "section": "generated",
+      "name": "seed1573",
+      "profile": "O0g2",
+      "similarityDelta": 0.2790093421936035
+    },
+    {
+      "section": "generated",
+      "name": "seed1573",
+      "profile": "O1g1",
+      "similarityDelta": 0.21114349365234375
+    },
+    {
+      "section": "generated",
+      "name": "seed1573",
+      "profile": "O1g2",
+      "similarityDelta": 0.21055340766906738
+    },
+    {
+      "section": "generated",
+      "name": "seed1741",
+      "profile": "O0g1",
+      "similarityDelta": 0.3403961658477783
+    },
+    {
+      "section": "generated",
+      "name": "seed1741",
+      "profile": "O0g2",
+      "similarityDelta": 0.33864378929138184
+    },
+    {
+      "section": "generated",
+      "name": "seed1741",
+      "profile": "O1g1",
+      "similarityDelta": 0.3204345703125
+    },
+    {
+      "section": "generated",
+      "name": "seed1741",
+      "profile": "O1g2",
+      "similarityDelta": 0.31792521476745605
+    },
+    {
+      "section": "generated",
+      "name": "seed1741",
+      "profile": "O2g1",
+      "similarityDelta": 0.1273512840270996
+    },
+    {
+      "section": "generated",
+      "name": "seed1741",
+      "profile": "O2g2",
+      "similarityDelta": 0.12587904930114746
+    },
+    {
+      "section": "generated",
+      "name": "seed1827",
+      "profile": "O0g1",
+      "similarityDelta": 0.21502971649169922
+    },
+    {
+      "section": "generated",
+      "name": "seed1827",
+      "profile": "O0g2",
+      "similarityDelta": 0.21628141403198242
+    },
+    {
+      "section": "generated",
+      "name": "seed1827",
+      "profile": "O1g1",
+      "similarityDelta": 0.24265646934509277
+    },
+    {
+      "section": "generated",
+      "name": "seed1827",
+      "profile": "O1g2",
+      "similarityDelta": 0.2420961856842041
+    },
+    {
+      "section": "generated",
+      "name": "seed1858",
+      "profile": "O1g1",
+      "similarityDelta": 0.062394142150878906
+    },
+    {
+      "section": "generated",
+      "name": "seed1858",
+      "profile": "O1g2",
+      "similarityDelta": 0.06347894668579102
+    },
+    {
+      "section": "generated",
+      "name": "seed1858",
+      "profile": "O2g1",
+      "similarityDelta": 0.03196001052856445
+    },
+    {
+      "section": "generated",
+      "name": "seed1858",
+      "profile": "O2g2",
+      "similarityDelta": 0.03330111503601074
+    },
+    {
+      "section": "generated",
+      "name": "seed1932",
+      "profile": "O0g1",
+      "similarityDelta": 0.2169966697692871
+    },
+    {
+      "section": "generated",
+      "name": "seed1932",
+      "profile": "O0g2",
+      "similarityDelta": 0.21710991859436035
+    },
+    {
+      "section": "generated",
+      "name": "seed1932",
+      "profile": "O1g1",
+      "similarityDelta": 0.22521615028381348
+    },
+    {
+      "section": "generated",
+      "name": "seed1932",
+      "profile": "O1g2",
+      "similarityDelta": 0.22522211074829102
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O0g1",
+      "similarityDelta": 0.3407299518585205
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O0g2",
+      "similarityDelta": 0.34027695655822754
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O1g1",
+      "similarityDelta": 0.35043954849243164
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O1g2",
+      "similarityDelta": 0.349956750869751
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O2g1",
+      "similarityDelta": 0.5130648612976074
+    },
+    {
+      "section": "libraries",
+      "name": "inspect",
+      "profile": "O2g2",
+      "similarityDelta": 0.5124986171722412
+    },
+    {
+      "section": "libraries",
+      "name": "lume",
+      "profile": "O0g1",
+      "similarityDelta": 0.16928911209106445
+    },
+    {
+      "section": "libraries",
+      "name": "lume",
+      "profile": "O0g2",
+      "similarityDelta": 0.17015933990478516
+    },
+    {
+      "section": "libraries",
+      "name": "lume",
+      "profile": "O1g1",
+      "similarityDelta": 0.1689612865447998
+    },
+    {
+      "section": "libraries",
+      "name": "lume",
+      "profile": "O1g2",
+      "similarityDelta": 0.1699388027191162
+    },
+    {
+      "section": "libraries",
+      "name": "lume",
+      "profile": "O2g1",
+      "similarityDelta": 0.15102028846740723
+    },
+    {
+      "section": "libraries",
+      "name": "lume",
+      "profile": "O2g2",
+      "similarityDelta": 0.1516282558441162
+    },
+    {
+      "section": "libraries",
+      "name": "tween",
+      "profile": "O0g1",
+      "similarityDelta": 0.42452216148376465
+    },
+    {
+      "section": "libraries",
+      "name": "tween",
+      "profile": "O0g2",
+      "similarityDelta": 0.42209625244140625
+    },
+    {
+      "section": "libraries",
+      "name": "tween",
+      "profile": "O1g1",
+      "similarityDelta": 0.36667585372924805
+    },
+    {
+      "section": "libraries",
+      "name": "tween",
+      "profile": "O1g2",
+      "similarityDelta": 0.36523938179016113
+    },
+    {
+      "section": "libraries",
+      "name": "tween",
+      "profile": "O2g1",
+      "similarityDelta": 0.3242671489715576
+    },
+    {
+      "section": "libraries",
+      "name": "tween",
+      "profile": "O2g2",
+      "similarityDelta": 0.3207683563232422
+    }
+  ]
+}

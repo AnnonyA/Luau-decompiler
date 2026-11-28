@@ -1,0 +1,547 @@
+{
+  "total": 36,
+  "pass": 36,
+  "node": "v22.23.5",
+  "results": [
+    {
+      "input": "effects-9d-O0g1.luauc",
+      "sha256": "a541392f49c6847f7b51b8fb45ced7b3d0f96ce8f5e2eb32726e33519d2b7b9d",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-9d-O0g2.luauc",
+      "sha256": "ad7ba54feac607c7762bd38531df9df79b3541ad7baa928a72523963d6f7d3a4",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-9d-O1g1.luauc",
+      "sha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-9d-O1g2.luauc",
+      "sha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-9d-O2g1.luauc",
+      "sha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-9d-O2g2.luauc",
+      "sha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-c875-O0g1.luauc",
+      "sha256": "a541392f49c6847f7b51b8fb45ced7b3d0f96ce8f5e2eb32726e33519d2b7b9d",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-c875-O0g2.luauc",
+      "sha256": "ad7ba54feac607c7762bd38531df9df79b3541ad7baa928a72523963d6f7d3a4",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-c875-O1g1.luauc",
+      "sha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-c875-O1g2.luauc",
+      "sha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-c875-O2g1.luauc",
+      "sha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "effects-c875-O2g2.luauc",
+      "sha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O0g1.luauc",
+      "sha256": "7500a1fc85ae053717d02d63913942046df6b34df19382177be640abc2917eb2",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O0g2.luauc",
+      "sha256": "3b19680c52279cc74473ef804698ac500eb00ca5e5739fe33754cadfba371f39",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O1g1.luauc",
+      "sha256": "d67654fa3be904507c4518f1ce070704320fc33522c1e631b6718aea1caca300",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O1g2.luauc",
+      "sha256": "22b353a6f4447e9d5f96adf9dc65944b6282088d01e918965a719da552be63c2",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O2g1.luauc",
+      "sha256": "8e66c68f9c5e06264fee6f992a9156f95c6c87e992b23a26eead0be449f1a6d1",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O2g2.luauc",
+      "sha256": "03f3b709e5ff60e2d8123773830421027fa52b668eec505b17f68df6735b0840",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O0g1.luauc",
+      "sha256": "7500a1fc85ae053717d02d63913942046df6b34df19382177be640abc2917eb2",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O0g2.luauc",
+      "sha256": "3b19680c52279cc74473ef804698ac500eb00ca5e5739fe33754cadfba371f39",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O1g1.luauc",
+      "sha256": "d67654fa3be904507c4518f1ce070704320fc33522c1e631b6718aea1caca300",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O1g2.luauc",
+      "sha256": "22b353a6f4447e9d5f96adf9dc65944b6282088d01e918965a719da552be63c2",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O2g1.luauc",
+      "sha256": "8e66c68f9c5e06264fee6f992a9156f95c6c87e992b23a26eead0be449f1a6d1",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O2g2.luauc",
+      "sha256": "03f3b709e5ff60e2d8123773830421027fa52b668eec505b17f68df6735b0840",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-9d-O0g1.luauc",
+      "sha256": "7abb73eb34e750d6c9e82b4d09511f1b2ac406a00538e366234eef2b28301d16",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-9d-O0g2.luauc",
+      "sha256": "c377f7d18f276e4cc4fc975e5b1dc4b5bf079eec6075ebcdaf08f662e095ef10",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-9d-O1g1.luauc",
+      "sha256": "557ef60db78ac821642ca8e64a5b975fa881bc7abf788addb0c44b6dfcdf401a",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-9d-O1g2.luauc",
+      "sha256": "671eb221ce7a67283397d325b258fde2f943fe9cd5825ff44f01c5a1a10af201",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-9d-O2g1.luauc",
+      "sha256": "19133083a24dad84f22874a24fe5870ce3b9df4083cc58048e19542ed3318c40",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-9d-O2g2.luauc",
+      "sha256": "7d50fce7f0cbb5d47e28e6f10ee60a748da07bd2dc63463e671a097bdf239847",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-c875-O0g1.luauc",
+      "sha256": "7abb73eb34e750d6c9e82b4d09511f1b2ac406a00538e366234eef2b28301d16",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-c875-O0g2.luauc",
+      "sha256": "c377f7d18f276e4cc4fc975e5b1dc4b5bf079eec6075ebcdaf08f662e095ef10",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-c875-O1g1.luauc",
+      "sha256": "557ef60db78ac821642ca8e64a5b975fa881bc7abf788addb0c44b6dfcdf401a",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-c875-O1g2.luauc",
+      "sha256": "671eb221ce7a67283397d325b258fde2f943fe9cd5825ff44f01c5a1a10af201",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-c875-O2g1.luauc",
+      "sha256": "19133083a24dad84f22874a24fe5870ce3b9df4083cc58048e19542ed3318c40",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    },
+    {
+      "input": "records-c875-O2g2.luauc",
+      "sha256": "7d50fce7f0cbb5d47e28e6f10ee60a748da07bd2dc63463e671a097bdf239847",
+      "pass": true,
+      "original": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "candidate": {
+        "exit": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      }
+    }
+  ]
+}

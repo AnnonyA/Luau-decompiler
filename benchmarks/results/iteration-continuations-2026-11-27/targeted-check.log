@@ -1,0 +1,5 @@
+ann: 12/12 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+readability on the 12 round trips every decompiler passed:
+  decompiler  similarity   size  locals  nesting  endless  names g2  cpu ms
+  ann              81.8%  1.24x   1.13x    +1.17        0     76.4%  293.91
+12 round trips in 0.6s

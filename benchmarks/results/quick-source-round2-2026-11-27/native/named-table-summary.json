@@ -1,0 +1,1394 @@
+{
+  "kind": "independent-integrated-engine-review",
+  "head": "eba3c9971283a322e2e300834a6cc95fdd437b9c",
+  "total": 36,
+  "passed": {
+    "baseline": 24,
+    "candidate": 36
+  },
+  "regressions": [],
+  "fixed": [
+    "names-and-packs-9d-O1g1.luauc",
+    "names-and-packs-9d-O1g2.luauc",
+    "names-and-packs-9d-O2g1.luauc",
+    "names-and-packs-9d-O2g2.luauc",
+    "names-and-packs-c875-O1g1.luauc",
+    "names-and-packs-c875-O1g2.luauc",
+    "names-and-packs-c875-O2g1.luauc",
+    "names-and-packs-c875-O2g2.luauc",
+    "records-9d-O2g1.luauc",
+    "records-9d-O2g2.luauc",
+    "records-c875-O2g1.luauc",
+    "records-c875-O2g2.luauc"
+  ],
+  "rows": [
+    {
+      "input": "effects-9d-O0g1.luauc",
+      "source": "effects.luau",
+      "profile": "O0g1",
+      "pin": "9d",
+      "originalSha256": "a541392f49c6847f7b51b8fb45ced7b3d0f96ce8f5e2eb32726e33519d2b7b9d",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "c69297567a82f9d914b42983b17e3516b5011cb21f74289c45e2ce0f5bdcc196",
+          "bytecodeSha256": "db7ff84282a05b1292da9393e883ad8fd00983341139108e2e7d9c9dea6529af"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "fcf97b36258593f011da8762f6a1d3bca71455a5c83a0f383cddffbc63851149",
+          "bytecodeSha256": "db7ff84282a05b1292da9393e883ad8fd00983341139108e2e7d9c9dea6529af"
+        }
+      }
+    },
+    {
+      "input": "effects-9d-O0g2.luauc",
+      "source": "effects.luau",
+      "profile": "O0g2",
+      "pin": "9d",
+      "originalSha256": "ad7ba54feac607c7762bd38531df9df79b3541ad7baa928a72523963d6f7d3a4",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "3fc806fe118dc527f8ab0458e3d292f74a3e391c5bf0e5f90d686165de5438ca",
+          "bytecodeSha256": "07c6027441963b56770b653067e13207186d8ed1936e8c8b97806c49c9dd4ecb"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "63d47039439703f7f7cff3b9512d27b0b150e53e9ac933e902cb11d74d7e92cf",
+          "bytecodeSha256": "07c6027441963b56770b653067e13207186d8ed1936e8c8b97806c49c9dd4ecb"
+        }
+      }
+    },
+    {
+      "input": "effects-9d-O1g1.luauc",
+      "source": "effects.luau",
+      "profile": "O1g1",
+      "pin": "9d",
+      "originalSha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "fa496bbb3d2dfbc1075ab52176b7c42d542a51ea0b0f2d1a0c9e7902bfa12089",
+          "bytecodeSha256": "21a8e856cd179be3b89b54c48093b6f9692eb34e301403a115d97c3fdbbc259e"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "fa496bbb3d2dfbc1075ab52176b7c42d542a51ea0b0f2d1a0c9e7902bfa12089",
+          "bytecodeSha256": "21a8e856cd179be3b89b54c48093b6f9692eb34e301403a115d97c3fdbbc259e"
+        }
+      }
+    },
+    {
+      "input": "effects-9d-O1g2.luauc",
+      "source": "effects.luau",
+      "profile": "O1g2",
+      "pin": "9d",
+      "originalSha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "00d33ca2b25ff327d0bd7a8afb7af4d272d5ae047d7d562b02f8c24cde6c108d",
+          "bytecodeSha256": "d0cc2020fb5e7c96a2b607ffdf67c91d290fd692452f93c2a58931a2772eedc6"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "00d33ca2b25ff327d0bd7a8afb7af4d272d5ae047d7d562b02f8c24cde6c108d",
+          "bytecodeSha256": "d0cc2020fb5e7c96a2b607ffdf67c91d290fd692452f93c2a58931a2772eedc6"
+        }
+      }
+    },
+    {
+      "input": "effects-9d-O2g1.luauc",
+      "source": "effects.luau",
+      "profile": "O2g1",
+      "pin": "9d",
+      "originalSha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "fa496bbb3d2dfbc1075ab52176b7c42d542a51ea0b0f2d1a0c9e7902bfa12089",
+          "bytecodeSha256": "21a8e856cd179be3b89b54c48093b6f9692eb34e301403a115d97c3fdbbc259e"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "fa496bbb3d2dfbc1075ab52176b7c42d542a51ea0b0f2d1a0c9e7902bfa12089",
+          "bytecodeSha256": "21a8e856cd179be3b89b54c48093b6f9692eb34e301403a115d97c3fdbbc259e"
+        }
+      }
+    },
+    {
+      "input": "effects-9d-O2g2.luauc",
+      "source": "effects.luau",
+      "profile": "O2g2",
+      "pin": "9d",
+      "originalSha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "00d33ca2b25ff327d0bd7a8afb7af4d272d5ae047d7d562b02f8c24cde6c108d",
+          "bytecodeSha256": "d0cc2020fb5e7c96a2b607ffdf67c91d290fd692452f93c2a58931a2772eedc6"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "00d33ca2b25ff327d0bd7a8afb7af4d272d5ae047d7d562b02f8c24cde6c108d",
+          "bytecodeSha256": "d0cc2020fb5e7c96a2b607ffdf67c91d290fd692452f93c2a58931a2772eedc6"
+        }
+      }
+    },
+    {
+      "input": "effects-c875-O0g1.luauc",
+      "source": "effects.luau",
+      "profile": "O0g1",
+      "pin": "c875",
+      "originalSha256": "a541392f49c6847f7b51b8fb45ced7b3d0f96ce8f5e2eb32726e33519d2b7b9d",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "fcf97b36258593f011da8762f6a1d3bca71455a5c83a0f383cddffbc63851149",
+          "bytecodeSha256": "db7ff84282a05b1292da9393e883ad8fd00983341139108e2e7d9c9dea6529af"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "fcf97b36258593f011da8762f6a1d3bca71455a5c83a0f383cddffbc63851149",
+          "bytecodeSha256": "db7ff84282a05b1292da9393e883ad8fd00983341139108e2e7d9c9dea6529af"
+        }
+      }
+    },
+    {
+      "input": "effects-c875-O0g2.luauc",
+      "source": "effects.luau",
+      "profile": "O0g2",
+      "pin": "c875",
+      "originalSha256": "ad7ba54feac607c7762bd38531df9df79b3541ad7baa928a72523963d6f7d3a4",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "63d47039439703f7f7cff3b9512d27b0b150e53e9ac933e902cb11d74d7e92cf",
+          "bytecodeSha256": "07c6027441963b56770b653067e13207186d8ed1936e8c8b97806c49c9dd4ecb"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "58021ecd4a31e6c12ae5a429065026597672228fa62cff6797b9d9845f736809",
+          "bytecodeSha256": "07c6027441963b56770b653067e13207186d8ed1936e8c8b97806c49c9dd4ecb"
+        }
+      }
+    },
+    {
+      "input": "effects-c875-O1g1.luauc",
+      "source": "effects.luau",
+      "profile": "O1g1",
+      "pin": "c875",
+      "originalSha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "6dc5b6a874d6570d2893ffd86f2eaba56678ffc195ba8c2265a3d9be468bd6cc",
+          "bytecodeSha256": "21a8e856cd179be3b89b54c48093b6f9692eb34e301403a115d97c3fdbbc259e"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "6dc5b6a874d6570d2893ffd86f2eaba56678ffc195ba8c2265a3d9be468bd6cc",
+          "bytecodeSha256": "21a8e856cd179be3b89b54c48093b6f9692eb34e301403a115d97c3fdbbc259e"
+        }
+      }
+    },
+    {
+      "input": "effects-c875-O1g2.luauc",
+      "source": "effects.luau",
+      "profile": "O1g2",
+      "pin": "c875",
+      "originalSha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "2c2ee919d2abae9c0bfaea145668e2ca41126d110756f5139f290b90ea3f4b92",
+          "bytecodeSha256": "d0cc2020fb5e7c96a2b607ffdf67c91d290fd692452f93c2a58931a2772eedc6"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "2c2ee919d2abae9c0bfaea145668e2ca41126d110756f5139f290b90ea3f4b92",
+          "bytecodeSha256": "d0cc2020fb5e7c96a2b607ffdf67c91d290fd692452f93c2a58931a2772eedc6"
+        }
+      }
+    },
+    {
+      "input": "effects-c875-O2g1.luauc",
+      "source": "effects.luau",
+      "profile": "O2g1",
+      "pin": "c875",
+      "originalSha256": "c0090b675d6f889c86266544efdd35d4fb3bd1c915763ed101b5edebae474b8f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "6dc5b6a874d6570d2893ffd86f2eaba56678ffc195ba8c2265a3d9be468bd6cc",
+          "bytecodeSha256": "21a8e856cd179be3b89b54c48093b6f9692eb34e301403a115d97c3fdbbc259e"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "6dc5b6a874d6570d2893ffd86f2eaba56678ffc195ba8c2265a3d9be468bd6cc",
+          "bytecodeSha256": "21a8e856cd179be3b89b54c48093b6f9692eb34e301403a115d97c3fdbbc259e"
+        }
+      }
+    },
+    {
+      "input": "effects-c875-O2g2.luauc",
+      "source": "effects.luau",
+      "profile": "O2g2",
+      "pin": "c875",
+      "originalSha256": "6ff966da6193d66eba18ca9fa31fa75b7db5ab6b997bc76357e58b7613f48749",
+      "original": {
+        "exitCode": 0,
+        "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "2c2ee919d2abae9c0bfaea145668e2ca41126d110756f5139f290b90ea3f4b92",
+          "bytecodeSha256": "d0cc2020fb5e7c96a2b607ffdf67c91d290fd692452f93c2a58931a2772eedc6"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "nil\teffect\tread\n13\t113\t113\ttake\t3,13\n",
+          "stderr": "",
+          "sourceSha256": "2c2ee919d2abae9c0bfaea145668e2ca41126d110756f5139f290b90ea3f4b92",
+          "bytecodeSha256": "d0cc2020fb5e7c96a2b607ffdf67c91d290fd692452f93c2a58931a2772eedc6"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O0g1.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O0g1",
+      "pin": "9d",
+      "originalSha256": "7500a1fc85ae053717d02d63913942046df6b34df19382177be640abc2917eb2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "c7876cbdac70e6d24c8fefa3410d46de22a53072b60c38e723587193a8971a5b",
+          "bytecodeSha256": "6520ca0c8ebdb251794286877d8e9f12eb9b308e30400e0748032f0218679482"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "e00d7f618474f812e8cef60ab7486105d59db1455c4c4f1105161c1665b5fba9",
+          "bytecodeSha256": "00ffd6db8a2453e7c552ddadc1cfbd973297f43d5fd7a3f429d920986bc5acea"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O0g2.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O0g2",
+      "pin": "9d",
+      "originalSha256": "3b19680c52279cc74473ef804698ac500eb00ca5e5739fe33754cadfba371f39",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "89655ee46ec08ee909ae0eb8b5d6de19f51948b74b7e6834a3ae1be59e52896f",
+          "bytecodeSha256": "f65526536de8eea921433bd5aaf4527977e613827c4773a6ca70683dc2da750d"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "eeb2fcc98f8db6a82279136b94cec96e536bf2c0be82e394c78d5087fca47d08",
+          "bytecodeSha256": "4baefa1a9b8e99e3661c8822d32516500f76c4e1581e79111047732aed0e57b2"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O1g1.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O1g1",
+      "pin": "9d",
+      "originalSha256": "d67654fa3be904507c4518f1ce070704320fc33522c1e631b6718aea1caca300",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\t\n",
+          "stderr": "",
+          "sourceSha256": "e1ca477d398fb85a998dc017720e9580ead2e2d50aca10837b5f9851c76e9541",
+          "bytecodeSha256": "562c897ac98004b96ee9eb69a2c74d9bb7acf4acb183c72cc7c395ac93d988da"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "b3dfbff15cad884ab3d0c0c228b7a59e1e12a950eb36d71653d608c58eddf48c",
+          "bytecodeSha256": "ed3ce97e43adc5d21c3454d963f8f439fec5a088f7a287a77871253779b7d776"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O1g2.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O1g2",
+      "pin": "9d",
+      "originalSha256": "22b353a6f4447e9d5f96adf9dc65944b6282088d01e918965a719da552be63c2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\t\n",
+          "stderr": "",
+          "sourceSha256": "15600637f996adc5fcbbdc10e286b1415dfcd3ec1bf79432afc6f9e5fbda07a7",
+          "bytecodeSha256": "1936f031ebf8c867d17f2da413a72996373fbf8208973ec0ce923e1b841c39b8"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "e5fed3a357bb9262e8142d7211b7f0117d1ae1b8395ab4e4546467726dbce9bc",
+          "bytecodeSha256": "0740c08f85fe2676ea134538eb9788428bb464e24029ad5bc9cf8716430e2089"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O2g1.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O2g1",
+      "pin": "9d",
+      "originalSha256": "8e66c68f9c5e06264fee6f992a9156f95c6c87e992b23a26eead0be449f1a6d1",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\t\n",
+          "stderr": "",
+          "sourceSha256": "20cbb77ca4b3467b8010af8b83a59e0bfc025e2c0648554cc7f6a9bc1976e15e",
+          "bytecodeSha256": "7a6d8a119a024b60024b431846942ab79588c916236da8fa6ef87587c5320a89"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "2350dc4e752e7715b21f5e10975ddc7d667e47ddd73fcd399e05cb161c1e4054",
+          "bytecodeSha256": "a1d20e94fe7ce4ed10be87290e34b2b119edda3ceb3768b3eaabe15d288c4da9"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-9d-O2g2.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O2g2",
+      "pin": "9d",
+      "originalSha256": "03f3b709e5ff60e2d8123773830421027fa52b668eec505b17f68df6735b0840",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\t\n",
+          "stderr": "",
+          "sourceSha256": "8c60530ece1d7d9ac78c1b4ee1e178c60745d4fef76c78407f4de617e0f9e57e",
+          "bytecodeSha256": "4213149d897abd45d4dc7bc9846ebfa15ad70ffa1244b77593ec9776b97b33ec"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "73f0e08ae26f75c6bc117b53c4e92ba1e1a7aa9fa0b9ce8e5d8122dc043dfd1f",
+          "bytecodeSha256": "92363b43a6c9b0a3e77496d71296884e145d7e002c9313db845b88c2e61341cd"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O0g1.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O0g1",
+      "pin": "c875",
+      "originalSha256": "7500a1fc85ae053717d02d63913942046df6b34df19382177be640abc2917eb2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "fb0265e766213dc077925c1ad465d189544878ed0a932ff802d69cdcddf54a97",
+          "bytecodeSha256": "6520ca0c8ebdb251794286877d8e9f12eb9b308e30400e0748032f0218679482"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "753f3f3a33d542cf4091b64c46d14513e2ea9a89080d3f9a13aee78fcec7e0ef",
+          "bytecodeSha256": "00ffd6db8a2453e7c552ddadc1cfbd973297f43d5fd7a3f429d920986bc5acea"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O0g2.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O0g2",
+      "pin": "c875",
+      "originalSha256": "3b19680c52279cc74473ef804698ac500eb00ca5e5739fe33754cadfba371f39",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "d135f645ed1bb43c9953ca8f24541c91475913c08677dd73bfcdf65f11df8c70",
+          "bytecodeSha256": "f65526536de8eea921433bd5aaf4527977e613827c4773a6ca70683dc2da750d"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "71092d1939c23337cde03d9cc2fe829e6afc6c0d968497d635cb4c487f10bdf5",
+          "bytecodeSha256": "4baefa1a9b8e99e3661c8822d32516500f76c4e1581e79111047732aed0e57b2"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O1g1.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O1g1",
+      "pin": "c875",
+      "originalSha256": "d67654fa3be904507c4518f1ce070704320fc33522c1e631b6718aea1caca300",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\t\n",
+          "stderr": "",
+          "sourceSha256": "f7183c5ff3140681ab32e31126389eda994ee1bc359ae14dfcf6c42ad9a6b5b0",
+          "bytecodeSha256": "562c897ac98004b96ee9eb69a2c74d9bb7acf4acb183c72cc7c395ac93d988da"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "9d50563d02e4166f22daec94534c40bff2a17f165999428a5de1826aef48f1f2",
+          "bytecodeSha256": "ed3ce97e43adc5d21c3454d963f8f439fec5a088f7a287a77871253779b7d776"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O1g2.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O1g2",
+      "pin": "c875",
+      "originalSha256": "22b353a6f4447e9d5f96adf9dc65944b6282088d01e918965a719da552be63c2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\t\n",
+          "stderr": "",
+          "sourceSha256": "4763065cb2d5735068507c4695572be5e9b157841a10145838fe06af3cda0232",
+          "bytecodeSha256": "1936f031ebf8c867d17f2da413a72996373fbf8208973ec0ce923e1b841c39b8"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "784ccf8d16e59f82298c2391432790a41d309b47a285d1430204c931c2f7c1ea",
+          "bytecodeSha256": "0740c08f85fe2676ea134538eb9788428bb464e24029ad5bc9cf8716430e2089"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O2g1.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O2g1",
+      "pin": "c875",
+      "originalSha256": "8e66c68f9c5e06264fee6f992a9156f95c6c87e992b23a26eead0be449f1a6d1",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\t\n",
+          "stderr": "",
+          "sourceSha256": "410b915d88eb704c693a148ed88f894f9ab0fd35fd82e416026f858c736bac04",
+          "bytecodeSha256": "7a6d8a119a024b60024b431846942ab79588c916236da8fa6ef87587c5320a89"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "29675a9102df8e4b49d52d39780d7e5ccf2078bdb6165e833fbdbd1c67cf5069",
+          "bytecodeSha256": "a1d20e94fe7ce4ed10be87290e34b2b119edda3ceb3768b3eaabe15d288c4da9"
+        }
+      }
+    },
+    {
+      "input": "names-and-packs-c875-O2g2.luauc",
+      "source": "names-and-packs.luau",
+      "profile": "O2g2",
+      "pin": "c875",
+      "originalSha256": "03f3b709e5ff60e2d8123773830421027fa52b668eec505b17f68df6735b0840",
+      "original": {
+        "exitCode": 0,
+        "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\t\n",
+          "stderr": "",
+          "sourceSha256": "1dc4c53c7f90cae86916094c1c94740e782d2a5d3ccaa454663206a42f529572",
+          "bytecodeSha256": "4213149d897abd45d4dc7bc9846ebfa15ad70ffa1244b77593ec9776b97b33ec"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "outer\tread\nvalues\t3\t1\tnil\t3\n0\n10\tsum\n17\toriginal\n",
+          "stderr": "",
+          "sourceSha256": "ab491f650a4947bc2b5f458ae708d5cc680b3af2780850511599a9113ddaf108",
+          "bytecodeSha256": "92363b43a6c9b0a3e77496d71296884e145d7e002c9313db845b88c2e61341cd"
+        }
+      }
+    },
+    {
+      "input": "records-9d-O0g1.luauc",
+      "source": "records.luau",
+      "profile": "O0g1",
+      "pin": "9d",
+      "originalSha256": "7abb73eb34e750d6c9e82b4d09511f1b2ac406a00538e366234eef2b28301d16",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "b1887d60cb92cff392ce29f1cf5aa9efc87760128411c9a158dab2cf26854938",
+          "bytecodeSha256": "615228b59199e3f257a6c3d53e61adc0c75db1432e4e88b4b98ec4c88dfc4030"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "ff40c3773303fc63c5fba201a6093935f25fffd1221c14df33381ce85a792291",
+          "bytecodeSha256": "b09ffecd63bd59547084c467fb2349e36cb66dabc93802a5d7c728e8bd558e30"
+        }
+      }
+    },
+    {
+      "input": "records-9d-O0g2.luauc",
+      "source": "records.luau",
+      "profile": "O0g2",
+      "pin": "9d",
+      "originalSha256": "c377f7d18f276e4cc4fc975e5b1dc4b5bf079eec6075ebcdaf08f662e095ef10",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "986640687cbd93a00b5c9d1b2378b5bc0da703856c13d814af7b5b0297ae3436",
+          "bytecodeSha256": "4f9505831e8bb267f5f6db96e897ca5731aacc7ea00e053749bb3e689ddd5817"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "c2da5687f4390bda0e71eaac83089e7351cdd3749af15a49bfdabf451a9db4d5",
+          "bytecodeSha256": "b293a4d15dee0eaee7eb7b57679fd5c76ebf9c551b22028f79f02db0128b00db"
+        }
+      }
+    },
+    {
+      "input": "records-9d-O1g1.luauc",
+      "source": "records.luau",
+      "profile": "O1g1",
+      "pin": "9d",
+      "originalSha256": "557ef60db78ac821642ca8e64a5b975fa881bc7abf788addb0c44b6dfcdf401a",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "bd288ce0d26ebd80a558b918de33ef5cbc12c48edaf6ca04142734a40cc20c11",
+          "bytecodeSha256": "fb47194db5891f9b7d51843ae4fe7da98f6dcd9e8ee348235a7cc7b8f9333ac9"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "871b2252937d1a09548b1e4880cc867c8a2fa37a7c9549a22c974511c752fd1d",
+          "bytecodeSha256": "472a5eca57741773b186100253ddf3804d65fc7546ca8ecf6440dafa97223af8"
+        }
+      }
+    },
+    {
+      "input": "records-9d-O1g2.luauc",
+      "source": "records.luau",
+      "profile": "O1g2",
+      "pin": "9d",
+      "originalSha256": "671eb221ce7a67283397d325b258fde2f943fe9cd5825ff44f01c5a1a10af201",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "6cd58b9bfecd629b48ed0e74ed04765abf2120b6f393110bfbc207b8993dd9a3",
+          "bytecodeSha256": "e331cbd4746496965f8f8bf95f0577c2281f9317ae77a2ac009128c6aa59e289"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "a90bcae47460ab12077f8ceaf7df32b86fb50e7073ba6d9a7dc68f283501db83",
+          "bytecodeSha256": "07bae360631de52d1eea7ed899850cad73fda05203441e263252d5f07d579ae4"
+        }
+      }
+    },
+    {
+      "input": "records-9d-O2g1.luauc",
+      "source": "records.luau",
+      "profile": "O2g1",
+      "pin": "9d",
+      "originalSha256": "19133083a24dad84f22874a24fe5870ce3b9df4083cc58048e19542ed3318c40",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\n\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "9d85c6f059aa6b7916eda33cc6d229c9a8a1cd9d55474840780dbdeef8b0b073",
+          "bytecodeSha256": "085d143f34b19306323981c8612d33a060d803df25be052135dc98a7fb9861be"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "e91b2d448bacff88b4634e96341f6f1df4794863938a3f84c706d3f6382d6638",
+          "bytecodeSha256": "57e0e15afa73e56a68d2dc823fc9edf64f04c12dc7597e67e12981db6af1555d"
+        }
+      }
+    },
+    {
+      "input": "records-9d-O2g2.luauc",
+      "source": "records.luau",
+      "profile": "O2g2",
+      "pin": "9d",
+      "originalSha256": "7d50fce7f0cbb5d47e28e6f10ee60a748da07bd2dc63463e671a097bdf239847",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\n\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "59c9baaed0691360e00a4bcf064dd545cdd6befe107ca9dbb8e21a3220ac006b",
+          "bytecodeSha256": "fe334dd0eb80b3e339c98f5fddb7051fafff97cf266b886c13ae392ccb49b357"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "e1e4cfcef6550e631c71f317ee193a43292033f1de6c253fc2eb9fffdeaff97b",
+          "bytecodeSha256": "5d516acc26be315ebfd31006dbea902b2d5718b96025115885797c19fa5158f2"
+        }
+      }
+    },
+    {
+      "input": "records-c875-O0g1.luauc",
+      "source": "records.luau",
+      "profile": "O0g1",
+      "pin": "c875",
+      "originalSha256": "7abb73eb34e750d6c9e82b4d09511f1b2ac406a00538e366234eef2b28301d16",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "7de716abf4e29e3f2c39c3bbcda0a100553e0b1ad94313f71ca52e49df28ed64",
+          "bytecodeSha256": "615228b59199e3f257a6c3d53e61adc0c75db1432e4e88b4b98ec4c88dfc4030"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "19393ce9fe8fa09167f703d06a55e52fab04c7cf2ee2d49c174193c3ea339c78",
+          "bytecodeSha256": "b09ffecd63bd59547084c467fb2349e36cb66dabc93802a5d7c728e8bd558e30"
+        }
+      }
+    },
+    {
+      "input": "records-c875-O0g2.luauc",
+      "source": "records.luau",
+      "profile": "O0g2",
+      "pin": "c875",
+      "originalSha256": "c377f7d18f276e4cc4fc975e5b1dc4b5bf079eec6075ebcdaf08f662e095ef10",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "4af187a5a03f680c7730ef79c2b8ed69dec9c26ef67732ad172a7940a5a1f356",
+          "bytecodeSha256": "4f9505831e8bb267f5f6db96e897ca5731aacc7ea00e053749bb3e689ddd5817"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\tfalse\tnil\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "a7bfa6d3f362854719e35f25763cfbbd1f4d19ce06380bfb84741305d1b3d14b",
+          "bytecodeSha256": "b293a4d15dee0eaee7eb7b57679fd5c76ebf9c551b22028f79f02db0128b00db"
+        }
+      }
+    },
+    {
+      "input": "records-c875-O1g1.luauc",
+      "source": "records.luau",
+      "profile": "O1g1",
+      "pin": "c875",
+      "originalSha256": "557ef60db78ac821642ca8e64a5b975fa881bc7abf788addb0c44b6dfcdf401a",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "aa99158c306f364d4dfd9a0dac208e8b7255c6b581b218ca3a8331c354c9e950",
+          "bytecodeSha256": "fb47194db5891f9b7d51843ae4fe7da98f6dcd9e8ee348235a7cc7b8f9333ac9"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "f04faf25db291f0bc52c3cc4b7040006c1242da984f031831e99fec8a7602402",
+          "bytecodeSha256": "472a5eca57741773b186100253ddf3804d65fc7546ca8ecf6440dafa97223af8"
+        }
+      }
+    },
+    {
+      "input": "records-c875-O1g2.luauc",
+      "source": "records.luau",
+      "profile": "O1g2",
+      "pin": "c875",
+      "originalSha256": "671eb221ce7a67283397d325b258fde2f943fe9cd5825ff44f01c5a1a10af201",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "f50f91c04acbd8f0f85b0bbe3d19bb15becc87d56eed971a95ad121cecb8803e",
+          "bytecodeSha256": "e331cbd4746496965f8f8bf95f0577c2281f9317ae77a2ac009128c6aa59e289"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "2004c2d713abce342ab5171317f08c4197be172362e007587cb987a2b3e89077",
+          "bytecodeSha256": "07bae360631de52d1eea7ed899850cad73fda05203441e263252d5f07d579ae4"
+        }
+      }
+    },
+    {
+      "input": "records-c875-O2g1.luauc",
+      "source": "records.luau",
+      "profile": "O2g1",
+      "pin": "c875",
+      "originalSha256": "19133083a24dad84f22874a24fe5870ce3b9df4083cc58048e19542ed3318c40",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\n\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "fb1a34cfd2fade491a466c0bd318f1ab3639f0925033795a8c9238390e029494",
+          "bytecodeSha256": "085d143f34b19306323981c8612d33a060d803df25be052135dc98a7fb9861be"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "d8eff56eb2f119da007f2b16abe6ae5812a36154d07c446f26deee326b4d8878",
+          "bytecodeSha256": "57e0e15afa73e56a68d2dc823fc9edf64f04c12dc7597e67e12981db6af1555d"
+        }
+      }
+    },
+    {
+      "input": "records-c875-O2g2.luauc",
+      "source": "records.luau",
+      "profile": "O2g2",
+      "pin": "c875",
+      "originalSha256": "7d50fce7f0cbb5d47e28e6f10ee60a748da07bd2dc63463e671a097bdf239847",
+      "original": {
+        "exitCode": 0,
+        "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+        "stderr": ""
+      },
+      "variants": {
+        "baseline": {
+          "match": false,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\n\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "97728d7bc286d9c9791bf0eca4facf5c48ad152bb04f37df0c49247adab52387",
+          "bytecodeSha256": "fe334dd0eb80b3e339c98f5fddb7051fafff97cf266b886c13ae392ccb49b357"
+        },
+        "candidate": {
+          "match": true,
+          "codes": [
+            0,
+            0,
+            0
+          ],
+          "stdout": "read\tfalse\n4\t7\tnil\n7\t9\tnil\n4\t5\tnil\ntag\ttrue\tsaved\t91\n1\t2\t3\tfalse\n",
+          "stderr": "",
+          "sourceSha256": "ffde3ff674dc0100775ae2f5e45985126afe53d618cd3e28b1acc7e2c2d485ee",
+          "bytecodeSha256": "5d516acc26be315ebfd31006dbea902b2d5718b96025115885797c19fa5158f2"
+        }
+      }
+    }
+  ]
+}

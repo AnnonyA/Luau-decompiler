@@ -1,0 +1,59 @@
+{
+  "format": "rosetta-exact-quality-diagnostic-comparison",
+  "behaviorVerified": false,
+  "metric": "unchanged Rosetta normalized-token Myers similarity; mean of 882 pairs",
+  "baseline": {
+    "revision": "36a344eeed74d194723e6f32a0ef7d699fac550f",
+    "jsTreeSha256": "edc5ff59d69f986aad80815f2485c4437c37e3a9bd9b04e64d1d146434903cbb",
+    "quality": {
+      "roundTrips": 882,
+      "similarity": 76.92827095114995,
+      "size": 0.9927495865084095,
+      "locals": 1.0963497723161764,
+      "nesting": -0.33900226757369617,
+      "endless": 38,
+      "names": 61.02136376938835
+    }
+  },
+  "candidate": {
+    "jsTreeSha256": "a3fcbf34e408ef3229985cf852c8845ef4b2205548fb476dc9aded28f5797887",
+    "callBoundariesSourceSha256": "bffb6a59394d9cb74316a7963633023cdf983b93f20ec5d25dc106ec05713c85",
+    "quality": {
+      "roundTrips": 882,
+      "similarity": 76.96879834207007,
+      "size": 0.991644135528782,
+      "locals": 1.0963497723161764,
+      "nesting": -0.33900226757369617,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "sourceTreeSha256": "12113a5c48700bf856de02db4e2974f15e835ae7395c9ff33f4c7a02777c1d0d",
+    "distSha256": "f76159f6ea3a768923ca7f28ea3927c5f7e5de6209eefdb3cc9c943b555c78a6"
+  },
+  "count": 882,
+  "deltaSimilarityPercentagePoints": 0.04052739092011848,
+  "deltaSizeRatio": -0.0011054509796275536,
+  "sourceCapture": "quality-research/current-36a344e-quick/records",
+  "candidateCapture": "quality-research/v2-call-boundary-probe/engine-quick/records",
+  "sourceMetricHash": "1668aad84ff770bcf31a4851dc1f87caf9dc4200af7359300c78a34135fc8a6a",
+  "lexerHash": "4a5099f62f1684fd7d529b5cd37dbfadad9596bf1fa79222f6e33e6b9ff42188",
+  "scorerBinaryHash": "6967c41ee1a706c32da0ffe4712ec087932aab4f64cbb72c7f56b5300db62032",
+  "strictQuick": {
+    "passed": 882,
+    "total": 882,
+    "allPass": true,
+    "raw": "annonyA-quick.json",
+    "provenance": "annonyA-quick.provenance.json",
+    "quality": {
+      "round_trips": 882,
+      "similarity": 76.96879834207007,
+      "size": 0.9916441355287821,
+      "locals": 1.0963497723161764,
+      "nesting": -0.33900226757369617,
+      "endless": 38,
+      "names": 61.02136376938835,
+      "cpu_ms_median": 261.243,
+      "cpu_ms_total": 278197.05200000014
+    }
+  }
+}

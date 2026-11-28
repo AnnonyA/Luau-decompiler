@@ -1,0 +1,134 @@
+(node:26) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+(node:39) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-v2-locals
+
+(node:69) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/single-template-field.test.ts (19 tests) 362ms
+   ✓ pins all independently executed normal and Hard inputs without discarding the first layout failure  329ms
+(node:96) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/template-key-identity.test.ts (7 tests | 3 failed) 37ms
+   × recognizes name-key spelling of the same literal slot 22ms
+     → expected [ { …(2) } ] to deeply equal [ { name: 'ready', value: { …(2) } } ]
+   ✓ recognizes key-name spelling of the same literal slot 3ms
+   × consumes the one loader reservation when SETTABLE uses its literal string key 3ms
+     → expected [ { …(2) } ] to deeply equal [ { name: 'ready', value: { …(2) } } ]
+   × retains a different key beside the original reservation 2ms
+     → expected [ { name: 'ready', …(2) }, …(1) ] to deeply equal [ …(2) ]
+   ✓ does not equate a dynamic string expression with a known field name 2ms
+   ✓ keeps a prior call when matching the mixed key spelling 2ms
+   ✓ keeps a prior unary when matching the mixed key spelling 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/template-key-identity.test.ts > recognizes name-key spelling of the same literal slot
+AssertionError: expected [ { …(2) } ] to deeply equal [ { name: 'ready', value: { …(2) } } ]
+
+- Expected
++ Received
+
+@@ -1,8 +1,11 @@
+  [
+    {
+-     "name": "ready",
++     "key": {
++       "kind": "literal",
++       "value": "ready",
++     },
+      "value": {
+        "kind": "literal",
+        "value": 5,
+      },
+    },
+
+ ❯ tests/template-key-identity.test.ts:31:18
+     29|   const [first, second] = direction.split("-") as ["name" | "key", "na…
+     30|   const {fields} = decode([ad(Opcode.LOADN, 2, 1), ...store(first), ad…
+     31|   expect(fields).toEqual([{name: "ready", value: {kind: "literal", val…
+       |                  ^
+     32| });
+     33| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/template-key-identity.test.ts > consumes the one loader reservation when SETTABLE uses its literal string key
+AssertionError: expected [ { …(2) } ] to deeply equal [ { name: 'ready', value: { …(2) } } ]
+
+- Expected
++ Received
+
+@@ -1,8 +1,11 @@
+  [
+    {
+-     "name": "ready",
++     "key": {
++       "kind": "literal",
++       "value": "ready",
++     },
+      "value": {
+        "kind": "literal",
+        "value": 5,
+      },
+    },
+
+ ❯ tests/template-key-identity.test.ts:36:18
+     34| it("consumes the one loader reservation when SETTABLE uses its literal…
+     35|   const {fields} = decode([ad(Opcode.LOADN, 2, 5), ...store("key")], t…
+     36|   expect(fields).toEqual([{name: "ready", value: {kind: "literal", val…
+       |                  ^
+     37| });
+     38| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/template-key-identity.test.ts > retains a different key beside the original reservation
+AssertionError: expected [ { name: 'ready', …(2) }, …(1) ] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+@@ -1,15 +1,19 @@
+  [
+    {
++     "key": undefined,
+      "name": "ready",
+      "value": {
+        "kind": "literal",
+        "value": 0,
+      },
+    },
+    {
+-     "name": "other",
++     "key": {
++       "kind": "literal",
++       "value": "other",
++     },
+      "value": {
+        "kind": "literal",
+        "value": 5,
+      },
+    },
+
+ ❯ tests/template-key-identity.test.ts:41:18
+     39| it("retains a different key beside the original reservation", () => {
+     40|   const {fields} = decode([ad(Opcode.LOADN, 2, 5), ...store("key", 1)]…
+     41|   expect(fields).toEqual([{name: "ready", value: {kind: "literal", val…
+       |                  ^
+     42|     {name: "other", value: {kind: "literal", value: 5}}]);
+     43| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  3 failed | 23 passed (26)
+   Start at  23:28:43
+   Duration  1.45s (transform 520ms, setup 0ms, collect 801ms, tests 399ms, environment 0ms, prepare 66ms)
+
+(node:116) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

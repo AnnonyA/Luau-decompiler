@@ -1,0 +1,8 @@
+{
+  "createdAt": "2026-11-27T23:22:06.192Z",
+  "bytecode": "synthetic-early-read.luauc",
+  "sha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+  "version": 6,
+  "typesVersion": 1,
+  "purpose": "Observe the numeric zero from one key-only DUPTABLE slot before and the value 5 after its explicit store"
+}

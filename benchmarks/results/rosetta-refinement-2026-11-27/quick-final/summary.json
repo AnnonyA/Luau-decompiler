@@ -1,0 +1,38 @@
+{
+  "measuredLocalRevision": "232332339cf07211e791a6a67bd395a2031b20a5",
+  "measuredTree": "14632ab47e761ef11e2d4c669743f08082181223",
+  "node": "v22.23.5",
+  "baselineSimilarityPercent": 76.92827095114995,
+  "sourceSimilarityPercent": 77.49586128999316,
+  "similarityGainPercentagePoints": 0.5675903388432033,
+  "normalizedTokenRatio": 0.9820264838255065,
+  "behavior": {
+    "pass": 882,
+    "total": 882,
+    "failures": 0,
+    "exclusions": 0
+  },
+  "unitNode20": {
+    "pass": 1917,
+    "total": 1917,
+    "files": 157
+  },
+  "unitNode22": {
+    "pass": 1917,
+    "total": 1917,
+    "files": 157
+  },
+  "demoWorkerTests": {
+    "pass": 6,
+    "total": 6
+  },
+  "nativeIntegration": {
+    "pass": 96,
+    "total": 96,
+    "distinctPinInputHashes": 72,
+    "pins": 2
+  },
+  "targetPercent": 100,
+  "targetReached": false,
+  "scope": "Quick only. Earlier all-four-tier baseline remains separate. All original scorer, corpus and strict validator settings retained."
+}

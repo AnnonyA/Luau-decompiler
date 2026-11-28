@@ -22,10 +22,13 @@ import type { Diagnostic } from "../diagnostics.js";
 import { buildSsa, type SsaFunction } from "../ssa/SsaBuilder.js";
 import { computeLiveness, type Liveness } from "../dataflow/Liveness.js";
 import { NameAllocator, debugNameAt, isValidIdentifier, parameterNames } from "./Naming.js";
+import { namedClosureDeclaration } from "./ClosureNames.js";
 import { eventCallbackName, nameFromMethod, nameFromProperty } from "./RobloxSemantics.js";
 import { ClosureEffects } from "./ClosureEffects.js";
 import { analyzeClosureCachePriming, closureCacheKey, type CaptureIdentity } from "./ClosureCachePriming.js";
 import { groupDebugDeclarations, parallelLocalDefinitions } from "./DebugDeclarations.js";
+import { sharedGuardShape } from "./SharedGuards.js";
+import { restoreTemplateFieldOrder } from "./TemplateFieldOrder.js";
 
 export interface FunctionIr {
   cfg: ControlFlowGraph;
@@ -44,6 +47,96 @@ export function analyzePrototype(prototype: Prototype): FunctionIr {
   const loops = findNaturalLoops(cfg, dominators);
   const structure = structureControlFlow(cfg, dominators, postDominators, loops);
   return { cfg, dominators, postDominators, ssa, loops, structure };
+}
+
+/** A global post-dominator may be reached only in a later iteration. Replace
+ * that boundary only when a bounded acyclic prefix proves a shared point in
+ * this iteration, with RETURN as its sole permitted alternative terminator.
+ * The new point has no phis and the prefixes cannot change its live inputs. */
+export function findIterationContinuation(
+  ir: FunctionIr, basic: BasicBlock, loop: NaturalLoop, selected: number,
+  liveness: Liveness, emitted: ReadonlySet<number> = new Set(),
+): number | undefined {
+  if (basic.fallthrough === undefined || basic.branch === undefined || !loop.blocks.includes(selected)) return undefined;
+  const inside = new Set(loop.blocks);
+  // A nested loop is emitted as one structured region; its body cannot be an
+  // enclosing conditional's stop, even when the path to that body is acyclic.
+  const otherLoopBlocks = new Set(ir.loops.filter(region => !region.blocks.includes(basic.id))
+    .flatMap(region => region.blocks));
+  const backEdges = new Set(ir.loops.flatMap(region => region.backEdges.map(edge => `${edge.from}:${edge.to}`)));
+  const backward = (from: number, to: number) =>
+    backEdges.has(`${from}:${to}`) || ir.dominators.dominates(to, from);
+  const prefix = (start: number, join: number, bounded: boolean): boolean => {
+    const states = new Map<number, 1 | 2>();
+    const pending: Array<[number, boolean]> = [[start, false]];
+    const live = liveness.liveIn[join] ?? new Set<number>();
+    let reachesJoin = false;
+    while (pending.length) {
+      const [id, complete] = pending.pop()!;
+      if (id === join) { reachesJoin = true; continue; }
+      if (id === basic.id || id === loop.header) return false;
+      if (complete) { states.set(id, 2); continue; }
+      if (states.get(id) === 1) return false;
+      if (states.get(id) === 2) continue;
+      const block = ir.cfg.blocks[id];
+      if (!block || block.unreachable || states.size >= 512) return false;
+      const returns = block.successors.length === 0 && block.instructions.at(-1)?.opcode === Opcode.RETURN;
+      if (!inside.has(id) && !returns) return false;
+      if (bounded && (otherLoopBlocks.has(id) || emitted.has(id) || block.instructions.some(insn =>
+        insn.defs.some(register => live.has(register)) || iterationPrefixChangesOwnership(insn)))) return false;
+      states.set(id, 1);
+      if (returns) { states.set(id, 2); continue; }
+      if (!block.successors.length) return false;
+      pending.push([id, true]);
+      for (const successor of block.successors) {
+        if (backward(id, successor)) return false;
+        pending.push([successor, false]);
+      }
+    }
+    return reachesJoin;
+  };
+  // Keep every existing boundary whose paths already stay in this iteration.
+  if (prefix(basic.fallthrough, selected, false) && prefix(basic.branch, selected, false)) return undefined;
+  const distances = (start: number): Map<number, number> | undefined => {
+    const result = new Map<number, number>();
+    const pending: Array<[number, number]> = [[start, 0]];
+    for (let index = 0; index < pending.length; index++) {
+      const [id, distance] = pending[index]!;
+      if (result.has(id) || id === basic.id || id === loop.header || !inside.has(id)) continue;
+      if (result.size >= 512) return undefined;
+      result.set(id, distance);
+      for (const successor of ir.cfg.blocks[id]?.successors ?? []) {
+        if (!backward(id, successor)) pending.push([successor, distance + 1]);
+      }
+    }
+    return result;
+  };
+  const thenDistances = distances(basic.fallthrough), elseDistances = distances(basic.branch);
+  if (!thenDistances || !elseDistances) return undefined;
+  const candidates = [...thenDistances.keys()].filter(id => id !== selected && elseDistances.has(id) &&
+    !emitted.has(id) && !otherLoopBlocks.has(id) && ir.dominators.dominates(basic.id, id) &&
+    !ir.loops.some(region => region.header === id) && !(ir.ssa.phis.get(id)?.length));
+  candidates.sort((a, b) => Math.max(thenDistances.get(a)!, elseDistances.get(a)!) -
+    Math.max(thenDistances.get(b)!, elseDistances.get(b)!) ||
+    thenDistances.get(a)! + elseDistances.get(a)! - thenDistances.get(b)! - elseDistances.get(b)!);
+  for (const join of candidates.slice(0, 32)) {
+    if (prefix(basic.fallthrough, join, true) && prefix(basic.branch, join, true)) return join;
+  }
+  return undefined;
+}
+
+function iterationPrefixChangesOwnership(insn: DecodedInstruction): boolean {
+  const opcode = insn.opcode;
+  return effectOf(insn) === "unknown" || opcode === Opcode.PREPVARARGS || opcode === Opcode.BREAK ||
+    opcode === Opcode.CAPTURE || opcode === Opcode.CLOSEUPVALS || opcode === Opcode.NEWCLOSURE ||
+    opcode === Opcode.DUPCLOSURE || opcode === Opcode.SETUPVAL || opcode === Opcode.CALL ||
+    opcode === Opcode.CALLFB || opcode === Opcode.GETVARARGS || isFastCall(opcode) ||
+    opcode === Opcode.NAMECALL || opcode === Opcode.NAMECALLUDATA ||
+    opcode === Opcode.NEWTABLE || opcode === Opcode.DUPTABLE ||
+    opcode === Opcode.SETTABLE || opcode === Opcode.SETTABLEKS || opcode === Opcode.SETTABLEN ||
+    opcode === Opcode.SETLIST || opcode === Opcode.SETGLOBAL || opcode === Opcode.SETUDATAKS ||
+    opcode === Opcode.FORNPREP || opcode === Opcode.FORNLOOP || opcode === Opcode.FORGLOOP ||
+    opcode === Opcode.FORGPREP || opcode === Opcode.FORGPREP_INEXT || opcode === Opcode.FORGPREP_NEXT;
 }
 
 export interface ReconstructedFunction {
@@ -210,6 +303,8 @@ interface PendingTable {
   role: string;
   flushed: boolean;
   name?: string;
+  /** Exact key-only one-slot DUPTABLE allocation, before any field store. */
+  templateKey?: string;
 }
 
 /** Mutable state of a pending table, for dry-run rollback. */
@@ -1394,6 +1489,39 @@ class SourceBuilder {
           });
           return { statements, follow: thenInside ? thenId : elseId };
         }
+        if (!this.loopTails.has(activeLoop) && this.openPacks.size === 0 &&
+            !this.pendingStack.some(pending => !pending.flushed) &&
+            this.hasExternalExitWork(outsideId, activeLoop)) {
+          // Natural loops exclude a linear arm that does work and then exits.
+          // It cannot join the continuing arm in this iteration. Keep it as
+          // a guard so that the continuation owns its reaching definitions
+          // and scope (in particular callee/argument setup for repeat..until).
+          // A generic diamond would restore the split's register environment
+          // after both arms, even though only the inside arm reaches the test.
+          this.consumed.add(last.pc);
+          const statements = this.emitStraight(basic);
+          const test = this.conditionFrom(last, !thenInside);
+          const savedEnv = new Map(this.env), savedOpen = new Set(this.openPacks);
+          const savedConsumed = new Set(this.consumed), savedEmitted = new Set(this.emitted);
+          const savedPending = [...this.pendingStack], savedPendingState = this.snapshotPendings();
+          const savedPhis = new Map(this.phiNames), savedDeclared = new Set(this.declaredPhis);
+          this.pushScope();
+          const consequent = block(this.emitRange(outsideId, follow, new Set(visited)));
+          this.popScope();
+          // This arm cannot supply bindings to the continuing edge. Shared
+          // exit work may also be reached by another guard, so its emission
+          // state is local to this arm; allocated AST names remain reserved.
+          this.restore(savedEnv, savedOpen, savedConsumed, savedPending);
+          this.restorePendings(savedPendingState);
+          this.emitted.clear();
+          for (const id of savedEmitted) this.emitted.add(id);
+          this.phiNames.clear();
+          for (const [key, name] of savedPhis) this.setPhiName(key, name);
+          this.declaredPhis.clear();
+          for (const key of savedDeclared) this.declaredPhis.add(key);
+          statements.push({kind: "if", test, consequent, branches: []});
+          return {statements, follow: thenInside ? thenId : elseId};
+        }
       }
     }
 
@@ -1464,12 +1592,14 @@ class SourceBuilder {
       if (binding?.name && (binding.forwardRef || name === binding.name))
         statements.push(...this.snapshotRegisterAliases(phi.register, binding.name));
     }
-    const test = this.conditionFrom(last, true);
+    let test = this.conditionFrom(last, true);
+    const shared = this.trySharedGuard(basic, join);
+    if (shared) test = shared.test;
     const branchEnv = new Map(this.env);
     const branchEmitted = new Set(this.emitted);
     const branchConsumed = new Set(this.consumed);
     this.pushScope();
-    const consequent = block(this.emitRange(thenId, join, new Set(visited)));
+    const consequent = block(this.emitRange(shared?.body ?? thenId, join, new Set(visited)));
     const consequentEnv = new Map(this.env);
     this.popScope();
     this.env.clear();
@@ -1479,7 +1609,7 @@ class SourceBuilder {
     this.consumed.clear();
     for (const pc of branchConsumed) this.consumed.add(pc);
     this.pushScope();
-    const alternateStmts = this.emitRange(elseId, join, new Set(visited));
+    const alternateStmts = this.emitRange(shared ? join : elseId, join, new Set(visited));
     const alternateEnv = new Map(this.env);
     this.popScope();
     // Only the split's live bindings and the join's phis survive both arms.
@@ -1518,6 +1648,39 @@ class SourceBuilder {
     return { statements: [...statements, fused], follow: join, followIsJoin: true };
   }
 
+  private trySharedGuard(basic: BasicBlock, follow: number): {test: Expression; body: number} | undefined {
+    this.liveness ??= computeLiveness(this.ir.cfg);
+    const shape = sharedGuardShape(this.ir, basic, follow, this.liveness);
+    if (!shape || this.openPacks.size > 0 || this.pendingStack.some(pending => !pending.flushed)) return undefined;
+    const {guard, body} = shape;
+    if ([guard, body].some(block => this.emitted.has(block.id) || block.instructions.some(insn =>
+      this.consumed.has(insn.pc) || insn.defs.some(register => this.env.get(register)?.forwardRef)))) return undefined;
+    const savedEnv = new Map(this.env), savedOpen = new Set(this.openPacks), savedConsumed = new Set(this.consumed);
+    const savedEmitted = new Set(this.emitted);
+    const savedPending = [...this.pendingStack], savedPendingState = this.snapshotPendings();
+    const savedNames = {allocator: this.allocator.snapshot(), functionCount: this.reconstructionNames.functions.length};
+    const savedScopes = this.scopeStack.map(scope => new Set(scope));
+    const savedPhis = new Map(this.phiNames), savedDeclared = new Set(this.declaredPhis);
+    // Ordinary emission must produce only the condition expression. Any
+    // snapshot, debug declaration or retained evaluation declines the fold.
+    let right: Expression | undefined;
+    try {
+      const statements = this.emitStraight(guard);
+      if (statements.length === 0)
+        right = this.conditionFrom(guard.instructions.at(-1)!, guard.fallthrough === body.id);
+    } finally {
+      this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending,
+        savedPendingState, savedNames, savedScopes, savedPhis, savedDeclared);
+      this.emitted.clear();
+      for (const id of savedEmitted) this.emitted.add(id);
+    }
+    if (!right) return undefined;
+    const left = this.conditionFrom(basic.instructions.at(-1)!, basic.fallthrough === body.id);
+    this.emitted.add(guard.id);
+    for (const insn of guard.instructions) this.consumed.add(insn.pc);
+    return {test: {kind: "binary", op: "or", left, right}, body: body.id};
+  }
+
   private joinOf(basic: BasicBlock): number | undefined {
     if (basic.fallthrough === undefined || basic.branch === undefined) {
       return undefined;
@@ -1525,13 +1688,18 @@ class SourceBuilder {
     const structured = this.ir.structure.ifFollow.get(basic.id);
     const ipdom = structured ?? this.ir.postDominators.ipdom[basic.id];
     const loop = this.currentLoop() ?? this.innermostLoopContaining(basic.id);
+    const inIteration = (selected: number): number => {
+      if (!loop || !loop.blocks.includes(selected)) return selected;
+      this.liveness ??= computeLiveness(this.ir.cfg);
+      return findIterationContinuation(this.ir, basic, loop, selected, this.liveness, this.emitted) ?? selected;
+    };
     if (ipdom !== undefined && ipdom >= 0 && ipdom < this.ir.cfg.blocks.length && ipdom !== basic.id) {
       if (!loop || loop.blocks.includes(ipdom)) {
-        return ipdom;
+        return inIteration(ipdom);
       }
       // The immediate post-dominator leaves the loop (e.g. a break in one
       // branch); the structural join is where the non-exiting flows merge.
-      return this.commonJoin(basic.fallthrough, basic.branch, undefined) ?? ipdom;
+      return inIteration(this.commonJoin(basic.fallthrough, basic.branch, undefined) ?? ipdom);
     }
     // Reachability alone does not establish a join: an alternative may
     // return before reaching that block. Terminal regions have no follow.
@@ -1539,7 +1707,7 @@ class SourceBuilder {
     // but a shared early return outside the loop is only conditionally reached.
     // Hoisting it after the branch would also return on the backedge path.
     const localJoin = loop ? this.commonJoin(basic.fallthrough, basic.branch, undefined) : undefined;
-    return localJoin !== undefined && loop?.blocks.includes(localJoin) ? localJoin : undefined;
+    return localJoin !== undefined && loop?.blocks.includes(localJoin) ? inIteration(localJoin) : undefined;
   }
 
   /** Acyclic guards can share a continuation even when some paths return
@@ -2327,17 +2495,32 @@ class SourceBuilder {
     pending.name = name;
     // Method lifting: closures assigned to fields become method declarations
     // after the table literal (and are dropped from it).
+    const lastNamedWrite = new Map<string, number>();
+    let lastDynamicWrite = -1;
+    fields.forEach((field, index) => {
+      const key = literalFieldName(field);
+      if (key !== undefined) lastNamedWrite.set(key, index);
+      else if (field.key && field.key.kind !== "literal") lastDynamicWrite = index;
+    });
     const liftedFields = new Set<TableField>();
     const liftedStatements: Statement[] = [];
-    for (const field of fields) {
-      const lifted = this.tryLiftMethod(field, name);
+    for (const [index, field] of fields.entries()) {
+      // Moving this write after a possible overwrite would reverse the value
+      // left in the table. Captured tables were already flushed by creation.
+      const overwritten = lastDynamicWrite > index || (lastNamedWrite.get(field.name ?? "") ?? -1) > index;
+      const lifted = overwritten ? undefined : this.tryLiftMethod(field, name);
       if (lifted) {
         liftedFields.add(field);
         liftedStatements.push(lifted);
       }
     }
     const literalFields = fields.filter((field) => !liftedFields.has(field));
-    const literal: Expression = { kind: "table", fields: normalizeArrayFields(literalFields) };
+    const template = definition?.opcode === Opcode.DUPTABLE ? this.proto.constants[definition.d] : undefined;
+    const templateKey = template?.kind === "table" && template.keys.length === 1
+      ? this.proto.constants[template.keys[0]!] : undefined;
+    const literal: Expression = { kind: "table", fields: normalizeArrayFields(
+      restoreTemplateFieldOrder(literalFields, template, this.proto.constants)),
+      ...(templateKey?.kind === "string" ? {templateKeys: [templateKey.value] as const} : {}) };
     const statements: Statement[] = [...prefix, ...aliases, assignment
       ? { kind: "assign", targets: [ident(name)], values: [literal] }
       : { kind: "local", names: [name], values: [literal] }];
@@ -2360,7 +2543,9 @@ class SourceBuilder {
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       }
     }
-    return { kind: "table", fields: normalizeArrayFields(fields) };
+    const definition = this.proto.instructions.find(insn => insn.pc === pending.startPc);
+    const template = definition?.opcode === Opcode.DUPTABLE ? this.proto.constants[definition.d] : undefined;
+    return { kind: "table", fields: normalizeArrayFields(restoreTemplateFieldOrder(fields, template, this.proto.constants)) };
   }
 
   private hasMultipleTableReads(pending: PendingTable): boolean {
@@ -2669,14 +2854,16 @@ class SourceBuilder {
         if (lifted) {
           statements.push(lifted);
         } else {
+          const value = this.readRegister(insn.a, insn);
+          const keepsFunctionName = value.kind !== "function-expr" || value.debugName === name;
           statements.push({
             kind: "assign",
             targets: [
-              validFieldName
+              validFieldName && keepsFunctionName
                 ? { kind: "property", object, name: name! }
                 : { kind: "index", table: object, key: this.constantExpr(insn.constantIndex ?? 0) },
             ],
-            values: [this.readRegister(insn.a, insn)],
+            values: [value],
           });
         }
         break;
@@ -2701,6 +2888,9 @@ class SourceBuilder {
       case Opcode.NEWTABLE:
       case Opcode.DUPTABLE: {
         const fields = insn.opcode === Opcode.DUPTABLE ? this.dupTableFields(insn.d) : [];
+        const template = insn.opcode === Opcode.DUPTABLE ? this.proto.constants[insn.d] : undefined;
+        const templateKey = template?.kind === "table" && template.keys.length === 1
+          ? this.stringConstant(template.keys[0]!) : undefined;
         if (this.env.get(insn.a)?.forwardRef) {
           // A constructor assigned directly to a live REF cell is observable
           // immediately by existing closures. Use the normal cell assignment
@@ -2708,7 +2898,8 @@ class SourceBuilder {
           statements.push(...this.define(insn.a, {kind: "table", fields}, insn));
           return {statements};
         }
-        return { statements, pendingTable: { register: insn.a, fields, nested: [], startPc: insn.pc, role: this.tableRole(insn), flushed: false } };
+        return { statements, pendingTable: { register: insn.a, fields, nested: [], startPc: insn.pc,
+          role: this.tableRole(insn), flushed: false, templateKey } };
       }
       case Opcode.SETLIST: {
         const startIndex = insn.aux ?? 1;
@@ -3081,7 +3272,12 @@ class SourceBuilder {
     const fieldName = this.nextFieldName(insn);
     const mutable = captures.some((capture) => capture.capture?.type === CaptureType.REF);
     const selfCaptured = captures.some((capture) => capture.capture?.source === insn.a);
-    const onlyField = !hasFreshSnapshot && Boolean(fieldName) && !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
+    // A different export key cannot carry the prototype's debug name. Keep
+    // its named lexical binding at this creation site instead of making an
+    // anonymous literal in an aliased record field.
+    const onlyField = !hasFreshSnapshot && Boolean(fieldName) &&
+      (child.debugName === undefined || child.debugName === fieldName) &&
+      !selfCaptured && !mutable && this.onlyUsedAsFieldWrite(insn);
     const existing = this.env.get(insn.a);
     const join = shared || existing?.forwardRef ? undefined : this.phiBinding(insn.a, insn);
     // A VAL self capture must retain this particular function if a later
@@ -3181,9 +3377,11 @@ class SourceBuilder {
       if (shared.factory) {
         this.declareInScope(shared.factory);
         this.declareInScope(shared.name);
+        const declaration = namedClosureDeclaration(fn);
         return [...statements,
           {kind:"function-decl",local:true,name:shared.factory,params:[],isVararg:true,
-            body:block([{kind:"return",values:[fn]}])},
+            body:block(declaration ? [declaration, {kind:"return",values:[ident(declaration.name)]}]
+              : [{kind:"return",values:[fn]}])},
           {kind:"local",names:[shared.name],values:[{kind:"call",callee:ident(shared.factory),args:[],open:false}]},
           ...this.define(insn.a,ident(shared.name),insn)];
       }
@@ -3356,8 +3554,11 @@ class SourceBuilder {
   private pinRefCapture(register: number, fromPc: number): Statement[] {
     const existing = this.env.get(register);
     if (existing?.name && existing.pinned && this.isDeclaredInScope(existing.name)) {
+      // Copies made before the first REF capture still own their old values.
+      // Once the cell is open, child calls can mutate it without a local write.
+      const aliases = existing.forwardRef ? [] : this.snapshotRegisterAliases(register, existing.name);
       this.env.set(register, { ...existing, forwardRef: true });
-      return [];
+      return aliases;
     }
     if (existing && !existing.name) {
       const name = this.allocator.reserve(nameHint(existing.expression) ?? "value");
@@ -3795,7 +3996,13 @@ class SourceBuilder {
 
   private removePureField(pending: PendingTable, field: TableField): void {
     const previous = pending.fields.findIndex((candidate) => sameFieldKey(candidate, field));
-    if (previous >= 0 && !pending.fields[previous]!.list && isPureValue(pending.fields[previous]!.value)) {
+    const old = pending.fields[previous];
+    // Cross-spelling recovery consumes only the exact original zero slot.
+    // Ordinary duplicate writes can encode a different hash allocation/order.
+    const mixedSpelling = old && (old.name !== undefined) !== (field.name !== undefined);
+    const reservation = pending.templateKey !== undefined && literalFieldName(field) === pending.templateKey &&
+      pending.fields.length === 1 && pending.nested.length === 0 && old?.value.kind === "literal" && old.value.value === 0;
+    if (old && !old.list && isPureValue(old.value) && (!mixedSpelling || reservation)) {
       pending.fields.splice(previous, 1);
     }
   }
@@ -3806,8 +4013,15 @@ class SourceBuilder {
       return [];
     }
     if (constant.kind === "table") {
-      // DUPTABLE key reservations initially contain nil, not source-level
-      // assignments. Explicit subsequent nil writes must remain observable.
+      // The VM loader initializes key-only template slots to numeric zero.
+      // Retain the exact single slot if construction is interrupted: dropping
+      // it changes both an early field read and subsequent hash reallocation.
+      if (constant.keys.length === 1) {
+        const key = this.proto.constants[constant.keys[0]!];
+        if (key?.kind === "string") return [{ ...(isValidIdentifier(key.value) ? { name: key.value } : { key: lit(key.value) }), value: lit(0) }];
+      }
+      // Recovering larger templates needs their complete allocation/layout
+      // proof; the bounded single-slot recovery does not expand to those.
       return [];
     }
     if (constant.kind === "tableWithConstants") {
@@ -4638,9 +4852,15 @@ function compareOp(opcode: Opcode): BinaryOperator {
   }
 }
 
+function literalFieldName(field: TableField): string | undefined {
+  return field.name ?? (field.key?.kind === "literal" && typeof field.key.value === "string" ? field.key.value : undefined);
+}
+
 function sameFieldKey(left: TableField, right: TableField): boolean {
-  if (left.name && right.name) {
-    return left.name === right.name;
+  const leftName = literalFieldName(left);
+  const rightName = literalFieldName(right);
+  if (leftName !== undefined && rightName !== undefined) {
+    return leftName === rightName;
   }
   if (left.key && right.key) {
     return expressionsEqual(left.key, right.key);

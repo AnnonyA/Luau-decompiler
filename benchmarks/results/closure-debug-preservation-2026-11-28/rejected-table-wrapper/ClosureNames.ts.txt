@@ -1,0 +1,13 @@
+import type {Expression, FunctionExpression} from '../ast/Ast.js';
+import {isValidIdentifier} from './Naming.js';
+
+/** A function expression in a return or assignment has no source debug name.
+ * A record field supplies the exact original name without declaring a local
+ * that could shadow a free binding in the function body. The temporary record
+ * never escapes; the one physical literal and its native constant pool remain
+ * in the same executing function. This adds no call or observable call frame.
+ * Independently implemented from Luau Parser.cpp parseTableConstructor. */
+export function namedClosureValue(fn: FunctionExpression): Expression {
+  if (!fn.debugName || !isValidIdentifier(fn.debugName)) return fn;
+  return {kind: 'property', object: {kind: 'table', fields: [{name: fn.debugName, value: fn}]}, name: fn.debugName};
+}

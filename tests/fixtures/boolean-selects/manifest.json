@@ -1,0 +1,67 @@
+{
+  "source": "selected-effects.luau",
+  "sourceSha256": "b8d5440d202665198194a9eac9298e42c2d0471f60189c5f69d0e7eda62df280",
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "entries": [
+    {
+      "profile": "O0g1",
+      "bytecode": "selected-effects-O0g1.luauc",
+      "sha256": "ab290c8fb215afd555dde629c4d873ebb2655eb1ead5ab9158e27073fcf16e89"
+    },
+    {
+      "profile": "O1g1",
+      "bytecode": "selected-effects-O1g1.luauc",
+      "sha256": "0977b36d87f0c99fabb93e90fb74cf2777ad77cebd67b8da4f89d7664f60254f"
+    },
+    {
+      "profile": "O2g1",
+      "bytecode": "selected-effects-O2g1.luauc",
+      "sha256": "334f2526e99cae27743fcd5979057c973b056c684e20b19df1d5a7750448fca3"
+    },
+    {
+      "profile": "O0g2",
+      "bytecode": "selected-effects-O0g2.luauc",
+      "sha256": "bfb823b157bba3cad67142494e47421dda0295c0b8f059b937d127265ec127f4"
+    },
+    {
+      "profile": "O1g2",
+      "bytecode": "selected-effects-O1g2.luauc",
+      "sha256": "f47e23f714b039af291179e690d2019dd3a0bbe0900caa242b0d328abf8196fa"
+    },
+    {
+      "profile": "O2g2",
+      "bytecode": "selected-effects-O2g2.luauc",
+      "sha256": "b36a0d3ea82894f1735ecf643e418567e86131a78fbbca3372ae06c8e7cb4fec"
+    },
+    {
+      "profile": "O0g1+x1",
+      "bytecode": "selected-effects-O0g1+x1.luauc",
+      "sha256": "7ff1ca67e89f85a48c80c9632227fb634b6a49d96b4391f68925ded22b5d3c08"
+    },
+    {
+      "profile": "O1g1+x2",
+      "bytecode": "selected-effects-O1g1+x2.luauc",
+      "sha256": "2058685542586c63cd806942b0a05184df77f53eb013f0eabd7388348a4c6c76"
+    },
+    {
+      "profile": "O2g1+x3",
+      "bytecode": "selected-effects-O2g1+x3.luauc",
+      "sha256": "b30ce1979cf385a0a0ccf8288c642843c058ab0cc811729675375461ff18126c"
+    },
+    {
+      "profile": "O0g2+x2",
+      "bytecode": "selected-effects-O0g2+x2.luauc",
+      "sha256": "a5605534fd7482e83a6f73bf67751993fff99e7d04d47a8ff6a8aba27360bcdb"
+    },
+    {
+      "profile": "O1g2+x3",
+      "bytecode": "selected-effects-O1g2+x3.luauc",
+      "sha256": "4e84c5a5c1623013e45285012a372dd9aba70fa991bffaf871b14e039faab860"
+    },
+    {
+      "profile": "O2g2+x1",
+      "bytecode": "selected-effects-O2g2+x1.luauc",
+      "sha256": "99daae8d63c2eb56eb1f4134bd4067a91fe0a5a27139f068decefe7f3b497d57"
+    }
+  ]
+}

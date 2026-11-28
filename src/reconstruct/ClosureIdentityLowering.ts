@@ -6,6 +6,7 @@ import { Opcode } from "../decode/Opcode.js";
 import type { BytecodeModule } from "../decode/Prototype.js";
 import { NameAllocator } from "./Naming.js";
 import { rewriteRegisterCount } from "./RegisterBudget.js";
+import { namedClosureDeclaration } from "./ClosureNames.js";
 
 type Load = { index: number; statement: Statement; fn: FunctionExpression; key: string };
 
@@ -24,6 +25,12 @@ export function lowerClosureIdentity(ast: Chunk, module: BytecodeModule): {
   const inventory = new Set<string>();
   forEachDeclaredName(ast.body, name => inventory.add(name));
   forEachIdentifier(ast.body, name => inventory.add(name));
+  // A named literal may have no same-spelled storage binding yet. Its
+  // exact-name declaration must never shadow the generated result cell.
+  visitObjects(ast.body, node => {
+    const value = node as Expression;
+    if (value.kind === "function-expr" && value.debugName) inventory.add(value.debugName);
+  });
   const names = new NameAllocator(inventory);
   const expected = new Map<string, number>();
   for (const proto of module.prototypes) for (const insn of proto.instructions) {
@@ -103,7 +110,12 @@ export function lowerClosureIdentity(ast: Chunk, module: BytecodeModule): {
       indices: loads.flatMap((load, index) => load.key === key ? [index] : []),
       fn: loads.find(load => load.key === key)!.fn,
     }));
-    const store = (fn: FunctionExpression): Statement => ({kind: "assign", targets: [ident(loaded)], values: [fn]});
+    const store = (fn: FunctionExpression): Statement => {
+      const declaration = namedClosureDeclaration(fn);
+      return declaration ? {kind: "do", body: block([declaration,
+        {kind: "assign", targets: [ident(loaded)], values: [ident(declaration.name)]}])}
+        : {kind: "assign", targets: [ident(loaded)], values: [fn]};
+    };
     const select: Statement = bySlot.length === 1 ? store(bySlot[0]!.fn) : {
       kind: "if", test: tests(bySlot[0]!.indices), consequent: block([store(bySlot[0]!.fn)]),
       branches: bySlot.slice(1, -1).map(slot => ({test: tests(slot.indices), body: block([store(slot.fn)])})),

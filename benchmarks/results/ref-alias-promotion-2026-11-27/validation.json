@@ -1,0 +1,83 @@
+{
+  "buildExitCode": 0,
+  "firstUnit": {
+    "pass": 1,
+    "fail": 3,
+    "total": 4,
+    "exitCode": 1
+  },
+  "focusedUnit": {
+    "pass": 23,
+    "total": 23,
+    "files": 3,
+    "exitCode": 0
+  },
+  "fullUnit": {
+    "pass": 1804,
+    "total": 1804,
+    "files": 155,
+    "exitCode": 0
+  },
+  "initialNative": {
+    "pass": 24,
+    "fail": 12,
+    "total": 36,
+    "exitCode": 1
+  },
+  "finalNative": {
+    "pass": 36,
+    "fail": 0,
+    "total": 36,
+    "exitCode": 0,
+    "originalObservationsUnchanged": true,
+    "perPin": {
+      "9d": {
+        "profiles": 18,
+        "matches": 18
+      },
+      "c875": {
+        "profiles": 18,
+        "matches": 18
+      }
+    }
+  },
+  "runtimeContract": "Successful compile/decompile/recompile, normal VM return, and byte-exact stdout and stderr.",
+  "quickDiagnostic": {
+    "behaviorVerified": false,
+    "profiles": 882,
+    "baseline": {
+      "roundTrips": 882,
+      "similarity": 77.25692801599871,
+      "size": 0.9854781501051264,
+      "locals": 1.0836565496359418,
+      "nesting": -0.34807256235827666,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "candidate": {
+      "roundTrips": 882,
+      "similarity": 77.25739926437673,
+      "size": 0.985485047415707,
+      "locals": 1.0836654207255476,
+      "nesting": -0.34807256235827666,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "deltas": {
+      "similarity": 0.0004712483780195953,
+      "size": 6.897310580566973e-06,
+      "locals": 8.87108960578864e-06,
+      "nesting": 0.0,
+      "endless": 0,
+      "names": 0.0
+    },
+    "changedProfiles": {
+      "better": 6,
+      "equal": 874,
+      "worse": 2
+    },
+    "changedOutputProfiles": 9
+  },
+  "strictQuickGate": "Pending parent integration; this diagnostic replay does not execute the programs.",
+  "noFullOrHardBenchmarkRun": true
+}

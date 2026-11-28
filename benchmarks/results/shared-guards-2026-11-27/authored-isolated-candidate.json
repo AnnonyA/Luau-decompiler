@@ -1,0 +1,913 @@
+{
+  "purpose": "authored shared-guard round trips on both pinned official compiler/VM revisions",
+  "engineDist": "/workspace/scratch/eb5e4be57451/similarity-v3-guards/dist",
+  "label": "candidate-v2",
+  "profiles": 36,
+  "pass": 32,
+  "fail": 4,
+  "allPass": false,
+  "records": [
+    {
+      "id": "c875/loop-observations/O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g1",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "72169bab1e9967aa7ed526874b67c6e1483297acae96b13ff6b53c636f2406a1",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "7a1bc80bdd647004f6a95b4a77a92a860c2ed0de2102ec77b54dcc9f2a711323",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "40ba87c06b0a6e3a5a55e7f5e1daab1ab3ef2fe9fc8833cf24891b1dd2340516"
+    },
+    {
+      "id": "c875/loop-observations/O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g2",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "a2ad94253ff3c13b2112fd9a32815f8cca9c1197788c273269fbf717245f386c",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "cfd5285136aa02326ff9b4c61c288327223e1299133bdbbc5c12e7744acb261f",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "1e6ff3835b08679f5d193129a3a56aec8adf020e4488e975fb552eebaefe69b9"
+    },
+    {
+      "id": "c875/loop-observations/O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g1",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "968b37f820e47b6f9f7a808a3ad4b803248296ba54d9093472adfd4c86c17926",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "d580e6116b849beccdb8df98da7af7cfee35b250f3a6c2aa66a23689bddc9b34",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "88d29e30e5aba33d99266f6fa7001cbb03bf15792c6da96d8408459b1337e3b8"
+    },
+    {
+      "id": "c875/loop-observations/O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g2",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "b2c0a423d527a748d6c6a5f58d5c9ea503a12a69920726eba34d288b95329002",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "35ec01f42c81262a2d78706a061e60f073f9649e8db9d66031b76b05186f2974",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "5a947cdecc0bc345eaff99841cdbb7e599efb58aa7e0c6d09da52a6e26929a7d"
+    },
+    {
+      "id": "c875/loop-observations/O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g1",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "968b37f820e47b6f9f7a808a3ad4b803248296ba54d9093472adfd4c86c17926",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "d580e6116b849beccdb8df98da7af7cfee35b250f3a6c2aa66a23689bddc9b34",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "88d29e30e5aba33d99266f6fa7001cbb03bf15792c6da96d8408459b1337e3b8"
+    },
+    {
+      "id": "c875/loop-observations/O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g2",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "b2c0a423d527a748d6c6a5f58d5c9ea503a12a69920726eba34d288b95329002",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "35ec01f42c81262a2d78706a061e60f073f9649e8db9d66031b76b05186f2974",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "5a947cdecc0bc345eaff99841cdbb7e599efb58aa7e0c6d09da52a6e26929a7d"
+    },
+    {
+      "id": "c875/ordered-lookup/O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g1",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "fa977b06120fd34d8bfce7799fba80aed9ad58b2b40e105ff4992962a92e825e",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "c419b235dcd4479794740728fe62cff85bcf2a071c4ca37ee664c7776f68c083",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "f79076df59f97e9b9fba0accec6ad2506f594858964c2c48878adf41632377cb"
+    },
+    {
+      "id": "c875/ordered-lookup/O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g2",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "4fd60b70cf7f4d7f5ea37f974e75ac2dfb5516a61a1984b3bdeb83941bb24eaf",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "d3af730289eb85120c9b7c46e152f5ea1d8b9e275a34a7b92a0ffedd732fe9b8",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "0e16b66ecd4b1940108f69c37e257f2f37f126509122da7dc3d5a2f3d3e0d589"
+    },
+    {
+      "id": "c875/ordered-lookup/O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g1",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "5781fac285592b768cf518568236f9856c0416a0b4c117d363a1e06182373b59",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "6b2cb2372741037d2063697f1806b8bf63021ca59426b0e7fa8dc107408c8c5f",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "1497b9cf1fe61648260fb0acc7509bbc3f640d38d348b5704158d839e1d924ea"
+    },
+    {
+      "id": "c875/ordered-lookup/O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g2",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "850496e015646032f9257163fb53a0bac46085385ba216879698a792ce780244",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "08a1e77e3a39bc8d146a1e9c65523e66d1b5bdbe2da62d5b07342acfbe36b10b",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "cb655d6fcb9db180dbe18442d50f90ef8bbaa3b468dabf1c8b87cd1f1eae32e1"
+    },
+    {
+      "id": "c875/ordered-lookup/O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g1",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "80faf7871aedb8bd2c1f0d779085f70e47e32aa77049b7e09819625ceeec9da8",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "51ef2454a463129ef981cb9f53580801e1e79aae5bf1df9ac7b4c9ff368cc9a6",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "fd8b09f1c127c857ff1fcf4d13e1e4d123ac5de9c673c23900ab46ad7dd7b9cc"
+    },
+    {
+      "id": "c875/ordered-lookup/O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g2",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "99b3f30502d183a8f6193ea69237637f544855fb4660bc76b32d95d5b786fc08",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "3c00f7c8f9cdbb87f631905f3b76e869371b5925e2361b74503e8fe889e5623b",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "21c0413b62800cd26784fe3ff252cfd4b73634f0730cc4324031eab7d4014d76"
+    },
+    {
+      "id": "c875/rejected-state/O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g1",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": false,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "6f09660cdcb2be7d9b7195cf73552ba15b6cc364d24c0aec18a1efc663d8c0c6",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t7\t7\nstate\tfalse\ttrue\t7\t7\tcondition/body\nstate\tfalse\tfalse\t7\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "00954fedb436ec2d0dff1b8638a32508f5e8eee37946e1b16b845269f9a683f3"
+    },
+    {
+      "id": "c875/rejected-state/O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g2",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "c1b0a1ea7b7adcd2498a5dd1a3a564c614157009a179779ce27e4412241d7847",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "473ffd63cb07c14f6786a0e2d5043f311afbb1599e8a4d7bb42e7b4fb0f94013"
+    },
+    {
+      "id": "c875/rejected-state/O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g1",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": false,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "1b99a775c476b27f659c75f4b98d3410887db159b0454a204bc8e53b0ccadbe6",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t7\t7\nstate\tfalse\ttrue\t7\t7\tcondition/body\nstate\tfalse\tfalse\t7\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "8933763145d36e95bb23289a32d483ce3331139ecf54571a7bf4ae61cb12d0df"
+    },
+    {
+      "id": "c875/rejected-state/O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g2",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "a52baf71a1b75dc879047703e2b204e850a76443c44b24b0d6d2df35cc70526a",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "35722163ba0c12368869464a85923000d712221b65c52047c13ce237ec9b37f2"
+    },
+    {
+      "id": "c875/rejected-state/O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g1",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "cbb1f77f28bde457c1d4f375931e55b9d635bfb3286670bb2ec017a122db52c8",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "a932f94315d6715b88d4e3bc748fe2c8f4012d88b191d24c23c04c326ee69c09"
+    },
+    {
+      "id": "c875/rejected-state/O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g2",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "40c45b0c47a8694d6d2cf1374562307d1cffd970b20e27939eec857bb77abecc",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "86cf8523aa6fe848626f6932175671eeaba70c3f1a0bf193a8854720dd4e25fb"
+    },
+    {
+      "id": "9d/loop-observations/O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g1",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "72169bab1e9967aa7ed526874b67c6e1483297acae96b13ff6b53c636f2406a1",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "7a1bc80bdd647004f6a95b4a77a92a860c2ed0de2102ec77b54dcc9f2a711323",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "40ba87c06b0a6e3a5a55e7f5e1daab1ab3ef2fe9fc8833cf24891b1dd2340516"
+    },
+    {
+      "id": "9d/loop-observations/O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g2",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "a2ad94253ff3c13b2112fd9a32815f8cca9c1197788c273269fbf717245f386c",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "cfd5285136aa02326ff9b4c61c288327223e1299133bdbbc5c12e7744acb261f",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "1e6ff3835b08679f5d193129a3a56aec8adf020e4488e975fb552eebaefe69b9"
+    },
+    {
+      "id": "9d/loop-observations/O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g1",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "968b37f820e47b6f9f7a808a3ad4b803248296ba54d9093472adfd4c86c17926",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "d580e6116b849beccdb8df98da7af7cfee35b250f3a6c2aa66a23689bddc9b34",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "88d29e30e5aba33d99266f6fa7001cbb03bf15792c6da96d8408459b1337e3b8"
+    },
+    {
+      "id": "9d/loop-observations/O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g2",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "b2c0a423d527a748d6c6a5f58d5c9ea503a12a69920726eba34d288b95329002",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "35ec01f42c81262a2d78706a061e60f073f9649e8db9d66031b76b05186f2974",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "5a947cdecc0bc345eaff99841cdbb7e599efb58aa7e0c6d09da52a6e26929a7d"
+    },
+    {
+      "id": "9d/loop-observations/O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g1",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "968b37f820e47b6f9f7a808a3ad4b803248296ba54d9093472adfd4c86c17926",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "d580e6116b849beccdb8df98da7af7cfee35b250f3a6c2aa66a23689bddc9b34",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "88d29e30e5aba33d99266f6fa7001cbb03bf15792c6da96d8408459b1337e3b8"
+    },
+    {
+      "id": "9d/loop-observations/O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g2",
+      "originalSourceSha256": "fdd3e598b97006bfa1ecb20282a99d80b9f4abd7ad98ce5030e2209baf27f994",
+      "originalBytecodeSha256": "b2c0a423d527a748d6c6a5f58d5c9ea503a12a69920726eba34d288b95329002",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "35ec01f42c81262a2d78706a061e60f073f9649e8db9d66031b76b05186f2974",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "5a947cdecc0bc345eaff99841cdbb7e599efb58aa7e0c6d09da52a6e26929a7d"
+    },
+    {
+      "id": "9d/ordered-lookup/O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g1",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "fa977b06120fd34d8bfce7799fba80aed9ad58b2b40e105ff4992962a92e825e",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "c419b235dcd4479794740728fe62cff85bcf2a071c4ca37ee664c7776f68c083",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "f79076df59f97e9b9fba0accec6ad2506f594858964c2c48878adf41632377cb"
+    },
+    {
+      "id": "9d/ordered-lookup/O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g2",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "4fd60b70cf7f4d7f5ea37f974e75ac2dfb5516a61a1984b3bdeb83941bb24eaf",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "d3af730289eb85120c9b7c46e152f5ea1d8b9e275a34a7b92a0ffedd732fe9b8",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "0e16b66ecd4b1940108f69c37e257f2f37f126509122da7dc3d5a2f3d3e0d589"
+    },
+    {
+      "id": "9d/ordered-lookup/O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g1",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "5781fac285592b768cf518568236f9856c0416a0b4c117d363a1e06182373b59",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "6b2cb2372741037d2063697f1806b8bf63021ca59426b0e7fa8dc107408c8c5f",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "1497b9cf1fe61648260fb0acc7509bbc3f640d38d348b5704158d839e1d924ea"
+    },
+    {
+      "id": "9d/ordered-lookup/O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g2",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "850496e015646032f9257163fb53a0bac46085385ba216879698a792ce780244",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "08a1e77e3a39bc8d146a1e9c65523e66d1b5bdbe2da62d5b07342acfbe36b10b",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "cb655d6fcb9db180dbe18442d50f90ef8bbaa3b468dabf1c8b87cd1f1eae32e1"
+    },
+    {
+      "id": "9d/ordered-lookup/O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g1",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "80faf7871aedb8bd2c1f0d779085f70e47e32aa77049b7e09819625ceeec9da8",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "51ef2454a463129ef981cb9f53580801e1e79aae5bf1df9ac7b4c9ff368cc9a6",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "fd8b09f1c127c857ff1fcf4d13e1e4d123ac5de9c673c23900ab46ad7dd7b9cc"
+    },
+    {
+      "id": "9d/ordered-lookup/O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g2",
+      "originalSourceSha256": "6371ccee0eabe1ce21866036d9d50cd9f4b725495831833356478c041c0cc8d2",
+      "originalBytecodeSha256": "99b3f30502d183a8f6193ea69237637f544855fb4660bc76b32d95d5b786fc08",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "3c00f7c8f9cdbb87f631905f3b76e869371b5925e2361b74503e8fe889e5623b",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "21c0413b62800cd26784fe3ff252cfd4b73634f0730cc4324031eab7d4014d76"
+    },
+    {
+      "id": "9d/rejected-state/O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g1",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": false,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "6f09660cdcb2be7d9b7195cf73552ba15b6cc364d24c0aec18a1efc663d8c0c6",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t7\t7\nstate\tfalse\ttrue\t7\t7\tcondition/body\nstate\tfalse\tfalse\t7\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "00954fedb436ec2d0dff1b8638a32508f5e8eee37946e1b16b845269f9a683f3"
+    },
+    {
+      "id": "9d/rejected-state/O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g2",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "c1b0a1ea7b7adcd2498a5dd1a3a564c614157009a179779ce27e4412241d7847",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "473ffd63cb07c14f6786a0e2d5043f311afbb1599e8a4d7bb42e7b4fb0f94013"
+    },
+    {
+      "id": "9d/rejected-state/O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g1",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": false,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "1b99a775c476b27f659c75f4b98d3410887db159b0454a204bc8e53b0ccadbe6",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t7\t7\nstate\tfalse\ttrue\t7\t7\tcondition/body\nstate\tfalse\tfalse\t7\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "8933763145d36e95bb23289a32d483ce3331139ecf54571a7bf4ae61cb12d0df"
+    },
+    {
+      "id": "9d/rejected-state/O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g2",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "a52baf71a1b75dc879047703e2b204e850a76443c44b24b0d6d2df35cc70526a",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "35722163ba0c12368869464a85923000d712221b65c52047c13ce237ec9b37f2"
+    },
+    {
+      "id": "9d/rejected-state/O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g1",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "cbb1f77f28bde457c1d4f375931e55b9d635bfb3286670bb2ec017a122db52c8",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "a932f94315d6715b88d4e3bc748fe2c8f4012d88b191d24c23c04c326ee69c09"
+    },
+    {
+      "id": "9d/rejected-state/O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g2",
+      "originalSourceSha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d",
+      "originalBytecodeSha256": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "40c45b0c47a8694d6d2cf1374562307d1cffd970b20e27939eec857bb77abecc",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "86cf8523aa6fe848626f6932175671eeaba70c3f1a0bf193a8854720dd4e25fb"
+    }
+  ],
+  "nodeExitCode": 0,
+  "finishedAt": "2026-11-27T23:50:38.734850+00:00"
+}

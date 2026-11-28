@@ -1,0 +1,35 @@
+{
+  "baseCommit": "fc6e10a88bfc97a04c53e6a2651977e5c6b50051",
+  "sourceFiles": {
+    "src/reconstruct/Reconstructor.ts": "67b93f69849de4eb4b15be9da1f33f054e8e8a55fcf964d3505411e17fbcfaf3",
+    "src/reconstruct/ClosureIdentityLowering.ts": "d3fe6fe0b36567557b8531f3d8d3a4e9f067dbc38b3dbd899764e0bf56749370",
+    "src/reconstruct/ClosureNames.ts": "3f26b750d916a4eb179b9def8cf8a36ceeaab7f3c9a99fd29bb454958fc48dd6",
+    "src/ast/AstCleanup.ts": "2c233fa7d7e1780765835867261822a5256a77b4bb112b13b24232f1810af1db",
+    "tests/closure-debug-preservation.test.ts": "3a9e8c24c43a25719f0d7fe21e91470c9c47d6ba748241e67f96df0fcacdf637",
+    "tests/closure-identity-lowering.test.ts": "77953a2fbc74088c9e1aaa69b636fef9eca1d48d0631ec16f310e9c5266b6257"
+  },
+  "tovek": "ce2ea3325547fa3896f274b68013386338039040",
+  "luau": [
+    "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+    "9d7748a4f324213a18cb8283fa2a77c330225fa0"
+  ],
+  "implementation": "independent, no reference code copied",
+  "tests": {
+    "targetedUnit": 34,
+    "rootNative": {
+      "total": 36,
+      "pass": 36
+    },
+    "authoredNative": {
+      "total": 12,
+      "baselinePass": 0,
+      "candidatePass": 4
+    },
+    "independentAllocation": {
+      "validOriginals": 8,
+      "pass": 8,
+      "invalidOriginals": 4
+    }
+  },
+  "integratedRequiredGates": "Node20/22 full suite, parser/runtime and strict Quick remain parent integration gates"
+}

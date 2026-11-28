@@ -1,0 +1,178 @@
+{
+  "sources": [
+    {
+      "path": "aliases-and-shared-names.luau",
+      "sha256": "c4dbbd43bbedeea869c4b87870be1782b1f9cccc609edab9c35b237389e2a010"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "aliases-and-shared-names-9d-O0g1.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "9d",
+      "profile": "O0g1",
+      "sha256": "1eaf9da1d367ac9e91398253dd90a4240c6bfa6078781138856f50b4b19091aa",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-9d-O0g2.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "9d",
+      "profile": "O0g2",
+      "sha256": "3bc6243b40163033fc33d2f305a2d2510e3bf938e3bf8fb9c19207437b3ecca4",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-9d-O1g1.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "9d",
+      "profile": "O1g1",
+      "sha256": "c8312d3d2d77e0ecbb09903fb01f6ff7d7489a89da7b2a89faf09c92faf5bf70",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-9d-O1g2.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "9d",
+      "profile": "O1g2",
+      "sha256": "4991f5467cf7ac1175eed0a8aefb2975ed83d2e1eaf3176f8ac3427e2ea377be",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-9d-O2g1.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "9d",
+      "profile": "O2g1",
+      "sha256": "c9f5fb50d49ed6294a06bbfc0edc5e4ebe5cabefdf2fc6e45b0e2fe070b0e54e",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-9d-O2g2.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "9d",
+      "profile": "O2g2",
+      "sha256": "988f8f5c472823479e9bc103f1d8b80c56e0a8276db874eca5e59bac71741ecb",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-c875-O0g1.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "c875",
+      "profile": "O0g1",
+      "sha256": "1eaf9da1d367ac9e91398253dd90a4240c6bfa6078781138856f50b4b19091aa",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-c875-O0g2.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "c875",
+      "profile": "O0g2",
+      "sha256": "3bc6243b40163033fc33d2f305a2d2510e3bf938e3bf8fb9c19207437b3ecca4",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O0",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-c875-O1g1.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "c875",
+      "profile": "O1g1",
+      "sha256": "c8312d3d2d77e0ecbb09903fb01f6ff7d7489a89da7b2a89faf09c92faf5bf70",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-c875-O1g2.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "c875",
+      "profile": "O1g2",
+      "sha256": "4991f5467cf7ac1175eed0a8aefb2975ed83d2e1eaf3176f8ac3427e2ea377be",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O1",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-c875-O2g1.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "c875",
+      "profile": "O2g1",
+      "sha256": "c9f5fb50d49ed6294a06bbfc0edc5e4ebe5cabefdf2fc6e45b0e2fe070b0e54e",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g1",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    },
+    {
+      "path": "aliases-and-shared-names-c875-O2g2.luauc",
+      "source": "aliases-and-shared-names.luau",
+      "pin": "c875",
+      "profile": "O2g2",
+      "sha256": "988f8f5c472823479e9bc103f1d8b80c56e0a8276db874eca5e59bac71741ecb",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+        "--binary",
+        "-O2",
+        "-g2",
+        "/workspace/scratch/1c4124dc88e4/engine-regions/tests/fixtures/closure-debug-preservation/aliases-and-shared-names.luau"
+      ]
+    }
+  ]
+}

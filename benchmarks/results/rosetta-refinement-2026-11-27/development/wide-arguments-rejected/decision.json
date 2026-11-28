@@ -1,0 +1,22 @@
+{
+  "decision": "Rejected in full; no TempFolding change integrated.",
+  "baselineRevision": "885eb08b0fd1bd9beb513db9fd90e5c369e8293e",
+  "baselineSimilarityPercent": 77.25692801599871,
+  "initialSimilarityPercent": 77.2983019246536,
+  "initialGainPp": 0.0413739086548901,
+  "initialCompileControl": {
+    "baselinePassed": 6,
+    "candidatePassed": 0,
+    "total": 6,
+    "kind": "AST-pass authored control, not an end-to-end decompilation failure"
+  },
+  "boundedSimilarityPercent": 77.26191127516515,
+  "boundedGainPp": 0.0049832591664369374,
+  "boundedFocusedUnits": {
+    "passed": 71,
+    "total": 71
+  },
+  "reason": "Per-argument readability exposed nested call-window pressure. A conservative per-rewrite register gate reduced the Quick diagnostic gain to 0.00498326 pp, insufficient to justify extra analysis and maintenance.",
+  "quickBehaviorVerified": false,
+  "scope": "Original scorer and all 882 Quick inputs; no other tier measured for this experiment."
+}

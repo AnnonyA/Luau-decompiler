@@ -1,0 +1,723 @@
+{
+  "root": "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first",
+  "files": [
+    {
+      "path": "after/O0g1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O0g1-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O0g1-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O0g1-run.stdout",
+      "sha256": "d3d69a40c1d0b6beb7bd7875024871ea6c6030e150d7e92170cd4077cd288760",
+      "bytes": 16,
+      "text": "0\n5\n-- Returned\n"
+    },
+    {
+      "path": "after/O0g1.luauc",
+      "sha256": "60f5b1f31e3c2b4bdfb74b955b629f0c8125e1b719dfba79b46175f259864cef",
+      "bytes": 164
+    },
+    {
+      "path": "after/O0g2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O0g2-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O0g2-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O0g2-run.stdout",
+      "sha256": "d3d69a40c1d0b6beb7bd7875024871ea6c6030e150d7e92170cd4077cd288760",
+      "bytes": 16,
+      "text": "0\n5\n-- Returned\n"
+    },
+    {
+      "path": "after/O0g2.luauc",
+      "sha256": "196b8aab6a3db2d934c8d4b279c35fa18d02aed1f8a3fa63c862b9e74b0ddfd7",
+      "bytes": 179
+    },
+    {
+      "path": "after/O1g1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O1g1-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O1g1-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O1g1-run.stdout",
+      "sha256": "d3d69a40c1d0b6beb7bd7875024871ea6c6030e150d7e92170cd4077cd288760",
+      "bytes": 16,
+      "text": "0\n5\n-- Returned\n"
+    },
+    {
+      "path": "after/O1g1.luauc",
+      "sha256": "eb214d0168ee4564a43b40f6e8d88cde0e7e790af43e6c50e3786bedfe2e73f6",
+      "bytes": 149
+    },
+    {
+      "path": "after/O1g2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O1g2-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O1g2-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O1g2-run.stdout",
+      "sha256": "d3d69a40c1d0b6beb7bd7875024871ea6c6030e150d7e92170cd4077cd288760",
+      "bytes": 16,
+      "text": "0\n5\n-- Returned\n"
+    },
+    {
+      "path": "after/O1g2.luauc",
+      "sha256": "bbd2179987d8caac77b4fc0ab5a599f581483fa2048f0e1f0f1e060eaee9e845",
+      "bytes": 164
+    },
+    {
+      "path": "after/O2g1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O2g1-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O2g1-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O2g1-run.stdout",
+      "sha256": "d3d69a40c1d0b6beb7bd7875024871ea6c6030e150d7e92170cd4077cd288760",
+      "bytes": 16,
+      "text": "0\n5\n-- Returned\n"
+    },
+    {
+      "path": "after/O2g1.luauc",
+      "sha256": "eb214d0168ee4564a43b40f6e8d88cde0e7e790af43e6c50e3786bedfe2e73f6",
+      "bytes": 149
+    },
+    {
+      "path": "after/O2g2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O2g2-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O2g2-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "after/O2g2-run.stdout",
+      "sha256": "d3d69a40c1d0b6beb7bd7875024871ea6c6030e150d7e92170cd4077cd288760",
+      "bytes": 16,
+      "text": "0\n5\n-- Returned\n"
+    },
+    {
+      "path": "after/O2g2.luauc",
+      "sha256": "bbd2179987d8caac77b4fc0ab5a599f581483fa2048f0e1f0f1e060eaee9e845",
+      "bytes": 164
+    },
+    {
+      "path": "after/decompile.stderr",
+      "sha256": "4bab9aebb28c30e50cf26b894915105f7422518f071df726227981b4d63b39dc",
+      "bytes": 175,
+      "text": "(node:27) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "path": "after/decompile.stdout",
+      "sha256": "829e1d00e5d907609752b72245b1c6815ed749b270df516c6848d1d8fe6bd25d",
+      "bytes": 221,
+      "text": "-- [[ annonya.github.io ]] v0.2.0 | decompiled at 2026-11-27T23:22:19Z\n-- Luau bytecode version: 6 | Luau type version: 1\n\nlocal data = { ready = 0 }\nlocal ready = data.ready\nprint(ready)\ndata.ready = 5\nprint(data.ready)\n"
+    },
+    {
+      "path": "after/recovered.luau",
+      "sha256": "829e1d00e5d907609752b72245b1c6815ed749b270df516c6848d1d8fe6bd25d",
+      "bytes": 221,
+      "text": "-- [[ annonya.github.io ]] v0.2.0 | decompiled at 2026-11-27T23:22:19Z\n-- Luau bytecode version: 6 | Luau type version: 1\n\nlocal data = { ready = 0 }\nlocal ready = data.ready\nprint(ready)\ndata.ready = 5\nprint(data.ready)\n"
+    },
+    {
+      "path": "before/O0g1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O0g1-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O0g1-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O0g1-run.stdout",
+      "sha256": "c6e4d8926ab8202a4e95c015d1b10d7989cdf81793e17853df37cd975a9c9487",
+      "bytes": 18,
+      "text": "nil\n5\n-- Returned\n"
+    },
+    {
+      "path": "before/O0g1.luauc",
+      "sha256": "abb6afc2a50c31b3a4e2f5ff803b3a31194cccb6c3d282e34e49b98f89affee2",
+      "bytes": 141
+    },
+    {
+      "path": "before/O0g2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O0g2-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O0g2-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O0g2-run.stdout",
+      "sha256": "c6e4d8926ab8202a4e95c015d1b10d7989cdf81793e17853df37cd975a9c9487",
+      "bytes": 18,
+      "text": "nil\n5\n-- Returned\n"
+    },
+    {
+      "path": "before/O0g2.luauc",
+      "sha256": "c5162e74316b0839d671065b79788d2ab48ea6cf4a09058c20dba218d4d8ccc4",
+      "bytes": 156
+    },
+    {
+      "path": "before/O1g1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O1g1-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O1g1-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O1g1-run.stdout",
+      "sha256": "c6e4d8926ab8202a4e95c015d1b10d7989cdf81793e17853df37cd975a9c9487",
+      "bytes": 18,
+      "text": "nil\n5\n-- Returned\n"
+    },
+    {
+      "path": "before/O1g1.luauc",
+      "sha256": "9b077412d1e8d21293195417ca0e9feda10ff10e2d41b6efae9b8e2f16e850ff",
+      "bytes": 137
+    },
+    {
+      "path": "before/O1g2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O1g2-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O1g2-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O1g2-run.stdout",
+      "sha256": "c6e4d8926ab8202a4e95c015d1b10d7989cdf81793e17853df37cd975a9c9487",
+      "bytes": 18,
+      "text": "nil\n5\n-- Returned\n"
+    },
+    {
+      "path": "before/O1g2.luauc",
+      "sha256": "8612a3231711f71587488a01c1a4287308bea515ce776936a937ff4ab39f5a72",
+      "bytes": 152
+    },
+    {
+      "path": "before/O2g1-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O2g1-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O2g1-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O2g1-run.stdout",
+      "sha256": "c6e4d8926ab8202a4e95c015d1b10d7989cdf81793e17853df37cd975a9c9487",
+      "bytes": 18,
+      "text": "nil\n5\n-- Returned\n"
+    },
+    {
+      "path": "before/O2g1.luauc",
+      "sha256": "9b077412d1e8d21293195417ca0e9feda10ff10e2d41b6efae9b8e2f16e850ff",
+      "bytes": 137
+    },
+    {
+      "path": "before/O2g2-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O2g2-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O2g2-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "before/O2g2-run.stdout",
+      "sha256": "c6e4d8926ab8202a4e95c015d1b10d7989cdf81793e17853df37cd975a9c9487",
+      "bytes": 18,
+      "text": "nil\n5\n-- Returned\n"
+    },
+    {
+      "path": "before/O2g2.luauc",
+      "sha256": "8612a3231711f71587488a01c1a4287308bea515ce776936a937ff4ab39f5a72",
+      "bytes": 152
+    },
+    {
+      "path": "before/decompile.stderr",
+      "sha256": "357d92a12b89b0b80a0734e8b5802fc8f95280beb9778c6110550b880f7b5e12",
+      "bytes": 174,
+      "text": "(node:7) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "path": "before/decompile.stdout",
+      "sha256": "6e2402f50223ed3d5b43b27da0523f3976a268ed560265ca8168862352331f87",
+      "bytes": 206,
+      "text": "-- [[ annonya.github.io ]] v0.2.0 | decompiled at 2026-11-27T23:22:19Z\n-- Luau bytecode version: 6 | Luau type version: 1\n\nlocal tbl = {}\nlocal ready = tbl.ready\nprint(ready)\ntbl.ready = 5\nprint(tbl.ready)\n"
+    },
+    {
+      "path": "before/recovered.luau",
+      "sha256": "6e2402f50223ed3d5b43b27da0523f3976a268ed560265ca8168862352331f87",
+      "bytes": 206,
+      "text": "-- [[ annonya.github.io ]] v0.2.0 | decompiled at 2026-11-27T23:22:19Z\n-- Luau bytecode version: 6 | Luau type version: 1\n\nlocal tbl = {}\nlocal ready = tbl.ready\nprint(ready)\ntbl.ready = 5\nprint(tbl.ready)\n"
+    },
+    {
+      "path": "original-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "text": ""
+    },
+    {
+      "path": "original-run.stdout",
+      "sha256": "d3d69a40c1d0b6beb7bd7875024871ea6c6030e150d7e92170cd4077cd288760",
+      "bytes": 16,
+      "text": "0\n5\n-- Returned\n"
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/similarity-v2-locals/tests/fixtures/single-template-field/synthetic-early-read.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "original-run.stdout",
+      "stderr": "original-run.stderr"
+    },
+    {
+      "command": [
+        "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/parallel-quick-v1/engine-dist/cli.js",
+        "decompile",
+        "/workspace/scratch/eb5e4be57451/similarity-v2-locals/tests/fixtures/single-template-field/synthetic-early-read.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/decompile.stdout",
+      "stderr": "before/decompile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/recovered.luau",
+        "--profile",
+        "O0g1",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O0g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O0g1-compile.stdout",
+      "stderr": "before/O0g1-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O0g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O0g1-run.stdout",
+      "stderr": "before/O0g1-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/recovered.luau",
+        "--profile",
+        "O1g1",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O1g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O1g1-compile.stdout",
+      "stderr": "before/O1g1-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O1g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O1g1-run.stdout",
+      "stderr": "before/O1g1-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/recovered.luau",
+        "--profile",
+        "O2g1",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O2g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O2g1-compile.stdout",
+      "stderr": "before/O2g1-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O2g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O2g1-run.stdout",
+      "stderr": "before/O2g1-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/recovered.luau",
+        "--profile",
+        "O0g2",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O0g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O0g2-compile.stdout",
+      "stderr": "before/O0g2-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O0g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O0g2-run.stdout",
+      "stderr": "before/O0g2-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/recovered.luau",
+        "--profile",
+        "O1g2",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O1g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O1g2-compile.stdout",
+      "stderr": "before/O1g2-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O1g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O1g2-run.stdout",
+      "stderr": "before/O1g2-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/recovered.luau",
+        "--profile",
+        "O2g2",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O2g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O2g2-compile.stdout",
+      "stderr": "before/O2g2-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/before/O2g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "before/O2g2-run.stdout",
+      "stderr": "before/O2g2-run.stderr"
+    },
+    {
+      "command": [
+        "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-authored-repair-v1/engine-dist/cli.js",
+        "decompile",
+        "/workspace/scratch/eb5e4be57451/similarity-v2-locals/tests/fixtures/single-template-field/synthetic-early-read.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/decompile.stdout",
+      "stderr": "after/decompile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/recovered.luau",
+        "--profile",
+        "O0g1",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O0g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O0g1-compile.stdout",
+      "stderr": "after/O0g1-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O0g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O0g1-run.stdout",
+      "stderr": "after/O0g1-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/recovered.luau",
+        "--profile",
+        "O1g1",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O1g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O1g1-compile.stdout",
+      "stderr": "after/O1g1-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O1g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O1g1-run.stdout",
+      "stderr": "after/O1g1-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/recovered.luau",
+        "--profile",
+        "O2g1",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O2g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O2g1-compile.stdout",
+      "stderr": "after/O2g1-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O2g1.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O2g1-run.stdout",
+      "stderr": "after/O2g1-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/recovered.luau",
+        "--profile",
+        "O0g2",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O0g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O0g2-compile.stdout",
+      "stderr": "after/O0g2-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O0g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O0g2-run.stdout",
+      "stderr": "after/O0g2-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/recovered.luau",
+        "--profile",
+        "O1g2",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O1g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O1g2-compile.stdout",
+      "stderr": "after/O1g2-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O1g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O1g2-run.stdout",
+      "stderr": "after/O1g2-run.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "compile",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/recovered.luau",
+        "--profile",
+        "O2g2",
+        "--output",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O2g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O2g2-compile.stdout",
+      "stderr": "after/O2g2-compile.stderr"
+    },
+    {
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "run",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-synthetic-first/after/O2g2.luauc"
+      ],
+      "exitCode": 0,
+      "stdout": "after/O2g2-run.stdout",
+      "stderr": "after/O2g2-run.stderr"
+    }
+  ]
+}

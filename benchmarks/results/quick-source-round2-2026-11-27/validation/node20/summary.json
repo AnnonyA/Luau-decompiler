@@ -1,0 +1,192 @@
+{
+  "revision": "eba3c9971283a322e2e300834a6cc95fdd437b9c",
+  "checkout": "/workspace/scratch/1c4124dc88e4/final-node20-checkout",
+  "startedAt": "2026-11-28T00:30:40.972418+00:00",
+  "runtime": {
+    "executable": "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+    "version": "v20.20.2",
+    "sha256": "6295488653f0d93b0a157841746fef7e72cc4328cfb60c4bbe0ca2668a836ffd"
+  },
+  "packageLockSha256": "e160f5ca3b42025a6186604028f9f5667bcbaacbf43ede5449e62867c04afd4d",
+  "install": "isolated npm ci from the lockfile using the existing package cache; offline, no audit or funding network requests",
+  "gates": [
+    {
+      "gate": "install",
+      "command": [
+        "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/bin/npm-cli.js",
+        "ci",
+        "--offline",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exitCode": 0,
+      "seconds": 0.963,
+      "log": "/workspace/scratch/1c4124dc88e4/final-node20-validation/install.log",
+      "logSha256": "0fef0212d57174437cc119064f5517449377e3dc8aecfbcc4d9bd4723d16eb5a",
+      "passed": true,
+      "timedOut": false
+    },
+    {
+      "gate": "unit",
+      "command": [
+        "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/bin/npm-cli.js",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 77.424,
+      "log": "/workspace/scratch/1c4124dc88e4/final-node20-validation/unit.log",
+      "logSha256": "41125aa0c1e03cc333b2d06c175c3f4241008a96656e84381fced2d587708216",
+      "passed": true,
+      "timedOut": false,
+      "testFilesPassed": 162,
+      "testsPassed": 2037
+    },
+    {
+      "gate": "typecheck",
+      "command": [
+        "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 2.274,
+      "log": "/workspace/scratch/1c4124dc88e4/final-node20-validation/typecheck.log",
+      "logSha256": "bd05c2df15aa9bd8f1ee6a6c27105cae11f8f0dce61f5a94ce345af5b10330d2",
+      "passed": true,
+      "timedOut": false
+    },
+    {
+      "gate": "build",
+      "command": [
+        "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "seconds": 3.057,
+      "log": "/workspace/scratch/1c4124dc88e4/final-node20-validation/build.log",
+      "logSha256": "5ab5f4ba5a2a2898fba32fe00e32f254d5ca0308f33faf3241f41862440fe529",
+      "passed": true,
+      "timedOut": false
+    },
+    {
+      "gate": "bench-test",
+      "command": [
+        "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "bench:test"
+      ],
+      "exitCode": 0,
+      "seconds": 3.692,
+      "log": "/workspace/scratch/1c4124dc88e4/final-node20-validation/bench-test.log",
+      "logSha256": "3cbbbe11472160adc024d68d09ba9a4f069d4dd051ad4d89c0383f5e1a9d78c0",
+      "passed": true,
+      "timedOut": false,
+      "testsPassed": 69,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    },
+    {
+      "gate": "bench-smoke",
+      "command": [
+        "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "bench:compare",
+        "--",
+        "--output",
+        "/workspace/scratch/1c4124dc88e4/final-node20-validation/baseline.json"
+      ],
+      "exitCode": 0,
+      "seconds": 0.669,
+      "log": "/workspace/scratch/1c4124dc88e4/final-node20-validation/bench-smoke.log",
+      "logSha256": "08d31db49613a5a05098519571b1b20d9521488019f8e956b9a24290bba86df4",
+      "passed": true,
+      "timedOut": false
+    },
+    {
+      "gate": "build-demo",
+      "command": [
+        "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "build:demo"
+      ],
+      "exitCode": 0,
+      "seconds": 3.189,
+      "log": "/workspace/scratch/1c4124dc88e4/final-node20-validation/build-demo.log",
+      "logSha256": "f098c2a241914f37465d35ecbcd04f34a05f0519c8200d5bd582dd79c22d86f8",
+      "passed": true,
+      "timedOut": false
+    },
+    {
+      "gate": "demo-test",
+      "command": [
+        "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "demo:test"
+      ],
+      "exitCode": 0,
+      "seconds": 0.893,
+      "log": "/workspace/scratch/1c4124dc88e4/final-node20-validation/demo-test.log",
+      "logSha256": "04e6c4c9f6732ecc17c39ecc49bfe1d791e862d067fbf2af86004d381d89ac63",
+      "passed": true,
+      "timedOut": false,
+      "testsPassed": 6,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    }
+  ],
+  "notRun": [
+    {
+      "gate": "bench-shared",
+      "reason": "No pinned LunaUX 910ccd4d checkout available locally; exact-revision CI must execute the 22-input gate."
+    },
+    {
+      "gate": "demo-browser",
+      "status": "blocked-environment",
+      "reason": "The Chromium launcher has no browser binary. No browser PASS is claimed; pages CI on Node22 is required.",
+      "probeExitCode": 127,
+      "probeLog": "/workspace/scratch/1c4124dc88e4/final-node20-validation/browser-environment.log"
+    }
+  ],
+  "baseline": {
+    "fixtureCounts": {
+      "total": 3,
+      "repository": 3,
+      "lunaux": 0,
+      "successful": 3
+    },
+    "sha256": "290da946bf332af92e967f289c04da0cb67f8aa89b720f1edb8f05ff6ce255dd"
+  },
+  "finishedAt": "2026-11-28T00:32:13.608750+00:00",
+  "trackedAndUntrackedStatusAfter": "",
+  "unchangedSource": true,
+  "packageLockUnchanged": true,
+  "allExecutedGatesPassed": true,
+  "compiled": {
+    "jsFiles": 69,
+    "jsTreeSha256": "01f7a9a185ee4db67576a765580147de653008ec5c32ab9520e6a952d01b2762",
+    "treeHashAlgorithm": "SHA256 of sorted(relativeJSPath + NUL + SHA256(fileBytes))",
+    "siteRevision": "eba3c99",
+    "staticEngineMatchesDist": true
+  },
+  "filesSha256": {
+    "baseline.json": "290da946bf332af92e967f289c04da0cb67f8aa89b720f1edb8f05ff6ce255dd",
+    "bench-smoke.log": "08d31db49613a5a05098519571b1b20d9521488019f8e956b9a24290bba86df4",
+    "bench-test.log": "3cbbbe11472160adc024d68d09ba9a4f069d4dd051ad4d89c0383f5e1a9d78c0",
+    "browser-environment.log": "6fcdda99fd80b9f3b6a59bf2d94bfff26ae563317c341b0baa0535bbc514a2da",
+    "build-demo.log": "f098c2a241914f37465d35ecbcd04f34a05f0519c8200d5bd582dd79c22d86f8",
+    "build.log": "5ab5f4ba5a2a2898fba32fe00e32f254d5ca0308f33faf3241f41862440fe529",
+    "demo-test.log": "04e6c4c9f6732ecc17c39ecc49bfe1d791e862d067fbf2af86004d381d89ac63",
+    "install.log": "0fef0212d57174437cc119064f5517449377e3dc8aecfbcc4d9bd4723d16eb5a",
+    "typecheck.log": "bd05c2df15aa9bd8f1ee6a6c27105cae11f8f0dce61f5a94ce345af5b10330d2",
+    "unit.log": "41125aa0c1e03cc333b2d06c175c3f4241008a96656e84381fced2d587708216"
+  }
+}
