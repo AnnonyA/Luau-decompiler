@@ -1,0 +1,77 @@
+{
+  "scriptSha256": "238a494e99350faa1270c48d1e453b87e37f406306dfd6cda50e36fd1027d78c",
+  "modeNotes": {
+    "primitive_inert_stores": "Only primitive-producing initializers, inferred from actual literals/immutable local initializers/numeric-for bindings; crosses only private local stores with inert RHS. Source/debug metadata and operand bindings preserved. This is still a diagnostic projection, not runtime certification.",
+    "inert_stores_unknown_results": "Includes unknown-result expressions over inert local stores. Result lifetime and exact runtime equivalence are not certified.",
+    "optimistic_other_local_stores": "Additionally permits potentially effectful RHS stores to unrelated private locals. This is intentionally unsafe sensitivity, not an engine proposal."
+  },
+  "limits": [
+    "Only generated 300/882 profiles, same block and one use, no captures or writes to the temporary.",
+    "Retains original source/debug declaration metadata and existing max folded weight40.",
+    "Rejects function/table/vararg allocation in the moved expression, unresolved identifiers, control-flow gaps and any gap writes to operand bindings.",
+    "Same baseline locate() ordering and scalar list-tail adjustment are reused.",
+    "Projections do not establish a universal upper bound for all potential temporary analyses."
+  ],
+  "primitive_inert_stores": {
+    "initializers": {
+      "binary": 3,
+      "unary": 14
+    },
+    "consumers": {
+      "local": 7,
+      "assign": 2,
+      "numeric-for": 6,
+      "expression-stmt": 2
+    },
+    "primitiveTypes": {
+      "number": 15,
+      "boolean": 2
+    }
+  },
+  "inert_stores_unknown_results": {
+    "initializers": {
+      "binary": 16,
+      "unary": 14,
+      "interp": 2,
+      "method-call": 12,
+      "identifier": 2
+    },
+    "consumers": {
+      "local": 32,
+      "assign": 2,
+      "numeric-for": 6,
+      "expression-stmt": 4,
+      "if": 2
+    },
+    "primitiveTypes": {
+      "number": 15,
+      "None": 29,
+      "boolean": 2
+    }
+  },
+  "optimistic_other_local_stores": {
+    "initializers": {
+      "index": 25,
+      "method-call": 238,
+      "binary": 448,
+      "unary": 152,
+      "call": 186,
+      "identifier": 10,
+      "interp": 4
+    },
+    "consumers": {
+      "if": 37,
+      "expression-stmt": 609,
+      "local": 251,
+      "assign": 104,
+      "numeric-for": 48,
+      "return": 14
+    },
+    "primitiveTypes": {
+      "None": 698,
+      "number": 313,
+      "boolean": 48,
+      "nil": 4
+    }
+  }
+}

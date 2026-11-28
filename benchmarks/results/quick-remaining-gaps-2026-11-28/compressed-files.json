@@ -1,0 +1,17 @@
+{
+  "algorithm": "gzip",
+  "mtime": 0,
+  "level": 9,
+  "files": [
+    {
+      "file": "numeric-records.json.gz",
+      "source": "/workspace/scratch/eb5e4be57451/quality-research/nonadjacent-temps-885-first-numeric-records.json",
+      "rawBytes": 788228,
+      "rawSha256": "6206ed4d3cfc1f6a7f28eb5ed3e5e0280c8ab6c9fa8c296796d6d77737a658a1",
+      "compressedBytes": 99154,
+      "compressedSha256": "07e44dc702670ac34bccbfb26777b3eb4080e41844035cd8ba0e8ad589fc375c",
+      "decompressedByteExact": true,
+      "content": "Lossless compression of the explicit numeric extraction; original source/output strings remain in the intact first records."
+    }
+  ]
+}

@@ -1,0 +1,2146 @@
+{
+  "revision": "232332339cf07211e791a6a67bd395a2031b20a5",
+  "node": "v22.23.5",
+  "total": 96,
+  "pass": 96,
+  "groups": {
+    "ref-alias-promotion": {
+      "total": 36,
+      "pass": 36
+    },
+    "shared-guards": {
+      "total": 36,
+      "pass": 36
+    },
+    "template-field-order": {
+      "total": 24,
+      "pass": 24
+    }
+  },
+  "distinctPinInputHashes": 72,
+  "note": "Profile checks of the three integrated changes. The original rejected-state source is intentionally present in both the OR and REF archives; these are not 96 distinct sources. Original bytes and sources verified against sealed manifests.",
+  "pins": {
+    "9d": {
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "hostSha256": "7d8d958fb0ba8537130697a1043f9da0b4b7ab4469345b08ab9153a4a146ae74"
+    },
+    "c875": {
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "hostSha256": "c7a7f7d1a9f3fff6303eecfef9f4c20e7c7e88806e6c5323575b409b0f4d42b6"
+    }
+  },
+  "results": [
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-closed-loop-copies-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "expected": "be019eeb73dd29a41d25e1f38d581a3adac6b85ba5b334534db39b168147f244",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "ae17075dad1a2319dd580e847e481003bcc56fcb40b3f6f65cc25064fda62c47",
+      "outputBytecodeSha256": "0a81af7982e73afd5a9837565f1bb2b245da71e2bdb124ec774b4bf863873780",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-closed-loop-copies-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "expected": "188f066f60be38a8178aa5f2d8d207666152493a30e29cd80a29831d9aa01a48",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "6af5c8dc90a04a782d41b99bc2cfca80970203e1cb5f6916b1f335161fd0606d",
+      "outputBytecodeSha256": "f49d316b0ca03cb1bbd599f574e90da7acf02c5f2d5ce891b0982e61b41e4b08",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-closed-loop-copies-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "expected": "61520f5858e789ae200bce6126a6481e9c7751db114a2fa42f3282ba14b7434f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "ae17075dad1a2319dd580e847e481003bcc56fcb40b3f6f65cc25064fda62c47",
+      "outputBytecodeSha256": "911119bdaf196978f54df488175954ad80cac9729fbcaebd38e10fe5ab06a0ee",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-closed-loop-copies-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "expected": "55b023bca155c8691d9ff68f8e58cde1a4aa3b7ffa145fbeea9741c7c65f6fe2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "c3c5f7df2fd66d697633d04bb0e43e2b78a67b5c01ee8e229804c23435e50ea9",
+      "outputBytecodeSha256": "8bfeab3149216800ad94296687ec4128bca4d8db77e22fd706086aa073a5460e",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-closed-loop-copies-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "expected": "01a094830d0e3993cce63b2ee1fbf90aa0dcc2c38be709812f9d8ec87e9457e7",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "e1db9c6f878fb645e9cdd31946b1a94755795bf754fd6ed54accce506f410f0e",
+      "outputBytecodeSha256": "c1de13880fc945b7af06d2bfa272b57e451dbc89caeb688ed957888f898a6574",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-closed-loop-copies-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "expected": "f4ae0234941c96ac84f7b62decfd7f7dc52570de95f0b7ebcdeb71fd33adac9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "a6551c2bbd2b97716f1af362b49beaf353a7b5b527c2d14886b75ea6c0e5aa28",
+      "outputBytecodeSha256": "a01ad6897bc37a4c3e5760734cc413fdf0640e3fe34dc98fb14b75e500e4e327",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-multiple-copies-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "expected": "efdcdd6e31abc9a2bca9cd186d15f36e726099d2b856d3a0dc15ca18b273f965",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "b917c818264e20cd045b95b0e2be46daea52e8a601f4c9f5f82be74a1f3608b8",
+      "outputBytecodeSha256": "a0d9f54852a0b67b8658306f05fb9eeb500815eafd6ff066631ed31b4b8db338",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-multiple-copies-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "expected": "0bb7e948d747b4635c68d2a4d488202541f3b3ffb3ad7296eae5088f51eef095",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "c38c402d5bb481fe2219f1d9349114069b70398193b302d288758aedbe378c3e",
+      "outputBytecodeSha256": "d0e445044bd68173569c77db1d48f55c72889722373ce11228fba8c9c2386d71",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-multiple-copies-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "expected": "0761a4087763b53dbc9ee3cb68d0bdb3596118a9406de593e971a4e1002ae6cb",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "b917c818264e20cd045b95b0e2be46daea52e8a601f4c9f5f82be74a1f3608b8",
+      "outputBytecodeSha256": "d4d918a025f225bd9386e17d329beb3e8f0b7ee312c3e53315a820e741e6f22a",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-multiple-copies-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "expected": "ebc90a4b615ba7cd5e6e728b83c4fc550805ab832527245ba99e85da1b71438f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "0a2a10c0535391184e92520eba40a38c71fd77ac96f7baef1e331e9413a6318f",
+      "outputBytecodeSha256": "f81ec7c8ccda0c156d7b67485c9c3994c304a7182f8950f29ba35be9aa9a62d7",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-multiple-copies-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "expected": "25fed3302f91e2f9edca5e18683be4fa9c1b8a99a55471f64a492129f79197e6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "0d34028b9fa38321671eed76c46056b565ca5d38c670985f51c36ed14cd6d01f",
+      "outputBytecodeSha256": "e5ccf78fa9a1c3714990740f56b63d5b111d857a4e6113c8a0c487a306cb2ebc",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-multiple-copies-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "expected": "bcdc98a6eba6521326a278a769742523cc8e8bf0b8e167bb1437f6074bf5aea5",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "5e669f9875b4550f4527aca36c18f903a6958810dad4e85addb511ec302ae994",
+      "outputBytecodeSha256": "55a79cbad3b91b20f30cd3d6ed15f254a6446b9b8afefe37cb02e38e26b41bf1",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-rejected-state-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "expected": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "614c2f0e569f50b70f9d8af731a128e31945b65b90ed3c6de5cd887a4045f248",
+      "outputBytecodeSha256": "3f34f7213ce98df8f625949353f5f2afd4ed3d742897958f304360457f1413b4",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-rejected-state-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "expected": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "64e00c04edcb78e1365aa609edcdef5e7d9ebad9647ee824206e50a8dfeb72f6",
+      "outputBytecodeSha256": "4bde2e6b2ed5e56152168e9ba77f5029acc0e1af5a70c5ec08f70b4592ef495d",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-rejected-state-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "expected": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "e898efd63ba90798998187d8d51717e3b1006aa2515d10002c0fb11eff686136",
+      "outputBytecodeSha256": "944bf8cf0d163a2ad7516d40a94ef2105f950c21aa43adee4112996afa4540a3",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-rejected-state-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "expected": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "cafd20fa81f28f6b5ce7c36ef0422371202318c43d8aa5afb94834464dedc85d",
+      "outputBytecodeSha256": "32496fb1778924eddd6b7b4765e3726b851b07dca8b1ec733a417eae55b3c95c",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-rejected-state-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "expected": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "6cab5d65bb6639e618bf530b81f409b83874fa821cb70ae2fd7e4b44ea4fb99d",
+      "outputBytecodeSha256": "7cc308ac0ef9cab5f67b0106504a4f6ff1aba470147f32610599e1345dcc2434",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/9d-rejected-state-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "expected": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "c084b47b1fcf3f052fbc923706aac5d0c6441883d53b2a1312f0e3c24cec09ce",
+      "outputBytecodeSha256": "cc597463f0b6a43ea71f59f31cb84959ffca0fef7b7760adc530a14a69ae26b2",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-closed-loop-copies-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "expected": "be019eeb73dd29a41d25e1f38d581a3adac6b85ba5b334534db39b168147f244",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "ad8a353a41b71439b33b2a3d9aa64f355a528c19f33422fd593fb226dcb2b23d",
+      "outputBytecodeSha256": "0a81af7982e73afd5a9837565f1bb2b245da71e2bdb124ec774b4bf863873780",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-closed-loop-copies-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "expected": "188f066f60be38a8178aa5f2d8d207666152493a30e29cd80a29831d9aa01a48",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "ec7bed520e40bdd750ec9800c2847b0eed290dfd4b5ce5c0eaab31ff83aedba5",
+      "outputBytecodeSha256": "f49d316b0ca03cb1bbd599f574e90da7acf02c5f2d5ce891b0982e61b41e4b08",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-closed-loop-copies-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "expected": "61520f5858e789ae200bce6126a6481e9c7751db114a2fa42f3282ba14b7434f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "ad8a353a41b71439b33b2a3d9aa64f355a528c19f33422fd593fb226dcb2b23d",
+      "outputBytecodeSha256": "911119bdaf196978f54df488175954ad80cac9729fbcaebd38e10fe5ab06a0ee",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-closed-loop-copies-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "expected": "55b023bca155c8691d9ff68f8e58cde1a4aa3b7ffa145fbeea9741c7c65f6fe2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "30488c48049e9b7d7102652c6cd09deebdb5942b895adf62497414b7bb7cee54",
+      "outputBytecodeSha256": "8bfeab3149216800ad94296687ec4128bca4d8db77e22fd706086aa073a5460e",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-closed-loop-copies-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "expected": "01a094830d0e3993cce63b2ee1fbf90aa0dcc2c38be709812f9d8ec87e9457e7",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "e5b4f23d3cd82565b958d2cee00c17f67c491431e33e884f6f01de7e4aca59c3",
+      "outputBytecodeSha256": "c1de13880fc945b7af06d2bfa272b57e451dbc89caeb688ed957888f898a6574",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-closed-loop-copies-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "expected": "f4ae0234941c96ac84f7b62decfd7f7dc52570de95f0b7ebcdeb71fd33adac9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "6b5755896bfe374845f68df0ac9bcb4847a45e72c5c088a23f48a3c1b941e150",
+      "outputBytecodeSha256": "a01ad6897bc37a4c3e5760734cc413fdf0640e3fe34dc98fb14b75e500e4e327",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-multiple-copies-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "expected": "efdcdd6e31abc9a2bca9cd186d15f36e726099d2b856d3a0dc15ca18b273f965",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "a1f6d273072017323e66d24a963183cc415758007e5fe2419c22e50c641d1cfd",
+      "outputBytecodeSha256": "a0d9f54852a0b67b8658306f05fb9eeb500815eafd6ff066631ed31b4b8db338",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-multiple-copies-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "expected": "0bb7e948d747b4635c68d2a4d488202541f3b3ffb3ad7296eae5088f51eef095",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "bd834f6cadb250ce5d49a108b06412f4fbb9bec169136a76db4728669207993e",
+      "outputBytecodeSha256": "d0e445044bd68173569c77db1d48f55c72889722373ce11228fba8c9c2386d71",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-multiple-copies-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "expected": "0761a4087763b53dbc9ee3cb68d0bdb3596118a9406de593e971a4e1002ae6cb",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "a1f6d273072017323e66d24a963183cc415758007e5fe2419c22e50c641d1cfd",
+      "outputBytecodeSha256": "d4d918a025f225bd9386e17d329beb3e8f0b7ee312c3e53315a820e741e6f22a",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-multiple-copies-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "expected": "ebc90a4b615ba7cd5e6e728b83c4fc550805ab832527245ba99e85da1b71438f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "fb86941e34755e76e65cc9c8fc6c36dceab5a65c400e76434b7f3bd212a96d48",
+      "outputBytecodeSha256": "f81ec7c8ccda0c156d7b67485c9c3994c304a7182f8950f29ba35be9aa9a62d7",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-multiple-copies-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "expected": "25fed3302f91e2f9edca5e18683be4fa9c1b8a99a55471f64a492129f79197e6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "263a2b1f17b107e8c6a772ad516245530c76f9cab62e51d296be5ba25da21aee",
+      "outputBytecodeSha256": "e5ccf78fa9a1c3714990740f56b63d5b111d857a4e6113c8a0c487a306cb2ebc",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-multiple-copies-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "expected": "bcdc98a6eba6521326a278a769742523cc8e8bf0b8e167bb1437f6074bf5aea5",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "86b6fef4215401b6afb613ab00990c578bc7cb9cf81cb99960780daca66cf47b",
+      "outputBytecodeSha256": "55a79cbad3b91b20f30cd3d6ed15f254a6446b9b8afefe37cb02e38e26b41bf1",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-rejected-state-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "expected": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "3e4c7238ee3374df31e9fcb1d19502700ae87b8cbd072df10c5e9a8a2dcb7513",
+      "outputBytecodeSha256": "3f34f7213ce98df8f625949353f5f2afd4ed3d742897958f304360457f1413b4",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-rejected-state-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "expected": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "01238d050339332cbdb28556d2b95a72549e8af7b387593ec65d039ae692833e",
+      "outputBytecodeSha256": "4bde2e6b2ed5e56152168e9ba77f5029acc0e1af5a70c5ec08f70b4592ef495d",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-rejected-state-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "expected": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "9a3ed56e5b4cf56c2909f0eab500c0836a8dfda98b89323202a77ef57f306a95",
+      "outputBytecodeSha256": "944bf8cf0d163a2ad7516d40a94ef2105f950c21aa43adee4112996afa4540a3",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-rejected-state-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "expected": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "91aaf33cad1cc86a075746a0ad23a96f95980a1e0cfe2b36bd4f00267596e417",
+      "outputBytecodeSha256": "32496fb1778924eddd6b7b4765e3726b851b07dca8b1ec733a417eae55b3c95c",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-rejected-state-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "expected": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "024876f549880af5c1aa3a93a3feaa40dd5a5d7daa62f95f511083bfc246d41d",
+      "outputBytecodeSha256": "7cc308ac0ef9cab5f67b0106504a4f6ff1aba470147f32610599e1345dcc2434",
+      "match": true
+    },
+    {
+      "group": "ref-alias-promotion",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/ref-alias-promotion/c875-rejected-state-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "expected": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "b25c61d0cafe1204852ac5db651c7c19519aa5d8dac9684cc10f6cb6497aabab",
+      "outputBytecodeSha256": "cc597463f0b6a43ea71f59f31cb84959ffca0fef7b7760adc530a14a69ae26b2",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-c875-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "expected": "72169bab1e9967aa7ed526874b67c6e1483297acae96b13ff6b53c636f2406a1",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "68ec08d4f4aa66e64f21bee3c846299dab0ccbb2f68837e3968b899e8aeba601",
+      "outputBytecodeSha256": "90feafcf943f1a5ff0a3037e719e9bf9e2a98f019781de7701bc47c247bf8b3c",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-c875-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "expected": "a2ad94253ff3c13b2112fd9a32815f8cca9c1197788c273269fbf717245f386c",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "44007e8c09b6571bf65b6c7c1fe1ad3be91625f9799052d06c8a5460e13c14b1",
+      "outputBytecodeSha256": "fde52d828d9a705026c9217cb1edfd158a9a8d3cc13f767d7e35f80b83a89648",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-c875-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "expected": "968b37f820e47b6f9f7a808a3ad4b803248296ba54d9093472adfd4c86c17926",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "90b358c1dd930c0dd7fad14077d47af35dc503b57504e6dced175e241dc10437",
+      "outputBytecodeSha256": "59b225ab3f32c650fafb09c0ece151b518795dac386e98f4a81eb28f934ee097",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-c875-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "expected": "b2c0a423d527a748d6c6a5f58d5c9ea503a12a69920726eba34d288b95329002",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "4d86032afe9abbdd284f8e455bd0e04c42e19ffeaf2576191e86b3fac2577f27",
+      "outputBytecodeSha256": "c3aadb88929dc477a496d6d7b43062c8b3510282d60b1d9e6391e3d51010d618",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-c875-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "expected": "968b37f820e47b6f9f7a808a3ad4b803248296ba54d9093472adfd4c86c17926",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "90b358c1dd930c0dd7fad14077d47af35dc503b57504e6dced175e241dc10437",
+      "outputBytecodeSha256": "59b225ab3f32c650fafb09c0ece151b518795dac386e98f4a81eb28f934ee097",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-c875-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "expected": "b2c0a423d527a748d6c6a5f58d5c9ea503a12a69920726eba34d288b95329002",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "4d86032afe9abbdd284f8e455bd0e04c42e19ffeaf2576191e86b3fac2577f27",
+      "outputBytecodeSha256": "c3aadb88929dc477a496d6d7b43062c8b3510282d60b1d9e6391e3d51010d618",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-c875-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "expected": "fa977b06120fd34d8bfce7799fba80aed9ad58b2b40e105ff4992962a92e825e",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "5d5780316b51821c065d5c22e49e32f7f8292a0fe3f6a541ed25c6a680b0f762",
+      "outputBytecodeSha256": "ce1d6c517f1b0c0feb1eb18f28c5a5df9e51adce612dfd48054203fe3c14cd6d",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-c875-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "expected": "4fd60b70cf7f4d7f5ea37f974e75ac2dfb5516a61a1984b3bdeb83941bb24eaf",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "d4a2d90d6d219114a5b1f9a684f6400d372bc6630dfa6db49ee1d629152d9b0c",
+      "outputBytecodeSha256": "e9bd279d6827a717677e2353073f327d992bd26de24ef32dc67340cc22f44d7e",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-c875-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "expected": "5781fac285592b768cf518568236f9856c0416a0b4c117d363a1e06182373b59",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "882d93266a7ce317940e9682bd9a960cc2eb466e9053e864fea854ffae8824d3",
+      "outputBytecodeSha256": "c697f9640cbbaba8b2e815345a3dd8f85efb7d3b5944188f2e4c4ea58ecc41ac",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-c875-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "expected": "850496e015646032f9257163fb53a0bac46085385ba216879698a792ce780244",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "53dfba317eaf1d3563fead866414ded98e03ec54f48c9e50d1478296d77f820f",
+      "outputBytecodeSha256": "54e3a76f5d059bce1ae297ad5d9a95e744aedf172d30bf6a6547034d054d0c55",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-c875-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "expected": "80faf7871aedb8bd2c1f0d779085f70e47e32aa77049b7e09819625ceeec9da8",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "f49564fd04d8fde776c01d8032ef0316889a25caa511924c6a233c0da08e4d40",
+      "outputBytecodeSha256": "1ecdd16e820df157a451d758b3d7be82bc476bd38456dba1d74bae2a16adbfa9",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-c875-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "expected": "99b3f30502d183a8f6193ea69237637f544855fb4660bc76b32d95d5b786fc08",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "42d2521a8740e725a2420eecee30aa815b28de0b7aa7879a6900bc8dc1ae7971",
+      "outputBytecodeSha256": "2ee95c88c2c30e12b90b0089dc711b25e2c2636e2efe66bd3b2c04a021e0bc40",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-c875-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "expected": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "aeecd986fa9b053bb5da2bd29cd029ab65f0dc0f2120996be6164d371cd9d0ee",
+      "outputBytecodeSha256": "3f34f7213ce98df8f625949353f5f2afd4ed3d742897958f304360457f1413b4",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-c875-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "expected": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "2859aa772f79fa5faf7d7f54950d188bd6f739fe3d47801e1c3f7c3fc4ee8774",
+      "outputBytecodeSha256": "4bde2e6b2ed5e56152168e9ba77f5029acc0e1af5a70c5ec08f70b4592ef495d",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-c875-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "expected": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "ba349c18308d0a845ebbc43e98e01ed6e8c1985e243eeac571236d4b3c6fb5a6",
+      "outputBytecodeSha256": "944bf8cf0d163a2ad7516d40a94ef2105f950c21aa43adee4112996afa4540a3",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-c875-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "expected": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "7fffecfaed4e017c8a94dca147514a8b9105c5a33cda64c8da1b95cda3bfba92",
+      "outputBytecodeSha256": "32496fb1778924eddd6b7b4765e3726b851b07dca8b1ec733a417eae55b3c95c",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-c875-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "expected": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "da88a7a8ee8871560cae776dfbe580976835ab75d2a72b9d634e58391c9d63d3",
+      "outputBytecodeSha256": "7cc308ac0ef9cab5f67b0106504a4f6ff1aba470147f32610599e1345dcc2434",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-c875-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "expected": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "d77f4606cc6ec2c74025a29a2e8678773431e609c36059e068792a9397d3950c",
+      "outputBytecodeSha256": "cc597463f0b6a43ea71f59f31cb84959ffca0fef7b7760adc530a14a69ae26b2",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-9d-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "expected": "72169bab1e9967aa7ed526874b67c6e1483297acae96b13ff6b53c636f2406a1",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "b81a5c96782a116bb152b1998251d63e81cebed6dd27314b66c8870e1532f349",
+      "outputBytecodeSha256": "90feafcf943f1a5ff0a3037e719e9bf9e2a98f019781de7701bc47c247bf8b3c",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-9d-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "expected": "a2ad94253ff3c13b2112fd9a32815f8cca9c1197788c273269fbf717245f386c",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "6011b9f11a82f5e2c54b7a1651502192b150261bf641290bab88f7d28528be47",
+      "outputBytecodeSha256": "fde52d828d9a705026c9217cb1edfd158a9a8d3cc13f767d7e35f80b83a89648",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-9d-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "expected": "968b37f820e47b6f9f7a808a3ad4b803248296ba54d9093472adfd4c86c17926",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "8c3a2c818e32f0ee2ff258d60bb557948cc70b7fec94f3775562cd883e2ce1d5",
+      "outputBytecodeSha256": "59b225ab3f32c650fafb09c0ece151b518795dac386e98f4a81eb28f934ee097",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-9d-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "expected": "b2c0a423d527a748d6c6a5f58d5c9ea503a12a69920726eba34d288b95329002",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "35775d0797bbdf46b94c705eb1ce85635108e5219af559e061c27bd48e308d41",
+      "outputBytecodeSha256": "c3aadb88929dc477a496d6d7b43062c8b3510282d60b1d9e6391e3d51010d618",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-9d-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "expected": "968b37f820e47b6f9f7a808a3ad4b803248296ba54d9093472adfd4c86c17926",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "8c3a2c818e32f0ee2ff258d60bb557948cc70b7fec94f3775562cd883e2ce1d5",
+      "outputBytecodeSha256": "59b225ab3f32c650fafb09c0ece151b518795dac386e98f4a81eb28f934ee097",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/loop-observations-9d-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "expected": "b2c0a423d527a748d6c6a5f58d5c9ea503a12a69920726eba34d288b95329002",
+      "original": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "loop\t4\t6\tr1/r1/w1/r2/w2/r3/r3/w3/r4/w4\tnil\t20\nempty\t0\t0\t\tnil\t0\nrepeated\t3\t4\tr2/w2/r2/w2/r1/r1/w1\tnil\t10\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "35775d0797bbdf46b94c705eb1ce85635108e5219af559e061c27bd48e308d41",
+      "outputBytecodeSha256": "c3aadb88929dc477a496d6d7b43062c8b3510282d60b1d9e6391e3d51010d618",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-9d-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "expected": "fa977b06120fd34d8bfce7799fba80aed9ad58b2b40e105ff4992962a92e825e",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "6c9e05e432d61da3808c15f737d0104ab1dcdfa1f7753e6acddbf6ed06709d4b",
+      "outputBytecodeSha256": "ce1d6c517f1b0c0feb1eb18f28c5a5df9e51adce612dfd48054203fe3c14cd6d",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-9d-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "expected": "4fd60b70cf7f4d7f5ea37f974e75ac2dfb5516a61a1984b3bdeb83941bb24eaf",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "00cc33f0d4fa74a5ee36c9afaad4e90dec3661994894de59e133df53bd80fddf",
+      "outputBytecodeSha256": "e9bd279d6827a717677e2353073f327d992bd26de24ef32dc67340cc22f44d7e",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-9d-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "expected": "5781fac285592b768cf518568236f9856c0416a0b4c117d363a1e06182373b59",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "c747cd5ea3816d8a2dd8a42601af05b4e51e640fdd8a3b1278664d2840536265",
+      "outputBytecodeSha256": "c697f9640cbbaba8b2e815345a3dd8f85efb7d3b5944188f2e4c4ea58ecc41ac",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-9d-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "expected": "850496e015646032f9257163fb53a0bac46085385ba216879698a792ce780244",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "81ac852b674c2cc726fe44846e08533a9dae6db1cd9567b851cce4f17b0d7ad8",
+      "outputBytecodeSha256": "54e3a76f5d059bce1ae297ad5d9a95e744aedf172d30bf6a6547034d054d0c55",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-9d-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "expected": "80faf7871aedb8bd2c1f0d779085f70e47e32aa77049b7e09819625ceeec9da8",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "35a072548f8c8dde038df56e6395380f74b372bdb50679e703ad421be63c809b",
+      "outputBytecodeSha256": "1ecdd16e820df157a451d758b3d7be82bc476bd38456dba1d74bae2a16adbfa9",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/ordered-lookup-9d-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "expected": "99b3f30502d183a8f6193ea69237637f544855fb4660bc76b32d95d5b786fc08",
+      "original": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "short\ttrue\t1\t1\tread:target:1/selected\ntaken\ttrue\t2\t1\tread:target:1/read:target:2/selected\nskip\ttrue\t2\t0\tread:target:1/read:target:2\nerror\tfalse\t2\t0\tread:target:1/read:target:2\nnan-left\ttrue\t2\t0\tread:target:1/read:target:2\nnan-right\ttrue\t2\t0\tread:target:1/read:target:2\ncomparison\t3\t7\nmetamethod\ttrue\t2\t1\tread:target:1/read:target:2/selected\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "2cde71db34a744635f45a003f0d980378d90bd95c80821a71e5b3a562d545106",
+      "outputBytecodeSha256": "2ee95c88c2c30e12b90b0089dc711b25e2c2636e2efe66bd3b2c04a021e0bc40",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-9d-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "expected": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "f4fb719c8b3dfecfcc8bba2e1e32b3df8c3dbb407c8eed5ab0131a71daf4d331",
+      "outputBytecodeSha256": "3f34f7213ce98df8f625949353f5f2afd4ed3d742897958f304360457f1413b4",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-9d-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "expected": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "54095769c0fa608bb6ac7aeea09aba2274ff15c7634a39f7edc40328465f3ab6",
+      "outputBytecodeSha256": "4bde2e6b2ed5e56152168e9ba77f5029acc0e1af5a70c5ec08f70b4592ef495d",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-9d-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "expected": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "26229ed271c61291cd7ee7b93dea5e64bcaece23a77bd668de08429d3539dd40",
+      "outputBytecodeSha256": "944bf8cf0d163a2ad7516d40a94ef2105f950c21aa43adee4112996afa4540a3",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-9d-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "expected": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "3259622ca552c5ca8e498e2d4045ffd3b9d37c01152da0b8761cc744d3c61cd0",
+      "outputBytecodeSha256": "32496fb1778924eddd6b7b4765e3726b851b07dca8b1ec733a417eae55b3c95c",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-9d-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "expected": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "acc08caad9518ae66729a9e402aaea73936b35385ef693980fe3f8d187f35561",
+      "outputBytecodeSha256": "7cc308ac0ef9cab5f67b0106504a4f6ff1aba470147f32610599e1345dcc2434",
+      "match": true
+    },
+    {
+      "group": "shared-guards",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/shared-guards/rejected-state-9d-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "expected": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "06a0d35e8c05ecd48545f5194a60d96322c7f6f5ec47e93eed9d48bf8a0059d4",
+      "outputBytecodeSha256": "cc597463f0b6a43ea71f59f31cb84959ffca0fef7b7760adc530a14a69ae26b2",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-evaluation-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "expected": "7353491e61a970175ac777bd8222db659a064f8971feba0df79098927e153964",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "4c8d69e04d8b947fc74be0d9b8002868765eed4659c0ce47e10c5efa121018ee",
+      "outputBytecodeSha256": "709f8d913a4c93d24c3d34fa94b31215febfd1b866f1b0b03d13d8ba96f4b2ce",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-evaluation-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "expected": "6fbcf62ae045296f7b43bb90ef4b0e029950de67f7cbc9ddad9c5f6af8df32f1",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "202559b2cac0ed12c4af46b32055d228ab4343a9e665ddcf7af86936eec99c97",
+      "outputBytecodeSha256": "b5976b314edd1177de5d606b7de67a6984ddc63d09b3042b4fa995c2710f977d",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-evaluation-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "expected": "f9c424a7cb23e406d7b9d91543b55d48437dbaf45a453606ea9941fb5ab4c831",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "30d0f73719053beff6bd0cf99db1316f5f201f3b2769d544aae453ed1ddd5128",
+      "outputBytecodeSha256": "14c2561c9bbed73b2aaa40b6469942b6e01378d7c42c2758e32b7e139eeb5e16",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-evaluation-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "expected": "3e5b00fb091e2342b87c220531da576d885c45e382c7ada4bb709786232837e2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "81110fe01b45dbb189d1fd08374094581ce9bfd0ff7244a30bce3daf44f44e59",
+      "outputBytecodeSha256": "35247438129d81e3e704972f0f766395e81c9c748b47e9e9ec83d3299f66200f",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-evaluation-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "expected": "f9c424a7cb23e406d7b9d91543b55d48437dbaf45a453606ea9941fb5ab4c831",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "30d0f73719053beff6bd0cf99db1316f5f201f3b2769d544aae453ed1ddd5128",
+      "outputBytecodeSha256": "14c2561c9bbed73b2aaa40b6469942b6e01378d7c42c2758e32b7e139eeb5e16",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-evaluation-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "expected": "3e5b00fb091e2342b87c220531da576d885c45e382c7ada4bb709786232837e2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "81110fe01b45dbb189d1fd08374094581ce9bfd0ff7244a30bce3daf44f44e59",
+      "outputBytecodeSha256": "35247438129d81e3e704972f0f766395e81c9c748b47e9e9ec83d3299f66200f",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-layout-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "expected": "79f83ba8b9d3bbc2f4b5735766a59b130aef27be6ce59c2e6f02e627173d9888",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "be4f644017cf2c1f187fc72c692ca29711a21cf2322ca4c326b66c14a42f569a",
+      "outputBytecodeSha256": "97f18d7d96e7423fa01d9068810be5adfcc9e7f22c88d2fc93ec2dd43f78df51",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-layout-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "expected": "de0130bef8933c5771ba6143be821513e73251a4bd940a4785e09af341ab8f96",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "54e15ed2aa2bf2cc07affdecf12ae4a63237f228e0937c1faa37e14a9b66ab59",
+      "outputBytecodeSha256": "7755480fdf035663813b49b0397b8b5a0f050cf3f7cf8dee498d5d924663f21b",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-layout-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "expected": "c5a6701bebaeaa82dc70d62590dd83b5dbc339302ca50e2c11ac73434aa61e9c",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "c9955657deb11a96439562fb3cac01b711a7a6972b83838fe74b028f0a8dcbf3",
+      "outputBytecodeSha256": "3ad97da64cde634f0ea1cb774e82fedd677e0113e2798a75f7893f53def9bcc0",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-layout-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "expected": "4288df48c6b49aa5957d8b836f1e568afe4e3b039961cc1ea377618eedb77a9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "31351965e1680c0eeafeb0c602c74415ef740eaf5d703c0d773a199e53683172",
+      "outputBytecodeSha256": "3164022baa764d996a757409eeae058da3669da452f945252d47d71c53f3a273",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-layout-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "expected": "c5a6701bebaeaa82dc70d62590dd83b5dbc339302ca50e2c11ac73434aa61e9c",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "c9955657deb11a96439562fb3cac01b711a7a6972b83838fe74b028f0a8dcbf3",
+      "outputBytecodeSha256": "3ad97da64cde634f0ea1cb774e82fedd677e0113e2798a75f7893f53def9bcc0",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/c875-template-layout-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "expected": "4288df48c6b49aa5957d8b836f1e568afe4e3b039961cc1ea377618eedb77a9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "99a607b93742f0fe2f33d694c64e51d0d5059fb16a03845c6290624514f4df39",
+      "outputBytecodeSha256": "3164022baa764d996a757409eeae058da3669da452f945252d47d71c53f3a273",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-evaluation-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "expected": "7353491e61a970175ac777bd8222db659a064f8971feba0df79098927e153964",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "2fe6106de7de670492b1ad111b5d6a232ae9cb170712fa3cba8f84b34639db9e",
+      "outputBytecodeSha256": "709f8d913a4c93d24c3d34fa94b31215febfd1b866f1b0b03d13d8ba96f4b2ce",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-evaluation-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "expected": "6fbcf62ae045296f7b43bb90ef4b0e029950de67f7cbc9ddad9c5f6af8df32f1",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "9d87b3e49e73af1aa5f89f4055b372d40622c9f99f9a8d632b4761755981861a",
+      "outputBytecodeSha256": "b5976b314edd1177de5d606b7de67a6984ddc63d09b3042b4fa995c2710f977d",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-evaluation-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "expected": "f9c424a7cb23e406d7b9d91543b55d48437dbaf45a453606ea9941fb5ab4c831",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "ebbc9cbb1ad1e04cb58fcd04055d31df9bc4d0f2edbae55893ef392df3ad0b6d",
+      "outputBytecodeSha256": "14c2561c9bbed73b2aaa40b6469942b6e01378d7c42c2758e32b7e139eeb5e16",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-evaluation-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "expected": "3e5b00fb091e2342b87c220531da576d885c45e382c7ada4bb709786232837e2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "3aeab8ca2c66f57c5a2ce6b33c1c1de7ffe412a553ff8b381cbc4eb38065cfbf",
+      "outputBytecodeSha256": "35247438129d81e3e704972f0f766395e81c9c748b47e9e9ec83d3299f66200f",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-evaluation-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "expected": "f9c424a7cb23e406d7b9d91543b55d48437dbaf45a453606ea9941fb5ab4c831",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "ebbc9cbb1ad1e04cb58fcd04055d31df9bc4d0f2edbae55893ef392df3ad0b6d",
+      "outputBytecodeSha256": "14c2561c9bbed73b2aaa40b6469942b6e01378d7c42c2758e32b7e139eeb5e16",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-evaluation-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "expected": "3e5b00fb091e2342b87c220531da576d885c45e382c7ada4bb709786232837e2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "calls\tfirst:assemble|second:assemble\tfirst-value\tfalse\t7\tdone\ttrue\nclosures\t__callback\t__other\t4\t5\tfalse\nextra\ttrue\ttrue\t2\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "3aeab8ca2c66f57c5a2ce6b33c1c1de7ffe412a553ff8b381cbc4eb38065cfbf",
+      "outputBytecodeSha256": "35247438129d81e3e704972f0f766395e81c9c748b47e9e9ec83d3299f66200f",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-layout-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "expected": "79f83ba8b9d3bbc2f4b5735766a59b130aef27be6ce59c2e6f02e627173d9888",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "05ab9e3a96fcb0e64057a97d39de6880678f69b04c81e3da5499254cf06d1ad2",
+      "outputBytecodeSha256": "97f18d7d96e7423fa01d9068810be5adfcc9e7f22c88d2fc93ec2dd43f78df51",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-layout-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "expected": "de0130bef8933c5771ba6143be821513e73251a4bd940a4785e09af341ab8f96",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "a8462f664bdc668500c16997bb7387069022c976510134de6a1322c577a42dec",
+      "outputBytecodeSha256": "7755480fdf035663813b49b0397b8b5a0f050cf3f7cf8dee498d5d924663f21b",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-layout-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "expected": "c5a6701bebaeaa82dc70d62590dd83b5dbc339302ca50e2c11ac73434aa61e9c",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "28ded32f4bdf00bcf9c9f5f6d2da7b82be1db1128f6af946f5a6d356e1ab1141",
+      "outputBytecodeSha256": "3ad97da64cde634f0ea1cb774e82fedd677e0113e2798a75f7893f53def9bcc0",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-layout-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "expected": "4288df48c6b49aa5957d8b836f1e568afe4e3b039961cc1ea377618eedb77a9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "99a607b93742f0fe2f33d694c64e51d0d5059fb16a03845c6290624514f4df39",
+      "outputBytecodeSha256": "3164022baa764d996a757409eeae058da3669da452f945252d47d71c53f3a273",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-layout-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "expected": "c5a6701bebaeaa82dc70d62590dd83b5dbc339302ca50e2c11ac73434aa61e9c",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "28ded32f4bdf00bcf9c9f5f6d2da7b82be1db1128f6af946f5a6d356e1ab1141",
+      "outputBytecodeSha256": "3ad97da64cde634f0ea1cb774e82fedd677e0113e2798a75f7893f53def9bcc0",
+      "match": true
+    },
+    {
+      "group": "template-field-order",
+      "file": "/workspace/scratch/eb5e4be57451/measurements/quick-final-2323323-engine/tests/fixtures/template-field-order/9d-template-layout-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "expected": "4288df48c6b49aa5957d8b836f1e568afe4e3b039961cc1ea377618eedb77a9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "number\t1\tbeta:number|ready:number\nnumber\t2\tbeta:number|abc:number\nnumber\t3\tbeta:number|x:number\nnumber\t4\tbeta:number|z:number\nnumber\t5\tbeta:number|epsilon:number\nnumber\t6\talpha:number|beta:number\nnumber\t7\tgamma:number|beta:number\nnumber\t8\tdelta:number|beta:number\nnumber\t9\tone:number|beta:number\nnumber\t10\tother:number|beta:number\nnumber\t11\tmarker:number|first:number|last:number|tag:string\nnumber\t12\titems:table|size:number\nnil\t1\tbeta:number\nnil\t2\tbeta:number\nnil\t3\tbeta:number\nnil\t4\tbeta:number\nnil\t5\tbeta:number\nnil\t6\tbeta:number\nnil\t7\tbeta:number\nnil\t8\tbeta:number\nnil\t9\tbeta:number\nnil\t10\tbeta:number\nnil\t11\tmarker:number|tag:string\nnil\t12\titems:table|size:number\nfalse\t1\tbeta:number|ready:boolean\nfalse\t2\tbeta:number|abc:boolean\nfalse\t3\tbeta:number|x:boolean\nfalse\t4\tbeta:number|z:boolean\nfalse\t5\tbeta:number|epsilon:boolean\nfalse\t6\talpha:boolean|beta:number\nfalse\t7\tgamma:boolean|beta:number\nfalse\t8\tdelta:boolean|beta:number\nfalse\t9\tone:boolean|beta:number\nfalse\t10\tother:boolean|beta:number\nfalse\t11\tmarker:number|first:boolean|last:boolean|tag:string\nfalse\t12\titems:table|size:number\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "compileExitCode": 0,
+      "outputSourceSha256": "99a607b93742f0fe2f33d694c64e51d0d5059fb16a03845c6290624514f4df39",
+      "outputBytecodeSha256": "3164022baa764d996a757409eeae058da3669da452f945252d47d71c53f3a273",
+      "match": true
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "engineOrRuntimeExperimentsRunDuringArchival": 0,
+  "byteExactCopies": {
+    "summary.json": "8458a674104e3855817f5e82f93696a6dd4a8b159af4b4e7852ae4ec3495685b",
+    "interpretation.json": "473d147e75ab232d1b57107ef35d214b0015b4ff71d15d775e619770d1440aea",
+    "first-run.log": "3e61bc5d5ee6cc14d3180ba20ce8352639d3d5b50bb56eab1798ca82629869b9",
+    "nonadjacent-temp-census.mjs": "238a494e99350faa1270c48d1e453b87e37f406306dfd6cda50e36fd1027d78c",
+    "baseline-strict-provenance.json": "a9fcaf6137996bf40b0286b868d977d336109c9ae881f604a53854bd27efbc5d",
+    "baseline-replay-summary.json": "6be0033d8dc3bb146e52df2b58a1a31357f75385b72ccea13262a1d63ac9c164",
+    "numeric-records.json.gz": "07e44dc702670ac34bccbfb26777b3eb4080e41844035cd8ba0e8ad589fc375c"
+  },
+  "sourceRecords": 300,
+  "inputBytecodeHashMatches": 300,
+  "baselineSourceAndSimilarityMatches": 300,
+  "projectionGroups": 900,
+  "summaryAggregatesRecomputedExactly": true,
+  "globalDenominator": 882,
+  "firstObservationsRetained": true,
+  "engineJavascriptDigestMatchesBaseline": true,
+  "strictResultDigestMatchesExistingProvenance": true,
+  "compactGzipDecompressedByteExact": true,
+  "gzipMtime": 0,
+  "latestIntegratedResult": "Measured separately by integration; not evaluated or inferred by this archive"
+}

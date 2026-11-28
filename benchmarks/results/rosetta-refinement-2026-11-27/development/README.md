@@ -2,6 +2,7 @@
 
 These files are intermediate observations. They are not four-tier
 release results and are not combined to manufacture a score for one engine.
+The [integrated Quick report](../README.md) records the later strict result.
 
 ## First integrated strict Quick
 

@@ -1,0 +1,320 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"completed":50,"total":300}
+{"completed":100,"total":300}
+{"completed":150,"total":300}
+{"completed":200,"total":300}
+{"completed":250,"total":300}
+{"completed":300,"total":300}
+{
+  "type": "Read-only non-adjacent temporary AST sensitivity; not a runtime or safety certification.",
+  "engineDist": "/workspace/scratch/eb5e4be57451/quality-research/current-885eb08-quick/engine-dist",
+  "records": "/workspace/scratch/eb5e4be57451/quality-research/current-885eb08-quick/records",
+  "corpusProfiles": 882,
+  "projectedGeneratedProfiles": 300,
+  "options": {},
+  "query": "",
+  "benchmarkChanged": false,
+  "scorerChanged": false,
+  "behaviorVerified": false,
+  "modes": {
+    "primitive_inert_stores": {
+      "movedDeclarations": 17,
+      "affectedProfiles": 13,
+      "projectedGlobalDeltaPoints": 0.0011144379098939788,
+      "projectedGeneratedDeltaPoints": 0.0032764474550882974,
+      "better": 11,
+      "equal": 287,
+      "worse": 2,
+      "largestChanges": [
+        {
+          "id": "generated/seed1121/O0g2",
+          "moved": 2,
+          "delta": 0.15395283699035645
+        },
+        {
+          "id": "generated/seed1121/O0g1",
+          "moved": 2,
+          "delta": 0.1539170742034912
+        },
+        {
+          "id": "generated/seed1342/O0g2",
+          "moved": 1,
+          "delta": 0.12621283531188965
+        },
+        {
+          "id": "generated/seed1483/O0g1",
+          "moved": 1,
+          "delta": 0.09660720825195312
+        },
+        {
+          "id": "generated/seed1483/O0g2",
+          "moved": 1,
+          "delta": 0.09659528732299805
+        },
+        {
+          "id": "generated/seed1898/O0g1",
+          "moved": 1,
+          "delta": 0.07946491241455078
+        },
+        {
+          "id": "generated/seed1945/O0g2",
+          "moved": 1,
+          "delta": 0.07898211479187012
+        },
+        {
+          "id": "generated/seed1945/O0g1",
+          "moved": 1,
+          "delta": 0.07873773574829102
+        },
+        {
+          "id": "generated/seed1080/O0g1",
+          "moved": 1,
+          "delta": 0.07753968238830566
+        },
+        {
+          "id": "generated/seed1080/O0g2",
+          "moved": 1,
+          "delta": 0.0774681568145752
+        },
+        {
+          "id": "generated/seed1220/O0g2",
+          "moved": 2,
+          "delta": 0.058972835540771484
+        },
+        {
+          "id": "generated/seed1220/O0g1",
+          "moved": 2,
+          "delta": -0.038623809814453125
+        },
+        {
+          "id": "generated/seed1229/O2g1",
+          "moved": 1,
+          "delta": -0.05689263343811035
+        }
+      ]
+    },
+    "inert_stores_unknown_results": {
+      "movedDeclarations": 46,
+      "affectedProfiles": 37,
+      "projectedGlobalDeltaPoints": 0.004470280779191966,
+      "projectedGeneratedDeltaPoints": 0.013142625490824381,
+      "better": 34,
+      "equal": 263,
+      "worse": 3,
+      "largestChanges": [
+        {
+          "id": "generated/seed1332/O2g1",
+          "moved": 1,
+          "delta": 0.3253817558288574
+        },
+        {
+          "id": "generated/seed1332/O2g2",
+          "moved": 1,
+          "delta": 0.28891563415527344
+        },
+        {
+          "id": "generated/seed1178/O1g2",
+          "moved": 1,
+          "delta": 0.22559165954589844
+        },
+        {
+          "id": "generated/seed1178/O1g1",
+          "moved": 1,
+          "delta": 0.19916892051696777
+        },
+        {
+          "id": "generated/seed1178/O2g2",
+          "moved": 1,
+          "delta": 0.19088387489318848
+        },
+        {
+          "id": "generated/seed1743/O2g1",
+          "moved": 1,
+          "delta": 0.18312931060791016
+        },
+        {
+          "id": "generated/seed1178/O2g1",
+          "moved": 1,
+          "delta": 0.16207098960876465
+        },
+        {
+          "id": "generated/seed1121/O0g2",
+          "moved": 2,
+          "delta": 0.15395283699035645
+        },
+        {
+          "id": "generated/seed1121/O0g1",
+          "moved": 2,
+          "delta": 0.1539170742034912
+        },
+        {
+          "id": "generated/seed1743/O2g2",
+          "moved": 1,
+          "delta": 0.14090538024902344
+        },
+        {
+          "id": "generated/seed1342/O0g2",
+          "moved": 1,
+          "delta": 0.12621283531188965
+        },
+        {
+          "id": "generated/seed1080/O0g2",
+          "moved": 2,
+          "delta": 0.12370944023132324
+        },
+        {
+          "id": "generated/seed1080/O0g1",
+          "moved": 2,
+          "delta": 0.1237034797668457
+        },
+        {
+          "id": "generated/seed1332/O1g1",
+          "moved": 1,
+          "delta": 0.11855959892272949
+        },
+        {
+          "id": "generated/seed1332/O1g2",
+          "moved": 1,
+          "delta": 0.11821389198303223
+        },
+        {
+          "id": "generated/seed1483/O0g1",
+          "moved": 1,
+          "delta": 0.09660720825195312
+        },
+        {
+          "id": "generated/seed1483/O0g2",
+          "moved": 1,
+          "delta": 0.09659528732299805
+        },
+        {
+          "id": "generated/seed1743/O0g2",
+          "moved": 1,
+          "delta": 0.09080767631530762
+        },
+        {
+          "id": "generated/seed1743/O0g1",
+          "moved": 1,
+          "delta": 0.0905752182006836
+        },
+        {
+          "id": "generated/seed1743/O1g1",
+          "moved": 1,
+          "delta": 0.09008049964904785
+        }
+      ]
+    },
+    "optimistic_other_local_stores": {
+      "movedDeclarations": 1063,
+      "affectedProfiles": 226,
+      "projectedGlobalDeltaPoints": 0.02321058930723575,
+      "projectedGeneratedDeltaPoints": 0.06823913256327312,
+      "better": 150,
+      "equal": 75,
+      "worse": 75,
+      "largestChanges": [
+        {
+          "id": "generated/seed1332/O1g1",
+          "moved": 13,
+          "delta": 1.0309815406799316
+        },
+        {
+          "id": "generated/seed1332/O1g2",
+          "moved": 13,
+          "delta": 1.0297596454620361
+        },
+        {
+          "id": "generated/seed1322/O0g1",
+          "moved": 21,
+          "delta": 0.6716668605804443
+        },
+        {
+          "id": "generated/seed1898/O0g1",
+          "moved": 20,
+          "delta": 0.6684780120849609
+        },
+        {
+          "id": "generated/seed1121/O0g2",
+          "moved": 21,
+          "delta": 0.6527185440063477
+        },
+        {
+          "id": "generated/seed1121/O0g1",
+          "moved": 21,
+          "delta": 0.6479144096374512
+        },
+        {
+          "id": "generated/seed1961/O0g1",
+          "moved": 20,
+          "delta": 0.5846619606018066
+        },
+        {
+          "id": "generated/seed1627/O0g1",
+          "moved": 20,
+          "delta": 0.5828797817230225
+        },
+        {
+          "id": "generated/seed1178/O1g2",
+          "moved": 10,
+          "delta": 0.5698263645172119
+        },
+        {
+          "id": "generated/seed1898/O0g2",
+          "moved": 19,
+          "delta": 0.5619049072265625
+        },
+        {
+          "id": "generated/seed1961/O0g2",
+          "moved": 20,
+          "delta": 0.5617916584014893
+        },
+        {
+          "id": "generated/seed1945/O0g2",
+          "moved": 9,
+          "delta": 0.554955005645752
+        },
+        {
+          "id": "generated/seed1945/O0g1",
+          "moved": 9,
+          "delta": 0.5522549152374268
+        },
+        {
+          "id": "generated/seed1322/O0g2",
+          "moved": 21,
+          "delta": 0.5491137504577637
+        },
+        {
+          "id": "generated/seed1178/O1g1",
+          "moved": 10,
+          "delta": 0.5444765090942383
+        },
+        {
+          "id": "generated/seed1627/O0g2",
+          "moved": 20,
+          "delta": 0.5267202854156494
+        },
+        {
+          "id": "generated/seed1633/O1g2",
+          "moved": 5,
+          "delta": 0.5259871482849121
+        },
+        {
+          "id": "generated/seed1863/O0g2",
+          "moved": 21,
+          "delta": 0.5192339420318604
+        },
+        {
+          "id": "generated/seed1319/O0g1",
+          "moved": 19,
+          "delta": 0.5073130130767822
+        },
+        {
+          "id": "generated/seed1863/O0g1",
+          "moved": 22,
+          "delta": 0.4873692989349365
+        }
+      ]
+    }
+  }
+}

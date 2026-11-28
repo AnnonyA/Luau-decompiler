@@ -7,6 +7,14 @@ to recorded commits rather than assigning new release numbers.
 
 ## Unreleased
 
+- Improve Quick source similarity from **76.93% to 77.50%**, retaining
+  **882/882** behavioral passes. The 100% similarity target remains unmet;
+  [the integrated report](benchmarks/results/rosetta-refinement-2026-11-27/README.md)
+  records exact results, provenance and rejected experiments.
+- Recover shared short-circuit bodies and iteration continuations; preserve
+  copies before reference capture, table template order and function key names.
+- Validate the combined engine with **1,917** unit tests on Node 20 and 22,
+  six demo worker/startup tests and 96 native profile checks on two Luau pins.
 - Present the browser interface as **LUVEX**, with the repository, package and
   CLI identities retained as Luau Decompiler, `luau-decompiler` and `luau-decompile`.
 - Shorten the README and move detailed usage and development instructions to

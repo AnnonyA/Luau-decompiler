@@ -1,0 +1,98 @@
+{
+  "format": "closed-quick-recovery-investigation",
+  "archivedOn": "2026-11-28",
+  "purpose": "Retain existing read-only projections without repeating an engine experiment.",
+  "baseline": {
+    "commit": "885eb08b0fd1bd9beb513db9fd90e5c369e8293e",
+    "gitTree": "83ffa1a2f4743b55bdf1c33e793df0642e69ebe6",
+    "engineDist": "/workspace/scratch/eb5e4be57451/quality-research/current-885eb08-quick/engine-dist",
+    "jsTreeSha256": "8c1aafdefa0dba0610ccd2d8c232850ea3a101bc7bdddbd1b959da3996285658",
+    "treeHashAlgorithm": "SHA256 of sorted(relativeJSPath + NUL + SHA256(fileBytes))",
+    "replaySummary": {
+      "path": "/workspace/scratch/eb5e4be57451/quality-research/current-885eb08-quick/summary.json",
+      "bytes": 1530,
+      "sha256": "6be0033d8dc3bb146e52df2b58a1a31357f75385b72ccea13262a1d63ac9c164"
+    },
+    "strictResult": {
+      "path": "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-quick-885eb08/annonyA-quick.json",
+      "bytes": 21008,
+      "sha256": "4bda417e0c717bf463340a8e138af089f9e8a4d5ac1c3ae09e9aa99ad1dafc89"
+    },
+    "strictBehaviorPass": 882,
+    "strictBehaviorTotal": 882
+  },
+  "census": {
+    "script": {
+      "path": "/workspace/scratch/eb5e4be57451/quality-research/nonadjacent-temp-census.mjs",
+      "bytes": 14635,
+      "sha256": "238a494e99350faa1270c48d1e453b87e37f406306dfd6cda50e36fd1027d78c"
+    },
+    "firstRecordsPath": "/workspace/scratch/eb5e4be57451/quality-research/nonadjacent-temps-885-first",
+    "firstRunLog": {
+      "path": "/workspace/scratch/eb5e4be57451/quality-research/nonadjacent-temps-885-first.log",
+      "bytes": 8416,
+      "sha256": "3e61bc5d5ee6cc14d3180ba20ce8352639d3d5b50bb56eab1798ca82629869b9"
+    },
+    "summary": {
+      "path": "/workspace/scratch/eb5e4be57451/quality-research/nonadjacent-temps-885-first/summary.json",
+      "bytes": 8063,
+      "sha256": "8458a674104e3855817f5e82f93696a6dd4a8b159af4b4e7852ae4ec3495685b"
+    },
+    "projectedProfiles": 300,
+    "unchangedProfiles": 582,
+    "globalDenominator": 882,
+    "query": "",
+    "options": {},
+    "behaviorVerified": false,
+    "engineChanged": false,
+    "corpusChanged": false,
+    "scorerChanged": false,
+    "runnerChanged": false,
+    "validatorChanged": false,
+    "fullOrHardBenchmarksRun": false,
+    "scope": "Same-block non-adjacent single-use temporary declarations in generated profiles; bounded expression weight40 and eight diagnostic rounds."
+  },
+  "tools": {
+    "node": {
+      "version": "v22.23.5",
+      "path": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "bytes": 124909296,
+      "sha256": "2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd"
+    },
+    "scorer": {
+      "path": "/workspace/scratch/eb5e4be57451/quality-research/harness/target/release/quality-score",
+      "bytes": 718248,
+      "sha256": "6967c41ee1a706c32da0ffe4712ec087932aab4f64cbb72c7f56b5300db62032"
+    },
+    "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "rosettaSuiteHash": "e24826907050bd1d",
+    "qualitySource": {
+      "path": "/workspace/scratch/eb5e4be57451/rosetta-research/src/quality.rs",
+      "bytes": 4796,
+      "sha256": "1668aad84ff770bcf31a4851dc1f87caf9dc4200af7359300c78a34135fc8a6a"
+    }
+  },
+  "reproduction": {
+    "cwd": "/workspace/scratch/eb5e4be57451",
+    "command": [
+      "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "/workspace/scratch/eb5e4be57451/quality-research/nonadjacent-temp-census.mjs",
+      "/workspace/scratch/eb5e4be57451/quality-research/current-885eb08-quick/engine-dist",
+      "/workspace/scratch/eb5e4be57451/quality-research/current-885eb08-quick/records",
+      "/workspace/scratch/eb5e4be57451/quality-research/nonadjacent-temps-885-reproduction"
+    ],
+    "status": "Recipe only; not executed during archival. Output directory must not exist."
+  },
+  "extraction": {
+    "script": {
+      "path": "/workspace/scratch/eb5e4be57451/similarity-v3-ref-aliases/benchmarks/results/quick-remaining-gaps-2026-11-28/extract-numeric-records.py",
+      "bytes": 3427,
+      "sha256": "97eb951f77bb124078b27b537ed76a838d19f8fe58ef194a2383230a05000273"
+    },
+    "completeFirstRecordsRetained": true,
+    "sourceOutputStringsOmittedFromCompactArchive": true,
+    "originalRecordHashRetainedForEveryProfile": true,
+    "rawCompactPath": "/workspace/scratch/eb5e4be57451/quality-research/nonadjacent-temps-885-first-numeric-records.json"
+  },
+  "integration": "No combined-engine result claimed. Separate corrections and hypotheses retain their own baselines and evidence."
+}

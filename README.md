@@ -24,24 +24,24 @@ browser. The current limits are **16 MiB** per input and **15 seconds** per run.
 
 ## Rosetta 3 results
 
-The measured engine passed **100% of usable source/profile pairs in all four
-tiers** on 2026-11-27, using the pinned Rosetta 3 corpus and default options.
+The latest development checkpoint focuses on **Quick**, using the pinned
+Rosetta 3 corpus and unchanged default options.
 
 | Tier | Behavioral pass | Source similarity | Output/original tokens |
 | --- | ---: | ---: | ---: |
-| Quick | 882/882 | **76.93%** | 99.27% |
-| Full | 12,276/12,276 | **73.91%** | 87.55% |
-| Hard Quick | 882/882 | **76.39%** | 99.79% |
-| Hard Full | 12,276/12,276 | **73.53%** | 87.72% |
+| Quick | **882/882** | **77.50%** | **98.20%** |
 
-Full and Hard Full each execute 12,282 pairs. The six profiles of the unusable
-upstream original `generated/seed1541` remain outside each graded denominator.
-No other originals are excluded. These are finite-corpus results.
+Source similarity increased from **76.93% to 77.50%**. The **100% similarity
+target remains unmet**; a behavioral pass does not imply identical source.
+Token ratios describe normalized tokens, not file size. No Quick originals
+are excluded. These are finite-corpus results.
 
-A behavioral pass does not imply identical source. Token ratios describe
-normalized tokens, not file size.
+The [previous four-tier baseline](benchmarks/results/rosetta-source-similarity-2026-11-27/README.md)
+retains the all-pass Full and Hard results, source-similarity measurements and
+the six unusable upstream profiles in Full/Hard Full. Those historical numbers
+have not been reassigned to this newer engine.
 
-[Complete report and raw evidence](benchmarks/results/rosetta-source-similarity-2026-11-27/README.md) ·
+[Quick report and raw evidence](benchmarks/results/rosetta-refinement-2026-11-27/README.md) ·
 [Published-result comparison](benchmarks/results/rosetta-source-similarity-2026-11-27/comparison.md) ·
 [Reproduce the measurements](docs/benchmarks/rosetta.md)
 
