@@ -1,0 +1,75 @@
+{
+  "generator": "typed-v2",
+  "cases": 8,
+  "profiles": [
+    "O2g2"
+  ],
+  "totals": {
+    "base": {
+      "mismatch": 8
+    },
+    "fixed": {
+      "pass": 8
+    },
+    "tovek": {
+      "pass": 8
+    }
+  },
+  "by_profile": {
+    "base": {
+      "O2g2": 8
+    }
+  },
+  "failures": {
+    "base": [
+      {
+        "case": "mut1-174.source",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "mut1-234.source",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "mut1-323.source",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "mut1-356.source",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "mut1-374.source",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "mut1-623.source",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "mut1-691.source",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      },
+      {
+        "case": "mut1-90.source",
+        "profile": "O2g2",
+        "kind": "mismatch",
+        "detail": "printed 0 lines, want 1"
+      }
+    ]
+  }
+}
