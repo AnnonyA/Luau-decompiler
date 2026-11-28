@@ -1,0 +1,36 @@
+{
+  "createdAt": "2026-11-27T23:43:21.212249+00:00",
+  "baseCommit": "ba9750858ea20ea6745e659b1bc150b8ecf0a71e",
+  "semanticBaselineCommit": "ea133e3211f1dd8334ab87805de97971b188fee6",
+  "publishedMainBaseline": "36a344eeed74d194723e6f32a0ef7d699fac550f",
+  "engineJsTrees": {
+    "baseline": "21e7bf39fb3b6ee84f638964981ab3690d270de7b4bf54116c708d79af2de9e1",
+    "firstKeyOnly": "6ee781330f05cded546ce0d444f9e34626f8b1c8b5ec84a0d89560f19a93b295",
+    "functionGuards": "376af67c96d2168e63e5db8998b7b80075689bc0294beb61eae5ebb55dfa8213",
+    "final": "3f546d991bc29dd5da604b37a298c924228389ba0ad92ffd6f0125b37a748a89"
+  },
+  "treeHashAlgorithm": "SHA256 of sorted(relativeJSPath + NUL + SHA256(fileBytes))",
+  "node": "v22.23.5",
+  "options": {},
+  "query": "",
+  "compilerHostSha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b",
+  "corpusChanged": false,
+  "scorerChanged": false,
+  "runnerChanged": false,
+  "validatorChanged": false,
+  "references": {
+    "Tovek": "ce2ea3325547fa3896f274b68013386338039040",
+    "LuauPins": [
+      "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f"
+    ],
+    "Rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "RosettaLuau": "0.747"
+  },
+  "implementation": "Independent TypeScript implementation; no competitor source copied.",
+  "review": {
+    "agent": "similarity_structure",
+    "result": "No remaining blocker within the one-slot reservation scope.",
+    "limitation": "General NEWTABLE allocation/layout recovery remains a separate preexisting defect."
+  }
+}

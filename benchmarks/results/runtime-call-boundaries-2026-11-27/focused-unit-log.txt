@@ -1,0 +1,29 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-v2-presentation
+
+(node:34) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/scalar-parentheses.test.ts (22 tests) 507ms
+(node:61) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/variadic-call-boundaries.test.ts (17 tests) 228ms
+(node:81) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/closure-call-boundary.test.ts (11 tests) 79ms
+(node:101) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/call-boundary-presentation.test.ts (11 tests) 4ms
+(node:121) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/runtime-call-boundaries.test.ts (9 tests) 363ms
+   ✓ pins and reconstructs all independently authored controls from both official compiler revisions  358ms
+
+ Test Files  5 passed (5)
+      Tests  70 passed (70)
+   Start at  23:21:07
+   Duration  2.76s (transform 611ms, setup 0ms, collect 1.01s, tests 1.18s, environment 0ms, prepare 163ms)
+
+(node:141) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,31 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-v2-continuation
+
+(node:35) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/shared-return-conditions.test.ts (12 tests) 620ms
+(node:61) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/iteration-continuations.test.ts (101 tests) 903ms
+(node:81) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/terminal-loop-boundaries.test.ts (12 tests) 127ms
+(node:101) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/rosetta-shared-continuation.test.ts (6 tests) 102ms
+(node:121) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/terminal-return-adapters.test.ts (6 tests) 81ms
+(node:141) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/cfg-ssa.test.ts (11 tests) 20ms
+
+ Test Files  6 passed (6)
+      Tests  148 passed (148)
+   Start at  23:36:08
+   Duration  5.06s (transform 1.15s, setup 0ms, collect 2.11s, tests 1.85s, environment 1ms, prepare 319ms)
+
+(node:161) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,25 @@
+(node:26) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+(node:39) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-v2-locals
+
+(node:69) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/valuepack.test.ts (16 tests) 67ms
+(node:95) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/single-template-field.test.ts (18 tests) 26ms
+(node:115) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/table-template-key-validation.test.ts (6 tests) 20ms
+
+ Test Files  3 passed (3)
+      Tests  40 passed (40)
+   Start at  23:21:25
+   Duration  1.28s (transform 579ms, setup 0ms, collect 842ms, tests 113ms, environment 0ms, prepare 87ms)
+
+(node:135) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

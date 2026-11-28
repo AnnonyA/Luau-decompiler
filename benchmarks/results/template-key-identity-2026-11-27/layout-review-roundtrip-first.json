@@ -1,0 +1,164 @@
+{
+  "type": "first authored end-to-end source/compile/decompile/recompile/runtime observation",
+  "engineBaseCommit": "ba97508",
+  "dirtyCandidate": true,
+  "reconstructorJavaScriptSha256": "40af7d3dd58ef6aebb0ab569029d34e2e4a5a307004ab82ab0ef21b50ca481b3",
+  "results": [
+    {
+      "pin": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "opt": 0,
+      "source": "c87565b8-O0g2-output.luau",
+      "sourceSha256": "6a8882611bdc1b15b7490e922145df8e6b30bc5fd40f79d9153a08dc1ae0c3d3",
+      "originalBytecodeSha256": "38d96521ec7c2876285951de767587494f3f92df3997d292ba2e720412d90d5f",
+      "recompiledBytecodeSha256": "22631a99654a0821bf06b3c964c233686c3a2a442b11dd553d068dce4d02afee",
+      "compileStatus": 0,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "beforeStdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tbeta,ready\tready,beta\tfalse\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tepsilon,ready\tready,epsilon\tfalse\nabc\tabc,ready\tready,abc\tfalse\nx\tx,ready\tready,x\tfalse\nz\tz,ready\tready,z\tfalse\none\tone,ready\tone,ready\ttrue\n",
+      "matchesBefore": false,
+      "diagnostics": [
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "class, feedback, and cost-model extensions are decoded but not fully reconstructed"
+        },
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "version 14 FASTPCALL is recognized; the standard CALL path is used for source reconstruction"
+        }
+      ]
+    },
+    {
+      "pin": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "opt": 1,
+      "source": "c87565b8-O1g2-output.luau",
+      "sourceSha256": "24ea526920adbf43ee4f2910572b0265e1e1f375c4d717444f4b30ab76b3c723",
+      "originalBytecodeSha256": "17c189793e7d351cf44aeec38fb8e1b731863ed343a6d9e83dc45989964b5a23",
+      "recompiledBytecodeSha256": "59d039253b6e49fb6104ea3a1f5a961de4d5265a511ba4951a7621ccc2730cf9",
+      "compileStatus": 0,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "beforeStdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tbeta,ready\tready,beta\tfalse\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tepsilon,ready\tready,epsilon\tfalse\nabc\tabc,ready\tready,abc\tfalse\nx\tx,ready\tready,x\tfalse\nz\tz,ready\tready,z\tfalse\none\tone,ready\tone,ready\ttrue\n",
+      "matchesBefore": false,
+      "diagnostics": [
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "class, feedback, and cost-model extensions are decoded but not fully reconstructed"
+        },
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "version 14 FASTPCALL is recognized; the standard CALL path is used for source reconstruction"
+        }
+      ]
+    },
+    {
+      "pin": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "opt": 2,
+      "source": "c87565b8-O2g2-output.luau",
+      "sourceSha256": "d67f26ec6c17d1608482599930157ba6247a02207aa0b1b448729a21cc45a2c3",
+      "originalBytecodeSha256": "b835eb4f8f00e1d04192424fed8f6704aa0cb1d412d36c9700483efc21960936",
+      "recompiledBytecodeSha256": "10ae76fc7a5540ac608ccd436a6a60417f1708c19c6042e5c7c77e9e136ec549",
+      "compileStatus": 0,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "beforeStdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tbeta,ready\tready,beta\tfalse\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tepsilon,ready\tready,epsilon\tfalse\nabc\tabc,ready\tready,abc\tfalse\nx\tx,ready\tready,x\tfalse\nz\tz,ready\tready,z\tfalse\none\tone,ready\tone,ready\ttrue\n",
+      "matchesBefore": false,
+      "diagnostics": [
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "class, feedback, and cost-model extensions are decoded but not fully reconstructed"
+        },
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "version 14 FASTPCALL is recognized; the standard CALL path is used for source reconstruction"
+        }
+      ]
+    },
+    {
+      "pin": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "opt": 0,
+      "source": "9d7748a4-O0g2-output.luau",
+      "sourceSha256": "6a8882611bdc1b15b7490e922145df8e6b30bc5fd40f79d9153a08dc1ae0c3d3",
+      "originalBytecodeSha256": "38d96521ec7c2876285951de767587494f3f92df3997d292ba2e720412d90d5f",
+      "recompiledBytecodeSha256": "22631a99654a0821bf06b3c964c233686c3a2a442b11dd553d068dce4d02afee",
+      "compileStatus": 0,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "beforeStdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tbeta,ready\tready,beta\tfalse\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tepsilon,ready\tready,epsilon\tfalse\nabc\tabc,ready\tready,abc\tfalse\nx\tx,ready\tready,x\tfalse\nz\tz,ready\tready,z\tfalse\none\tone,ready\tone,ready\ttrue\n",
+      "matchesBefore": false,
+      "diagnostics": [
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "class, feedback, and cost-model extensions are decoded but not fully reconstructed"
+        },
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "version 14 FASTPCALL is recognized; the standard CALL path is used for source reconstruction"
+        }
+      ]
+    },
+    {
+      "pin": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "opt": 1,
+      "source": "9d7748a4-O1g2-output.luau",
+      "sourceSha256": "24ea526920adbf43ee4f2910572b0265e1e1f375c4d717444f4b30ab76b3c723",
+      "originalBytecodeSha256": "17c189793e7d351cf44aeec38fb8e1b731863ed343a6d9e83dc45989964b5a23",
+      "recompiledBytecodeSha256": "59d039253b6e49fb6104ea3a1f5a961de4d5265a511ba4951a7621ccc2730cf9",
+      "compileStatus": 0,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "beforeStdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tbeta,ready\tready,beta\tfalse\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tepsilon,ready\tready,epsilon\tfalse\nabc\tabc,ready\tready,abc\tfalse\nx\tx,ready\tready,x\tfalse\nz\tz,ready\tready,z\tfalse\none\tone,ready\tone,ready\ttrue\n",
+      "matchesBefore": false,
+      "diagnostics": [
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "class, feedback, and cost-model extensions are decoded but not fully reconstructed"
+        },
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "version 14 FASTPCALL is recognized; the standard CALL path is used for source reconstruction"
+        }
+      ]
+    },
+    {
+      "pin": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "opt": 2,
+      "source": "9d7748a4-O2g2-output.luau",
+      "sourceSha256": "d67f26ec6c17d1608482599930157ba6247a02207aa0b1b448729a21cc45a2c3",
+      "originalBytecodeSha256": "b835eb4f8f00e1d04192424fed8f6704aa0cb1d412d36c9700483efc21960936",
+      "recompiledBytecodeSha256": "10ae76fc7a5540ac608ccd436a6a60417f1708c19c6042e5c7c77e9e136ec549",
+      "compileStatus": 0,
+      "status": 0,
+      "stdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tready,beta\tready,beta\ttrue\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tready,epsilon\tready,epsilon\ttrue\nabc\tready,abc\tready,abc\ttrue\nx\tready,x\tready,x\ttrue\nz\tready,z\tready,z\ttrue\none\tone,ready\tone,ready\ttrue\n",
+      "stderr": "",
+      "beforeStdout": "other\tother,ready\tother,ready\ttrue\nalpha\talpha,ready\talpha,ready\ttrue\nbeta\tbeta,ready\tready,beta\tfalse\ngamma\tgamma,ready\tgamma,ready\ttrue\ndelta\tdelta,ready\tdelta,ready\ttrue\nepsilon\tepsilon,ready\tready,epsilon\tfalse\nabc\tabc,ready\tready,abc\tfalse\nx\tx,ready\tready,x\tfalse\nz\tz,ready\tready,z\tfalse\none\tone,ready\tone,ready\ttrue\n",
+      "matchesBefore": false,
+      "diagnostics": [
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "class, feedback, and cost-model extensions are decoded but not fully reconstructed"
+        },
+        {
+          "severity": "info",
+          "code": "profile",
+          "message": "version 14 FASTPCALL is recognized; the standard CALL path is used for source reconstruction"
+        }
+      ]
+    }
+  ]
+}

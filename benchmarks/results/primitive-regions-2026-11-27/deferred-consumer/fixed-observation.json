@@ -1,0 +1,85 @@
+{
+  "type": "authored AST transformation control; not an end-to-end source regression",
+  "baseCommit": "51de2ab695821536cf70724e60bf1b12652f9e61",
+  "dirtyFix": true,
+  "recovered": [],
+  "sourceSha256": "df35364aec8efee8ed6d3bfd4feccf3e89d8e3261cfd54b9dff403b36984419a",
+  "results": [
+    {
+      "pin": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "opt": 0,
+      "status": 0,
+      "stdout": "false\n",
+      "stderr": "",
+      "bytecodeSha256": "7609e083e92e3a518e39767d437394b5a60c383b897c894959fd44193e7a36ab",
+      "matchesBefore": true
+    },
+    {
+      "pin": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "opt": 1,
+      "status": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "bytecodeSha256": "eba1ecced8607086eec667d8c6f48192693a62a0ecb590fc1a56645ff5711367",
+      "matchesBefore": true
+    },
+    {
+      "pin": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "opt": 2,
+      "status": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "bytecodeSha256": "cd29ede19dbf8de26b5c00cd811afb9b533b9b8d36ec582630071ed1d625c25f",
+      "matchesBefore": true
+    },
+    {
+      "pin": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "opt": 0,
+      "status": 0,
+      "stdout": "false\n",
+      "stderr": "",
+      "bytecodeSha256": "7609e083e92e3a518e39767d437394b5a60c383b897c894959fd44193e7a36ab",
+      "matchesBefore": true
+    },
+    {
+      "pin": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "opt": 1,
+      "status": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "bytecodeSha256": "eba1ecced8607086eec667d8c6f48192693a62a0ecb590fc1a56645ff5711367",
+      "matchesBefore": true
+    },
+    {
+      "pin": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "opt": 2,
+      "status": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "bytecodeSha256": "cd29ede19dbf8de26b5c00cd811afb9b533b9b8d36ec582630071ed1d625c25f",
+      "matchesBefore": true
+    }
+  ],
+  "preservedQuickOutputs": [
+    {
+      "id": "cases/control_flow/O2g1",
+      "identical": true,
+      "outputSha256": "d79863db25d91aed78d24dd7de215b344a4f3b30d77cd630a713f4644c3f65d3"
+    },
+    {
+      "id": "cases/control_flow/O2g2",
+      "identical": true,
+      "outputSha256": "d7a5e0a5225c85133451b973871a1f0cb7adce9802febf0958d8c01031580fd8"
+    },
+    {
+      "id": "cases/loops/O2g1",
+      "identical": true,
+      "outputSha256": "bf005aaefed67f57866f16d6cc1cf4dfb5a842394ea7d81d5036417a41576e58"
+    },
+    {
+      "id": "cases/loops/O2g2",
+      "identical": true,
+      "outputSha256": "a0b8cdc26ef35e46c0180c75185cbd7936aad5c216a4e01a92d6d4f3188a17b8"
+    }
+  ]
+}

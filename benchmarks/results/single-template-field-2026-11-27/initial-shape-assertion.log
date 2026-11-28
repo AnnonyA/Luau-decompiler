@@ -1,0 +1,104 @@
+(node:26) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+(node:39) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-v2-locals
+
+(node:69) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/single-template-field.test.ts (16 tests | 6 failed) 43ms
+   ✓ restores the unique reserved field with its initializer evaluated once 6ms
+   × retains scalar field adjustment for { kind: 'literal', value: null } 9ms
+     → expected 'assign' to be 'local' // Object.is equality
+   × retains scalar field adjustment for { kind: 'literal', value: false } 1ms
+     → expected 'assign' to be 'local' // Object.is equality
+   × retains scalar field adjustment for { kind: 'vararg' } 1ms
+     → expected 'assign' to be 'local' // Object.is equality
+   × retains scalar field adjustment for { kind: 'call', callee: { kind: 'identifier', name: 'many' }, args: [], open: false } 1ms
+     → expected 'assign' to be 'local' // Object.is equality
+   ✓ retains unknown indexed storage 0ms
+   ✓ retains wrong-template indexed storage 10ms
+   ✓ retains wrong-key indexed storage 0ms
+   ✓ retains dynamic-key indexed storage 1ms
+   ✓ retains existing-field indexed storage 0ms
+   ✓ retains array-slot indexed storage 0ms
+   ✓ retains metamethod indexed storage 0ms
+   × does not expand the one-node reservation with later fields or absorb overwrites 3ms
+     → expected [ { kind: 'assign', …(2) } ] to have a length of 2 but got 1
+   ✓ keeps an initializer which can observe the declared table 1ms
+   × keeps function literal spelling even through a conditional, argument or nested record 7ms
+     → expected '({})["ready"] = function()\n    retur…' to contain 'record["ready"] ='
+   ✓ retains a field store after an intervening observer 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/single-template-field.test.ts > retains scalar field adjustment for { kind: 'literal', value: null }
+ FAIL  tests/single-template-field.test.ts > retains scalar field adjustment for { kind: 'literal', value: false }
+ FAIL  tests/single-template-field.test.ts > retains scalar field adjustment for { kind: 'vararg' }
+ FAIL  tests/single-template-field.test.ts > retains scalar field adjustment for { kind: 'call', callee: { kind: 'identifier', name: 'many' }, args: [], open: false }
+AssertionError: expected 'assign' to be 'local' // Object.is equality
+
+Expected: "local"
+Received: "assign"
+
+ ❯ tests/single-template-field.test.ts:24:22
+     22|   const first = result.body.statements[0]!;
+     23|   expect(result.body.statements).toHaveLength(1);
+     24|   expect(first.kind).toBe("local");
+       |                      ^
+     25|   if (first.kind === "local") expect(first.values).toEqual([{...empty(…
+     26| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/single-template-field.test.ts > does not expand the one-node reservation with later fields or absorb overwrites
+AssertionError: expected [ { kind: 'assign', …(2) } ] to have a length of 2 but got 1
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ tests/single-template-field.test.ts:48:36
+     46|     const result = foldTemporaries(chunk([declaration(), store(call("f…
+     47|       {kind: "assign", targets: [target], values: [call("second")]}]));
+     48|     expect(result.body.statements).toHaveLength(2);
+       |                                    ^
+     49|     expect(result.body.statements[1]).toMatchObject({kind: "assign", t…
+     50|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/single-template-field.test.ts > keeps function literal spelling even through a conditional, argument or nested record
+AssertionError: expected '({})["ready"] = function()\n    retur…' to contain 'record["ready"] ='
+
+- Expected
++ Received
+
+- record["ready"] =
++ ({})["ready"] = function()
++     return 4
++ end
++
+
+ ❯ tests/single-template-field.test.ts:64:77
+     62|     {kind: "if-expr", test: call("condition"), consequent: fn(), branc…
+     63|     call("wrap", [fn()]), {kind: "table", fields: [{name: "callback", …
+     64|   for (const value of values) expect(source([declaration(), store(valu…
+       |                                                                             ^
+     65| });
+     66| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 10 passed (16)
+   Start at  23:17:31
+   Duration  874ms (transform 336ms, setup 0ms, collect 424ms, tests 43ms, environment 0ms, prepare 120ms)
+
+(node:94) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

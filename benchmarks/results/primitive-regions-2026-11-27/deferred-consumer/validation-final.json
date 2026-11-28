@@ -1,0 +1,42 @@
+{
+  "baseCommit": "51de2ab695821536cf70724e60bf1b12652f9e61",
+  "dirtyFix": true,
+  "engineJavaScriptTreeSha256": "07a628250fb6f7c0ef1a4465fe015fb5bc08e0b4eb9a876fc6a84e54536cadf6",
+  "build": "npm run build: PASS",
+  "focused": {
+    "command": "npx vitest run tests/primitive-regions.test.ts tests/primitive-regions-fixtures.test.ts",
+    "tests": 53,
+    "passed": 53,
+    "files": 2
+  },
+  "fixedRuntime": {
+    "profiles": 6,
+    "pins": 2,
+    "allSourceAndBytecodeIdenticalToBefore": true,
+    "evidence": "fixed-observation.json"
+  },
+  "preservedQuickOutputs": [
+    {
+      "id": "cases/control_flow/O2g1",
+      "identical": true,
+      "outputSha256": "d79863db25d91aed78d24dd7de215b344a4f3b30d77cd630a713f4644c3f65d3"
+    },
+    {
+      "id": "cases/control_flow/O2g2",
+      "identical": true,
+      "outputSha256": "d7a5e0a5225c85133451b973871a1f0cb7adce9802febf0958d8c01031580fd8"
+    },
+    {
+      "id": "cases/loops/O2g1",
+      "identical": true,
+      "outputSha256": "bf005aaefed67f57866f16d6cc1cf4dfb5a842394ea7d81d5036417a41576e58"
+    },
+    {
+      "id": "cases/loops/O2g2",
+      "identical": true,
+      "outputSha256": "a0b8cdc26ef35e46c0180c75185cbd7936aad5c216a4e01a92d6d4f3188a17b8"
+    }
+  ],
+  "fullSuiteRerun": false,
+  "strictTierRerun": false
+}

@@ -1,0 +1,1047 @@
+{
+  "format": "rosetta-quality-replay-comparison",
+  "behaviorVerified": false,
+  "count": 882,
+  "overall": {
+    "baseline": {
+      "roundTrips": 882,
+      "similarity": 76.92827095114995,
+      "size": 0.9927495865084095,
+      "locals": 1.0963497723161764,
+      "nesting": -0.33900226757369617,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "candidate": {
+      "roundTrips": 882,
+      "similarity": 77.08476577080837,
+      "size": 0.9908493704406943,
+      "locals": 1.0874242389146205,
+      "nesting": -0.33900226757369617,
+      "endless": 38,
+      "names": 61.02136376938835
+    },
+    "deltas": {
+      "similarity": 0.15649481965841971,
+      "size": -0.001900216067715177,
+      "locals": -0.008925533401555885,
+      "nesting": 0.0,
+      "endless": 0,
+      "names": 0.0
+    }
+  },
+  "profiles": {
+    "O0g1": {
+      "baseline": {
+        "roundTrips": 147,
+        "similarity": 80.28226367064885,
+        "size": 1.0235604088710055,
+        "locals": 1.1062257506052686,
+        "nesting": -0.17687074829931973,
+        "endless": 7,
+        "names": null
+      },
+      "candidate": {
+        "roundTrips": 147,
+        "similarity": 80.4418195064376,
+        "size": 1.0215727933143348,
+        "locals": 1.0968466594674395,
+        "nesting": -0.17687074829931973,
+        "endless": 7,
+        "names": null
+      },
+      "deltas": {
+        "similarity": 0.1595558357887512,
+        "size": -0.0019876155566707077,
+        "locals": -0.009379091137829088,
+        "nesting": 0.0,
+        "endless": 0
+      }
+    },
+    "O0g2": {
+      "baseline": {
+        "roundTrips": 147,
+        "similarity": 80.48638715630486,
+        "size": 1.029639785533211,
+        "locals": 1.1275190119431595,
+        "nesting": -0.17687074829931973,
+        "endless": 7,
+        "names": 63.1079894644425
+      },
+      "candidate": {
+        "roundTrips": 147,
+        "similarity": 80.64667985958307,
+        "size": 1.0276404670026267,
+        "locals": 1.1179626926140105,
+        "nesting": -0.17687074829931973,
+        "endless": 7,
+        "names": 63.1079894644425
+      },
+      "deltas": {
+        "similarity": 0.1602927032782162,
+        "size": -0.0019993185305842154,
+        "locals": -0.009556319329149021,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    "O1g1": {
+      "baseline": {
+        "roundTrips": 147,
+        "similarity": 79.88452625517942,
+        "size": 0.9512541361358794,
+        "locals": 1.014376220166913,
+        "nesting": -0.3673469387755102,
+        "endless": 6,
+        "names": null
+      },
+      "candidate": {
+        "roundTrips": 147,
+        "similarity": 80.04392959228178,
+        "size": 0.9493891093787145,
+        "locals": 1.005756571342182,
+        "nesting": -0.3673469387755102,
+        "endless": 6,
+        "names": null
+      },
+      "deltas": {
+        "similarity": 0.15940333710236132,
+        "size": -0.0018650267571649337,
+        "locals": -0.008619648824730985,
+        "nesting": 0.0,
+        "endless": 0
+      }
+    },
+    "O1g2": {
+      "baseline": {
+        "roundTrips": 147,
+        "similarity": 80.08135648406281,
+        "size": 0.9578961853110993,
+        "locals": 1.0347573784350619,
+        "nesting": -0.3401360544217687,
+        "endless": 6,
+        "names": 60.8252853380158
+      },
+      "candidate": {
+        "roundTrips": 147,
+        "similarity": 80.24150646057258,
+        "size": 0.9560183272954241,
+        "locals": 1.0259692235487459,
+        "nesting": -0.3401360544217687,
+        "endless": 6,
+        "names": 60.8252853380158
+      },
+      "deltas": {
+        "similarity": 0.16014997650977136,
+        "size": -0.0018778580156751934,
+        "locals": -0.008788154886316013,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    "O2g1": {
+      "baseline": {
+        "roundTrips": 147,
+        "similarity": 70.27358378277344,
+        "size": 0.99376431892521,
+        "locals": 1.1355662548800218,
+        "nesting": -0.5102040816326531,
+        "endless": 6,
+        "names": null
+      },
+      "candidate": {
+        "roundTrips": 147,
+        "similarity": 70.42284897801017,
+        "size": 0.9919358272140274,
+        "locals": 1.127105342372983,
+        "nesting": -0.5102040816326531,
+        "endless": 6,
+        "names": null
+      },
+      "deltas": {
+        "similarity": 0.14926519523672255,
+        "size": -0.0018284917111826005,
+        "locals": -0.008460912507038731,
+        "nesting": 0.0,
+        "endless": 0
+      }
+    },
+    "O2g2": {
+      "baseline": {
+        "roundTrips": 147,
+        "similarity": 70.56150835793035,
+        "size": 1.0030927540997072,
+        "locals": 1.1680920750410737,
+        "nesting": -0.46258503401360546,
+        "endless": 6,
+        "names": 59.13081650570676
+      },
+      "candidate": {
+        "roundTrips": 147,
+        "similarity": 70.71181022796502,
+        "size": 1.0012470983929274,
+        "locals": 1.1593888181376426,
+        "nesting": -0.46258503401360546,
+        "endless": 6,
+        "names": 59.13081650570676
+      },
+      "deltas": {
+        "similarity": 0.15030187003466722,
+        "size": -0.0018456557067798585,
+        "locals": -0.0087032569034311,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    }
+  },
+  "sections": {
+    "cases": {
+      "baseline": {
+        "roundTrips": 246,
+        "similarity": 82.23380889834428,
+        "size": 1.0981759305605017,
+        "locals": 1.1447962693810254,
+        "nesting": 0.012195121951219513,
+        "endless": 24,
+        "names": 76.12612612612612
+      },
+      "candidate": {
+        "roundTrips": 246,
+        "similarity": 82.29073482315715,
+        "size": 1.0974111446470247,
+        "locals": 1.1413846037772781,
+        "nesting": 0.012195121951219513,
+        "endless": 24,
+        "names": 76.12612612612612
+      },
+      "deltas": {
+        "similarity": 0.05692592481287306,
+        "size": -0.0007647859134769508,
+        "locals": -0.0034116656037472826,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    "generated": {
+      "baseline": {
+        "roundTrips": 300,
+        "similarity": 68.56820217768352,
+        "size": 0.706096910323681,
+        "locals": 0.9372776281915255,
+        "nesting": -1.3266666666666667,
+        "endless": 2,
+        "names": 55.10887772194305
+      },
+      "candidate": {
+        "roundTrips": 300,
+        "similarity": 68.57140064239502,
+        "size": 0.7060729841575464,
+        "locals": 0.9371214558114487,
+        "nesting": -1.3266666666666667,
+        "endless": 2,
+        "names": 55.10887772194305
+      },
+      "deltas": {
+        "similarity": 0.0031984647115024245,
+        "size": -2.3926166134669025e-05,
+        "locals": -0.00015617238007681333,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    "libraries": {
+      "baseline": {
+        "roundTrips": 36,
+        "similarity": 83.38936633533902,
+        "size": 1.1590983287861993,
+        "locals": 1.1827396524797993,
+        "nesting": 0.8333333333333334,
+        "endless": 12,
+        "names": 77.04918032786885
+      },
+      "candidate": {
+        "roundTrips": 36,
+        "similarity": 83.38936633533902,
+        "size": 1.1590983287861993,
+        "locals": 1.1827396524797993,
+        "nesting": 0.8333333333333334,
+        "endless": 12,
+        "names": 77.04918032786885
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    "mutants": {
+      "baseline": {
+        "roundTrips": 300,
+        "similarity": 80.16246716181438,
+        "size": 1.2612437929235263,
+        "locals": 1.226530538957239,
+        "nesting": 0.22,
+        "endless": 0,
+        "names": 69.8822463768116
+      },
+      "candidate": {
+        "roundTrips": 300,
+        "similarity": 80.57268420855205,
+        "size": 1.2549185711461035,
+        "locals": 1.200538961339086,
+        "nesting": 0.22,
+        "endless": 0,
+        "names": 69.8822463768116
+      },
+      "deltas": {
+        "similarity": 0.4102170467376709,
+        "size": -0.006325221777422785,
+        "locals": -0.02599157761815296,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    }
+  },
+  "changedProfiles": {
+    "better": 64,
+    "equal": 818,
+    "worse": 0
+  },
+  "biggestGains": [
+    {
+      "program": "cases/pathfinding",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 82.96626309553781,
+        "size": 1.1974092378757333,
+        "locals": 1.3125859563443325,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 70.0
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 85.30022601286569,
+        "size": 1.1636915267321104,
+        "locals": 1.1614051274678947,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 70.0
+      },
+      "deltas": {
+        "similarity": 2.333962917327881,
+        "size": -0.033717711143622875,
+        "locals": -0.1511808288764378,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "mutants/mut1-94",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 83.02010695139566,
+        "size": 1.1929960851331318,
+        "locals": 1.3314798639517142,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 85.3332539399465,
+        "size": 1.1596531603502467,
+        "locals": 1.1803059639156728,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "deltas": {
+        "similarity": 2.313146988550841,
+        "size": -0.03334292478288514,
+        "locals": -0.15117390003604148,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "mutants/mut1-99",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 82.6982706785202,
+        "size": 1.1932104522544504,
+        "locals": 1.3314798639517142,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 85.00882387161255,
+        "size": 1.1598304205849155,
+        "locals": 1.1803059639156728,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "deltas": {
+        "similarity": 2.310553193092346,
+        "size": -0.03338003166953496,
+        "locals": -0.15117390003604148,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "mutants/mut1-356",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 82.75073965390524,
+        "size": 1.192568775121606,
+        "locals": 1.3314798639517142,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 85.0549747546514,
+        "size": 1.1592998171308193,
+        "locals": 1.1803059639156728,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "deltas": {
+        "similarity": 2.304235100746155,
+        "size": -0.033268957990786774,
+        "locals": -0.15117390003604148,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "mutants/mut1-109",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 83.38414033253989,
+        "size": 1.1905682047274386,
+        "locals": 1.350373062405379,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 85.68470577398935,
+        "size": 1.157519303380422,
+        "locals": 1.199205791697793,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "deltas": {
+        "similarity": 2.3005654414494643,
+        "size": -0.033048901347016546,
+        "locals": -0.15116727070758595,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "mutants/mut1-187",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 83.48374962806702,
+        "size": 1.1893189882518085,
+        "locals": 1.350373062405379,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 85.77180504798889,
+        "size": 1.156487139748355,
+        "locals": 1.199205791697793,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "deltas": {
+        "similarity": 2.288055419921875,
+        "size": -0.03283184850345355,
+        "locals": -0.15116727070758595,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "mutants/mut1-564",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 82.9323410987854,
+        "size": 1.192348368626608,
+        "locals": 1.3570852459507856,
+        "nesting": 1.0,
+        "endless": 0,
+        "names": 71.7948717948718
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 85.21896600723267,
+        "size": 1.1593721704685156,
+        "locals": 1.2030041555294357,
+        "nesting": 1.0,
+        "endless": 0,
+        "names": 71.7948717948718
+      },
+      "deltas": {
+        "similarity": 2.2866249084472656,
+        "size": -0.032976198158092496,
+        "locals": -0.15408109042134988,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "mutants/mut1-496",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 82.76554743448892,
+        "size": 1.187624175852764,
+        "locals": 1.3445018010235539,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 85.0495308637619,
+        "size": 1.1547226243477535,
+        "locals": 1.193384312680631,
+        "nesting": 2.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "deltas": {
+        "similarity": 2.283983429272979,
+        "size": -0.032901551505010396,
+        "locals": -0.15111748834292293,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "mutants/mut1-850",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 82.89334575335184,
+        "size": 1.196731305056324,
+        "locals": 1.3253661538423163,
+        "nesting": 1.0,
+        "endless": 0,
+        "names": 69.91869918699187
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 85.14962395032248,
+        "size": 1.164112356796225,
+        "locals": 1.1769982770367227,
+        "nesting": 1.0,
+        "endless": 0,
+        "names": 69.91869918699187
+      },
+      "deltas": {
+        "similarity": 2.2562781969706407,
+        "size": -0.03261894826009892,
+        "locals": -0.1483678768055936,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "mutants/mut1-283",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 79.79622383912405,
+        "size": 1.2633669472058842,
+        "locals": 1.4112016004953685,
+        "nesting": 1.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 81.96363349755606,
+        "size": 1.2303901198588563,
+        "locals": 1.2598096127498974,
+        "nesting": 1.0,
+        "endless": 0,
+        "names": 72.5
+      },
+      "deltas": {
+        "similarity": 2.167409658432007,
+        "size": -0.03297682734702789,
+        "locals": -0.15139198774547102,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "generated/seed1148",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 65.69910744825998,
+        "size": 0.7337930072504946,
+        "locals": 0.9607645476630106,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 44.529262086513995
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 65.85903068383536,
+        "size": 0.7325508062433778,
+        "locals": 0.9527928439128883,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 44.529262086513995
+      },
+      "deltas": {
+        "similarity": 0.15992323557537702,
+        "size": -0.0012422010071168055,
+        "locals": -0.007971703750122239,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/builtins",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 90.867218375206,
+        "size": 0.9874801232532253,
+        "locals": 1.0867149723308818,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 83.33333333333334
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 90.867218375206,
+        "size": 0.9874801232532253,
+        "locals": 1.0867149723308818,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 83.33333333333334
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/calculator",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 87.0999813079834,
+        "size": 1.1101051153396462,
+        "locals": 1.040306597963522,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 79.16666666666666
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 87.0999813079834,
+        "size": 1.1101051153396462,
+        "locals": 1.040306597963522,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 79.16666666666666
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/captured_args",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 72.24649786949158,
+        "size": 1.3390959059412098,
+        "locals": 2.1996913147146233,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 60.0
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 72.24649786949158,
+        "size": 1.3390959059412098,
+        "locals": 2.1996913147146233,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 60.0
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/closures",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 90.46646753946939,
+        "size": 1.1928509719219178,
+        "locals": 1.0897442508185495,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 68.88888888888889
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 90.46646753946939,
+        "size": 1.1928509719219178,
+        "locals": 1.0897442508185495,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 68.88888888888889
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/contextual_keywords",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 86.84219320615134,
+        "size": 0.952684747986478,
+        "locals": 0.9283177667225558,
+        "nesting": -0.3333333333333333,
+        "endless": 0,
+        "names": 40.0
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 86.84219320615134,
+        "size": 0.952684747986478,
+        "locals": 0.9283177667225558,
+        "nesting": -0.3333333333333333,
+        "endless": 0,
+        "names": 40.0
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/control_flow",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 88.21715712547302,
+        "size": 1.1593818481215763,
+        "locals": 1.114651693704067,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 71.42857142857143
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 88.21715712547302,
+        "size": 1.1593818481215763,
+        "locals": 1.114651693704067,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 71.42857142857143
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/dead_code",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 34.78260934352875,
+        "size": 0.25,
+        "locals": 0.5,
+        "nesting": -2.0,
+        "endless": 0,
+        "names": 0.0
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 34.78260934352875,
+        "size": 0.25,
+        "locals": 0.5,
+        "nesting": -2.0,
+        "endless": 0,
+        "names": 0.0
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/debug_names",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 89.6327942609787,
+        "size": 1.1306545430532386,
+        "locals": 1.1348455252486973,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 83.33333333333334
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 89.6327942609787,
+        "size": 1.1306545430532386,
+        "locals": 1.1348455252486973,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 83.33333333333334
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/deep_branches",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 84.11081830660501,
+        "size": 0.9752241847058252,
+        "locals": 0.8944271909999159,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 50.0
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 84.11081830660501,
+        "size": 0.9752241847058252,
+        "locals": 0.8944271909999159,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 50.0
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/environments",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 86.05170945326486,
+        "size": 1.161267717047184,
+        "locals": 1.3558885654327615,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 79.48717948717949
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 86.05170945326486,
+        "size": 1.161267717047184,
+        "locals": 1.3558885654327615,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 79.48717948717949
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/evaluation_order",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 74.20479853947958,
+        "size": 1.4752823675238653,
+        "locals": 1.3323228130528078,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 69.23076923076923
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 74.20479853947958,
+        "size": 1.4752823675238653,
+        "locals": 1.3323228130528078,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 69.23076923076923
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/events",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 95.59939503669739,
+        "size": 1.0917721518987342,
+        "locals": 1.1,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 94.11764705882352
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 95.59939503669739,
+        "size": 1.0917721518987342,
+        "locals": 1.1,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 94.11764705882352
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/generalized_iteration",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 90.69680571556091,
+        "size": 1.074045304304587,
+        "locals": 1.118219355461263,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 35.483870967741936
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 90.69680571556091,
+        "size": 1.074045304304587,
+        "locals": 1.118219355461263,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 35.483870967741936
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    },
+    {
+      "program": "cases/if_local",
+      "baseline": {
+        "roundTrips": 6,
+        "similarity": 70.28607527414957,
+        "size": 1.342128128444248,
+        "locals": 1.1258162310696722,
+        "nesting": -1.0,
+        "endless": 24,
+        "names": 71.9298245614035
+      },
+      "candidate": {
+        "roundTrips": 6,
+        "similarity": 70.28607527414957,
+        "size": 1.342128128444248,
+        "locals": 1.1258162310696722,
+        "nesting": -1.0,
+        "endless": 24,
+        "names": 71.9298245614035
+      },
+      "deltas": {
+        "similarity": 0.0,
+        "size": 0.0,
+        "locals": 0.0,
+        "nesting": 0.0,
+        "endless": 0,
+        "names": 0.0
+      }
+    }
+  ],
+  "biggestLosses": []
+}

@@ -1,0 +1,67 @@
+{
+  "source": "operations.luau",
+  "sourceSha256": "2ba8f0ace18566425c8e4c647ab97f1ce8410ca11b1c904d8620ad1b6f54b0d0",
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "entries": [
+    {
+      "profile": "O0g1",
+      "bytecode": "operations-O0g1.luauc",
+      "sha256": "6a2ce54163dbc806fd98267932010c54b2d193b8882b57992cbb068c5c90dc7e"
+    },
+    {
+      "profile": "O1g1",
+      "bytecode": "operations-O1g1.luauc",
+      "sha256": "11b3f259d4a6bc64dc6548fba4c31797f067e1eeab29aab8247caa450fd642b4"
+    },
+    {
+      "profile": "O2g1",
+      "bytecode": "operations-O2g1.luauc",
+      "sha256": "ab9e9595909b1db706c1d944abbb8a1a271adfce59a97dd719e0b1a9a3af6af6"
+    },
+    {
+      "profile": "O0g2",
+      "bytecode": "operations-O0g2.luauc",
+      "sha256": "f4620ed077a2d7b65be05b98ad3ff2a02455c5857f8135e022e45a8f3920ba4d"
+    },
+    {
+      "profile": "O1g2",
+      "bytecode": "operations-O1g2.luauc",
+      "sha256": "f7cfe9270835ca9fb18f4070d29b5632272c1c7b02c22858dc1e662fde501001"
+    },
+    {
+      "profile": "O2g2",
+      "bytecode": "operations-O2g2.luauc",
+      "sha256": "f681fa849b0b08b44456f97b77c1e147180574a3452c6cd83ad163607defdc01"
+    },
+    {
+      "profile": "O0g1+x1",
+      "bytecode": "operations-O0g1+x1.luauc",
+      "sha256": "c082431b6076af857bc17aab10635a334a3c4eb74cf66607a934fab748c03ac1"
+    },
+    {
+      "profile": "O1g1+x2",
+      "bytecode": "operations-O1g1+x2.luauc",
+      "sha256": "6cdbe394ef6c6a86f2596b91f527c5c4e86d2bfd5a6fae3ed401d630e70782cb"
+    },
+    {
+      "profile": "O2g1+x3",
+      "bytecode": "operations-O2g1+x3.luauc",
+      "sha256": "b8524d32c754971e15893f4aa10c1d1ddba18b3bd0db25ddc2e5de80f7baba87"
+    },
+    {
+      "profile": "O0g2+x2",
+      "bytecode": "operations-O0g2+x2.luauc",
+      "sha256": "95d2929526eaa0e7dbe5a16d673ee5c055b9eb804fbe5d3117b79d074c4d94c7"
+    },
+    {
+      "profile": "O1g2+x3",
+      "bytecode": "operations-O1g2+x3.luauc",
+      "sha256": "3abad9baa975ced4ce88bcffc1b4bd7f57572f0ca0ca28bbc5dbf00bf8a9208e"
+    },
+    {
+      "profile": "O2g2+x1",
+      "bytecode": "operations-O2g2+x1.luauc",
+      "sha256": "cecd7e56feb177429436179ea9d1e34beebce5ffedf92efbb1d0831e2d45f1d8"
+    }
+  ]
+}

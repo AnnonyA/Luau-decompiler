@@ -1,0 +1,51 @@
+{
+  "execution": "Final engine decompilation of the same six saved review bytecodes; no new VM run, comparing complete emitted source bytes to the independently executed earlier outputs.",
+  "processExitCode": 0,
+  "profiles": 6,
+  "allSourcesByteExactToMain": true,
+  "allSourcesByteExactToFirstCandidate": true,
+  "results": [
+    {
+      "id": "9d7748a4-O0g2",
+      "candidateSourceSha256": "6a8882611bdc1b15b7490e922145df8e6b30bc5fd40f79d9153a08dc1ae0c3d3",
+      "baselineSourceSha256": "6a8882611bdc1b15b7490e922145df8e6b30bc5fd40f79d9153a08dc1ae0c3d3",
+      "byteExactToMainSource": true,
+      "byteExactToFirstCandidateSource": true
+    },
+    {
+      "id": "9d7748a4-O1g2",
+      "candidateSourceSha256": "24ea526920adbf43ee4f2910572b0265e1e1f375c4d717444f4b30ab76b3c723",
+      "baselineSourceSha256": "24ea526920adbf43ee4f2910572b0265e1e1f375c4d717444f4b30ab76b3c723",
+      "byteExactToMainSource": true,
+      "byteExactToFirstCandidateSource": true
+    },
+    {
+      "id": "9d7748a4-O2g2",
+      "candidateSourceSha256": "d67f26ec6c17d1608482599930157ba6247a02207aa0b1b448729a21cc45a2c3",
+      "baselineSourceSha256": "d67f26ec6c17d1608482599930157ba6247a02207aa0b1b448729a21cc45a2c3",
+      "byteExactToMainSource": true,
+      "byteExactToFirstCandidateSource": true
+    },
+    {
+      "id": "c87565b8-O0g2",
+      "candidateSourceSha256": "6a8882611bdc1b15b7490e922145df8e6b30bc5fd40f79d9153a08dc1ae0c3d3",
+      "baselineSourceSha256": "6a8882611bdc1b15b7490e922145df8e6b30bc5fd40f79d9153a08dc1ae0c3d3",
+      "byteExactToMainSource": true,
+      "byteExactToFirstCandidateSource": true
+    },
+    {
+      "id": "c87565b8-O1g2",
+      "candidateSourceSha256": "24ea526920adbf43ee4f2910572b0265e1e1f375c4d717444f4b30ab76b3c723",
+      "baselineSourceSha256": "24ea526920adbf43ee4f2910572b0265e1e1f375c4d717444f4b30ab76b3c723",
+      "byteExactToMainSource": true,
+      "byteExactToFirstCandidateSource": true
+    },
+    {
+      "id": "c87565b8-O2g2",
+      "candidateSourceSha256": "d67f26ec6c17d1608482599930157ba6247a02207aa0b1b448729a21cc45a2c3",
+      "baselineSourceSha256": "d67f26ec6c17d1608482599930157ba6247a02207aa0b1b448729a21cc45a2c3",
+      "byteExactToMainSource": true,
+      "byteExactToFirstCandidateSource": true
+    }
+  ]
+}

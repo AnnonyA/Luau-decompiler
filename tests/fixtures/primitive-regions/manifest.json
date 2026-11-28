@@ -1,0 +1,69 @@
+{
+  "source": "../quality/primitive-regions.luau",
+  "sourceSha256": "6dfd4783611f630c4219a7e3747a16d9516ec98aefab0d52820b0ffbc98c7ef1",
+  "luauRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "compilerSha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b",
+  "entries": [
+    {
+      "profile": "O0g1",
+      "bytecode": "O0g1.luauc",
+      "sha256": "fea44fe5ce68d9a9359f22db3855c5dc42bd02dd8e8778712ab8c4ca2bf9f050"
+    },
+    {
+      "profile": "O1g1",
+      "bytecode": "O1g1.luauc",
+      "sha256": "8dc0218e315ae7138897e68299e8f18dd959dd9a812281911edaa2f0484038ce"
+    },
+    {
+      "profile": "O2g1",
+      "bytecode": "O2g1.luauc",
+      "sha256": "5ef8762fcf704be4c2e2684a8c486856c2e569ee83216591b0df56687fc72936"
+    },
+    {
+      "profile": "O0g2",
+      "bytecode": "O0g2.luauc",
+      "sha256": "f40e3dee99a2e8f92d54904316a76e28eba40688f093c318eed26e1fa0e24e3f"
+    },
+    {
+      "profile": "O1g2",
+      "bytecode": "O1g2.luauc",
+      "sha256": "490b8db3db0a1c1e398bf6ab55e08b3cf7d69dcac44b569a3c2b0ec51fe282dd"
+    },
+    {
+      "profile": "O2g2",
+      "bytecode": "O2g2.luauc",
+      "sha256": "8c89ecc98b23f4db7ad68cd1260f100c41de9bde85aac76b2834d5c2b0f7d2bf"
+    },
+    {
+      "profile": "O0g1+x1",
+      "bytecode": "O0g1+x1.luauc",
+      "sha256": "adaf3a495ae4cf3863296936b1079215a3936eb50592c8231692cd626a32e5fb"
+    },
+    {
+      "profile": "O1g1+x2",
+      "bytecode": "O1g1+x2.luauc",
+      "sha256": "7b630ca02fbd9cd1b5aff2a2042441dfab389b54037ac4f8601c335e3fcd8898"
+    },
+    {
+      "profile": "O2g1+x3",
+      "bytecode": "O2g1+x3.luauc",
+      "sha256": "120f46aeef8c649ab50ace874175de2f01eca0b06f4d2de75ac7e529d0147bc6"
+    },
+    {
+      "profile": "O0g2+x2",
+      "bytecode": "O0g2+x2.luauc",
+      "sha256": "6ff6807ab545fd30b12604332130fec4476791b3023ca94a9ce0997930b7c50c"
+    },
+    {
+      "profile": "O1g2+x3",
+      "bytecode": "O1g2+x3.luauc",
+      "sha256": "02f042dbbcb058364c39ce0aa36d72758574099e67718d7ab7da79306cfb9e41"
+    },
+    {
+      "profile": "O2g2+x1",
+      "bytecode": "O2g2+x1.luauc",
+      "sha256": "2ed7c004d582dc1c8c003d30912114b3ce5e75cfff77a5b79eb7fe699e90111d"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+before: 33/36 pass | 3 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+  failures by profile: O2g1 1, O2g2 1, O2g2+x1 1
+  template-layout-effects O2g1 Mismatch: line 3: want `beta,alpha,delta,gamma,ready	0	false	1` got `beta,delta,gamma,alpha,ready	0	false	1`
+  template-layout-effects O2g2 Mismatch: line 3: want `beta,alpha,delta,gamma,ready	0	false	1` got `beta,delta,gamma,alpha,ready	0	false	1`
+  template-layout-effects O2g2+x1 Mismatch: line 3: want `beta,alpha,delta,gamma,ready	0	false	1` got `beta,delta,gamma,alpha,ready	0	false	1`
+after: 36/36 pass | 0 mismatch, 0 don't recompile, 0 decompile failures, 0 refused | 0 unusable inputs
+readability on the 33 round trips every decompiler passed:
+  decompiler  similarity   size  locals  nesting  endless  names g2  cpu ms
+  after            87.6%  1.17x   1.14x    +0.12        0     59.0%  170.87
+  before           87.5%  1.17x   1.15x    +0.12        0     59.0%  143.16
+72 round trips in 2.1s

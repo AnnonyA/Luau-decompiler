@@ -22,6 +22,7 @@ import { forEachChildExpression, mapStatementBlocks, mapStatementExpressions, re
 import { refineStructure, recoverPrivateLogicalReturns } from "./StructureRefinement.js";
 import { foldTemporaries } from "./TempFolding.js";
 import { recoverLoopResultDefaults } from "./LoopResultDefaults.js";
+import { recoverParallelAssignments } from "./ParallelAssignments.js";
 
 const COMPOUND_OPS = new Set<BinaryOperator>(["+", "-", "*", "/", "%", ".."]);
 const GENERIC_CLOSURE = /^function_?\d*$/;
@@ -61,7 +62,8 @@ export function cleanupAst(ast: Chunk, options: CleanupOptions): Chunk {
   // further single-use temporaries.
   // A conditional return is recognised before its arms become guard clauses.
   const returns = (chunk: Chunk): Chunk => options.ifExpressions ? finalizeReturnExpressions(chunk) : chunk;
-  const refined = refineStructure(returns(fold(structured)), { ifExpressions: options.ifExpressions, guards: options.earlyReturn });
+  const parallel = options.foldSingleUseTemps === false ? structured : recoverParallelAssignments(structured);
+  const refined = refineStructure(returns(fold(parallel)), { ifExpressions: options.ifExpressions, guards: options.earlyReturn });
   const folded = annotateFoldedLocals(fold(refined), options);
 const named = inferHumanNames(folded, {foldSingleUseTemps: options.foldSingleUseTemps,
     sourceNames: new Set([...(options.sourceNames ?? []), ...(options.inferredSourceNames ?? []), ...(options.debugNames ?? [])]),

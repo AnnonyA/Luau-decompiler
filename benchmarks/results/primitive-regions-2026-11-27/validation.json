@@ -1,0 +1,50 @@
+{
+  "baseCommit": "36a344eeed74d194723e6f32a0ef7d699fac550f",
+  "baselineJsSha256": "edc5ff59d69f986aad80815f2485c4437c37e3a9bd9b04e64d1d146434903cbb",
+  "candidateJsSha256": "dd0e2b681b1070cf30cbd061bb2e02807b84bfcf36916280d706877e0ec26ab6",
+  "currentDistMatchesCandidate": true,
+  "sourceSha256": "6dfd4783611f630c4219a7e3747a16d9516ec98aefab0d52820b0ffbc98c7ef1",
+  "quality": {
+    "scorer": "unchanged Rosetta 3 normalized tokens/Myers",
+    "profiles": 882,
+    "baselineSimilarity": 76.92827095114995,
+    "candidateSimilarity": 76.94468800983731,
+    "deltaPercentagePoints": 0.016417058687352437,
+    "changedOutputs": 4,
+    "identicalOutputs": 878,
+    "options": {},
+    "query": "",
+    "behaviorVerifiedByDiagnosticReplay": false
+  },
+  "validation": {
+    "fullUnit": {
+      "files": 146,
+      "tests": 1565,
+      "passed": 1565,
+      "logSha256": "bc30b496f2774de3c4b90a55af0b0123b6402077135c2c5107cf1ebe78b4d58a",
+      "note": "Full engine suite before the final register-pressure control and 13 sealed-fixture integration tests were added; unchanged engine. The final 39 focused tests include those additions."
+    },
+    "focusedUnit": {
+      "files": 2,
+      "tests": 39,
+      "passed": 39
+    },
+    "authoredRuntime": {
+      "profiles": 12,
+      "baselinePassed": 12,
+      "candidatePassed": 12
+    },
+    "quickHardSourceRegression": {
+      "sources": 147,
+      "profilesPerSource": 12,
+      "passed": 1764,
+      "total": 1764,
+      "note": "Regression over unchanged copied Quick sources, six normal and six Hard profiles. This is not a four-tier release benchmark."
+    }
+  },
+  "commands": {
+    "quality": "python quality-research/replay.py --dist similarity-v2-regions/dist --out similarity-v2-regions-probes/v2-quick --require-count 882",
+    "authored": "rosetta check tests/fixtures/quality/primitive-regions.luau --decompiler before=<sealed baseline CLI> --decompiler candidate=<sealed candidate CLI> --profiles O0g1,O1g1,O2g1,O0g2,O1g2,O2g2,O0g1+x1,O1g1+x2,O2g1+x3,O0g2+x2,O1g2+x3,O2g2+x1",
+    "quickHardRegression": "rosetta check similarity-structure-probes/quick-sources --decompiler candidate=<sealed candidate CLI> --profiles O0g1,O1g1,O2g1,O0g2,O1g2,O2g2,O0g1+x1,O1g1+x2,O2g1+x3,O0g2+x2,O1g2+x3,O2g2+x1"
+  }
+}

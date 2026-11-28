@@ -6,6 +6,7 @@ import { cleanupAst } from "../src/ast/AstCleanup.ts";
 import { presentClosures } from "../src/ast/ClosurePresentation.ts";
 import { decompile, defaultCleanupOptions } from "../src/decompile.ts";
 import { printLuau } from "../src/print/LuauPrinter.ts";
+import { analyzeCallBoundaries } from "../src/print/CallBoundaries.ts";
 import { abc, ad, CaptureType, compile, Opcode, proto } from "./helpers.ts";
 
 function nodes(value: unknown, kind: string): any[] {
@@ -103,10 +104,12 @@ describe("native closure call boundaries", () => {
     // keep their indirect CALLs too, even after naming/materialization.
     expect(boundaries.filter(call => /^(getfenv|setfenv)$/.test(call.callee?.name ?? ""))).toHaveLength(3);
     expect(boundaries).toHaveLength(7);
-    // These values have no immutable literal initializer in the final AST.
-    // Grouping still blocks builtin recognition without exposing an inline
-    // candidate; all seven original CALL boundaries remain represented.
-    expect(result.source.match(/\((?:loadedClosure\d*|getfenv|setfenv)\)\(/g)).toHaveLength(7);
+    // Written closure targets cannot expose a literal or builtin. Environment
+    // operations still keep their groups; all seven CALL metadata entries stay.
+    const presentation = analyzeCallBoundaries(result.ast.body);
+    expect(boundaries.filter(call => presentation.direct.has(call))).toHaveLength(4);
+    expect(result.source.match(/\bloadedClosure\d*\(/g)).toHaveLength(4);
+    expect(result.source.match(/\((?:getfenv|setfenv)\)\(/g)).toHaveLength(3);
     expect(result.diagnostics.some(diagnostic => diagnostic.code === "closure-identity-unresolved")).toBe(false);
     expect(result.source).not.toContain("--!optimize");
   });

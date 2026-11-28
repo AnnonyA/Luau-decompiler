@@ -1,0 +1,219 @@
+{
+  "createdAt": "2026-11-27T23:09:00.956175+00:00",
+  "compiler": "Rosetta pinned Luau 0.747",
+  "compilerHostSha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b",
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "sources": [
+    {
+      "name": "parallel-scalar-identity",
+      "sourceSha256": "cfb69973daa733108bf74990d3854f1cfb63885aee85f74a2e915ad272f9a934",
+      "bytecodes": [
+        {
+          "profile": "O0g1",
+          "path": "parallel-scalar-identity-O0g1.luauc",
+          "sha256": "c21e47ef74f8de02b36e85d648a46bcd09b5672e9b2aa09982a8abab2568f895"
+        },
+        {
+          "profile": "O1g1",
+          "path": "parallel-scalar-identity-O1g1.luauc",
+          "sha256": "cbf535e43568f4c1c04a94d4467ae2cd47b5dadc01965c1f5c1413d0581befd6"
+        },
+        {
+          "profile": "O2g1",
+          "path": "parallel-scalar-identity-O2g1.luauc",
+          "sha256": "e0674ff0ad5cd64dd7c85ea4ec89d9843b1669209727965c59685e4bd8bad102"
+        },
+        {
+          "profile": "O0g2",
+          "path": "parallel-scalar-identity-O0g2.luauc",
+          "sha256": "0ac5bfc938532113e7d4952ea041fb5a534ce3861cb3798f6ea70e753ab21374"
+        },
+        {
+          "profile": "O1g2",
+          "path": "parallel-scalar-identity-O1g2.luauc",
+          "sha256": "8a74eaad3b34421dcdbf5ffbda34b5e1846e8ceb97d8353c76d59bbf3d92d34a"
+        },
+        {
+          "profile": "O2g2",
+          "path": "parallel-scalar-identity-O2g2.luauc",
+          "sha256": "f0b3149c211ecf4f55cefdb07ad01fa3b5ef5055c7de396adc437b285b0d418e"
+        },
+        {
+          "profile": "O0g1+x1",
+          "path": "parallel-scalar-identity-O0g1+x1.luauc",
+          "sha256": "f36fad1c3032562d5087014b67b0c447f6c83f03a5d531186bc997213b771291"
+        },
+        {
+          "profile": "O1g1+x2",
+          "path": "parallel-scalar-identity-O1g1+x2.luauc",
+          "sha256": "884925b23c15380ae00abd714f9280fc7f7aed89525162b8209fed230eaaf1e0"
+        },
+        {
+          "profile": "O2g1+x3",
+          "path": "parallel-scalar-identity-O2g1+x3.luauc",
+          "sha256": "28f00f5ea12b1ffd9e4e3c22a84c8c803dd219ece47de15c2b62e410eb7169e4"
+        },
+        {
+          "profile": "O0g2+x2",
+          "path": "parallel-scalar-identity-O0g2+x2.luauc",
+          "sha256": "249af9c4891888f29ec6efc8e4fab0fb3223f2dc1959858f6aa1383a95a01f83"
+        },
+        {
+          "profile": "O1g2+x3",
+          "path": "parallel-scalar-identity-O1g2+x3.luauc",
+          "sha256": "b28d9b652ab9ab812a5042b1354678946a0c21f207e9ace56cdb6e0538e5b5bb"
+        },
+        {
+          "profile": "O2g2+x1",
+          "path": "parallel-scalar-identity-O2g2+x1.luauc",
+          "sha256": "3a2af3169cfc65f357c27558f1cd23fe4cb0aafb10154a4bc91ce35457bf0594"
+        }
+      ]
+    },
+    {
+      "name": "parallel-store-effects",
+      "sourceSha256": "e55ff7fe47651d7c0d4cb2b903447e61b3e6471e6ad61af8fb77ea5a5806baad",
+      "bytecodes": [
+        {
+          "profile": "O0g1",
+          "path": "parallel-store-effects-O0g1.luauc",
+          "sha256": "43a4064289afcf811b1cfc66f3c60015b5c9747f6a1c34567e6f105d5475a927"
+        },
+        {
+          "profile": "O1g1",
+          "path": "parallel-store-effects-O1g1.luauc",
+          "sha256": "dc15ca4ed9cee38650aff42d1a34c3331424a296748582017201c995b26cd46c"
+        },
+        {
+          "profile": "O2g1",
+          "path": "parallel-store-effects-O2g1.luauc",
+          "sha256": "fc060ea053206b3848204266260e51c0600c8206f8ce94162987b8722e0fa67f"
+        },
+        {
+          "profile": "O0g2",
+          "path": "parallel-store-effects-O0g2.luauc",
+          "sha256": "e21b76978fea207a5106802c291f91c6f611b65b958f7e4d9f554a126efd9608"
+        },
+        {
+          "profile": "O1g2",
+          "path": "parallel-store-effects-O1g2.luauc",
+          "sha256": "eea57398f9ecb29f2d4ddefca9e3bfd1aaa21a42f7e042a63cf6880c90c83e88"
+        },
+        {
+          "profile": "O2g2",
+          "path": "parallel-store-effects-O2g2.luauc",
+          "sha256": "108883e0b0977649ae0c8a4fbd3408fc2cbed396fc5a576b69056b0e9e4da18a"
+        },
+        {
+          "profile": "O0g1+x1",
+          "path": "parallel-store-effects-O0g1+x1.luauc",
+          "sha256": "21203fb335efc6df340db752d116aa7a04af613aaf5d8af089df45a27e050a39"
+        },
+        {
+          "profile": "O1g1+x2",
+          "path": "parallel-store-effects-O1g1+x2.luauc",
+          "sha256": "775f089b08cbcf2be354990395c0b053a56a8193e3f64fddfb53c99598570096"
+        },
+        {
+          "profile": "O2g1+x3",
+          "path": "parallel-store-effects-O2g1+x3.luauc",
+          "sha256": "e95d21ae50e6513a9179495aeac04f55b115f1a94d56e02326ffd4557ec06dfb"
+        },
+        {
+          "profile": "O0g2+x2",
+          "path": "parallel-store-effects-O0g2+x2.luauc",
+          "sha256": "2d398ef6007fea2361f598c6d18a08fe662fa6ff34361536f13fa8e9c9cdf5fb"
+        },
+        {
+          "profile": "O1g2+x3",
+          "path": "parallel-store-effects-O1g2+x3.luauc",
+          "sha256": "f82eccd7807c2fbaf6b8bb029f758bda4d5905c87b3890ee91eeb2b23f55d723"
+        },
+        {
+          "profile": "O2g2+x1",
+          "path": "parallel-store-effects-O2g2+x1.luauc",
+          "sha256": "518420bbd9a1d1bc56e266d0690c6b8ff2266167c37891103d418cecba84c605"
+        }
+      ]
+    },
+    {
+      "name": "parallel-target-mutation",
+      "sourceSha256": "a517d2feb79f42bf3f6ddf14cae52429f86efcc967216860a38c0fadedcb1502",
+      "bytecodes": [
+        {
+          "profile": "O0g1",
+          "path": "parallel-target-mutation-O0g1.luauc",
+          "sha256": "2d38121d92b5319c0ca8efd67c56c354a97ad33a22e2e9b41833ed2b8dc2024a"
+        },
+        {
+          "profile": "O1g1",
+          "path": "parallel-target-mutation-O1g1.luauc",
+          "sha256": "f52c76393631a8cac93ec97ecc2abf99eb0c6141a90bdb83836d57b37e55db05"
+        },
+        {
+          "profile": "O2g1",
+          "path": "parallel-target-mutation-O2g1.luauc",
+          "sha256": "51a434c503e10d737f01975a1067c94bdb5e43207d0b80ba49d7f9aefb8b6142"
+        },
+        {
+          "profile": "O0g2",
+          "path": "parallel-target-mutation-O0g2.luauc",
+          "sha256": "6354b5c556699cbff639eaf7d20630e388e66c2046ddbbee8516883e76bce4db"
+        },
+        {
+          "profile": "O1g2",
+          "path": "parallel-target-mutation-O1g2.luauc",
+          "sha256": "70a457b0a94a15bb21fdc8e09847cdec793ab2cf9223a6020821eb7176d9e8c0"
+        },
+        {
+          "profile": "O2g2",
+          "path": "parallel-target-mutation-O2g2.luauc",
+          "sha256": "d67a2d18818335b8392d81ca02fc7b9a026ae3e043200546c318a4d2fb151a40"
+        },
+        {
+          "profile": "O0g1+x1",
+          "path": "parallel-target-mutation-O0g1+x1.luauc",
+          "sha256": "f7743e5f545c3c348af6a305551bf0b9ffd5badf4f6f7e074494f3e60d0ea495"
+        },
+        {
+          "profile": "O1g1+x2",
+          "path": "parallel-target-mutation-O1g1+x2.luauc",
+          "sha256": "9bad8c912f16db60c7c92dbc89584e7ffd7e661731db201ab8d16b9a9866a2b4"
+        },
+        {
+          "profile": "O2g1+x3",
+          "path": "parallel-target-mutation-O2g1+x3.luauc",
+          "sha256": "5c1783063cbb3595a7ef5acd90ba3eb67adf58d3a8a046a3584748b7c961d527"
+        },
+        {
+          "profile": "O0g2+x2",
+          "path": "parallel-target-mutation-O0g2+x2.luauc",
+          "sha256": "2dd220ae99f4743cbf806df5453aa8dc5c07181bb422bc50a37fc012ba98dd00"
+        },
+        {
+          "profile": "O1g2+x3",
+          "path": "parallel-target-mutation-O1g2+x3.luauc",
+          "sha256": "ac68175748a6f202829bba8e96d264cb82b8355acfc36dd8937dad066101d1b3"
+        },
+        {
+          "profile": "O2g2+x1",
+          "path": "parallel-target-mutation-O2g2+x1.luauc",
+          "sha256": "52d8859a9f18a9d6fd1a29b075bc8008337e8c909763550eecdbb3230682cdc4"
+        }
+      ]
+    }
+  ]
+}

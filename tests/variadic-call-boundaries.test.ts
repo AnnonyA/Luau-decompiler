@@ -31,12 +31,13 @@ it("follows immutable aliases without interpreting an unknown field as a literal
   expect(analyzeCallBoundaries(ast.body).direct.has(invocation)).toBe(false);
 });
 
-it("keeps an overwritten target grouped even if its earlier initializer was variadic", () => {
+it("uses the written-local proof independently of an earlier variadic initializer", () => {
   const invocation = call("helper");
   const ast = chunk([local("helper", variadic()), {kind: "assign", targets: [ident("helper")], values: [ident("replacement")]},
     {kind: "return", values: [invocation]}]);
-  expect(analyzeCallBoundaries(ast.body).direct.has(invocation)).toBe(false);
-  expect(printLuau(ast)).toContain("return (helper)(...)");
+  expect(analyzeCallBoundaries(ast.body).direct.has(invocation)).toBe(true);
+  expect(printLuau(ast)).toContain("return helper(...)");
+  expect(invocation.preserveBoundary).toBe(true);
 });
 
 it("distinguishes a same-named parameter from the outer known variadic function", () => {

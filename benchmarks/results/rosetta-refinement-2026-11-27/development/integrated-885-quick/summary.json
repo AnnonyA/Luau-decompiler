@@ -1,0 +1,26 @@
+{
+  "engineRevision": "885eb08b0fd1bd9beb513db9fd90e5c369e8293e",
+  "engineTree": "83ffa1a2f4743b55bdf1c33e793df0642e69ebe6",
+  "node": "v22.23.5",
+  "workingTreeClean": true,
+  "quick": {
+    "passed": 882,
+    "total": 882,
+    "sourceSimilarityPercent": 77.25692801599871,
+    "geometricTokenRatio": 0.9854781501051265
+  },
+  "units": {
+    "passed": 1800,
+    "total": 1800,
+    "files": 154,
+    "command": "node22 node_modules/vitest/vitest.mjs run --maxWorkers 2"
+  },
+  "baseline": {
+    "revision": "36a344eeed74d194723e6f32a0ef7d699fac550f",
+    "sourceSimilarityPercent": 76.92827095114995
+  },
+  "similarityGainPercentagePoints": 0.32865706484875545,
+  "targetPercent": 100,
+  "targetReached": false,
+  "scope": "Quick-only development checkpoint. Full and Hard work paused by user. No new measurements of those tiers are attributed to this revision."
+}

@@ -1,0 +1,228 @@
+{
+  "baseline": "edc5ff59d69f986aad80815f2485c4437c37e3a9bd9b04e64d1d146434903cbb",
+  "candidate": "dd0e2b681b1070cf30cbd061bb2e02807b84bfcf36916280d706877e0ec26ab6",
+  "before": {
+    "roundTrips": 882,
+    "similarity": 76.92827095114995,
+    "size": 0.9927495865084095,
+    "locals": 1.0963497723161764,
+    "nesting": -0.33900226757369617,
+    "endless": 38,
+    "names": 61.02136376938835
+  },
+  "after": {
+    "roundTrips": 882,
+    "similarity": 76.94468800983731,
+    "size": 0.9924414853856484,
+    "locals": 1.095835175911486,
+    "nesting": -0.33900226757369617,
+    "endless": 38,
+    "names": 61.02136376938835
+  },
+  "changed": [
+    {
+      "id": "cases/control_flow/O2g1",
+      "before": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.2352941176470589,
+        "locals": [
+          20,
+          16
+        ],
+        "names": null,
+        "similarity": 0.8259109258651733,
+        "size": 1.275229357798165,
+        "tokens": [
+          277,
+          217
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.1764705882352942,
+        "locals": [
+          19,
+          16
+        ],
+        "names": null,
+        "similarity": 0.8517745137214661,
+        "size": 1.2064220183486238,
+        "tokens": [
+          262,
+          217
+        ]
+      },
+      "deltaSimilarity": 2.5863587856292725
+    },
+    {
+      "id": "cases/control_flow/O2g2",
+      "before": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.2352941176470589,
+        "locals": [
+          20,
+          16
+        ],
+        "names": [
+          10,
+          14
+        ],
+        "similarity": 0.8259109258651733,
+        "size": 1.275229357798165,
+        "tokens": [
+          277,
+          217
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.1764705882352942,
+        "locals": [
+          19,
+          16
+        ],
+        "names": [
+          10,
+          14
+        ],
+        "similarity": 0.8517745137214661,
+        "size": 1.2064220183486238,
+        "tokens": [
+          262,
+          217
+        ]
+      },
+      "deltaSimilarity": 2.5863587856292725
+    },
+    {
+      "id": "cases/loops/O2g1",
+      "before": {
+        "depth": [
+          4,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.8409090909090908,
+        "locals": [
+          80,
+          43
+        ],
+        "names": null,
+        "similarity": 0.7069452404975891,
+        "size": 1.4762569832402235,
+        "tokens": [
+          1056,
+          715
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.5681818181818181,
+        "locals": [
+          68,
+          43
+        ],
+        "names": null,
+        "similarity": 0.7535545229911804,
+        "size": 1.3603351955307263,
+        "tokens": [
+          973,
+          715
+        ]
+      },
+      "deltaSimilarity": 4.660928249359131
+    },
+    {
+      "id": "cases/loops/O2g2",
+      "before": {
+        "depth": [
+          4,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.8863636363636365,
+        "locals": [
+          82,
+          43
+        ],
+        "names": [
+          15,
+          23
+        ],
+        "similarity": 0.7089887857437134,
+        "size": 1.488826815642458,
+        "tokens": [
+          1065,
+          715
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          5
+        ],
+        "endless": [
+          0,
+          0
+        ],
+        "localRatio": 1.6136363636363635,
+        "locals": [
+          70,
+          43
+        ],
+        "names": [
+          15,
+          23
+        ],
+        "similarity": 0.7554507851600647,
+        "size": 1.3729050279329609,
+        "tokens": [
+          982,
+          715
+        ]
+      },
+      "deltaSimilarity": 4.646199941635132
+    }
+  ]
+}

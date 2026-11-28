@@ -1,0 +1,66 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/Luau-decompiler
+
+(node:35) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/parallel-assignments.test.ts (27 tests | 1 failed | 26 skipped) 11ms
+   ↓ private parallel indexed assignments > restores a fixed store list and lets adjacent temporaries regain their original evaluation positions
+   ↓ private parallel indexed assignments > keeps aliased destinations in their existing left-to-right store order
+   ↓ private parallel indexed assignments > retains one result from each call initializer
+   ↓ private parallel indexed assignments > retains one result from each method-call initializer
+   ↓ private parallel indexed assignments > retains one result from each vararg initializer
+   ↓ private parallel indexed assignments > rejects missing producer ownership
+   ↓ private parallel indexed assignments > rejects debug producer ownership
+   ↓ private parallel indexed assignments > rejects parallel-debug producer ownership
+   ↓ private parallel indexed assignments > rejects different-prototype producer ownership
+   ↓ private parallel indexed assignments > retains caller-protected temporary declarations
+   ↓ private parallel indexed assignments > does not move an effectful-key before the first store
+   ↓ private parallel indexed assignments > does not move an effectful-object before the first store
+   ↓ private parallel indexed assignments > does not move an global-key before the first store
+   ↓ private parallel indexed assignments > does not move an global-object before the first store
+   ↓ private parallel indexed assignments > keeps a destination depending on mutable captured cell left
+   ↓ private parallel indexed assignments > keeps a destination depending on mutable captured cell right
+   ↓ private parallel indexed assignments > keeps a destination depending on mutable captured cell owner
+   ↓ private parallel indexed assignments > permits an immutable captured destination cell
+   × private parallel indexed assignments > rejects an identifier node shared by different lexical destination bindings 10ms
+     → expected [ { kind: 'assign', …(2) } ] to have a length of 2 but got 1
+   ↓ private parallel indexed assignments > keeps captured scalar results
+   ↓ private parallel indexed assignments > keeps used-twice scalar results
+   ↓ private parallel indexed assignments > keeps written scalar results
+   ↓ private parallel indexed assignments > keeps gap scalar results
+   ↓ private parallel indexed assignments > keeps reverse-order scalar results
+   ↓ private parallel indexed assignments > keeps local-target scalar results
+   ↓ private parallel indexed assignments > respects the disabled temporary-recovery option
+   ↓ private parallel indexed assignments > pins the independently executed normal and Hard bytecodes and exercises the recovered stores
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/parallel-assignments.test.ts > private parallel indexed assignments > rejects an identifier node shared by different lexical destination bindings
+AssertionError: expected [ { kind: 'assign', …(2) } ] to have a length of 2 but got 1
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ tests/parallel-assignments.test.ts:111:85
+    109|     const result = recoverParallelAssignments(chunk([first, second])).…
+    110|     if (result.kind !== "function-decl") throw new Error("missing fixt…
+    111|     expect(result.body.statements.filter(statement => statement.kind =…
+       |                                                                                     ^
+    112|   });
+    113| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 26 skipped (27)
+   Start at  23:25:48
+   Duration  1.05s (transform 696ms, setup 0ms, collect 861ms, tests 11ms, environment 0ms, prepare 47ms)
+
+(node:61) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

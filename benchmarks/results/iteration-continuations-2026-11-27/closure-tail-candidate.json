@@ -1,0 +1,313 @@
+{
+  "purpose": "authored iteration-continuation round trips on both pinned official compiler/VM revisions",
+  "engineDist": "/workspace/scratch/eb5e4be57451/quality-research/v2-continuation-candidate-final/engine-dist",
+  "label": "candidate-shared-closure-tail",
+  "profiles": 12,
+  "pass": 12,
+  "fail": 0,
+  "allPass": true,
+  "records": [
+    {
+      "id": "c875/shared-closure-tail/O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g1",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "131f4bab31b896cd36378c809714ab634733f17bf505209e67c532809725f667",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "ce3d3c662ef0e096f8cb2a9a9b2d72ebe443feccb72f480750e93d5b035a5d36"
+    },
+    {
+      "id": "c875/shared-closure-tail/O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O0g2",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "32b0097a57603b3979e0f179b60794455cfc26ddeddb39f5ec8a5a7005152f59",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "b155a5fffd479e6019ad5131b25310a50afdd98de2a7cba5fbe141b953a75cfd"
+    },
+    {
+      "id": "c875/shared-closure-tail/O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g1",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "5f4861233dc1635157acc9425385ab71262098c93e8dfd128b3c044d15cf0300",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "92ca0a5782e782e4324864dd984099c15abf34430c0ceb45cabe500cef29e490"
+    },
+    {
+      "id": "c875/shared-closure-tail/O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O1g2",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "99f9fb8aed7d827e7dacd699ab87a4b4f49c3b5ad9e9c74ee67a5178d18b5a9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "648317d63b66f27d8d76985fc89a6c07250401c68b105f75eb273427119c4baa"
+    },
+    {
+      "id": "c875/shared-closure-tail/O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g1",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "5f4861233dc1635157acc9425385ab71262098c93e8dfd128b3c044d15cf0300",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "92ca0a5782e782e4324864dd984099c15abf34430c0ceb45cabe500cef29e490"
+    },
+    {
+      "id": "c875/shared-closure-tail/O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "profile": "O2g2",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "99f9fb8aed7d827e7dacd699ab87a4b4f49c3b5ad9e9c74ee67a5178d18b5a9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "648317d63b66f27d8d76985fc89a6c07250401c68b105f75eb273427119c4baa"
+    },
+    {
+      "id": "9d/shared-closure-tail/O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g1",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "131f4bab31b896cd36378c809714ab634733f17bf505209e67c532809725f667",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "ce3d3c662ef0e096f8cb2a9a9b2d72ebe443feccb72f480750e93d5b035a5d36"
+    },
+    {
+      "id": "9d/shared-closure-tail/O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O0g2",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "32b0097a57603b3979e0f179b60794455cfc26ddeddb39f5ec8a5a7005152f59",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "b155a5fffd479e6019ad5131b25310a50afdd98de2a7cba5fbe141b953a75cfd"
+    },
+    {
+      "id": "9d/shared-closure-tail/O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g1",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "5f4861233dc1635157acc9425385ab71262098c93e8dfd128b3c044d15cf0300",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "92ca0a5782e782e4324864dd984099c15abf34430c0ceb45cabe500cef29e490"
+    },
+    {
+      "id": "9d/shared-closure-tail/O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O1g2",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "99f9fb8aed7d827e7dacd699ab87a4b4f49c3b5ad9e9c74ee67a5178d18b5a9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "648317d63b66f27d8d76985fc89a6c07250401c68b105f75eb273427119c4baa"
+    },
+    {
+      "id": "9d/shared-closure-tail/O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g1",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "5f4861233dc1635157acc9425385ab71262098c93e8dfd128b3c044d15cf0300",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "92ca0a5782e782e4324864dd984099c15abf34430c0ceb45cabe500cef29e490"
+    },
+    {
+      "id": "9d/shared-closure-tail/O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "profile": "O2g2",
+      "originalSourceSha256": "9f35d5400054209e40375d907f9c2832a69ea40f9acad79deb8c2942849e1bb2",
+      "originalBytecodeSha256": "99f9fb8aed7d827e7dacd699ab87a4b4f49c3b5ad9e9c74ee67a5178d18b5a9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "decompileOk": true,
+      "match": true,
+      "recompile": {
+        "exitCode": 0,
+        "stderr": ""
+      },
+      "outputSourceSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "actual": {
+        "exitCode": 0,
+        "stdout": "shared-cell\t1\ncollected\t2\t1\ncell\t1\t12\t15\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\ncollected\t4\t3\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\nshared-cell\t1\nshared-cell\t2\nshared-cell\t3\nshared-cell\t4\nshared-cell\t5\ncollected\t6\t5\ncell\t1\t12\t15\tfalse\ncell\t2\t13\t16\tfalse\ncell\t3\t14\t17\tfalse\ncell\t4\t15\t18\tfalse\ncell\t5\t16\t19\tfalse\n",
+        "stderr": ""
+      },
+      "outputBytecodeSha256": "648317d63b66f27d8d76985fc89a6c07250401c68b105f75eb273427119c4baa"
+    }
+  ],
+  "nodeExitCode": 0,
+  "finishedAt": "2026-11-27T23:35:56.414189+00:00"
+}

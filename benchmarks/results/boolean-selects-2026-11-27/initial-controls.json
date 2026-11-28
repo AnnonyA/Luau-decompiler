@@ -1,0 +1,41 @@
+{
+  "generator": "typed-v2",
+  "cases": 1,
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "totals": {
+    "annonyA": {
+      "pass": 12
+    }
+  },
+  "by_profile": {},
+  "failures": {},
+  "quality": {
+    "round_trips": 12,
+    "by_decompiler": {
+      "annonyA": {
+        "round_trips": 12,
+        "similarity": 74.23282514015833,
+        "size": 1.364277646073675,
+        "locals": 1.3150337894529787,
+        "nesting": 0.16666666666666666,
+        "endless": 0,
+        "names": 61.25000000000001,
+        "cpu_ms_median": 313.444,
+        "cpu_ms_total": 3692.434
+      }
+    }
+  }
+}

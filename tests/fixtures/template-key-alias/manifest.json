@@ -1,0 +1,87 @@
+{
+  "createdAt": "2026-11-27T23:29:34.949796+00:00",
+  "compiler": "Rosetta pinned Luau 0.747",
+  "compilerHostSha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b",
+  "profiles": [
+    "O0g1",
+    "O1g1",
+    "O2g1",
+    "O0g2",
+    "O1g2",
+    "O2g2",
+    "O0g1+x1",
+    "O1g1+x2",
+    "O2g1+x3",
+    "O0g2+x2",
+    "O1g2+x3",
+    "O2g2+x1"
+  ],
+  "sources": [
+    {
+      "name": "template-key-alias-effects",
+      "sourceSha256": "6ab3ded9ac0e262b664576e6545f946fff052681c5aacf6438d89b7bdf6558a0",
+      "bytecodes": [
+        {
+          "profile": "O0g1",
+          "path": "template-key-alias-effects-O0g1.luauc",
+          "sha256": "21dca31001a2e48d3acba8bf233f600ab0d7ec309197ef9d8f7fa3a88fd8a327"
+        },
+        {
+          "profile": "O1g1",
+          "path": "template-key-alias-effects-O1g1.luauc",
+          "sha256": "0bb3fa2c27baf183c86765b73c06b1d458c6a0c49827dca8e54c733ec4f94ce5"
+        },
+        {
+          "profile": "O2g1",
+          "path": "template-key-alias-effects-O2g1.luauc",
+          "sha256": "5a776fc56c9ea1b468ecbc3e61f40b528d6a64fe14afa749bcfef97513b79196"
+        },
+        {
+          "profile": "O0g2",
+          "path": "template-key-alias-effects-O0g2.luauc",
+          "sha256": "1edc32d76d3c0f1c225b22aea7ad4e19280304a966026790da5f7e6640d321d8"
+        },
+        {
+          "profile": "O1g2",
+          "path": "template-key-alias-effects-O1g2.luauc",
+          "sha256": "67e2a5370145d823c768379e8ab6661bf3488a26440c599594cf60539cb25036"
+        },
+        {
+          "profile": "O2g2",
+          "path": "template-key-alias-effects-O2g2.luauc",
+          "sha256": "a7d100d7d3ff9cc0ed5035b555ea4692a2c387ed007a366723f6797c39e9d165"
+        },
+        {
+          "profile": "O0g1+x1",
+          "path": "template-key-alias-effects-O0g1+x1.luauc",
+          "sha256": "866f68034bc3a0166f01f429dd1ffd05038b9a40638c50711379c2af6566a77d"
+        },
+        {
+          "profile": "O1g1+x2",
+          "path": "template-key-alias-effects-O1g1+x2.luauc",
+          "sha256": "d567a6d8671a96072e6d95bbdb8a45b7e1578e6d8a2c2139e733a631a9734ce6"
+        },
+        {
+          "profile": "O2g1+x3",
+          "path": "template-key-alias-effects-O2g1+x3.luauc",
+          "sha256": "faca1c5f7fd308b816fa466a65dac60719f48b4fa75ab83845448a183161c987"
+        },
+        {
+          "profile": "O0g2+x2",
+          "path": "template-key-alias-effects-O0g2+x2.luauc",
+          "sha256": "011c32218c26db803d50d675beeae43b1d5fdfd8e4fdc3bb867511f359c4b358"
+        },
+        {
+          "profile": "O1g2+x3",
+          "path": "template-key-alias-effects-O1g2+x3.luauc",
+          "sha256": "2284e5cf48eafeed4da09e2e57fee45962e85f90edfa5d79cb1398776d240dc3"
+        },
+        {
+          "profile": "O2g2+x1",
+          "path": "template-key-alias-effects-O2g2+x1.luauc",
+          "sha256": "7042415c6c1af7a1131b25290850ee67406eeb93f5139cf835adad1cce58df0f"
+        }
+      ]
+    }
+  ]
+}

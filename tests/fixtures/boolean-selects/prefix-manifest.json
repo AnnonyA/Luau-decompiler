@@ -1,0 +1,67 @@
+{
+  "source": "primitive-prefixes.luau",
+  "sourceSha256": "aef5fa783ffa560230442a8a7c327e8ed8b1e9b55660e894479c21d8a4e2be1c",
+  "rosettaRevision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+  "entries": [
+    {
+      "profile": "O0g1",
+      "bytecode": "primitive-prefixes-O0g1.luauc",
+      "sha256": "6d53c7f16565c9ad50ed6f6eda3ef3e51993f35211ba3c6946657498da96f3f0"
+    },
+    {
+      "profile": "O1g1",
+      "bytecode": "primitive-prefixes-O1g1.luauc",
+      "sha256": "3625167a88ddc571ba166c36303c612d133a0054da77e8f3dbc4cb41d655760e"
+    },
+    {
+      "profile": "O2g1",
+      "bytecode": "primitive-prefixes-O2g1.luauc",
+      "sha256": "96890e8946be58cc5712e48a724b7cdf656e178e51106aef952121c81fce136a"
+    },
+    {
+      "profile": "O0g2",
+      "bytecode": "primitive-prefixes-O0g2.luauc",
+      "sha256": "4d6d52207a0bb26c8cf0c0fcbfc0e004013c829073c99b043a6fc709caeec07f"
+    },
+    {
+      "profile": "O1g2",
+      "bytecode": "primitive-prefixes-O1g2.luauc",
+      "sha256": "d79593bb002a5e0145aecd38afd19722996b2c411a7fb2e07f0fa280f92aaaad"
+    },
+    {
+      "profile": "O2g2",
+      "bytecode": "primitive-prefixes-O2g2.luauc",
+      "sha256": "10cc7de5c53ad5cad7a37c48718b327051b1ab06bb0d29604324a72d45ca194c"
+    },
+    {
+      "profile": "O0g1+x1",
+      "bytecode": "primitive-prefixes-O0g1+x1.luauc",
+      "sha256": "de3da695d241cea008a7f3099bd542538176d8efe5214d026b879265bb302a29"
+    },
+    {
+      "profile": "O1g1+x2",
+      "bytecode": "primitive-prefixes-O1g1+x2.luauc",
+      "sha256": "d0926007a232b54dff9dc75d8e39d8a16d783768a15ded3f8c27cc44d654d0c5"
+    },
+    {
+      "profile": "O2g1+x3",
+      "bytecode": "primitive-prefixes-O2g1+x3.luauc",
+      "sha256": "15eceac796f9600fc0306fe8815553de5339bf06c64293f3e7538adb59a5ea07"
+    },
+    {
+      "profile": "O0g2+x2",
+      "bytecode": "primitive-prefixes-O0g2+x2.luauc",
+      "sha256": "43e721ecd823bc600fbb43ad01d1c9617351958de0eb163267570076d73b4fea"
+    },
+    {
+      "profile": "O1g2+x3",
+      "bytecode": "primitive-prefixes-O1g2+x3.luauc",
+      "sha256": "c2f73118ef4ed2bc2aaa2967f8746dbecc799ae55febb0f64970fb582b1e08c0"
+    },
+    {
+      "profile": "O2g2+x1",
+      "bytecode": "primitive-prefixes-O2g2+x1.luauc",
+      "sha256": "e9866ea5cfc50fbd379563fc8d3b04a0f7cad9bdfa86cac2366736906de18ec2"
+    }
+  ]
+}

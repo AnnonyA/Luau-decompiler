@@ -101,6 +101,40 @@ export function analyzeCallBoundaries(body: Block): CallBoundaryPresentation {
     return !!value && variadicLiteral(value, new Set(seen).add(binding));
   };
   const direct = new Set(calls.filter(call => ungroup(call.callee).kind === "identifier" && variadicLiteral(call.callee, new Set())));
+  // Both compiler resolvers stop at computed indexes and call results. They
+  // also reject written locals. Immutable aliases may reach those values,
+  // but fixed-arity parameters are deliberately not runtime proofs: when the
+  // enclosing function is inlined, compileInlinedCall substitutes argument
+  // initializers and analyzes its builtins again.
+  const runtimeTarget = (expression: Expression, seen: Set<LexicalBinding>): boolean => {
+    expression = ungroup(expression);
+    if (expression.kind === "call" || expression.kind === "method-call" || expression.kind === "index") return true;
+    if (expression.kind === "identifier") {
+      const binding = references.get(expression);
+      if (!binding || seen.has(binding) || seen.size >= 64) return false;
+      if (binding.writes.length) return true;
+      const value = initializer(binding);
+      return value !== undefined && runtimeTarget(value, new Set(seen).add(binding));
+    }
+    if (expression.kind !== "property") return false;
+    const object = ungroup(expression.object);
+    if (object.kind === "call" || object.kind === "method-call" || object.kind === "index" || object.kind === "property") return true;
+    if (object.kind !== "identifier") return false;
+    const binding = references.get(object);
+    if (!binding || seen.has(binding) || seen.size >= 64) return false;
+    if (binding.writes.length) return true;
+    const value = initializer(binding);
+    if (!value) return false;
+    const initialized = ungroup(value);
+    // getBuiltin only recognizes an object local initialized directly with a
+    // global (or `global or fallback`); getFunctionExpr requires a literal
+    // table. Keep all other initializer forms outside this bounded proof.
+    return initialized.kind === "call" || initialized.kind === "method-call" ||
+      initialized.kind === "index" || initialized.kind === "property";
+  };
+  for (const call of grouped) {
+    if (runtimeTarget(call.callee, new Set())) direct.add(call);
+  }
   return {grouped, direct};
 }
 

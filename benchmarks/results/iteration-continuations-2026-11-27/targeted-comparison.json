@@ -1,0 +1,695 @@
+{
+  "scope": "12 development round trips, calculator and mut1-929; no claim about general corpus quality delta",
+  "beforeEngineRevision": "12bd5f0",
+  "beforeJsTreeSha256": "d3fdfd3e3794beb086ef89a9bfcb966e60f3b27c13b2267c5dbdee2b50da096d",
+  "afterJsTreeSha256": "615365476b7eafc085382b8463ab84d1364765a209f7069b67c37300706a9cb8",
+  "cases": 12,
+  "beforeSimilarity": 73.68172705173492,
+  "afterSimilarity": 81.82531595230103,
+  "records": [
+    {
+      "section": "cases",
+      "name": "calculator",
+      "profile": "O0g1",
+      "originalSourceSha256": "7c4f884ae08c60a3ecda52df89f3b1a44e6baae79c40cf30405551e43ce9cafd",
+      "bytecodeSha256": "c60d1968e58426a97d26dd34930948ee670f8e1ed301247cc6a40d79eb5db3f3",
+      "beforeOutputSha256": "dc2c24a2337ccd09d736ea5c3098b053fbc371caa61c8c3f418ab57ce68a4dde",
+      "afterOutputSha256": "dc2c24a2337ccd09d736ea5c3098b053fbc371caa61c8c3f418ab57ce68a4dde",
+      "before": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0303030303030303,
+        "locals": [
+          33,
+          32
+        ],
+        "names": null,
+        "similarity": 0.8684034943580627,
+        "size": 1.1262411347517731,
+        "tokens": [
+          793,
+          704
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0303030303030303,
+        "locals": [
+          33,
+          32
+        ],
+        "names": null,
+        "similarity": 0.8684034943580627,
+        "size": 1.1262411347517731,
+        "tokens": [
+          793,
+          704
+        ]
+      },
+      "outputUnchanged": true
+    },
+    {
+      "section": "cases",
+      "name": "calculator",
+      "profile": "O0g2",
+      "originalSourceSha256": "7c4f884ae08c60a3ecda52df89f3b1a44e6baae79c40cf30405551e43ce9cafd",
+      "bytecodeSha256": "d6e676879f76a5770d46988c25541f29f8f0a2fa63858251e39dd8c8084fec95",
+      "beforeOutputSha256": "579f7978f7ba82b05e4eb9d116a10a412aeede5583ffb87dec14dda9a4411704",
+      "afterOutputSha256": "579f7978f7ba82b05e4eb9d116a10a412aeede5583ffb87dec14dda9a4411704",
+      "before": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0303030303030303,
+        "locals": [
+          33,
+          32
+        ],
+        "names": [
+          19,
+          24
+        ],
+        "similarity": 0.8684034943580627,
+        "size": 1.1262411347517731,
+        "tokens": [
+          793,
+          704
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0303030303030303,
+        "locals": [
+          33,
+          32
+        ],
+        "names": [
+          19,
+          24
+        ],
+        "similarity": 0.8684034943580627,
+        "size": 1.1262411347517731,
+        "tokens": [
+          793,
+          704
+        ]
+      },
+      "outputUnchanged": true
+    },
+    {
+      "section": "cases",
+      "name": "calculator",
+      "profile": "O1g1",
+      "originalSourceSha256": "7c4f884ae08c60a3ecda52df89f3b1a44e6baae79c40cf30405551e43ce9cafd",
+      "bytecodeSha256": "e80ebb23d362558a8e12189e2f2749278c28ebcfa18230a424ba663aaf9553b1",
+      "beforeOutputSha256": "c9c99a1aafdcab3cd6473fd2125a7b4a35fae4e092fab321299d3f1abb904e19",
+      "afterOutputSha256": "c9c99a1aafdcab3cd6473fd2125a7b4a35fae4e092fab321299d3f1abb904e19",
+      "before": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0606060606060606,
+        "locals": [
+          34,
+          32
+        ],
+        "names": null,
+        "similarity": 0.8717948794364929,
+        "size": 1.1049645390070921,
+        "tokens": [
+          778,
+          704
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0606060606060606,
+        "locals": [
+          34,
+          32
+        ],
+        "names": null,
+        "similarity": 0.8717948794364929,
+        "size": 1.1049645390070921,
+        "tokens": [
+          778,
+          704
+        ]
+      },
+      "outputUnchanged": true
+    },
+    {
+      "section": "cases",
+      "name": "calculator",
+      "profile": "O1g2",
+      "originalSourceSha256": "7c4f884ae08c60a3ecda52df89f3b1a44e6baae79c40cf30405551e43ce9cafd",
+      "bytecodeSha256": "04df9b27b729e7de7ce507acd0d3bdc7a391455070f366f803d44372aa70688b",
+      "beforeOutputSha256": "dd4b8355b05971ee85eeedc30bffa83cafa2a1eb9661299b1fae28c8348142ff",
+      "afterOutputSha256": "dd4b8355b05971ee85eeedc30bffa83cafa2a1eb9661299b1fae28c8348142ff",
+      "before": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0606060606060606,
+        "locals": [
+          34,
+          32
+        ],
+        "names": [
+          19,
+          24
+        ],
+        "similarity": 0.8717948794364929,
+        "size": 1.1049645390070921,
+        "tokens": [
+          778,
+          704
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0606060606060606,
+        "locals": [
+          34,
+          32
+        ],
+        "names": [
+          19,
+          24
+        ],
+        "similarity": 0.8717948794364929,
+        "size": 1.1049645390070921,
+        "tokens": [
+          778,
+          704
+        ]
+      },
+      "outputUnchanged": true
+    },
+    {
+      "section": "cases",
+      "name": "calculator",
+      "profile": "O2g1",
+      "originalSourceSha256": "7c4f884ae08c60a3ecda52df89f3b1a44e6baae79c40cf30405551e43ce9cafd",
+      "bytecodeSha256": "b937f0359fdf798b669e9467c17631ada93550311f6078e48e74c94f34294d4c",
+      "beforeOutputSha256": "c697405fce094bb5a973a6bb8bd6c13fe16a9d30df5793d469f2a56a72107a2d",
+      "afterOutputSha256": "c697405fce094bb5a973a6bb8bd6c13fe16a9d30df5793d469f2a56a72107a2d",
+      "before": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0303030303030303,
+        "locals": [
+          33,
+          32
+        ],
+        "names": null,
+        "similarity": 0.8728010654449463,
+        "size": 1.099290780141844,
+        "tokens": [
+          774,
+          704
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0303030303030303,
+        "locals": [
+          33,
+          32
+        ],
+        "names": null,
+        "similarity": 0.8728010654449463,
+        "size": 1.099290780141844,
+        "tokens": [
+          774,
+          704
+        ]
+      },
+      "outputUnchanged": true
+    },
+    {
+      "section": "cases",
+      "name": "calculator",
+      "profile": "O2g2",
+      "originalSourceSha256": "7c4f884ae08c60a3ecda52df89f3b1a44e6baae79c40cf30405551e43ce9cafd",
+      "bytecodeSha256": "ac90ffc782898f67376e0c072195ce929b8cc75e2ef2d6a087fb10da3194caa5",
+      "beforeOutputSha256": "cd8582635e490b77449fb28a0b4b2f9c68ec020a3c1f9f780518090937c49f3d",
+      "afterOutputSha256": "cd8582635e490b77449fb28a0b4b2f9c68ec020a3c1f9f780518090937c49f3d",
+      "before": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0303030303030303,
+        "locals": [
+          33,
+          32
+        ],
+        "names": [
+          19,
+          24
+        ],
+        "similarity": 0.8728010654449463,
+        "size": 1.099290780141844,
+        "tokens": [
+          774,
+          704
+        ]
+      },
+      "after": {
+        "depth": [
+          4,
+          4
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.0303030303030303,
+        "locals": [
+          33,
+          32
+        ],
+        "names": [
+          19,
+          24
+        ],
+        "similarity": 0.8728010654449463,
+        "size": 1.099290780141844,
+        "tokens": [
+          774,
+          704
+        ]
+      },
+      "outputUnchanged": true
+    },
+    {
+      "section": "mutants",
+      "name": "mut1-929",
+      "profile": "O0g1",
+      "originalSourceSha256": "ca2a78790765b6129d08e2a57090936c2fed707c65bc5a5cb583a247e7e2b2cf",
+      "bytecodeSha256": "7ff50c3021d2c0d8bc6856238a1efe68fd7f6787cf029cfd3ae2f76612db5515",
+      "beforeOutputSha256": "d1005c45ab00b54f581541620dc28b81da142de70a20ca51220217c993a38ef1",
+      "afterOutputSha256": "f4143a2e1c263af0d5a622f3789cc1ed5c32f2bd06dc1ff1273fc04555966fe0",
+      "before": {
+        "depth": [
+          10,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.5151515151515151,
+        "locals": [
+          49,
+          32
+        ],
+        "names": null,
+        "similarity": 0.601190447807312,
+        "size": 2.053177691309987,
+        "tokens": [
+          1582,
+          770
+        ]
+      },
+      "after": {
+        "depth": [
+          8,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.1515151515151516,
+        "locals": [
+          37,
+          32
+        ],
+        "names": null,
+        "similarity": 0.8424206376075745,
+        "size": 1.1673151750972763,
+        "tokens": [
+          899,
+          770
+        ]
+      },
+      "outputUnchanged": false
+    },
+    {
+      "section": "mutants",
+      "name": "mut1-929",
+      "profile": "O0g2",
+      "originalSourceSha256": "ca2a78790765b6129d08e2a57090936c2fed707c65bc5a5cb583a247e7e2b2cf",
+      "bytecodeSha256": "8e8f033e629a5e7f401dcc93e36ec8b9121ad7bd124299e4f33e18745b9fbe98",
+      "beforeOutputSha256": "2b3f71593b6fb778670323947c33d3164de423e740f66ecf4f0410f4a9e98633",
+      "afterOutputSha256": "4b5635d1d28bb03a0d61b6eb792ed87b0487af0c7eadd9c105e7b24ae0768221",
+      "before": {
+        "depth": [
+          10,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.5151515151515151,
+        "locals": [
+          49,
+          32
+        ],
+        "names": [
+          18,
+          24
+        ],
+        "similarity": 0.601190447807312,
+        "size": 2.053177691309987,
+        "tokens": [
+          1582,
+          770
+        ]
+      },
+      "after": {
+        "depth": [
+          8,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.1515151515151516,
+        "locals": [
+          37,
+          32
+        ],
+        "names": [
+          18,
+          24
+        ],
+        "similarity": 0.8424206376075745,
+        "size": 1.1673151750972763,
+        "tokens": [
+          899,
+          770
+        ]
+      },
+      "outputUnchanged": false
+    },
+    {
+      "section": "mutants",
+      "name": "mut1-929",
+      "profile": "O1g1",
+      "originalSourceSha256": "ca2a78790765b6129d08e2a57090936c2fed707c65bc5a5cb583a247e7e2b2cf",
+      "bytecodeSha256": "e0498838b777cffc11fa44c65eb6c3efc09184aefd78f7ddeaf9e92997be830f",
+      "beforeOutputSha256": "08800f16a0baa23a0a941a680f1da024b81c0a25e2b5da05d21a62cfb8150845",
+      "afterOutputSha256": "c96325ebc17f5ef7106ef79f9137b96e47fa5b7614ac9978a05f382419b5457f",
+      "before": {
+        "depth": [
+          10,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.4848484848484849,
+        "locals": [
+          48,
+          32
+        ],
+        "names": null,
+        "similarity": 0.6064516305923462,
+        "size": 2.0181582360570687,
+        "tokens": [
+          1555,
+          770
+        ]
+      },
+      "after": {
+        "depth": [
+          8,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.121212121212121,
+        "locals": [
+          36,
+          32
+        ],
+        "names": null,
+        "similarity": 0.8538367748260498,
+        "size": 1.132295719844358,
+        "tokens": [
+          872,
+          770
+        ]
+      },
+      "outputUnchanged": false
+    },
+    {
+      "section": "mutants",
+      "name": "mut1-929",
+      "profile": "O1g2",
+      "originalSourceSha256": "ca2a78790765b6129d08e2a57090936c2fed707c65bc5a5cb583a247e7e2b2cf",
+      "bytecodeSha256": "a7a07dacf6b632a21fd7c6bb78238e186a5c89866a5bf1a8e1729240cd43afc6",
+      "beforeOutputSha256": "b1f1cee4a6591fe5a5a36fdb88ad7ff622d58a84fbe35b7fd22e8b521bd3bea5",
+      "afterOutputSha256": "7f7a2dcda7bda92e745078efd0c0fd2821e286c876449f9daa329b0adc04502e",
+      "before": {
+        "depth": [
+          10,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.4848484848484849,
+        "locals": [
+          48,
+          32
+        ],
+        "names": [
+          18,
+          24
+        ],
+        "similarity": 0.6064516305923462,
+        "size": 2.0181582360570687,
+        "tokens": [
+          1555,
+          770
+        ]
+      },
+      "after": {
+        "depth": [
+          8,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.121212121212121,
+        "locals": [
+          36,
+          32
+        ],
+        "names": [
+          18,
+          24
+        ],
+        "similarity": 0.8538367748260498,
+        "size": 1.132295719844358,
+        "tokens": [
+          872,
+          770
+        ]
+      },
+      "outputUnchanged": false
+    },
+    {
+      "section": "mutants",
+      "name": "mut1-929",
+      "profile": "O2g1",
+      "originalSourceSha256": "ca2a78790765b6129d08e2a57090936c2fed707c65bc5a5cb583a247e7e2b2cf",
+      "bytecodeSha256": "75d0f71ed59d0615c3412768d71d7f6144bcd64e3fba439d56e475f7e0857595",
+      "beforeOutputSha256": "206820cb8fad9f6e78973ebe7dd66471dcd92b41e4c3afa7469dc972e2f3630f",
+      "afterOutputSha256": "206820cb8fad9f6e78973ebe7dd66471dcd92b41e4c3afa7469dc972e2f3630f",
+      "before": {
+        "depth": [
+          9,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.4545454545454546,
+        "locals": [
+          47,
+          32
+        ],
+        "names": null,
+        "similarity": 0.6002621054649353,
+        "size": 1.9714656290531778,
+        "tokens": [
+          1519,
+          770
+        ]
+      },
+      "after": {
+        "depth": [
+          9,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.4545454545454546,
+        "locals": [
+          47,
+          32
+        ],
+        "names": null,
+        "similarity": 0.6002621054649353,
+        "size": 1.9714656290531778,
+        "tokens": [
+          1519,
+          770
+        ]
+      },
+      "outputUnchanged": true
+    },
+    {
+      "section": "mutants",
+      "name": "mut1-929",
+      "profile": "O2g2",
+      "originalSourceSha256": "ca2a78790765b6129d08e2a57090936c2fed707c65bc5a5cb583a247e7e2b2cf",
+      "bytecodeSha256": "939b3ffeed9ef1552b220050e242dcabdc4a10c9119bb60de9d1f15bb431464a",
+      "beforeOutputSha256": "5a86efef632dacb0f2a6d0783686fb972623b10f51344b40aa1811caab5fe765",
+      "afterOutputSha256": "5a86efef632dacb0f2a6d0783686fb972623b10f51344b40aa1811caab5fe765",
+      "before": {
+        "depth": [
+          9,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.4545454545454546,
+        "locals": [
+          47,
+          32
+        ],
+        "names": [
+          17,
+          24
+        ],
+        "similarity": 0.6002621054649353,
+        "size": 1.9714656290531778,
+        "tokens": [
+          1519,
+          770
+        ]
+      },
+      "after": {
+        "depth": [
+          9,
+          6
+        ],
+        "endless": [
+          1,
+          1
+        ],
+        "localRatio": 1.4545454545454546,
+        "locals": [
+          47,
+          32
+        ],
+        "names": [
+          17,
+          24
+        ],
+        "similarity": 0.6002621054649353,
+        "size": 1.9714656290531778,
+        "tokens": [
+          1519,
+          770
+        ]
+      },
+      "outputUnchanged": true
+    }
+  ]
+}

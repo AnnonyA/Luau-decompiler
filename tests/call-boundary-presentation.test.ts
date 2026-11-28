@@ -10,12 +10,12 @@ const fn = (isVararg = false): Expression =>
 const local = (name: string, value: Expression): Statement => ({kind: "local", names: [name], values: [value]});
 const output = (prefix: Statement[], call: Expression) => printLuau(chunk([...prefix, {kind: "return", values: [call]}]));
 
-it("keeps global and runtime field calls grouped to block new builtin recognition", () => {
+it("keeps possible builtin calls grouped and permits fields of a returned object", () => {
   expect(output([], invoke({kind: "property", object: ident("math"), name: "floor"})))
     .toBe("return (math.floor)()\n");
   expect(output([local("service", {kind: "call", callee: ident("resolve"), args: [], open: false})],
     invoke({kind: "property", object: ident("service"), name: "fetch"})))
-    .toContain("return (service.fetch)()\n");
+    .toContain("return service.fetch()\n");
 });
 
 it("retains the strong boundary through immutable literal aliases", () => {
@@ -45,9 +45,9 @@ it("keeps a captured immutable literal protected in a nested function", () => {
   expect(printLuau(ast)).toContain("return (true and handler)()\n");
 });
 
-it("keeps a rewritten target grouped and permits a known non-inlineable variadic literal", () => {
+it("permits a written target and a known non-inlineable variadic literal", () => {
   expect(output([local("handler", fn()), {kind: "assign", targets: [ident("handler")], values: [ident("replacement")]}],
-    invoke(ident("handler")))).toContain("return (handler)()\n");
+    invoke(ident("handler")))).toContain("return handler()\n");
   expect(output([local("handler", fn(true))], invoke(ident("handler"))))
     .toContain("return handler()\n");
 });

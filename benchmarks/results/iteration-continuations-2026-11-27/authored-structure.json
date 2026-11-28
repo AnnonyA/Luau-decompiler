@@ -1,0 +1,487 @@
+{
+  "profiles": 60,
+  "unchanged": 36,
+  "changed": 24,
+  "records": [
+    {
+      "path": "9d/iteration-continuation/O0g1-output.luau",
+      "beforeSha256": "85ef4a5958b85e3ca6c61cd23516c328d69da03ba4b2021ea0b367b1bd079145",
+      "afterSha256": "85ef4a5958b85e3ca6c61cd23516c328d69da03ba4b2021ea0b367b1bd079145",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/iteration-continuation/O0g2-output.luau",
+      "beforeSha256": "4b1de55b73636c402bb8e727e2204bdb17577f00f5a38fe599ba0c40fedc855e",
+      "afterSha256": "4b1de55b73636c402bb8e727e2204bdb17577f00f5a38fe599ba0c40fedc855e",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/iteration-continuation/O1g1-output.luau",
+      "beforeSha256": "3ea79c1ddb784bf13e6b62e45ab983c45e8e1157ebc7b4ffc75eb18e14f3ef4c",
+      "afterSha256": "3ea79c1ddb784bf13e6b62e45ab983c45e8e1157ebc7b4ffc75eb18e14f3ef4c",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/iteration-continuation/O1g2-output.luau",
+      "beforeSha256": "a9dc2c334d7c04d2b075c68fce5cedd3e5ea42918245f6aeabc48b3f52e922a6",
+      "afterSha256": "a9dc2c334d7c04d2b075c68fce5cedd3e5ea42918245f6aeabc48b3f52e922a6",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/iteration-continuation/O2g1-output.luau",
+      "beforeSha256": "fc62e4a02108d94928777b372b79d8f0c9477cb7b339b8d02ec2840465109732",
+      "afterSha256": "fc62e4a02108d94928777b372b79d8f0c9477cb7b339b8d02ec2840465109732",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/iteration-continuation/O2g2-output.luau",
+      "beforeSha256": "e055ed34ca228dedef044c5a361f739c1f6f443ea01310acd09404f5b27e2428",
+      "afterSha256": "e055ed34ca228dedef044c5a361f739c1f6f443ea01310acd09404f5b27e2428",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/primitive-prefix/O0g1-output.luau",
+      "beforeSha256": "3de38b1a4b838705a36041d95c5a089596a4f1f9e6fd6a2aa524ef6ddc612cf7",
+      "afterSha256": "1a87c0657f29d6e9d304d84170d60f1560b1ece8fb6a8477b30ff3c2b719c3a1",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/primitive-prefix/O0g2-output.luau",
+      "beforeSha256": "ab4fd1d8d1ccf2a76f3e1376c2840888f76fcf81e08e4608e666a4b14c1c8ba6",
+      "afterSha256": "fb6642e6a25c10783023476a0e2ed60bdabc1978983c1e96dd3391ecf76cf1cf",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/primitive-prefix/O1g1-output.luau",
+      "beforeSha256": "d1cd094b60c5ef23e19324f791a856930113f35fed46ee6abc48e0c8c8d9a5ad",
+      "afterSha256": "b2ca497f9bd8e0909ac63224a51f27f4b49c90ffc4e310bd378a72ffe084ea9c",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/primitive-prefix/O1g2-output.luau",
+      "beforeSha256": "0605f4ef7989f669f7e1753f4584471a6b28add8f1ab11c87aa4618917b190d0",
+      "afterSha256": "acf3d4c6561d8114a25d227bad3ea62ae5ce7033ed55586133f8f6484b5eb8fd",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/primitive-prefix/O2g1-output.luau",
+      "beforeSha256": "d1cd094b60c5ef23e19324f791a856930113f35fed46ee6abc48e0c8c8d9a5ad",
+      "afterSha256": "b2ca497f9bd8e0909ac63224a51f27f4b49c90ffc4e310bd378a72ffe084ea9c",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/primitive-prefix/O2g2-output.luau",
+      "beforeSha256": "0605f4ef7989f669f7e1753f4584471a6b28add8f1ab11c87aa4618917b190d0",
+      "afterSha256": "acf3d4c6561d8114a25d227bad3ea62ae5ce7033ed55586133f8f6484b5eb8fd",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/rejected-aliases/O0g1-output.luau",
+      "beforeSha256": "541453903f36f26584cf64282d970cc039a74b9f998b4982a84311c8cd7fce64",
+      "afterSha256": "541453903f36f26584cf64282d970cc039a74b9f998b4982a84311c8cd7fce64",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-aliases/O0g2-output.luau",
+      "beforeSha256": "d07188bf717f73f0650d8cf1ab3654806021e4d34b3adc9080e27a6368dbf980",
+      "afterSha256": "d07188bf717f73f0650d8cf1ab3654806021e4d34b3adc9080e27a6368dbf980",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-aliases/O1g1-output.luau",
+      "beforeSha256": "d2ba1cc261b141996d039f01702a3bd31551ec7c6c6ef5f9dacb284d077b7254",
+      "afterSha256": "d2ba1cc261b141996d039f01702a3bd31551ec7c6c6ef5f9dacb284d077b7254",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-aliases/O1g2-output.luau",
+      "beforeSha256": "5915a80da8800f9c1d57b1a14ba1578fed2de71b720c7a040355410af70465c2",
+      "afterSha256": "5915a80da8800f9c1d57b1a14ba1578fed2de71b720c7a040355410af70465c2",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-aliases/O2g1-output.luau",
+      "beforeSha256": "315279f7b5651845b8629702ec0a7860e482def3f54771c3e65ac3ac039a5792",
+      "afterSha256": "315279f7b5651845b8629702ec0a7860e482def3f54771c3e65ac3ac039a5792",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-aliases/O2g2-output.luau",
+      "beforeSha256": "cc3a8fd76c308f819f889d194d10ee971da2849f5b9463ef3a31f133fb3a2d97",
+      "afterSha256": "cc3a8fd76c308f819f889d194d10ee971da2849f5b9463ef3a31f133fb3a2d97",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-lifetimes/O0g1-output.luau",
+      "beforeSha256": "c682ef5bce6d304e3afb6d85ce48661243f4f334e88cf30455a12cb68e848a79",
+      "afterSha256": "c682ef5bce6d304e3afb6d85ce48661243f4f334e88cf30455a12cb68e848a79",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-lifetimes/O0g2-output.luau",
+      "beforeSha256": "dfa23391b114449c054a32ef342b9c8611496a847b3f8a34ab47d3189eb00eb7",
+      "afterSha256": "dfa23391b114449c054a32ef342b9c8611496a847b3f8a34ab47d3189eb00eb7",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-lifetimes/O1g1-output.luau",
+      "beforeSha256": "7e6be275fec0650f6aef1c31b3f23d8247c99599a7a069aabd2f81cd3d548902",
+      "afterSha256": "7e6be275fec0650f6aef1c31b3f23d8247c99599a7a069aabd2f81cd3d548902",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-lifetimes/O1g2-output.luau",
+      "beforeSha256": "d60df619427f2f69638645e5e24a2112afe9e5342f65357d6ebadbda01963988",
+      "afterSha256": "d60df619427f2f69638645e5e24a2112afe9e5342f65357d6ebadbda01963988",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-lifetimes/O2g1-output.luau",
+      "beforeSha256": "7e6be275fec0650f6aef1c31b3f23d8247c99599a7a069aabd2f81cd3d548902",
+      "afterSha256": "7e6be275fec0650f6aef1c31b3f23d8247c99599a7a069aabd2f81cd3d548902",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/rejected-lifetimes/O2g2-output.luau",
+      "beforeSha256": "d60df619427f2f69638645e5e24a2112afe9e5342f65357d6ebadbda01963988",
+      "afterSha256": "d60df619427f2f69638645e5e24a2112afe9e5342f65357d6ebadbda01963988",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/iteration-continuation/O0g1-output.luau",
+      "beforeSha256": "85ef4a5958b85e3ca6c61cd23516c328d69da03ba4b2021ea0b367b1bd079145",
+      "afterSha256": "85ef4a5958b85e3ca6c61cd23516c328d69da03ba4b2021ea0b367b1bd079145",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/iteration-continuation/O0g2-output.luau",
+      "beforeSha256": "4b1de55b73636c402bb8e727e2204bdb17577f00f5a38fe599ba0c40fedc855e",
+      "afterSha256": "4b1de55b73636c402bb8e727e2204bdb17577f00f5a38fe599ba0c40fedc855e",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/iteration-continuation/O1g1-output.luau",
+      "beforeSha256": "3ea79c1ddb784bf13e6b62e45ab983c45e8e1157ebc7b4ffc75eb18e14f3ef4c",
+      "afterSha256": "3ea79c1ddb784bf13e6b62e45ab983c45e8e1157ebc7b4ffc75eb18e14f3ef4c",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/iteration-continuation/O1g2-output.luau",
+      "beforeSha256": "a9dc2c334d7c04d2b075c68fce5cedd3e5ea42918245f6aeabc48b3f52e922a6",
+      "afterSha256": "a9dc2c334d7c04d2b075c68fce5cedd3e5ea42918245f6aeabc48b3f52e922a6",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/iteration-continuation/O2g1-output.luau",
+      "beforeSha256": "fc62e4a02108d94928777b372b79d8f0c9477cb7b339b8d02ec2840465109732",
+      "afterSha256": "fc62e4a02108d94928777b372b79d8f0c9477cb7b339b8d02ec2840465109732",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/iteration-continuation/O2g2-output.luau",
+      "beforeSha256": "e055ed34ca228dedef044c5a361f739c1f6f443ea01310acd09404f5b27e2428",
+      "afterSha256": "e055ed34ca228dedef044c5a361f739c1f6f443ea01310acd09404f5b27e2428",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/primitive-prefix/O0g1-output.luau",
+      "beforeSha256": "3de38b1a4b838705a36041d95c5a089596a4f1f9e6fd6a2aa524ef6ddc612cf7",
+      "afterSha256": "1a87c0657f29d6e9d304d84170d60f1560b1ece8fb6a8477b30ff3c2b719c3a1",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/primitive-prefix/O0g2-output.luau",
+      "beforeSha256": "ab4fd1d8d1ccf2a76f3e1376c2840888f76fcf81e08e4608e666a4b14c1c8ba6",
+      "afterSha256": "fb6642e6a25c10783023476a0e2ed60bdabc1978983c1e96dd3391ecf76cf1cf",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/primitive-prefix/O1g1-output.luau",
+      "beforeSha256": "d1cd094b60c5ef23e19324f791a856930113f35fed46ee6abc48e0c8c8d9a5ad",
+      "afterSha256": "b2ca497f9bd8e0909ac63224a51f27f4b49c90ffc4e310bd378a72ffe084ea9c",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/primitive-prefix/O1g2-output.luau",
+      "beforeSha256": "0605f4ef7989f669f7e1753f4584471a6b28add8f1ab11c87aa4618917b190d0",
+      "afterSha256": "acf3d4c6561d8114a25d227bad3ea62ae5ce7033ed55586133f8f6484b5eb8fd",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/primitive-prefix/O2g1-output.luau",
+      "beforeSha256": "d1cd094b60c5ef23e19324f791a856930113f35fed46ee6abc48e0c8c8d9a5ad",
+      "afterSha256": "b2ca497f9bd8e0909ac63224a51f27f4b49c90ffc4e310bd378a72ffe084ea9c",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/primitive-prefix/O2g2-output.luau",
+      "beforeSha256": "0605f4ef7989f669f7e1753f4584471a6b28add8f1ab11c87aa4618917b190d0",
+      "afterSha256": "acf3d4c6561d8114a25d227bad3ea62ae5ce7033ed55586133f8f6484b5eb8fd",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/rejected-aliases/O0g1-output.luau",
+      "beforeSha256": "541453903f36f26584cf64282d970cc039a74b9f998b4982a84311c8cd7fce64",
+      "afterSha256": "541453903f36f26584cf64282d970cc039a74b9f998b4982a84311c8cd7fce64",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-aliases/O0g2-output.luau",
+      "beforeSha256": "d07188bf717f73f0650d8cf1ab3654806021e4d34b3adc9080e27a6368dbf980",
+      "afterSha256": "d07188bf717f73f0650d8cf1ab3654806021e4d34b3adc9080e27a6368dbf980",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-aliases/O1g1-output.luau",
+      "beforeSha256": "d2ba1cc261b141996d039f01702a3bd31551ec7c6c6ef5f9dacb284d077b7254",
+      "afterSha256": "d2ba1cc261b141996d039f01702a3bd31551ec7c6c6ef5f9dacb284d077b7254",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-aliases/O1g2-output.luau",
+      "beforeSha256": "5915a80da8800f9c1d57b1a14ba1578fed2de71b720c7a040355410af70465c2",
+      "afterSha256": "5915a80da8800f9c1d57b1a14ba1578fed2de71b720c7a040355410af70465c2",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-aliases/O2g1-output.luau",
+      "beforeSha256": "315279f7b5651845b8629702ec0a7860e482def3f54771c3e65ac3ac039a5792",
+      "afterSha256": "315279f7b5651845b8629702ec0a7860e482def3f54771c3e65ac3ac039a5792",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-aliases/O2g2-output.luau",
+      "beforeSha256": "cc3a8fd76c308f819f889d194d10ee971da2849f5b9463ef3a31f133fb3a2d97",
+      "afterSha256": "cc3a8fd76c308f819f889d194d10ee971da2849f5b9463ef3a31f133fb3a2d97",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-lifetimes/O0g1-output.luau",
+      "beforeSha256": "c682ef5bce6d304e3afb6d85ce48661243f4f334e88cf30455a12cb68e848a79",
+      "afterSha256": "c682ef5bce6d304e3afb6d85ce48661243f4f334e88cf30455a12cb68e848a79",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-lifetimes/O0g2-output.luau",
+      "beforeSha256": "dfa23391b114449c054a32ef342b9c8611496a847b3f8a34ab47d3189eb00eb7",
+      "afterSha256": "dfa23391b114449c054a32ef342b9c8611496a847b3f8a34ab47d3189eb00eb7",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-lifetimes/O1g1-output.luau",
+      "beforeSha256": "7e6be275fec0650f6aef1c31b3f23d8247c99599a7a069aabd2f81cd3d548902",
+      "afterSha256": "7e6be275fec0650f6aef1c31b3f23d8247c99599a7a069aabd2f81cd3d548902",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-lifetimes/O1g2-output.luau",
+      "beforeSha256": "d60df619427f2f69638645e5e24a2112afe9e5342f65357d6ebadbda01963988",
+      "afterSha256": "d60df619427f2f69638645e5e24a2112afe9e5342f65357d6ebadbda01963988",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-lifetimes/O2g1-output.luau",
+      "beforeSha256": "7e6be275fec0650f6aef1c31b3f23d8247c99599a7a069aabd2f81cd3d548902",
+      "afterSha256": "7e6be275fec0650f6aef1c31b3f23d8247c99599a7a069aabd2f81cd3d548902",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "c875/rejected-lifetimes/O2g2-output.luau",
+      "beforeSha256": "d60df619427f2f69638645e5e24a2112afe9e5342f65357d6ebadbda01963988",
+      "afterSha256": "d60df619427f2f69638645e5e24a2112afe9e5342f65357d6ebadbda01963988",
+      "unchanged": true,
+      "beforeSharedMarkerCount": 0,
+      "afterSharedMarkerCount": 0
+    },
+    {
+      "path": "9d/shared-closure-tail/O0g1-output.luau",
+      "beforeSha256": "639ca31f9fa074886942ef18b1c33d967fe63714a4d08d122d284729ca3845dd",
+      "afterSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/shared-closure-tail/O0g2-output.luau",
+      "beforeSha256": "09985bccd5707d6b9435d26368a956c8a8efcf6094c143618cb779a161d8014a",
+      "afterSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/shared-closure-tail/O1g1-output.luau",
+      "beforeSha256": "639ca31f9fa074886942ef18b1c33d967fe63714a4d08d122d284729ca3845dd",
+      "afterSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/shared-closure-tail/O1g2-output.luau",
+      "beforeSha256": "09985bccd5707d6b9435d26368a956c8a8efcf6094c143618cb779a161d8014a",
+      "afterSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/shared-closure-tail/O2g1-output.luau",
+      "beforeSha256": "639ca31f9fa074886942ef18b1c33d967fe63714a4d08d122d284729ca3845dd",
+      "afterSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "9d/shared-closure-tail/O2g2-output.luau",
+      "beforeSha256": "09985bccd5707d6b9435d26368a956c8a8efcf6094c143618cb779a161d8014a",
+      "afterSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/shared-closure-tail/O0g1-output.luau",
+      "beforeSha256": "639ca31f9fa074886942ef18b1c33d967fe63714a4d08d122d284729ca3845dd",
+      "afterSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/shared-closure-tail/O0g2-output.luau",
+      "beforeSha256": "09985bccd5707d6b9435d26368a956c8a8efcf6094c143618cb779a161d8014a",
+      "afterSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/shared-closure-tail/O1g1-output.luau",
+      "beforeSha256": "639ca31f9fa074886942ef18b1c33d967fe63714a4d08d122d284729ca3845dd",
+      "afterSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/shared-closure-tail/O1g2-output.luau",
+      "beforeSha256": "09985bccd5707d6b9435d26368a956c8a8efcf6094c143618cb779a161d8014a",
+      "afterSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/shared-closure-tail/O2g1-output.luau",
+      "beforeSha256": "639ca31f9fa074886942ef18b1c33d967fe63714a4d08d122d284729ca3845dd",
+      "afterSha256": "3b1d6ea56e3195040ee6b9e97b03466b26506e05526e25226541e4384b7322cc",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    },
+    {
+      "path": "c875/shared-closure-tail/O2g2-output.luau",
+      "beforeSha256": "09985bccd5707d6b9435d26368a956c8a8efcf6094c143618cb779a161d8014a",
+      "afterSha256": "f41e0c6ef78bd6768fb6134cc01462f2f89664368997e05ce16b5f1a9c2144b7",
+      "unchanged": false,
+      "beforeSharedMarkerCount": 3,
+      "afterSharedMarkerCount": 1
+    }
+  ]
+}

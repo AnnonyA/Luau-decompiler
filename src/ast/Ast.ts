@@ -239,6 +239,8 @@ export interface TableField {
 export interface TableExpression {
   kind: "table";
   fields: TableField[];
+  /** Exact one-key DUPTABLE reservation; unrelated later stores stay explicit. */
+  templateKeys?: readonly [string];
 }
 
 export interface FunctionExpression {

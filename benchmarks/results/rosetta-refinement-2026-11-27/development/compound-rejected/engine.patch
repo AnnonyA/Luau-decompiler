@@ -1,0 +1,37 @@
+diff --git a/src/ast/Ast.ts b/src/ast/Ast.ts
+index f0899d7..29db4fd 100644
+--- a/src/ast/Ast.ts
++++ b/src/ast/Ast.ts
+@@ -17,7 +17,7 @@ export interface Block {
+   statements: Statement[];
+ }
+ 
+-export type CompoundOperator = "+" | "-" | "*" | "/" | "%" | "..";
++export type CompoundOperator = "+" | "-" | "*" | "/" | "//" | "%" | "^" | "..";
+ 
+ export type Statement =
+   | LocalDeclaration
+diff --git a/src/ast/AstCleanup.ts b/src/ast/AstCleanup.ts
+index 4e190cc..378b6e9 100644
+--- a/src/ast/AstCleanup.ts
++++ b/src/ast/AstCleanup.ts
+@@ -24,7 +24,7 @@ import { foldTemporaries } from "./TempFolding.js";
+ import { recoverLoopResultDefaults } from "./LoopResultDefaults.js";
+ import { recoverParallelAssignments } from "./ParallelAssignments.js";
+ 
+-const COMPOUND_OPS = new Set<BinaryOperator>(["+", "-", "*", "/", "%", ".."]);
++const COMPOUND_OPS = new Set<BinaryOperator>(["+", "-", "*", "/", "//", "%", "^", ".."]);
+ const GENERIC_CLOSURE = /^function_?\d*$/;
+ 
+ export interface CleanupOptions {
+@@ -340,6 +340,10 @@ function foldCompoundAssigns(statements: Statement[]): Statement[] {
+     if (value.kind !== "binary" || !COMPOUND_OPS.has(value.op)) {
+       return statement;
+     }
++    // The newly supported operators use a literal RHS only. Luau can read a
++    // compound local's value after compiling its RHS; an effectful RHS could
++    // otherwise change a captured/global target before that read.
++    if ((value.op === "//" || value.op === "^") && value.right.kind !== "literal") return statement;
+     if (!isSafeCompoundTarget(target) || !sameCompoundTarget(target, value.left)) {
+       return statement;
+     }

@@ -1,0 +1,18 @@
+[
+  {
+    "script": "recheck-template-old-final-v2",
+    "exitCode": 0
+  },
+  {
+    "script": "recheck-template-key-saved-final",
+    "exitCode": 0
+  },
+  {
+    "script": "recheck-template-captures-final",
+    "exitCode": 0
+  },
+  {
+    "script": "verify-template-synthetic-final-v2",
+    "exitCode": 0
+  }
+]

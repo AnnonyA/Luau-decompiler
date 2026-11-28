@@ -1,0 +1,138 @@
+{
+  "inputKind": "synthetic official bytecode, version 6; one original input, six recompile profiles per engine",
+  "expectedOriginalStdout": "0\n5\n-- Returned\n",
+  "originalStdout": "0\n5\n-- Returned\n",
+  "originalStderr": "",
+  "results": [
+    {
+      "engine": "before",
+      "recompileProfile": "O0g1",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": false,
+      "stderrByteExact": true,
+      "match": false
+    },
+    {
+      "engine": "before",
+      "recompileProfile": "O1g1",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": false,
+      "stderrByteExact": true,
+      "match": false
+    },
+    {
+      "engine": "before",
+      "recompileProfile": "O2g1",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": false,
+      "stderrByteExact": true,
+      "match": false
+    },
+    {
+      "engine": "before",
+      "recompileProfile": "O0g2",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": false,
+      "stderrByteExact": true,
+      "match": false
+    },
+    {
+      "engine": "before",
+      "recompileProfile": "O1g2",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": false,
+      "stderrByteExact": true,
+      "match": false
+    },
+    {
+      "engine": "before",
+      "recompileProfile": "O2g2",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": false,
+      "stderrByteExact": true,
+      "match": false
+    },
+    {
+      "engine": "after",
+      "recompileProfile": "O0g1",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": true,
+      "stderrByteExact": true,
+      "match": true
+    },
+    {
+      "engine": "after",
+      "recompileProfile": "O1g1",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": true,
+      "stderrByteExact": true,
+      "match": true
+    },
+    {
+      "engine": "after",
+      "recompileProfile": "O2g1",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": true,
+      "stderrByteExact": true,
+      "match": true
+    },
+    {
+      "engine": "after",
+      "recompileProfile": "O0g2",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": true,
+      "stderrByteExact": true,
+      "match": true
+    },
+    {
+      "engine": "after",
+      "recompileProfile": "O1g2",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": true,
+      "stderrByteExact": true,
+      "match": true
+    },
+    {
+      "engine": "after",
+      "recompileProfile": "O2g2",
+      "inputSha256": "527056b65b4aed935c8e5a8895d73f5d7caf4d1f6d09f8f9a670c62495aed8e1",
+      "originalReturned": true,
+      "recoveredReturned": true,
+      "stdoutByteExact": true,
+      "stderrByteExact": true,
+      "match": true
+    }
+  ],
+  "perEngine": {
+    "before": {
+      "profiles": 6,
+      "matches": 0
+    },
+    "after": {
+      "profiles": 6,
+      "matches": 6
+    }
+  }
+}

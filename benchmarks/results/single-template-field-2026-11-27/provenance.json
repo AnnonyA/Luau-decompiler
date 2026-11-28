@@ -1,0 +1,101 @@
+{
+  "createdAt": "2026-11-27T23:24:19.710340+00:00",
+  "baseCommit": "0a78f47d9fa7cddd8a5dfb3066d207a8cd1a46f1",
+  "compilerHostSha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b",
+  "engineJsTrees": {
+    "before": "1679004fd53e2cdc4cdc97dd3025b5a9884e00978faeaf8c02c2ff05bede1ab7",
+    "first": "f02cb1bdaa60c85af856536c8eae59bb3b8bd07aff6cf56135a18012679d1f7d",
+    "initial": "88e79368dda00a122c537a78e22116ce3b7e6cf6a5831ddadeea078a824a7bd9",
+    "final": "21e7bf39fb3b6ee84f638964981ab3690d270de7b4bf54116c708d79af2de9e1"
+  },
+  "treeHashAlgorithm": "SHA256 of sorted(relativeJSPath + NUL + SHA256(fileBytes))",
+  "node": "v22.23.5",
+  "options": {},
+  "query": "",
+  "corpusChanged": false,
+  "scorerChanged": false,
+  "runnerChanged": false,
+  "validatorChanged": false,
+  "authoredInputManifestSha256": "023437467f17819e2fb3684eaceda56e3fa4440cf03410e2cca06787f29fbef0",
+  "syntheticInputManifestSha256": "2a402305d61f06fbf78c6b8676f5c9fbe588313b97645fe342e2bf1b97891cf1",
+  "authoredCheckCommands": {
+    "initial": {
+      "createdAt": "2026-11-27T23:19:04.600708+00:00",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "check",
+        "/workspace/scratch/eb5e4be57451/similarity-v2-locals/tests/fixtures/single-template-field",
+        "--profiles",
+        "O0g1,O1g1,O2g1,O0g2,O1g2,O2g2,O0g1+x1,O1g1+x2,O2g1+x3,O0g2+x2,O1g2+x3,O2g2+x1",
+        "--decompiler",
+        "before=/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node /workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/parallel-quick-v1/engine-dist/cli.js decompile {}",
+        "--decompiler",
+        "after=/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node /workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-authored-initial/engine-dist/cli.js decompile {}",
+        "--work",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-authored-initial/work",
+        "--report",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-authored-initial/report.json"
+      ],
+      "options": {},
+      "profiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2",
+        "O0g1+x1",
+        "O1g1+x2",
+        "O2g1+x3",
+        "O0g2+x2",
+        "O1g2+x3",
+        "O2g2+x1"
+      ],
+      "compilerHostSha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b"
+    },
+    "repaired": {
+      "createdAt": "2026-11-27T23:21:39.045931+00:00",
+      "command": [
+        "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+        "check",
+        "/workspace/scratch/eb5e4be57451/similarity-v2-locals/tests/fixtures/single-template-field",
+        "--profiles",
+        "O0g1,O1g1,O2g1,O0g2,O1g2,O2g2,O0g1+x1,O1g1+x2,O2g1+x3,O0g2+x2,O1g2+x3,O2g2+x1",
+        "--decompiler",
+        "before=/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node /workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/parallel-quick-v1/engine-dist/cli.js decompile {}",
+        "--decompiler",
+        "after=/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node /workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-authored-repair-v1/engine-dist/cli.js decompile {}",
+        "--work",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-authored-repair-v1/work",
+        "--report",
+        "/workspace/scratch/eb5e4be57451/measurements/similarity-v2-locals-probes/template-authored-repair-v1/report.json"
+      ],
+      "options": {},
+      "profiles": [
+        "O0g1",
+        "O1g1",
+        "O2g1",
+        "O0g2",
+        "O1g2",
+        "O2g2",
+        "O0g1+x1",
+        "O1g1+x2",
+        "O2g1+x3",
+        "O0g2+x2",
+        "O1g2+x3",
+        "O2g2+x1"
+      ],
+      "compilerHostSha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b"
+    }
+  },
+  "references": {
+    "Tovek": "ce2ea3325547fa3896f274b68013386338039040",
+    "LuauPins": [
+      "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f"
+    ],
+    "Rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "RosettaLuau": "0.747"
+  },
+  "implementation": "Independent TypeScript implementation; no competitor source copied."
+}
