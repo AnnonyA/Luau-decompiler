@@ -1,0 +1,1362 @@
+{
+  "dist": "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist",
+  "node": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+  "total": 24,
+  "passed": 24,
+  "pins": {
+    "9d": {
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "hostSha256": "7d8d958fb0ba8537130697a1043f9da0b4b7ab4469345b08ab9153a4a146ae74"
+    },
+    "c875": {
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "hostSha256": "c7a7f7d1a9f3fff6303eecfef9f4c20e7c7e88806e6c5323575b409b0f4d42b6"
+    }
+  },
+  "results": [
+    {
+      "path": "capture-and-scope-9d-O0g1.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "9d",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "b42ae527c566270a4d8e0d151a3deaebe0dc6d3e907fe115a24f3d643f1bc3c6",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O0g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O0g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O0",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O0g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O0g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "486c97411498ae2318d3d6ef702209496756037932e9fd3265483fca8bc76802",
+      "outputBytecodeSha256": "b71c14d02b9e5bf5dfcdfb93951e2803ec28c1861f5ea0e1aeb963f07f7d3373",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-9d-O0g2.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "9d",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "7bbbed658fc8d1032e0a64c89f5192082775d2bc0742419bc0d2b065353e190d",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O0g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O0g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O0",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O0g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O0g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "65a7554a59156d0d0ad4149e25cf244a6973d6f94c4338ad54014baa1f3286fb",
+      "outputBytecodeSha256": "c9584a1f851fcc4ca138b4fa471a578c79e852ac4edf282cfff05f9b97aef34a",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-9d-O1g1.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "9d",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "63bd5399e4f708826d4ca39b18139f7890e29b8be6d049baea1e4b41a08e452e",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O1g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O1g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O1",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O1g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O1g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "c3514d8050b55da4babae94dc1b8d206e941e021b87348ea4738e0afc5ef22fe",
+      "outputBytecodeSha256": "dc00423b99fe02ff17c03a5cdb8034d2169666517e7f058b5c93638ec9020405",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-9d-O1g2.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "9d",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "d275e38cad4cf090dbe32295ff1ce86de3e86fdffff1dca97609594e550be6b1",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O1g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O1g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O1",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O1g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O1g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "59a534cd9c8383a7a35bb1eb788b5e0b766f1c9a4f1e1d9b27993387425dd41c",
+      "outputBytecodeSha256": "680526af17251c023be024906059337fcc324209bd05f4a67371f56eca676f15",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-9d-O2g1.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "9d",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "a611f5f2ed63d800908096e581341a8dddbf9b1ae4dbfa2af0865afe535f8a0d",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O2g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O2g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O2",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O2g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O2g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "70fd6ae4e53ed1fc604b6b86c16e0d76f66972822ee618853794e6d1badf9c46",
+      "outputBytecodeSha256": "052e7ff355f8c00927809196f2e083a691a3ea4b71c3b750b598a659ea9e9831",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-9d-O2g2.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "9d",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "f97df052e4e723e8d5885661d494db3463f1852299e1f36f1bf78eda052d7883",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O2g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-9d-O2g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O2",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O2g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-9d-O2g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "1fa33a0855252f1b2ef48f3e574f94ca90a9165e61ef5b7b010fe31ab9ed73d8",
+      "outputBytecodeSha256": "9f192d4684958f1ea7e79ba08a686167fda42ec546e2c0cbfb57a2b11b1e6572",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-9d-O0g1.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "9d",
+      "profile": "O0g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "a9ecafbdc8c07a1e6aa7e07e20890293b0522c2e85d7b3f423654305bf69b8db",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O0g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O0g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O0",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O0g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O0g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "62f7a2f8a5f42f584914605a7b857aaa01c62973858cd648ff9bccd2759f93c3",
+      "outputBytecodeSha256": "e760c01ebc79041532dba4f27198cb6705359335efc034b4c750330442853466",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-9d-O0g2.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "9d",
+      "profile": "O0g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "3b278c6460a3dea408247d6a12183dc6a857f10a122d272b11fd4c678bffef32",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O0g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O0g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O0",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O0g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O0g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "ec2a7b2ba486b492aae7911afb36a931118dd32da26fc1f59fea80891227df1e",
+      "outputBytecodeSha256": "9ad0f1dc83680942504eef6665012c689e4a3fccaa4d27fd1a6ed58bccab42f8",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-9d-O1g1.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "9d",
+      "profile": "O1g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "9e521d69090aaf46ce84b65c49704ca769df61da7b120043affe865371f63fc2",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O1g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O1g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O1",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O1g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O1g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "89b09ccf949b7ecf6672bd3fb543dbee1e279390e71b95e2e6bd6b213953ec6c",
+      "outputBytecodeSha256": "9e21a2d722514ea3d30f4482d83665da0bb3f44c4098f6466385d5efe92512d2",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-9d-O1g2.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "9d",
+      "profile": "O1g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "1885f06d98105534894d6d067e0118436f798e1371434aedef9afce570fa1665",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O1g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O1g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O1",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O1g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O1g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "1d32fe9c11bf8effea9b86d43151e4960e053f1d0bdf93d426b36a445bc09a71",
+      "outputBytecodeSha256": "748f3493b5a049aecc6af1f84ff21a8bd3646c8b5c08d267c54c61e16ef376bd",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-9d-O2g1.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "9d",
+      "profile": "O2g1",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "6e3a91a59eeae2bf6cec15657831a78145ac7aa5fef67bd578aa45cf55a677a7",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O2g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O2g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O2",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O2g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O2g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "b5668fbbc93c8f2deb0b9b6965abf91258ae659d60950a3355c636b66c09c7fa",
+      "outputBytecodeSha256": "ac09c8065e5e649415e927cb83396e0b48e8df8ca4abbe5e8051ea4fc4eeb071",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-9d-O2g2.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "9d",
+      "profile": "O2g2",
+      "compilerRevision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "sha256": "3f906ee486f8e65bcb7ee2e9bf4e11bfccf343a337aec15e90cab5eee37377a2",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O2g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-9d-O2g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/luau-compile",
+            "--binary",
+            "-O2",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O2g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-9d",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-9d-O2g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "583735baf04782d1712db6bc27b35c53a36d1a71bbbedee861736557fa10971b",
+      "outputBytecodeSha256": "ef60b6a26aa7fb81b885ddb2f830b133d6ac3aee519188b7300e79a58a28bb7b",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-c875-O0g1.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "c875",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "b42ae527c566270a4d8e0d151a3deaebe0dc6d3e907fe115a24f3d643f1bc3c6",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O0g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O0g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O0",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O0g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O0g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "825ade45587bd61b867c90059fa6016e57b3ee4d99a2888a80a7bd46b459872e",
+      "outputBytecodeSha256": "b71c14d02b9e5bf5dfcdfb93951e2803ec28c1861f5ea0e1aeb963f07f7d3373",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-c875-O0g2.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "c875",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "7bbbed658fc8d1032e0a64c89f5192082775d2bc0742419bc0d2b065353e190d",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O0g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O0g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O0",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O0g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O0g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "d6380586e54e14ce14b12355e46dd54c3089032098fa89e753cf21156848efac",
+      "outputBytecodeSha256": "c9584a1f851fcc4ca138b4fa471a578c79e852ac4edf282cfff05f9b97aef34a",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-c875-O1g1.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "c875",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "63bd5399e4f708826d4ca39b18139f7890e29b8be6d049baea1e4b41a08e452e",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O1g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O1g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O1",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O1g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O1g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "ab8e8e6fcfec0d257842d1209f18563a1038eede9d0098b00fc72b8764a9d258",
+      "outputBytecodeSha256": "dc00423b99fe02ff17c03a5cdb8034d2169666517e7f058b5c93638ec9020405",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-c875-O1g2.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "c875",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "d275e38cad4cf090dbe32295ff1ce86de3e86fdffff1dca97609594e550be6b1",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O1g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O1g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O1",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O1g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O1g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "009272b95101876d8bc917967325eead113fef6e33910e5baab5436ffa8f047e",
+      "outputBytecodeSha256": "680526af17251c023be024906059337fcc324209bd05f4a67371f56eca676f15",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-c875-O2g1.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "c875",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "a611f5f2ed63d800908096e581341a8dddbf9b1ae4dbfa2af0865afe535f8a0d",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O2g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O2g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O2",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O2g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O2g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "778334eb643297fc2b47a84403bfb3fd0a4683769e42094b214677f512b4e91a",
+      "outputBytecodeSha256": "052e7ff355f8c00927809196f2e083a691a3ea4b71c3b750b598a659ea9e9831",
+      "match": true
+    },
+    {
+      "path": "capture-and-scope-c875-O2g2.luauc",
+      "source": "capture-and-scope.luau",
+      "pin": "c875",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "f97df052e4e723e8d5885661d494db3463f1852299e1f36f1bf78eda052d7883",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O2g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/capture-and-scope-c875-O2g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O2",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O2g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/capture-and-scope-c875-O2g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "identity\tfalse\tfalse\t7\t7\tfalse\nkeys\tfirst\tsecond\tthird\nobserved\tmutated\tnil\nscope\touter\touter\ndefault-effects\ttable\tstring\ncreation\t\tnamed\tnil\nsaved\t7\t7\tfalse\nwatch:false,watch:false,inner:false,inner:inner,initialize,test:false,initialize,test:true\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "73c73fc59647584fc5d073c414283787bde26d754af31ba1aeb802324c2d4acb",
+      "outputBytecodeSha256": "9f192d4684958f1ea7e79ba08a686167fda42ec546e2c0cbfb57a2b11b1e6572",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-c875-O0g1.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "c875",
+      "profile": "O0g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "a9ecafbdc8c07a1e6aa7e07e20890293b0522c2e85d7b3f423654305bf69b8db",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O0g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O0g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O0",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O0g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O0g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "90b250a8b4d275f6c76e56db47b5f69429d8abce33fd515b726c2857c26431e3",
+      "outputBytecodeSha256": "e760c01ebc79041532dba4f27198cb6705359335efc034b4c750330442853466",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-c875-O0g2.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "c875",
+      "profile": "O0g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "3b278c6460a3dea408247d6a12183dc6a857f10a122d272b11fd4c678bffef32",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O0g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O0g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O0",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O0g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O0g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "a5b84c6f8aa453b4954583c61f08a9f5d70a6570ea508b4decb91d5b4b59a560",
+      "outputBytecodeSha256": "9ad0f1dc83680942504eef6665012c689e4a3fccaa4d27fd1a6ed58bccab42f8",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-c875-O1g1.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "c875",
+      "profile": "O1g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "9e521d69090aaf46ce84b65c49704ca769df61da7b120043affe865371f63fc2",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O1g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O1g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O1",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O1g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O1g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "d53e83b781d310507c5faa3685e7ae4227d87a201fb369e7d175495354750d5e",
+      "outputBytecodeSha256": "9e21a2d722514ea3d30f4482d83665da0bb3f44c4098f6466385d5efe92512d2",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-c875-O1g2.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "c875",
+      "profile": "O1g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "1885f06d98105534894d6d067e0118436f798e1371434aedef9afce570fa1665",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O1g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O1g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O1",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O1g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O1g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "eb84c416aa86a8cda1eb5259b52cb4c0390d4d8e67997f027e60d22942206a0c",
+      "outputBytecodeSha256": "748f3493b5a049aecc6af1f84ff21a8bd3646c8b5c08d267c54c61e16ef376bd",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-c875-O2g1.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "c875",
+      "profile": "O2g1",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "6e3a91a59eeae2bf6cec15657831a78145ac7aa5fef67bd578aa45cf55a677a7",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O2g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O2g1.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O2",
+            "-g1",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O2g1/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O2g1/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "2eb9d91433f2482d13192ecc8a526bb7cf096ad62dde744f03be9af0533fea34",
+      "outputBytecodeSha256": "ac09c8065e5e649415e927cb83396e0b48e8df8ca4abbe5e8051ea4fc4eeb071",
+      "match": true
+    },
+    {
+      "path": "values-and-effects-c875-O2g2.luauc",
+      "source": "values-and-effects.luau",
+      "pin": "c875",
+      "profile": "O2g2",
+      "compilerRevision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "sha256": "3f906ee486f8e65bcb7ee2e9bf4e11bfccf343a337aec15e90cab5eee37377a2",
+      "commands": [
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O2g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/dist/cli.js",
+            "decompile",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/guarded-literal-selects/values-and-effects-c875-O2g2.luauc"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/reference-luau/build/release/luau-compile",
+            "--binary",
+            "-O2",
+            "-g2",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O2g2/output.luau"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "/workspace/scratch/eb5e4be57451/quality-research/v2-call-boundary-probe/run-bytecode-c875",
+            "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/literal-candidate/values-and-effects-c875-O2g2/output.luauc"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "original": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "false-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tnil\nnil-default\t1\tnil\nfalse-default\t1\tfalse\nnil-default\t1\tfalse\nfalse-default\t1\tobject\nnil-default\t1\tobject\nfalse-default\t1\tcallback\nnil-default\t1\tcallback\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tnil\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tfalse\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tobject\nreversed\t1\ttrue\nnil-test\t1\tfalse\nnil-test-default\t1\tnil\nnan\t1\ttrue\nordered\t1\tcallback\nreversed\t1\ttrue\nmeta-yes\t1\tobject\nmeta-no\t1\ttrue\nread-present\t1\ttrue\nread-absent\t1\tfalse\nreads\t1\nproduce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:0,produce:1,produce:1,produce:2,produce:2,produce:3,produce:3,produce:4,produce:4,produce:0,produce:1,produce:2,produce:3,produce:4,compare:1:2,produce:3,compare:2:1,read:ready\n",
+        "stderr": ""
+      },
+      "outputSourceSha256": "88eb12b3105feb1705a2bc3ad57290b7100b6b148b5358eaf8230c8135e5991d",
+      "outputBytecodeSha256": "ef60b6a26aa7fb81b885ddb2f830b133d6ac3aee519188b7300e79a58a28bb7b",
+      "match": true
+    }
+  ]
+}

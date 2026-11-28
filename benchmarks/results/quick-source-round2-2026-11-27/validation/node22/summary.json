@@ -1,0 +1,38 @@
+{
+  "revision": "eba3c9971283a322e2e300834a6cc95fdd437b9c",
+  "runtime": {
+    "node": "v22.23.5",
+    "executable": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+    "executableSha256": "2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd",
+    "platform": "linux",
+    "arch": "x64",
+    "nodeOptions": null
+  },
+  "unit": {
+    "testFilesPassed": 162,
+    "testsPassed": 2037,
+    "log": "integrated-node22-tests.log.gz"
+  },
+  "typecheck": {
+    "passed": true,
+    "log": "integrated-node22-typecheck.log.gz",
+    "receiptBasis": "coordinator confirmed successful process; captured log is empty"
+  },
+  "build": {
+    "passed": true,
+    "command": [
+      "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "/workspace/scratch/1c4124dc88e4/Luau-decompiler/node_modules/typescript/bin/tsc",
+      "-p",
+      "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tsconfig.json"
+    ],
+    "receiptBasis": "strict benchmark provenance records a completed build and immutable engine"
+  },
+  "harness": {
+    "passed": 69,
+    "failed": 0,
+    "skipped": 0,
+    "log": "integrated-node22-harness.log.gz"
+  },
+  "ciStatus": "not claimed"
+}

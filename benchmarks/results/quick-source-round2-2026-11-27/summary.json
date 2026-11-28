@@ -1,0 +1,320 @@
+{
+  "format": "integrated-quick-source-round2",
+  "preparedAt": "2026-11-28T00:35:32.104983+00:00",
+  "engine": {
+    "localRevision": "eba3c9971283a322e2e300834a6cc95fdd437b9c",
+    "publishedCommit": "4193d35293b1e9ed7313944ab02d98821a48a795",
+    "publishedCommitUrl": "https://github.com/AnnonyA/Luau-decompiler/commit/4193d35293b1e9ed7313944ab02d98821a48a795",
+    "tree": "39d7488ed74721a378d1a9658af7b778588d19ba",
+    "publishedParent": "2b031283cd5efceddf962039b1b58bbe819add3f",
+    "mappingBasis": "coordinator created immutable GitHub commit with exactly the measured local tree; original local provenance retained",
+    "sourceTreeSha256": "59f885507ec4039898627bd62ccee15f19eedd5d4c8d18ca6704416d6f4de54f",
+    "strictDistSha256": "c0bd0eddb3d8871b009ef4d23192f36182d47a19bbc9aecf35d66f19ca5822c3",
+    "canonicalJsTreeSha256": "6b7265185633c57656004439768262cc09b7167e90b2ba19ebe766c509bce9e5",
+    "canonicalJsTreeHashAlgorithm": "SHA256 of sorted(relativeJSPath UTF8 + NUL + raw SHA256(fileBytes))"
+  },
+  "baseline": {
+    "localRevision": "fc6e10a88bfc97a04c53e6a2651977e5c6b50051",
+    "tree": "c80948f6c7e7624f05d9fb92d843c9b8dc2d78f8"
+  },
+  "rosetta": {
+    "revision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "commitTree": "dd5acdc6b2612b04b3fb15ef5e5d3bf07f65920a",
+    "dirty": false,
+    "checkout": "/workspace/scratch/eb5e4be57451/rosetta-research",
+    "repository": "https://github.com/Scrensayol/rosetta.git",
+    "suite": "rosetta-3",
+    "luau": "0.747",
+    "transform": "transform-2",
+    "binary": "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "binarySha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b"
+  },
+  "quick": {
+    "baseline": {
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "quality": {
+        "round_trips": 882,
+        "similarity": 77.49586128999316,
+        "size": 0.9820264838255065,
+        "locals": 1.0824637944726487,
+        "nesting": -0.41609977324263037,
+        "endless": 38,
+        "names": 61.02136376938835,
+        "cpu_ms_median": 259.83,
+        "cpu_ms_total": 259921.7810000001
+      },
+      "runtime": {
+        "node": "v24.22.3",
+        "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "executableSha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+        "platform": "linux",
+        "arch": "x64",
+        "nodeOptions": null
+      }
+    },
+    "candidate": {
+      "score": {
+        "passed": 882,
+        "total": 882
+      },
+      "quality": {
+        "round_trips": 882,
+        "similarity": 77.63762703152742,
+        "size": 0.9774616147072638,
+        "locals": 1.0791576337334974,
+        "nesting": -0.41609977324263037,
+        "endless": 38,
+        "names": 61.024290313140185,
+        "cpu_ms_median": 278.507,
+        "cpu_ms_total": 282284.505
+      },
+      "runtime": {
+        "node": "v22.23.5",
+        "executable": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+        "executableSha256": "2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd",
+        "platform": "linux",
+        "arch": "x64",
+        "nodeOptions": null
+      }
+    },
+    "sourceGainPoints": 0.14176574153425747,
+    "status": "strict all-pass",
+    "unusable": 0
+  },
+  "hardQuick": {
+    "score": {
+      "passed": 882,
+      "total": 882
+    },
+    "quality": {
+      "round_trips": 882,
+      "similarity": 77.02314934425073,
+      "size": 0.9829621600704698,
+      "locals": 1.0879351901641805,
+      "nesting": -0.41609977324263037,
+      "endless": 36,
+      "names": 30.01755926251097,
+      "cpu_ms_median": 287.452,
+      "cpu_ms_total": 322851.8690000001
+    },
+    "status": "strict all-pass",
+    "unusable": 0,
+    "suiteHash": "9bcb49d29e867a92",
+    "runtime": {
+      "node": "v22.23.5",
+      "executable": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "executableSha256": "2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd",
+      "platform": "linux",
+      "arch": "x64",
+      "nodeOptions": null
+    }
+  },
+  "full": {
+    "status": "not measured for this engine",
+    "historicalOnly": true
+  },
+  "hardFull": {
+    "status": "not measured for this engine",
+    "historicalOnly": true
+  },
+  "native": {
+    "validInputs": 128,
+    "baselinePass": 92,
+    "candidatePass": 120,
+    "candidateFailures": 8,
+    "groups": [
+      {
+        "group": "format-interpolation",
+        "total": 24,
+        "baselinePass": 24,
+        "candidatePass": 24
+      },
+      {
+        "group": "loop-exit-guards",
+        "total": 24,
+        "baselinePass": 12,
+        "candidatePass": 24
+      },
+      {
+        "group": "guarded-literal-selects",
+        "total": 24,
+        "baselinePass": 24,
+        "candidatePass": 24
+      },
+      {
+        "group": "named-table-closures",
+        "total": 36,
+        "baselinePass": 24,
+        "candidatePass": 36
+      },
+      {
+        "group": "closure-debug-homonyms",
+        "total": 12,
+        "baselinePass": 0,
+        "candidatePass": 4
+      },
+      {
+        "group": "closure-allocation",
+        "total": 8,
+        "baselinePass": 8,
+        "candidatePass": 8
+      }
+    ],
+    "excludedInvalidOriginals": [
+      {
+        "pin": "9d",
+        "profile": "O0g1",
+        "originalValid": false,
+        "firstOriginalExitCode": 4,
+        "originalBytecodeSha256": "91645b9769f992657aef248339642ce4fdd337c5b1950629fb9f7af4827608f1",
+        "candidateExecuted": false,
+        "countedInPassTotal": false
+      },
+      {
+        "pin": "9d",
+        "profile": "O0g2",
+        "originalValid": false,
+        "firstOriginalExitCode": 4,
+        "originalBytecodeSha256": "5c6d7b553ef4f0ef952310ef22a79fc624f787696589863730a58ad9f02a68b6",
+        "candidateExecuted": false,
+        "countedInPassTotal": false
+      },
+      {
+        "pin": "c875",
+        "profile": "O0g1",
+        "originalValid": false,
+        "firstOriginalExitCode": 4,
+        "originalBytecodeSha256": "91645b9769f992657aef248339642ce4fdd337c5b1950629fb9f7af4827608f1",
+        "candidateExecuted": false,
+        "countedInPassTotal": false
+      },
+      {
+        "pin": "c875",
+        "profile": "O0g2",
+        "originalValid": false,
+        "firstOriginalExitCode": 4,
+        "originalBytecodeSha256": "5c6d7b553ef4f0ef952310ef22a79fc624f787696589863730a58ad9f02a68b6",
+        "candidateExecuted": false,
+        "countedInPassTotal": false
+      }
+    ],
+    "failureGroup": "closure-debug-homonyms",
+    "developmentControls": true
+  },
+  "diagnosticProfiles": {
+    "better": 427,
+    "equal": 361,
+    "worse": 94,
+    "changedOutputs": 521
+  },
+  "localValidation": {
+    "node22": {
+      "revision": "eba3c9971283a322e2e300834a6cc95fdd437b9c",
+      "runtime": {
+        "node": "v22.23.5",
+        "executable": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+        "executableSha256": "2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd",
+        "platform": "linux",
+        "arch": "x64",
+        "nodeOptions": null
+      },
+      "unit": {
+        "testFilesPassed": 162,
+        "testsPassed": 2037,
+        "log": "integrated-node22-tests.log.gz"
+      },
+      "typecheck": {
+        "passed": true,
+        "log": "integrated-node22-typecheck.log.gz",
+        "receiptBasis": "coordinator confirmed successful process; captured log is empty"
+      },
+      "build": {
+        "passed": true,
+        "command": [
+          "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+          "/workspace/scratch/1c4124dc88e4/Luau-decompiler/node_modules/typescript/bin/tsc",
+          "-p",
+          "/workspace/scratch/1c4124dc88e4/Luau-decompiler/tsconfig.json"
+        ],
+        "receiptBasis": "strict benchmark provenance records a completed build and immutable engine"
+      },
+      "harness": {
+        "passed": 69,
+        "failed": 0,
+        "skipped": 0,
+        "log": "integrated-node22-harness.log.gz"
+      },
+      "ciStatus": "not claimed"
+    },
+    "node20": {
+      "runtime": {
+        "executable": "/home/agent/.npm/_npx/ebaba8b9e55fd0a9/node_modules/node/bin/node",
+        "version": "v20.20.2",
+        "sha256": "6295488653f0d93b0a157841746fef7e72cc4328cfb60c4bbe0ca2668a836ffd"
+      },
+      "testsPassed": 2037,
+      "testFilesPassed": 162,
+      "harnessPassed": 69,
+      "demoWorkerStartupPassed": 6,
+      "allExecutedGatesPassed": true,
+      "notRun": [
+        {
+          "gate": "bench-shared",
+          "reason": "No pinned LunaUX 910ccd4d checkout available locally; exact-revision CI must execute the 22-input gate."
+        },
+        {
+          "gate": "demo-browser",
+          "status": "blocked-environment",
+          "reason": "The Chromium launcher has no browser binary. No browser PASS is claimed; pages CI on Node22 is required.",
+          "probeExitCode": 127,
+          "probeLog": "/workspace/scratch/1c4124dc88e4/final-node20-validation/browser-environment.log"
+        }
+      ]
+    }
+  },
+  "ciStatus": "not measured or claimed",
+  "target100PercentReached": false,
+  "measurementsScope": "Quick source improvement; current strict Quick and Hard Quick only. Full and Hard Full remain historical.",
+  "compiledNode20Node22Equivalence": {
+    "equal": true,
+    "jsTreeSha256WithHexDigests": "01f7a9a185ee4db67576a765580147de653008ec5c32ab9520e6a952d01b2762",
+    "hashAlgorithm": "SHA256 of sorted(relativeJSPath UTF8 + NUL + lowercase hexadecimal SHA256(fileBytes) UTF8)",
+    "node20Receipt": "validation/node20/summary.json",
+    "node22Receipt": "native/expression-snapshot-receipt.json",
+    "hashConventionReceipt": "validation/node20/hash-conventions.json"
+  },
+  "timingLimitations": [
+    "baseline strict Quick uses Node24.22.3; candidate strict Quick/Hard Quick use Node22.23.5",
+    "concurrent local validation can affect wall times",
+    "single runs; no speedup or performance-regression guarantee claimed"
+  ],
+  "rejectedExperiments": [
+    {
+      "name": "primitive helper recovery, two bounded variants",
+      "commit": "7c1c8e1",
+      "reason": "each variant produced882 identical Quick outputs; no source gain",
+      "integrated": false
+    },
+    {
+      "name": "scalar early-return regions",
+      "commit": "bb314c1ae926e91204ba7f033cc7e287a5a55962",
+      "reason": "882 identical Quick outputs; independently reviewed AST DAG counterexample remained unfixed",
+      "integrated": false,
+      "nativeDevelopmentControls": {
+        "baseline": 36,
+        "candidate": 36,
+        "total": 36
+      },
+      "astDagCounterexample": {
+        "pass": 0,
+        "total": 12,
+        "endToEndBytecodeFailureClaimed": false
+      },
+      "countedInIntegratedNativeTotals": false,
+      "evidence": "rejected/scalar-return-regions/evidence.tar.gz"
+    }
+  ]
+}

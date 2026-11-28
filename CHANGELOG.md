@@ -7,14 +7,21 @@ to recorded commits rather than assigning new release numbers.
 
 ## Unreleased
 
-- Improve Quick source similarity from **76.93% to 77.50%**, retaining
-  **882/882** behavioral passes. The 100% similarity target remains unmet;
-  [the integrated report](benchmarks/results/rosetta-refinement-2026-11-27/README.md)
-  records exact results, provenance and rejected experiments.
-- Recover shared short-circuit bodies and iteration continuations; preserve
-  copies before reference capture, table template order and function key names.
-- Validate the combined engine with **1,917** unit tests on Node 20 and 22,
-  six demo worker/startup tests and 96 native profile checks on two Luau pins.
+- Improve Quick source similarity from **77.50% to 77.64%**, retaining
+  **882/882** behavioral passes in both Quick and a new Hard Quick run.
+  Hard Quick source similarity is **77.02%**. The 100% similarity target remains
+  unmet; [the integrated report](benchmarks/results/quick-source-round2-2026-11-27/README.md)
+  preserves exact local/published engine mapping, raw provenance and failures.
+  The preceding [**76.93% to 77.50%** Quick checkpoint](benchmarks/results/rosetta-refinement-2026-11-27/README.md)
+  and its original measurements remain recorded separately.
+- Recover ordered named record closures, guarded literal values and supported
+  format interpolation; repair repeat-condition environments and preserve
+  aliased/shared closure names without extra allocation.
+- Pass **2,037** unit tests across **162 files** on Node 20 and 22, **69** harness
+  tests on each, and **6** local demo worker/startup tests. Integrated native
+  controls improve from **92/128 to 120/128**; eight homonymous-global failures
+  remain pending and four invalid originals are explicitly excluded. These
+  local results do not claim browser or GitHub Actions CI completion.
 - Present the browser interface as **LUVEX**, with the repository, package and
   CLI identities retained as Luau Decompiler, `luau-decompiler` and `luau-decompile`.
 - Shorten the README and move detailed usage and development instructions to

@@ -1,0 +1,258 @@
+{
+  "commit": "eba3c9971283a322e2e300834a6cc95fdd437b9c",
+  "rootHeadAfter": "eba3c9971283a322e2e300834a6cc95fdd437b9c",
+  "node": "v22.23.5",
+  "engineJsTreeSha256": "6b7265185633c57656004439768262cc09b7167e90b2ba19ebe766c509bce9e5",
+  "baselineJsTreeSha256": "54451c8b198ce206b2b9097f1a47feccda2bc9b9e1f11961c465ffcd9f6f4067",
+  "hashAlgorithm": "SHA256 of sorted(relativeJSPath UTF8 + NUL + raw SHA256(fileBytes))",
+  "immutabilityChecks": {
+    "rootDistUnchanged": true,
+    "candidateSnapshotUnchanged": true,
+    "baselineDistUnchanged": true,
+    "baselineSnapshotUnchanged": true,
+    "snapshotFixturesUnchanged": true
+  },
+  "total": 72,
+  "baselinePass": 60,
+  "candidatePass": 72,
+  "groups": {
+    "format-interpolation": {
+      "total": 24,
+      "baselinePass": 24,
+      "candidatePass": 24
+    },
+    "loop-exit-guards": {
+      "total": 24,
+      "baselinePass": 12,
+      "candidatePass": 24
+    },
+    "guarded-literal-selects": {
+      "total": 24,
+      "baselinePass": 24,
+      "candidatePass": 24
+    }
+  },
+  "expressionBaselineFailures": [
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-9d-O0g1.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        4
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-9d-O0g2.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        4
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-9d-O1g1.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        4
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-9d-O1g2.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        4
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-9d-O2g1.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-9d-O2g2.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-c875-O0g1.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        4
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-c875-O0g2.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        4
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-c875-O1g1.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        4
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-c875-O1g2.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        4
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-c875-O2g1.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "group": "loop-exit-guards",
+      "path": "completed-c875-O2g2.luauc",
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "group": "loop-exit-guards",
+      "manifest": "completed-manifest.json",
+      "manifestSha256": "0acfec20eab4f5a8eccca91bfe6a6c40ffb61a9a41ba733e820d78e7150469a4",
+      "source": "completed-observations.luau",
+      "sourceSha256": "3a3cfef170edc684110d209fee3d5b5124fe39a4bcbc823c80c5267eb10f065a",
+      "inputs": 12
+    },
+    {
+      "group": "loop-exit-guards",
+      "manifest": "review-manifest.json",
+      "manifestSha256": "b9358ba64254e3dc8b5ef9207366bf4a5688d66d17981430808b7a506c9cb4cd",
+      "source": "review-controls.luau",
+      "sourceSha256": "2ee47a6b68664888664a8c4330fc41f04a0b806287f08183001c507eec9e184d",
+      "inputs": 12
+    },
+    {
+      "group": "format-interpolation",
+      "manifest": "manifest.json",
+      "manifestSha256": "451ca9c0326661a3fde0c4cf40393a216e7a8ce80accd3dc0d19d797249c8934",
+      "source": "observations.luau",
+      "sourceSha256": "85c3b17844c2a7c8c3a3abbead4e77945677924a8678354b167f71b94a977984",
+      "inputs": 12
+    },
+    {
+      "group": "format-interpolation",
+      "manifest": "review-manifest.json",
+      "manifestSha256": "8803605634a0a739b115e3f80ad58fa1267474009a161e113a0a202b27731bb8",
+      "source": "review-controls.luau",
+      "sourceSha256": "c1c38fe6ecca5e4ea91a9389038fdaa6331d0e14aa860949bc0382fdc9c30691",
+      "inputs": 12
+    },
+    {
+      "group": "guarded-literal-selects",
+      "manifest": "manifest.json",
+      "manifestSha256": "a5c21a81aa0105e7311208b410a4646ebbf9854eb6e5cf3b5644a359a0e5adcf",
+      "source": "capture-and-scope.luau",
+      "sourceSha256": "c2942a3b70fb98078e40cffd55c0451716ee487645e3bf830d80674123c3a4bc"
+    },
+    {
+      "group": "guarded-literal-selects",
+      "manifest": "manifest.json",
+      "manifestSha256": "a5c21a81aa0105e7311208b410a4646ebbf9854eb6e5cf3b5644a359a0e5adcf",
+      "source": "values-and-effects.luau",
+      "sourceSha256": "821eec8532de82bc0596623e8d9a256824a1a4f0e79b2189204cfe582f7b6584"
+    }
+  ],
+  "pins": {
+    "9d": {
+      "revision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "hostSha256": "ec977f7fccd2f5e39ce86d8aad4f159c37d444cd55aed400786780d269133cae",
+      "hostSourceSha256": "35b5fc92b6008c1f23491dd3e8dbac38a4974318289df311788c6a0b4c04e807",
+      "hostBuild": [
+        "c++",
+        "-O2",
+        "-std=c++17",
+        "-I",
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/VM/include",
+        "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/format-interpolation/run-bytecode.cpp",
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/libluauvm.a",
+        "/workspace/scratch/eb5e4be57451/reference-luau-ci/build/release/libluaucommon.a",
+        "-o",
+        "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/expression/run-bytecode-9d"
+      ]
+    },
+    "c875": {
+      "revision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "hostSha256": "53cb7cf374d903cdc76092de44589022d5c7c755356027de83cc967159508c50",
+      "hostSourceSha256": "35b5fc92b6008c1f23491dd3e8dbac38a4974318289df311788c6a0b4c04e807",
+      "hostBuild": [
+        "c++",
+        "-O2",
+        "-std=c++17",
+        "-I",
+        "/workspace/scratch/eb5e4be57451/reference-luau/VM/include",
+        "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/engine/tests/fixtures/format-interpolation/run-bytecode.cpp",
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/libluauvm.a",
+        "/workspace/scratch/eb5e4be57451/reference-luau/build/release/libluaucommon.a",
+        "-o",
+        "/workspace/scratch/1c4124dc88e4/measurements/integrated-native-expressions-eba3c997/expression/run-bytecode-c875"
+      ]
+    }
+  },
+  "guardedLiteralPins": {
+    "9d": {
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "hostSha256": "7d8d958fb0ba8537130697a1043f9da0b4b7ab4469345b08ab9153a4a146ae74"
+    },
+    "c875": {
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "hostSha256": "c7a7f7d1a9f3fff6303eecfef9f4c20e7c7e88806e6c5323575b409b0f4d42b6"
+    }
+  },
+  "summaryFiles": [
+    "expression/summary.json",
+    "literal-candidate/summary.json",
+    "literal-baseline/summary.json"
+  ]
+}

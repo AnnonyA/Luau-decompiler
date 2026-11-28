@@ -1,0 +1,7 @@
+{
+  "note": "Same compiled files. The previously reported jsTreeSha256 used hexadecimal child-digest strings; Rosetta replay uses raw 32-byte child digests. This supplement makes the encodings explicit.",
+  "hashes": {
+    "rawFileDigestBytes": "6b7265185633c57656004439768262cc09b7167e90b2ba19ebe766c509bce9e5",
+    "hexEncodedFileDigests": "01f7a9a185ee4db67576a765580147de653008ec5c32ab9520e6a952d01b2762"
+  }
+}
