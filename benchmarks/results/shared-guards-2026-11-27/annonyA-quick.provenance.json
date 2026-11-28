@@ -1,0 +1,125 @@
+{
+  "integration": {
+    "pinSha256": "0b67b06dee91960755f9e5fbeadcd0722ec77e7d1a0b54878285b77af66ee142",
+    "runnerSha256": "6c128909fea9acdbf0f6a5c7582b81204a017f73f2f75a820c9ff8a1523b63d3",
+    "validatorSha256": "888718cf60934d8795392149f2cbd5e5999ce2e431a096602a42f61d172bfc15"
+  },
+  "engine": {
+    "revision": "2b2f5b4d3b0cb83102ad83183ff2d6aaa3c556fa",
+    "commitTree": "ed0f8737469e413ac9bf1b19fdf744fca3d2522f",
+    "dirty": true,
+    "status": [
+      " M src/reconstruct/Reconstructor.ts",
+      "?? node_modules",
+      "?? src/reconstruct/SharedGuards.ts",
+      "?? tests/fixtures/shared-guards/",
+      "?? tests/shared-guards.test.ts"
+    ],
+    "sourceTreeSha256": "8bbf321b80ab21dd2ca5651a9ac0d54f07a9736fddb430404f9c4d7162e80827",
+    "distSha256": "146bd95fa2a0f4bb7c0e5bbcb0a1ed32849e04471f1ed683f3ad109bebfa954d",
+    "checkout": "/workspace/scratch/eb5e4be57451/similarity-v3-guards",
+    "cli": "/workspace/scratch/eb5e4be57451/similarity-v3-guards/dist/cli.js",
+    "buildCommand": [
+      "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+      "/workspace/scratch/eb5e4be57451/similarity-v3-guards/node_modules/typescript/bin/tsc",
+      "-p",
+      "/workspace/scratch/eb5e4be57451/similarity-v3-guards/tsconfig.json"
+    ]
+  },
+  "rosetta": {
+    "revision": "80f3c13ce48dc3318d5d49f54958f580937ca8aa",
+    "commitTree": "dd5acdc6b2612b04b3fb15ef5e5d3bf07f65920a",
+    "dirty": false,
+    "checkout": "/workspace/scratch/eb5e4be57451/rosetta-research",
+    "repository": "https://github.com/Scrensayol/rosetta.git",
+    "suite": "rosetta-3",
+    "luau": "0.747",
+    "transform": "transform-2",
+    "binary": "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "binarySha256": "5da91d395f20409b3efcc074f91ad5584a70480565e088b9d2f1bff1036c642b"
+  },
+  "runtime": {
+    "node": "v22.23.5",
+    "executable": "/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node",
+    "executableSha256": "2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd",
+    "platform": "linux",
+    "arch": "x64",
+    "nodeOptions": null
+  },
+  "timing": "direct CLI per bytecode; includes Node.js startup and decompilation; no HTTP client/server split",
+  "schemaVersion": 1,
+  "format": "annonyA-rosetta-provenance",
+  "tier": "quick",
+  "startedAt": "2026-11-27T23:51:57.070Z",
+  "status": "completed",
+  "gate": "all-pass",
+  "command": [
+    "/workspace/scratch/eb5e4be57451/rosetta-research/target/release/rosetta",
+    "bench",
+    "--tier",
+    "quick",
+    "--decompiler",
+    "annonyA=/home/agent/.npm/_npx/52027bd8fc0022aa/node_modules/node/bin/node /workspace/scratch/eb5e4be57451/similarity-v3-guards/dist/cli.js decompile {}",
+    "--version",
+    "annonyA=2b2f5b4d3b0cb83102ad83183ff2d6aaa3c556fa+dirty",
+    "--out",
+    "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/strict-quick"
+  ],
+  "environment": {
+    "RAYON_NUM_THREADS": "4",
+    "forbiddenOverridesAbsent": [
+      "ROSETTA_TRANSFORM_OFF",
+      "ROSETTA_TRANSFORM_ONLY",
+      "LUAU_DECOMPILE_OPTS"
+    ]
+  },
+  "result": {
+    "path": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/strict-quick/annonyA-quick.json",
+    "sha256": "fb2a3f6081f8df99d3dfc7101d0bd114b49e3237d620ace7a4ca2361cd713779"
+  },
+  "summary": {
+    "tier": "quick",
+    "hash": "e24826907050bd1d",
+    "passed": 882,
+    "total": 882,
+    "roundTrips": 882,
+    "counts": {
+      "pass": 882,
+      "mismatch": 0,
+      "recompile_failed": 0,
+      "decompile_failed": 0,
+      "refused": 0,
+      "unusable": 0
+    },
+    "sections": [
+      {
+        "id": "cases",
+        "passed": 246,
+        "total": 246
+      },
+      {
+        "id": "libraries",
+        "passed": 36,
+        "total": 36
+      },
+      {
+        "id": "generated",
+        "passed": 300,
+        "total": 300
+      },
+      {
+        "id": "mutants",
+        "passed": 300,
+        "total": 300
+      }
+    ],
+    "allPass": true
+  },
+  "process": {
+    "exitCode": 0,
+    "signal": null,
+    "error": null
+  },
+  "finishedAt": "2026-11-27T23:52:53.134Z",
+  "elapsedSeconds": 56.06402404000001
+}

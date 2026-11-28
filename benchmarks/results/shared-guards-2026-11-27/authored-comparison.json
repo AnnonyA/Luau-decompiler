@@ -1,0 +1,25 @@
+{
+  "purpose": "separate the pre-existing saved-copy defect from the shared-guard change",
+  "baselinePass": 32,
+  "candidatePass": 32,
+  "total": 36,
+  "positives": {
+    "pass": 24,
+    "total": 24
+  },
+  "firstFailureIds": [
+    "c875/rejected-state/O0g1",
+    "c875/rejected-state/O1g1",
+    "9d/rejected-state/O0g1",
+    "9d/rejected-state/O1g1"
+  ],
+  "candidateFailureIds": [
+    "c875/rejected-state/O0g1",
+    "c875/rejected-state/O1g1",
+    "9d/rejected-state/O0g1",
+    "9d/rejected-state/O1g1"
+  ],
+  "allRejectedSourceOutputsIdentical": true,
+  "independentFix": "b63f3a32b8359a4256bbaaea393cb4541da2934a",
+  "independentFixIncludedInThisMeasurement": false
+}

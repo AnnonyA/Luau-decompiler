@@ -1,0 +1,73 @@
+import {describe, expect, it} from "vitest";
+import {analyzeBindings} from "../src/analysis/Bindings.ts";
+import {block, chunk, ident, lit, type Chunk, type Expression, type Statement} from "../src/ast/Ast.ts";
+import {foldTemporaries} from "../src/ast/TempFolding.ts";
+import {printLuau} from "../src/print/LuauPrinter.ts";
+import {rewriteRegisterCount} from "../src/reconstruct/RegisterBudget.ts";
+
+const call = (name: string, args: Expression[]): Expression =>
+  ({kind: "call", callee: ident(name), args, open: false});
+const slots = (count: number): Expression[] => Array.from({length: count}, (_, i) => lit(i));
+const temporary = (name: string, value: Expression): Statement =>
+  ({kind: "local", names: [name], values: [value], definition: {prototypeId: 0, pc: 0, register: 0}});
+const source = (ast: Chunk): string => printLuau(foldTemporaries(ast));
+const wide = (prefix: Expression[], tail: Expression = ident("value")): Chunk => chunk([
+  temporary("value", call("produce", slots(12))),
+  {kind: "return", values: [call("consume", [...prefix, tail])]},
+]);
+
+describe("adjacent producers in wide argument lists", () => {
+  it("measures the argument's expression while preserving a scalar result at the tail", () => {
+    const output = source(wide(slots(48)));
+    expect(output).not.toContain("local value");
+    expect(output).toContain(", (produce(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)))");
+  });
+
+  it("keeps an earlier effect ahead of the original producer", () => {
+    expect(source(wide([...slots(48), call("earlier", [])]))).toContain("local value = produce(");
+  });
+
+  it("does not move an unconditional producer into a short-circuit argument", () => {
+    const output = source(wide(slots(48), {kind: "binary", op: "and", left: ident("enabled"), right: ident("value")}));
+    expect(output).toContain("local value = produce(");
+  });
+
+  it("keeps exact source declaration evidence even in wide calls", () => {
+    const ast = wide(slots(48));
+    const declaration = ast.body.statements[0]!;
+    if (declaration.kind !== "local") throw new Error("unexpected fixture");
+    declaration.definition!.debugName = "value";
+    expect(source(ast)).toContain("local value = produce(");
+  });
+
+  it("does not widen the separate method-call evaluation policy", () => {
+    const ast = chunk([temporary("value", call("produce", slots(12))),
+      {kind: "return", values: [{kind: "method-call", object: ident("receiver"), name: "consume",
+        args: [...slots(48), ident("value")], open: false}]}]);
+    expect(source(ast)).toContain("local value = produce(");
+  });
+
+  it("retains the first compiler-overflow counterexample's separate call window", () => {
+    const ast = wide(slots(249));
+    expect(source(ast)).toBe(printLuau(ast));
+  });
+
+  it("rechecks the combined window when several producers can nest", () => {
+    const statements: Statement[] = [temporary("value0", call("produce", slots(12)))];
+    for (let i = 1; i < 9; i++)
+      statements.push(temporary(`value${i}`, call("produce", [...slots(11), ident(`value${i - 1}`)])));
+    statements.push({kind: "return", values: [call("consume", [...slots(199), ident("value8")])]});
+    const ast = chunk(statements), folded = foldTemporaries(ast);
+    expect(folded.body.statements.length).toBeGreaterThan(1);
+    const bindings = analyzeBindings(ast.body).bindings;
+    expect(rewriteRegisterCount(bindings, folded.body)).toBeLessThanOrEqual(240);
+  });
+
+  it("charges the enclosing named and hidden loop slots", () => {
+    const ast = wide(slots(48));
+    const enclosing = Array.from({length: 175}, (_, i) => temporary(`saved${i}`, ident(`input${i}`)));
+    const loop: Statement = {kind: "numeric-for", name: "index", start: lit(1), stop: lit(2),
+      body: block(ast.body.statements)};
+    expect(source(chunk([...enclosing, loop]))).toContain("local value = produce(");
+  });
+});

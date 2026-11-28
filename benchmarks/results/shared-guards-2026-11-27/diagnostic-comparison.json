@@ -1,0 +1,620 @@
+{
+  "kind": "diagnostic exact-metric comparison only; behavior not verified by replay",
+  "before": "2b2f5b4d3b0cb83102ad83183ff2d6aaa3c556fa",
+  "after": "quality-research/v3-shared-guards/current-quick",
+  "total": 882,
+  "changed": 76,
+  "improved": 76,
+  "worse": 0,
+  "deltaMean": 0.17254916853915536,
+  "rows": [
+    {
+      "id": "cases/pathfinding/O0g1",
+      "before": 86.49214506149292,
+      "after": 88.84119987487793,
+      "delta": 2.3490548133850098,
+      "beforeTokens": 1021,
+      "afterTokens": 975
+    },
+    {
+      "id": "cases/pathfinding/O0g2",
+      "before": 87.22513318061829,
+      "after": 89.59227204322815,
+      "delta": 2.3671388626098633,
+      "beforeTokens": 1021,
+      "afterTokens": 975
+    },
+    {
+      "id": "cases/pathfinding/O1g1",
+      "before": 86.225026845932,
+      "after": 88.57758641242981,
+      "delta": 2.3525595664978027,
+      "beforeTokens": 1013,
+      "afterTokens": 967
+    },
+    {
+      "id": "cases/pathfinding/O1g2",
+      "before": 86.96109652519226,
+      "after": 89.33189511299133,
+      "delta": 2.3707985877990723,
+      "beforeTokens": 1013,
+      "afterTokens": 967
+    },
+    {
+      "id": "cases/pathfinding/O2g1",
+      "before": 81.93877339363098,
+      "after": 84.76541638374329,
+      "delta": 2.8266429901123047,
+      "beforeTokens": 1071,
+      "afterTokens": 1008
+    },
+    {
+      "id": "cases/pathfinding/O2g2",
+      "before": 82.95918107032776,
+      "after": 85.81971526145935,
+      "delta": 2.860534191131592,
+      "beforeTokens": 1071,
+      "afterTokens": 1008
+    },
+    {
+      "id": "generated/seed1563/O0g1",
+      "before": 65.63022136688232,
+      "after": 65.7621443271637,
+      "delta": 0.13192296028137207,
+      "beforeTokens": 2524,
+      "afterTokens": 2512
+    },
+    {
+      "id": "generated/seed1563/O0g2",
+      "before": 65.93296527862549,
+      "after": 66.06516242027283,
+      "delta": 0.13219714164733887,
+      "beforeTokens": 2539,
+      "afterTokens": 2527
+    },
+    {
+      "id": "generated/seed1932/O0g1",
+      "before": 71.4470624923706,
+      "after": 71.51185274124146,
+      "delta": 0.06479024887084961,
+      "beforeTokens": 3388,
+      "afterTokens": 3381
+    },
+    {
+      "id": "generated/seed1932/O0g2",
+      "before": 71.92054390907288,
+      "after": 71.98554277420044,
+      "delta": 0.06499886512756348,
+      "beforeTokens": 3415,
+      "afterTokens": 3408
+    },
+    {
+      "id": "libraries/libdeflate/O0g1",
+      "before": 79.15117144584656,
+      "after": 79.25153970718384,
+      "delta": 0.10036826133728027,
+      "beforeTokens": 17958,
+      "afterTokens": 17920
+    },
+    {
+      "id": "libraries/libdeflate/O0g2",
+      "before": 79.72337603569031,
+      "after": 79.82409596443176,
+      "delta": 0.10071992874145508,
+      "beforeTokens": 18062,
+      "afterTokens": 18024
+    },
+    {
+      "id": "libraries/libdeflate/O1g1",
+      "before": 79.01497483253479,
+      "after": 79.11543250083923,
+      "delta": 0.10045766830444336,
+      "beforeTokens": 17879,
+      "afterTokens": 17841
+    },
+    {
+      "id": "libraries/libdeflate/O1g2",
+      "before": 79.65805530548096,
+      "after": 79.75885272026062,
+      "delta": 0.10079741477966309,
+      "beforeTokens": 18013,
+      "afterTokens": 17975
+    },
+    {
+      "id": "libraries/libdeflate/O2g1",
+      "before": 77.70566940307617,
+      "after": 77.80321836471558,
+      "delta": 0.0975489616394043,
+      "beforeTokens": 18319,
+      "afterTokens": 18281
+    },
+    {
+      "id": "libraries/libdeflate/O2g2",
+      "before": 78.30287218093872,
+      "after": 78.40068936347961,
+      "delta": 0.09781718254089355,
+      "beforeTokens": 18463,
+      "afterTokens": 18425
+    },
+    {
+      "id": "mutants/mut1-109/O0g1",
+      "before": 86.41975522041321,
+      "after": 88.72497081756592,
+      "delta": 2.30521559715271,
+      "beforeTokens": 1037,
+      "afterTokens": 991
+    },
+    {
+      "id": "mutants/mut1-109/O0g2",
+      "before": 87.13991641998291,
+      "after": 89.46259021759033,
+      "delta": 2.322673797607422,
+      "beforeTokens": 1037,
+      "afterTokens": 991
+    },
+    {
+      "id": "mutants/mut1-109/O1g1",
+      "before": 86.82170510292053,
+      "after": 89.14769887924194,
+      "delta": 2.325993776321411,
+      "beforeTokens": 1028,
+      "afterTokens": 982
+    },
+    {
+      "id": "mutants/mut1-109/O1g2",
+      "before": 87.54522204399109,
+      "after": 89.88882899284363,
+      "delta": 2.343606948852539,
+      "beforeTokens": 1028,
+      "afterTokens": 982
+    },
+    {
+      "id": "mutants/mut1-109/O2g1",
+      "before": 82.5890600681305,
+      "after": 85.38860082626343,
+      "delta": 2.7995407581329346,
+      "beforeTokens": 1086,
+      "afterTokens": 1023
+    },
+    {
+      "id": "mutants/mut1-109/O2g2",
+      "before": 83.59257578849792,
+      "after": 86.42486929893494,
+      "delta": 2.8322935104370117,
+      "beforeTokens": 1086,
+      "afterTokens": 1023
+    },
+    {
+      "id": "mutants/mut1-187/O0g1",
+      "before": 86.50306463241577,
+      "after": 88.79581093788147,
+      "delta": 2.2927463054656982,
+      "beforeTokens": 1043,
+      "afterTokens": 997
+    },
+    {
+      "id": "mutants/mut1-187/O0g2",
+      "before": 87.2188150882721,
+      "after": 89.52879309654236,
+      "delta": 2.3099780082702637,
+      "beforeTokens": 1043,
+      "afterTokens": 997
+    },
+    {
+      "id": "mutants/mut1-187/O1g1",
+      "before": 86.90292835235596,
+      "after": 89.2162024974823,
+      "delta": 2.3132741451263428,
+      "beforeTokens": 1034,
+      "afterTokens": 988
+    },
+    {
+      "id": "mutants/mut1-187/O1g2",
+      "before": 87.62198090553284,
+      "after": 89.95265364646912,
+      "delta": 2.3306727409362793,
+      "beforeTokens": 1034,
+      "afterTokens": 988
+    },
+    {
+      "id": "mutants/mut1-187/O2g1",
+      "before": 82.69326686859131,
+      "after": 85.47888994216919,
+      "delta": 2.785623073577881,
+      "beforeTokens": 1092,
+      "afterTokens": 1029
+    },
+    {
+      "id": "mutants/mut1-187/O2g2",
+      "before": 83.69077444076538,
+      "after": 86.50875091552734,
+      "delta": 2.817976474761963,
+      "beforeTokens": 1092,
+      "afterTokens": 1029
+    },
+    {
+      "id": "mutants/mut1-283/O0g1",
+      "before": 83.11817049980164,
+      "after": 85.2642297744751,
+      "delta": 2.146059274673462,
+      "beforeTokens": 1105,
+      "afterTokens": 1059
+    },
+    {
+      "id": "mutants/mut1-283/O0g2",
+      "before": 83.81330966949463,
+      "after": 85.97561120986938,
+      "delta": 2.162301540374756,
+      "beforeTokens": 1105,
+      "afterTokens": 1059
+    },
+    {
+      "id": "mutants/mut1-283/O1g1",
+      "before": 82.97553658485413,
+      "after": 85.13030409812927,
+      "delta": 2.1547675132751465,
+      "beforeTokens": 1094,
+      "afterTokens": 1048
+    },
+    {
+      "id": "mutants/mut1-283/O1g2",
+      "before": 83.67449045181274,
+      "after": 85.84568500518799,
+      "delta": 2.171194553375244,
+      "beforeTokens": 1094,
+      "afterTokens": 1048
+    },
+    {
+      "id": "mutants/mut1-283/O2g1",
+      "before": 78.56797575950623,
+      "after": 81.1377227306366,
+      "delta": 2.569746971130371,
+      "beforeTokens": 1158,
+      "afterTokens": 1095
+    },
+    {
+      "id": "mutants/mut1-283/O2g2",
+      "before": 79.63231801986694,
+      "after": 82.23552703857422,
+      "delta": 2.6032090187072754,
+      "beforeTokens": 1158,
+      "afterTokens": 1095
+    },
+    {
+      "id": "mutants/mut1-294/O0g1",
+      "before": 85.60931086540222,
+      "after": 86.29629611968994,
+      "delta": 0.6869852542877197,
+      "beforeTokens": 875,
+      "afterTokens": 862
+    },
+    {
+      "id": "mutants/mut1-294/O0g2",
+      "before": 85.40012240409851,
+      "after": 86.0837459564209,
+      "delta": 0.6836235523223877,
+      "beforeTokens": 879,
+      "afterTokens": 866
+    },
+    {
+      "id": "mutants/mut1-294/O1g1",
+      "before": 87.04277873039246,
+      "after": 87.64045238494873,
+      "delta": 0.5976736545562744,
+      "beforeTokens": 855,
+      "afterTokens": 844
+    },
+    {
+      "id": "mutants/mut1-294/O1g2",
+      "before": 86.82745695114136,
+      "after": 87.4221682548523,
+      "delta": 0.5947113037109375,
+      "beforeTokens": 859,
+      "afterTokens": 848
+    },
+    {
+      "id": "mutants/mut1-294/O2g1",
+      "before": 73.69001507759094,
+      "after": 74.13984537124634,
+      "delta": 0.4498302936553955,
+      "beforeTokens": 1055,
+      "afterTokens": 1044
+    },
+    {
+      "id": "mutants/mut1-294/O2g2",
+      "before": 73.63786697387695,
+      "after": 74.08638000488281,
+      "delta": 0.4485130310058594,
+      "beforeTokens": 1059,
+      "afterTokens": 1048
+    },
+    {
+      "id": "mutants/mut1-356/O0g1",
+      "before": 86.23188138008118,
+      "after": 88.54718804359436,
+      "delta": 2.3153066635131836,
+      "beforeTokens": 1031,
+      "afterTokens": 985
+    },
+    {
+      "id": "mutants/mut1-356/O0g2",
+      "before": 86.95651888847351,
+      "after": 89.28950428962708,
+      "delta": 2.3329854011535645,
+      "beforeTokens": 1031,
+      "afterTokens": 985
+    },
+    {
+      "id": "mutants/mut1-356/O1g1",
+      "before": 85.96673607826233,
+      "after": 88.28541040420532,
+      "delta": 2.318674325942993,
+      "beforeTokens": 1023,
+      "afterTokens": 977
+    },
+    {
+      "id": "mutants/mut1-356/O1g2",
+      "before": 86.6943895816803,
+      "after": 89.03088569641113,
+      "delta": 2.336496114730835,
+      "beforeTokens": 1023,
+      "afterTokens": 977
+    },
+    {
+      "id": "mutants/mut1-356/O2g1",
+      "before": 81.73562288284302,
+      "after": 84.52318906784058,
+      "delta": 2.7875661849975586,
+      "beforeTokens": 1081,
+      "afterTokens": 1018
+    },
+    {
+      "id": "mutants/mut1-356/O2g2",
+      "before": 82.744699716568,
+      "after": 85.56540012359619,
+      "delta": 2.8207004070281982,
+      "beforeTokens": 1081,
+      "afterTokens": 1018
+    },
+    {
+      "id": "mutants/mut1-496/O0g1",
+      "before": 86.37295365333557,
+      "after": 88.66736888885498,
+      "delta": 2.294415235519409,
+      "beforeTokens": 1041,
+      "afterTokens": 995
+    },
+    {
+      "id": "mutants/mut1-496/O0g2",
+      "before": 87.09016442298889,
+      "after": 89.40188884735107,
+      "delta": 2.3117244243621826,
+      "beforeTokens": 1041,
+      "afterTokens": 995
+    },
+    {
+      "id": "mutants/mut1-496/O1g1",
+      "before": 86.11111044883728,
+      "after": 88.40885162353516,
+      "delta": 2.297741174697876,
+      "beforeTokens": 1033,
+      "afterTokens": 987
+    },
+    {
+      "id": "mutants/mut1-496/O1g2",
+      "before": 86.83127760887146,
+      "after": 89.14647102355957,
+      "delta": 2.3151934146881104,
+      "beforeTokens": 1033,
+      "afterTokens": 987
+    },
+    {
+      "id": "mutants/mut1-496/O2g1",
+      "before": 81.44433498382568,
+      "after": 84.20507311820984,
+      "delta": 2.7607381343841553,
+      "beforeTokens": 1083,
+      "afterTokens": 1020
+    },
+    {
+      "id": "mutants/mut1-496/O2g2",
+      "before": 82.44734406471252,
+      "after": 85.24080514907837,
+      "delta": 2.7934610843658447,
+      "beforeTokens": 1083,
+      "afterTokens": 1020
+    },
+    {
+      "id": "mutants/mut1-564/O0g1",
+      "before": 85.94871759414673,
+      "after": 88.23529481887817,
+      "delta": 2.2865772247314453,
+      "beforeTokens": 1041,
+      "afterTokens": 995
+    },
+    {
+      "id": "mutants/mut1-564/O0g2",
+      "before": 86.66666746139526,
+      "after": 88.97058963775635,
+      "delta": 2.303922176361084,
+      "beforeTokens": 1041,
+      "afterTokens": 995
+    },
+    {
+      "id": "mutants/mut1-564/O1g1",
+      "before": 86.34724617004395,
+      "after": 88.65435123443604,
+      "delta": 2.30710506439209,
+      "beforeTokens": 1032,
+      "afterTokens": 986
+    },
+    {
+      "id": "mutants/mut1-564/O1g2",
+      "before": 87.06852197647095,
+      "after": 89.39313888549805,
+      "delta": 2.3246169090270996,
+      "beforeTokens": 1032,
+      "afterTokens": 986
+    },
+    {
+      "id": "mutants/mut1-564/O2g1",
+      "before": 82.14107155799866,
+      "after": 84.91735458374023,
+      "delta": 2.776283025741577,
+      "beforeTokens": 1090,
+      "afterTokens": 1027
+    },
+    {
+      "id": "mutants/mut1-564/O2g2",
+      "before": 83.14157128334045,
+      "after": 85.95041036605835,
+      "delta": 2.8088390827178955,
+      "beforeTokens": 1090,
+      "afterTokens": 1027
+    },
+    {
+      "id": "mutants/mut1-850/O0g1",
+      "before": 86.42350435256958,
+      "after": 88.6929452419281,
+      "delta": 2.2694408893585205,
+      "beforeTokens": 1055,
+      "afterTokens": 1009
+    },
+    {
+      "id": "mutants/mut1-850/O0g2",
+      "before": 87.132728099823,
+      "after": 89.41908478736877,
+      "delta": 2.2863566875457764,
+      "beforeTokens": 1055,
+      "afterTokens": 1009
+    },
+    {
+      "id": "mutants/mut1-850/O1g1",
+      "before": 86.16480231285095,
+      "after": 88.43749761581421,
+      "delta": 2.272695302963257,
+      "beforeTokens": 1047,
+      "afterTokens": 1001
+    },
+    {
+      "id": "mutants/mut1-850/O1g2",
+      "before": 86.87690496444702,
+      "after": 89.16666507720947,
+      "delta": 2.289760112762451,
+      "beforeTokens": 1047,
+      "afterTokens": 1001
+    },
+    {
+      "id": "mutants/mut1-850/O2g1",
+      "before": 81.55818581581116,
+      "after": 84.27481055259705,
+      "delta": 2.7166247367858887,
+      "beforeTokens": 1109,
+      "afterTokens": 1046
+    },
+    {
+      "id": "mutants/mut1-850/O2g2",
+      "before": 82.7416181564331,
+      "after": 85.49618124961853,
+      "delta": 2.754563093185425,
+      "beforeTokens": 1109,
+      "afterTokens": 1046
+    },
+    {
+      "id": "mutants/mut1-94/O0g1",
+      "before": 86.5145206451416,
+      "after": 88.8416588306427,
+      "delta": 2.3271381855010986,
+      "beforeTokens": 1029,
+      "afterTokens": 983
+    },
+    {
+      "id": "mutants/mut1-94/O0g2",
+      "before": 87.24066615104675,
+      "after": 89.58554863929749,
+      "delta": 2.3448824882507324,
+      "beforeTokens": 1029,
+      "afterTokens": 983
+    },
+    {
+      "id": "mutants/mut1-94/O1g1",
+      "before": 86.2500011920929,
+      "after": 88.58057856559753,
+      "delta": 2.3305773735046387,
+      "beforeTokens": 1021,
+      "afterTokens": 975
+    },
+    {
+      "id": "mutants/mut1-94/O1g2",
+      "before": 86.97916865348816,
+      "after": 89.32763934135437,
+      "delta": 2.348470687866211,
+      "beforeTokens": 1021,
+      "afterTokens": 975
+    },
+    {
+      "id": "mutants/mut1-94/O2g1",
+      "before": 82.00201988220215,
+      "after": 84.80417728424072,
+      "delta": 2.802157402038574,
+      "beforeTokens": 1079,
+      "afterTokens": 1016
+    },
+    {
+      "id": "mutants/mut1-94/O2g2",
+      "before": 83.0131471157074,
+      "after": 85.84856390953064,
+      "delta": 2.835416793823242,
+      "beforeTokens": 1079,
+      "afterTokens": 1016
+    },
+    {
+      "id": "mutants/mut1-99/O0g1",
+      "before": 86.1889898777008,
+      "after": 88.51063847541809,
+      "delta": 2.321648597717285,
+      "beforeTokens": 1028,
+      "afterTokens": 982
+    },
+    {
+      "id": "mutants/mut1-99/O0g2",
+      "before": 86.91588640213013,
+      "after": 89.25532102584839,
+      "delta": 2.3394346237182617,
+      "beforeTokens": 1028,
+      "afterTokens": 982
+    },
+    {
+      "id": "mutants/mut1-99/O1g1",
+      "before": 85.92283725738525,
+      "after": 88.2478654384613,
+      "delta": 2.32502818107605,
+      "beforeTokens": 1020,
+      "afterTokens": 974
+    },
+    {
+      "id": "mutants/mut1-99/O1g2",
+      "before": 86.65276169776917,
+      "after": 88.99572491645813,
+      "delta": 2.342963218688965,
+      "beforeTokens": 1020,
+      "afterTokens": 974
+    },
+    {
+      "id": "mutants/mut1-99/O2g1",
+      "before": 81.68016076087952,
+      "after": 84.4746470451355,
+      "delta": 2.7944862842559814,
+      "beforeTokens": 1078,
+      "afterTokens": 1015
+    },
+    {
+      "id": "mutants/mut1-99/O2g2",
+      "before": 82.69230723381042,
+      "after": 85.5201244354248,
+      "delta": 2.82781720161438,
+      "beforeTokens": 1078,
+      "afterTokens": 1015
+    }
+  ]
+}

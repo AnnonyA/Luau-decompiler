@@ -1,0 +1,1607 @@
+{
+  "count": 882,
+  "changed": 228,
+  "improved": 228,
+  "regressed": 0,
+  "sameScore": 654,
+  "globalDeltaPoints": 0.06550584926086218,
+  "allTokenCountsIdentical": true,
+  "changedRows": [
+    {
+      "id": "cases/calculator/O1g1",
+      "changed": true,
+      "deltaPoints": 0.26990771293640137,
+      "before": 0.8717948794364929,
+      "after": 0.8744939565658569
+    },
+    {
+      "id": "cases/calculator/O1g2",
+      "changed": true,
+      "deltaPoints": 0.26990771293640137,
+      "before": 0.8717948794364929,
+      "after": 0.8744939565658569
+    },
+    {
+      "id": "cases/calculator/O2g1",
+      "changed": true,
+      "deltaPoints": 0.27063488960266113,
+      "before": 0.8728010654449463,
+      "after": 0.8755074143409729
+    },
+    {
+      "id": "cases/calculator/O2g2",
+      "changed": true,
+      "deltaPoints": 0.27063488960266113,
+      "before": 0.8728010654449463,
+      "after": 0.8755074143409729
+    },
+    {
+      "id": "cases/generalized_iteration/O1g1",
+      "changed": true,
+      "deltaPoints": 0.634920597076416,
+      "before": 0.9285714030265808,
+      "after": 0.934920608997345
+    },
+    {
+      "id": "cases/generalized_iteration/O1g2",
+      "changed": true,
+      "deltaPoints": 0.6334125995635986,
+      "before": 0.9295328855514526,
+      "after": 0.9358670115470886
+    },
+    {
+      "id": "cases/generalized_iteration/O2g1",
+      "changed": true,
+      "deltaPoints": 0.6259799003601074,
+      "before": 0.9014084339141846,
+      "after": 0.9076682329177856
+    },
+    {
+      "id": "cases/generalized_iteration/O2g2",
+      "changed": true,
+      "deltaPoints": 0.6245136260986328,
+      "before": 0.9024199843406677,
+      "after": 0.908665120601654
+    },
+    {
+      "id": "cases/nested_inlining/O1g1",
+      "changed": true,
+      "deltaPoints": 0.25141239166259766,
+      "before": 0.8673790097236633,
+      "after": 0.8698931336402893
+    },
+    {
+      "id": "cases/nested_inlining/O1g2",
+      "changed": true,
+      "deltaPoints": 0.25078654289245605,
+      "before": 0.8652037382125854,
+      "after": 0.86771160364151
+    },
+    {
+      "id": "cases/nested_inlining/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20418763160705566,
+      "before": 0.6554364562034607,
+      "after": 0.6574783325195312
+    },
+    {
+      "id": "cases/nested_inlining/O2g2",
+      "changed": true,
+      "deltaPoints": 0.20377039909362793,
+      "before": 0.6551197171211243,
+      "after": 0.6571574211120605
+    },
+    {
+      "id": "cases/pathfinding/O1g1",
+      "changed": true,
+      "deltaPoints": 0.3154575824737549,
+      "before": 0.8622502684593201,
+      "after": 0.8654048442840576
+    },
+    {
+      "id": "cases/pathfinding/O1g2",
+      "changed": true,
+      "deltaPoints": 0.31545162200927734,
+      "before": 0.8696109652519226,
+      "after": 0.8727654814720154
+    },
+    {
+      "id": "cases/pathfinding/O2g1",
+      "changed": true,
+      "deltaPoints": 0.3061234951019287,
+      "before": 0.8193877339363098,
+      "after": 0.8224489688873291
+    },
+    {
+      "id": "cases/pathfinding/O2g2",
+      "changed": true,
+      "deltaPoints": 0.3061234951019287,
+      "before": 0.8295918107032776,
+      "after": 0.8326530456542969
+    },
+    {
+      "id": "cases/refusals/O1g1",
+      "changed": true,
+      "deltaPoints": 1.6923069953918457,
+      "before": 0.7307692170143127,
+      "after": 0.7476922869682312
+    },
+    {
+      "id": "cases/refusals/O1g2",
+      "changed": true,
+      "deltaPoints": 1.6871154308319092,
+      "before": 0.7361963391304016,
+      "after": 0.7530674934387207
+    },
+    {
+      "id": "cases/refusals/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21367669105529785,
+      "before": 0.5053418874740601,
+      "after": 0.507478654384613
+    },
+    {
+      "id": "cases/refusals/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21277070045471191,
+      "before": 0.5031914710998535,
+      "after": 0.5053191781044006
+    },
+    {
+      "id": "generated/seed1080/O1g1",
+      "changed": true,
+      "deltaPoints": 0.12970566749572754,
+      "before": 0.7237353920936584,
+      "after": 0.7250324487686157
+    },
+    {
+      "id": "generated/seed1080/O1g2",
+      "changed": true,
+      "deltaPoints": 0.1292586326599121,
+      "before": 0.7293585538864136,
+      "after": 0.7306511402130127
+    },
+    {
+      "id": "generated/seed1080/O2g1",
+      "changed": true,
+      "deltaPoints": 0.14008283615112305,
+      "before": 0.6366660594940186,
+      "after": 0.6380668878555298
+    },
+    {
+      "id": "generated/seed1080/O2g2",
+      "changed": true,
+      "deltaPoints": 0.13877153396606445,
+      "before": 0.6428447365760803,
+      "after": 0.644232451915741
+    },
+    {
+      "id": "libraries/tween/O1g1",
+      "changed": true,
+      "deltaPoints": 0.05989670753479004,
+      "before": 0.9116501808166504,
+      "after": 0.9122491478919983
+    },
+    {
+      "id": "libraries/tween/O1g2",
+      "changed": true,
+      "deltaPoints": 0.0597834587097168,
+      "before": 0.9089822173118591,
+      "after": 0.9095800518989563
+    },
+    {
+      "id": "libraries/tween/O2g1",
+      "changed": true,
+      "deltaPoints": 0.056546926498413086,
+      "before": 0.826123833656311,
+      "after": 0.8266893029212952
+    },
+    {
+      "id": "libraries/tween/O2g2",
+      "changed": true,
+      "deltaPoints": 0.056231021881103516,
+      "before": 0.8193448781967163,
+      "after": 0.8199071884155273
+    },
+    {
+      "id": "mutants/mut1-109/O1g1",
+      "changed": true,
+      "deltaPoints": 0.3100752830505371,
+      "before": 0.8682170510292053,
+      "after": 0.8713178038597107
+    },
+    {
+      "id": "mutants/mut1-109/O1g2",
+      "changed": true,
+      "deltaPoints": 0.3100752830505371,
+      "before": 0.8754522204399109,
+      "after": 0.8785529732704163
+    },
+    {
+      "id": "mutants/mut1-109/O2g1",
+      "changed": true,
+      "deltaPoints": 0.3010571002960205,
+      "before": 0.8258906006813049,
+      "after": 0.8289011716842651
+    },
+    {
+      "id": "mutants/mut1-109/O2g2",
+      "changed": true,
+      "deltaPoints": 0.30105113983154297,
+      "before": 0.8359257578849792,
+      "after": 0.8389362692832947
+    },
+    {
+      "id": "mutants/mut1-187/O1g1",
+      "changed": true,
+      "deltaPoints": 0.3081679344177246,
+      "before": 0.8690292835235596,
+      "after": 0.8721109628677368
+    },
+    {
+      "id": "mutants/mut1-187/O1g2",
+      "changed": true,
+      "deltaPoints": 0.3081679344177246,
+      "before": 0.8762198090553284,
+      "after": 0.8793014883995056
+    },
+    {
+      "id": "mutants/mut1-187/O2g1",
+      "changed": true,
+      "deltaPoints": 0.29925107955932617,
+      "before": 0.8269326686859131,
+      "after": 0.8299251794815063
+    },
+    {
+      "id": "mutants/mut1-187/O2g2",
+      "changed": true,
+      "deltaPoints": 0.29925107955932617,
+      "before": 0.8369077444076538,
+      "after": 0.8399002552032471
+    },
+    {
+      "id": "mutants/mut1-201/O1g1",
+      "changed": true,
+      "deltaPoints": 0.24227499961853027,
+      "before": 0.8661417365074158,
+      "after": 0.8685644865036011
+    },
+    {
+      "id": "mutants/mut1-201/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24169087409973145,
+      "before": 0.8640483617782593,
+      "after": 0.8664652705192566
+    },
+    {
+      "id": "mutants/mut1-201/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20151138305664062,
+      "before": 0.6488664746284485,
+      "after": 0.6508815884590149
+    },
+    {
+      "id": "mutants/mut1-201/O2g2",
+      "changed": true,
+      "deltaPoints": 0.20110607147216797,
+      "before": 0.6485671401023865,
+      "after": 0.6505782008171082
+    },
+    {
+      "id": "mutants/mut1-239/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2451002597808838,
+      "before": 0.876225471496582,
+      "after": 0.8786764740943909
+    },
+    {
+      "id": "mutants/mut1-239/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24450421333312988,
+      "before": 0.8740831017494202,
+      "after": 0.8765281438827515
+    },
+    {
+      "id": "mutants/mut1-239/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21786093711853027,
+      "before": 0.7265795469284058,
+      "after": 0.7287581562995911
+    },
+    {
+      "id": "mutants/mut1-239/O2g2",
+      "changed": true,
+      "deltaPoints": 0.2173900604248047,
+      "before": 0.7260869741439819,
+      "after": 0.72826087474823
+    },
+    {
+      "id": "mutants/mut1-248/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2408146858215332,
+      "before": 0.8669476509094238,
+      "after": 0.8693557977676392
+    },
+    {
+      "id": "mutants/mut1-248/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24023652076721191,
+      "before": 0.8648648858070374,
+      "after": 0.8672672510147095
+    },
+    {
+      "id": "mutants/mut1-248/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20000338554382324,
+      "before": 0.6489999890327454,
+      "after": 0.6510000228881836
+    },
+    {
+      "id": "mutants/mut1-248/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19959807395935059,
+      "before": 0.6487026214599609,
+      "after": 0.6506986021995544
+    },
+    {
+      "id": "mutants/mut1-283/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2995491027832031,
+      "before": 0.8297553658485413,
+      "after": 0.8327508568763733
+    },
+    {
+      "id": "mutants/mut1-283/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2995491027832031,
+      "before": 0.8367449045181274,
+      "after": 0.8397403955459595
+    },
+    {
+      "id": "mutants/mut1-283/O2g1",
+      "changed": true,
+      "deltaPoints": 0.29027462005615234,
+      "before": 0.7856797575950623,
+      "after": 0.7885825037956238
+    },
+    {
+      "id": "mutants/mut1-283/O2g2",
+      "changed": true,
+      "deltaPoints": 0.29027462005615234,
+      "before": 0.7963231801986694,
+      "after": 0.799225926399231
+    },
+    {
+      "id": "mutants/mut1-294/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2479851245880127,
+      "before": 0.8704277873039246,
+      "after": 0.8729076385498047
+    },
+    {
+      "id": "mutants/mut1-294/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24737119674682617,
+      "before": 0.8682745695114136,
+      "after": 0.8707482814788818
+    },
+    {
+      "id": "mutants/mut1-294/O2g1",
+      "changed": true,
+      "deltaPoints": 0.22063255310058594,
+      "before": 0.7369001507759094,
+      "after": 0.7391064763069153
+    },
+    {
+      "id": "mutants/mut1-294/O2g2",
+      "changed": true,
+      "deltaPoints": 0.2201378345489502,
+      "before": 0.7363786697387695,
+      "after": 0.738580048084259
+    },
+    {
+      "id": "mutants/mut1-319/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2403855323791504,
+      "before": 0.8617788553237915,
+      "after": 0.864182710647583
+    },
+    {
+      "id": "mutants/mut1-319/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2398073673248291,
+      "before": 0.8597122430801392,
+      "after": 0.8621103167533875
+    },
+    {
+      "id": "mutants/mut1-319/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20090937614440918,
+      "before": 0.649924635887146,
+      "after": 0.6519337296485901
+    },
+    {
+      "id": "mutants/mut1-319/O2g2",
+      "changed": true,
+      "deltaPoints": 0.20009875297546387,
+      "before": 0.648324191570282,
+      "after": 0.6503251791000366
+    },
+    {
+      "id": "mutants/mut1-329/O1g1",
+      "changed": true,
+      "deltaPoints": 0.23923516273498535,
+      "before": 0.8588516712188721,
+      "after": 0.8612440228462219
+    },
+    {
+      "id": "mutants/mut1-329/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2386629581451416,
+      "before": 0.8568019270896912,
+      "after": 0.8591885566711426
+    },
+    {
+      "id": "mutants/mut1-329/O2g1",
+      "changed": true,
+      "deltaPoints": 0.19890666007995605,
+      "before": 0.6444554924964905,
+      "after": 0.64644455909729
+    },
+    {
+      "id": "mutants/mut1-329/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19811391830444336,
+      "before": 0.6428925395011902,
+      "after": 0.6448736786842346
+    },
+    {
+      "id": "mutants/mut1-330/O1g1",
+      "changed": true,
+      "deltaPoints": 0.243455171585083,
+      "before": 0.8691418170928955,
+      "after": 0.8715763688087463
+    },
+    {
+      "id": "mutants/mut1-330/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24286508560180664,
+      "before": 0.8670309782028198,
+      "after": 0.8694596290588379
+    },
+    {
+      "id": "mutants/mut1-330/O2g1",
+      "changed": true,
+      "deltaPoints": 0.2192974090576172,
+      "before": 0.7225877046585083,
+      "after": 0.7247806787490845
+    },
+    {
+      "id": "mutants/mut1-330/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21881461143493652,
+      "before": 0.7221006751060486,
+      "after": 0.724288821220398
+    },
+    {
+      "id": "mutants/mut1-332/O1g1",
+      "changed": true,
+      "deltaPoints": 0.24169087409973145,
+      "before": 0.870090663433075,
+      "after": 0.8725075721740723
+    },
+    {
+      "id": "mutants/mut1-332/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24111270904541016,
+      "before": 0.8679927587509155,
+      "after": 0.8704038858413696
+    },
+    {
+      "id": "mutants/mut1-332/O2g1",
+      "changed": true,
+      "deltaPoints": 0.2038717269897461,
+      "before": 0.6625891923904419,
+      "after": 0.6646279096603394
+    },
+    {
+      "id": "mutants/mut1-332/O2g2",
+      "changed": true,
+      "deltaPoints": 0.2034604549407959,
+      "before": 0.6622583866119385,
+      "after": 0.6642929911613464
+    },
+    {
+      "id": "mutants/mut1-356/O1g1",
+      "changed": true,
+      "deltaPoints": 0.31185150146484375,
+      "before": 0.8596673607826233,
+      "after": 0.8627858757972717
+    },
+    {
+      "id": "mutants/mut1-356/O1g2",
+      "changed": true,
+      "deltaPoints": 0.3118455410003662,
+      "before": 0.866943895816803,
+      "after": 0.8700623512268066
+    },
+    {
+      "id": "mutants/mut1-356/O2g1",
+      "changed": true,
+      "deltaPoints": 0.3027200698852539,
+      "before": 0.8173562288284302,
+      "after": 0.8203834295272827
+    },
+    {
+      "id": "mutants/mut1-356/O2g2",
+      "changed": true,
+      "deltaPoints": 0.30272603034973145,
+      "before": 0.8274469971656799,
+      "after": 0.8304742574691772
+    },
+    {
+      "id": "mutants/mut1-464/O1g1",
+      "changed": true,
+      "deltaPoints": 0.243455171585083,
+      "before": 0.8691418170928955,
+      "after": 0.8715763688087463
+    },
+    {
+      "id": "mutants/mut1-464/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24286508560180664,
+      "before": 0.8670309782028198,
+      "after": 0.8694596290588379
+    },
+    {
+      "id": "mutants/mut1-464/O2g1",
+      "changed": true,
+      "deltaPoints": 0.2192974090576172,
+      "before": 0.7225877046585083,
+      "after": 0.7247806787490845
+    },
+    {
+      "id": "mutants/mut1-464/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21881461143493652,
+      "before": 0.7221006751060486,
+      "after": 0.724288821220398
+    },
+    {
+      "id": "mutants/mut1-496/O1g1",
+      "changed": true,
+      "deltaPoints": 0.30864477157592773,
+      "before": 0.8611111044883728,
+      "after": 0.8641975522041321
+    },
+    {
+      "id": "mutants/mut1-496/O1g2",
+      "changed": true,
+      "deltaPoints": 0.3086388111114502,
+      "before": 0.8683127760887146,
+      "after": 0.8713991641998291
+    },
+    {
+      "id": "mutants/mut1-496/O2g1",
+      "changed": true,
+      "deltaPoints": 0.3009021282196045,
+      "before": 0.8144433498382568,
+      "after": 0.8174523711204529
+    },
+    {
+      "id": "mutants/mut1-496/O2g2",
+      "changed": true,
+      "deltaPoints": 0.3009021282196045,
+      "before": 0.8244734406471252,
+      "after": 0.8274824619293213
+    },
+    {
+      "id": "mutants/mut1-540/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2335071563720703,
+      "before": 0.8686515092849731,
+      "after": 0.8709865808486938
+    },
+    {
+      "id": "mutants/mut1-540/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23296475410461426,
+      "before": 0.8666278123855591,
+      "after": 0.8689574599266052
+    },
+    {
+      "id": "mutants/mut1-540/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20629167556762695,
+      "before": 0.680763304233551,
+      "after": 0.6828262209892273
+    },
+    {
+      "id": "mutants/mut1-540/O2g2",
+      "changed": true,
+      "deltaPoints": 0.20586848258972168,
+      "before": 0.6803911328315735,
+      "after": 0.6824498176574707
+    },
+    {
+      "id": "mutants/mut1-542/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2398073673248291,
+      "before": 0.8741007447242737,
+      "after": 0.876498818397522
+    },
+    {
+      "id": "mutants/mut1-542/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23923516273498535,
+      "before": 0.8720095753669739,
+      "after": 0.8744019269943237
+    },
+    {
+      "id": "mutants/mut1-542/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21633505821228027,
+      "before": 0.7290427088737488,
+      "after": 0.7312060594558716
+    },
+    {
+      "id": "mutants/mut1-542/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21587014198303223,
+      "before": 0.7285482883453369,
+      "after": 0.7307069897651672
+    },
+    {
+      "id": "mutants/mut1-564/O1g1",
+      "changed": true,
+      "deltaPoints": 0.3091156482696533,
+      "before": 0.8634724617004395,
+      "after": 0.866563618183136
+    },
+    {
+      "id": "mutants/mut1-564/O1g2",
+      "changed": true,
+      "deltaPoints": 0.3091156482696533,
+      "before": 0.8706852197647095,
+      "after": 0.873776376247406
+    },
+    {
+      "id": "mutants/mut1-564/O2g1",
+      "changed": true,
+      "deltaPoints": 0.30015110969543457,
+      "before": 0.8214107155799866,
+      "after": 0.8244122266769409
+    },
+    {
+      "id": "mutants/mut1-564/O2g2",
+      "changed": true,
+      "deltaPoints": 0.30015110969543457,
+      "before": 0.8314157128334045,
+      "after": 0.8344172239303589
+    },
+    {
+      "id": "mutants/mut1-572/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2350151538848877,
+      "before": 0.8672150373458862,
+      "after": 0.8695651888847351
+    },
+    {
+      "id": "mutants/mut1-572/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2344667911529541,
+      "before": 0.8651816844940186,
+      "after": 0.8675263524055481
+    },
+    {
+      "id": "mutants/mut1-572/O2g1",
+      "changed": true,
+      "deltaPoints": 0.19521713256835938,
+      "before": 0.6510493159294128,
+      "after": 0.6530014872550964
+    },
+    {
+      "id": "mutants/mut1-572/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19483566284179688,
+      "before": 0.650754988193512,
+      "after": 0.6527033448219299
+    },
+    {
+      "id": "mutants/mut1-574/O1g1",
+      "changed": true,
+      "deltaPoints": 0.23894906044006348,
+      "before": 0.862604558467865,
+      "after": 0.8649940490722656
+    },
+    {
+      "id": "mutants/mut1-574/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23838281631469727,
+      "before": 0.8605482578277588,
+      "after": 0.8629320859909058
+    },
+    {
+      "id": "mutants/mut1-574/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21563172340393066,
+      "before": 0.6997304558753967,
+      "after": 0.701886773109436
+    },
+    {
+      "id": "mutants/mut1-574/O2g2",
+      "changed": true,
+      "deltaPoints": 0.2147078514099121,
+      "before": 0.6967257261276245,
+      "after": 0.6988728046417236
+    },
+    {
+      "id": "mutants/mut1-593/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2371072769165039,
+      "before": 0.865441620349884,
+      "after": 0.8678126931190491
+    },
+    {
+      "id": "mutants/mut1-593/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23654699325561523,
+      "before": 0.8633944392204285,
+      "after": 0.8657599091529846
+    },
+    {
+      "id": "mutants/mut1-593/O2g1",
+      "changed": true,
+      "deltaPoints": 0.19646286964416504,
+      "before": 0.6650294661521912,
+      "after": 0.6669940948486328
+    },
+    {
+      "id": "mutants/mut1-593/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19608139991760254,
+      "before": 0.6647058725357056,
+      "after": 0.6666666865348816
+    },
+    {
+      "id": "mutants/mut1-597/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2371072769165039,
+      "before": 0.8701837658882141,
+      "after": 0.8725548386573792
+    },
+    {
+      "id": "mutants/mut1-597/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23654699325561523,
+      "before": 0.8681253790855408,
+      "after": 0.8704908490180969
+    },
+    {
+      "id": "mutants/mut1-597/O2g1",
+      "changed": true,
+      "deltaPoints": 0.22804737091064453,
+      "before": 0.7502850890159607,
+      "after": 0.7525655627250671
+    },
+    {
+      "id": "mutants/mut1-597/O2g2",
+      "changed": true,
+      "deltaPoints": 0.22701025009155273,
+      "before": 0.7468785643577576,
+      "after": 0.7491486668586731
+    },
+    {
+      "id": "mutants/mut1-647/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2371072769165039,
+      "before": 0.8713693022727966,
+      "after": 0.8737403750419617
+    },
+    {
+      "id": "mutants/mut1-647/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23654699325561523,
+      "before": 0.8693081140518188,
+      "after": 0.871673583984375
+    },
+    {
+      "id": "mutants/mut1-647/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21762847900390625,
+      "before": 0.7366703152656555,
+      "after": 0.7388466000556946
+    },
+    {
+      "id": "mutants/mut1-647/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21715760231018066,
+      "before": 0.7361563444137573,
+      "after": 0.7383279204368591
+    },
+    {
+      "id": "mutants/mut1-669/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2408146858215332,
+      "before": 0.8669476509094238,
+      "after": 0.8693557977676392
+    },
+    {
+      "id": "mutants/mut1-669/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24023652076721191,
+      "before": 0.8648648858070374,
+      "after": 0.8672672510147095
+    },
+    {
+      "id": "mutants/mut1-669/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20050406455993652,
+      "before": 0.650626540184021,
+      "after": 0.6526315808296204
+    },
+    {
+      "id": "mutants/mut1-669/O2g2",
+      "changed": true,
+      "deltaPoints": 0.20009875297546387,
+      "before": 0.6503251791000366,
+      "after": 0.6523261666297913
+    },
+    {
+      "id": "mutants/mut1-684/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2344667911529541,
+      "before": 0.8757327198982239,
+      "after": 0.8780773878097534
+    },
+    {
+      "id": "mutants/mut1-684/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2339184284210205,
+      "before": 0.8736842274665833,
+      "after": 0.8760234117507935
+    },
+    {
+      "id": "mutants/mut1-684/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21632909774780273,
+      "before": 0.7366144061088562,
+      "after": 0.7387776970863342
+    },
+    {
+      "id": "mutants/mut1-684/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21587014198303223,
+      "before": 0.7361035943031311,
+      "after": 0.7382622957229614
+    },
+    {
+      "id": "mutants/mut1-697/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2325594425201416,
+      "before": 0.8639534711837769,
+      "after": 0.8662790656089783
+    },
+    {
+      "id": "mutants/mut1-697/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23121237754821777,
+      "before": 0.8635838031768799,
+      "after": 0.8658959269523621
+    },
+    {
+      "id": "mutants/mut1-697/O2g1",
+      "changed": true,
+      "deltaPoints": 0.1932382583618164,
+      "before": 0.6531400680541992,
+      "after": 0.6550724506378174
+    },
+    {
+      "id": "mutants/mut1-697/O2g2",
+      "changed": true,
+      "deltaPoints": 0.1923084259033203,
+      "before": 0.6519230604171753,
+      "after": 0.6538461446762085
+    },
+    {
+      "id": "mutants/mut1-719/O1g1",
+      "changed": true,
+      "deltaPoints": 0.23571252822875977,
+      "before": 0.8638774156570435,
+      "after": 0.866234540939331
+    },
+    {
+      "id": "mutants/mut1-719/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23515820503234863,
+      "before": 0.8618459701538086,
+      "after": 0.8641975522041321
+    },
+    {
+      "id": "mutants/mut1-719/O2g1",
+      "changed": true,
+      "deltaPoints": 0.19550323486328125,
+      "before": 0.6647116541862488,
+      "after": 0.6666666865348816
+    },
+    {
+      "id": "mutants/mut1-719/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19512176513671875,
+      "before": 0.6643902659416199,
+      "after": 0.6663414835929871
+    },
+    {
+      "id": "mutants/mut1-720/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2408146858215332,
+      "before": 0.8705599308013916,
+      "after": 0.8729680776596069
+    },
+    {
+      "id": "mutants/mut1-720/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24024248123168945,
+      "before": 0.8684684634208679,
+      "after": 0.8708708882331848
+    },
+    {
+      "id": "mutants/mut1-720/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20325183868408203,
+      "before": 0.6636179089546204,
+      "after": 0.6656504273414612
+    },
+    {
+      "id": "mutants/mut1-720/O2g2",
+      "changed": true,
+      "deltaPoints": 0.2028346061706543,
+      "before": 0.663286030292511,
+      "after": 0.6653143763542175
+    },
+    {
+      "id": "mutants/mut1-730/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2305448055267334,
+      "before": 0.8691642880439758,
+      "after": 0.8714697360992432
+    },
+    {
+      "id": "mutants/mut1-730/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23002028465270996,
+      "before": 0.8671650290489197,
+      "after": 0.8694652318954468
+    },
+    {
+      "id": "mutants/mut1-730/O2g1",
+      "changed": true,
+      "deltaPoints": 0.2053380012512207,
+      "before": 0.7248460054397583,
+      "after": 0.7268993854522705
+    },
+    {
+      "id": "mutants/mut1-730/O2g2",
+      "changed": true,
+      "deltaPoints": 0.20491480827331543,
+      "before": 0.7243852615356445,
+      "after": 0.7264344096183777
+    },
+    {
+      "id": "mutants/mut1-748/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2415478229522705,
+      "before": 0.8743961453437805,
+      "after": 0.8768116235733032
+    },
+    {
+      "id": "mutants/mut1-748/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24096369743347168,
+      "before": 0.8722891807556152,
+      "after": 0.87469881772995
+    },
+    {
+      "id": "mutants/mut1-748/O2g1",
+      "changed": true,
+      "deltaPoints": 0.19910335540771484,
+      "before": 0.6500746607780457,
+      "after": 0.6520656943321228
+    },
+    {
+      "id": "mutants/mut1-748/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19870996475219727,
+      "before": 0.6497764587402344,
+      "after": 0.6517635583877563
+    },
+    {
+      "id": "mutants/mut1-752/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2415478229522705,
+      "before": 0.8756038546562195,
+      "after": 0.8780193328857422
+    },
+    {
+      "id": "mutants/mut1-752/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24096369743347168,
+      "before": 0.8734939694404602,
+      "after": 0.8759036064147949
+    },
+    {
+      "id": "mutants/mut1-752/O2g1",
+      "changed": true,
+      "deltaPoints": 0.19900202751159668,
+      "before": 0.6626865863800049,
+      "after": 0.6646766066551208
+    },
+    {
+      "id": "mutants/mut1-752/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19782781600952148,
+      "before": 0.6617210507392883,
+      "after": 0.6636993288993835
+    },
+    {
+      "id": "mutants/mut1-758/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2317488193511963,
+      "before": 0.8667439222335815,
+      "after": 0.8690614104270935
+    },
+    {
+      "id": "mutants/mut1-758/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23121237754821777,
+      "before": 0.8647398948669434,
+      "after": 0.8670520186424255
+    },
+    {
+      "id": "mutants/mut1-758/O2g1",
+      "changed": true,
+      "deltaPoints": 0.2131044864654541,
+      "before": 0.7352157831192017,
+      "after": 0.7373468279838562
+    },
+    {
+      "id": "mutants/mut1-758/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21265149116516113,
+      "before": 0.7347155809402466,
+      "after": 0.7368420958518982
+    },
+    {
+      "id": "mutants/mut1-760/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2318859100341797,
+      "before": 0.8742029070854187,
+      "after": 0.8765217661857605
+    },
+    {
+      "id": "mutants/mut1-760/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23134946823120117,
+      "before": 0.8721804618835449,
+      "after": 0.8744939565658569
+    },
+    {
+      "id": "mutants/mut1-760/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21321773529052734,
+      "before": 0.7420042753219604,
+      "after": 0.7441364526748657
+    },
+    {
+      "id": "mutants/mut1-760/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21276473999023438,
+      "before": 0.7414893507957458,
+      "after": 0.7436169981956482
+    },
+    {
+      "id": "mutants/mut1-764/O1g1",
+      "changed": true,
+      "deltaPoints": 0.23502111434936523,
+      "before": 0.8495886921882629,
+      "after": 0.8519389033317566
+    },
+    {
+      "id": "mutants/mut1-764/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2344667911529541,
+      "before": 0.8475967049598694,
+      "after": 0.8499413728713989
+    },
+    {
+      "id": "mutants/mut1-764/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20481348037719727,
+      "before": 0.6820276379585266,
+      "after": 0.6840757727622986
+    },
+    {
+      "id": "mutants/mut1-764/O2g2",
+      "changed": true,
+      "deltaPoints": 0.20439624786376953,
+      "before": 0.6816555857658386,
+      "after": 0.6836995482444763
+    },
+    {
+      "id": "mutants/mut1-781/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2490699291229248,
+      "before": 0.8704856634140015,
+      "after": 0.8729763627052307
+    },
+    {
+      "id": "mutants/mut1-781/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24845004081726074,
+      "before": 0.8683229684829712,
+      "after": 0.8708074688911438
+    },
+    {
+      "id": "mutants/mut1-781/O2g1",
+      "changed": true,
+      "deltaPoints": 0.22209882736206055,
+      "before": 0.7284841537475586,
+      "after": 0.7307051420211792
+    },
+    {
+      "id": "mutants/mut1-781/O2g2",
+      "changed": true,
+      "deltaPoints": 0.22161006927490234,
+      "before": 0.7279778122901917,
+      "after": 0.7301939129829407
+    },
+    {
+      "id": "mutants/mut1-784/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2475261688232422,
+      "before": 0.8725247383117676,
+      "after": 0.875
+    },
+    {
+      "id": "mutants/mut1-784/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24691224098205566,
+      "before": 0.8703703880310059,
+      "after": 0.8728395104408264
+    },
+    {
+      "id": "mutants/mut1-784/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21750926971435547,
+      "before": 0.7177814245223999,
+      "after": 0.7199565172195435
+    },
+    {
+      "id": "mutants/mut1-784/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21703839302062988,
+      "before": 0.7162235379219055,
+      "after": 0.7183939218521118
+    },
+    {
+      "id": "mutants/mut1-799/O1g1",
+      "changed": true,
+      "deltaPoints": 0.23571252822875977,
+      "before": 0.8626988530158997,
+      "after": 0.8650559782981873
+    },
+    {
+      "id": "mutants/mut1-799/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2351522445678711,
+      "before": 0.8606702089309692,
+      "after": 0.863021731376648
+    },
+    {
+      "id": "mutants/mut1-799/O2g1",
+      "changed": true,
+      "deltaPoints": 0.19102096557617188,
+      "before": 0.6475644707679749,
+      "after": 0.6494746804237366
+    },
+    {
+      "id": "mutants/mut1-799/O2g2",
+      "changed": true,
+      "deltaPoints": 0.190657377243042,
+      "before": 0.647283136844635,
+      "after": 0.6491897106170654
+    },
+    {
+      "id": "mutants/mut1-806/O1g1",
+      "changed": true,
+      "deltaPoints": 0.23612380027770996,
+      "before": 0.8654073476791382,
+      "after": 0.8677685856819153
+    },
+    {
+      "id": "mutants/mut1-806/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23556947708129883,
+      "before": 0.8633686900138855,
+      "after": 0.8657243847846985
+    },
+    {
+      "id": "mutants/mut1-806/O2g1",
+      "changed": true,
+      "deltaPoints": 0.19655823707580566,
+      "before": 0.6506142616271973,
+      "after": 0.6525798439979553
+    },
+    {
+      "id": "mutants/mut1-806/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19578933715820312,
+      "before": 0.6490455269813538,
+      "after": 0.6510034203529358
+    },
+    {
+      "id": "mutants/mut1-822/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2297520637512207,
+      "before": 0.8753589987754822,
+      "after": 0.8776565194129944
+    },
+    {
+      "id": "mutants/mut1-822/O1g2",
+      "changed": true,
+      "deltaPoints": 0.22922754287719727,
+      "before": 0.8733524084091187,
+      "after": 0.8756446838378906
+    },
+    {
+      "id": "mutants/mut1-822/O2g1",
+      "changed": true,
+      "deltaPoints": 0.2123117446899414,
+      "before": 0.7388535141944885,
+      "after": 0.7409766316413879
+    },
+    {
+      "id": "mutants/mut1-822/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21186470985412598,
+      "before": 0.7383474707603455,
+      "after": 0.7404661178588867
+    },
+    {
+      "id": "mutants/mut1-846/O1g1",
+      "changed": true,
+      "deltaPoints": 0.23571252822875977,
+      "before": 0.8638774156570435,
+      "after": 0.866234540939331
+    },
+    {
+      "id": "mutants/mut1-846/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23515820503234863,
+      "before": 0.8618459701538086,
+      "after": 0.8641975522041321
+    },
+    {
+      "id": "mutants/mut1-846/O2g1",
+      "changed": true,
+      "deltaPoints": 0.1962721347808838,
+      "before": 0.6496565341949463,
+      "after": 0.6516192555427551
+    },
+    {
+      "id": "mutants/mut1-846/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19550323486328125,
+      "before": 0.6480938196182251,
+      "after": 0.6500488519668579
+    },
+    {
+      "id": "mutants/mut1-850/O1g1",
+      "changed": true,
+      "deltaPoints": 0.3051877021789551,
+      "before": 0.8616480231285095,
+      "after": 0.8646999001502991
+    },
+    {
+      "id": "mutants/mut1-850/O1g2",
+      "changed": true,
+      "deltaPoints": 0.3051877021789551,
+      "before": 0.8687690496444702,
+      "after": 0.8718209266662598
+    },
+    {
+      "id": "mutants/mut1-850/O2g1",
+      "changed": true,
+      "deltaPoints": 0.29585957527160645,
+      "before": 0.8155818581581116,
+      "after": 0.8185404539108276
+    },
+    {
+      "id": "mutants/mut1-850/O2g2",
+      "changed": true,
+      "deltaPoints": 0.29585957527160645,
+      "before": 0.827416181564331,
+      "after": 0.8303747773170471
+    },
+    {
+      "id": "mutants/mut1-852/O1g1",
+      "changed": true,
+      "deltaPoints": 0.2369701862335205,
+      "before": 0.8542653918266296,
+      "after": 0.8566350936889648
+    },
+    {
+      "id": "mutants/mut1-852/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2364039421081543,
+      "before": 0.8522458672523499,
+      "after": 0.8546099066734314
+    },
+    {
+      "id": "mutants/mut1-852/O2g1",
+      "changed": true,
+      "deltaPoints": 0.19588470458984375,
+      "before": 0.6581782698631287,
+      "after": 0.6601371169090271
+    },
+    {
+      "id": "mutants/mut1-852/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19550323486328125,
+      "before": 0.6578690409660339,
+      "after": 0.6598240733146667
+    },
+    {
+      "id": "mutants/mut1-872/O1g1",
+      "changed": true,
+      "deltaPoints": 0.24614930152893066,
+      "before": 0.8652307987213135,
+      "after": 0.8676922917366028
+    },
+    {
+      "id": "mutants/mut1-872/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24555325508117676,
+      "before": 0.8631061911582947,
+      "after": 0.8655617237091064
+    },
+    {
+      "id": "mutants/mut1-872/O2g1",
+      "changed": true,
+      "deltaPoints": 0.2211153507232666,
+      "before": 0.7197346687316895,
+      "after": 0.7219458222389221
+    },
+    {
+      "id": "mutants/mut1-872/O2g2",
+      "changed": true,
+      "deltaPoints": 0.22063255310058594,
+      "before": 0.7192498445510864,
+      "after": 0.7214561700820923
+    },
+    {
+      "id": "mutants/mut1-876/O1g1",
+      "changed": true,
+      "deltaPoints": 0.24286508560180664,
+      "before": 0.8633880019187927,
+      "after": 0.8658166527748108
+    },
+    {
+      "id": "mutants/mut1-876/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2422809600830078,
+      "before": 0.8612961769104004,
+      "after": 0.8637189865112305
+    },
+    {
+      "id": "mutants/mut1-876/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20201802253723145,
+      "before": 0.6626262664794922,
+      "after": 0.6646464467048645
+    },
+    {
+      "id": "mutants/mut1-876/O2g2",
+      "changed": true,
+      "deltaPoints": 0.2016127109527588,
+      "before": 0.6622983813285828,
+      "after": 0.6643145084381104
+    },
+    {
+      "id": "mutants/mut1-889/O1g1",
+      "changed": true,
+      "deltaPoints": 0.24600625038146973,
+      "before": 0.8733087182044983,
+      "after": 0.875768780708313
+    },
+    {
+      "id": "mutants/mut1-889/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24539828300476074,
+      "before": 0.8711656332015991,
+      "after": 0.8736196160316467
+    },
+    {
+      "id": "mutants/mut1-889/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21633505821228027,
+      "before": 0.7193077206611633,
+      "after": 0.7214710712432861
+    },
+    {
+      "id": "mutants/mut1-889/O2g2",
+      "changed": true,
+      "deltaPoints": 0.2158641815185547,
+      "before": 0.7177550196647644,
+      "after": 0.71991366147995
+    },
+    {
+      "id": "mutants/mut1-929/O1g1",
+      "changed": true,
+      "deltaPoints": 0.24360418319702148,
+      "before": 0.8538367748260498,
+      "after": 0.85627281665802
+    },
+    {
+      "id": "mutants/mut1-929/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24360418319702148,
+      "before": 0.8538367748260498,
+      "after": 0.85627281665802
+    },
+    {
+      "id": "mutants/mut1-929/O2g1",
+      "changed": true,
+      "deltaPoints": 0.17474889755249023,
+      "before": 0.6002621054649353,
+      "after": 0.6020095944404602
+    },
+    {
+      "id": "mutants/mut1-929/O2g2",
+      "changed": true,
+      "deltaPoints": 0.17474889755249023,
+      "before": 0.6002621054649353,
+      "after": 0.6020095944404602
+    },
+    {
+      "id": "mutants/mut1-94/O1g1",
+      "changed": true,
+      "deltaPoints": 0.3125011920928955,
+      "before": 0.862500011920929,
+      "after": 0.8656250238418579
+    },
+    {
+      "id": "mutants/mut1-94/O1g2",
+      "changed": true,
+      "deltaPoints": 0.31249523162841797,
+      "before": 0.8697916865348816,
+      "after": 0.8729166388511658
+    },
+    {
+      "id": "mutants/mut1-94/O2g1",
+      "changed": true,
+      "deltaPoints": 0.30333995819091797,
+      "before": 0.8200201988220215,
+      "after": 0.8230535984039307
+    },
+    {
+      "id": "mutants/mut1-94/O2g2",
+      "changed": true,
+      "deltaPoints": 0.30333399772644043,
+      "before": 0.830131471157074,
+      "after": 0.8331648111343384
+    },
+    {
+      "id": "mutants/mut1-950/O1g1",
+      "changed": true,
+      "deltaPoints": 0.23838281631469727,
+      "before": 0.8712753057479858,
+      "after": 0.8736591339111328
+    },
+    {
+      "id": "mutants/mut1-950/O1g2",
+      "changed": true,
+      "deltaPoints": 0.23781061172485352,
+      "before": 0.8692033290863037,
+      "after": 0.8715814352035522
+    },
+    {
+      "id": "mutants/mut1-950/O2g1",
+      "changed": true,
+      "deltaPoints": 0.20242929458618164,
+      "before": 0.6609311699867249,
+      "after": 0.6629554629325867
+    },
+    {
+      "id": "mutants/mut1-950/O2g2",
+      "changed": true,
+      "deltaPoints": 0.20201802253723145,
+      "before": 0.6606060862541199,
+      "after": 0.6626262664794922
+    },
+    {
+      "id": "mutants/mut1-954/O1g1",
+      "changed": true,
+      "deltaPoints": 0.24198293685913086,
+      "before": 0.8566243052482605,
+      "after": 0.8590441346168518
+    },
+    {
+      "id": "mutants/mut1-954/O1g2",
+      "changed": true,
+      "deltaPoints": 0.24139881134033203,
+      "before": 0.8545564413070679,
+      "after": 0.8569704294204712
+    },
+    {
+      "id": "mutants/mut1-954/O2g1",
+      "changed": true,
+      "deltaPoints": 0.1974344253540039,
+      "before": 0.6544916033744812,
+      "after": 0.6564659476280212
+    },
+    {
+      "id": "mutants/mut1-954/O2g2",
+      "changed": true,
+      "deltaPoints": 0.19704103469848633,
+      "before": 0.6541872024536133,
+      "after": 0.6561576128005981
+    },
+    {
+      "id": "mutants/mut1-971/O1g1",
+      "changed": true,
+      "deltaPoints": 0.24331212043762207,
+      "before": 0.8795620203018188,
+      "after": 0.8819951415061951
+    },
+    {
+      "id": "mutants/mut1-971/O1g2",
+      "changed": true,
+      "deltaPoints": 0.2427220344543457,
+      "before": 0.8774271607398987,
+      "after": 0.8798543810844421
+    },
+    {
+      "id": "mutants/mut1-971/O2g1",
+      "changed": true,
+      "deltaPoints": 0.21075010299682617,
+      "before": 0.6912539601325989,
+      "after": 0.6933614611625671
+    },
+    {
+      "id": "mutants/mut1-971/O2g2",
+      "changed": true,
+      "deltaPoints": 0.21030306816101074,
+      "before": 0.6908517479896545,
+      "after": 0.6929547786712646
+    },
+    {
+      "id": "mutants/mut1-99/O1g1",
+      "changed": true,
+      "deltaPoints": 0.3128230571746826,
+      "before": 0.8592283725738525,
+      "after": 0.8623566031455994
+    },
+    {
+      "id": "mutants/mut1-99/O1g2",
+      "changed": true,
+      "deltaPoints": 0.31282901763916016,
+      "before": 0.8665276169776917,
+      "after": 0.8696559071540833
+    },
+    {
+      "id": "mutants/mut1-99/O2g1",
+      "changed": true,
+      "deltaPoints": 0.30364394187927246,
+      "before": 0.8168016076087952,
+      "after": 0.8198380470275879
+    },
+    {
+      "id": "mutants/mut1-99/O2g2",
+      "changed": true,
+      "deltaPoints": 0.30364394187927246,
+      "before": 0.8269230723381042,
+      "after": 0.829959511756897
+    }
+  ]
+}

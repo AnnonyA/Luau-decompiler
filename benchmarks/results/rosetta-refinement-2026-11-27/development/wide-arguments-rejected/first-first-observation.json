@@ -1,0 +1,89 @@
+{
+  "kind": "pass-level authored AST compiler pressure control; not a bytecode round-trip",
+  "rows": [
+    {
+      "name": "baseline",
+      "pin": "c875",
+      "opt": 0,
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "name": "baseline",
+      "pin": "c875",
+      "opt": 1,
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "name": "baseline",
+      "pin": "c875",
+      "opt": 2,
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "name": "baseline",
+      "pin": "9d",
+      "opt": 0,
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "name": "baseline",
+      "pin": "9d",
+      "opt": 1,
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "name": "baseline",
+      "pin": "9d",
+      "opt": 2,
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "name": "candidate",
+      "pin": "c875",
+      "opt": 0,
+      "exitCode": 1,
+      "stderr": "/workspace/scratch/eb5e4be57451/quality-research/argument-fold-review-first/candidate.luau(1,764): CompileError: Out of registers when trying to allocate 12 registers: exceeded limit 255\n"
+    },
+    {
+      "name": "candidate",
+      "pin": "c875",
+      "opt": 1,
+      "exitCode": 1,
+      "stderr": "/workspace/scratch/eb5e4be57451/quality-research/argument-fold-review-first/candidate.luau(1,764): CompileError: Out of registers when trying to allocate 12 registers: exceeded limit 255\n"
+    },
+    {
+      "name": "candidate",
+      "pin": "c875",
+      "opt": 2,
+      "exitCode": 1,
+      "stderr": "/workspace/scratch/eb5e4be57451/quality-research/argument-fold-review-first/candidate.luau(1,764): CompileError: Out of registers when trying to allocate 12 registers: exceeded limit 255\n"
+    },
+    {
+      "name": "candidate",
+      "pin": "9d",
+      "opt": 0,
+      "exitCode": 1,
+      "stderr": "/workspace/scratch/eb5e4be57451/quality-research/argument-fold-review-first/candidate.luau(1,764): CompileError: Out of registers when trying to allocate 12 registers: exceeded limit 255\n"
+    },
+    {
+      "name": "candidate",
+      "pin": "9d",
+      "opt": 1,
+      "exitCode": 1,
+      "stderr": "/workspace/scratch/eb5e4be57451/quality-research/argument-fold-review-first/candidate.luau(1,764): CompileError: Out of registers when trying to allocate 12 registers: exceeded limit 255\n"
+    },
+    {
+      "name": "candidate",
+      "pin": "9d",
+      "opt": 2,
+      "exitCode": 1,
+      "stderr": "/workspace/scratch/eb5e4be57451/quality-research/argument-fold-review-first/candidate.luau(1,764): CompileError: Out of registers when trying to allocate 12 registers: exceeded limit 255\n"
+    }
+  ]
+}

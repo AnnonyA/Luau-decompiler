@@ -1,0 +1,39 @@
+{
+  "createdAt": "2026-11-27T23:52:19.339138+00:00",
+  "baseCommit": "885eb08b0fd1bd9beb513db9fd90e5c369e8293e",
+  "node": "v22.23.5",
+  "query": "",
+  "options": {},
+  "baselineJsTreeSha256": "8c1aafdefa0dba0610ccd2d8c232850ea3a101bc7bdddbd1b959da3996285658",
+  "candidateJsTreeSha256": "acaca4ae4bd42b957c1d0dd98df7ce1ffc13b22e9f96538f82357c8f6b716aec",
+  "treeHashAlgorithm": "SHA256 of sorted(relativeJSPath + NUL + SHA256(fileBytes))",
+  "nativePins": {
+    "9d": {
+      "revision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "hostSha256": "7d8d958fb0ba8537130697a1043f9da0b4b7ab4469345b08ab9153a4a146ae74"
+    },
+    "c875": {
+      "revision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "hostSha256": "c7a7f7d1a9f3fff6303eecfef9f4c20e7c7e88806e6c5323575b409b0f4d42b6"
+    }
+  },
+  "manifestSha256": "07f6a44f91b575da7279abb3ee663f8c97bc0027e51f6329e2141d8004f11d4b",
+  "firstResearchSummarySha256": "3d1386883aa941c8d0a74332511f42394d1d031839708f3b1bc832eb721626d8",
+  "corpusChanged": false,
+  "scorerChanged": false,
+  "runnerChanged": false,
+  "validatorChanged": false,
+  "references": {
+    "Tovek": "ce2ea3325547fa3896f274b68013386338039040",
+    "files": [
+      "ast/src/materialize_value_captures.rs",
+      "ast/src/copy_cleanup.rs"
+    ],
+    "Luau": "VM/src/lvmexecute.cpp (LOP_MOVE, NEWCLOSURE/LCT_REF, CLOSEUPVALS)",
+    "Rosetta": "80f3c13ce48dc3318d5d49f54958f580937ca8aa"
+  },
+  "review": "similarity_structure reviewed first promotion, alias replacement, open-cell exclusion and authored coverage; no blocker.",
+  "implementation": "Independent bounded TypeScript correction using the existing alias-snapshot helper; no external code copied."
+}

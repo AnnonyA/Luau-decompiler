@@ -1,0 +1,14 @@
+{
+  "originalResearchSummary": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/summary.json",
+  "originalResearchSummarySha256": "3d1386883aa941c8d0a74332511f42394d1d031839708f3b1bc832eb721626d8",
+  "originalResearchTotals": {
+    "profiles": 36,
+    "pass": 32,
+    "fail": 4
+  },
+  "copiedCase": "rejected-state",
+  "copiedProfiles": 12,
+  "inputBytesAndFirstObservationsIdentical": true,
+  "rootCauseBeforeCleanup": true,
+  "rootCauseBeforeNewSharedGuardPass": true
+}

@@ -1,0 +1,318 @@
+{
+  "sources": [
+    {
+      "path": "closed-loop-copies.luau",
+      "sha256": "3e6b8a67dc39eee0d33e8a6a302e18516a2eafd8b226913d3f54c4981e3955b9"
+    },
+    {
+      "path": "multiple-copies.luau",
+      "sha256": "aa5c1e555203e8b0801d4f2c1bae3f6a127cae9da7497b57b1ed8859a0b3eefe"
+    },
+    {
+      "path": "rejected-state.luau",
+      "sha256": "64bedf891415ae9deb3e0ec7cfda5ea9e3410f8883e1bde3286035cd8c4a559d"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "9d-closed-loop-copies-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "source": "closed-loop-copies.luau",
+      "sha256": "be019eeb73dd29a41d25e1f38d581a3adac6b85ba5b334534db39b168147f244",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-closed-loop-copies-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "source": "closed-loop-copies.luau",
+      "sha256": "188f066f60be38a8178aa5f2d8d207666152493a30e29cd80a29831d9aa01a48",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-closed-loop-copies-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "source": "closed-loop-copies.luau",
+      "sha256": "61520f5858e789ae200bce6126a6481e9c7751db114a2fa42f3282ba14b7434f",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-closed-loop-copies-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "source": "closed-loop-copies.luau",
+      "sha256": "55b023bca155c8691d9ff68f8e58cde1a4aa3b7ffa145fbeea9741c7c65f6fe2",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-closed-loop-copies-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "source": "closed-loop-copies.luau",
+      "sha256": "01a094830d0e3993cce63b2ee1fbf90aa0dcc2c38be709812f9d8ec87e9457e7",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-closed-loop-copies-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "source": "closed-loop-copies.luau",
+      "sha256": "f4ae0234941c96ac84f7b62decfd7f7dc52570de95f0b7ebcdeb71fd33adac9b",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-multiple-copies-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "source": "multiple-copies.luau",
+      "sha256": "efdcdd6e31abc9a2bca9cd186d15f36e726099d2b856d3a0dc15ca18b273f965",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-multiple-copies-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "source": "multiple-copies.luau",
+      "sha256": "0bb7e948d747b4635c68d2a4d488202541f3b3ffb3ad7296eae5088f51eef095",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-multiple-copies-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "source": "multiple-copies.luau",
+      "sha256": "0761a4087763b53dbc9ee3cb68d0bdb3596118a9406de593e971a4e1002ae6cb",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-multiple-copies-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "source": "multiple-copies.luau",
+      "sha256": "ebc90a4b615ba7cd5e6e728b83c4fc550805ab832527245ba99e85da1b71438f",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-multiple-copies-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "source": "multiple-copies.luau",
+      "sha256": "25fed3302f91e2f9edca5e18683be4fa9c1b8a99a55471f64a492129f79197e6",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-multiple-copies-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "source": "multiple-copies.luau",
+      "sha256": "bcdc98a6eba6521326a278a769742523cc8e8bf0b8e167bb1437f6074bf5aea5",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "9d-rejected-state-O0g1.luauc",
+      "pin": "9d",
+      "profile": "O0g1",
+      "source": "rejected-state.luau",
+      "sha256": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/9d/rejected-state/O0g1.luauc"
+    },
+    {
+      "path": "9d-rejected-state-O0g2.luauc",
+      "pin": "9d",
+      "profile": "O0g2",
+      "source": "rejected-state.luau",
+      "sha256": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/9d/rejected-state/O0g2.luauc"
+    },
+    {
+      "path": "9d-rejected-state-O1g1.luauc",
+      "pin": "9d",
+      "profile": "O1g1",
+      "source": "rejected-state.luau",
+      "sha256": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/9d/rejected-state/O1g1.luauc"
+    },
+    {
+      "path": "9d-rejected-state-O1g2.luauc",
+      "pin": "9d",
+      "profile": "O1g2",
+      "source": "rejected-state.luau",
+      "sha256": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/9d/rejected-state/O1g2.luauc"
+    },
+    {
+      "path": "9d-rejected-state-O2g1.luauc",
+      "pin": "9d",
+      "profile": "O2g1",
+      "source": "rejected-state.luau",
+      "sha256": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/9d/rejected-state/O2g1.luauc"
+    },
+    {
+      "path": "9d-rejected-state-O2g2.luauc",
+      "pin": "9d",
+      "profile": "O2g2",
+      "source": "rejected-state.luau",
+      "sha256": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/9d/rejected-state/O2g2.luauc"
+    },
+    {
+      "path": "c875-closed-loop-copies-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "source": "closed-loop-copies.luau",
+      "sha256": "be019eeb73dd29a41d25e1f38d581a3adac6b85ba5b334534db39b168147f244",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-closed-loop-copies-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "source": "closed-loop-copies.luau",
+      "sha256": "188f066f60be38a8178aa5f2d8d207666152493a30e29cd80a29831d9aa01a48",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-closed-loop-copies-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "source": "closed-loop-copies.luau",
+      "sha256": "61520f5858e789ae200bce6126a6481e9c7751db114a2fa42f3282ba14b7434f",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-closed-loop-copies-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "source": "closed-loop-copies.luau",
+      "sha256": "55b023bca155c8691d9ff68f8e58cde1a4aa3b7ffa145fbeea9741c7c65f6fe2",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-closed-loop-copies-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "source": "closed-loop-copies.luau",
+      "sha256": "01a094830d0e3993cce63b2ee1fbf90aa0dcc2c38be709812f9d8ec87e9457e7",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-closed-loop-copies-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "source": "closed-loop-copies.luau",
+      "sha256": "f4ae0234941c96ac84f7b62decfd7f7dc52570de95f0b7ebcdeb71fd33adac9b",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-multiple-copies-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "source": "multiple-copies.luau",
+      "sha256": "efdcdd6e31abc9a2bca9cd186d15f36e726099d2b856d3a0dc15ca18b273f965",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-multiple-copies-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "source": "multiple-copies.luau",
+      "sha256": "0bb7e948d747b4635c68d2a4d488202541f3b3ffb3ad7296eae5088f51eef095",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-multiple-copies-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "source": "multiple-copies.luau",
+      "sha256": "0761a4087763b53dbc9ee3cb68d0bdb3596118a9406de593e971a4e1002ae6cb",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-multiple-copies-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "source": "multiple-copies.luau",
+      "sha256": "ebc90a4b615ba7cd5e6e728b83c4fc550805ab832527245ba99e85da1b71438f",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-multiple-copies-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "source": "multiple-copies.luau",
+      "sha256": "25fed3302f91e2f9edca5e18683be4fa9c1b8a99a55471f64a492129f79197e6",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-multiple-copies-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "source": "multiple-copies.luau",
+      "sha256": "bcdc98a6eba6521326a278a769742523cc8e8bf0b8e167bb1437f6074bf5aea5",
+      "origin": "Compiled once from the unchanged authored source with the recorded compiler."
+    },
+    {
+      "path": "c875-rejected-state-O0g1.luauc",
+      "pin": "c875",
+      "profile": "O0g1",
+      "source": "rejected-state.luau",
+      "sha256": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/c875/rejected-state/O0g1.luauc"
+    },
+    {
+      "path": "c875-rejected-state-O0g2.luauc",
+      "pin": "c875",
+      "profile": "O0g2",
+      "source": "rejected-state.luau",
+      "sha256": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/c875/rejected-state/O0g2.luauc"
+    },
+    {
+      "path": "c875-rejected-state-O1g1.luauc",
+      "pin": "c875",
+      "profile": "O1g1",
+      "source": "rejected-state.luau",
+      "sha256": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/c875/rejected-state/O1g1.luauc"
+    },
+    {
+      "path": "c875-rejected-state-O1g2.luauc",
+      "pin": "c875",
+      "profile": "O1g2",
+      "source": "rejected-state.luau",
+      "sha256": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/c875/rejected-state/O1g2.luauc"
+    },
+    {
+      "path": "c875-rejected-state-O2g1.luauc",
+      "pin": "c875",
+      "profile": "O2g1",
+      "source": "rejected-state.luau",
+      "sha256": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/c875/rejected-state/O2g1.luauc"
+    },
+    {
+      "path": "c875-rejected-state-O2g2.luauc",
+      "pin": "c875",
+      "profile": "O2g2",
+      "source": "rejected-state.luau",
+      "sha256": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "origin": "/workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/first-baseline/c875/rejected-state/O2g2.luauc"
+    }
+  ],
+  "pins": {
+    "9d": {
+      "revision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "hostSha256": "7d8d958fb0ba8537130697a1043f9da0b4b7ab4469345b08ab9153a4a146ae74"
+    },
+    "c875": {
+      "revision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "hostSha256": "c7a7f7d1a9f3fff6303eecfef9f4c20e7c7e88806e6c5323575b409b0f4d42b6"
+    }
+  }
+}

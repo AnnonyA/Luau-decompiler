@@ -1,0 +1,27 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ RUN  v3.2.7 /workspace/scratch/eb5e4be57451/similarity-v3-arguments
+
+(node:35) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/temporary-provenance.test.ts (30 tests) 516ms
+   ✓ sealed temporary reconstruction fixtures > pins independent effect/arity sources and every normal/Hard input  379ms
+(node:62) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/parallel-assignments.test.ts (27 tests) 376ms
+   ✓ private parallel indexed assignments > pins the independently executed normal and Hard bytecodes and exercises the recovered stores  362ms
+(node:82) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/wide-argument-folding.test.ts (8 tests) 15ms
+(node:102) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/temporary-side-effects.test.ts (6 tests) 6ms
+
+ Test Files  4 passed (4)
+      Tests  71 passed (71)
+   Start at  23:57:26
+   Duration  2.45s (transform 743ms, setup 0ms, collect 1.01s, tests 913ms, environment 0ms, prepare 134ms)
+
+(node:122) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

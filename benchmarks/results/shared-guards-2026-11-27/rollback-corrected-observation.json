@@ -1,0 +1,18 @@
+{
+  "purpose": "synthetic shared-guard rejection retaining an effectful read used twice",
+  "originalBytecodeSha256": "548a0e7df1560a2cf5f62b669acd48267c6571987b82b5d21f0910c7403d3c6a",
+  "rows": [
+    {
+      "engine": "quality-research/current-2b2f5b4-quick/engine-dist",
+      "ok": true,
+      "source": "if not value then\n    local value2 = index.value\n    if value2 == value2 then\n        count()\n    end\nelse\n    count()\nend\n",
+      "validation": []
+    },
+    {
+      "engine": "similarity-v3-guards/dist",
+      "ok": true,
+      "source": "if not value then\n    local value2 = index.value\n    if value2 == value2 then\n        count()\n    end\nelse\n    count()\nend\n",
+      "validation": []
+    }
+  ]
+}

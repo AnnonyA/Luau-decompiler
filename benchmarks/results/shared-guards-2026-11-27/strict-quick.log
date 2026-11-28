@@ -1,0 +1,8 @@
+(node:5) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Rebuilding the decompiler with the measured Node.js runtime...
+Running pinned Rosetta quick (all-pass gate)...
+suite rosetta-3 quick (e24826907050bd1d): 147 programs at 6 profiles, ready in 2.7s
+annonyA: 882/882 (100.0%) | cases 246/246, libraries 36/36, generated 300/300, mutants 300/300 | 53.3s -> /workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/strict-quick/annonyA-quick.json
+quick: 882/882; {"pass":882,"mismatch":0,"recompile_failed":0,"decompile_failed":0,"refused":0,"unusable":0}
+Provenance: /workspace/scratch/eb5e4be57451/quality-research/v3-shared-guards/strict-quick/annonyA-quick.provenance.json

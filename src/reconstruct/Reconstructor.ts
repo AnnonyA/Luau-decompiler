@@ -26,6 +26,8 @@ import { eventCallbackName, nameFromMethod, nameFromProperty } from "./RobloxSem
 import { ClosureEffects } from "./ClosureEffects.js";
 import { analyzeClosureCachePriming, closureCacheKey, type CaptureIdentity } from "./ClosureCachePriming.js";
 import { groupDebugDeclarations, parallelLocalDefinitions } from "./DebugDeclarations.js";
+import { sharedGuardShape } from "./SharedGuards.js";
+import { restoreTemplateFieldOrder } from "./TemplateFieldOrder.js";
 
 export interface FunctionIr {
   cfg: ControlFlowGraph;
@@ -1556,12 +1558,14 @@ class SourceBuilder {
       if (binding?.name && (binding.forwardRef || name === binding.name))
         statements.push(...this.snapshotRegisterAliases(phi.register, binding.name));
     }
-    const test = this.conditionFrom(last, true);
+    let test = this.conditionFrom(last, true);
+    const shared = this.trySharedGuard(basic, join);
+    if (shared) test = shared.test;
     const branchEnv = new Map(this.env);
     const branchEmitted = new Set(this.emitted);
     const branchConsumed = new Set(this.consumed);
     this.pushScope();
-    const consequent = block(this.emitRange(thenId, join, new Set(visited)));
+    const consequent = block(this.emitRange(shared?.body ?? thenId, join, new Set(visited)));
     const consequentEnv = new Map(this.env);
     this.popScope();
     this.env.clear();
@@ -1571,7 +1575,7 @@ class SourceBuilder {
     this.consumed.clear();
     for (const pc of branchConsumed) this.consumed.add(pc);
     this.pushScope();
-    const alternateStmts = this.emitRange(elseId, join, new Set(visited));
+    const alternateStmts = this.emitRange(shared ? join : elseId, join, new Set(visited));
     const alternateEnv = new Map(this.env);
     this.popScope();
     // Only the split's live bindings and the join's phis survive both arms.
@@ -1608,6 +1612,39 @@ class SourceBuilder {
     // Fuse `if a then <if b then X end> end` into `if a and b then X end`.
     const fused = fuseGuardChain(ifStmt);
     return { statements: [...statements, fused], follow: join, followIsJoin: true };
+  }
+
+  private trySharedGuard(basic: BasicBlock, follow: number): {test: Expression; body: number} | undefined {
+    this.liveness ??= computeLiveness(this.ir.cfg);
+    const shape = sharedGuardShape(this.ir, basic, follow, this.liveness);
+    if (!shape || this.openPacks.size > 0 || this.pendingStack.some(pending => !pending.flushed)) return undefined;
+    const {guard, body} = shape;
+    if ([guard, body].some(block => this.emitted.has(block.id) || block.instructions.some(insn =>
+      this.consumed.has(insn.pc) || insn.defs.some(register => this.env.get(register)?.forwardRef)))) return undefined;
+    const savedEnv = new Map(this.env), savedOpen = new Set(this.openPacks), savedConsumed = new Set(this.consumed);
+    const savedEmitted = new Set(this.emitted);
+    const savedPending = [...this.pendingStack], savedPendingState = this.snapshotPendings();
+    const savedNames = {allocator: this.allocator.snapshot(), functionCount: this.reconstructionNames.functions.length};
+    const savedScopes = this.scopeStack.map(scope => new Set(scope));
+    const savedPhis = new Map(this.phiNames), savedDeclared = new Set(this.declaredPhis);
+    // Ordinary emission must produce only the condition expression. Any
+    // snapshot, debug declaration or retained evaluation declines the fold.
+    let right: Expression | undefined;
+    try {
+      const statements = this.emitStraight(guard);
+      if (statements.length === 0)
+        right = this.conditionFrom(guard.instructions.at(-1)!, guard.fallthrough === body.id);
+    } finally {
+      this.restoreValueIf(savedEnv, savedOpen, savedConsumed, savedPending,
+        savedPendingState, savedNames, savedScopes, savedPhis, savedDeclared);
+      this.emitted.clear();
+      for (const id of savedEmitted) this.emitted.add(id);
+    }
+    if (!right) return undefined;
+    const left = this.conditionFrom(basic.instructions.at(-1)!, basic.fallthrough === body.id);
+    this.emitted.add(guard.id);
+    for (const insn of guard.instructions) this.consumed.add(insn.pc);
+    return {test: {kind: "binary", op: "or", left, right}, body: body.id};
   }
 
   private joinOf(basic: BasicBlock): number | undefined {
@@ -2447,7 +2484,8 @@ class SourceBuilder {
     const template = definition?.opcode === Opcode.DUPTABLE ? this.proto.constants[definition.d] : undefined;
     const templateKey = template?.kind === "table" && template.keys.length === 1
       ? this.proto.constants[template.keys[0]!] : undefined;
-    const literal: Expression = { kind: "table", fields: normalizeArrayFields(literalFields),
+    const literal: Expression = { kind: "table", fields: normalizeArrayFields(
+      restoreTemplateFieldOrder(literalFields, template, this.proto.constants)),
       ...(templateKey?.kind === "string" ? {templateKeys: [templateKey.value] as const} : {}) };
     const statements: Statement[] = [...prefix, ...aliases, assignment
       ? { kind: "assign", targets: [ident(name)], values: [literal] }
@@ -2471,7 +2509,9 @@ class SourceBuilder {
         fields.push({ ...nested.field, value: ident(child.name ?? `r${child.register}`) });
       }
     }
-    return { kind: "table", fields: normalizeArrayFields(fields) };
+    const definition = this.proto.instructions.find(insn => insn.pc === pending.startPc);
+    const template = definition?.opcode === Opcode.DUPTABLE ? this.proto.constants[definition.d] : undefined;
+    return { kind: "table", fields: normalizeArrayFields(restoreTemplateFieldOrder(fields, template, this.proto.constants)) };
   }
 
   private hasMultipleTableReads(pending: PendingTable): boolean {
@@ -3473,8 +3513,11 @@ class SourceBuilder {
   private pinRefCapture(register: number, fromPc: number): Statement[] {
     const existing = this.env.get(register);
     if (existing?.name && existing.pinned && this.isDeclaredInScope(existing.name)) {
+      // Copies made before the first REF capture still own their old values.
+      // Once the cell is open, child calls can mutate it without a local write.
+      const aliases = existing.forwardRef ? [] : this.snapshotRegisterAliases(register, existing.name);
       this.env.set(register, { ...existing, forwardRef: true });
-      return [];
+      return aliases;
     }
     if (existing && !existing.name) {
       const name = this.allocator.reserve(nameHint(existing.expression) ?? "value");

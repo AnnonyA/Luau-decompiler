@@ -1,0 +1,825 @@
+{
+  "purpose": "Exact saved-bytecode round trips for aliases preceding first REF capture.",
+  "label": "first-before",
+  "engineDist": "measurements/similarity-v3-saved-cell-triage/baseline-885-engine",
+  "profiles": 36,
+  "pass": 24,
+  "fail": 12,
+  "pins": {
+    "9d": {
+      "revision": "9d7748a4f324213a18cb8283fa2a77c330225fa0",
+      "compilerSha256": "e876b74199ccb267732e71178b73022d7c8491c8144f88eb310c1dc17c122332",
+      "hostSha256": "7d8d958fb0ba8537130697a1043f9da0b4b7ab4469345b08ab9153a4a146ae74"
+    },
+    "c875": {
+      "revision": "c87565b8b0db5d5d5bfd2b8b00ad6573e5d06d9f",
+      "compilerSha256": "0ff02bd7d4a8aba0514fe93faea8c0b3a353a9f660456aff032812092aeede54",
+      "hostSha256": "c7a7f7d1a9f3fff6303eecfef9f4c20e7c7e88806e6c5323575b409b0f4d42b6"
+    }
+  },
+  "manifestSha256": "07f6a44f91b575da7279abb3ee663f8c97bc0027e51f6329e2141d8004f11d4b",
+  "perPin": {
+    "9d": {
+      "profiles": 18,
+      "matches": 12
+    },
+    "c875": {
+      "profiles": 18,
+      "matches": 12
+    }
+  },
+  "results": [
+    {
+      "id": "9d/closed-loop-copies/O0g1",
+      "pin": "9d",
+      "source": "closed-loop-copies.luau",
+      "profile": "O0g1",
+      "inputSha256": "be019eeb73dd29a41d25e1f38d581a3adac6b85ba5b334534db39b168147f244",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t21\t21\t11\t21\t21\nagain\t1\t21\t21\t11\t21\t21\nclosed\t2\t101\t101\t102\nagain\t2\t102\t102\t103\nclosed\t3\t22\t22\t12\t22\t22\nagain\t3\t22\t22\t12\t22\t22\nclosed\t4\t201\t201\t202\nagain\t4\t202\t202\t203\nclosed\t5\t23\t23\t13\t23\t23\nagain\t5\t23\t23\t13\t23\t23\nclosed\t6\t301\t301\t302\nagain\t6\t302\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "6d6c33168e3ff21a1e3c389b87219b193d8bff63b11d5e6a08c24fe016339429",
+      "outputBytecodeSha256": "690f00983b80219744717bf707bd5fe24e840cabfe2cb7a424adadcfaa4b509b",
+      "match": false
+    },
+    {
+      "id": "9d/closed-loop-copies/O0g2",
+      "pin": "9d",
+      "source": "closed-loop-copies.luau",
+      "profile": "O0g2",
+      "inputSha256": "188f066f60be38a8178aa5f2d8d207666152493a30e29cd80a29831d9aa01a48",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "d86ad6f7a9750c705a7e7d24240f399b938861cb38d9d13dc9a06246d9f5465d",
+      "outputBytecodeSha256": "f49d316b0ca03cb1bbd599f574e90da7acf02c5f2d5ce891b0982e61b41e4b08",
+      "match": true
+    },
+    {
+      "id": "9d/closed-loop-copies/O1g1",
+      "pin": "9d",
+      "source": "closed-loop-copies.luau",
+      "profile": "O1g1",
+      "inputSha256": "61520f5858e789ae200bce6126a6481e9c7751db114a2fa42f3282ba14b7434f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t21\t21\t11\t21\t21\nagain\t1\t21\t21\t11\t21\t21\nclosed\t2\t101\t101\t102\nagain\t2\t102\t102\t103\nclosed\t3\t22\t22\t12\t22\t22\nagain\t3\t22\t22\t12\t22\t22\nclosed\t4\t201\t201\t202\nagain\t4\t202\t202\t203\nclosed\t5\t23\t23\t13\t23\t23\nagain\t5\t23\t23\t13\t23\t23\nclosed\t6\t301\t301\t302\nagain\t6\t302\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "21480c156c102719227076b7f6fd60f0234b01c6500bae5d210dd7dde5ea2e99",
+      "outputBytecodeSha256": "c32667a6d807be0c614b6871ae190bdd96565f3bafbac13d5b1afd47428a81f3",
+      "match": false
+    },
+    {
+      "id": "9d/closed-loop-copies/O1g2",
+      "pin": "9d",
+      "source": "closed-loop-copies.luau",
+      "profile": "O1g2",
+      "inputSha256": "55b023bca155c8691d9ff68f8e58cde1a4aa3b7ffa145fbeea9741c7c65f6fe2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "8cfefd27e6e7d71c1815c27c78af10e635016ad4fbff073b3440f0655e347c3c",
+      "outputBytecodeSha256": "8bfeab3149216800ad94296687ec4128bca4d8db77e22fd706086aa073a5460e",
+      "match": true
+    },
+    {
+      "id": "9d/closed-loop-copies/O2g1",
+      "pin": "9d",
+      "source": "closed-loop-copies.luau",
+      "profile": "O2g1",
+      "inputSha256": "01a094830d0e3993cce63b2ee1fbf90aa0dcc2c38be709812f9d8ec87e9457e7",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "47658ade30f1f588aef3620177d0faf20eb580442c920135516b0ae1e2f87b17",
+      "outputBytecodeSha256": "e4a058563dd7b9c5bc14bef9aea3d7e78f7aaf4ba9f3be87598196256d929885",
+      "match": true
+    },
+    {
+      "id": "9d/closed-loop-copies/O2g2",
+      "pin": "9d",
+      "source": "closed-loop-copies.luau",
+      "profile": "O2g2",
+      "inputSha256": "f4ae0234941c96ac84f7b62decfd7f7dc52570de95f0b7ebcdeb71fd33adac9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "453e65ace99f3c5c74b6d270fe15e0d4c7364f53c6b0d30bc2c561ff405e684e",
+      "outputBytecodeSha256": "a01ad6897bc37a4c3e5760734cc413fdf0640e3fe34dc98fb14b75e500e4e327",
+      "match": true
+    },
+    {
+      "id": "9d/multiple-copies/O0g1",
+      "pin": "9d",
+      "source": "multiple-copies.luau",
+      "profile": "O0g1",
+      "inputSha256": "efdcdd6e31abc9a2bca9cd186d15f36e726099d2b856d3a0dc15ca18b273f965",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ntables\t8\t11\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "fc662b85cefc16347aae8e7ac03b8e3223b45007ad07facb215a0341f1469489",
+      "outputBytecodeSha256": "2b99864cf602da39c483953177724353fcd4d2c85ca943079926001fcd02a766",
+      "match": false
+    },
+    {
+      "id": "9d/multiple-copies/O0g2",
+      "pin": "9d",
+      "source": "multiple-copies.luau",
+      "profile": "O0g2",
+      "inputSha256": "0bb7e948d747b4635c68d2a4d488202541f3b3ffb3ad7296eae5088f51eef095",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "1b98f38eccb342634912b94aa68352565fb7d5a2ffa04541e290dd3dfce84a49",
+      "outputBytecodeSha256": "d0e445044bd68173569c77db1d48f55c72889722373ce11228fba8c9c2386d71",
+      "match": true
+    },
+    {
+      "id": "9d/multiple-copies/O1g1",
+      "pin": "9d",
+      "source": "multiple-copies.luau",
+      "profile": "O1g1",
+      "inputSha256": "0761a4087763b53dbc9ee3cb68d0bdb3596118a9406de593e971a4e1002ae6cb",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ntables\t8\t11\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "fc662b85cefc16347aae8e7ac03b8e3223b45007ad07facb215a0341f1469489",
+      "outputBytecodeSha256": "0eea585d3ed6f87fcbf1a359b4b27f5d55e48259fc63ca222f938c7dbdde1a42",
+      "match": false
+    },
+    {
+      "id": "9d/multiple-copies/O1g2",
+      "pin": "9d",
+      "source": "multiple-copies.luau",
+      "profile": "O1g2",
+      "inputSha256": "ebc90a4b615ba7cd5e6e728b83c4fc550805ab832527245ba99e85da1b71438f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "f7319be53b73e9364089cb83550e9ae3bf834921c35da0743edb90ea4b23fec7",
+      "outputBytecodeSha256": "f81ec7c8ccda0c156d7b67485c9c3994c304a7182f8950f29ba35be9aa9a62d7",
+      "match": true
+    },
+    {
+      "id": "9d/multiple-copies/O2g1",
+      "pin": "9d",
+      "source": "multiple-copies.luau",
+      "profile": "O2g1",
+      "inputSha256": "25fed3302f91e2f9edca5e18683be4fa9c1b8a99a55471f64a492129f79197e6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "ddb7004f9d27556b25e0ad46dbd338206bc92c831e1566834055693c38208698",
+      "outputBytecodeSha256": "c740cc2f3a726a967e744717e7010e68e73605c71b1a8375e4820335a533e9c3",
+      "match": true
+    },
+    {
+      "id": "9d/multiple-copies/O2g2",
+      "pin": "9d",
+      "source": "multiple-copies.luau",
+      "profile": "O2g2",
+      "inputSha256": "bcdc98a6eba6521326a278a769742523cc8e8bf0b8e167bb1437f6074bf5aea5",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "bb1689325f9c11e713fe5dc6d1ebcae57be43bb1938d0ce448587f6ace67713a",
+      "outputBytecodeSha256": "55a79cbad3b91b20f30cd3d6ed15f254a6446b9b8afefe37cb02e38e26b41bf1",
+      "match": true
+    },
+    {
+      "id": "9d/rejected-state/O0g1",
+      "pin": "9d",
+      "source": "rejected-state.luau",
+      "profile": "O0g1",
+      "inputSha256": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t7\t7\nstate\tfalse\ttrue\t7\t7\tcondition/body\nstate\tfalse\tfalse\t7\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "2c7359bc8b7078121eb1918c4085a50b929f4b61acd78738e6dc7488f933fd94",
+      "outputBytecodeSha256": "1181dd5cf8d87a80440231cfcd3902d0fedf595156e8858e1c91c6380e098ad0",
+      "match": false
+    },
+    {
+      "id": "9d/rejected-state/O0g2",
+      "pin": "9d",
+      "source": "rejected-state.luau",
+      "profile": "O0g2",
+      "inputSha256": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "4858320d8d97ca8a8ff23da704aae42ff84c812c249bc117b74c832ad1d1a1c4",
+      "outputBytecodeSha256": "4bde2e6b2ed5e56152168e9ba77f5029acc0e1af5a70c5ec08f70b4592ef495d",
+      "match": true
+    },
+    {
+      "id": "9d/rejected-state/O1g1",
+      "pin": "9d",
+      "source": "rejected-state.luau",
+      "profile": "O1g1",
+      "inputSha256": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t7\t7\nstate\tfalse\ttrue\t7\t7\tcondition/body\nstate\tfalse\tfalse\t7\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "c42d8ce05c2db98ed9d0f3eea1a6ade582b317fcb11dda8a16e5c225250dac51",
+      "outputBytecodeSha256": "d7fa503df831fa7d1d088d1a7a0453c425e6921f842018ca8647f153b3c9981e",
+      "match": false
+    },
+    {
+      "id": "9d/rejected-state/O1g2",
+      "pin": "9d",
+      "source": "rejected-state.luau",
+      "profile": "O1g2",
+      "inputSha256": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "7c3a3712c16d31c5dde0f60e8f0ef10e516b20b82c8c6119ff5f1d554cf853f1",
+      "outputBytecodeSha256": "32496fb1778924eddd6b7b4765e3726b851b07dca8b1ec733a417eae55b3c95c",
+      "match": true
+    },
+    {
+      "id": "9d/rejected-state/O2g1",
+      "pin": "9d",
+      "source": "rejected-state.luau",
+      "profile": "O2g1",
+      "inputSha256": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "64ca62ed82950f80c52b20fbed904d53028681bf7fdad02df985ade808b801cd",
+      "outputBytecodeSha256": "7fca9b2f8691a69a86135aafb9687c5992f69660dbec210a6e2a86217793c3a4",
+      "match": true
+    },
+    {
+      "id": "9d/rejected-state/O2g2",
+      "pin": "9d",
+      "source": "rejected-state.luau",
+      "profile": "O2g2",
+      "inputSha256": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "e862d44628df8191ceebf3e817e6558a5d929c81c57a68091fa9e4e4b28db346",
+      "outputBytecodeSha256": "cc597463f0b6a43ea71f59f31cb84959ffca0fef7b7760adc530a14a69ae26b2",
+      "match": true
+    },
+    {
+      "id": "c875/closed-loop-copies/O0g1",
+      "pin": "c875",
+      "source": "closed-loop-copies.luau",
+      "profile": "O0g1",
+      "inputSha256": "be019eeb73dd29a41d25e1f38d581a3adac6b85ba5b334534db39b168147f244",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t21\t21\t11\t21\t21\nagain\t1\t21\t21\t11\t21\t21\nclosed\t2\t101\t101\t102\nagain\t2\t102\t102\t103\nclosed\t3\t22\t22\t12\t22\t22\nagain\t3\t22\t22\t12\t22\t22\nclosed\t4\t201\t201\t202\nagain\t4\t202\t202\t203\nclosed\t5\t23\t23\t13\t23\t23\nagain\t5\t23\t23\t13\t23\t23\nclosed\t6\t301\t301\t302\nagain\t6\t302\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "21a2b74746023c1c8026e17041eb87badeab7b845599dd2636dd31e200f6e001",
+      "outputBytecodeSha256": "690f00983b80219744717bf707bd5fe24e840cabfe2cb7a424adadcfaa4b509b",
+      "match": false
+    },
+    {
+      "id": "c875/closed-loop-copies/O0g2",
+      "pin": "c875",
+      "source": "closed-loop-copies.luau",
+      "profile": "O0g2",
+      "inputSha256": "188f066f60be38a8178aa5f2d8d207666152493a30e29cd80a29831d9aa01a48",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "df0c236cc58988e93597c8e69e4fe70c40f9f571853f30fbeb2927d84f6539ae",
+      "outputBytecodeSha256": "f49d316b0ca03cb1bbd599f574e90da7acf02c5f2d5ce891b0982e61b41e4b08",
+      "match": true
+    },
+    {
+      "id": "c875/closed-loop-copies/O1g1",
+      "pin": "c875",
+      "source": "closed-loop-copies.luau",
+      "profile": "O1g1",
+      "inputSha256": "61520f5858e789ae200bce6126a6481e9c7751db114a2fa42f3282ba14b7434f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t21\t21\t11\t21\t21\nagain\t1\t21\t21\t11\t21\t21\nclosed\t2\t101\t101\t102\nagain\t2\t102\t102\t103\nclosed\t3\t22\t22\t12\t22\t22\nagain\t3\t22\t22\t12\t22\t22\nclosed\t4\t201\t201\t202\nagain\t4\t202\t202\t203\nclosed\t5\t23\t23\t13\t23\t23\nagain\t5\t23\t23\t13\t23\t23\nclosed\t6\t301\t301\t302\nagain\t6\t302\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "eb2876d56a4866c54e994bf89e51d2cef0d5a747dd23e45bffe65dbbd7417d66",
+      "outputBytecodeSha256": "c32667a6d807be0c614b6871ae190bdd96565f3bafbac13d5b1afd47428a81f3",
+      "match": false
+    },
+    {
+      "id": "c875/closed-loop-copies/O1g2",
+      "pin": "c875",
+      "source": "closed-loop-copies.luau",
+      "profile": "O1g2",
+      "inputSha256": "55b023bca155c8691d9ff68f8e58cde1a4aa3b7ffa145fbeea9741c7c65f6fe2",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "6c5aeb913e7762278ac2c643003fb5c99d162ab88e0609615422352763f7c4bf",
+      "outputBytecodeSha256": "8bfeab3149216800ad94296687ec4128bca4d8db77e22fd706086aa073a5460e",
+      "match": true
+    },
+    {
+      "id": "c875/closed-loop-copies/O2g1",
+      "pin": "c875",
+      "source": "closed-loop-copies.luau",
+      "profile": "O2g1",
+      "inputSha256": "01a094830d0e3993cce63b2ee1fbf90aa0dcc2c38be709812f9d8ec87e9457e7",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "4717639879231156995b0a6cb9d35ea3c5fe7b74e9d9d380ee01fbcfaf6b8c10",
+      "outputBytecodeSha256": "e4a058563dd7b9c5bc14bef9aea3d7e78f7aaf4ba9f3be87598196256d929885",
+      "match": true
+    },
+    {
+      "id": "c875/closed-loop-copies/O2g2",
+      "pin": "c875",
+      "source": "closed-loop-copies.luau",
+      "profile": "O2g2",
+      "inputSha256": "f4ae0234941c96ac84f7b62decfd7f7dc52570de95f0b7ebcdeb71fd33adac9b",
+      "original": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "closed\t1\t1\t1\t11\t21\t21\nagain\t1\t1\t1\t11\t21\t21\nclosed\t2\t100\t101\t102\nagain\t2\t100\t102\t103\nclosed\t3\t2\t2\t12\t22\t22\nagain\t3\t2\t2\t12\t22\t22\nclosed\t4\t200\t201\t202\nagain\t4\t200\t202\t203\nclosed\t5\t3\t3\t13\t23\t23\nagain\t5\t3\t3\t13\t23\t23\nclosed\t6\t300\t301\t302\nagain\t6\t300\t302\t303\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "0a5ee96740f05eda778edf1cd722756e53d3114002539a55ea2247e529c46f3c",
+      "outputBytecodeSha256": "a01ad6897bc37a4c3e5760734cc413fdf0640e3fe34dc98fb14b75e500e4e327",
+      "match": true
+    },
+    {
+      "id": "c875/multiple-copies/O0g1",
+      "pin": "c875",
+      "source": "multiple-copies.luau",
+      "profile": "O0g1",
+      "inputSha256": "efdcdd6e31abc9a2bca9cd186d15f36e726099d2b856d3a0dc15ca18b273f965",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ntables\t8\t11\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "3eae3b3b9ad8b22c2230188b8ae7aedd8446fbc6ad900e1fd2450414c8e81a9a",
+      "outputBytecodeSha256": "2b99864cf602da39c483953177724353fcd4d2c85ca943079926001fcd02a766",
+      "match": false
+    },
+    {
+      "id": "c875/multiple-copies/O0g2",
+      "pin": "c875",
+      "source": "multiple-copies.luau",
+      "profile": "O0g2",
+      "inputSha256": "0bb7e948d747b4635c68d2a4d488202541f3b3ffb3ad7296eae5088f51eef095",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "9ae2191d99bd482549a7e0ef5981a778701d2b02883ae7cacdc6ff100aec42df",
+      "outputBytecodeSha256": "d0e445044bd68173569c77db1d48f55c72889722373ce11228fba8c9c2386d71",
+      "match": true
+    },
+    {
+      "id": "c875/multiple-copies/O1g1",
+      "pin": "c875",
+      "source": "multiple-copies.luau",
+      "profile": "O1g1",
+      "inputSha256": "0761a4087763b53dbc9ee3cb68d0bdb3596118a9406de593e971a4e1002ae6cb",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\ntables\t8\t11\ncopies\tfalse\tfalse\tfalse\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\ttrue\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "3eae3b3b9ad8b22c2230188b8ae7aedd8446fbc6ad900e1fd2450414c8e81a9a",
+      "outputBytecodeSha256": "0eea585d3ed6f87fcbf1a359b4b27f5d55e48259fc63ca222f938c7dbdde1a42",
+      "match": false
+    },
+    {
+      "id": "c875/multiple-copies/O1g2",
+      "pin": "c875",
+      "source": "multiple-copies.luau",
+      "profile": "O1g2",
+      "inputSha256": "ebc90a4b615ba7cd5e6e728b83c4fc550805ab832527245ba99e85da1b71438f",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "ae83c9e2b6c0fa43b64820f7a3700230c6a758bceee3cec603c32dcad96fafe8",
+      "outputBytecodeSha256": "f81ec7c8ccda0c156d7b67485c9c3994c304a7182f8950f29ba35be9aa9a62d7",
+      "match": true
+    },
+    {
+      "id": "c875/multiple-copies/O2g1",
+      "pin": "c875",
+      "source": "multiple-copies.luau",
+      "profile": "O2g1",
+      "inputSha256": "25fed3302f91e2f9edca5e18683be4fa9c1b8a99a55471f64a492129f79197e6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "27223d100d4f0ae8da7bceca373d1ddb77ed496222da08341606c86890e221fc",
+      "outputBytecodeSha256": "c740cc2f3a726a967e744717e7010e68e73605c71b1a8375e4820335a533e9c3",
+      "match": true
+    },
+    {
+      "id": "c875/multiple-copies/O2g2",
+      "pin": "c875",
+      "source": "multiple-copies.luau",
+      "profile": "O2g2",
+      "inputSha256": "bcdc98a6eba6521326a278a769742523cc8e8bf0b8e167bb1437f6074bf5aea5",
+      "original": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "copies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\ntables\t8\t11\ncopies\ttrue\ttrue\ttrue\ttrue\ttrue\ttrue\npack\t5\ttrue\ttrue\ttrue\tfalse\nfunctions\t13\t17\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "b9f1b431d6fce8907dba0952b955f8c2c0f85ceb3b3070efc6819ef10612fb44",
+      "outputBytecodeSha256": "55a79cbad3b91b20f30cd3d6ed15f254a6446b9b8afefe37cb02e38e26b41bf1",
+      "match": true
+    },
+    {
+      "id": "c875/rejected-state/O0g1",
+      "pin": "c875",
+      "source": "rejected-state.luau",
+      "profile": "O0g1",
+      "inputSha256": "a88a7c211c41b5c377494bead5b2a089bdf5363ce2f294243bb3bc000dd634b9",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t7\t7\nstate\tfalse\ttrue\t7\t7\tcondition/body\nstate\tfalse\tfalse\t7\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "3a5f1d3259f7f29363de1315db7085f26e56a2f1c32e0b48d5bbc86784a6c82a",
+      "outputBytecodeSha256": "1181dd5cf8d87a80440231cfcd3902d0fedf595156e8858e1c91c6380e098ad0",
+      "match": false
+    },
+    {
+      "id": "c875/rejected-state/O0g2",
+      "pin": "c875",
+      "source": "rejected-state.luau",
+      "profile": "O0g2",
+      "inputSha256": "736ef35a7bd70a3f610ceef0358d3005cb5c60d8323e2e0fd289b86555b9ee05",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "6900dbdfaa4672781998dd4d95b22ca477683e3ca7c31525663ed35a431ddd30",
+      "outputBytecodeSha256": "4bde2e6b2ed5e56152168e9ba77f5029acc0e1af5a70c5ec08f70b4592ef495d",
+      "match": true
+    },
+    {
+      "id": "c875/rejected-state/O1g1",
+      "pin": "c875",
+      "source": "rejected-state.luau",
+      "profile": "O1g1",
+      "inputSha256": "07db3c48081b137c9a345bfeffed3dd60584e6edc8322240756033c75c478cda",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t7\t7\nstate\tfalse\ttrue\t7\t7\tcondition/body\nstate\tfalse\tfalse\t7\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "c2d89eb8681388e00fa6bd99063ea34007669ec1f39f7c2c5cb3d2cdfd35d9fe",
+      "outputBytecodeSha256": "d7fa503df831fa7d1d088d1a7a0453c425e6921f842018ca8647f153b3c9981e",
+      "match": false
+    },
+    {
+      "id": "c875/rejected-state/O1g2",
+      "pin": "c875",
+      "source": "rejected-state.luau",
+      "profile": "O1g2",
+      "inputSha256": "25ff6319f66104a5bc9b3b13a0bb3cd4d4a65c0dd2065e5423358f5fa7d14bb6",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "0a043b99c9882c82a5a1d1075eb76765e136380f9b44453685ad0e7bdad20b29",
+      "outputBytecodeSha256": "32496fb1778924eddd6b7b4765e3726b851b07dca8b1ec733a417eae55b3c95c",
+      "match": true
+    },
+    {
+      "id": "c875/rejected-state/O2g1",
+      "pin": "c875",
+      "source": "rejected-state.luau",
+      "profile": "O2g1",
+      "inputSha256": "f2776cacac4da31816a6ec1ea04c491456ca19cb7f4dafbc25ca25904b1ab366",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "5830ea438e9eddaeda6205c59bad3bdcef7c23b5ad9e506d82ba5aed54107a49",
+      "outputBytecodeSha256": "7fca9b2f8691a69a86135aafb9687c5992f69660dbec210a6e2a86217793c3a4",
+      "match": true
+    },
+    {
+      "id": "c875/rejected-state/O2g2",
+      "pin": "c875",
+      "source": "rejected-state.luau",
+      "profile": "O2g2",
+      "inputSha256": "84c666fe04dcfc0b070cf72e67d18e8b5d17c84dd02295e71ee827c3873bb803",
+      "original": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "actual": {
+        "exitCode": 0,
+        "stdout": "selected\t4\t4\nstate\ttrue\ttrue\t4\t4\tbody\nselected\t4\t7\nstate\tfalse\ttrue\t4\t7\tcondition/body\nstate\tfalse\tfalse\t4\t7\tcondition\nnested\t2\t3\nnested\t3\t4\nnested\t4\t5\nnested\t2\t3\nnested\t3\t4\n",
+        "stderr": ""
+      },
+      "decompileExitCode": 0,
+      "recompileExitCode": 0,
+      "sourceSha256": "9697e66549c0711f3c19ebef4b0a3789da4b849fffabe9c5a962e2bed7d10bf4",
+      "outputBytecodeSha256": "cc597463f0b6a43ea71f59f31cb84959ffca0fef7b7760adc530a14a69ae26b2",
+      "match": true
+    }
+  ]
+}
