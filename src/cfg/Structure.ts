@@ -83,6 +83,12 @@ export function followOfLoop(
   const latch = cfg.blocks[loop.latch];
   const opcode = latch?.instructions.at(-1)?.opcode;
   const iterationLoop = opcode === Opcode.FORGLOOP || opcode === Opcode.FORNLOOP;
+  // A zero-or-one-iteration numeric region can have an unreachable FORNLOOP.
+  // The prep and latch have the same normal exit (modulo pure jumps), but
+  // the unreachable latch has no post-dominator. Use its reachable exit to
+  // distinguish the shared continuation from a zero-trip-only tail.
+  const exitWitness = opcode === Opcode.FORNLOOP && latch?.unreachable && latch.fallthrough !== undefined
+    ? followPureJumps(cfg, latch.fallthrough) : loop.latch;
   // The body's first common block can still be inside the loop (for example
   // the join that materializes a predicate before an inlined early return).
   // Continue up the post-dominator tree to the first enclosing continuation.
@@ -92,13 +98,13 @@ export function followOfLoop(
   let common = postDominators.ipdom[loop.header];
   const seen = new Set<number>();
   while (common !== undefined && common >= 0 && common < cfg.blocks.length &&
-      (loop.blocks.includes(common) || (iterationLoop && !postDominators.postDominates(common, loop.latch))) &&
+      (loop.blocks.includes(common) || (iterationLoop && !postDominators.postDominates(common, exitWitness))) &&
       !seen.has(common)) {
     seen.add(common);
     common = postDominators.ipdom[common];
   }
   if (common !== undefined && common >= 0 && common < cfg.blocks.length && !loop.blocks.includes(common) &&
-      (!iterationLoop || postDominators.postDominates(common, loop.latch))) {
+      (!iterationLoop || postDominators.postDominates(common, exitWitness))) {
     return followPureJumps(cfg, common);
   }
   if (iterationLoop && latch?.fallthrough !== undefined) {
